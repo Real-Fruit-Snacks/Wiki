@@ -1,0 +1,63 @@
+# Development and test files
+test-*.html
+test-*.js
+debug-*.html
+verify-*.html
+*-summary.md
+*-fix-summary.md
+gitlab-notes-wiki-docs.md
+
+# System files
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.temp
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node.js (if used)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Local development
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Claude Code configuration
+.claude/
+
+# GitLab Pages build directory
+public/

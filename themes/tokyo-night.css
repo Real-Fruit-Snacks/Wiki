@@ -1,0 +1,126 @@
+/* Tokyo Night Theme Variables */
+:root[data-theme="tokyo-night"] {
+    /* Background Colors */
+    --bg-primary: #1a1b26;
+    --bg-secondary: #24283b;
+    --bg-sidebar: #292e42;
+    --bg-code: #24283b;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Text Colors */
+    --text-primary: #a9b1d6;
+    --text-secondary: #9aa5ce;
+    --text-muted: #787c99;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors */
+    --accent-primary: #7aa2f7;
+    --accent-secondary: #7dcfff;
+    --accent-warning: #fbbf24;
+    --accent-error: #ef4444;
+    --accent-info: var(--accent-primary);
+    --accent-success: #10b981;
+    
+    /* Border Colors */
+    --border-primary: #414868;
+    --border-secondary: #3b4261;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-error);
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(122, 162, 247, 0.1);
+    --bg-code-block: #24283b;
+}
+
+/* Syntax Highlighting - Tokyo Night Theme */
+:root[data-theme="tokyo-night"] .token.comment,
+:root[data-theme="tokyo-night"] .token.prolog,
+:root[data-theme="tokyo-night"] .token.doctype,
+:root[data-theme="tokyo-night"] .token.cdata {
+    color: #565f89;
+    font-style: italic;
+}
+
+:root[data-theme="tokyo-night"] .token.punctuation {
+    color: #a9b1d6;
+}
+
+:root[data-theme="tokyo-night"] .token.property,
+:root[data-theme="tokyo-night"] .token.tag,
+:root[data-theme="tokyo-night"] .token.boolean,
+:root[data-theme="tokyo-night"] .token.number,
+:root[data-theme="tokyo-night"] .token.constant,
+:root[data-theme="tokyo-night"] .token.symbol,
+:root[data-theme="tokyo-night"] .token.deleted {
+    color: #ff9e64;
+}
+
+:root[data-theme="tokyo-night"] .token.selector,
+:root[data-theme="tokyo-night"] .token.attr-name,
+:root[data-theme="tokyo-night"] .token.string,
+:root[data-theme="tokyo-night"] .token.char,
+:root[data-theme="tokyo-night"] .token.builtin,
+:root[data-theme="tokyo-night"] .token.inserted {
+    color: #9ece6a;
+}
+
+:root[data-theme="tokyo-night"] .token.operator,
+:root[data-theme="tokyo-night"] .token.entity,
+:root[data-theme="tokyo-night"] .token.url,
+:root[data-theme="tokyo-night"] .language-css .token.string,
+:root[data-theme="tokyo-night"] .style .token.string {
+    color: #7dcfff;
+    background: transparent;
+}
+
+:root[data-theme="tokyo-night"] .token.atrule,
+:root[data-theme="tokyo-night"] .token.attr-value,
+:root[data-theme="tokyo-night"] .token.keyword {
+    color: #bb9af7;
+}
+
+:root[data-theme="tokyo-night"] .token.function,
+:root[data-theme="tokyo-night"] .token.class-name {
+    color: #7aa2f7;
+}
+
+:root[data-theme="tokyo-night"] .token.regex,
+:root[data-theme="tokyo-night"] .token.important,
+:root[data-theme="tokyo-night"] .token.variable {
+    color: #e0af68;
+}
+
+/* Scrollbar Tokyo Night Theme */
+:root[data-theme="tokyo-night"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="tokyo-night"] ::-webkit-scrollbar-thumb {
+    background: #565f89;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="tokyo-night"] ::-webkit-scrollbar-thumb:hover {
+    background: #737aa2;
+}
+
+/* Firefox Scrollbar Tokyo Night Theme */
+:root[data-theme="tokyo-night"] * {
+    scrollbar-color: #565f89 var(--bg-primary);
+}

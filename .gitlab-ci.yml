@@ -1,0 +1,96 @@
+# GitLab CI/CD configuration for Notes Wiki
+# This pipeline builds the static site and deploys it to GitLab Pages
+
+stages:
+  - build
+  - deploy
+
+# Build stage - Generate notes index and prepare static files
+build:
+  stage: build
+  image: python:3.11-alpine
+  before_script:
+    # Install Python YAML parser
+    - pip install pyyaml
+  script:
+    # Create build directory
+    - mkdir -p public
+    
+    # Copy all static assets to public directory
+    - cp -r index.html style.css script.js libs themes notes CLAUDE.md public/
+    
+    # Create 404 page from index.html (for client-side routing)
+    - cp public/index.html public/404.html
+    
+    # Run build script to generate notes-index.json
+    - python3 build.py
+    
+    # Move generated notes-index.json to public directory
+    - mv notes-index.json public/
+    
+    # Display build statistics
+    - echo "Build completed successfully!"
+    - echo "Total files in public directory:" $(find public -type f | wc -l)
+    - echo "Notes index size:" $(ls -lh public/notes-index.json | awk '{print $5}')
+    
+  artifacts:
+    paths:
+      - public
+    expire_in: 1 hour
+  only:
+    - main
+    - master
+
+# Deploy to GitLab Pages
+pages:
+  stage: deploy
+  dependencies:
+    - build
+  script:
+    # GitLab Pages expects files in 'public' directory
+    - echo "Deploying Notes Wiki to GitLab Pages..."
+    - echo "Site will be available at: https://$CI_PROJECT_NAMESPACE.gitlab.io/$CI_PROJECT_NAME"
+  artifacts:
+    paths:
+      - public
+    expire_in: 30 days
+  only:
+    - main
+    - master
+
+# Optional: Deploy preview for merge requests
+deploy_preview:
+  stage: deploy
+  image: alpine:latest
+  script:
+    - echo "Deploy preview is available at $CI_ENVIRONMENT_URL"
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    url: https://$CI_PROJECT_NAMESPACE.gitlab.io/-/$CI_PROJECT_NAME/-/jobs/$CI_JOB_ID/artifacts/public/index.html
+    on_stop: stop_preview
+    auto_stop_in: 1 week
+  artifacts:
+    paths:
+      - public
+    expire_in: 1 week
+  except:
+    - main
+    - master
+  only:
+    - merge_requests
+
+# Stop preview environment
+stop_preview:
+  stage: deploy
+  image: alpine:latest
+  script:
+    - echo "Stopping preview environment"
+  when: manual
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    action: stop
+  except:
+    - main
+    - master
+  only:
+    - merge_requests
