@@ -1,0 +1,486 @@
+{
+  "notes": [
+    {
+      "path": "/notes/test-code-blocks.md",
+      "context": null,
+      "metadata": {
+        "title": "Code Block Test",
+        "tags": [
+          "test",
+          "debugging"
+        ],
+        "created": "2025-01-06",
+        "author": "Debug",
+        "description": "Testing various code block formats",
+        "updated": null,
+        "category": null,
+        "status": null
+      },
+      "content_preview": "This file tests various code block formats to debug the [object Object] issue.\n\n\n\njavascript\nconsole.log('Hello, world!');\nconst x = 42;\nfunction test() {\n    return x  2;\n}\n\n\n\n\npython title:\"Example ...",
+      "searchable_content": "This file tests various code block formats to debug the [object Object] issue.\n\n\n\njavascript\nconsole.log('Hello, world!');\nconst x = 42;\nfunction test() {\n    return x  2;\n}\n\n\n\n\npython title:\"Example  console.log('Hello, world!');\nconst x = 42;\nfunction test() {\n    return x * 2;\n} python Example Python Script def hello():\n    print(\"Hello from Python\")\n    return True\n\nif __name__ == \"__main__\":\n    hello() This is plain text\nwithout any highlighting\njust regular monospace #!/bin/bash\necho \"Testing bash highlighting\"\nls -la\ngrep \"pattern\" file.txt <!DOCTYPE html>\n<html>\n<head>\n    <title>Test</title>\n</head>\n<body>\n    <h1>Hello</h1>\n</body>\n</html> body {\n    font-family: Arial, sans-serif;\n    background-color: #f0f0f0;\n}\n\n.code-block {\n    background: #282c34;\n    padding: 1rem;\n} ",
+      "code_blocks_count": 7
+    },
+    {
+      "path": "/notes/theme-showcase.md",
+      "context": null,
+      "metadata": {
+        "title": "Theme Showcase & Test",
+        "tags": [
+          "themes",
+          "test",
+          "showcase"
+        ],
+        "created": "2025-01-06",
+        "author": "Wiki Admin",
+        "description": "Comprehensive test of all 15 themes with various code examples",
+        "updated": null,
+        "category": null,
+        "status": null
+      },
+      "content_preview": "This page tests all 15 available themes with various code examples to ensure syntax highlighting works correctly.\n\n\n\n1. Light - Clean light theme\n2. Dark - Easy on the eyes dark theme\n3. VSCode Dark+ ...",
+      "searchable_content": "This page tests all 15 available themes with various code examples to ensure syntax highlighting works correctly.\n\n\n\n1. Light - Clean light theme\n2. Dark - Easy on the eyes dark theme\n3. VSCode Dark+  javascript JavaScript Class Example // ES6 Class with various syntax elements\nclass ThemeManager {\n    constructor(options = {}) {\n        this.themes = options.themes || [];\n        this.currentTheme = options.defaultTheme || 'light';\n        this.callbacks = new Map();\n        this._initialized = false;\n    }\n\n    async initialize() {\n        try {\n            // Load saved theme from localStorage\n            const saved = localStorage.getItem('theme');\n            if (saved && this.themes.includes(saved)) {\n                this.currentTheme = saved;\n            }\n            \n            // Apply the theme\n            await this.applyTheme(this.currentTheme);\n            this._initialized = true;\n            \n            return { success: true, theme: this.currentTheme };\n        } catch (error) {\n            console.error('Failed to initialize theme:', error);\n            return { success: false, error: error.message };\n        }\n    }\n\n    applyTheme(themeName) {\n        // Validate theme exists\n        if (!this.th... (truncated) python Python Data Processing import pandas as pd\nimport numpy as np\nfrom datetime import datetime, timedelta\nfrom typing import List, Dict, Optional, Union\nimport asyncio\n\nclass DataProcessor:\n    \"\"\"Process and analyze time series data with various transformations.\"\"\"\n    \n    def __init__(self, data_path: str, cache_size: int = 1000):\n        self.data_path = data_path\n        self.cache_size = cache_size\n        self._cache: Dict[str, pd.DataFrame] = {}\n        self._metadata = {\n            'created': datetime.now(),\n            'version': '1.0.0',\n            'author': 'System'\n        }\n    \n    @property\n    def is_cached(self) -> bool:\n        \"\"\"Check if data is currently cached.\"\"\"\n        return len(self._cache) > 0\n    \n    async def load_data_async(self, \n                            file_pa",
+      "code_blocks_count": 7
+    },
+    {
+      "path": "/notes/tutorials/advanced/microservices-architecture.md",
+      "context": "tutorials",
+      "metadata": {
+        "title": "Microservices Architecture Guide",
+        "tags": [
+          "microservices",
+          "architecture",
+          "docker",
+          "kubernetes",
+          "advanced"
+        ],
+        "created": "2024-02-12",
+        "author": "Architecture Team",
+        "description": "Comprehensive guide to designing and implementing microservices",
+        "updated": "2024-03-10",
+        "category": "tutorials",
+        "status": "published"
+      },
+      "content_preview": "Microservices architecture is a design pattern where applications are structured as a collection of loosely coupled, independently deployable services. Each service is responsible for a specific busin...",
+      "searchable_content": "Microservices architecture is a design pattern where applications are structured as a collection of loosely coupled, independently deployable services. Each service is responsible for a specific busin // API Gateway implementation with Express\nimport express from 'express';\nimport httpProxy from 'http-proxy-middleware';\nimport rateLimit from 'express-rate-limit';\nimport jwt from 'jsonwebtoken';\n\nconst app = express();\n\n// Rate limiting\nconst limiter = rateLimit({\n  windowMs: 15 * 60 * 1000, // 15 minutes\n  max: 100 // limit each IP to 100 requests per windowMs\n});\n\napp.use(limiter);\n\n// Authentication middleware\nconst authenticate = (req, res, next) => {\n  const token = req.headers.authorization?.split(' ')[1];\n  \n  if (!token) {\n    return res.status(401).json({ error: 'No token provided' });\n  }\n  \n  try {\n    const decoded = jwt.verify(token, process.env.JWT_SECRET);\n    req.user = decoded;\n    next();\n  } catch (error) {\n    return res.status(401).json({ error: 'Invalid token' });\n  }\n};\n\n// Service routing\nconst services = {\n  users: 'http://users-service:3001',\n  products: 'http://products-service:3002',\n  orders: 'http://orders-service:3003',\n};\n\nObject.keys(services).forEach... (truncated) # Consul service registration\nservices:\n  - name: users-service\n    port: 3001\n    tags:\n      - primary\n      - v1\n    check:\n      http: http://localhost:3001/health\n      interval: 10s\n      timeout: 5s // Service discovery client\nimport Consul from 'consul';\n\nconst consul = new Consul({\n  host: 'consul',\n  port: 8500,\n});\n\nclass ServiceDiscovery {\n  async getService(serviceName) {\n    try {\n      const services = await consul.health.service(serviceName);\n      \n      if (services.length === 0) {\n        throw new Error(`No healthy instances of ${serviceName}`);\n      }\n      \n      // Load balancing - random selection\n      const randomIndex = Math.floor(Math.random() * services.length);\n      const service = services[randomIndex];\n      \n      return {\n        address: s",
+      "code_blocks_count": 9
+    },
+    {
+      "path": "/notes/reference/cheatsheets/regex-patterns.md",
+      "context": "reference",
+      "metadata": {
+        "title": "Regular Expression Patterns",
+        "tags": [
+          "regex",
+          "patterns",
+          "reference",
+          "cheatsheet"
+        ],
+        "created": "2024-02-10",
+        "author": "Dev Team",
+        "description": "Common regex patterns and examples for various use cases",
+        "updated": "2024-03-01",
+        "category": "reference",
+        "status": "published"
+      },
+      "content_preview": "regex\n.       # Any character except newline\n\\d      # Digit (0-9)\n\\D      # Not a digit\n\\w      # Word character (a-z, A-Z, 0-9, )\n\\W      # Not a word character\n\\s      # Whitespace (space, tab, new...",
+      "searchable_content": "regex\n.       # Any character except newline\n\\d      # Digit (0-9)\n\\D      # Not a digit\n\\w      # Word character (a-z, A-Z, 0-9, )\n\\W      # Not a word character\n\\s      # Whitespace (space, tab, new .       # Any character except newline\n\\d      # Digit (0-9)\n\\D      # Not a digit\n\\w      # Word character (a-z, A-Z, 0-9, _)\n\\W      # Not a word character\n\\s      # Whitespace (space, tab, newline)\n\\S      # Not whitespace\n[abc]   # Any of a, b, or c\n[^abc]  # Not a, b, or c\n[a-z]   # Character between a and z\n[a-zA-Z] # a-z or A-Z *       # 0 or more\n+       # 1 or more\n?       # 0 or 1\n{3}     # Exactly 3\n{3,}    # 3 or more\n{3,5}   # 3, 4, or 5 ^       # Start of string\n$       # End of string\n\\b      # Word boundary\n\\B      # Not word boundary\n\\A      # Start of string (not line)\n\\Z      # End of string (not line) # Basic email pattern\n^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$\n\n# More comprehensive\n^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$\n\n# Examples:\n# \u2713 user@example.com\n# \u2713 john.doe+filter@company.co.uk\n# \u2717 invalid@.com\n# \u2717 @example.com # Basic URL\n^https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)$\n\n# With optional protocol\n^(https?:\\/\\/)?(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)$\n\n# Examples:\n# \u2713 https://www.example.com\n# \u2713 http://subdomain.example.com/path?query=1\n# \u2713 www.example.com\n# \u2717 htp://wrong-protocol.com # US Phone Number\n^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$\n\n# International format\n^\\+?[1-9]\\d{1,14}$\n\n# Examples:\n# \u2713 (555) 123-4567\n# \u2713 555-123-4567\n# \u2713 555.123.4567\n# \u2713 5551234567\n# \u2713 +1 555 123 4567 # At least 8 chars, 1 uppercase, 1 lowercase, 1 number\n^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d\\w\\W]{8,}$\n\n# With special character requirement\n^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$\n\n# Examples:\n# \u2713 Password123\n# \u2713 Str0n",
+      "code_blocks_count": 21
+    },
+    {
+      "path": "/notes/projects/todo-app.md",
+      "context": "projects",
+      "metadata": {
+        "title": "Todo App Project",
+        "tags": [
+          "projects",
+          "web-development",
+          "react",
+          "typescript"
+        ],
+        "created": "2024-02-05",
+        "author": "Project Team",
+        "description": "Full-stack todo application with React and Node.js",
+        "updated": "2024-03-02",
+        "category": "projects",
+        "status": "published"
+      },
+      "content_preview": "Building a modern, full-stack todo application with the following features:\n- User authentication\n- Real-time updates\n- Drag-and-drop functionality\n- Tags and categories\n- Due dates and reminders\n\n\n\nF...",
+      "searchable_content": "Building a modern, full-stack todo application with the following features:\n- User authentication\n- Real-time updates\n- Drag-and-drop functionality\n- Tags and categories\n- Due dates and reminders\n\n\n\nF todo-app/\n\u251c\u2500\u2500 client/\n\u2502   \u251c\u2500\u2500 src/\n\u2502   \u2502   \u251c\u2500\u2500 components/\n\u2502   \u2502   \u251c\u2500\u2500 hooks/\n\u2502   \u2502   \u251c\u2500\u2500 pages/\n\u2502   \u2502   \u251c\u2500\u2500 services/\n\u2502   \u2502   \u251c\u2500\u2500 store/\n\u2502   \u2502   \u2514\u2500\u2500 utils/\n\u2502   \u2514\u2500\u2500 package.json\n\u251c\u2500\u2500 server/\n\u2502   \u251c\u2500\u2500 src/\n\u2502   \u2502   \u251c\u2500\u2500 controllers/\n\u2502   \u2502   \u251c\u2500\u2500 middleware/\n\u2502   \u2502   \u251c\u2500\u2500 models/\n\u2502   \u2502   \u251c\u2500\u2500 routes/\n\u2502   \u2502   \u2514\u2500\u2500 services/\n\u2502   \u2514\u2500\u2500 package.json\n\u2514\u2500\u2500 docker-compose.yml -- Users table\nCREATE TABLE users (\n    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n    email VARCHAR(255) UNIQUE NOT NULL,\n    password_hash VARCHAR(255) NOT NULL,\n    name VARCHAR(255),\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n\n-- Todos table\nCREATE TABLE todos (\n    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n    user_id UUID REFERENCES users(id) ON DELETE CASCADE,\n    title VARCHAR(255) NOT NULL,\n    description TEXT,\n    completed BOOLEAN DEFAULT FALSE,\n    due_date TIMESTAMP,\n    priority INTEGER DEFAULT 0,\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n\n-- Tags table\nCREATE TABLE tags (\n    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n    name VARCHAR(50) NOT NULL,\n    color VARCHAR(7),\n    user_id UUID REFERENCES users(id) ON DELETE CASCADE,\n    UNIQUE(name, user_id)\n);\n\n-- Todo-Tags junction table\nCREATE TABLE todo_tags (\n    todo_id UUID REFERENC... (truncated) POST   /api/auth/register    // Register new user\nPOST   /api/auth/login       // Login user\nPOST   /api/auth/refresh     // Refresh token\nPOST   /api/auth/logout      // Logout user GET    /api/todos           // Get all todos\nPOST   /api/todos           // Create new todo\nGET    /api/todos/:id       // Get single todo\nPUT    /api/todos/:id       // Update todo\nDELETE /api/todos/:id       // Delete todo\nPATCH  /api/todos/:id",
+      "code_blocks_count": 10
+    },
+    {
+      "path": "/notes/personal/recipes.md",
+      "context": "personal",
+      "metadata": {
+        "title": "Favorite Recipes",
+        "tags": [
+          "personal",
+          "cooking",
+          "recipes",
+          "food"
+        ],
+        "created": "2024-02-01",
+        "author": "Sarah Johnson",
+        "description": "Collection of my favorite recipes and cooking tips",
+        "updated": "2024-02-25",
+        "category": "personal",
+        "status": "published"
+      },
+      "content_preview": "Ingredients:\n- 2 cups mixed vegetables (broccoli, bell peppers, snap peas)\n- 1 cup protein (tofu, chicken, or shrimp)\n- 2 tbsp soy sauce\n- 1 tbsp sesame oil\n- 2 cloves garlic, minced\n- 1 tsp ginger, g...",
+      "searchable_content": "Ingredients:\n- 2 cups mixed vegetables (broccoli, bell peppers, snap peas)\n- 1 cup protein (tofu, chicken, or shrimp)\n- 2 tbsp soy sauce\n- 1 tbsp sesame oil\n- 2 cloves garlic, minced\n- 1 tsp ginger, g Base Recipe:\n- 1/2 cup rolled oats\n- 1/2 cup milk (any type)\n- 1 tbsp chia seeds\n- 1 tsp honey or maple syrup\n\nFlavor Variations:\n1. Berry Blast: + blueberries + vanilla\n2. Chocolate PB: + cocoa powder + peanut butter\n3. Apple Pie: + diced apples + cinnamon # Pizza dough calculator\ndef calculate_ingredients(num_pizzas, size='medium'):\n    sizes = {\n        'small': 200,\n        'medium': 250,\n        'large': 300\n    }\n    \n    dough_weight = sizes.get(size, 250) * num_pizzas\n    \n    ingredients = {\n        'flour': dough_weight * 0.60,\n        'water': dough_weight * 0.36,\n        'salt': dough_weight * 0.02,\n        'yeast': dough_weight * 0.02\n    }\n    \n    return ingredients",
+      "code_blocks_count": 2
+    },
+    {
+      "path": "/notes/projects/personal-blog.md",
+      "context": "projects",
+      "metadata": {
+        "title": "Personal Blog Platform",
+        "tags": [
+          "projects",
+          "blog",
+          "gatsby",
+          "graphql",
+          "cms"
+        ],
+        "created": "2024-01-30",
+        "author": "Blog Team",
+        "description": "JAMstack blog built with Gatsby and headless CMS",
+        "updated": "2024-02-28",
+        "category": "projects",
+        "status": "published"
+      },
+      "content_preview": "Create a fast, modern blog platform with:\n- Static site generation for performance\n- MDX support for interactive content\n- SEO optimization\n- Dark mode support\n- Comment system\n- Newsletter integratio...",
+      "searchable_content": "Create a fast, modern blog platform with:\n- Static site generation for performance\n- MDX support for interactive content\n- SEO optimization\n- Dark mode support\n- Comment system\n- Newsletter integratio personal-blog/\n\u251c\u2500\u2500 src/\n\u2502   \u251c\u2500\u2500 components/\n\u2502   \u2502   \u251c\u2500\u2500 Layout/\n\u2502   \u2502   \u251c\u2500\u2500 SEO/\n\u2502   \u2502   \u251c\u2500\u2500 BlogPost/\n\u2502   \u2502   \u251c\u2500\u2500 Navigation/\n\u2502   \u2502   \u2514\u2500\u2500 ThemeToggle/\n\u2502   \u251c\u2500\u2500 pages/\n\u2502   \u251c\u2500\u2500 templates/\n\u2502   \u251c\u2500\u2500 hooks/\n\u2502   \u2514\u2500\u2500 utils/\n\u251c\u2500\u2500 content/\n\u2502   \u251c\u2500\u2500 blog/\n\u2502   \u251c\u2500\u2500 pages/\n\u2502   \u2514\u2500\u2500 images/\n\u251c\u2500\u2500 gatsby-config.js\n\u251c\u2500\u2500 gatsby-node.js\n\u2514\u2500\u2500 gatsby-browser.js // gatsby-config.js\nmodule.exports = {\n  plugins: [\n    {\n      resolve: `gatsby-source-filesystem`,\n      options: {\n        path: `${__dirname}/content/blog`,\n        name: `blog`,\n      },\n    },\n    {\n      resolve: `gatsby-plugin-mdx`,\n      options: {\n        extensions: [`.mdx`, `.md`],\n        gatsbyRemarkPlugins: [\n          {\n            resolve: `gatsby-remark-images`,\n            options: {\n              maxWidth: 1200,\n              quality: 90,\n            },\n          },\n          {\n            resolve: `gatsby-remark-prismjs`,\n            options: {\n              classPrefix: \"language-\",\n              inlineCodeMarker: null,\n            },\n          },\n        ],\n      },\n    },\n  ],\n}; import React from 'react';\nimport { graphql } from 'gatsby';\nimport { MDXRenderer } from 'gatsby-plugin-mdx';\nimport Layout from '../components/Layout';\nimport SEO from '../components/SEO';\nimport { formatDate } from '../utils/helpers';\n\nconst BlogPostTemplate = ({ data }) => {\n  const { mdx } = data;\n  const { title, date, description, tags } = mdx.frontmatter;\n\n  return (\n    <Layout>\n      <SEO \n        title={title}\n        description={description}\n        article\n      />\n      <article className=\"max-w-4xl mx-auto px-4 py-8\">\n        <header className=\"mb-8\">\n          <h1 className=\"text-4xl font-bold mb-2\">{title}</h1>\n          <div className=\"flex items-center gap-4 text-gray-600\">\n            <time dateTime={date}>{formatDate(date)",
+      "code_blocks_count": 11
+    },
+    {
+      "path": "/notes/personal/book-notes.md",
+      "context": "personal",
+      "metadata": {
+        "title": "Book Notes and Reviews",
+        "tags": [
+          "personal",
+          "books",
+          "reading",
+          "reviews"
+        ],
+        "created": "2024-01-25",
+        "author": "Jane Smith",
+        "description": "Notes and reviews from books I've read",
+        "updated": "2024-02-20",
+        "category": "personal",
+        "status": "published"
+      },
+      "content_preview": "Progress: Chapter 5 of 8\n\nKey takeaways so far:\n- DRY Principle (Don't Repeat Yourself) - fundamental to good software design\n- Orthogonality - keep components independent and decoupled\n- Tracer bulle...",
+      "searchable_content": "Progress: Chapter 5 of 8\n\nKey takeaways so far:\n- DRY Principle (Don't Repeat Yourself) - fundamental to good software design\n- Orthogonality - keep components independent and decoupled\n- Tracer bulle python This is the title # Example: DRY principle in action\n# Bad\ndef calculate_area_rectangle(width, height):\n    return width * height\n\ndef calculate_area_square(side):\n    return side * side\n\n# Good\ndef calculate_area(width, height=None):\n    if height is None:\n        height = width  # Square case\n    return width * height",
+      "code_blocks_count": 1
+    },
+    {
+      "path": "/notes/technical/databases/sql-optimization.md",
+      "context": "technical",
+      "metadata": {
+        "title": "SQL Query Optimization",
+        "tags": [
+          "sql",
+          "databases",
+          "performance",
+          "optimization"
+        ],
+        "created": "2024-01-22",
+        "author": "Database Team",
+        "description": "Advanced SQL optimization techniques and best practices",
+        "updated": "2024-02-18",
+        "category": "technical",
+        "status": "published"
+      },
+      "content_preview": "sql\n-- PostgreSQL\nEXPLAIN (ANALYZE, BUFFERS) \nSELECT o.orderid, o.orderdate, c.customername, \n       SUM(oi.quantity  oi.unitprice) as total\nFROM orders o\nJOIN customers c ON o.customerid = c.customer...",
+      "searchable_content": "sql\n-- PostgreSQL\nEXPLAIN (ANALYZE, BUFFERS) \nSELECT o.orderid, o.orderdate, c.customername, \n       SUM(oi.quantity  oi.unitprice) as total\nFROM orders o\nJOIN customers c ON o.customerid = c.customer -- PostgreSQL\nEXPLAIN (ANALYZE, BUFFERS) \nSELECT o.order_id, o.order_date, c.customer_name, \n       SUM(oi.quantity * oi.unit_price) as total\nFROM orders o\nJOIN customers c ON o.customer_id = c.customer_id\nJOIN order_items oi ON o.order_id = oi.order_id\nWHERE o.order_date >= '2024-01-01'\nGROUP BY o.order_id, o.order_date, c.customer_name\nORDER BY total DESC\nLIMIT 10;\n\n-- MySQL\nEXPLAIN FORMAT=JSON\nSELECT ...;\n\n-- SQL Server\nSET STATISTICS IO ON;\nSET STATISTICS TIME ON; -- B-Tree Index (default)\nCREATE INDEX idx_customer_email ON customers(email);\n\n-- Composite Index\nCREATE INDEX idx_order_customer_date \nON orders(customer_id, order_date);\n\n-- Partial Index (PostgreSQL)\nCREATE INDEX idx_active_users \nON users(email) \nWHERE is_active = true;\n\n-- Covering Index\nCREATE INDEX idx_order_covering \nON orders(customer_id, order_date) \nINCLUDE (total_amount, status);\n\n-- Full-text Index (MySQL)\nCREATE FULLTEXT INDEX idx_product_search \nON products(name, description);\n\n-- JSON Index (PostgreSQL)\nCREATE INDEX idx_metadata \nON products((metadata->>'category')); -- Bad: N+1 problem\n-- First query\nSELECT * FROM authors;\n-- Then N queries\nSELECT * FROM books WHERE author_id = ?;\n\n-- Good: Single query with JOIN\nSELECT a.*, b.*\nFROM authors a\nLEFT JOIN books b ON a.author_id = b.author_id\nORDER BY a.author_id, b.published_date;\n\n-- Or using subquery\nSELECT *,\n       (SELECT JSON_AGG(b.*) \n        FROM books b \n        WHERE b.author_id = a.author_id) as books\nFROM authors a; -- Inefficient: Correlated subquery\nSELECT c.customer_name,\n       (SELECT COUNT(*) \n        FROM orders o \n        WHERE o.customer_id = c.customer_id) as order_count\nFROM customers c;\n\n-- Better: JOIN with GROUP BY\nSELECT c.customer_name, COUNT(o.order_id) as order_count\nFROM customers c\nLEFT JOIN orders o ON c.custom",
+      "code_blocks_count": 15
+    },
+    {
+      "path": "/notes/personal/daily-journal.md",
+      "context": "personal",
+      "metadata": {
+        "title": "Daily Journal",
+        "tags": [
+          "personal",
+          "journal",
+          "thoughts"
+        ],
+        "created": "2024-01-20",
+        "author": "John Doe",
+        "description": "My daily thoughts and reflections",
+        "updated": "2024-02-15",
+        "category": "personal",
+        "status": "published"
+      },
+      "content_preview": "Today was a productive day. I managed to complete several important tasks:\n\n- Finished the project proposal\n- Had a great meeting with the team\n- Learned about new React hooks\n\n\n\nI've been experimenti...",
+      "searchable_content": "Today was a productive day. I managed to complete several important tasks:\n\n- Finished the project proposal\n- Had a great meeting with the team\n- Learned about new React hooks\n\n\n\nI've been experimenti // My custom timer function\nfunction pomodoroTimer(minutes = 25) {\n    const seconds = minutes * 60;\n    let remaining = seconds;\n    \n    const interval = setInterval(() => {\n        remaining--;\n        console.log(`Time remaining: ${Math.floor(remaining / 60)}:${(remaining % 60).toString().padStart(2, '0')}`);\n        \n        if (remaining === 0) {\n            clearInterval(interval);\n            alert('Pomodoro complete!');\n        }\n    }, 1000);\n}",
+      "code_blocks_count": 1
+    },
+    {
+      "path": "/notes/technical/devops/docker-basics.md",
+      "context": "technical",
+      "metadata": {
+        "title": "Docker Fundamentals",
+        "tags": [
+          "docker",
+          "devops",
+          "containers",
+          "deployment"
+        ],
+        "created": "2024-01-18",
+        "author": "DevOps Team",
+        "description": "Essential Docker concepts and practical examples",
+        "updated": "2024-02-22",
+        "category": "technical",
+        "status": "published"
+      },
+      "content_preview": "Docker containers are lightweight, standalone, executable packages that include everything needed to run software:\n- Code\n- Runtime\n- System tools\n- Libraries\n- Settings\n\n\n\n| Feature | Docker | Virtua...",
+      "searchable_content": "Docker containers are lightweight, standalone, executable packages that include everything needed to run software:\n- Code\n- Runtime\n- System tools\n- Libraries\n- Settings\n\n\n\n| Feature | Docker | Virtua # Pull an image\ndocker pull nginx:latest\n\n# List images\ndocker images\n\n# Build an image\ndocker build -t myapp:1.0 .\n\n# Tag an image\ndocker tag myapp:1.0 myregistry/myapp:1.0\n\n# Push to registry\ndocker push myregistry/myapp:1.0\n\n# Remove an image\ndocker rmi myapp:1.0 # Run a container\ndocker run -d --name webserver -p 80:80 nginx\n\n# List running containers\ndocker ps\n\n# List all containers\ndocker ps -a\n\n# Stop a container\ndocker stop webserver\n\n# Start a container\ndocker start webserver\n\n# Remove a container\ndocker rm webserver\n\n# Execute command in running container\ndocker exec -it webserver bash\n\n# View logs\ndocker logs -f webserver # Stage 1: Build\nFROM node:16-alpine AS builder\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci --only=production\nCOPY . .\nRUN npm run build\n\n# Stage 2: Runtime\nFROM node:16-alpine\nWORKDIR /app\nRUN addgroup -g 1001 -S nodejs\nRUN adduser -S nodejs -u 1001\n\nCOPY --from=builder --chown=nodejs:nodejs /app/dist ./dist\nCOPY --from=builder --chown=nodejs:nodejs /app/node_modules ./node_modules\n\nUSER nodejs\nEXPOSE 3000\nCMD [\"node\", \"dist/index.js\"] FROM python:3.9-slim\n\n# Set environment variables\nENV PYTHONDONTWRITEBYTECODE=1 \\\n    PYTHONUNBUFFERED=1 \\\n    APP_HOME=/app\n\n# Create app directory\nWORKDIR $APP_HOME\n\n# Install dependencies\nCOPY requirements.txt .\nRUN pip install --no-cache-dir -r requirements.txt\n\n# Copy application\nCOPY . .\n\n# Create non-root user\nRUN useradd -m -u 1001 appuser && chown -R appuser:appuser $APP_HOME\nUSER appuser\n\n# Health check\nHEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \\\n    CMD python -c \"import requests; requests.get('http://localhost:8000/health')\"\n\nEXPOSE 8000\nCMD [\"gunicorn\", \"--bind\", \"0.0.0.0:8000\", \"--workers\", \"4\", \"app:application\"] version: '3.8'\n\nservices:\n  web:\n    build: .\n    ports:",
+      "code_blocks_count": 20
+    },
+    {
+      "path": "/notes/index.md",
+      "context": null,
+      "metadata": {
+        "title": "Welcome to Notes Wiki",
+        "tags": [
+          "getting-started",
+          "documentation",
+          "wiki"
+        ],
+        "created": "2024-01-15",
+        "author": "Wiki Admin",
+        "description": "A self-contained notes and documentation system with advanced features like themes, search, and metadata support",
+        "updated": "2024-01-15",
+        "category": "documentation",
+        "status": "published"
+      },
+      "content_preview": "Welcome to your new self-contained notes wiki! This system is designed to be hosted on GitLab Pages and provides a powerful, feature-rich documentation platform with no external dependencies.\n\n\n\nThis ...",
+      "searchable_content": "Welcome to your new self-contained notes wiki! This system is designed to be hosted on GitLab Pages and provides a powerful, feature-rich documentation platform with no external dependencies.\n\n\n\nThis  yaml Note Template ---\ntitle: Your Note Title\ntags: [tag1, tag2, tag3]\ncreated: 2024-01-15\nauthor: Your Name\ndescription: Brief description of your note\n---\n\n# Your Content Here\n\nWrite your content using standard Markdown syntax... javascript Example Function function greetUser(name) {\n    console.log(`Hello, ${name}!`);\n    return `Welcome to the Notes Wiki`;\n} python Data Processing Example import pandas as pd\n\ndef process_data(file_path):\n    \"\"\"Process CSV data with pandas\"\"\"\n    df = pd.read_csv(file_path)\n    return df.describe() notes/\n\u251c\u2500\u2500 personal/\n\u2502   \u251c\u2500\u2500 daily-notes.md\n\u2502   \u2514\u2500\u2500 ideas.md\n\u251c\u2500\u2500 technical/\n\u2502   \u251c\u2500\u2500 javascript/\n\u2502   \u2502   \u251c\u2500\u2500 tips.md\n\u2502   \u2502   \u2514\u2500\u2500 frameworks.md\n\u2502   \u2514\u2500\u2500 python/\n\u2502       \u2514\u2500\u2500 data-science.md\n\u2514\u2500\u2500 projects/\n    \u251c\u2500\u2500 project-1.md\n    \u2514\u2500\u2500 project-2.md",
+      "code_blocks_count": 4
+    },
+    {
+      "path": "/notes/callouts-demo.md",
+      "context": null,
+      "metadata": {
+        "title": "Callouts Demonstration",
+        "tags": [
+          "demo",
+          "documentation",
+          "callouts"
+        ],
+        "created": "2024-01-15",
+        "author": "Wiki Admin",
+        "description": "Demonstration of all available callout types and their usage",
+        "updated": null,
+        "category": null,
+        "status": null
+      },
+      "content_preview": "This page demonstrates all available callout types in the wiki system. Callouts are special blockquotes that provide visual emphasis for important information.\n\n\n\nTo create a callout, use the followin...",
+      "searchable_content": "This page demonstrates all available callout types in the wiki system. Callouts are special blockquotes that provide visual emphasis for important information.\n\n\n\nTo create a callout, use the followin > [!TYPE] Optional Title\n> Content of the callout\n> Can span multiple lines > console.log(\"Hello from a callout!\");\n>",
+      "code_blocks_count": 2
+    },
+    {
+      "path": "/notes/technical/programming/python-guide.md",
+      "context": "technical",
+      "metadata": {
+        "title": "Python Best Practices Guide",
+        "tags": [
+          "python",
+          "programming",
+          "best-practices",
+          "guide"
+        ],
+        "created": "2024-01-12",
+        "author": "Maria Rodriguez",
+        "description": "Comprehensive guide to Python best practices and patterns",
+        "updated": "2024-03-01",
+        "category": "technical",
+        "status": "published"
+      },
+      "content_preview": "python\nimport this  # Run this to see the Zen of Python\n\n\n\n\n\n\n\n\n\n\n\nmyproject/\n\u251c\u2500\u2500 src/\n\u2502   \u2514\u2500\u2500 mypackage/\n\u2502       \u251c\u2500\u2500 init.py\n\u2502       \u251c\u2500\u2500 core.py\n\u2502       \u2514\u2500\u2500 utils.py\n\u251c\u2500\u2500 tests/\n\u2502   \u251c\u2500\u2500 init.py\n\u2502   \u2514\u2500...",
+      "searchable_content": "python\nimport this  # Run this to see the Zen of Python\n\n\n\n\n\n\n\n\n\n\n\nmyproject/\n\u251c\u2500\u2500 src/\n\u2502   \u2514\u2500\u2500 mypackage/\n\u2502       \u251c\u2500\u2500 init.py\n\u2502       \u251c\u2500\u2500 core.py\n\u2502       \u2514\u2500\u2500 utils.py\n\u251c\u2500\u2500 tests/\n\u2502   \u251c\u2500\u2500 init.py\n\u2502   \u2514\u2500 import this  # Run this to see the Zen of Python\n\n# Key principles:\n# - Explicit is better than implicit\n# - Simple is better than complex\n# - Readability counts\n# - There should be one-- and preferably only one --obvious way to do it my_project/\n\u251c\u2500\u2500 src/\n\u2502   \u2514\u2500\u2500 my_package/\n\u2502       \u251c\u2500\u2500 __init__.py\n\u2502       \u251c\u2500\u2500 core.py\n\u2502       \u2514\u2500\u2500 utils.py\n\u251c\u2500\u2500 tests/\n\u2502   \u251c\u2500\u2500 __init__.py\n\u2502   \u2514\u2500\u2500 test_core.py\n\u251c\u2500\u2500 docs/\n\u251c\u2500\u2500 requirements.txt\n\u251c\u2500\u2500 setup.py\n\u251c\u2500\u2500 README.md\n\u2514\u2500\u2500 .gitignore from typing import List, Dict, Optional, Union, Tuple, Callable\nfrom dataclasses import dataclass\n\n# Function with type hints\ndef process_data(\n    items: List[str],\n    transform: Callable[[str], str],\n    max_length: Optional[int] = None\n) -> Dict[str, int]:\n    \"\"\"Process list of items and return frequency count.\"\"\"\n    result: Dict[str, int] = {}\n    \n    for item in items:\n        processed = transform(item)\n        if max_length and len(processed) > max_length:\n            processed = processed[:max_length]\n        result[processed] = result.get(processed, 0) + 1\n    \n    return result\n\n# Dataclass with type hints\n@dataclass\nclass User:\n    name: str\n    email: str\n    age: int\n    is_active: bool = True\n    tags: List[str] = None\n    \n    def __post_init__(self):\n        if self.tags is None:\n            self.tags = [] from contextlib import contextmanager\nimport time\n\n# Custom context manager using decorator\n@contextmanager\ndef timer(name: str):\n    \"\"\"Time a block of code.\"\"\"\n    start = time.time()\n    try:\n        yield\n    finally:\n        end = time.time()\n        print(f\"{name} took {end - start:.2f} seconds\")\n\n# Class-based context manager\nclass DatabaseConnection:\n    def __init__(self, connection_string: str):\n        self.connection_string = connection_string\n        self.connection = None\n    \n   ",
+      "code_blocks_count": 9
+    },
+    {
+      "path": "/notes/technical/javascript-tips.md",
+      "context": "technical",
+      "metadata": {
+        "title": "JavaScript Tips and Tricks",
+        "tags": [
+          "javascript",
+          "programming",
+          "web-development",
+          "tips"
+        ],
+        "created": "2024-01-10",
+        "author": "Alex Chen",
+        "description": "Useful JavaScript patterns, tips, and best practices",
+        "updated": "2024-02-28",
+        "category": "technical",
+        "status": "published"
+      },
+      "content_preview": "javascript\n// Object destructuring with renaming and defaults\nconst user = { name: 'Alice', age: 30 };\nconst { name: userName, age, role = 'user' } = user;\n\n// Array destructuring with skip\nconst [fir...",
+      "searchable_content": "javascript\n// Object destructuring with renaming and defaults\nconst user = { name: 'Alice', age: 30 };\nconst { name: userName, age, role = 'user' } = user;\n\n// Array destructuring with skip\nconst [fir // Object destructuring with renaming and defaults\nconst user = { name: 'Alice', age: 30 };\nconst { name: userName, age, role = 'user' } = user;\n\n// Array destructuring with skip\nconst [first, , third] = [1, 2, 3];\n\n// Nested destructuring\nconst data = {\n    user: {\n        profile: {\n            name: 'Bob',\n            settings: { theme: 'dark' }\n        }\n    }\n};\nconst { user: { profile: { name, settings: { theme } } } } = data; // Parallel execution\nasync function fetchMultiple() {\n    const [users, posts, comments] = await Promise.all([\n        fetch('/api/users').then(r => r.json()),\n        fetch('/api/posts').then(r => r.json()),\n        fetch('/api/comments').then(r => r.json())\n    ]);\n    \n    return { users, posts, comments };\n}\n\n// Error handling with async/await\nasync function safeApiCall(url) {\n    try {\n        const response = await fetch(url);\n        if (!response.ok) {\n            throw new Error(`HTTP error! status: ${response.status}`);\n        }\n        return await response.json();\n    } catch (error) {\n        console.error('API call failed:', error);\n        return { error: error.message };\n    }\n}\n\n// Retry pattern\nasync function fetchWithRetry(url, retries = 3) {\n    for (let i = 0; i < retries; i++) {\n        try {\n            return await fetch(url);\n        } catch (error) {\n            if (i === retries - 1) throw error;\n            await new Promise(resolve => setTimeout(resolve, ... (truncated) // Debounce - delays execution until after wait time\nfunction debounce(func, wait) {\n    let timeout;\n    return function executedFunction(...args) {\n        const later = () => {\n            clearTimeout(timeout);\n            func(...args);\n        };\n        clearTimeout(timeout);\n        timeout = setTimeout(later, wait);\n    };\n}\n\n// Throttle ",
+      "code_blocks_count": 9
+    },
+    {
+      "path": "/notes/reference/git-commands.md",
+      "context": "reference",
+      "metadata": {
+        "title": "Git Commands Reference",
+        "tags": [
+          "git",
+          "version-control",
+          "reference",
+          "commands"
+        ],
+        "created": "2024-01-08",
+        "author": "DevOps Team",
+        "description": "Comprehensive Git command reference with examples",
+        "updated": "2024-03-05",
+        "category": "reference",
+        "status": "published"
+      },
+      "content_preview": "bash\n\ngit config --global user.name \"John Doe\"\ngit config --global user.email \"john@example.com\"\n\n\ngit config --global core.editor \"vim\"\n\n\ngit config --global color.ui auto\n\n\ngit config --list\n\n\ngit c...",
+      "searchable_content": "bash\n\ngit config --global user.name \"John Doe\"\ngit config --global user.email \"john@example.com\"\n\n\ngit config --global core.editor \"vim\"\n\n\ngit config --global color.ui auto\n\n\ngit config --list\n\n\ngit c # Set user information\ngit config --global user.name \"John Doe\"\ngit config --global user.email \"john@example.com\"\n\n# Set default editor\ngit config --global core.editor \"vim\"\n\n# Enable color output\ngit config --global color.ui auto\n\n# List all configurations\ngit config --list\n\n# Get specific config value\ngit config user.name # Initialize new repository\ngit init\n\n# Clone existing repository\ngit clone https://github.com/user/repo.git\n\n# Clone with specific branch\ngit clone -b develop https://github.com/user/repo.git\n\n# Clone with depth (shallow clone)\ngit clone --depth 1 https://github.com/user/repo.git # Check status\ngit status\n\n# Short status\ngit status -s\n\n# Show changes in working directory\ngit diff\n\n# Show staged changes\ngit diff --staged\n\n# Show changes between commits\ngit diff commit1 commit2\n\n# Show changes for specific file\ngit diff HEAD -- path/to/file # Stage specific files\ngit add file1.txt file2.txt\n\n# Stage all changes\ngit add .\n\n# Stage parts of files interactively\ngit add -p\n\n# Commit with message\ngit commit -m \"Add new feature\"\n\n# Commit with detailed message\ngit commit\n\n# Amend last commit\ngit commit --amend\n\n# Commit with specific author\ngit commit --author=\"Name <email@example.com>\" # List branches\ngit branch\n\n# List all branches (including remote)\ngit branch -a\n\n# Create new branch\ngit branch feature-branch\n\n# Create and switch to branch\ngit checkout -b feature-branch\n\n# Switch branches\ngit checkout main\n\n# Delete branch\ngit branch -d feature-branch\n\n# Force delete branch\ngit branch -D feature-branch\n\n# Rename branch\ngit branch -m old-name new-name # Merge branch into current branch\ngit merge feature-branch\n\n# Merge with no fast-forward\ngit merge --no-ff feature-branch\n\n# Abort merge\ngit merge --abort\n\n# Continue merge after conflicts\ngit merge --continue",
+      "code_blocks_count": 19
+    },
+    {
+      "path": "/notes/tutorials/beginner/web-development-101.md",
+      "context": "tutorials",
+      "metadata": {
+        "title": "Web Development 101",
+        "tags": [
+          "tutorial",
+          "web-development",
+          "html",
+          "css",
+          "javascript",
+          "beginner"
+        ],
+        "created": "2024-01-05",
+        "author": "Tutorial Team",
+        "description": "Complete beginner's guide to web development",
+        "updated": "2024-02-20",
+        "category": "tutorials",
+        "status": "published"
+      },
+      "content_preview": "Welcome to the world of web development! This tutorial will guide you through the basics of building websites using HTML, CSS, and JavaScript.\n\n\n\n- A text editor (VS Code recommended)\n- A web browser ...",
+      "searchable_content": "Welcome to the world of web development! This tutorial will guide you through the basics of building websites using HTML, CSS, and JavaScript.\n\n\n\n- A text editor (VS Code recommended)\n- A web browser  <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>My First Web Page</title>\n</head>\n<body>\n    <h1>Hello, World!</h1>\n    <p>This is my first web page.</p>\n</body>\n</html> <h1>Main Heading</h1>\n<h2>Subheading</h2>\n<h3>Sub-subheading</h3>\n<!-- ... up to h6 --> <p>This is a paragraph.</p>\n<strong>Bold text</strong>\n<em>Italic text</em>\n<br> <!-- Line break -->\n<hr> <!-- Horizontal rule --> <!-- Unordered list -->\n<ul>\n    <li>Item 1</li>\n    <li>Item 2</li>\n    <li>Item 3</li>\n</ul>\n\n<!-- Ordered list -->\n<ol>\n    <li>First step</li>\n    <li>Second step</li>\n    <li>Third step</li>\n</ol> <!-- Links -->\n<a href=\"https://example.com\">Visit Example</a>\n<a href=\"about.html\">About Page</a>\n<a href=\"#section\">Jump to Section</a>\n\n<!-- Images -->\n<img src=\"photo.jpg\" alt=\"Description of photo\">\n<img src=\"https://example.com/image.png\" alt=\"External image\"> <form action=\"/submit\" method=\"post\">\n    <label for=\"name\">Name:</label>\n    <input type=\"text\" id=\"name\" name=\"name\" required>\n    \n    <label for=\"email\">Email:</label>\n    <input type=\"email\" id=\"email\" name=\"email\" required>\n    \n    <label for=\"message\">Message:</label>\n    <textarea id=\"message\" name=\"message\" rows=\"4\"></textarea>\n    \n    <button type=\"submit\">Send</button>\n</form> <!-- Inline CSS -->\n<p style=\"color: blue;\">Blue text</p>\n\n<!-- Internal CSS -->\n<style>\n    p {\n        color: green;\n    }\n</style>\n\n<!-- External CSS (recommended) -->\n<link rel=\"stylesheet\" href=\"styles.css\"> /* Element selector */\np {\n    color: blue;\n}\n\n/* Class selector */\n.highlight {\n    background-color: yellow;\n}\n\n/* ID selector */\n#header {\n    font-size: 24px;\n}\n\n/* Descendant selector */\nnav a {\n    text-decoration: none;\n}\n\n/* Multi",
+      "code_blocks_count": 18
+    }
+  ],
+  "tags": {
+    "getting-started": 1,
+    "documentation": 2,
+    "wiki": 1,
+    "test": 2,
+    "debugging": 1,
+    "themes": 1,
+    "showcase": 1,
+    "demo": 1,
+    "callouts": 1,
+    "personal": 3,
+    "journal": 1,
+    "thoughts": 1,
+    "books": 1,
+    "reading": 1,
+    "reviews": 1,
+    "cooking": 1,
+    "recipes": 1,
+    "food": 1,
+    "javascript": 2,
+    "programming": 2,
+    "web-development": 3,
+    "tips": 1,
+    "python": 1,
+    "best-practices": 1,
+    "guide": 1,
+    "docker": 2,
+    "devops": 1,
+    "containers": 1,
+    "deployment": 1,
+    "sql": 1,
+    "databases": 1,
+    "performance": 1,
+    "optimization": 1,
+    "projects": 2,
+    "react": 1,
+    "typescript": 1,
+    "blog": 1,
+    "gatsby": 1,
+    "graphql": 1,
+    "cms": 1,
+    "git": 1,
+    "version-control": 1,
+    "reference": 2,
+    "commands": 1,
+    "regex": 1,
+    "patterns": 1,
+    "cheatsheet": 1,
+    "tutorial": 1,
+    "html": 1,
+    "css": 1,
+    "beginner": 1,
+    "microservices": 1,
+    "architecture": 1,
+    "kubernetes": 1,
+    "advanced": 1
+  },
+  "authors": [
+    "Project Team",
+    "Blog Team",
+    "Dev Team",
+    "Tutorial Team",
+    "Alex Chen",
+    "Sarah Johnson",
+    "Debug",
+    "Architecture Team",
+    "Maria Rodriguez",
+    "Wiki Admin",
+    "Database Team",
+    "Jane Smith",
+    "John Doe",
+    "DevOps Team"
+  ],
+  "categories": [
+    "personal",
+    "technical",
+    "projects",
+    "documentation",
+    "tutorials",
+    "reference"
+  ],
+  "contexts": [
+    {
+      "id": "personal",
+      "name": "Personal",
+      "noteCount": 3
+    },
+    {
+      "id": "technical",
+      "name": "Technical",
+      "noteCount": 4
+    },
+    {
+      "id": "projects",
+      "name": "Projects",
+      "noteCount": 2
+    },
+    {
+      "id": "reference",
+      "name": "Reference",
+      "noteCount": 2
+    },
+    {
+      "id": "tutorials",
+      "name": "Tutorials",
+      "noteCount": 2
+    }
+  ],
+  "generated": "2025-06-05T11:17:28.442223",
+  "totalNotes": 17
+}
