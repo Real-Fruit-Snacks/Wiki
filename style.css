@@ -620,61 +620,188 @@ body.content-width-full .content-wrapper {
 .code-block {
     margin: var(--spacing-md) 0;
     background-color: var(--bg-code);
-    border: 1px solid rgba(128, 128, 128, 0.2); /* Ultra-thin faint border */
+    border: 1px solid rgba(128, 128, 128, 0.1);
     border-radius: var(--radius-md);
     overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Subtle depth */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition: box-shadow var(--transition-fast);
+}
+
+.code-block:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .code-block-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--spacing-sm) var(--spacing-md);
-    background-color: var(--bg-secondary);
-    border-bottom: 1px solid var(--border-primary);
+    padding: 10px 16px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(128, 128, 128, 0.15);
+    position: relative;
 }
 
 .code-block-info {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
+    flex: 1;
+}
+
+.code-block-language-section {
+    min-width: fit-content;
+    display: flex;
+    align-items: center;
+}
+
+.code-block-separator {
+    width: 1px;
+    height: 18px;
+    background: linear-gradient(to bottom, 
+        transparent, 
+        rgba(128, 128, 128, 0.3) 20%, 
+        rgba(128, 128, 128, 0.3) 80%, 
+        transparent);
+    margin: 0 12px;
+    opacity: 0.5;
+}
+
+.code-block-title-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
 }
 
 .code-block-title {
     font-size: var(--text-sm);
-    font-weight: 600;
+    font-weight: 500;
     color: var(--text-primary);
+    letter-spacing: -0.01em;
 }
 
 .code-block-language {
-    font-size: var(--text-xs);
-    font-weight: 500;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
     color: var(--text-secondary);
-    background-color: var(--bg-tag);
-    padding: 2px 8px;
-    border-radius: var(--radius-sm);
+    background-color: rgba(128, 128, 128, 0.1);
+    padding: 3px 10px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.code-block-language::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: currentColor;
+    opacity: 0.5;
+    transition: all var(--transition-fast);
+}
+
+.code-block:hover .code-block-language {
+    transform: translateX(2px);
+}
+
+.code-block:hover .code-block-language::before {
+    opacity: 0.8;
+    transform: scale(1.2);
 }
 
 .code-block-actions {
     display: flex;
-    gap: var(--spacing-xs);
+    gap: 6px;
+    align-items: center;
 }
 
 .code-block-button {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    background: transparent;
-    border: 1px solid var(--border-primary);
-    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background: rgba(128, 128, 128, 0.05);
+    border: 1px solid transparent;
+    border-radius: 6px;
     color: var(--text-secondary);
-    font-size: var(--text-xs);
     cursor: pointer;
     transition: all var(--transition-fast);
+    position: relative;
 }
 
 .code-block-button:hover {
-    background-color: var(--bg-hover);
+    background-color: rgba(128, 128, 128, 0.15);
     color: var(--text-primary);
+    transform: translateY(-1px);
+}
+
+.code-block-button:active {
+    transform: translateY(0);
+}
+
+.code-block-button svg {
+    width: 14px;
+    height: 14px;
+    transition: all var(--transition-fast);
+}
+
+/* Copy button specific styling */
+.copy-button {
+    position: relative;
+}
+
+.copy-button::after {
+    content: 'Copy';
+    position: absolute;
+    right: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%) scale(0.95);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all var(--transition-fast);
+}
+
+.copy-button:hover::after {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+}
+
+/* Success state for copy button */
+.copy-button.success {
+    background-color: rgba(34, 197, 94, 0.15);
+    color: rgb(34, 197, 94);
+}
+
+.copy-button.success svg {
+    animation: checkmark 0.3s ease-out;
+}
+
+@keyframes checkmark {
+    0% {
+        transform: scale(0.8) rotate(-45deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1) rotate(0deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
 }
 
 /* Collapsible code blocks */
@@ -690,14 +817,40 @@ body.content-width-full .content-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
-    padding: 0;
+}
+
+.toggle-button::after {
+    content: 'Expand';
+    position: absolute;
+    right: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-fast);
+}
+
+.toggle-button:hover::after {
+    opacity: 1;
+}
+
+.code-block:not(.collapsed) .toggle-button::after {
+    content: 'Collapse';
 }
 
 .toggle-icon {
-    font-size: 12px;
+    font-size: 10px;
     transition: transform var(--transition-fast);
+}
+
+.code-block:not(.collapsed) .toggle-icon {
+    transform: rotate(90deg);
 }
 
 /* Code block content */
@@ -771,6 +924,124 @@ body:not(.show-line-numbers) .line-numbers {
 
 body:not(.show-line-numbers) .code-with-line-numbers {
     display: block;
+}
+
+/* Language-specific styling */
+.code-block-language[data-lang="javascript"],
+.code-block-language[data-lang="js"] {
+    background-color: rgba(240, 219, 79, 0.15);
+    color: #f0db4f;
+}
+
+.code-block-language[data-lang="typescript"],
+.code-block-language[data-lang="ts"] {
+    background-color: rgba(0, 122, 204, 0.15);
+    color: #007acc;
+}
+
+.code-block-language[data-lang="python"],
+.code-block-language[data-lang="py"] {
+    background-color: rgba(55, 118, 171, 0.15);
+    color: #3776ab;
+}
+
+.code-block-language[data-lang="java"] {
+    background-color: rgba(244, 67, 54, 0.15);
+    color: #f44336;
+}
+
+.code-block-language[data-lang="html"] {
+    background-color: rgba(227, 79, 38, 0.15);
+    color: #e34f26;
+}
+
+.code-block-language[data-lang="css"] {
+    background-color: rgba(21, 114, 182, 0.15);
+    color: #1572b6;
+}
+
+.code-block-language[data-lang="scss"],
+.code-block-language[data-lang="sass"] {
+    background-color: rgba(205, 103, 153, 0.15);
+    color: #cd6799;
+}
+
+.code-block-language[data-lang="json"] {
+    background-color: rgba(128, 128, 128, 0.15);
+    color: #808080;
+}
+
+.code-block-language[data-lang="bash"],
+.code-block-language[data-lang="shell"],
+.code-block-language[data-lang="sh"] {
+    background-color: rgba(64, 64, 64, 0.15);
+    color: #4d4d4d;
+}
+
+.code-block-language[data-lang="go"] {
+    background-color: rgba(0, 173, 216, 0.15);
+    color: #00add8;
+}
+
+.code-block-language[data-lang="rust"] {
+    background-color: rgba(222, 165, 132, 0.15);
+    color: #dea584;
+}
+
+.code-block-language[data-lang="cpp"],
+.code-block-language[data-lang="c++"] {
+    background-color: rgba(0, 89, 156, 0.15);
+    color: #00599c;
+}
+
+.code-block-language[data-lang="c"] {
+    background-color: rgba(85, 85, 255, 0.15);
+    color: #5555ff;
+}
+
+.code-block-language[data-lang="csharp"],
+.code-block-language[data-lang="cs"] {
+    background-color: rgba(104, 33, 122, 0.15);
+    color: #68217a;
+}
+
+.code-block-language[data-lang="php"] {
+    background-color: rgba(119, 123, 180, 0.15);
+    color: #777bb4;
+}
+
+.code-block-language[data-lang="ruby"],
+.code-block-language[data-lang="rb"] {
+    background-color: rgba(204, 52, 45, 0.15);
+    color: #cc342d;
+}
+
+.code-block-language[data-lang="swift"] {
+    background-color: rgba(255, 172, 69, 0.15);
+    color: #ffac45;
+}
+
+.code-block-language[data-lang="kotlin"],
+.code-block-language[data-lang="kt"] {
+    background-color: rgba(127, 82, 255, 0.15);
+    color: #7f52ff;
+}
+
+.code-block-language[data-lang="yaml"],
+.code-block-language[data-lang="yml"] {
+    background-color: rgba(203, 23, 30, 0.15);
+    color: #cb171e;
+}
+
+.code-block-language[data-lang="markdown"],
+.code-block-language[data-lang="md"] {
+    background-color: rgba(8, 61, 126, 0.15);
+    color: #083d7e;
+}
+
+.code-block-language[data-lang="sql"] {
+    background-color: rgba(51, 103, 145, 0.15);
+    color: #336791;
 }
 
 body:not(.show-line-numbers) .code-with-line-numbers .code-content {

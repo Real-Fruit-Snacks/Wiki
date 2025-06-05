@@ -42,6 +42,48 @@
       "code_blocks_count": 7
     },
     {
+      "path": "/notes/test-html-copy.md",
+      "context": null,
+      "metadata": {
+        "title": "HTML Copy Test",
+        "tags": [
+          "test",
+          "html",
+          "code"
+        ],
+        "created": "2025-01-06",
+        "author": "System",
+        "description": "Test file for verifying HTML code copying functionality",
+        "updated": null,
+        "category": null,
+        "status": null
+      },
+      "content_preview": "This page tests the copying functionality for code blocks containing HTML.\n\n\n\nhtml\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Test Page</title>\n</head>\n<body>\n    <h...",
+      "searchable_content": "This page tests the copying functionality for code blocks containing HTML.\n\n\n\nhtml\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Test Page</title>\n</head>\n<body>\n    <h <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Test Page</title>\n</head>\n<body>\n    <h1>Hello World</h1>\n    <p>This is a <strong>test</strong> paragraph.</p>\n    <div class=\"container\">\n        <span>Some content</span>\n    </div>\n</body>\n</html> import React from 'react';\n\nconst MyComponent = () => {\n    return (\n        <div className=\"wrapper\">\n            <h1>Welcome</h1>\n            <p>This is a React component with <em>JSX</em> syntax.</p>\n            <button onClick={() => console.log('clicked')}>\n                Click Me\n            </button>\n        </div>\n    );\n};\n\nexport default MyComponent; <div>This has <strong>bold</strong> and <em>italic</em> text.</div>\n<p>Links: <a href=\"https://example.com\">Example</a></p>\n<img src=\"image.jpg\" alt=\"An image\" />\n<input type=\"text\" placeholder=\"Enter text\" />",
+      "code_blocks_count": 3
+    },
+    {
+      "path": "/notes/test-code-alignment.md",
+      "context": null,
+      "metadata": {
+        "title": "Code Block Alignment Test",
+        "tags": [
+          "test",
+          "code",
+          "alignment"
+        ],
+        "created": "2025-01-06",
+        "author": "System",
+        "description": "Test file for verifying code block header alignment",
+        "updated": null,
+        "category": null,
+        "status": null
+      },
+      "content_preview": "This page demonstrates how code blocks align when they have different languages and titles.\n\n\n\njavascript title:\"Main Application Entry\"\n// JavaScript with a title\nconst app = {\n    name: 'Notes Wiki'...",
+      "searchable_content": "This page demonstrates how code blocks align when they have different languages and titles.\n\n\n\njavascript title:\"Main Application Entry\"\n// JavaScript with a title\nconst app = {\n    name: 'Notes Wiki' javascript Main Application Entry // JavaScript with a title\nconst app = {\n    name: 'Notes Wiki',\n    version: '1.0.0'\n}; # Python without a title\ndef hello_world():\n    print(\"Hello, World!\") html Basic HTML Template <!DOCTYPE html>\n<html>\n    <head>\n        <title>Test</title>\n    </head>\n    <body>\n        <h1>Hello</h1>\n    </body>\n</html> /* CSS without a title */\n.container {\n    display: flex;\n    align-items: center;\n} bash Build Script #!/bin/bash\necho \"Building project...\"\nnpm run build json Package Configuration {\n    \"name\": \"notes-wiki\",\n    \"version\": \"1.0.0\"\n} rust Rust Example fn main() {\n    println!(\"Hello from Rust!\");\n} package main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Hello from Go!\")\n} typescript TypeScript Interface interface User {\n    id: number;\n    name: string;\n    email: string;\n} yaml Configuration File app:\n  name: Notes Wiki\n  version: 1.0.0\n  features:\n    - search\n    - themes\n    - markdown",
+      "code_blocks_count": 10
+    },
+    {
       "path": "/notes/tutorials/advanced/microservices-architecture.md",
       "context": "tutorials",
       "metadata": {
@@ -377,12 +419,15 @@
     "getting-started": 1,
     "documentation": 2,
     "wiki": 1,
-    "test": 2,
+    "test": 4,
     "debugging": 1,
     "themes": 1,
     "showcase": 1,
     "demo": 1,
     "callouts": 1,
+    "html": 2,
+    "code": 2,
+    "alignment": 1,
     "personal": 3,
     "journal": 1,
     "thoughts": 1,
@@ -422,7 +467,6 @@
     "patterns": 1,
     "cheatsheet": 1,
     "tutorial": 1,
-    "html": 1,
     "css": 1,
     "beginner": 1,
     "microservices": 1,
@@ -431,28 +475,29 @@
     "advanced": 1
   },
   "authors": [
+    "Alex Chen",
+    "Debug",
     "Project Team",
+    "John Doe",
+    "Tutorial Team",
+    "Wiki Admin",
+    "Maria Rodriguez",
+    "Database Team",
+    "Sarah Johnson",
+    "Architecture Team",
     "Blog Team",
     "Dev Team",
-    "Tutorial Team",
-    "Alex Chen",
-    "Sarah Johnson",
-    "Debug",
-    "Architecture Team",
-    "Maria Rodriguez",
-    "Wiki Admin",
-    "Database Team",
     "Jane Smith",
-    "John Doe",
-    "DevOps Team"
+    "DevOps Team",
+    "System"
   ],
   "categories": [
-    "personal",
-    "technical",
     "projects",
-    "documentation",
+    "technical",
     "tutorials",
-    "reference"
+    "personal",
+    "reference",
+    "documentation"
   ],
   "contexts": [
     {
@@ -481,6 +526,6 @@
       "noteCount": 2
     }
   ],
-  "generated": "2025-06-05T11:17:28.442223",
-  "totalNotes": 17
+  "generated": "2025-06-05T18:19:55.382719",
+  "totalNotes": 19
 }

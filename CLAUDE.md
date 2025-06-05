@@ -6,6 +6,22 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A self-contained static notes/wiki website for GitLab Pages that displays markdown files with advanced features including 16 built-in themes, real-time search, metadata parsing, and no external dependencies. All assets are bundled locally to ensure complete offline functionality.
 
+## Development Commands
+
+```bash
+# Local development server
+python3 -m http.server 8000
+
+# Build search index (required after adding/modifying notes)
+python3 build.py
+
+# The build script will:
+# - Scan all markdown files in /notes/
+# - Parse YAML frontmatter
+# - Generate notes-index.json with metadata and content
+# - Output statistics about tags, authors, and categories
+```
+
 ## Architecture
 
 ### Frontend Stack
@@ -42,21 +58,10 @@ A self-contained static notes/wiki website for GitLab Pages that displays markdo
    - Optional fields: updated, category, status
    - Metadata used for search, filtering, and navigation
 
-## Development Commands
-
-```bash
-# Local development server
-python3 -m http.server 8000
-
-# Build search index (required after adding/modifying notes)
-python3 build.py
-
-# The build script will:
-# - Scan all markdown files in /notes/
-# - Parse YAML frontmatter
-# - Generate notes-index.json with metadata and content
-# - Output statistics about tags, authors, and categories
-```
+5. **Context System**
+   - Top-level folders in `/notes/` become "contexts" for filtering
+   - Dynamic filtering: navigation, search, tags respect active context
+   - Persistent context saved in localStorage
 
 ## Important Implementation Details
 
@@ -66,10 +71,11 @@ python3 build.py
 code content
 ```
 ```
-- Copy button on hover
+- Copy button with HTML entity escaping (critical for HTML code)
 - Line numbers toggle
 - Word wrap toggle
-- Collapse functionality (partially implemented)
+- Collapse functionality
+- Language label with separator line before title
 
 ### Note Frontmatter Structure
 ```yaml
@@ -100,33 +106,38 @@ status: published    # optional
   "preferences": {
     "showLineNumbers": true,         // Code block line numbers
     "wordWrap": false,               // Code block word wrap
-    "autoTheme": true                // Follow system theme
+    "autoTheme": true,               // Follow system theme
+    "activeContext": "technical",    // Current context filter
+    "stickySearch": false,           // Preserve search queries
+    "contentWidth": "narrow"         // Content width preference
   }
 }
 ```
 
-## Current Implementation Status
+## Critical Implementation Notes
 
-### Completed Features
-- ✅ Full theme collection (16 themes)
-- ✅ Search with fuzzy matching
-- ✅ Recent files tracking
-- ✅ Tag filtering system
-- ✅ Share/copy link functionality
-- ✅ Frontmatter parsing with js-yaml
-- ✅ Theme preview mode
-- ✅ Auto-theme detection
-- ✅ Code block enhancements (copy, line numbers)
-- ✅ Python build script
+### Code Block Copy Mechanism
+The copy functionality for code blocks containing HTML requires special handling:
+- HTML entities are escaped when storing in data attributes
+- Uses `textarea` element (not `div`) to decode entities without HTML parsing
+- Prevents angle brackets from being stripped when copying HTML code
 
-### Missing/TODO
-- GitLab CI/CD configuration (.gitlab-ci.yml)
-- Code block title rendering (parser exists, UI needs work)
-- Code block collapse refinement
-- Advanced keyboard shortcuts
-- Search term highlighting in content preview
-- Asset minification in build process
-- Sitemap generation for SEO
+### Search Index Generation
+- `build.py` extracts first 2KB of searchable content per note
+- Combines regular text and code block content for search
+- Generates context information from directory structure
+- Must be run after any note modifications
+
+### Callout Extension
+- Custom marked.js extension for blockquote callouts
+- 13 types: WARNING, INFO, TIP, NOTE, DANGER, IMPORTANT, CAUTION, SUCCESS, QUESTION, EXAMPLE, QUOTE, BUG, TODO
+- Syntax: `> [!TYPE] Optional Title`
+- Handles nested content including code blocks
+
+### Performance Considerations
+- Search index loaded entirely into memory
+- Theme switching causes full page repaint
+- No pagination for search results (hardcoded limit of 10)
 
 ## Key Files to Modify
 
@@ -161,6 +172,7 @@ When testing changes:
 6. Validate mobile responsive behavior
 7. Test offline functionality (all assets are local)
 8. Verify code block features (copy, line numbers, wrap)
+9. Test HTML code copying specifically
 
 ## Security Notes
 

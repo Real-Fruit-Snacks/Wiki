@@ -58,6 +58,7 @@ wheels/
 
 # Claude Code configuration
 .claude/
+CLAUDE.md
 
 # GitLab Pages build directory
 public/

@@ -560,6 +560,8 @@ class NotesWiki {
                     pill.classList.remove('active');
                 }
             });
+            // Update tag count badge
+            this.updateTagCountBadge();
         } else {
             this.loadNote(hash);
         }
@@ -732,19 +734,35 @@ class NotesWiki {
             const blockId = `code-block-${codeBlockId++}`;
             
             // Escape the original code content for storing in data attribute
-            const escapedCodeContent = codeContent.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+            // Important: escape HTML entities to prevent browser from parsing HTML tags
+            const escapedCodeContent = codeContent
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
             
             // Build code block HTML
             let html = '<div class="code-block' + (collapse ? ' collapsed' : '') + '" id="' + blockId + '" data-code-content="' + escapedCodeContent + '">';
             html += '<div class="code-block-header">';
             html += '<div class="code-block-info">';
             
+            // Language section (always present for alignment)
+            html += '<div class="code-block-language-section">';
             if (language) {
-                html += '<span class="code-block-language">' + language + '</span>';
+                html += '<span class="code-block-language" data-lang="' + language.toLowerCase() + '">' + language + '</span>';
             }
+            html += '</div>';
+            
+            // Vertical separator
+            html += '<div class="code-block-separator"></div>';
+            
+            // Title section (always present for alignment)
+            html += '<div class="code-block-title-section">';
             if (title) {
                 html += '<span class="code-block-title">' + self.escapeHtml(title) + '</span>';
             }
+            html += '</div>';
             
             html += '</div>';
             html += '<div class="code-block-actions">';
@@ -924,9 +942,10 @@ class NotesWiki {
             // First try to get code from data attribute (most reliable)
             if (codeBlock.dataset.codeContent) {
                 // Decode HTML entities that were escaped when storing in data attribute
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = codeBlock.dataset.codeContent;
-                codeText = tempDiv.textContent;
+                // Use a textarea instead of div to prevent HTML parsing
+                const tempTextarea = document.createElement('textarea');
+                tempTextarea.innerHTML = codeBlock.dataset.codeContent;
+                codeText = tempTextarea.value;
             } else {
                 // Fallback: Get the original code element, not the one with line numbers
                 const codeElement = codeBlock.querySelector('pre > code');
@@ -943,12 +962,14 @@ class NotesWiki {
                 // Show success feedback
                 const button = codeBlock.querySelector('.copy-button');
                 const originalHTML = button.innerHTML;
+                button.classList.add('success');
                 button.innerHTML = `
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                         <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"/>
                     </svg>
                 `;
                 setTimeout(() => {
+                    button.classList.remove('success');
                     button.innerHTML = originalHTML;
                 }, 2000);
             });
@@ -1110,6 +1131,11 @@ class NotesWiki {
         document.getElementById('selected-tags-count').textContent = `${count} selected`;
         
         // Update button badge
+        this.updateTagCountBadge();
+    }
+    
+    updateTagCountBadge() {
+        const count = this.selectedTags.size;
         const badge = document.getElementById('active-tag-count');
         if (count > 0) {
             badge.textContent = count;

@@ -84,7 +84,6 @@ notes-wiki/
 ├── style.css               # Main stylesheet
 ├── build.py                # Search index generator
 ├── notes-index.json        # Generated search index
-├── CLAUDE.md               # Development documentation
 ├── libs/                   # JavaScript libraries
 │   ├── marked.min.js       # Markdown parser
 │   ├── prism.min.js        # Syntax highlighter
@@ -196,7 +195,7 @@ Access settings via the gear icon to configure:
 1. Modify `script.js` for functionality
 2. Update `style.css` for styling
 3. Test across all 16 themes
-4. Update `CLAUDE.md` for AI development context
+4. Update documentation as needed
 
 ### Theme Development
 - Use CSS custom properties for consistency
@@ -220,7 +219,7 @@ MIT License - feel free to use for personal or commercial projects.
 
 - Create an issue for bug reports
 - Check existing issues for solutions
-- Review `CLAUDE.md` for development context
+- Review the codebase documentation
 
 ---
 
