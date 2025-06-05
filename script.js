@@ -12,6 +12,7 @@ class NotesWiki {
         this.selectedTags = new Set();
         this.activeContext = null;  // Track active context
         this.contexts = [];  // Store available contexts
+        this.initialHash = window.location.hash;  // Store initial hash for later processing
         this.themes = [
             { id: 'light', name: 'Light', description: 'Clean light theme' },
             { id: 'dark', name: 'Dark', description: 'Easy on the eyes dark theme' },
@@ -72,8 +73,12 @@ class NotesWiki {
         // Set up event listeners
         this.setupEventListeners();
         
-        // Handle initial route
-        this.handleRoute();
+        // Handle initial route - restore the initial hash if it was lost
+        if (this.initialHash && window.location.hash !== this.initialHash) {
+            window.location.hash = this.initialHash;
+        } else {
+            this.handleRoute();
+        }
         
         // Load recent files
         this.loadRecentFiles();
@@ -231,6 +236,7 @@ class NotesWiki {
                     // Add click handler for expand/collapse
                     folderHeader.addEventListener('click', () => {
                         li.classList.toggle('expanded');
+                        this.updateExpandButtonState();
                     });
                     
                     li.appendChild(folderHeader);
@@ -246,6 +252,9 @@ class NotesWiki {
         };
         
         fileTree.appendChild(renderTree(tree));
+        
+        // Update expand button state after building tree
+        this.updateExpandButtonState();
     }
     
     buildTagFilter() {
@@ -510,6 +519,11 @@ class NotesWiki {
             this.handleRoute();
         });
         
+        // Handle hash changes (important for direct link visits)
+        window.addEventListener('hashchange', () => {
+            this.handleRoute();
+        });
+        
         // Close dropdowns when clicking outside
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.dropdown')) {
@@ -535,6 +549,11 @@ class NotesWiki {
     }
     
     handleRoute() {
+        // Don't handle routes until notes index is loaded
+        if (!this.notesIndex) {
+            return;
+        }
+        
         let hash = window.location.hash.slice(1);
         
         // Handle empty hash or just "/" 
@@ -815,9 +834,13 @@ class NotesWiki {
                 <header class="note-header">
                     <div class="note-title-row">
                         <h1 class="note-title">${this.escapeHtml(metadata.title || 'Untitled')}</h1>
-                        <button class="icon-button share-icon" onclick="notesWiki.shareNote()" title="Copy link to this note">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                                <path d="M7.823 1.677L4.927 4.573c-.47.47-.47 1.234 0 1.704l2.896 2.896a.25.25 0 00.427-.177V7.235c2.467.023 4.741.773 4.741 4.029a4.272 4.272 0 01-1.215 2.966.5.5 0 00.755.656c.98-.893 2.22-2.543 2.22-4.872 0-3.681-2.946-5.552-5.75-5.552a.385.385 0 01-.25-.067V3.354a.25.25 0 00-.427-.177zM3.75 12.5c-.69 0-1.25-.56-1.25-1.25v-4.5c0-.69.56-1.25 1.25-1.25h1a.75.75 0 010 1.5h-1v4.5h7.5V9h.5a.75.75 0 011.5 0v2.25c0 .69-.56 1.25-1.25 1.25h-7.5z"/>
+                        <button class="icon-button share-icon" onclick="notesWiki.shareNote()" aria-label="Share this note">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="18" cy="5" r="3"/>
+                                <circle cx="6" cy="12" r="3"/>
+                                <circle cx="18" cy="19" r="3"/>
+                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
                             </svg>
                         </button>
                     </div>
@@ -870,10 +893,27 @@ class NotesWiki {
                     ${html}
                 </article>
             </div>
+            
+            <!-- Floating share button -->
+            <button class="floating-share" onclick="notesWiki.shareNote()" aria-label="Share this note">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="18" cy="5" r="3"/>
+                    <circle cx="6" cy="12" r="3"/>
+                    <circle cx="18" cy="19" r="3"/>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                </svg>
+            </button>
         `;
         
         // Scroll to top
         mainContent.scrollTop = 0;
+        
+        // Setup floating share button visibility
+        this.setupFloatingShareButton();
+        
+        // Update expand button state after rendering
+        this.updateExpandButtonState();
         
         // Handle internal links
         mainContent.querySelectorAll('a[href^="#"]').forEach(link => {
@@ -895,10 +935,55 @@ class NotesWiki {
     }
     
     
+    setupFloatingShareButton() {
+        const mainContent = document.getElementById('main-content');
+        const floatingButton = document.querySelector('.floating-share');
+        const noteHeader = document.querySelector('.note-header');
+        
+        if (!floatingButton || !noteHeader) return;
+        
+        // Remove any existing scroll listener
+        if (this.scrollListener) {
+            mainContent.removeEventListener('scroll', this.scrollListener);
+        }
+        
+        // Create scroll listener
+        this.scrollListener = () => {
+            const headerRect = noteHeader.getBoundingClientRect();
+            const scrollThreshold = 200; // Show button after scrolling 200px past header
+            
+            if (headerRect.bottom < -scrollThreshold) {
+                floatingButton.classList.add('visible');
+            } else {
+                floatingButton.classList.remove('visible');
+            }
+        };
+        
+        // Add scroll listener
+        mainContent.addEventListener('scroll', this.scrollListener);
+    }
+    
     shareNote() {
         const url = window.location.href;
+        const shareButtons = document.querySelectorAll('.share-icon, .floating-share');
         
         navigator.clipboard.writeText(url).then(() => {
+            // Add success state to all share buttons
+            shareButtons.forEach(button => {
+                const originalHTML = button.innerHTML;
+                button.classList.add('success');
+                button.innerHTML = `
+                    <svg width="${button.classList.contains('floating-share') ? '24' : '20'}" height="${button.classList.contains('floating-share') ? '24' : '20'}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                `;
+                
+                setTimeout(() => {
+                    button.classList.remove('success');
+                    button.innerHTML = originalHTML;
+                }, 2000);
+            });
+            
             // Show success message with a toast notification
             this.showToast('Link copied to clipboard!');
         });
@@ -923,6 +1008,88 @@ class NotesWiki {
         }, 2000);
     }
     
+    toggleExpandAll() {
+        const expandButton = document.querySelector('.floating-expand');
+        
+        // Get all expandable elements
+        const folders = document.querySelectorAll('.file-tree-folder-item');
+        const collapsibleCodeBlocks = document.querySelectorAll('.code-block[id]'); // Only code blocks with IDs are collapsible
+        
+        // Check current state - if most items are expanded, we'll collapse all
+        const expandedFolders = document.querySelectorAll('.file-tree-folder-item.expanded');
+        const expandedCodeBlocks = Array.from(collapsibleCodeBlocks).filter(block => !block.classList.contains('collapsed'));
+        
+        const totalExpandable = folders.length + collapsibleCodeBlocks.length;
+        const currentExpanded = expandedFolders.length + expandedCodeBlocks.length;
+        
+        const shouldExpand = currentExpanded < totalExpandable / 2;
+        
+        // Toggle folders
+        folders.forEach(folder => {
+            if (shouldExpand) {
+                folder.classList.add('expanded');
+            } else {
+                folder.classList.remove('expanded');
+            }
+        });
+        
+        // Toggle code blocks
+        document.querySelectorAll('.code-block').forEach(block => {
+            if (block.querySelector('.toggle-button')) {
+                if (shouldExpand) {
+                    block.classList.remove('collapsed');
+                    const icon = block.querySelector('.toggle-icon');
+                    if (icon) icon.textContent = '▼';
+                } else {
+                    block.classList.add('collapsed');
+                    const icon = block.querySelector('.toggle-icon');
+                    if (icon) icon.textContent = '▶';
+                }
+            }
+        });
+        
+        // Update button state based on final state
+        if (expandButton) {
+            // Check final state after toggling
+            const finalExpandedFolders = document.querySelectorAll('.file-tree-folder-item.expanded');
+            const finalExpandedCodeBlocks = Array.from(collapsibleCodeBlocks).filter(block => !block.classList.contains('collapsed'));
+            const finalExpanded = finalExpandedFolders.length + finalExpandedCodeBlocks.length;
+            
+            // If more than half are expanded, show collapse icon
+            if (finalExpanded > totalExpandable / 2 || totalExpandable === 0) {
+                expandButton.classList.add('all-expanded');
+            } else {
+                expandButton.classList.remove('all-expanded');
+            }
+        }
+        
+        // Show feedback
+        this.showToast(shouldExpand ? 'Expanded all' : 'Collapsed all');
+    }
+    
+    updateExpandButtonState() {
+        const expandButton = document.querySelector('.floating-expand');
+        if (!expandButton) return;
+        
+        // Get all expandable elements
+        const folders = document.querySelectorAll('.file-tree-folder-item');
+        const collapsibleCodeBlocks = document.querySelectorAll('.code-block[id]');
+        
+        // Count expanded items
+        const expandedFolders = document.querySelectorAll('.file-tree-folder-item.expanded');
+        const expandedCodeBlocks = Array.from(collapsibleCodeBlocks).filter(block => !block.classList.contains('collapsed'));
+        
+        const totalExpandable = folders.length + collapsibleCodeBlocks.length;
+        const currentExpanded = expandedFolders.length + expandedCodeBlocks.length;
+        
+        // Update button state
+        if (currentExpanded > totalExpandable / 2 || totalExpandable === 0) {
+            expandButton.classList.add('all-expanded');
+        } else {
+            expandButton.classList.remove('all-expanded');
+        }
+    }
+    
     toggleCodeBlock(blockId) {
         const codeBlock = document.getElementById(blockId);
         if (codeBlock) {
@@ -931,6 +1098,7 @@ class NotesWiki {
             if (icon) {
                 icon.textContent = codeBlock.classList.contains('collapsed') ? '▶' : '▼';
             }
+            this.updateExpandButtonState();
         }
     }
     

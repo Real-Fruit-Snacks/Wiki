@@ -439,9 +439,9 @@ body.content-width-full .content-wrapper {
 
 .note-title-row {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--spacing-md);
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
 }
 
 .note-title {
@@ -454,12 +454,175 @@ body.content-width-full .content-wrapper {
 }
 
 .share-icon {
-    opacity: 0.5;
-    transition: opacity var(--transition-fast);
+    position: relative;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    width: 36px;
+    height: 36px;
+    opacity: 0.8;
+    transition: all var(--transition-fast);
 }
 
 .share-icon:hover {
     opacity: 1;
+    background: var(--bg-hover);
+    border-color: var(--border-secondary);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.share-icon:active {
+    transform: translateY(0);
+}
+
+.share-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 2;
+}
+
+/* Tooltip for share button */
+.share-icon::before {
+    content: 'Share this note';
+    position: absolute;
+    bottom: calc(100% + 8px);
+    right: 0;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-primary);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(4px);
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.share-icon:hover::before {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Success state for share button */
+.share-icon.success {
+    background: var(--accent-success);
+    border-color: var(--accent-success);
+    color: var(--bg-primary);
+}
+
+.share-icon.success svg {
+    animation: checkmark 0.3s ease-out;
+}
+
+/* Floating buttons */
+.floating-share,
+.floating-expand {
+    position: fixed;
+    bottom: 20px;
+    width: 44px;
+    height: 44px;
+    background: var(--accent-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: 50%;
+    color: var(--bg-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+.floating-share {
+    right: 20px;
+}
+
+.floating-expand {
+    left: 20px;
+    display: flex; /* Always visible */
+}
+
+.floating-share.visible {
+    display: flex;
+}
+
+.floating-share:hover,
+.floating-expand:hover {
+    transform: translateY(-2px);
+    background: var(--accent-primary);
+    filter: brightness(1.1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.floating-share:active,
+.floating-expand:active {
+    transform: translateY(0) scale(0.95);
+}
+
+.floating-share svg,
+.floating-expand svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2;
+}
+
+/* Expand button specific styles */
+.floating-expand svg {
+    transition: transform var(--transition-fast);
+}
+
+.floating-expand.all-expanded svg {
+    transform: rotate(180deg);
+}
+
+.floating-share.success {
+    background: var(--accent-success);
+    color: var(--bg-primary);
+    border-color: var(--accent-success);
+}
+
+/* Tooltips for floating buttons */
+.floating-share::before,
+.floating-expand::before {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-primary);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(4px);
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.floating-share::before {
+    content: 'Share this note';
+    right: 0;
+}
+
+.floating-expand::before {
+    content: 'Expand all';
+    left: 0;
+}
+
+.floating-expand.all-expanded::before {
+    content: 'Collapse all';
+}
+
+.floating-share:hover::before,
+.floating-expand:hover::before {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .note-metadata {
@@ -2203,6 +2366,34 @@ body.enable-word-wrap .code-content {
         padding: 0 4px;
         font-size: 10px;
     }
+    
+    /* Mobile adjustments for floating buttons */
+    .floating-share,
+    .floating-expand {
+        bottom: 16px;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .floating-share {
+        right: 16px;
+    }
+    
+    .floating-expand {
+        left: 16px;
+    }
+    
+    .floating-share svg,
+    .floating-expand svg {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .floating-share::before,
+    .floating-expand::before {
+        font-size: 11px;
+        padding: 4px 8px;
+    }
 }
 
 /* Print styles */
@@ -2211,7 +2402,9 @@ body.enable-word-wrap .code-content {
     .sidebar,
     .note-actions,
     .search-overlay,
-    .modal {
+    .modal,
+    .floating-share,
+    .floating-expand {
         display: none !important;
     }
     
