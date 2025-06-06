@@ -55,6 +55,14 @@ class NotesWiki {
         // Search state
         this.lastSearchQuery = '';
         
+        // Timer state
+        this.timerStartTime = null;
+        this.timerInterval = null;
+        this.timerElapsed = 0;
+        this.timerRunning = false;
+        this.resetPressTimer = null;
+        this.resetPressed = false;
+        
         this.init();
     }
     
@@ -576,6 +584,35 @@ class NotesWiki {
                 this.showSearch();
             }
         });
+        
+        // Timer event listeners
+        document.getElementById('timer-play-pause').addEventListener('click', () => {
+            this.toggleTimer();
+        });
+        
+        // Reset button with long-press functionality
+        const resetButton = document.getElementById('timer-reset');
+        
+        resetButton.addEventListener('mousedown', (e) => {
+            if (e.button === 0) { // Left mouse button
+                this.startResetPress();
+            }
+        });
+        
+        resetButton.addEventListener('mouseup', () => {
+            this.endResetPress();
+        });
+        
+        resetButton.addEventListener('mouseleave', () => {
+            this.endResetPress();
+        });
+        
+        // Prevent context menu on long press
+        resetButton.addEventListener('contextmenu', (e) => {
+            if (this.resetPressed) {
+                e.preventDefault();
+            }
+        });
     }
     
     handleRoute() {
@@ -868,15 +905,6 @@ class NotesWiki {
                 <header class="note-header">
                     <div class="note-title-row">
                         <h1 class="note-title">${this.escapeHtml(metadata.title || 'Untitled')}</h1>
-                        <button class="icon-button share-icon" onclick="notesWiki.shareNote()" aria-label="Share this note">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="18" cy="5" r="3"/>
-                                <circle cx="6" cy="12" r="3"/>
-                                <circle cx="18" cy="19" r="3"/>
-                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
-                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-                            </svg>
-                        </button>
                     </div>
                     
                     <div class="note-metadata">
@@ -1015,44 +1043,26 @@ class NotesWiki {
     
     
     setupFloatingShareButton() {
+        // Share button is now always visible via CSS
+        // Remove any existing scroll listener if present
         const mainContent = document.getElementById('main-content');
-        const floatingButton = document.querySelector('.floating-share');
-        const noteHeader = document.querySelector('.note-header');
-        
-        if (!floatingButton || !noteHeader) return;
-        
-        // Remove any existing scroll listener
         if (this.scrollListener) {
             mainContent.removeEventListener('scroll', this.scrollListener);
+            this.scrollListener = null;
         }
-        
-        // Create scroll listener
-        this.scrollListener = () => {
-            const headerRect = noteHeader.getBoundingClientRect();
-            const scrollThreshold = 200; // Show button after scrolling 200px past header
-            
-            if (headerRect.bottom < -scrollThreshold) {
-                floatingButton.classList.add('visible');
-            } else {
-                floatingButton.classList.remove('visible');
-            }
-        };
-        
-        // Add scroll listener
-        mainContent.addEventListener('scroll', this.scrollListener);
     }
     
     shareNote() {
         const url = window.location.href;
-        const shareButtons = document.querySelectorAll('.share-icon, .floating-share');
+        const shareButtons = document.querySelectorAll('.floating-share');
         
         navigator.clipboard.writeText(url).then(() => {
-            // Add success state to all share buttons
+            // Add success state to floating share button
             shareButtons.forEach(button => {
                 const originalHTML = button.innerHTML;
                 button.classList.add('success');
                 button.innerHTML = `
-                    <svg width="${button.classList.contains('floating-share') ? '24' : '20'}" height="${button.classList.contains('floating-share') ? '24' : '20'}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="20 6 9 17 4 12"/>
                     </svg>
                 `;
@@ -2508,6 +2518,108 @@ class NotesWiki {
             }
         }
         return false;
+    }
+    
+    // Timer methods
+    toggleTimer() {
+        if (this.timerRunning) {
+            this.pauseTimer();
+        } else {
+            this.startTimer();
+        }
+    }
+    
+    startTimer() {
+        this.timerRunning = true;
+        this.timerStartTime = Date.now() - this.timerElapsed;
+        
+        this.timerInterval = setInterval(() => {
+            this.updateTimerDisplay();
+        }, 1000);
+        
+        this.updateTimerUI();
+        this.updateTimerDisplay();
+    }
+    
+    pauseTimer() {
+        this.timerRunning = false;
+        this.timerElapsed = Date.now() - this.timerStartTime;
+        
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+            this.timerInterval = null;
+        }
+        
+        this.updateTimerUI();
+    }
+    
+    resetTimer() {
+        this.timerRunning = false;
+        this.timerElapsed = 0;
+        this.timerStartTime = null;
+        
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+            this.timerInterval = null;
+        }
+        
+        this.updateTimerDisplay();
+        this.updateTimerUI();
+    }
+    
+    updateTimerDisplay() {
+        const currentElapsed = this.timerRunning 
+            ? Date.now() - this.timerStartTime 
+            : this.timerElapsed;
+            
+        const totalSeconds = Math.floor(currentElapsed / 1000);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        
+        const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        document.getElementById('timer-display').textContent = timeString;
+    }
+    
+    updateTimerUI() {
+        const playPauseButton = document.getElementById('timer-play-pause');
+        const timerWidget = document.querySelector('.timer-widget');
+        
+        if (this.timerRunning) {
+            playPauseButton.classList.add('playing', 'active');
+            timerWidget.classList.add('running');
+        } else {
+            playPauseButton.classList.remove('playing', 'active');
+            timerWidget.classList.remove('running');
+        }
+    }
+    
+    startResetPress() {
+        this.resetPressed = true;
+        const resetButton = document.getElementById('timer-reset');
+        resetButton.classList.add('pressing');
+        
+        // Start 3-second countdown
+        this.resetPressTimer = setTimeout(() => {
+            // Only reset if still pressed after 3 seconds
+            if (this.resetPressed) {
+                this.resetTimer();
+                this.endResetPress();
+            }
+        }, 3000);
+    }
+    
+    endResetPress() {
+        this.resetPressed = false;
+        const resetButton = document.getElementById('timer-reset');
+        resetButton.classList.remove('pressing');
+        
+        // Clear the countdown timer
+        if (this.resetPressTimer) {
+            clearTimeout(this.resetPressTimer);
+            this.resetPressTimer = null;
+        }
     }
 }
 

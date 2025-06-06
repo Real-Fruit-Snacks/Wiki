@@ -36,6 +36,12 @@ A modern, self-contained static notes and documentation system designed for GitL
 - **Responsive Design**: Works seamlessly on desktop, tablet, and mobile
 - **Offline First**: All assets bundled locally - no external dependencies
 
+### ⏱️ **Productivity Features**
+- **Built-in Timer**: Integrated timer widget with play/pause/reset functionality
+- **Long-press Reset**: Hold reset button for 3 seconds with visual feedback
+- **Theme-aware Design**: Timer adapts to all 16 themes automatically
+- **Persistent State**: Timer continues running even when switching between notes
+
 ## 🚀 Quick Start
 
 ### Option 1: Use with Python (Recommended)

@@ -429,10 +429,15 @@ body {
     border-right: 1px solid var(--border-primary);
     overflow-y: auto;
     transition: transform var(--transition-normal);
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar-nav {
     padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .sidebar-section {
@@ -525,6 +530,242 @@ body {
     color: var(--text-primary);
 }
 
+/* Timer widget - Professional media player design */
+.timer-widget {
+    margin-top: auto;
+    padding: 12px;
+    border-top: 1px solid var(--border-primary);
+}
+
+.timer-compact {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: rgba(128, 128, 128, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 8px;
+    border: 1px solid var(--border-primary);
+    transition: all var(--transition-normal);
+}
+
+.timer-compact:hover {
+    background: rgba(128, 128, 128, 0.15);
+    border-color: var(--border-secondary);
+}
+
+.timer-display-compact {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    min-width: 72px;
+    text-align: center;
+    padding: 4px 8px;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+    border: 1px solid var(--border-secondary);
+    letter-spacing: 0.5px;
+    transition: all var(--transition-normal);
+}
+
+.timer-controls-compact {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+}
+
+.timer-button-compact {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 28px;
+    padding: 0 8px;
+    background: transparent;
+    border: 1px solid var(--border-secondary);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.timer-button-compact:hover {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    transform: translateY(-1px);
+}
+
+.timer-button-compact:active {
+    transform: translateY(0);
+    transition: transform 0.1s ease;
+}
+
+.timer-button-compact:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--accent-primary);
+}
+
+.timer-button-compact:focus:not(:focus-visible) {
+    box-shadow: none;
+}
+
+.timer-button-compact.active,
+.timer-button-compact.playing {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: var(--bg-primary);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.timer-button-compact.active:hover,
+.timer-button-compact.playing:hover {
+    background: var(--accent-primary);
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+/* Enhanced SVG icon styling */
+.timer-button-compact svg {
+    width: 14px;
+    height: 14px;
+    transition: all 0.2s ease;
+    fill: currentColor;
+    stroke: currentColor;
+    stroke-width: 0;
+}
+
+.timer-button-compact svg path {
+    fill: currentColor;
+    stroke: currentColor;
+}
+
+/* Ensure proper icon contrast when button is active */
+.timer-button-compact.active svg,
+.timer-button-compact.playing svg {
+    color: var(--bg-primary);
+    fill: var(--bg-primary);
+    stroke: var(--bg-primary);
+}
+
+.timer-button-compact .hidden {
+    display: none;
+}
+
+.timer-button-compact.playing .play-icon {
+    display: none;
+}
+
+.timer-button-compact.playing .pause-icon {
+    display: block;
+}
+
+/* Reset button special hover state */
+.timer-button-compact.reset:hover {
+    background: rgba(251, 191, 36, 0.1);
+    border-color: var(--accent-warning);
+    color: var(--accent-warning);
+}
+
+/* Long-press reset functionality */
+.timer-button-compact.reset {
+    position: relative;
+    overflow: visible;
+}
+
+.timer-button-compact.reset.pressing {
+    background: var(--accent-warning);
+    color: var(--bg-primary);
+    border-color: var(--accent-warning);
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3);
+}
+
+.timer-button-compact.reset.pressing::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    border-top-color: var(--accent-warning);
+    animation: reset-progress 3s linear forwards;
+    z-index: -1;
+}
+
+@keyframes reset-progress {
+    0% {
+        transform: rotate(0deg);
+        border-top-color: var(--accent-warning);
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+    }
+    25% {
+        border-right-color: var(--accent-warning);
+    }
+    50% {
+        border-bottom-color: var(--accent-warning);
+    }
+    75% {
+        border-left-color: var(--accent-warning);
+    }
+    100% {
+        transform: rotate(360deg);
+        border: 2px solid var(--accent-warning);
+    }
+}
+
+/* Timer running state - Enhanced with subtle glow */
+.timer-widget.running .timer-compact {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.2),
+                0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.timer-widget.running .timer-display-compact {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+    font-weight: 600;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+    animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+@keyframes pulse-subtle {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+    }
+}
+
+/* Ensure reset button remains visible when timer is running */
+.timer-widget.running .timer-button-compact.reset {
+    background: transparent;
+    border-color: var(--border-secondary);
+    color: var(--text-secondary);
+}
+
+.timer-widget.running .timer-button-compact.reset:hover {
+    background: rgba(251, 191, 36, 0.1);
+    border-color: var(--accent-warning);
+    color: var(--accent-warning);
+}
+
+.timer-widget.running .timer-button-compact.reset.pressing {
+    background: var(--accent-warning);
+    color: var(--bg-primary);
+    border-color: var(--accent-warning);
+}
 
 
 /* Main content */
@@ -668,15 +909,12 @@ body.content-width-full .content-wrapper {
 
 .floating-share {
     right: 20px;
-}
-
-.floating-expand {
-    left: 20px;
     display: flex; /* Always visible */
 }
 
-.floating-share.visible {
-    display: flex;
+.floating-expand {
+    right: 76px; /* Position next to share button */
+    display: flex; /* Always visible */
 }
 
 .floating-share:hover,
@@ -740,7 +978,7 @@ body.content-width-full .content-wrapper {
 
 .floating-expand::before {
     content: 'Expand all code blocks';
-    left: 0;
+    right: 0;
 }
 
 .floating-expand.all-expanded::before {
@@ -2495,7 +2733,7 @@ body.enable-word-wrap .code-content {
     }
     
     .floating-expand {
-        left: 16px;
+        right: 68px; /* Position next to share button on mobile */
     }
     
     .floating-share svg,
