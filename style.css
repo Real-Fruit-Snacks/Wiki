@@ -2,6 +2,7 @@
 :root {
     /* Layout */
     --header-height: 60px;
+    --tab-bar-height: 36px;
     --sidebar-width: 280px;
     --content-max-width: 900px;
     
@@ -287,11 +288,138 @@ body {
     font-weight: 600;
 }
 
+/* Tab bar */
+.tab-bar {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    height: var(--tab-bar-height);
+    background-color: var(--bg-primary);
+    border-bottom: 1px solid var(--border-primary);
+    z-index: 99;
+    overflow: hidden;
+}
+
+.tab-bar-inner {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+.tabs-container {
+    display: flex;
+    flex: 1;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.tabs-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Individual tab */
+.tab {
+    display: flex;
+    align-items: center;
+    min-width: 120px;
+    max-width: 240px;
+    height: 100%;
+    padding: 0 12px;
+    background-color: var(--bg-secondary);
+    border-right: 1px solid var(--border-primary);
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    transition: background-color var(--transition-fast);
+}
+
+.tab:hover {
+    background-color: var(--bg-hover);
+}
+
+.tab.active {
+    background-color: var(--bg-primary);
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+.tab.dragging {
+    opacity: 0.5;
+}
+
+.tab-title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin-right: 8px;
+}
+
+.tab.active .tab-title {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.tab-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    opacity: 0;
+    transition: all var(--transition-fast);
+}
+
+.tab:hover .tab-close,
+.tab.active .tab-close {
+    opacity: 1;
+}
+
+.tab-close:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.tab-close svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* New tab button */
+.tab-new-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--tab-bar-height);
+    height: var(--tab-bar-height);
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.tab-new-button:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+}
+
 /* Main layout */
 .main-layout {
     display: flex;
     flex: 1;
     overflow: hidden;
+    margin-top: var(--tab-bar-height);
 }
 
 /* Sidebar */
@@ -611,12 +739,12 @@ body.content-width-full .content-wrapper {
 }
 
 .floating-expand::before {
-    content: 'Expand all';
+    content: 'Expand all code blocks';
     left: 0;
 }
 
 .floating-expand.all-expanded::before {
-    content: 'Collapse all';
+    content: 'Collapse all code blocks';
 }
 
 .floating-share:hover::before,
@@ -848,8 +976,8 @@ body.content-width-full .content-wrapper {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: var(--text-secondary);
-    background-color: rgba(128, 128, 128, 0.1);
+    color: var(--text-primary);
+    background-color: var(--bg-hover);
     padding: 3px 10px;
     border-radius: 12px;
     display: inline-flex;
@@ -857,6 +985,7 @@ body.content-width-full .content-wrapper {
     gap: 5px;
     transition: all var(--transition-fast);
     position: relative;
+    opacity: 0.9;
 }
 
 .code-block-language::before {
@@ -1089,122 +1218,108 @@ body:not(.show-line-numbers) .code-with-line-numbers {
     display: block;
 }
 
-/* Language-specific styling */
+/* Language-specific styling using theme-aware approach */
+.code-block-language::before {
+    opacity: 0.7;
+}
+
+/* Popular languages get subtle accent tinting */
 .code-block-language[data-lang="javascript"],
 .code-block-language[data-lang="js"] {
-    background-color: rgba(240, 219, 79, 0.15);
-    color: #f0db4f;
+    background-color: var(--accent-warning);
+    color: var(--bg-primary);
+    opacity: 0.85;
 }
 
 .code-block-language[data-lang="typescript"],
 .code-block-language[data-lang="ts"] {
-    background-color: rgba(0, 122, 204, 0.15);
-    color: #007acc;
+    background-color: var(--accent-info);
+    color: var(--bg-primary);
+    opacity: 0.85;
 }
 
 .code-block-language[data-lang="python"],
 .code-block-language[data-lang="py"] {
-    background-color: rgba(55, 118, 171, 0.15);
-    color: #3776ab;
+    background-color: var(--accent-primary);
+    color: var(--bg-primary);
+    opacity: 0.85;
 }
 
 .code-block-language[data-lang="java"] {
-    background-color: rgba(244, 67, 54, 0.15);
-    color: #f44336;
+    background-color: var(--accent-error);
+    color: var(--bg-primary);
+    opacity: 0.85;
 }
 
 .code-block-language[data-lang="html"] {
-    background-color: rgba(227, 79, 38, 0.15);
-    color: #e34f26;
+    background-color: var(--accent-error);
+    color: var(--bg-primary);
+    opacity: 0.75;
 }
 
 .code-block-language[data-lang="css"] {
-    background-color: rgba(21, 114, 182, 0.15);
-    color: #1572b6;
+    background-color: var(--accent-info);
+    color: var(--bg-primary);
+    opacity: 0.75;
 }
 
 .code-block-language[data-lang="scss"],
 .code-block-language[data-lang="sass"] {
-    background-color: rgba(205, 103, 153, 0.15);
-    color: #cd6799;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: var(--bg-primary);
+    opacity: 0.85;
 }
 
-.code-block-language[data-lang="json"] {
-    background-color: rgba(128, 128, 128, 0.15);
-    color: #808080;
+/* Other languages use subtle variations */
+.code-block-language[data-lang="json"],
+.code-block-language[data-lang="yaml"],
+.code-block-language[data-lang="yml"],
+.code-block-language[data-lang="xml"] {
+    opacity: 0.8;
 }
 
 .code-block-language[data-lang="bash"],
 .code-block-language[data-lang="shell"],
 .code-block-language[data-lang="sh"] {
-    background-color: rgba(64, 64, 64, 0.15);
-    color: #4d4d4d;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    opacity: 1;
 }
 
-.code-block-language[data-lang="go"] {
-    background-color: rgba(0, 173, 216, 0.15);
-    color: #00add8;
-}
-
-.code-block-language[data-lang="rust"] {
-    background-color: rgba(222, 165, 132, 0.15);
-    color: #dea584;
-}
-
+.code-block-language[data-lang="go"],
+.code-block-language[data-lang="rust"],
 .code-block-language[data-lang="cpp"],
-.code-block-language[data-lang="c++"] {
-    background-color: rgba(0, 89, 156, 0.15);
-    color: #00599c;
-}
-
-.code-block-language[data-lang="c"] {
-    background-color: rgba(85, 85, 255, 0.15);
-    color: #5555ff;
-}
-
+.code-block-language[data-lang="c++"],
+.code-block-language[data-lang="c"],
 .code-block-language[data-lang="csharp"],
 .code-block-language[data-lang="cs"] {
-    background-color: rgba(104, 33, 122, 0.15);
-    color: #68217a;
+    background-color: var(--accent-secondary);
+    color: var(--bg-primary);
+    opacity: 0.8;
 }
 
-.code-block-language[data-lang="php"] {
-    background-color: rgba(119, 123, 180, 0.15);
-    color: #777bb4;
-}
-
+.code-block-language[data-lang="php"],
 .code-block-language[data-lang="ruby"],
-.code-block-language[data-lang="rb"] {
-    background-color: rgba(204, 52, 45, 0.15);
-    color: #cc342d;
-}
-
-.code-block-language[data-lang="swift"] {
-    background-color: rgba(255, 172, 69, 0.15);
-    color: #ffac45;
-}
-
+.code-block-language[data-lang="rb"],
+.code-block-language[data-lang="swift"],
 .code-block-language[data-lang="kotlin"],
 .code-block-language[data-lang="kt"] {
-    background-color: rgba(127, 82, 255, 0.15);
-    color: #7f52ff;
-}
-
-.code-block-language[data-lang="yaml"],
-.code-block-language[data-lang="yml"] {
-    background-color: rgba(203, 23, 30, 0.15);
-    color: #cb171e;
+    background: linear-gradient(135deg, var(--bg-hover), var(--accent-primary));
+    color: var(--text-primary);
+    opacity: 0.9;
 }
 
 .code-block-language[data-lang="markdown"],
 .code-block-language[data-lang="md"] {
-    background-color: rgba(8, 61, 126, 0.15);
-    color: #083d7e;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--accent-primary);
+    opacity: 1;
 }
 
 .code-block-language[data-lang="sql"] {
-    background-color: rgba(51, 103, 145, 0.15);
-    color: #336791;
+    background-color: var(--accent-primary);
+    color: var(--bg-primary);
+    opacity: 0.7;
 }
 
 body:not(.show-line-numbers) .code-with-line-numbers .code-content {
@@ -2319,7 +2434,7 @@ body.enable-word-wrap .code-content {
     
     .sidebar {
         position: fixed;
-        top: var(--header-height);
+        top: calc(var(--header-height) + var(--tab-bar-height));
         left: 0;
         bottom: 0;
         z-index: 90;

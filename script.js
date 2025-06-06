@@ -13,6 +13,13 @@ class NotesWiki {
         this.activeContext = null;  // Track active context
         this.contexts = [];  // Store available contexts
         this.initialHash = window.location.hash;  // Store initial hash for later processing
+        
+        // Tab management
+        this.tabs = new Map(); // Map of tab ID to tab data
+        this.activeTabId = null;
+        this.tabIdCounter = 0;
+        this.tabContents = new Map(); // Map of tab ID to content HTML
+        this.draggedTabId = null; // For drag and drop
         this.themes = [
             { id: 'light', name: 'Light', description: 'Clean light theme' },
             { id: 'dark', name: 'Dark', description: 'Easy on the eyes dark theme' },
@@ -73,12 +80,12 @@ class NotesWiki {
         // Set up event listeners
         this.setupEventListeners();
         
-        // Handle initial route - restore the initial hash if it was lost
-        if (this.initialHash && window.location.hash !== this.initialHash) {
-            window.location.hash = this.initialHash;
-        } else {
-            this.handleRoute();
-        }
+        // Handle initial route - tabs will handle this now
+        // if (this.initialHash && window.location.hash !== this.initialHash) {
+        //     window.location.hash = this.initialHash;
+        // } else {
+        //     this.handleRoute();
+        // }
         
         // Load recent files
         this.loadRecentFiles();
@@ -88,6 +95,9 @@ class NotesWiki {
         
         // Build context switcher
         this.buildContextSwitcher();
+        
+        // Initialize tab system
+        this.initializeTabs();
     }
     
     async loadNotesIndex() {
@@ -106,6 +116,9 @@ class NotesWiki {
             
             // Build tag filter
             this.buildTagFilter();
+            
+            // Initialize tag count badge
+            this.updateTagCountBadge();
         } catch (error) {
             console.error('Failed to load notes index:', error);
             // Fallback to basic structure if index doesn't exist
@@ -205,8 +218,25 @@ class NotesWiki {
                     // Add click handler
                     a.addEventListener('click', (e) => {
                         e.preventDefault();
-                        // Always use the full original path from the note object
-                        window.location.hash = value.path;
+                        
+                        // Check if should open in new tab
+                        if (e.ctrlKey || e.metaKey || e.button === 1) {
+                            this.openInNewTab(value.path);
+                        } else {
+                            // Check if note is already open in another tab
+                            const existingTabId = this.findTabByPath(value.path);
+                            if (existingTabId && existingTabId !== this.activeTabId) {
+                                // Switch to existing tab
+                                this.switchToTab(existingTabId);
+                            } else {
+                                // Update current tab
+                                const tab = this.tabs.get(this.activeTabId);
+                                if (tab) {
+                                    tab.path = value.path;
+                                    this.loadNote(value.path);
+                                }
+                            }
+                        }
                     });
                     
                     li.appendChild(a);
@@ -514,15 +544,15 @@ class NotesWiki {
             });
         }
         
-        // Handle browser navigation
-        window.addEventListener('popstate', () => {
-            this.handleRoute();
-        });
+        // Handle browser navigation - disabled for tab system
+        // window.addEventListener('popstate', () => {
+        //     this.handleRoute();
+        // });
         
-        // Handle hash changes (important for direct link visits)
-        window.addEventListener('hashchange', () => {
-            this.handleRoute();
-        });
+        // Handle hash changes (important for direct link visits) - disabled for tab system
+        // window.addEventListener('hashchange', () => {
+        //     this.handleRoute();
+        // });
         
         // Close dropdowns when clicking outside
         document.addEventListener('click', (e) => {
@@ -570,15 +600,18 @@ class NotesWiki {
             const tags = hash.slice(6).split(',');
             this.selectedTags = new Set(tags);
             this.filterNotesByTags();
-            // Update tag pills
-            document.querySelectorAll('.tag-pill').forEach(pill => {
-                const tagName = pill.querySelector('span').textContent;
-                if (this.selectedTags.has(tagName)) {
-                    pill.classList.add('active');
-                } else {
-                    pill.classList.remove('active');
-                }
-            });
+            // Update tag pills if modal exists
+            const modalTagFilter = document.getElementById('modal-tag-filter');
+            if (modalTagFilter) {
+                document.querySelectorAll('.tag-pill').forEach(pill => {
+                    const tagName = pill.querySelector('span').textContent;
+                    if (this.selectedTags.has(tagName)) {
+                        pill.classList.add('active');
+                    } else {
+                        pill.classList.remove('active');
+                    }
+                });
+            }
             // Update tag count badge
             this.updateTagCountBadge();
         } else {
@@ -622,19 +655,21 @@ class NotesWiki {
             // Update URL
             window.location.hash = path;
             
+            // Update current tab's path
+            if (this.activeTabId) {
+                const tab = this.tabs.get(this.activeTabId);
+                if (tab) {
+                    tab.path = path;
+                }
+            }
+            
             // Track in recent files
             if (this.settings.trackRecent) {
                 this.addToRecentFiles(path, metadata);
             }
             
             // Update active state in navigation
-            document.querySelectorAll('.file-tree-link').forEach(link => {
-                if (link.dataset.path === path) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
+            this.setActiveFile(path);
         } catch (error) {
             console.error('Failed to load note:', error);
             mainContent.innerHTML = `
@@ -786,11 +821,10 @@ class NotesWiki {
             html += '</div>';
             html += '<div class="code-block-actions">';
             
-            if (collapse) {
-                html += '<button class="code-block-button toggle-button" onclick="notesWiki.toggleCodeBlock(\'' + blockId + '\')" aria-label="Toggle code">';
-                html += '<span class="toggle-icon">▶</span>';
-                html += '</button>';
-            }
+            // Always add toggle button
+            html += '<button class="code-block-button toggle-button" onclick="notesWiki.toggleCodeBlock(\'' + blockId + '\')" aria-label="Toggle code">';
+            html += '<span class="toggle-icon">' + (collapse ? '▶' : '▼') + '</span>';
+            html += '</button>';
             
             html += '<button class="code-block-button copy-button" onclick="notesWiki.copyCode(\'' + blockId + '\')" aria-label="Copy code">';
             html += '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">';
@@ -915,14 +949,46 @@ class NotesWiki {
         // Update expand button state after rendering
         this.updateExpandButtonState();
         
-        // Handle internal links
+        // Handle internal links and tag links
         mainContent.querySelectorAll('a[href^="#"]').forEach(link => {
             link.addEventListener('click', (e) => {
+                if (e.ctrlKey || e.metaKey || e.button === 1) {
+                    // Let the global tab handler deal with this
+                    return;
+                }
+                
                 e.preventDefault();
                 const href = link.getAttribute('href');
                 if (href.startsWith('#/')) {
-                    // Internal note link
-                    window.location.hash = href.slice(1);
+                    // Internal note link or tag link
+                    const path = href.slice(1);
+                    
+                    // Check if it's a tag link
+                    if (path.startsWith('/tags/')) {
+                        // Apply tag filter
+                        const tagName = decodeURIComponent(path.substring(6));
+                        this.selectedTags.clear();
+                        this.selectedTags.add(tagName);
+                        this.filterNotesByTags();
+                        this.updateTagCountBadge(); // FIX: Add missing badge update
+                        
+                        // Update URL
+                        window.history.replaceState(null, '', href);
+                    } else {
+                        // Check if note is already open in another tab
+                        const existingTabId = this.findTabByPath(path);
+                        if (existingTabId && existingTabId !== this.activeTabId) {
+                            // Switch to existing tab
+                            this.switchToTab(existingTabId);
+                        } else {
+                            // Update current tab's path
+                            const tab = this.tabs.get(this.activeTabId);
+                            if (tab) {
+                                tab.path = path;
+                                this.loadNote(tab.path);
+                            }
+                        }
+                    }
                 } else {
                     // Heading anchor
                     const target = mainContent.querySelector(href);
@@ -932,6 +998,19 @@ class NotesWiki {
                 }
             });
         });
+        
+        // Update the current tab's title with the note's title
+        if (this.activeTabId && metadata.title) {
+            const tab = this.tabs.get(this.activeTabId);
+            if (tab) {
+                tab.title = metadata.title;
+                const tabElement = document.getElementById(this.activeTabId);
+                if (tabElement) {
+                    tabElement.querySelector('.tab-title').textContent = metadata.title;
+                }
+                this.saveTabState();
+            }
+        }
     }
     
     
@@ -1010,56 +1089,38 @@ class NotesWiki {
     
     toggleExpandAll() {
         const expandButton = document.querySelector('.floating-expand');
+        const mainContent = document.getElementById('main-content');
         
-        // Get all expandable elements
-        const folders = document.querySelectorAll('.file-tree-folder-item');
-        const collapsibleCodeBlocks = document.querySelectorAll('.code-block[id]'); // Only code blocks with IDs are collapsible
+        // Get ALL code blocks in the main content area
+        const allCodeBlocks = mainContent.querySelectorAll('.code-block[id]');
         
-        // Check current state - if most items are expanded, we'll collapse all
-        const expandedFolders = document.querySelectorAll('.file-tree-folder-item.expanded');
-        const expandedCodeBlocks = Array.from(collapsibleCodeBlocks).filter(block => !block.classList.contains('collapsed'));
+        // If no code blocks, return early
+        if (allCodeBlocks.length === 0) return;
         
-        const totalExpandable = folders.length + collapsibleCodeBlocks.length;
-        const currentExpanded = expandedFolders.length + expandedCodeBlocks.length;
+        // Check current state - count how many are collapsed
+        const collapsedBlocks = Array.from(allCodeBlocks).filter(block => block.classList.contains('collapsed'));
+        const shouldExpand = collapsedBlocks.length > allCodeBlocks.length / 2;
         
-        const shouldExpand = currentExpanded < totalExpandable / 2;
-        
-        // Toggle folders
-        folders.forEach(folder => {
+        // Toggle all code blocks
+        allCodeBlocks.forEach(block => {
+            // Toggle the state
             if (shouldExpand) {
-                folder.classList.add('expanded');
+                block.classList.remove('collapsed');
+                const icon = block.querySelector('.toggle-icon');
+                if (icon) icon.textContent = '▼';
             } else {
-                folder.classList.remove('expanded');
+                block.classList.add('collapsed');
+                const icon = block.querySelector('.toggle-icon');
+                if (icon) icon.textContent = '▶';
             }
         });
         
-        // Toggle code blocks
-        document.querySelectorAll('.code-block').forEach(block => {
-            if (block.querySelector('.toggle-button')) {
-                if (shouldExpand) {
-                    block.classList.remove('collapsed');
-                    const icon = block.querySelector('.toggle-icon');
-                    if (icon) icon.textContent = '▼';
-                } else {
-                    block.classList.add('collapsed');
-                    const icon = block.querySelector('.toggle-icon');
-                    if (icon) icon.textContent = '▶';
-                }
-            }
-        });
-        
-        // Update button state based on final state
+        // Update button state
         if (expandButton) {
-            // Check final state after toggling
-            const finalExpandedFolders = document.querySelectorAll('.file-tree-folder-item.expanded');
-            const finalExpandedCodeBlocks = Array.from(collapsibleCodeBlocks).filter(block => !block.classList.contains('collapsed'));
-            const finalExpanded = finalExpandedFolders.length + finalExpandedCodeBlocks.length;
-            
-            // If more than half are expanded, show collapse icon
-            if (finalExpanded > totalExpandable / 2 || totalExpandable === 0) {
-                expandButton.classList.add('all-expanded');
-            } else {
+            if (shouldExpand) {
                 expandButton.classList.remove('all-expanded');
+            } else {
+                expandButton.classList.add('all-expanded');
             }
         }
         
@@ -1204,8 +1265,12 @@ class NotesWiki {
         }
         
         // Render results
-        results.innerHTML = matches.slice(0, 10).map(match => `
-            <a href="#${match.path}" class="search-result" onclick="notesWiki.onSearchResultClick('${match.path}')">
+        results.innerHTML = '';
+        matches.slice(0, 10).forEach(match => {
+            const a = document.createElement('a');
+            a.href = `#${match.path}`;
+            a.className = 'search-result';
+            a.innerHTML = `
                 <div class="search-result-title">${this.highlightText(match.title, searchTerms)}</div>
                 <div class="search-result-path">${match.path}</div>
                 ${match.description ? `
@@ -1213,18 +1278,52 @@ class NotesWiki {
                         ${this.highlightText(match.description, searchTerms)}
                     </div>
                 ` : ''}
-            </a>
-        `).join('');
+            `;
+            
+            // Handle click for tab navigation
+            a.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Save search query if sticky search is enabled
+                if (this.settings.stickySearch) {
+                    this.lastSearchQuery = document.getElementById('search-input').value;
+                }
+                
+                // Check if should open in new tab
+                if (e.ctrlKey || e.metaKey || e.button === 1) {
+                    this.openInNewTab(match.path);
+                } else {
+                    // Check if note is already open in another tab
+                    const existingTabId = this.findTabByPath(match.path);
+                    if (existingTabId && existingTabId !== this.activeTabId) {
+                        // Switch to existing tab
+                        this.switchToTab(existingTabId);
+                    } else {
+                        // Update current tab
+                        const tab = this.tabs.get(this.activeTabId);
+                        if (tab) {
+                            tab.path = match.path;
+                            this.loadNote(match.path);
+                        }
+                    }
+                }
+                
+                // Hide search overlay
+                this.hideSearch();
+            });
+            
+            results.appendChild(a);
+        });
     }
     
     onSearchResultClick(path) {
-        // Save search query if sticky search is enabled
-        if (this.settings.stickySearch) {
-            this.lastSearchQuery = document.getElementById('search-input').value;
+        // This method is no longer needed since we handle clicks inline
+        // Keep it for backward compatibility if called elsewhere
+        const tab = this.tabs.get(this.activeTabId);
+        if (tab) {
+            tab.path = path;
+            this.loadNote(path);
         }
-        // Navigate to the note
-        window.location.hash = path;
-        // Hide search overlay
         this.hideSearch();
     }
     
@@ -1305,6 +1404,10 @@ class NotesWiki {
     updateTagCountBadge() {
         const count = this.selectedTags.size;
         const badge = document.getElementById('active-tag-count');
+        if (!badge) {
+            return;
+        }
+        
         if (count > 0) {
             badge.textContent = count;
             badge.style.display = 'inline-flex';
@@ -1702,15 +1805,50 @@ class NotesWiki {
             count.textContent = filteredRecent.length;
             count.style.display = 'flex';
             
-            list.innerHTML = filteredRecent.map(file => `
-                <li class="recent-file-item">
-                    <a href="#${file.path}" class="recent-file-link">
-                        <div class="recent-file-title">${this.escapeHtml(file.title)}</div>
-                        <div class="recent-file-path">${file.path}</div>
-                        <div class="recent-file-time">${this.formatRelativeTime(file.lastViewed)}</div>
-                    </a>
-                </li>
-            `).join('');
+            list.innerHTML = '';
+            filteredRecent.forEach(file => {
+                const li = document.createElement('li');
+                li.className = 'recent-file-item';
+                
+                const a = document.createElement('a');
+                a.href = `#${file.path}`;
+                a.className = 'recent-file-link';
+                a.innerHTML = `
+                    <div class="recent-file-title">${this.escapeHtml(file.title)}</div>
+                    <div class="recent-file-path">${file.path}</div>
+                    <div class="recent-file-time">${this.formatRelativeTime(file.lastViewed)}</div>
+                `;
+                
+                // Handle click for tab navigation
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Check if should open in new tab
+                    if (e.ctrlKey || e.metaKey || e.button === 1) {
+                        this.openInNewTab(file.path);
+                    } else {
+                        // Check if note is already open in another tab
+                        const existingTabId = this.findTabByPath(file.path);
+                        if (existingTabId && existingTabId !== this.activeTabId) {
+                            // Switch to existing tab
+                            this.switchToTab(existingTabId);
+                        } else {
+                            // Update current tab
+                            const tab = this.tabs.get(this.activeTabId);
+                            if (tab) {
+                                tab.path = file.path;
+                                this.loadNote(file.path);
+                            }
+                        }
+                    }
+                    
+                    // Close the dropdown
+                    document.getElementById('recent-dropdown').classList.remove('active');
+                });
+                
+                li.appendChild(a);
+                list.appendChild(li);
+            });
         }
     }
     
@@ -1949,6 +2087,33 @@ class NotesWiki {
         return date.toLocaleDateString();
     }
     
+    setActiveFile(path) {
+        // Remove active class from all links
+        document.querySelectorAll('.file-tree-link').forEach(link => {
+            link.classList.remove('active');
+        });
+        
+        // Find and activate the link for this path
+        const activeLink = document.querySelector(`.file-tree-link[data-path="${path}"]`);
+        if (activeLink) {
+            activeLink.classList.add('active');
+            
+            // Expand all parent folders to make the active file visible
+            let parentFolder = activeLink.closest('.file-tree-folder');
+            while (parentFolder) {
+                const folderItem = parentFolder.closest('.file-tree-folder-item');
+                if (folderItem && !folderItem.classList.contains('expanded')) {
+                    folderItem.classList.add('expanded');
+                }
+                // Move up to the next parent folder
+                parentFolder = folderItem ? folderItem.parentElement.closest('.file-tree-folder') : null;
+            }
+            
+            // Scroll the active file into view if needed
+            activeLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    }
+    
     applyLineNumberSetting() {
         // Apply or remove the line numbers class from the body
         if (this.settings.showLineNumbers) {
@@ -1978,6 +2143,371 @@ class NotesWiki {
         
         // Apply the selected content width class
         document.body.classList.add(`content-width-${this.settings.contentWidth}`);
+    }
+    
+    // Tab Management Methods
+    initializeTabs() {
+        // Set up event listeners for tab system
+        document.getElementById('tab-new-button').addEventListener('click', () => {
+            this.createNewTab();
+        });
+        
+        // Try to restore saved tabs
+        if (!this.restoreTabState()) {
+            // Create initial tab if no saved state
+            const initialPath = this.initialHash ? this.initialHash.slice(1) : '/notes/index.md';
+            this.createNewTab(initialPath, 'Home');
+        }
+        
+        // Global click handler removed - we now handle clicks on individual links
+        // to avoid duplicate tab creation
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                if (e.key === 'w') {
+                    e.preventDefault();
+                    this.closeTab(this.activeTabId);
+                } else if (e.key === 'Tab') {
+                    e.preventDefault();
+                    this.switchToNextTab(e.shiftKey);
+                }
+            }
+        });
+        
+        // Ensure tag count badge is properly initialized
+        this.updateTagCountBadge();
+    }
+    
+    createNewTab(path = '/notes/index.md', title = 'New Tab') {
+        const tabId = `tab-${this.tabIdCounter++}`;
+        const tab = {
+            id: tabId,
+            path: path,
+            title: title,
+            scrollPosition: 0
+        };
+        
+        this.tabs.set(tabId, tab);
+        this.renderTab(tabId);
+        // When creating a new tab, preserve the current context
+        this.switchToTab(tabId, true);
+        
+        // Load content for the tab
+        if (path) {
+            this.loadNoteInTab(path, tabId);
+        }
+        
+        return tabId;
+    }
+    
+    renderTab(tabId) {
+        const tab = this.tabs.get(tabId);
+        if (!tab) return;
+        
+        const tabElement = document.createElement('div');
+        tabElement.className = 'tab';
+        tabElement.id = tabId;
+        tabElement.draggable = true;
+        tabElement.innerHTML = `
+            <span class="tab-title">${this.escapeHtml(tab.title)}</span>
+            <button class="tab-close" aria-label="Close tab">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                    <path d="M7 7.707l3.146 3.147a.5.5 0 00.708-.708L7.707 7l3.147-3.146a.5.5 0 00-.708-.708L7 6.293 3.854 3.146a.5.5 0 10-.708.708L6.293 7l-3.147 3.146a.5.5 0 00.708.708L7 7.707z"/>
+                </svg>
+            </button>
+        `;
+        
+        // Click to switch tab
+        tabElement.addEventListener('click', (e) => {
+            if (!e.target.closest('.tab-close')) {
+                this.switchToTab(tabId);
+            }
+        });
+        
+        // Middle-click to close
+        tabElement.addEventListener('mousedown', (e) => {
+            if (e.button === 1) {
+                e.preventDefault();
+                this.closeTab(tabId);
+            }
+        });
+        
+        // Close button
+        tabElement.querySelector('.tab-close').addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.closeTab(tabId);
+        });
+        
+        // Drag and drop
+        this.setupTabDragAndDrop(tabElement, tabId);
+        
+        document.getElementById('tabs-container').appendChild(tabElement);
+    }
+    
+    setupTabDragAndDrop(tabElement, tabId) {
+        tabElement.addEventListener('dragstart', (e) => {
+            this.draggedTabId = tabId;
+            tabElement.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        });
+        
+        tabElement.addEventListener('dragend', () => {
+            tabElement.classList.remove('dragging');
+            this.draggedTabId = null;
+        });
+        
+        tabElement.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            if (this.draggedTabId && this.draggedTabId !== tabId) {
+                const draggingElement = document.getElementById(this.draggedTabId);
+                const rect = tabElement.getBoundingClientRect();
+                const midpoint = rect.left + rect.width / 2;
+                
+                if (e.clientX < midpoint) {
+                    tabElement.parentNode.insertBefore(draggingElement, tabElement);
+                } else {
+                    tabElement.parentNode.insertBefore(draggingElement, tabElement.nextSibling);
+                }
+                
+                // Update tab order in memory
+                this.updateTabOrder();
+            }
+        });
+    }
+    
+    updateTabOrder() {
+        const container = document.getElementById('tabs-container');
+        const tabElements = container.querySelectorAll('.tab');
+        const newOrder = new Map();
+        
+        tabElements.forEach((element) => {
+            const tabId = element.id;
+            const tab = this.tabs.get(tabId);
+            if (tab) {
+                newOrder.set(tabId, tab);
+            }
+        });
+        
+        this.tabs = newOrder;
+        this.saveTabState();
+    }
+    
+    switchToTab(tabId, preserveContext = false) {
+        const tab = this.tabs.get(tabId);
+        if (!tab) return;
+        
+        // Save current tab's scroll position
+        if (this.activeTabId) {
+            const currentTab = this.tabs.get(this.activeTabId);
+            if (currentTab) {
+                currentTab.scrollPosition = document.getElementById('main-content').scrollTop;
+            }
+            
+            // Save current tab's content
+            const content = document.getElementById('main-content').innerHTML;
+            this.tabContents.set(this.activeTabId, content);
+        }
+        
+        // Update active states
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(tabId)?.classList.add('active');
+        
+        this.activeTabId = tabId;
+        
+        // Restore tab content and scroll position
+        const savedContent = this.tabContents.get(tabId);
+        if (savedContent) {
+            document.getElementById('main-content').innerHTML = savedContent;
+            document.getElementById('main-content').scrollTop = tab.scrollPosition || 0;
+            
+            // Re-setup event listeners for the restored content
+            this.setupContentEventListeners();
+        } else {
+            // Load content if not cached
+            this.loadNoteInTab(tab.path, tabId);
+        }
+        
+        // Update URL
+        window.history.replaceState(null, '', `#${tab.path}`);
+        
+        // Only switch context if not preserving it (i.e., when switching existing tabs)
+        if (!preserveContext) {
+            // Check if we need to switch context first
+            const noteData = this.notesIndex.notes.find(note => note.path === tab.path);
+            if (noteData && noteData.context !== this.activeContext) {
+                // Switch to the note's context
+                this.setActiveContext(noteData.context);
+            }
+        }
+        
+        // Update sidebar active file highlight AFTER context switch
+        // Use setTimeout to ensure the DOM has been updated after context switch
+        setTimeout(() => {
+            this.setActiveFile(tab.path);
+        }, 0);
+        
+        this.saveTabState();
+    }
+    
+    closeTab(tabId) {
+        if (this.tabs.size <= 1) {
+            // Don't close the last tab
+            return;
+        }
+        
+        const tab = this.tabs.get(tabId);
+        if (!tab) return;
+        
+        // Remove from DOM
+        document.getElementById(tabId)?.remove();
+        
+        // Remove from memory
+        this.tabs.delete(tabId);
+        this.tabContents.delete(tabId);
+        
+        // If closing active tab, switch to another
+        if (tabId === this.activeTabId) {
+            const remainingTabs = Array.from(this.tabs.keys());
+            const newActiveTab = remainingTabs[remainingTabs.length - 1];
+            this.switchToTab(newActiveTab);
+        }
+        
+        this.saveTabState();
+    }
+    
+    switchToNextTab(reverse = false) {
+        const tabIds = Array.from(this.tabs.keys());
+        const currentIndex = tabIds.indexOf(this.activeTabId);
+        
+        let newIndex;
+        if (reverse) {
+            newIndex = currentIndex - 1;
+            if (newIndex < 0) newIndex = tabIds.length - 1;
+        } else {
+            newIndex = currentIndex + 1;
+            if (newIndex >= tabIds.length) newIndex = 0;
+        }
+        
+        this.switchToTab(tabIds[newIndex]);
+    }
+    
+    openInNewTab(path) {
+        // Extract title from path or use default
+        const parts = path.split('/');
+        const filename = parts[parts.length - 1];
+        const title = filename.replace('.md', '').replace(/-/g, ' ');
+        
+        this.createNewTab(path, title);
+    }
+    
+    findTabByPath(path) {
+        // Search all tabs for one with matching path
+        for (const [tabId, tab] of this.tabs) {
+            if (tab.path === path) {
+                return tabId;
+            }
+        }
+        return null;
+    }
+    
+    loadNoteInTab(path, tabId) {
+        // Use existing loadNote method but update the tab after loading
+        const originalTabId = this.activeTabId;
+        this.activeTabId = tabId;
+        
+        const originalCallback = this.renderNote.bind(this);
+        this.renderNote = () => {
+            originalCallback();
+            
+            // Update tab title with actual note title
+            if (this.currentNote && this.currentNote.metadata.title) {
+                const tab = this.tabs.get(tabId);
+                if (tab) {
+                    tab.title = this.currentNote.metadata.title;
+                    const tabElement = document.getElementById(tabId);
+                    if (tabElement) {
+                        tabElement.querySelector('.tab-title').textContent = tab.title;
+                    }
+                }
+            }
+            
+            // Restore original renderNote
+            this.renderNote = originalCallback;
+        };
+        
+        this.loadNote(path);
+    }
+    
+    setupContentEventListeners() {
+        const mainContent = document.getElementById('main-content');
+        
+        // Re-setup floating share button
+        this.setupFloatingShareButton();
+        
+        // Re-setup internal links and tag links
+        mainContent.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (e.ctrlKey || e.metaKey || e.button === 1) {
+                    // Already handled by global listener
+                    return;
+                }
+                
+                e.preventDefault();
+                const href = link.getAttribute('href');
+                if (href.startsWith('#/')) {
+                    // Internal note link or tag link
+                    const path = href.slice(1);
+                    
+                    // Update current tab's path
+                    const tab = this.tabs.get(this.activeTabId);
+                    if (tab) {
+                        tab.path = path;
+                        this.loadNote(tab.path);
+                    }
+                } else {
+                    // Heading anchor
+                    const target = mainContent.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+    }
+    
+    saveTabState() {
+        const tabState = {
+            tabs: Array.from(this.tabs.values()),
+            activeTabId: this.activeTabId
+        };
+        localStorage.setItem('tabState', JSON.stringify(tabState));
+    }
+    
+    restoreTabState() {
+        const savedState = localStorage.getItem('tabState');
+        if (savedState) {
+            try {
+                const { tabs, activeTabId } = JSON.parse(savedState);
+                
+                // Restore tabs
+                tabs.forEach(tabData => {
+                    const tabId = tabData.id;
+                    this.tabs.set(tabId, tabData);
+                    this.renderTab(tabId);
+                });
+                
+                // Restore active tab
+                if (activeTabId && this.tabs.has(activeTabId)) {
+                    this.switchToTab(activeTabId);
+                }
+                
+                return true;
+            } catch (e) {
+                console.error('Failed to restore tab state:', e);
+            }
+        }
+        return false;
     }
 }
 

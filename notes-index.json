@@ -475,29 +475,29 @@
     "advanced": 1
   },
   "authors": [
-    "System",
-    "Sarah Johnson",
-    "Database Team",
-    "Architecture Team",
-    "John Doe",
+    "Tutorial Team",
     "Debug",
+    "John Doe",
     "Wiki Admin",
+    "Database Team",
+    "Alex Chen",
+    "Blog Team",
+    "Dev Team",
     "Jane Smith",
     "Maria Rodriguez",
+    "Architecture Team",
+    "Sarah Johnson",
+    "System",
     "Project Team",
-    "Dev Team",
-    "DevOps Team",
-    "Blog Team",
-    "Alex Chen",
-    "Tutorial Team"
+    "DevOps Team"
   ],
   "categories": [
-    "technical",
     "projects",
-    "documentation",
-    "tutorials",
     "reference",
-    "personal"
+    "tutorials",
+    "documentation",
+    "personal",
+    "technical"
   ],
   "contexts": [
     {
@@ -526,6 +526,6 @@
       "noteCount": 2
     }
   ],
-  "generated": "2025-06-05T18:41:04.207576",
+  "generated": "2025-06-05T21:02:47.042255",
   "totalNotes": 19
 }
