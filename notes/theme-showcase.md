@@ -3,12 +3,12 @@ title: Theme Showcase & Test
 tags: [themes, test, showcase]
 created: 2025-01-06
 author: Wiki Admin
-description: Comprehensive test of all 15 themes with various code examples
+description: Comprehensive test of all 28 themes with various code examples
 ---
 
 # Theme Showcase & Test
 
-This page tests all 15 available themes with various code examples to ensure syntax highlighting works correctly.
+This page tests all 28 available themes with various code examples to ensure syntax highlighting works correctly.
 
 ## Available Themes
 
@@ -27,6 +27,19 @@ This page tests all 15 available themes with various code examples to ensure syn
 13. **Gruvbox Light** - Retro groove light theme
 14. **Tokyo Night** - A clean dark theme that celebrates Tokyo at night
 15. **Palenight** - An elegant and juicy material-like theme
+16. **Hot Dog Stand** - Windows 3.1 classic - Bold red & yellow!
+17. **Catppuccin Mocha** - Dark theme with soft pastel colors
+18. **Catppuccin Latte** - Light theme with warm colors
+19. **Rosé Pine** - Dark theme with muted colors
+20. **Rosé Pine Dawn** - Light variant of Rosé Pine
+21. **Material Ocean** - Material design dark theme
+22. **Ayu Dark** - Modern dark theme
+23. **Ayu Light** - Modern light theme
+24. **Everforest Dark** - Forest-inspired dark theme
+25. **Kanagawa** - Japanese aesthetic inspired dark theme
+26. **Zenburn** - Low contrast theme for reduced eye strain
+27. **Tomorrow Night** - Popular dark theme from the Tomorrow theme family
+28. **Cobalt2** - Wes Bos's popular blue-based dark theme
 
 ## How to Test
 

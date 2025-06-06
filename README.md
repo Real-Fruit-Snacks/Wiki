@@ -1,8 +1,8 @@
 # Notes Wiki
 
-A modern, self-contained static notes and documentation system designed for GitLab Pages with advanced features including 16 built-in themes, real-time search, metadata parsing, and complete offline functionality.
+A modern, self-contained static notes and documentation system designed for GitLab Pages with advanced features including 28 built-in themes, real-time search, metadata parsing, and complete offline functionality.
 
-![Wiki Screenshot](https://img.shields.io/badge/Status-Ready-green) ![No Dependencies](https://img.shields.io/badge/Dependencies-None-blue) ![Themes](https://img.shields.io/badge/Themes-16-purple)
+![Wiki Screenshot](https://img.shields.io/badge/Status-Ready-green) ![No Dependencies](https://img.shields.io/badge/Dependencies-None-blue) ![Themes](https://img.shields.io/badge/Themes-28-purple)
 
 ## 🌟 Features
 
@@ -13,7 +13,7 @@ A modern, self-contained static notes and documentation system designed for GitL
 - **YAML Frontmatter**: Metadata support for tags, authors, categories, and more
 
 ### 🎨 **Theme System**
-- **16 VSCode-Inspired Themes**: Light, Dark, Monokai, Dracula, GitHub, and more
+- **28 Professional Themes**: Including VSCode, Catppuccin, Rosé Pine, Material, Ayu, and more
 - **Auto Theme Detection**: Automatically switch based on system preferences
 - **Preview Mode**: Test themes before saving
 - **Consistent Styling**: All themes support both UI and syntax highlighting
@@ -39,7 +39,7 @@ A modern, self-contained static notes and documentation system designed for GitL
 ### ⏱️ **Productivity Features**
 - **Built-in Timer**: Integrated timer widget with play/pause/reset functionality
 - **Long-press Reset**: Hold reset button for 3 seconds with visual feedback
-- **Theme-aware Design**: Timer adapts to all 16 themes automatically
+- **Theme-aware Design**: Timer adapts to all 28 themes automatically
 - **Persistent State**: Timer continues running even when switching between notes
 
 ## 🚀 Quick Start
@@ -94,7 +94,7 @@ notes-wiki/
 │   ├── marked.min.js       # Markdown parser
 │   ├── prism.min.js        # Syntax highlighter
 │   └── js-yaml.min.js      # YAML frontmatter parser
-├── themes/                 # 16 built-in themes
+├── themes/                 # 28 built-in themes
 │   ├── light.css
 │   ├── dark.css
 │   ├── vscode-dark-plus.css
@@ -200,7 +200,7 @@ Access settings via the gear icon to configure:
 ### Adding New Features
 1. Modify `script.js` for functionality
 2. Update `style.css` for styling
-3. Test across all 16 themes
+3. Test across all 28 themes
 4. Update documentation as needed
 
 ### Theme Development
@@ -208,6 +208,18 @@ Access settings via the gear icon to configure:
 - Test with various content types
 - Ensure accessibility compliance
 - Validate syntax highlighting colors
+
+### Available Themes (28)
+**Classic**: Light, Dark, Monokai, Dracula, Solarized (Light/Dark)  
+**Modern**: VSCode Dark+, One Dark Pro, Tokyo Night, Nord, Palenight  
+**GitHub**: GitHub Light, GitHub Dark  
+**Gruvbox**: Gruvbox Light, Gruvbox Dark  
+**Material**: Material Ocean  
+**Catppuccin**: Mocha, Latte  
+**Rosé Pine**: Main, Dawn  
+**Ayu**: Light, Dark  
+**Nature**: Everforest Dark  
+**Unique**: Hotdog Stand, Kanagawa, Zenburn, Tomorrow Night, Cobalt2
 
 ## 📄 License
 

@@ -1,0 +1,122 @@
+/* Everforest Dark Theme for Notes Wiki */
+:root[data-theme="everforest-dark"] {
+    /* Background Colors */
+    --bg-primary: #2d353b;
+    --bg-secondary: #343f44;
+    --bg-sidebar: #232a2e;
+    --bg-code: #343f44;
+    --bg-selection: #a7c08033;
+    --bg-dropdown: #343f44;
+    --bg-hover: #3d484d;
+    --bg-tag: #3d484d;
+    
+    /* Text Colors */
+    --text-primary: #d3c6aa;
+    --text-secondary: #9da9a0;
+    --text-muted: #7a8478;
+    --text-heading: #dbbc7f;
+    
+    /* Accent Colors */
+    --accent-primary: #7fbbb3;
+    --accent-secondary: #a7c080;
+    --accent-warning: #dbbc7f;
+    --accent-error: #e67e80;
+    --accent-danger: #e67e80;
+    --accent-info: #7fbbb3;
+    --accent-success: #a7c080;
+    
+    /* Border Colors */
+    --border-primary: #475258;
+    --border-secondary: #56635f;
+    
+    /* Button Colors */
+    --button-bg: #343f44;
+    --button-hover: #3d484d;
+    --button-active: #7fbbb3;
+    
+    /* Badge Colors */
+    --badge-bg: #e67e80;
+    --badge-text: #2d353b;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(35, 42, 46, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(35, 42, 46, 0.4), 0 2px 4px -1px rgba(35, 42, 46, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(35, 42, 46, 0.5), 0 4px 6px -2px rgba(35, 42, 46, 0.4);
+    --shadow-xl: 0 20px 25px -5px rgba(35, 42, 46, 0.6), 0 10px 10px -5px rgba(35, 42, 46, 0.5);
+}
+
+/* Syntax Highlighting - Everforest Dark */
+:root[data-theme="everforest-dark"] .token.comment,
+:root[data-theme="everforest-dark"] .token.prolog,
+:root[data-theme="everforest-dark"] .token.doctype,
+:root[data-theme="everforest-dark"] .token.cdata {
+    color: #7a8478;
+}
+
+:root[data-theme="everforest-dark"] .token.punctuation {
+    color: #9da9a0;
+}
+
+:root[data-theme="everforest-dark"] .token.property,
+:root[data-theme="everforest-dark"] .token.tag,
+:root[data-theme="everforest-dark"] .token.boolean,
+:root[data-theme="everforest-dark"] .token.number,
+:root[data-theme="everforest-dark"] .token.constant,
+:root[data-theme="everforest-dark"] .token.symbol,
+:root[data-theme="everforest-dark"] .token.deleted {
+    color: #e67e80;
+}
+
+:root[data-theme="everforest-dark"] .token.selector,
+:root[data-theme="everforest-dark"] .token.attr-name,
+:root[data-theme="everforest-dark"] .token.string,
+:root[data-theme="everforest-dark"] .token.char,
+:root[data-theme="everforest-dark"] .token.builtin,
+:root[data-theme="everforest-dark"] .token.inserted {
+    color: #a7c080;
+}
+
+:root[data-theme="everforest-dark"] .token.operator,
+:root[data-theme="everforest-dark"] .token.entity,
+:root[data-theme="everforest-dark"] .token.url,
+:root[data-theme="everforest-dark"] .language-css .token.string,
+:root[data-theme="everforest-dark"] .style .token.string {
+    color: #83c092;
+    background: transparent;
+}
+
+:root[data-theme="everforest-dark"] .token.atrule,
+:root[data-theme="everforest-dark"] .token.attr-value,
+:root[data-theme="everforest-dark"] .token.keyword {
+    color: #d699b6;
+}
+
+:root[data-theme="everforest-dark"] .token.function,
+:root[data-theme="everforest-dark"] .token.class-name {
+    color: #7fbbb3;
+}
+
+:root[data-theme="everforest-dark"] .token.regex,
+:root[data-theme="everforest-dark"] .token.important,
+:root[data-theme="everforest-dark"] .token.variable {
+    color: #dbbc7f;
+}
+
+/* Scrollbar Everforest Dark Theme */
+:root[data-theme="everforest-dark"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="everforest-dark"] ::-webkit-scrollbar-thumb {
+    background: #56635f;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="everforest-dark"] ::-webkit-scrollbar-thumb:hover {
+    background: #6f7c76;
+}
+
+/* Firefox Scrollbar Everforest Dark Theme */
+:root[data-theme="everforest-dark"] * {
+    scrollbar-color: #56635f var(--bg-primary);
+}

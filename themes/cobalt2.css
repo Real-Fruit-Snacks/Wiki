@@ -1,0 +1,145 @@
+/* Cobalt2 - Wes Bos's popular blue-based dark theme */
+:root[data-theme="cobalt2"] {
+    /* Primary colors */
+    --primary-color: #FFC600;
+    --secondary-color: #FF9D00;
+    --accent-color: #0088FF;
+    
+    /* Background colors */
+    --bg-color: #193549;
+    --bg-secondary: #15232D;
+    --bg-tertiary: #1F3A52;
+    
+    /* Text colors */
+    --text-color: #FFFFFF;
+    --text-muted: #AAB1C0;
+    --text-dim: #7A8290;
+    
+    /* Border and surface colors */
+    --border-color: #0D3A58;
+    --surface-color: #15232D;
+    --hover-bg: #1F3A52;
+    
+    /* Header and navigation */
+    --header-bg: #193549;
+    --nav-bg: #15232D;
+    --nav-hover-bg: #1F3A52;
+    --nav-border: #0D3A58;
+    --nav-active-bg: #1F3A52;
+    
+    /* Links */
+    --link-color: #FFC600;
+    --link-hover-color: #FFE873;
+    
+    /* Code blocks */
+    --code-bg: #122738;
+    --code-border: #0D3A58;
+    --inline-code-bg: #15232D;
+    --inline-code-color: #FFC600;
+    
+    /* Buttons */
+    --button-bg: #1F3A52;
+    --button-hover-bg: #2A4A64;
+    --button-active-bg: #345A76;
+    --button-text: #FFFFFF;
+    
+    /* Search */
+    --search-bg: #15232D;
+    --search-border: #0D3A58;
+    --search-focus-border: #FFC600;
+    --search-placeholder: #7A8290;
+    
+    /* Tags */
+    --tag-bg: #0D3A58;
+    --tag-hover-bg: #1F3A52;
+    --tag-text: #FFFFFF;
+    
+    /* Scrollbar */
+    --scrollbar-bg: #193549;
+    --scrollbar-thumb: #0D3A58;
+    --scrollbar-thumb-hover: #1F3A52;
+    
+    /* Callouts */
+    --callout-info-bg: #0D3A58;
+    --callout-info-border: #0088FF;
+    --callout-warning-bg: #4A3A0D;
+    --callout-warning-border: #FFC600;
+    --callout-danger-bg: #4A0D0D;
+    --callout-danger-border: #FB94FF;
+    --callout-success-bg: #0D4A0D;
+    --callout-success-border: #9EFF80;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+    
+    /* Syntax highlighting - Cobalt2 colors */
+    --syntax-comment: #0088FF;
+    --syntax-keyword: #FF9D00;
+    --syntax-string: #A5FF90;
+    --syntax-number: #FF628C;
+    --syntax-function: #FFC600;
+    --syntax-variable: #E1EFFF;
+    --syntax-class: #FFEE80;
+    --syntax-constant: #FF628C;
+    --syntax-operator: #FF9D00;
+    --syntax-punctuation: #E1EFFF;
+    --syntax-property: #9EFFFF;
+    --syntax-tag: #FB94FF;
+    --syntax-attribute: #FFC600;
+    --syntax-value: #A5FF90;
+    --syntax-unit: #FF628C;
+    --syntax-regex: #FB94FF;
+    --syntax-important: #FB94FF;
+    --syntax-builtin: #FFC600;
+    --syntax-type: #80FFBB;
+}
+
+/* Syntax highlighting classes for Cobalt2 theme */
+:root[data-theme="cobalt2"] .token.comment,
+:root[data-theme="cobalt2"] .token.prolog,
+:root[data-theme="cobalt2"] .token.doctype,
+:root[data-theme="cobalt2"] .token.cdata { color: var(--syntax-comment); font-style: italic; }
+
+:root[data-theme="cobalt2"] .token.keyword,
+:root[data-theme="cobalt2"] .token.control,
+:root[data-theme="cobalt2"] .token.directive { color: var(--syntax-keyword); }
+
+:root[data-theme="cobalt2"] .token.string,
+:root[data-theme="cobalt2"] .token.char { color: var(--syntax-string); }
+
+:root[data-theme="cobalt2"] .token.number,
+:root[data-theme="cobalt2"] .token.hexcode { color: var(--syntax-number); }
+
+:root[data-theme="cobalt2"] .token.function { color: var(--syntax-function); }
+
+:root[data-theme="cobalt2"] .token.variable { color: var(--syntax-variable); }
+
+:root[data-theme="cobalt2"] .token.class-name,
+:root[data-theme="cobalt2"] .token.maybe-class-name { color: var(--syntax-class); }
+
+:root[data-theme="cobalt2"] .token.constant { color: var(--syntax-constant); }
+
+:root[data-theme="cobalt2"] .token.operator { color: var(--syntax-operator); }
+
+:root[data-theme="cobalt2"] .token.punctuation { color: var(--syntax-punctuation); }
+
+:root[data-theme="cobalt2"] .token.property { color: var(--syntax-property); }
+
+:root[data-theme="cobalt2"] .token.tag { color: var(--syntax-tag); }
+
+:root[data-theme="cobalt2"] .token.attr-name,
+:root[data-theme="cobalt2"] .token.attribute { color: var(--syntax-attribute); }
+
+:root[data-theme="cobalt2"] .token.attr-value,
+:root[data-theme="cobalt2"] .token.value { color: var(--syntax-value); }
+
+:root[data-theme="cobalt2"] .token.regex { color: var(--syntax-regex); }
+
+:root[data-theme="cobalt2"] .token.important { color: var(--syntax-important); }
+
+:root[data-theme="cobalt2"] .token.builtin { color: var(--syntax-builtin); }
+
+:root[data-theme="cobalt2"] .token.type,
+:root[data-theme="cobalt2"] .token.annotation { color: var(--syntax-type); }

@@ -36,7 +36,19 @@ class NotesWiki {
             { id: 'gruvbox-light', name: 'Gruvbox Light', description: 'Retro groove light theme' },
             { id: 'tokyo-night', name: 'Tokyo Night', description: 'A clean dark theme that celebrates Tokyo at night' },
             { id: 'palenight', name: 'Palenight', description: 'An elegant and juicy material-like theme' },
-            { id: 'hotdog-stand', name: 'Hot Dog Stand', description: 'Windows 3.1 classic - Bold red & yellow!' }
+            { id: 'hotdog-stand', name: 'Hot Dog Stand', description: 'Windows 3.1 classic - Bold red & yellow!' },
+            { id: 'catppuccin-mocha', name: 'Catppuccin Mocha', description: 'Dark theme with soft pastel colors' },
+            { id: 'catppuccin-latte', name: 'Catppuccin Latte', description: 'Light theme with warm colors' },
+            { id: 'rose-pine', name: 'Rosé Pine', description: 'Dark theme with muted colors' },
+            { id: 'rose-pine-dawn', name: 'Rosé Pine Dawn', description: 'Light variant of Rosé Pine' },
+            { id: 'material-ocean', name: 'Material Ocean', description: 'Material design dark theme' },
+            { id: 'ayu-dark', name: 'Ayu Dark', description: 'Modern dark theme' },
+            { id: 'ayu-light', name: 'Ayu Light', description: 'Modern light theme' },
+            { id: 'everforest-dark', name: 'Everforest Dark', description: 'Forest-inspired dark theme' },
+            { id: 'kanagawa', name: 'Kanagawa', description: 'Japanese aesthetic inspired dark theme' },
+            { id: 'zenburn', name: 'Zenburn', description: 'Low contrast theme for reduced eye strain' },
+            { id: 'tomorrow-night', name: 'Tomorrow Night', description: 'Popular dark theme from the Tomorrow theme family' },
+            { id: 'cobalt2', name: 'Cobalt2', description: 'Wes Bos\'s popular blue-based dark theme' }
         ];
         
         // Settings
@@ -45,7 +57,7 @@ class NotesWiki {
             showLineNumbers: true,
             enableWordWrap: false,
             recentLimit: 20,
-            theme: 'light',
+            theme: 'tokyo-night',
             autoTheme: false, // Enable automatic theme switching based on system preferences
             activeContext: null,  // Store active context in settings
             stickySearch: false,  // Keep search query when reopening search
@@ -1701,6 +1713,90 @@ class NotesWiki {
                 accent: '#ffeb3b',
                 text: '#ffeb3b',
                 textMuted: '#fff9c4'
+            },
+            'catppuccin-mocha': {
+                bg: '#1e1e2e',
+                border: '#45475a',
+                accent: '#89b4fa',
+                text: '#cdd6f4',
+                textMuted: '#6c7086'
+            },
+            'catppuccin-latte': {
+                bg: '#eff1f5',
+                border: '#bcc0cc',
+                accent: '#1e66f5',
+                text: '#4c4f69',
+                textMuted: '#7c7f93'
+            },
+            'rose-pine': {
+                bg: '#191724',
+                border: '#403d52',
+                accent: '#c4a7e7',
+                text: '#e0def4',
+                textMuted: '#6e6a86'
+            },
+            'rose-pine-dawn': {
+                bg: '#faf4ed',
+                border: '#dfdad9',
+                accent: '#907aa9',
+                text: '#575279',
+                textMuted: '#9893a5'
+            },
+            'material-ocean': {
+                bg: '#0f111a',
+                border: '#232530',
+                accent: '#82aaff',
+                text: '#8f93a2',
+                textMuted: '#464b5d'
+            },
+            'ayu-dark': {
+                bg: '#0a0e14',
+                border: '#1c212a',
+                accent: '#39bae6',
+                text: '#b3b1ad',
+                textMuted: '#626a73'
+            },
+            'ayu-light': {
+                bg: '#fafafa',
+                border: '#e7e8e9',
+                accent: '#41a6d9',
+                text: '#5c6773',
+                textMuted: '#abb0b6'
+            },
+            'everforest-dark': {
+                bg: '#2d353b',
+                border: '#475258',
+                accent: '#7fbbb3',
+                text: '#d3c6aa',
+                textMuted: '#7a8478'
+            },
+            'kanagawa': {
+                bg: '#1f1f28',
+                border: '#54546d',
+                accent: '#7e9cd8',
+                text: '#dcd7ba',
+                textMuted: '#727169'
+            },
+            'zenburn': {
+                bg: '#3f3f3f',
+                border: '#5f5f5f',
+                accent: '#8cd0d3',
+                text: '#dcdccc',
+                textMuted: '#9f9f9f'
+            },
+            'tomorrow-night': {
+                bg: '#1d1f21',
+                border: '#373b41',
+                accent: '#81a2be',
+                text: '#c5c8c6',
+                textMuted: '#969896'
+            },
+            'cobalt2': {
+                bg: '#193549',
+                border: '#0d3a58',
+                accent: '#ffc600',
+                text: '#ffffff',
+                textMuted: '#aab1c0'
             }
         };
         

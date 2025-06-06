@@ -1,0 +1,145 @@
+/* Zenburn - Low contrast theme for reduced eye strain */
+:root[data-theme="zenburn"] {
+    /* Primary colors */
+    --primary-color: #8CD0D3;
+    --secondary-color: #DCA3A3;
+    --accent-color: #93E0E3;
+    
+    /* Background colors */
+    --bg-color: #3F3F3F;
+    --bg-secondary: #4F4F4F;
+    --bg-tertiary: #5F5F5F;
+    
+    /* Text colors */
+    --text-color: #DCDCCC;
+    --text-muted: #9F9F9F;
+    --text-dim: #7F7F7F;
+    
+    /* Border and surface colors */
+    --border-color: #5F5F5F;
+    --surface-color: #4F4F4F;
+    --hover-bg: #5F5F5F;
+    
+    /* Header and navigation */
+    --header-bg: #3F3F3F;
+    --nav-bg: #4F4F4F;
+    --nav-hover-bg: #5F5F5F;
+    --nav-border: #6F6F6F;
+    --nav-active-bg: #5F5F5F;
+    
+    /* Links */
+    --link-color: #8CD0D3;
+    --link-hover-color: #93E0E3;
+    
+    /* Code blocks */
+    --code-bg: #2F2F2F;
+    --code-border: #5F5F5F;
+    --inline-code-bg: #4F4F4F;
+    --inline-code-color: #EFEF8F;
+    
+    /* Buttons */
+    --button-bg: #5F5F5F;
+    --button-hover-bg: #6F6F6F;
+    --button-active-bg: #7F7F7F;
+    --button-text: #DCDCCC;
+    
+    /* Search */
+    --search-bg: #4F4F4F;
+    --search-border: #6F6F6F;
+    --search-focus-border: #8CD0D3;
+    --search-placeholder: #8F8F8F;
+    
+    /* Tags */
+    --tag-bg: #5F5F5F;
+    --tag-hover-bg: #6F6F6F;
+    --tag-text: #DCDCCC;
+    
+    /* Scrollbar */
+    --scrollbar-bg: #3F3F3F;
+    --scrollbar-thumb: #6F6F6F;
+    --scrollbar-thumb-hover: #7F7F7F;
+    
+    /* Callouts */
+    --callout-info-bg: #4F5F5F;
+    --callout-info-border: #8CD0D3;
+    --callout-warning-bg: #5F5F4F;
+    --callout-warning-border: #F0DFAF;
+    --callout-danger-bg: #5F4F4F;
+    --callout-danger-border: #DCA3A3;
+    --callout-success-bg: #4F5F4F;
+    --callout-success-border: #7F9F7F;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+    
+    /* Syntax highlighting - Zenburn colors */
+    --syntax-comment: #7F9F7F;
+    --syntax-keyword: #F0DFAF;
+    --syntax-string: #CC9393;
+    --syntax-number: #8CD0D3;
+    --syntax-function: #EFEF8F;
+    --syntax-variable: #DCDCCC;
+    --syntax-class: #EFEF8F;
+    --syntax-constant: #DCA3A3;
+    --syntax-operator: #F0EFD0;
+    --syntax-punctuation: #DCDCCC;
+    --syntax-property: #DFAF8F;
+    --syntax-tag: #E89393;
+    --syntax-attribute: #93E0E3;
+    --syntax-value: #CC9393;
+    --syntax-unit: #8CD0D3;
+    --syntax-regex: #E89393;
+    --syntax-important: #DCA3A3;
+    --syntax-builtin: #EFEF8F;
+    --syntax-type: #7CB8BB;
+}
+
+/* Syntax highlighting classes for Zenburn theme */
+:root[data-theme="zenburn"] .token.comment,
+:root[data-theme="zenburn"] .token.prolog,
+:root[data-theme="zenburn"] .token.doctype,
+:root[data-theme="zenburn"] .token.cdata { color: var(--syntax-comment); }
+
+:root[data-theme="zenburn"] .token.keyword,
+:root[data-theme="zenburn"] .token.control,
+:root[data-theme="zenburn"] .token.directive { color: var(--syntax-keyword); }
+
+:root[data-theme="zenburn"] .token.string,
+:root[data-theme="zenburn"] .token.char { color: var(--syntax-string); }
+
+:root[data-theme="zenburn"] .token.number,
+:root[data-theme="zenburn"] .token.hexcode { color: var(--syntax-number); }
+
+:root[data-theme="zenburn"] .token.function { color: var(--syntax-function); }
+
+:root[data-theme="zenburn"] .token.variable { color: var(--syntax-variable); }
+
+:root[data-theme="zenburn"] .token.class-name,
+:root[data-theme="zenburn"] .token.maybe-class-name { color: var(--syntax-class); }
+
+:root[data-theme="zenburn"] .token.constant { color: var(--syntax-constant); }
+
+:root[data-theme="zenburn"] .token.operator { color: var(--syntax-operator); }
+
+:root[data-theme="zenburn"] .token.punctuation { color: var(--syntax-punctuation); }
+
+:root[data-theme="zenburn"] .token.property { color: var(--syntax-property); }
+
+:root[data-theme="zenburn"] .token.tag { color: var(--syntax-tag); }
+
+:root[data-theme="zenburn"] .token.attr-name,
+:root[data-theme="zenburn"] .token.attribute { color: var(--syntax-attribute); }
+
+:root[data-theme="zenburn"] .token.attr-value,
+:root[data-theme="zenburn"] .token.value { color: var(--syntax-value); }
+
+:root[data-theme="zenburn"] .token.regex { color: var(--syntax-regex); }
+
+:root[data-theme="zenburn"] .token.important { color: var(--syntax-important); }
+
+:root[data-theme="zenburn"] .token.builtin { color: var(--syntax-builtin); }
+
+:root[data-theme="zenburn"] .token.type,
+:root[data-theme="zenburn"] .token.annotation { color: var(--syntax-type); }

@@ -32,13 +32,13 @@
         ],
         "created": "2025-01-06",
         "author": "Wiki Admin",
-        "description": "Comprehensive test of all 15 themes with various code examples",
+        "description": "Comprehensive test of all 28 themes with various code examples",
         "updated": null,
         "category": null,
         "status": null
       },
-      "content_preview": "This page tests all 15 available themes with various code examples to ensure syntax highlighting works correctly.\n\n\n\n1. Light - Clean light theme\n2. Dark - Easy on the eyes dark theme\n3. VSCode Dark+ ...",
-      "searchable_content": "This page tests all 15 available themes with various code examples to ensure syntax highlighting works correctly.\n\n\n\n1. Light - Clean light theme\n2. Dark - Easy on the eyes dark theme\n3. VSCode Dark+  javascript JavaScript Class Example // ES6 Class with various syntax elements\nclass ThemeManager {\n    constructor(options = {}) {\n        this.themes = options.themes || [];\n        this.currentTheme = options.defaultTheme || 'light';\n        this.callbacks = new Map();\n        this._initialized = false;\n    }\n\n    async initialize() {\n        try {\n            // Load saved theme from localStorage\n            const saved = localStorage.getItem('theme');\n            if (saved && this.themes.includes(saved)) {\n                this.currentTheme = saved;\n            }\n            \n            // Apply the theme\n            await this.applyTheme(this.currentTheme);\n            this._initialized = true;\n            \n            return { success: true, theme: this.currentTheme };\n        } catch (error) {\n            console.error('Failed to initialize theme:', error);\n            return { success: false, error: error.message };\n        }\n    }\n\n    applyTheme(themeName) {\n        // Validate theme exists\n        if (!this.th... (truncated) python Python Data Processing import pandas as pd\nimport numpy as np\nfrom datetime import datetime, timedelta\nfrom typing import List, Dict, Optional, Union\nimport asyncio\n\nclass DataProcessor:\n    \"\"\"Process and analyze time series data with various transformations.\"\"\"\n    \n    def __init__(self, data_path: str, cache_size: int = 1000):\n        self.data_path = data_path\n        self.cache_size = cache_size\n        self._cache: Dict[str, pd.DataFrame] = {}\n        self._metadata = {\n            'created': datetime.now(),\n            'version': '1.0.0',\n            'author': 'System'\n        }\n    \n    @property\n    def is_cached(self) -> bool:\n        \"\"\"Check if data is currently cached.\"\"\"\n        return len(self._cache) > 0\n    \n    async def load_data_async(self, \n                            file_pa",
+      "content_preview": "This page tests all 28 available themes with various code examples to ensure syntax highlighting works correctly.\n\n\n\n1. Light - Clean light theme\n2. Dark - Easy on the eyes dark theme\n3. VSCode Dark+ ...",
+      "searchable_content": "This page tests all 28 available themes with various code examples to ensure syntax highlighting works correctly.\n\n\n\n1. Light - Clean light theme\n2. Dark - Easy on the eyes dark theme\n3. VSCode Dark+  javascript JavaScript Class Example // ES6 Class with various syntax elements\nclass ThemeManager {\n    constructor(options = {}) {\n        this.themes = options.themes || [];\n        this.currentTheme = options.defaultTheme || 'light';\n        this.callbacks = new Map();\n        this._initialized = false;\n    }\n\n    async initialize() {\n        try {\n            // Load saved theme from localStorage\n            const saved = localStorage.getItem('theme');\n            if (saved && this.themes.includes(saved)) {\n                this.currentTheme = saved;\n            }\n            \n            // Apply the theme\n            await this.applyTheme(this.currentTheme);\n            this._initialized = true;\n            \n            return { success: true, theme: this.currentTheme };\n        } catch (error) {\n            console.error('Failed to initialize theme:', error);\n            return { success: false, error: error.message };\n        }\n    }\n\n    applyTheme(themeName) {\n        // Validate theme exists\n        if (!this.th... (truncated) python Python Data Processing import pandas as pd\nimport numpy as np\nfrom datetime import datetime, timedelta\nfrom typing import List, Dict, Optional, Union\nimport asyncio\n\nclass DataProcessor:\n    \"\"\"Process and analyze time series data with various transformations.\"\"\"\n    \n    def __init__(self, data_path: str, cache_size: int = 1000):\n        self.data_path = data_path\n        self.cache_size = cache_size\n        self._cache: Dict[str, pd.DataFrame] = {}\n        self._metadata = {\n            'created': datetime.now(),\n            'version': '1.0.0',\n            'author': 'System'\n        }\n    \n    @property\n    def is_cached(self) -> bool:\n        \"\"\"Check if data is currently cached.\"\"\"\n        return len(self._cache) > 0\n    \n    async def load_data_async(self, \n                            file_pa",
       "code_blocks_count": 7
     },
     {
@@ -475,28 +475,28 @@
     "advanced": 1
   },
   "authors": [
-    "System",
-    "Sarah Johnson",
-    "Database Team",
-    "Architecture Team",
-    "Wiki Admin",
     "Debug",
-    "Maria Rodriguez",
-    "Tutorial Team",
+    "Project Team",
+    "DevOps Team",
+    "System",
+    "Wiki Admin",
+    "Sarah Johnson",
     "Alex Chen",
     "Dev Team",
     "John Doe",
-    "Blog Team",
+    "Maria Rodriguez",
+    "Tutorial Team",
+    "Architecture Team",
     "Jane Smith",
-    "DevOps Team",
-    "Project Team"
+    "Blog Team",
+    "Database Team"
   ],
   "categories": [
+    "projects",
+    "documentation",
     "personal",
     "technical",
     "reference",
-    "projects",
-    "documentation",
     "tutorials"
   ],
   "contexts": [
@@ -526,6 +526,6 @@
       "noteCount": 2
     }
   ],
-  "generated": "2025-06-05T22:19:57.872239",
+  "generated": "2025-06-05T22:53:44.941464",
   "totalNotes": 19
 }
