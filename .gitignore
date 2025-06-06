@@ -3,9 +3,14 @@ test-*.html
 test-*.js
 debug-*.html
 verify-*.html
+verify-*.py
+fix-*.py
 *-summary.md
 *-fix-summary.md
 gitlab-notes-wiki-docs.md
+theme_*.py
+*_verification*.json
+screenshots/
 
 # System files
 .DS_Store

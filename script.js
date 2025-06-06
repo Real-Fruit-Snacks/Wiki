@@ -47,8 +47,7 @@ class NotesWiki {
             { id: 'everforest-dark', name: 'Everforest Dark', description: 'Forest-inspired dark theme' },
             { id: 'kanagawa', name: 'Kanagawa', description: 'Japanese aesthetic inspired dark theme' },
             { id: 'zenburn', name: 'Zenburn', description: 'Low contrast theme for reduced eye strain' },
-            { id: 'tomorrow-night', name: 'Tomorrow Night', description: 'Popular dark theme from the Tomorrow theme family' },
-            { id: 'cobalt2', name: 'Cobalt2', description: 'Wes Bos\'s popular blue-based dark theme' }
+            { id: 'tomorrow-night', name: 'Tomorrow Night', description: 'Popular dark theme from the Tomorrow theme family' }
         ];
         
         // Settings
@@ -1790,13 +1789,6 @@ class NotesWiki {
                 accent: '#81a2be',
                 text: '#c5c8c6',
                 textMuted: '#969896'
-            },
-            'cobalt2': {
-                bg: '#193549',
-                border: '#0d3a58',
-                accent: '#ffc600',
-                text: '#ffffff',
-                textMuted: '#aab1c0'
             }
         };
         

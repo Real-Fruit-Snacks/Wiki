@@ -2,7 +2,7 @@
 :root[data-theme="one-dark-pro"] {
     /* Background Colors */
     --bg-primary: #282c34;
-    --bg-secondary: #21252b;
+    --bg-secondary: #2f333d;
     --bg-sidebar: #2c313a;
     --bg-code: #2c313a;
     --bg-selection: var(--accent-primary)33;
@@ -25,7 +25,7 @@
     --accent-success: #10b981;
     
     /* Border Colors */
-    --border-primary: #3e4451;
+    --border-primary: #4b5263;
     --border-secondary: #2c313a;
     
     /* Button Colors */

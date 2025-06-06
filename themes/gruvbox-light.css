@@ -2,7 +2,7 @@
 :root[data-theme="gruvbox-light"] {
     /* Background Colors */
     --bg-primary: #fbf1c7;
-    --bg-secondary: #f2e5bc;
+    --bg-secondary: #ebdbb2;
     --bg-sidebar: #ebdbb2;
     --bg-code: #ebdbb2;
     --bg-selection: var(--accent-primary)33;

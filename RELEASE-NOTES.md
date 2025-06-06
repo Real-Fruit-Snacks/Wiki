@@ -1,22 +1,56 @@
-# Notes Wiki v1.0.0 - Release Notes
+# Notes Wiki v2.0.0 - Release Notes
 
-🎉 **Initial Release** - December 2024
+🎉 **Major Update** - June 2025
 
 ## 📦 Download
 
-**Offline Package**: `notes-wiki-v1.0.0.tar.gz` (154 KB)
+**Offline Package**: `notes-wiki-v2.0.0.tar.gz` (~200 KB)
 
 - Complete standalone application
 - No internet connection required
 - All features included
-- 17 sample notes with rich content
+- 19 sample notes with rich content
 
-## ✨ Features
+## 🆕 What's New in v2.0.0
+
+### 🎨 **Expanded Theme Collection**
+- **27 professional themes** (up from 16)
+- **New themes added**: Kanagawa, Everforest Dark, Zenburn, Tomorrow Night, Palenight, Rose Pine Dawn, Material Ocean, and more
+- **Fixed dropdown transparency** issues in custom-named themes
+- **Improved theme accuracy** with verified official color palettes
+
+### ⏱️ **Integrated Timer Widget**
+- **Built-in productivity timer** with play/pause/reset functionality
+- **Long-press reset** (3 seconds) with visual feedback
+- **Theme-aware design** that adapts to all 27 themes
+- **Persistent state** between page reloads
+
+### 🎯 **Enhanced Features**
+- **Improved code block styling** with better theme integration
+- **Fixed HTML code copying** with proper entity handling
+- **Better tag filtering** UI with preview tag display
+- **Enhanced share functionality** with floating buttons
+- **Improved expand/collapse** controls for code blocks
+
+### 🐛 **Bug Fixes**
+- Fixed dropdown menu transparency in several themes
+- Corrected color values for 12 themes to match official palettes
+- Improved code block alignment and formatting
+- Fixed HTML entity escaping in code copy functionality
+- Resolved theme preview styling issues
+
+### 🔧 **Technical Improvements**
+- Optimized theme loading performance
+- Better CSS variable mapping for consistent UI
+- Improved build script with better error handling
+- Enhanced search index generation
+
+## ✨ All Features
 
 ### 🎨 **Theme System**
-- **16 VSCode-inspired themes** with live preview
+- **27 VSCode-inspired themes** with live preview
 - **Auto theme detection** based on system preferences  
-- **Theme categories**: Light, Dark, Retro, Modern, and Fun
+- **Theme categories**: Light, Dark, Nature, Terminal, Modern
 - Consistent styling across UI and code blocks
 
 ### 🔍 **Advanced Search**
@@ -38,7 +72,7 @@
 - **Cross-linking** support for internal notes and headings
 
 ### ⚙️ **Customization**
-- **Code block features**: line numbers, word wrap, copy buttons
+- **Code block features**: line numbers, word wrap, copy buttons, collapse
 - **Content width**: narrow, normal, wide, or full-width layouts
 - **Responsive design** optimized for all screen sizes
 - **Offline-first**: all assets bundled locally
@@ -49,77 +83,49 @@
 - **Docker support** via simple HTTP server
 - **Local development** with Python/Node.js/PHP servers
 
-## 📊 **Statistics**
+## 🛠️ Installation
 
-- **Languages**: JavaScript, CSS, Python, Markdown
-- **Total files**: 44 (application + content)
-- **Themes**: 16 complete theme files
-- **Sample content**: 17 notes across 5 contexts
-- **Dependencies**: 3 minified JS libraries (all local)
-- **Size**: 154 KB compressed, ~500 KB extracted
+### Quick Start
+```bash
+# Extract the archive
+tar -xzf notes-wiki-v2.0.0.tar.gz
+cd notes-wiki
 
-## 🎯 **Use Cases**
+# Start local server
+python3 -m http.server 8000
 
-- **Personal knowledge base** for notes and learning
-- **Team documentation** with advanced organization
-- **Project documentation** with syntax highlighting  
-- **Blog/portfolio** as a static site generator
-- **Educational content** with rich formatting
+# Open in browser
+http://localhost:8000
+```
 
-## 🔧 **Technical Details**
+### GitLab Pages Deployment
+1. Push to GitLab repository
+2. Enable Pages in Settings > Pages
+3. CI/CD pipeline will auto-deploy
+4. Access at: `https://username.gitlab.io/project-name`
 
-### **Frontend Stack**
-- Vanilla JavaScript (no framework dependencies)
-- CSS custom properties for theming
-- marked.js v15+ for Markdown parsing
-- Prism.js for syntax highlighting
-- js-yaml for frontmatter parsing
+## 🔄 Upgrading from v1.x
 
-### **Architecture**
-- Client-side routing with hash navigation
-- Local storage for settings and preferences
-- Dynamic search index generation
-- Modular CSS with theme inheritance
+1. Backup your `/notes` folder
+2. Replace all files except `/notes`
+3. Run `python3 build.py` to rebuild index
+4. Clear browser cache for theme updates
 
-### **Browser Support**
-- Modern browsers (Chrome, Firefox, Safari, Edge)
-- ES6+ features used (async/await, modules)
-- CSS Grid and Flexbox for layouts
-- Responsive design with mobile support
+## 📋 Requirements
 
-## 📋 **Installation**
+- Modern web browser (Chrome, Firefox, Safari, Edge)
+- Python 3.x for local development (or any HTTP server)
+- No internet connection required for operation
 
-### **Quick Start**
-1. Extract `notes-wiki-v1.0.0.tar.gz`
-2. Run: `python3 -m http.server 8000`
-3. Open: http://localhost:8000
+## 🤝 Credits
 
-### **Requirements**
-- Web browser (Chrome/Firefox/Safari/Edge)
-- Local HTTP server (Python/Node.js/PHP/Ruby)
-- No database or complex setup required
-
-## 🔮 **Future Roadmap**
-
-- **Plugin system** for custom extensions
-- **Export functionality** (PDF, HTML, etc.)
-- **Advanced search** with regex and filters
-- **Theme editor** with visual customization
-- **Collaboration features** for team usage
-
-## 🤝 **Contributing**
-
-- Fork the repository on GitHub
-- Review the `CLAUDE.md` file for development context
-- Submit pull requests with clear descriptions
-- Test across all 16 themes before submitting
-
-## 📄 **License**
-
-MIT License - Free for personal and commercial use.
+- **Marked.js** - Markdown parsing
+- **Prism.js** - Syntax highlighting
+- **js-yaml** - YAML frontmatter parsing
+- Theme inspirations from VSCode, Catppuccin, Rosé Pine, and more
 
 ---
 
-**Thank you for using Notes Wiki! 🚀**
+📝 **Note**: The Cobalt2 theme has been removed in this release due to maintenance considerations.
 
-*Built with ❤️ for knowledge workers who value simplicity and functionality.*
+🐛 **Found a bug?** Please report issues on our GitHub repository.

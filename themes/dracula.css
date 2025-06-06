@@ -2,7 +2,7 @@
 :root[data-theme="dracula"] {
     /* Background Colors */
     --bg-primary: #282a36;
-    --bg-secondary: #21222c;
+    --bg-secondary: #44475a;
     --bg-sidebar: #1e1f29;
     --bg-code: #282a36;
     --bg-selection: #44475a;

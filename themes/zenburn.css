@@ -3,7 +3,7 @@
     /* Primary colors */
     --primary-color: #8CD0D3;
     --secondary-color: #DCA3A3;
-    --accent-color: #93E0E3;
+    --accent-color: #f0dfaf;
     
     /* Background colors */
     --bg-color: #3F3F3F;
@@ -16,7 +16,7 @@
     --text-dim: #7F7F7F;
     
     /* Border and surface colors */
-    --border-color: #5F5F5F;
+    --border-color: #636363;
     --surface-color: #4F4F4F;
     --hover-bg: #5F5F5F;
     
@@ -74,6 +74,38 @@
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
     
+
+    
+    /* Standard variable mappings for UI consistency */
+    --bg-primary: var(--bg-color);
+    --bg-secondary: #4F4F4F;
+    --bg-dropdown: #4F4F4F;
+    --bg-sidebar: #4F4F4F;
+    --bg-hover: var(--hover-bg);
+    --bg-code: var(--code-bg);
+    --bg-tag: #5F5F5F;
+    
+    --text-primary: var(--text-color);
+    --text-secondary: #FFFFEF;
+    --text-muted: #7F9F7F;
+    --text-heading: #FFFFEF;
+    
+    --accent-primary: var(--link-color);
+    --accent-secondary: var(--accent-color);
+    --accent-warning: var(--accent-color);
+    --accent-error: #CC9393;
+    --accent-info: var(--link-color);
+    --accent-success: #7F9F7F;
+    
+    --border-primary: var(--border-color);
+    --border-secondary: #5F5F5F;
+    
+    --button-bg: var(--button-bg);
+    --button-hover: var(--button-hover-bg);
+    --button-active: var(--button-active-bg);
+    
+    --badge-bg: #CC9393;
+    --badge-text: #DCDCCC;
     /* Syntax highlighting - Zenburn colors */
     --syntax-comment: #7F9F7F;
     --syntax-keyword: #F0DFAF;
