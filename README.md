@@ -2,7 +2,7 @@
 
 A modern, self-contained static notes and documentation system designed for GitLab Pages with advanced features including 50 built-in themes, real-time search, metadata parsing, and complete offline functionality.
 
-![Wiki Screenshot](https://img.shields.io/badge/Status-Ready-green) ![No Dependencies](https://img.shields.io/badge/Dependencies-None-blue) ![Themes](https://img.shields.io/badge/Themes-50-purple)
+![Wiki Screenshot](https://img.shields.io/badge/Status-Ready-green) ![No Dependencies](https://img.shields.io/badge/Dependencies-None-blue) ![Themes](https://img.shields.io/badge/Themes-50-purple) ![Version](https://img.shields.io/badge/Version-2.2.0-blue)
 
 ## 🌟 Features
 
@@ -267,6 +267,26 @@ MIT License - feel free to use for personal or commercial projects.
 - Create an issue for bug reports
 - Check existing issues for solutions
 - Review the codebase documentation
+
+## 📋 Changelog
+
+### v2.2.0 (Latest)
+- **Added 16 new themes** bringing total to 50
+- **Live theme previews** - Each theme card shows actual colors and syntax highlighting
+- **Alphabetical theme sorting** for easier navigation
+- **Fixed recent files** - Now shows all categories with context badges
+- **Fixed duplicate tab bug** when Ctrl+clicking links
+- **Improved tab management** - Closing last tab creates fresh Home tab
+- **Simplified keyboard shortcuts** to essential commands only
+- **Enhanced modal interactions** - Escape key and click-outside to close
+- **Added keyboard shortcut tooltips** on hover
+- **Improved .gitignore** with additional patterns
+
+### v2.1.0
+- Added 6 unique themes: Matrix, Witch Hazel, Vaporwave, Cyberpunk, HackTheBox, ThinkUltra
+- Implemented tab management system
+- Added productivity timer widget
+- Enhanced search functionality
 
 ---
 

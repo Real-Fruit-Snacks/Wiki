@@ -78,3 +78,11 @@ $RECYCLE.BIN/
 .Spotlight-V100
 .Trashes
 .fseventsd
+
+# Local server files
+*.pid
+nohup.out
+
+# IDE specific
+.history/
+*.code-workspace
