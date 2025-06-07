@@ -1,4 +1,40 @@
-# Notes Wiki v2.0.0 - Release Notes
+# Notes Wiki v2.1.0 - Release Notes
+
+🎨 **Theme Expansion Update** - January 2025
+
+## 📦 Download
+
+**Offline Package**: `notes-wiki-v2.1.0.tar.gz` (~220 KB)
+
+- Complete standalone application
+- No internet connection required
+- All features included
+- 19 sample notes with rich content
+
+## 🆕 What's New in v2.1.0
+
+### 🎨 **Six New Themes**
+- **Matrix** - Classic green terminal aesthetic with phosphor glow
+- **Witch Hazel** - Purple-focused dark theme with mystical vibes
+- **Vaporwave** - Retro 80s neon style with pink and cyan accents
+- **Cyberpunk** - Futuristic theme with neon yellow highlights
+- **HackTheBox** - Hacker-inspired green theme for security enthusiasts
+- **ThinkUltra** - Clean minimal theme with subtle accents
+
+### 🐛 **Bug Fixes**
+- Fixed settings modal visibility issues
+- Improved modal backdrop behavior
+- Enhanced theme switching reliability
+
+### 🔧 **Technical Improvements**
+- Updated UI components for better consistency
+- Enhanced build system performance
+- Improved documentation and repository management
+- Streamlined component architecture
+
+---
+
+## Previous Release: v2.0.0
 
 🎉 **Major Update** - June 2025
 
@@ -48,7 +84,7 @@
 ## ✨ All Features
 
 ### 🎨 **Theme System**
-- **27 VSCode-inspired themes** with live preview
+- **33 professional themes** with live preview
 - **Auto theme detection** based on system preferences  
 - **Theme categories**: Light, Dark, Nature, Terminal, Modern
 - Consistent styling across UI and code blocks
