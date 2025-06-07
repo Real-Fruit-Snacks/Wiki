@@ -47,7 +47,13 @@ class NotesWiki {
             { id: 'everforest-dark', name: 'Everforest Dark', description: 'Forest-inspired dark theme' },
             { id: 'kanagawa', name: 'Kanagawa', description: 'Japanese aesthetic inspired dark theme' },
             { id: 'zenburn', name: 'Zenburn', description: 'Low contrast theme for reduced eye strain' },
-            { id: 'tomorrow-night', name: 'Tomorrow Night', description: 'Popular dark theme from the Tomorrow theme family' }
+            { id: 'tomorrow-night', name: 'Tomorrow Night', description: 'Popular dark theme from the Tomorrow theme family' },
+            { id: 'matrix', name: 'Matrix', description: 'Classic terminal green on black - Enter the Matrix' },
+            { id: 'witch-hazel', name: 'Witch Hazel', description: 'Purple-based theme with magical vibes' },
+            { id: 'vaporwave', name: 'Vaporwave', description: 'Retro aesthetic with neon pink and cyan' },
+            { id: 'cyberpunk', name: 'Cyberpunk', description: 'Neon-lit dystopian future theme' },
+            { id: 'hackthebox', name: 'HackTheBox', description: 'Inspired by the HTB platform colors' },
+            { id: 'thinkultra', name: 'ThinkUltra', description: 'ThinkPad-inspired minimalist black theme' }
         ];
         
         // Settings
@@ -175,6 +181,7 @@ class NotesWiki {
             context: note.context,
             codeBlocksCount: note.code_blocks_count || 0
         }));
+        
     }
     
     buildNavigationTree() {
@@ -239,7 +246,7 @@ class NotesWiki {
                         e.preventDefault();
                         
                         // Check if should open in new tab
-                        if (e.ctrlKey || e.metaKey || e.button === 1) {
+                        if (e.ctrlKey || e.metaKey) {
                             this.openInNewTab(value.path);
                         } else {
                             // Check if note is already open in another tab
@@ -255,6 +262,14 @@ class NotesWiki {
                                     this.loadNote(value.path);
                                 }
                             }
+                        }
+                    });
+                    
+                    // Handle middle-click
+                    a.addEventListener('mousedown', (e) => {
+                        if (e.button === 1) {
+                            e.preventDefault();
+                            this.openInNewTab(value.path);
                         }
                     });
                     
@@ -440,18 +455,7 @@ class NotesWiki {
             this.clearRecentFiles();
         });
         
-        // Theme dropdown
-        const themeDropdown = document.getElementById('theme-dropdown');
-        themeDropdown.querySelector('button').addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent document click handler
-            // Close other dropdowns
-            document.querySelectorAll('.dropdown').forEach(d => {
-                if (d !== themeDropdown) {
-                    d.classList.remove('active');
-                }
-            });
-            themeDropdown.classList.toggle('active');
-        });
+        // Theme dropdown is now in settings modal, no header event listener needed
         
         // Settings
         document.getElementById('settings-toggle').addEventListener('click', () => {
@@ -533,16 +537,44 @@ class NotesWiki {
             this.applyWordWrapSetting();
         });
         
-        document.getElementById('recent-limit').addEventListener('change', (e) => {
-            this.settings.recentLimit = parseInt(e.target.value);
-            this.saveSettings();
-        });
+        // Recent limit option pills
+        const recentLimitOptions = document.getElementById('recent-limit-options');
+        if (recentLimitOptions) {
+            recentLimitOptions.addEventListener('click', (e) => {
+                if (e.target.classList.contains('option-pill')) {
+                    // Remove active class from all pills
+                    recentLimitOptions.querySelectorAll('.option-pill').forEach(pill => {
+                        pill.classList.remove('active');
+                    });
+                    // Add active class to clicked pill
+                    e.target.classList.add('active');
+                    // Update setting
+                    this.settings.recentLimit = parseInt(e.target.dataset.value);
+                    this.saveSettings();
+                    this.showToast('Recent files limit updated');
+                }
+            });
+        }
         
-        document.getElementById('content-width').addEventListener('change', (e) => {
-            this.settings.contentWidth = e.target.value;
-            this.saveSettings();
-            this.applyContentWidthSetting();
-        });
+        // Content width option pills
+        const contentWidthOptions = document.getElementById('content-width-options');
+        if (contentWidthOptions) {
+            contentWidthOptions.addEventListener('click', (e) => {
+                if (e.target.classList.contains('option-pill')) {
+                    // Remove active class from all pills
+                    contentWidthOptions.querySelectorAll('.option-pill').forEach(pill => {
+                        pill.classList.remove('active');
+                    });
+                    // Add active class to clicked pill
+                    e.target.classList.add('active');
+                    // Update setting
+                    this.settings.contentWidth = e.target.dataset.value;
+                    this.saveSettings();
+                    this.applyContentWidthSetting();
+                    this.showToast('Content width updated');
+                }
+            });
+        }
         
         // Auto theme toggle - Note: requires 'auto-theme' checkbox in settings modal HTML
         const autoThemeCheckbox = document.getElementById('auto-theme');
@@ -554,12 +586,58 @@ class NotesWiki {
                 // Reinitialize theme based on new setting
                 this.initializeTheme();
                 
-                // Enable/disable theme picker based on auto theme setting
-                const themeList = document.getElementById('theme-list');
-                if (themeList) {
-                    themeList.style.opacity = e.target.checked ? '0.5' : '1';
-                    themeList.style.pointerEvents = e.target.checked ? 'none' : 'auto';
+                // Update theme cards state
+                this.updateAutoThemeState();
+            });
+        }
+        
+        // Sticky search toggle
+        const stickySearchCheckbox = document.getElementById('sticky-search-setting');
+        if (stickySearchCheckbox) {
+            stickySearchCheckbox.addEventListener('change', (e) => {
+                this.settings.stickySearch = e.target.checked;
+                this.saveSettings();
+            });
+        }
+        
+        // Settings navigation buttons
+        const settingsNavButtons = document.querySelectorAll('.settings-nav-item');
+        settingsNavButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const section = button.dataset.section;
+                if (section) {
+                    this.switchSettingsPanel(section);
                 }
+            });
+        });
+        
+        // Settings search input
+        const settingsSearchInput = document.getElementById('settings-search');
+        if (settingsSearchInput) {
+            settingsSearchInput.addEventListener('input', (e) => {
+                this.filterSettings(e.target.value);
+            });
+        }
+        
+        // Clear history button (if it exists in the HTML)
+        const clearHistoryButton = document.getElementById('clear-history-button');
+        if (clearHistoryButton) {
+            clearHistoryButton.addEventListener('click', () => {
+                this.clearRecentFromSettings();
+            });
+        }
+        
+        // Recent limit increment/decrement buttons (if they exist)
+        const incrementButton = document.getElementById('recent-limit-increment');
+        const decrementButton = document.getElementById('recent-limit-decrement');
+        if (incrementButton) {
+            incrementButton.addEventListener('click', () => {
+                this.incrementRecentLimit();
+            });
+        }
+        if (decrementButton) {
+            decrementButton.addEventListener('click', () => {
+                this.decrementRecentLimit();
             });
         }
         
@@ -582,17 +660,52 @@ class NotesWiki {
             }
         });
         
-        // Escape key handling
+        // Global keyboard shortcuts
         document.addEventListener('keydown', (e) => {
+            // Skip if user is typing in an input field
+            const isTyping = e.target.matches('input, textarea, [contenteditable="true"]');
+            
             if (e.key === 'Escape') {
                 this.closeAllDropdowns();
                 this.hideSearch();
                 this.hideSettings();
                 this.hideTagsModal();
-            } else if (e.key === '/' && !e.target.matches('input, textarea')) {
+            } else if (e.key === '/' && !isTyping) {
                 e.preventDefault();
                 this.closeAllDropdowns();
                 this.showSearch();
+            } else if (e.key === '?' && !isTyping) {
+                e.preventDefault();
+                this.showKeyboardShortcuts();
+            } else if ((e.ctrlKey || e.metaKey) && !isTyping) {
+                switch(e.key.toLowerCase()) {
+                    case 'k': // Quick search
+                    case 'f': // Find
+                        e.preventDefault();
+                        this.closeAllDropdowns();
+                        this.showSearch();
+                        break;
+                    case 's': // Save/bookmark
+                        e.preventDefault();
+                        this.bookmarkCurrentNote();
+                        break;
+                    case 'w': // Close tab
+                        e.preventDefault();
+                        this.closeTab(this.activeTabId);
+                        break;
+                    case 'Tab': // Switch tabs
+                        e.preventDefault();
+                        this.switchToNextTab(e.shiftKey);
+                        break;
+                }
+            } else if (e.altKey && !isTyping && e.key >= '1' && e.key <= '9') {
+                // Alt + number to switch to specific tab
+                e.preventDefault();
+                const tabIndex = parseInt(e.key) - 1;
+                const tabIds = Array.from(this.tabs.keys());
+                if (tabIndex < tabIds.length) {
+                    this.switchToTab(tabIds[tabIndex]);
+                }
             }
         });
         
@@ -670,6 +783,14 @@ class NotesWiki {
     async loadNote(path) {
         const mainContent = document.getElementById('main-content');
         
+        // Add loading class to active tab
+        if (this.activeTabId) {
+            const tabElement = document.getElementById(this.activeTabId);
+            if (tabElement) {
+                tabElement.classList.add('loading');
+            }
+        }
+        
         // Show loading state
         mainContent.innerHTML = `
             <div class="loading">
@@ -718,6 +839,16 @@ class NotesWiki {
             
             // Update active state in navigation
             this.setActiveFile(path);
+            
+            // Remove loading class from tab
+            if (this.activeTabId) {
+                const tabElement = document.getElementById(this.activeTabId);
+                if (tabElement) {
+                    tabElement.classList.remove('loading');
+                }
+            }
+            
+            return true; // Return success
         } catch (error) {
             console.error('Failed to load note:', error);
             mainContent.innerHTML = `
@@ -727,7 +858,108 @@ class NotesWiki {
                     <p><a href="#/notes/index.md">Return to home</a></p>
                 </div>
             `;
+            
+            // Remove loading class even on error
+            if (this.activeTabId) {
+                const tabElement = document.getElementById(this.activeTabId);
+                if (tabElement) {
+                    tabElement.classList.remove('loading');
+                }
+            }
+            
+            throw error; // Re-throw for caller to handle
         }
+    }
+    
+    normalizeRelatedPath(relatedPath, currentPath) {
+        // Convert relative or absolute paths to hash routes
+        let normalizedPath = relatedPath.trim();
+        
+        // If it's already a hash route, return as is
+        if (normalizedPath.startsWith('#/')) {
+            return normalizedPath;
+        }
+        
+        // Remove .md extension if present
+        if (normalizedPath.endsWith('.md')) {
+            normalizedPath = normalizedPath.slice(0, -3);
+        }
+        
+        // Handle absolute paths (starting with /)
+        if (normalizedPath.startsWith('/')) {
+            // If it starts with /notes/, use as is
+            if (normalizedPath.startsWith('/notes/')) {
+                return `#${normalizedPath}.md`;
+            }
+            // Otherwise, prepend /notes/
+            return `#/notes${normalizedPath}.md`;
+        }
+        
+        // Handle relative paths
+        if (normalizedPath.startsWith('./') || normalizedPath.startsWith('../')) {
+            // Get the directory of the current file
+            const currentDir = currentPath.substring(0, currentPath.lastIndexOf('/'));
+            
+            // Resolve the relative path
+            const pathParts = normalizedPath.split('/');
+            const dirParts = currentDir.split('/').filter(p => p);
+            
+            for (const part of pathParts) {
+                if (part === '.') {
+                    // Current directory, do nothing
+                } else if (part === '..') {
+                    // Parent directory
+                    dirParts.pop();
+                } else if (part) {
+                    // Regular directory or file
+                    dirParts.push(part);
+                }
+            }
+            
+            return `#/${dirParts.join('/')}.md`;
+        }
+        
+        // If no prefix, assume it's relative to /notes/
+        return `#/notes/${normalizedPath}.md`;
+    }
+    
+    renderRelatedPages(metadata) {
+        if (!metadata.related || (Array.isArray(metadata.related) && metadata.related.length === 0)) {
+            return '';
+        }
+        
+        // Ensure related is an array
+        const relatedPaths = Array.isArray(metadata.related) ? metadata.related : [metadata.related];
+        
+        // Build related pages HTML
+        const relatedItems = relatedPaths.map(relatedPath => {
+            const normalizedPath = this.normalizeRelatedPath(relatedPath, this.currentNote.path);
+            
+            // Try to find the note in the index to get its title
+            const noteInfo = this.notesIndex.notes.find(note => {
+                const notePath = normalizedPath.replace('#', '');
+                return note.path === notePath;
+            });
+            
+            const title = noteInfo ? noteInfo.metadata.title : relatedPath;
+            const description = noteInfo ? noteInfo.metadata.description : '';
+            
+            return `
+                <a href="${normalizedPath}" class="related-page-item">
+                    <div class="related-page-title">${this.escapeHtml(title)}</div>
+                    ${description ? `<div class="related-page-description">${this.escapeHtml(description)}</div>` : ''}
+                </a>
+            `;
+        }).join('');
+        
+        return `
+            <div class="related-pages">
+                <h2 class="related-pages-title">Related Pages</h2>
+                <div class="related-pages-list">
+                    ${relatedItems}
+                </div>
+            </div>
+        `;
     }
     
     parseFrontmatter(markdown) {
@@ -765,19 +997,20 @@ class NotesWiki {
         const self = this; // Store reference to this
         
         renderer.code = function(token) {
-            // marked v15 uses token objects instead of direct parameters
-            // Extract code content and language from token
+            // marked v15 uses token objects
             let codeContent = '';
             let info = '';
             
-            if (typeof token === 'string') {
-                // Fallback for old signature (pre-v15)
-                codeContent = token;
-                info = arguments[1] || '';
-            } else if (typeof token === 'object' && token !== null) {
-                // marked v15+ token object
-                codeContent = token.text || token.raw || '';
+            // In marked v15, the code renderer receives a token object
+            if (typeof token === 'object' && token !== null) {
+                // The actual code content is in token.text
+                codeContent = token.text || '';
+                // The language info is in token.lang
                 info = token.lang || '';
+            } else {
+                // This shouldn't happen with marked v15, but handle it just in case
+                console.warn('Unexpected token type in code renderer:', typeof token);
+                codeContent = String(token);
             }
             
             // Remove any trailing newline from code content
@@ -893,17 +1126,13 @@ class NotesWiki {
             html += '</div>';
             
             return html;
-        }.bind(this);  // Bind this context
+        };  // No need to bind since we're using arrow function inside
         
-        // Configure marked with custom extensions
-        marked.setOptions({
+        // Configure marked with custom renderer and options
+        marked.use({
             renderer: renderer,
             breaks: true,
-            gfm: true
-        });
-        
-        // Add callout extension
-        marked.use({
+            gfm: true,
             extensions: [this.createCalloutExtension()]
         });
         
@@ -965,6 +1194,8 @@ class NotesWiki {
                 <article class="note-content">
                     ${html}
                 </article>
+                
+                ${this.renderRelatedPages(metadata)}
             </div>
             
             <!-- Floating share button -->
@@ -991,8 +1222,14 @@ class NotesWiki {
         // Handle internal links and tag links
         mainContent.querySelectorAll('a[href^="#"]').forEach(link => {
             link.addEventListener('click', (e) => {
-                if (e.ctrlKey || e.metaKey || e.button === 1) {
-                    // Let the global tab handler deal with this
+                if (e.ctrlKey || e.metaKey) {
+                    // Open in new tab
+                    e.preventDefault();
+                    const href = link.getAttribute('href');
+                    if (href.startsWith('#/') && !href.startsWith('#/tags/')) {
+                        const path = href.slice(1);
+                        this.openInNewTab(path);
+                    }
                     return;
                 }
                 
@@ -1172,6 +1409,24 @@ class NotesWiki {
         }
     }
     
+    bookmarkCurrentNote() {
+        if (!this.currentNote) {
+            this.showToast('No note to bookmark');
+            return;
+        }
+        
+        // For now, just copy the URL to clipboard
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+            this.showToast('Note link copied to clipboard');
+        }).catch(() => {
+            this.showToast('Failed to copy link');
+        });
+        
+        // TODO: In the future, implement actual bookmarking functionality
+        // This could save to a special bookmarks list in localStorage
+    }
+    
     toggleCodeBlock(blockId) {
         const codeBlock = document.getElementById(blockId);
         if (codeBlock) {
@@ -1233,6 +1488,19 @@ class NotesWiki {
     }
     
     showSearch() {
+        // Temporarily build a global search index that includes all notes
+        const allNotes = this.notesIndex.notes;
+        this.globalSearchIndex = allNotes.map(note => ({
+            path: note.path,
+            title: note.metadata.title || '',
+            description: note.metadata.description || '',
+            tags: note.metadata.tags || [],
+            author: note.metadata.author || '',
+            content: note.searchable_content || note.content_preview || '',
+            context: note.context,
+            codeBlocksCount: note.code_blocks_count || 0
+        }));
+        
         document.getElementById('search-overlay').style.display = 'block';
         const searchInput = document.getElementById('search-input');
         const stickyCheckbox = document.getElementById('sticky-search');
@@ -1263,6 +1531,9 @@ class NotesWiki {
         }
         
         document.getElementById('search-results').innerHTML = '';
+        
+        // Clean up global search index
+        this.globalSearchIndex = null;
     }
     
     performSearch(query) {
@@ -1275,7 +1546,11 @@ class NotesWiki {
         
         // Simple fuzzy search
         const searchTerms = query.toLowerCase().split(' ');
-        const matches = this.searchIndex.filter(item => {
+        
+        // Use global search index if available (when search modal is open), otherwise use context-filtered index
+        const searchIndex = this.globalSearchIndex || this.searchIndex;
+        
+        const matches = searchIndex.filter(item => {
             const searchText = `${item.title} ${item.description} ${item.tags.join(' ')} ${item.author} ${item.content}`.toLowerCase();
             return searchTerms.every(term => searchText.includes(term));
         });
@@ -1311,7 +1586,7 @@ class NotesWiki {
                 }
                 
                 // Check if should open in new tab
-                if (e.ctrlKey || e.metaKey || e.button === 1) {
+                if (e.ctrlKey || e.metaKey) {
                     this.openInNewTab(match.path);
                 } else {
                     // Check if note is already open in another tab
@@ -1331,6 +1606,14 @@ class NotesWiki {
                 
                 // Hide search overlay
                 this.hideSearch();
+            });
+            
+            // Handle middle-click
+            a.addEventListener('mousedown', (e) => {
+                if (e.button === 1) {
+                    e.preventDefault();
+                    this.openInNewTab(match.path);
+                }
             });
             
             results.appendChild(a);
@@ -1364,8 +1647,26 @@ class NotesWiki {
         document.getElementById('track-recent').checked = this.settings.trackRecent;
         document.getElementById('show-line-numbers').checked = this.settings.showLineNumbers;
         document.getElementById('enable-word-wrap').checked = this.settings.enableWordWrap;
-        document.getElementById('recent-limit').value = this.settings.recentLimit;
-        document.getElementById('content-width').value = this.settings.contentWidth;
+        // Update recent limit option pills
+        const recentLimitOptions = document.getElementById('recent-limit-options');
+        if (recentLimitOptions) {
+            recentLimitOptions.querySelectorAll('.option-pill').forEach(pill => {
+                pill.classList.remove('active');
+                if (parseInt(pill.dataset.value) === this.settings.recentLimit) {
+                    pill.classList.add('active');
+                }
+            });
+        }
+        // Update content width option pills
+        const contentWidthOptions = document.getElementById('content-width-options');
+        if (contentWidthOptions) {
+            contentWidthOptions.querySelectorAll('.option-pill').forEach(pill => {
+                pill.classList.remove('active');
+                if (pill.dataset.value === this.settings.contentWidth) {
+                    pill.classList.add('active');
+                }
+            });
+        }
         
         // Update auto theme checkbox if it exists
         const autoThemeCheckbox = document.getElementById('auto-theme');
@@ -1373,16 +1674,153 @@ class NotesWiki {
             autoThemeCheckbox.checked = this.settings.autoTheme;
         }
         
-        // Update theme list state based on auto theme setting
-        const themeList = document.getElementById('theme-list');
-        if (themeList && this.settings.autoTheme) {
-            themeList.style.opacity = '0.5';
-            themeList.style.pointerEvents = 'none';
+        // Update sticky search checkbox
+        const stickySearchCheckbox = document.getElementById('sticky-search-setting');
+        if (stickySearchCheckbox) {
+            stickySearchCheckbox.checked = this.settings.stickySearch || false;
         }
+        
+        // Initialize current theme display
+        this.updateCurrentThemeDisplay();
+        
+        // Reset to general section
+        this.switchSettingsPanel('general');
+        
+        // Clear search input
+        const searchInput = document.getElementById('settings-search');
+        if (searchInput) {
+            searchInput.value = '';
+        }
+        
+        // Populate theme picker
+        this.populateThemePicker();
+        
+        // Update auto-theme state for the new card-based layout
+        this.updateAutoThemeState();
     }
     
     hideSettings() {
         document.getElementById('settings-modal').style.display = 'none';
+    }
+    
+    switchSettingsPanel(panelName) {
+        // Update navigation items
+        const navItems = document.querySelectorAll('.settings-nav-item');
+        navItems.forEach(item => {
+            if (item.dataset.section === panelName) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+        
+        // Update sections
+        const sections = document.querySelectorAll('[id^="settings-section-"]');
+        sections.forEach(section => {
+            if (section.id === `settings-section-${panelName}`) {
+                section.classList.add('active');
+            } else {
+                section.classList.remove('active');
+            }
+        });
+    }
+    
+    filterSettings(searchTerm) {
+        const normalizedSearch = searchTerm.toLowerCase().trim();
+        const sections = document.querySelectorAll('[id^="settings-section-"]');
+        const navItems = document.querySelectorAll('.settings-nav-item');
+        
+        if (!normalizedSearch) {
+            // Show all settings and navigation items
+            sections.forEach(section => {
+                section.style.display = 'block';
+                const items = section.querySelectorAll('.setting-item');
+                items.forEach(item => item.style.display = 'flex');
+            });
+            navItems.forEach(item => item.style.display = 'flex');
+            return;
+        }
+        
+        // Hide all sections and nav items initially
+        sections.forEach(section => section.style.display = 'none');
+        navItems.forEach(item => item.style.display = 'none');
+        
+        // Search through settings
+        sections.forEach(section => {
+            let hasVisibleSettings = false;
+            const items = section.querySelectorAll('.setting-item');
+            
+            items.forEach(item => {
+                const name = item.querySelector('.setting-name')?.textContent.toLowerCase() || '';
+                const description = item.querySelector('.setting-description')?.textContent.toLowerCase() || '';
+                
+                if (name.includes(normalizedSearch) || description.includes(normalizedSearch)) {
+                    item.style.display = 'flex';
+                    hasVisibleSettings = true;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // Show section if it has visible settings
+            if (hasVisibleSettings) {
+                section.style.display = 'block';
+                // Show corresponding nav item
+                const sectionId = section.id.replace('settings-section-', '');
+                const navItem = document.querySelector(`.settings-nav-item[data-section="${sectionId}"]`);
+                if (navItem) {
+                    navItem.style.display = 'flex';
+                }
+            }
+        });
+        
+        // Activate first visible section
+        const firstVisibleSection = Array.from(sections).find(s => s.style.display !== 'none');
+        if (firstVisibleSection) {
+            const sectionId = firstVisibleSection.id.replace('settings-section-', '');
+            this.switchSettingsPanel(sectionId);
+        }
+    }
+    
+    clearRecentFromSettings() {
+        if (confirm('Are you sure you want to clear your recent file history?')) {
+            this.recentFiles = [];
+            this.saveRecentFiles();
+            this.updateRecentFilesUI();
+            this.showToast('Recent file history cleared');
+        }
+    }
+    
+    incrementRecentLimit() {
+        const input = document.getElementById('recent-limit');
+        if (input) {
+            const currentValue = parseInt(input.value) || 10;
+            const newValue = Math.min(currentValue + 1, 50); // Max 50
+            input.value = newValue;
+            this.settings.recentLimit = newValue;
+            this.saveSettings();
+        }
+    }
+    
+    decrementRecentLimit() {
+        const input = document.getElementById('recent-limit');
+        if (input) {
+            const currentValue = parseInt(input.value) || 10;
+            const newValue = Math.max(currentValue - 1, 1); // Min 1
+            input.value = newValue;
+            this.settings.recentLimit = newValue;
+            this.saveSettings();
+        }
+    }
+    
+    updateCurrentThemeDisplay() {
+        const currentThemeElement = document.getElementById('current-theme-name');
+        if (currentThemeElement) {
+            const currentTheme = this.themes.find(t => t.id === this.settings.theme);
+            if (currentTheme) {
+                currentThemeElement.textContent = currentTheme.name;
+            }
+        }
     }
     
     showTagsModal() {
@@ -1411,6 +1849,66 @@ class NotesWiki {
             }
             this.filterTagsBySearch('');
         }
+    }
+    
+    showKeyboardShortcuts() {
+        const shortcuts = [
+            { keys: '/', description: 'Open search' },
+            { keys: '?', description: 'Show this help' },
+            { keys: 'Esc', description: 'Close all dialogs' },
+            { keys: 'Ctrl/⌘ + K', description: 'Quick search' },
+            { keys: 'Ctrl/⌘ + F', description: 'Find in notes' },
+            { keys: 'Ctrl/⌘ + W', description: 'Close current tab' },
+            { keys: 'Ctrl/⌘ + Tab', description: 'Next tab' },
+            { keys: 'Ctrl/⌘ + Shift + Tab', description: 'Previous tab' },
+            { keys: 'Alt + 1-9', description: 'Jump to specific tab' },
+            { keys: 'Ctrl/⌘ + S', description: 'Copy note link' },
+            { keys: 'Ctrl/⌘ + Click', description: 'Open link in new tab' },
+            { keys: 'Middle Click', description: 'Open link in new tab / Close tab' }
+        ];
+        
+        const modalHtml = `
+            <div class="modal" id="shortcuts-modal" style="display: flex;">
+                <div class="modal-content" style="max-width: 600px;">
+                    <div class="modal-header">
+                        <h2>Keyboard Shortcuts</h2>
+                        <button class="icon-button" onclick="document.getElementById('shortcuts-modal').remove()">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            ${shortcuts.map(s => `
+                                <tr style="border-bottom: 1px solid var(--border-primary);">
+                                    <td style="padding: 12px; font-family: var(--font-mono); font-size: 14px; color: var(--accent-primary);">
+                                        ${this.escapeHtml(s.keys)}
+                                    </td>
+                                    <td style="padding: 12px; color: var(--text-secondary);">
+                                        ${this.escapeHtml(s.description)}
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Add modal to body
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = modalHtml;
+        document.body.appendChild(tempDiv.firstElementChild);
+        
+        // Add event listener to close on Escape
+        const closeHandler = (e) => {
+            if (e.key === 'Escape') {
+                document.getElementById('shortcuts-modal')?.remove();
+                document.removeEventListener('keydown', closeHandler);
+            }
+        };
+        document.addEventListener('keydown', closeHandler);
     }
     
     updateTagsUI() {
@@ -1483,68 +1981,129 @@ class NotesWiki {
         }
     }
     
-    populateThemePicker() {
-        const themeList = document.getElementById('theme-list');
-        const themeDropdown = document.getElementById('theme-dropdown');
+    populateThemeCards() {
+        const themeCardsGrid = document.getElementById('theme-cards-grid');
+        const themeCardsContainer = document.getElementById('theme-cards-container');
         
-        // Store the original theme and preview theme
-        this.originalTheme = this.settings.theme;
-        this.previewTheme = null;
+        if (!themeCardsGrid) return;
         
-        // Add save button at the top of the dropdown
-        const saveSection = document.createElement('div');
-        saveSection.className = 'theme-save-section';
-        saveSection.innerHTML = `
-            <button id="save-theme" class="button button-primary" disabled>
-                Save Theme
-            </button>
-            <button id="cancel-theme" class="button button-secondary">
-                Cancel
-            </button>
-        `;
+        // Clear existing cards
+        themeCardsGrid.innerHTML = '';
         
-        // Insert save section at the beginning of dropdown content
-        const dropdownContent = themeDropdown.querySelector('.dropdown-content');
-        const existingHeader = dropdownContent.querySelector('h3');
-        if (existingHeader) {
-            existingHeader.insertAdjacentElement('afterend', saveSection);
-        } else {
-            dropdownContent.insertBefore(saveSection, dropdownContent.firstChild);
-        }
-        
-        // Handle save button
-        document.getElementById('save-theme').addEventListener('click', () => {
-            if (this.previewTheme) {
-                this.settings.theme = this.previewTheme;
-                this.originalTheme = this.previewTheme;
+        // Create theme cards
+        this.themes.forEach(theme => {
+            const card = document.createElement('div');
+            card.className = 'theme-card';
+            card.dataset.themeId = theme.id;
+            
+            // Mark current theme as active
+            if (theme.id === this.settings.theme) {
+                card.classList.add('active');
+            }
+            
+            // Get theme colors for preview
+            const previewColors = this.getThemePreviewColors(theme.id);
+            
+            card.innerHTML = `
+                <div class="theme-card-preview">
+                    <div class="preview-section">
+                        <div class="preview-bg" style="background: ${previewColors.bg};"></div>
+                        <div class="preview-accent" style="background: ${previewColors.accent};"></div>
+                    </div>
+                    <div class="preview-section">
+                        <div class="preview-bg" style="background: ${previewColors.text}; opacity: 0.1;"></div>
+                    </div>
+                </div>
+                <div class="theme-card-title">${theme.name}</div>
+                <div class="theme-card-description">${theme.description}</div>
+            `;
+            
+            // Handle theme selection
+            card.addEventListener('click', () => {
+                // If auto-theme is enabled, disable it when user selects a theme
+                if (this.settings.autoTheme) {
+                    this.settings.autoTheme = false;
+                    this.saveSettings();
+                    
+                    // Update auto-theme checkbox
+                    const autoThemeCheckbox = document.getElementById('auto-theme');
+                    if (autoThemeCheckbox) {
+                        autoThemeCheckbox.checked = false;
+                    }
+                    
+                    // Hide auto-theme overlay
+                    this.updateAutoThemeState();
+                }
+                
+                // Apply the selected theme
+                this.applyTheme(theme.id);
+                this.settings.theme = theme.id;
                 this.saveSettings();
                 
-                // Close dropdown
-                themeDropdown.classList.remove('active');
+                // Update visual state
+                themeCardsGrid.querySelectorAll('.theme-card').forEach(c => {
+                    c.classList.remove('active');
+                });
+                card.classList.add('active');
                 
-                // Show success toast
-                this.showToast('Theme saved successfully!');
-            }
-        });
-        
-        // Handle cancel button
-        document.getElementById('cancel-theme').addEventListener('click', () => {
-            // Restore original theme
-            this.applyTheme(this.originalTheme);
-            this.previewTheme = null;
-            
-            // Reset UI state
-            document.getElementById('save-theme').disabled = true;
-            themeList.querySelectorAll('.theme-item').forEach(item => {
-                item.classList.remove('previewing');
-                if (item.dataset.themeId === this.originalTheme) {
-                    item.classList.add('active');
-                }
+                // Show success feedback
+                this.showToast(`${theme.name} theme applied!`);
             });
             
-            // Close dropdown
-            themeDropdown.classList.remove('active');
+            themeCardsGrid.appendChild(card);
         });
+        
+        // Update auto-theme state
+        this.updateAutoThemeState();
+    }
+    
+    updateAutoThemeState() {
+        const themeCardsContainer = document.getElementById('theme-cards-container');
+        const autoThemeOverlay = document.getElementById('auto-theme-overlay');
+        
+        if (!themeCardsContainer || !autoThemeOverlay) return;
+        
+        if (this.settings.autoTheme) {
+            themeCardsContainer.classList.add('auto-theme-enabled');
+            autoThemeOverlay.style.display = 'flex';
+            
+            // Add click handler to disable auto-theme
+            autoThemeOverlay.onclick = () => {
+                this.settings.autoTheme = false;
+                this.saveSettings();
+                
+                // Update auto-theme checkbox
+                const autoThemeCheckbox = document.getElementById('auto-theme');
+                if (autoThemeCheckbox) {
+                    autoThemeCheckbox.checked = false;
+                }
+                
+                // Update visual state
+                this.updateAutoThemeState();
+                
+                // Show feedback
+                this.showToast('Auto-theme disabled. You can now select themes manually.');
+            };
+        } else {
+            themeCardsContainer.classList.remove('auto-theme-enabled');
+            autoThemeOverlay.style.display = 'none';
+            autoThemeOverlay.onclick = null; // Remove event handler
+        }
+    }
+    
+    // Keep the old function name for backward compatibility but redirect to new implementation
+    populateThemePicker() {
+        // Check if we're using the new card-based approach
+        if (document.getElementById('theme-cards-grid')) {
+            this.populateThemeCards();
+            return;
+        }
+        
+        // Legacy dropdown approach (if needed for header dropdown)
+        const themeList = document.getElementById('theme-list');
+        if (!themeList) return;
+        
+        themeList.innerHTML = '';
         
         this.themes.forEach(theme => {
             const item = document.createElement('div');
@@ -1555,7 +2114,6 @@ class NotesWiki {
                 item.classList.add('active');
             }
             
-            // Create a more accurate theme preview based on actual theme colors
             const previewColors = this.getThemePreviewColors(theme.id);
             
             item.innerHTML = `
@@ -1572,26 +2130,17 @@ class NotesWiki {
                 </div>
             `;
             
-            // Click to preview theme
             item.addEventListener('click', () => {
-                // Apply theme preview
                 this.applyTheme(theme.id);
-                this.previewTheme = theme.id;
+                this.settings.theme = theme.id;
+                this.saveSettings();
                 
-                // Enable save button
-                document.getElementById('save-theme').disabled = false;
-                
-                // Update visual state
                 themeList.querySelectorAll('.theme-item').forEach(i => {
-                    i.classList.remove('previewing');
                     i.classList.remove('active');
                 });
-                item.classList.add('previewing');
+                item.classList.add('active');
                 
-                // Show which theme is being previewed
-                if (theme.id === this.originalTheme) {
-                    item.classList.add('active');
-                }
+                this.showToast('Theme applied successfully!');
             });
             
             themeList.appendChild(item);
@@ -1789,6 +2338,48 @@ class NotesWiki {
                 accent: '#81a2be',
                 text: '#c5c8c6',
                 textMuted: '#969896'
+            },
+            'matrix': {
+                bg: '#0D0208',
+                border: '#008F11',
+                accent: '#00FF41',
+                text: '#00FF41',
+                textMuted: '#006600'
+            },
+            'witch-hazel': {
+                bg: '#433e56',
+                border: '#716799',
+                accent: '#1bc5e0',
+                text: '#F8F8F0',
+                textMuted: '#a599c7'
+            },
+            'vaporwave': {
+                bg: '#300350',
+                border: '#B967FF',
+                accent: '#FF71CE',
+                text: '#FFFB96',
+                textMuted: '#B967FF'
+            },
+            'cyberpunk': {
+                bg: '#091833',
+                border: '#0ABDC6',
+                accent: '#EA00D9',
+                text: '#0ABDC6',
+                textMuted: '#7a8bb5'
+            },
+            'hackthebox': {
+                bg: '#1a2332',
+                border: '#313f55',
+                accent: '#9fef00',
+                text: '#a4b1cd',
+                textMuted: '#7d8ca8'
+            },
+            'thinkultra': {
+                bg: '#000000',
+                border: '#4D4D4D',
+                accent: '#E60012',
+                text: '#E8E8E8',
+                textMuted: '#808080'
             }
         };
         
@@ -1852,6 +2443,9 @@ class NotesWiki {
         if (!this.settings.autoTheme) {
             this.settings.theme = themeId;
         }
+        
+        // Update current theme display in settings modal
+        this.updateCurrentThemeDisplay();
     }
     
     loadRecentFiles() {
@@ -1922,7 +2516,7 @@ class NotesWiki {
                     e.preventDefault();
                     
                     // Check if should open in new tab
-                    if (e.ctrlKey || e.metaKey || e.button === 1) {
+                    if (e.ctrlKey || e.metaKey) {
                         this.openInNewTab(file.path);
                     } else {
                         // Check if note is already open in another tab
@@ -1942,6 +2536,15 @@ class NotesWiki {
                     
                     // Close the dropdown
                     document.getElementById('recent-dropdown').classList.remove('active');
+                });
+                
+                // Handle middle-click
+                a.addEventListener('mousedown', (e) => {
+                    if (e.button === 1) {
+                        e.preventDefault();
+                        this.openInNewTab(file.path);
+                        document.getElementById('recent-dropdown').classList.remove('active');
+                    }
                 });
                 
                 li.appendChild(a);
@@ -2246,9 +2849,12 @@ class NotesWiki {
     // Tab Management Methods
     initializeTabs() {
         // Set up event listeners for tab system
-        document.getElementById('tab-new-button').addEventListener('click', () => {
-            this.createNewTab();
-        });
+        const closeAllButton = document.getElementById('tab-close-all-button');
+        if (closeAllButton) {
+            closeAllButton.addEventListener('click', () => {
+                this.closeAllTabs();
+            });
+        }
         
         // Try to restore saved tabs
         if (!this.restoreTabState()) {
@@ -2260,18 +2866,7 @@ class NotesWiki {
         // Global click handler removed - we now handle clicks on individual links
         // to avoid duplicate tab creation
         
-        // Keyboard shortcuts
-        document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey || e.metaKey) {
-                if (e.key === 'w') {
-                    e.preventDefault();
-                    this.closeTab(this.activeTabId);
-                } else if (e.key === 'Tab') {
-                    e.preventDefault();
-                    this.switchToNextTab(e.shiftKey);
-                }
-            }
-        });
+        // Tab keyboard shortcuts are now handled in the global keyboard handler
         
         // Ensure tag count badge is properly initialized
         this.updateTagCountBadge();
@@ -2288,8 +2883,8 @@ class NotesWiki {
         
         this.tabs.set(tabId, tab);
         this.renderTab(tabId);
-        // When creating a new tab, preserve the current context
-        this.switchToTab(tabId, true);
+        // Switch to tab and update context if needed
+        this.switchToTab(tabId, false);
         
         // Load content for the tab
         if (path) {
@@ -2402,9 +2997,19 @@ class NotesWiki {
                 currentTab.scrollPosition = document.getElementById('main-content').scrollTop;
             }
             
-            // Save current tab's content
+            // Save current tab's content with memory management
             const content = document.getElementById('main-content').innerHTML;
             this.tabContents.set(this.activeTabId, content);
+            
+            // Limit cache size to prevent memory issues
+            const MAX_CACHED_TABS = 10;
+            if (this.tabContents.size > MAX_CACHED_TABS) {
+                // Remove oldest cached content (first in map)
+                const firstKey = this.tabContents.keys().next().value;
+                if (firstKey !== this.activeTabId) {
+                    this.tabContents.delete(firstKey);
+                }
+            }
         }
         
         // Update active states
@@ -2413,25 +3018,44 @@ class NotesWiki {
         
         this.activeTabId = tabId;
         
-        // Restore tab content and scroll position
-        const savedContent = this.tabContents.get(tabId);
-        if (savedContent) {
-            document.getElementById('main-content').innerHTML = savedContent;
-            document.getElementById('main-content').scrollTop = tab.scrollPosition || 0;
-            
-            // Re-setup event listeners for the restored content
-            this.setupContentEventListeners();
+        // Check if tab has pending load
+        if (tab.pendingLoad) {
+            const pendingPath = tab.pendingLoad;
+            delete tab.pendingLoad;
+            this.loadNote(pendingPath).then(() => {
+                // Update tab title after successful load
+                if (this.currentNote && this.currentNote.metadata.title) {
+                    tab.title = this.currentNote.metadata.title;
+                    const tabElement = document.getElementById(tabId);
+                    if (tabElement) {
+                        tabElement.querySelector('.tab-title').textContent = tab.title;
+                    }
+                    this.saveTabState();
+                }
+            }).catch(() => {
+                // Load failed, keep the placeholder title
+            });
         } else {
-            // Load content if not cached
-            this.loadNoteInTab(tab.path, tabId);
+            // Restore tab content and scroll position
+            const savedContent = this.tabContents.get(tabId);
+            if (savedContent) {
+                document.getElementById('main-content').innerHTML = savedContent;
+                document.getElementById('main-content').scrollTop = tab.scrollPosition || 0;
+                
+                // Re-setup event listeners for the restored content
+                this.setupContentEventListeners();
+            } else {
+                // Load content if not cached
+                this.loadNoteInTab(tab.path, tabId);
+            }
         }
         
         // Update URL
         window.history.replaceState(null, '', `#${tab.path}`);
         
-        // Only switch context if not preserving it (i.e., when switching existing tabs)
+        // Always switch to the appropriate context when switching tabs
         if (!preserveContext) {
-            // Check if we need to switch context first
+            // Check if we need to switch context
             const noteData = this.notesIndex.notes.find(note => note.path === tab.path);
             if (noteData && noteData.context !== this.activeContext) {
                 // Switch to the note's context
@@ -2466,12 +3090,48 @@ class NotesWiki {
         
         // If closing active tab, switch to another
         if (tabId === this.activeTabId) {
-            const remainingTabs = Array.from(this.tabs.keys());
-            const newActiveTab = remainingTabs[remainingTabs.length - 1];
-            this.switchToTab(newActiveTab);
+            const tabIds = Array.from(this.tabs.keys());
+            const currentIndex = tabIds.indexOf(tabId);
+            let newActiveTab;
+            
+            // Try to switch to the next tab, or previous if it's the last tab
+            if (currentIndex < tabIds.length - 1) {
+                newActiveTab = tabIds[currentIndex + 1];
+            } else if (currentIndex > 0) {
+                newActiveTab = tabIds[currentIndex - 1];
+            } else {
+                // This was the last tab, find any remaining
+                const remainingTabs = Array.from(this.tabs.keys());
+                newActiveTab = remainingTabs[0];
+            }
+            
+            if (newActiveTab) {
+                this.switchToTab(newActiveTab);
+            }
         }
         
         this.saveTabState();
+    }
+    
+    closeAllTabs() {
+        // Clear all tabs from DOM
+        document.getElementById('tabs-container').innerHTML = '';
+        
+        // Clear all tabs from memory
+        this.tabs.clear();
+        this.tabContents.clear();
+        
+        // Reset tab counter
+        this.tabIdCounter = 0;
+        
+        // Clear saved tab state
+        localStorage.removeItem('tabState');
+        
+        // Create a single tab with the home page
+        this.createNewTab('/notes/index.md', 'Home');
+        
+        // Show a confirmation toast
+        this.showToast('All tabs closed');
     }
     
     switchToNextTab(reverse = false) {
@@ -2491,12 +3151,21 @@ class NotesWiki {
     }
     
     openInNewTab(path) {
-        // Extract title from path or use default
-        const parts = path.split('/');
-        const filename = parts[parts.length - 1];
-        const title = filename.replace('.md', '').replace(/-/g, ' ');
+        // Check if a tab with this path already exists
+        const existingTabId = this.findTabByPath(path);
         
-        this.createNewTab(path, title);
+        if (existingTabId) {
+            // Tab already exists, switch to it
+            this.switchToTab(existingTabId);
+        } else {
+            // Create new tab
+            // Extract title from path or use default
+            const parts = path.split('/');
+            const filename = parts[parts.length - 1];
+            const title = filename.replace('.md', '').replace(/-/g, ' ');
+            
+            this.createNewTab(path, title);
+        }
     }
     
     findTabByPath(path) {
@@ -2510,31 +3179,42 @@ class NotesWiki {
     }
     
     loadNoteInTab(path, tabId) {
-        // Use existing loadNote method but update the tab after loading
-        const originalTabId = this.activeTabId;
-        this.activeTabId = tabId;
+        // Check if this is the active tab
+        const isActiveTab = tabId === this.activeTabId;
         
-        const originalCallback = this.renderNote.bind(this);
-        this.renderNote = () => {
-            originalCallback();
-            
-            // Update tab title with actual note title
-            if (this.currentNote && this.currentNote.metadata.title) {
-                const tab = this.tabs.get(tabId);
-                if (tab) {
-                    tab.title = this.currentNote.metadata.title;
-                    const tabElement = document.getElementById(tabId);
-                    if (tabElement) {
-                        tabElement.querySelector('.tab-title').textContent = tab.title;
+        if (isActiveTab) {
+            // For active tab, just load normally
+            this.loadNote(path).then(() => {
+                // Update tab title after successful load
+                if (this.currentNote && this.currentNote.metadata.title) {
+                    const tab = this.tabs.get(tabId);
+                    if (tab) {
+                        tab.title = this.currentNote.metadata.title;
+                        const tabElement = document.getElementById(tabId);
+                        if (tabElement) {
+                            tabElement.querySelector('.tab-title').textContent = tab.title;
+                        }
+                        this.saveTabState();
                     }
                 }
+            });
+        } else {
+            // For background tabs, we need to load without affecting current view
+            // Store the request and load when tab becomes active
+            const tab = this.tabs.get(tabId);
+            if (tab) {
+                tab.pendingLoad = path;
+                // Set a placeholder title
+                const parts = path.split('/');
+                const filename = parts[parts.length - 1];
+                tab.title = filename.replace('.md', '').replace(/-/g, ' ');
+                
+                const tabElement = document.getElementById(tabId);
+                if (tabElement) {
+                    tabElement.querySelector('.tab-title').textContent = tab.title;
+                }
             }
-            
-            // Restore original renderNote
-            this.renderNote = originalCallback;
-        };
-        
-        this.loadNote(path);
+        }
     }
     
     setupContentEventListeners() {
@@ -2545,9 +3225,18 @@ class NotesWiki {
         
         // Re-setup internal links and tag links
         mainContent.querySelectorAll('a[href^="#"]').forEach(link => {
+            // Skip if already has listener (check with data attribute)
+            if (link.dataset.listenerAttached) return;
+            link.dataset.listenerAttached = 'true';
+            
             link.addEventListener('click', (e) => {
-                if (e.ctrlKey || e.metaKey || e.button === 1) {
-                    // Already handled by global listener
+                if (e.ctrlKey || e.metaKey) {
+                    e.preventDefault();
+                    const href = link.getAttribute('href');
+                    if (href.startsWith('#/') && !href.startsWith('#/tags/')) {
+                        const path = href.slice(1);
+                        this.openInNewTab(path);
+                    }
                     return;
                 }
                 
@@ -2557,17 +3246,49 @@ class NotesWiki {
                     // Internal note link or tag link
                     const path = href.slice(1);
                     
-                    // Update current tab's path
-                    const tab = this.tabs.get(this.activeTabId);
-                    if (tab) {
-                        tab.path = path;
-                        this.loadNote(tab.path);
+                    // Check if it's a tag link
+                    if (path.startsWith('/tags/')) {
+                        // Apply tag filter
+                        const tagName = decodeURIComponent(path.substring(6));
+                        this.selectedTags.clear();
+                        this.selectedTags.add(tagName);
+                        this.filterNotesByTags();
+                        this.updateTagCountBadge();
+                        
+                        // Update URL
+                        window.history.replaceState(null, '', href);
+                    } else {
+                        // Check if note is already open in another tab
+                        const existingTabId = this.findTabByPath(path);
+                        if (existingTabId && existingTabId !== this.activeTabId) {
+                            // Switch to existing tab
+                            this.switchToTab(existingTabId);
+                        } else {
+                            // Update current tab's path
+                            const tab = this.tabs.get(this.activeTabId);
+                            if (tab) {
+                                tab.path = path;
+                                this.loadNote(tab.path);
+                            }
+                        }
                     }
                 } else {
                     // Heading anchor
                     const target = mainContent.querySelector(href);
                     if (target) {
                         target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+            
+            // Handle middle-click
+            link.addEventListener('mousedown', (e) => {
+                if (e.button === 1) {
+                    e.preventDefault();
+                    const href = link.getAttribute('href');
+                    if (href.startsWith('#/') && !href.startsWith('#/tags/')) {
+                        const path = href.slice(1);
+                        this.openInNewTab(path);
                     }
                 }
             });

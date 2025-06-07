@@ -1,8 +1,8 @@
 # Notes Wiki
 
-A modern, self-contained static notes and documentation system designed for GitLab Pages with advanced features including 28 built-in themes, real-time search, metadata parsing, and complete offline functionality.
+A modern, self-contained static notes and documentation system designed for GitLab Pages with advanced features including 34 built-in themes, real-time search, metadata parsing, and complete offline functionality.
 
-![Wiki Screenshot](https://img.shields.io/badge/Status-Ready-green) ![No Dependencies](https://img.shields.io/badge/Dependencies-None-blue) ![Themes](https://img.shields.io/badge/Themes-28-purple)
+![Wiki Screenshot](https://img.shields.io/badge/Status-Ready-green) ![No Dependencies](https://img.shields.io/badge/Dependencies-None-blue) ![Themes](https://img.shields.io/badge/Themes-34-purple)
 
 ## 🌟 Features
 
@@ -14,7 +14,7 @@ A modern, self-contained static notes and documentation system designed for GitL
 - **Image Support**: Embed images with alignment, sizing, captions, and hover effects
 
 ### 🎨 **Theme System**
-- **28 Professional Themes**: Including VSCode, Catppuccin, Rosé Pine, Material, Ayu, and more
+- **34 Professional Themes**: Including VSCode, Catppuccin, Rosé Pine, Material, Ayu, Matrix, Cyberpunk, and more
 - **Auto Theme Detection**: Automatically switch based on system preferences
 - **Preview Mode**: Test themes before saving with hover preview
 - **Consistent Styling**: All themes support both UI and syntax highlighting
@@ -40,7 +40,7 @@ A modern, self-contained static notes and documentation system designed for GitL
 ### ⏱️ **Productivity Features**
 - **Built-in Timer**: Integrated timer widget with play/pause/reset functionality
 - **Long-press Reset**: Hold reset button for 3 seconds with visual feedback
-- **Theme-aware Design**: Timer adapts to all 28 themes automatically
+- **Theme-aware Design**: Timer adapts to all 34 themes automatically
 - **Persistent State**: Timer continues running even when switching between notes
 - **Tab Management**: Multiple tabs with drag-and-drop reordering and cached content
 
@@ -96,7 +96,7 @@ notes-wiki/
 │   ├── marked.min.js       # Markdown parser
 │   ├── prism.min.js        # Syntax highlighter
 │   └── js-yaml.min.js      # YAML frontmatter parser
-├── themes/                 # 28 built-in themes
+├── themes/                 # 34 built-in themes
 │   ├── light.css
 │   ├── dark.css
 │   ├── vscode-dark-plus.css

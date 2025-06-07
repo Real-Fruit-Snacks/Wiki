@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A self-contained static notes/wiki website for GitLab Pages that displays markdown files with advanced features including 28 built-in themes, real-time search, metadata parsing, and no external dependencies. All assets are bundled locally to ensure complete offline functionality.
+A self-contained static notes/wiki website for GitLab Pages that displays markdown files with advanced features including 34 built-in themes, real-time search, metadata parsing, and no external dependencies. All assets are bundled locally to ensure complete offline functionality.
 
 ## Development Commands
 
@@ -51,7 +51,7 @@ The `NotesWiki` class (in script.js) is the central controller that manages:
    - Routes: `/notes/`, `/search/`, `/tags/`, `/recent`
 
 2. **Theme System**
-   - 28 professional themes in `/themes/` (VSCode, Catppuccin, Rosé Pine, Material, Ayu, etc.)
+   - 34 professional themes in `/themes/` (VSCode, Catppuccin, Rosé Pine, Material, Ayu, Matrix, Cyberpunk, etc.)
    - Dynamic theme loading via CSS file switching
    - Preview functionality with hover preview and save/cancel
    - Auto-theme detection based on system preferences
@@ -138,7 +138,7 @@ status: published    # optional
 - Integrated productivity timer in the header
 - Play/pause/reset controls
 - Long-press reset (3 seconds) with visual feedback
-- Theme-aware design adapts to all 28 themes
+- Theme-aware design adapts to all 34 themes
 - Timer state persists across navigation
 
 ### Code Block Copy Mechanism
@@ -192,7 +192,7 @@ The copy functionality for code blocks containing HTML requires special handling
 
 When testing changes:
 1. Run `python3 build.py` after modifying notes
-2. Test all 28 themes for visual consistency
+2. Test all 34 themes for visual consistency
 3. Verify search with special characters and multiple terms
 4. Test deep linking to specific headings
 5. Check localStorage persistence across sessions
