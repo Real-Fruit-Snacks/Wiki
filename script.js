@@ -2437,11 +2437,11 @@ class NotesWiki {
                 textMuted: '#abb0b6'
             },
             'balatro': {
-                bg: '#0d0d0d',
-                border: '#4d1a4d',
-                accent: '#ff007f',
-                text: '#e0d5e0',
-                textMuted: '#8066B0'
+                bg: '#181c20',
+                border: '#3a4045',
+                accent: '#428dff',
+                text: '#ffffff',
+                textMuted: '#8b949e'
             },
             'everforest-dark': {
                 bg: '#2d353b',
@@ -2816,11 +2816,11 @@ class NotesWiki {
                 number: '#fa8d3e'
             },
             'balatro': {
-                keyword: '#ff007f',
-                function: '#9966ff',
-                string: '#00ff66',
-                comment: '#8066B0',
-                number: '#ff0040'
+                keyword: '#428dff',
+                function: '#ffd93d',
+                string: '#2ed573',
+                comment: '#8b949e',
+                number: '#ff4757'
             },
             'everforest-dark': {
                 keyword: '#e67e80',
