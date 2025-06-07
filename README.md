@@ -34,6 +34,10 @@ A modern, self-contained static notes and documentation system designed for GitL
 ### ⚙️ **Customization**
 - **Code Block Features**: Line numbers, word wrap, copy buttons, collapse functionality
 - **Content Width**: Choose between narrow, normal, wide, or full-width layouts
+- **Font Settings**: Adjustable font size (small/normal/large/extra-large) and font family (system/sans-serif/serif/monospace)
+- **Navigation Options**: Set default home page, control external link behavior
+- **Custom CSS**: Add your own CSS rules for advanced customization
+- **Keyboard Shortcuts**: Customize shortcuts for common actions
 - **Responsive Design**: Works seamlessly on desktop, tablet, and mobile
 - **Offline First**: All assets bundled locally - no external dependencies
 
@@ -43,8 +47,9 @@ A modern, self-contained static notes and documentation system designed for GitL
 - **Theme-aware Design**: Timer adapts to all 50 themes automatically
 - **Persistent State**: Timer continues running even when switching between notes
 - **Tab Management**: Multiple tabs with drag-and-drop reordering and cached content
-- **Keyboard Shortcuts**: Essential shortcuts (Ctrl+T new tab, Ctrl+K search, Ctrl+, settings, Ctrl+F filter)
+- **Keyboard Shortcuts**: Customizable shortcuts (default: Ctrl+T new tab, Ctrl+K search, Ctrl+, settings, Ctrl+F filter)
 - **Modal Interactions**: Escape key and click-outside to close modals
+- **Quick Access**: Set specific notes as default home page for instant access
 
 ## 🚀 Quick Start
 
@@ -203,12 +208,33 @@ This generates `notes-index.json` with metadata and search content for all notes
 4. Add to the themes array in `script.js`
 
 ### Settings
-Access settings via the gear icon to configure:
-- Theme selection and auto-theme
-- Code block line numbers and word wrap
-- Content width preferences
+Access settings via the gear icon (or Ctrl+,) to configure:
+
+**General Settings**
+- Auto-theme based on system preferences
 - Recent files tracking
-- Search behavior
+- Sticky search queries
+
+**Editor Settings**
+- Code block line numbers toggle
+- Word wrap for long lines
+- Default code language for unmarked blocks
+
+**Appearance**
+- Content width (narrow/normal/wide/full)
+- 50 professional themes with live previews
+
+**Navigation & Behavior**
+- Default home page (home/last viewed/specific note)
+- External links behavior (new tab/same tab)
+
+**Reading & Display**
+- Font size adjustment (small/normal/large/extra-large)
+- Font family selection (system/sans-serif/serif/monospace)
+
+**Advanced**
+- Custom CSS editor for personal styling
+- Keyboard shortcut customization (click to edit)
 
 ## 🎯 Use Cases
 
@@ -270,7 +296,18 @@ MIT License - feel free to use for personal or commercial projects.
 
 ## 📋 Changelog
 
-### v2.2.0 (Latest)
+### v2.3.0 (Latest)
+- **Enhanced Settings Modal** with new customization options:
+  - Font size adjustment (small/normal/large/extra-large)
+  - Font family selection (system/sans-serif/serif/monospace)
+  - Default home page configuration
+  - External links behavior control
+  - Custom CSS editor for advanced styling
+  - Customizable keyboard shortcuts
+  - Default code language setting
+- **Improved .gitignore** with test file patterns
+
+### v2.2.0
 - **Added 16 new themes** bringing total to 50
 - **Live theme previews** - Each theme card shows actual colors and syntax highlighting
 - **Alphabetical theme sorting** for easier navigation
@@ -280,7 +317,6 @@ MIT License - feel free to use for personal or commercial projects.
 - **Simplified keyboard shortcuts** to essential commands only
 - **Enhanced modal interactions** - Escape key and click-outside to close
 - **Added keyboard shortcut tooltips** on hover
-- **Improved .gitignore** with additional patterns
 
 ### v2.1.0
 - Added 6 unique themes: Matrix, Witch Hazel, Vaporwave, Cyberpunk, HackTheBox, ThinkUltra

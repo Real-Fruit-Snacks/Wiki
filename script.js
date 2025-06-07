@@ -83,7 +83,21 @@ class NotesWiki {
             autoTheme: false, // Enable automatic theme switching based on system preferences
             activeContext: null,  // Store active context in settings
             stickySearch: false,  // Keep search query when reopening search
-            contentWidth: 'narrow'  // Default to narrow width
+            contentWidth: 'narrow',  // Default to narrow width
+            // New settings
+            defaultHomePage: 'home', // 'home', 'last-viewed', 'specific'
+            specificHomeNote: '', // Path to specific note
+            externalLinksNewTab: true,
+            fontSize: 'normal', // 'small', 'normal', 'large', 'extra-large'
+            fontFamily: 'system', // 'system', 'sans-serif', 'serif', 'monospace'
+            defaultCodeLanguage: 'plaintext',
+            customCSS: '',
+            keyboardShortcuts: {
+                'new-tab': 'Ctrl+T',
+                'search': 'Ctrl+K',
+                'settings': 'Ctrl+,',
+                'filter': 'Ctrl+F'
+            }
         };
         
         // Search state
@@ -115,6 +129,12 @@ class NotesWiki {
         
         // Apply content width setting
         this.applyContentWidthSetting();
+        
+        // Apply font settings
+        this.applyFontSettings();
+        
+        // Apply custom CSS
+        this.applyCustomCSS();
         
         // Load notes index
         await this.loadNotesIndex();
@@ -636,6 +656,200 @@ class NotesWiki {
             });
         }
         
+        // New settings handlers
+        // Default home page setting
+        const defaultHomePageSelect = document.getElementById('default-home-page');
+        const specificHomeNoteInput = document.getElementById('specific-home-note');
+        if (defaultHomePageSelect) {
+            defaultHomePageSelect.value = this.settings.defaultHomePage;
+            defaultHomePageSelect.addEventListener('change', (e) => {
+                this.settings.defaultHomePage = e.target.value;
+                this.saveSettings();
+                
+                // Show/hide specific note input
+                if (e.target.value === 'specific') {
+                    specificHomeNoteInput.style.display = 'block';
+                } else {
+                    specificHomeNoteInput.style.display = 'none';
+                }
+            });
+            
+            // Initialize visibility
+            if (this.settings.defaultHomePage === 'specific') {
+                specificHomeNoteInput.style.display = 'block';
+            }
+        }
+        
+        if (specificHomeNoteInput) {
+            specificHomeNoteInput.value = this.settings.specificHomeNote;
+            specificHomeNoteInput.addEventListener('input', (e) => {
+                this.settings.specificHomeNote = e.target.value;
+                this.saveSettings();
+            });
+        }
+        
+        // External links in new tabs
+        const externalLinksCheckbox = document.getElementById('external-links-new-tab');
+        if (externalLinksCheckbox) {
+            externalLinksCheckbox.checked = this.settings.externalLinksNewTab;
+            externalLinksCheckbox.addEventListener('change', (e) => {
+                this.settings.externalLinksNewTab = e.target.checked;
+                this.saveSettings();
+            });
+        }
+        
+        // Font size options
+        const fontSizeOptions = document.getElementById('font-size-options');
+        if (fontSizeOptions) {
+            // Set initial active state
+            const activeFontSize = fontSizeOptions.querySelector(`[data-value="${this.settings.fontSize}"]`);
+            if (activeFontSize) activeFontSize.classList.add('active');
+            
+            fontSizeOptions.addEventListener('click', (e) => {
+                if (e.target.classList.contains('option-pill')) {
+                    fontSizeOptions.querySelectorAll('.option-pill').forEach(pill => {
+                        pill.classList.remove('active');
+                    });
+                    e.target.classList.add('active');
+                    this.settings.fontSize = e.target.dataset.value;
+                    this.saveSettings();
+                    this.applyFontSettings();
+                    this.showToast('Font size updated');
+                }
+            });
+        }
+        
+        // Font family setting
+        const fontFamilySelect = document.getElementById('font-family');
+        if (fontFamilySelect) {
+            fontFamilySelect.value = this.settings.fontFamily;
+            fontFamilySelect.addEventListener('change', (e) => {
+                this.settings.fontFamily = e.target.value;
+                this.saveSettings();
+                this.applyFontSettings();
+                this.showToast('Font family updated');
+            });
+        }
+        
+        // Default code language setting
+        const defaultCodeLanguageSelect = document.getElementById('default-code-language');
+        if (defaultCodeLanguageSelect) {
+            defaultCodeLanguageSelect.value = this.settings.defaultCodeLanguage;
+            defaultCodeLanguageSelect.addEventListener('change', (e) => {
+                this.settings.defaultCodeLanguage = e.target.value;
+                this.saveSettings();
+                this.showToast('Default code language updated');
+            });
+        }
+        
+        // Custom CSS editor
+        const customCSSTextarea = document.getElementById('custom-css');
+        const applyCustomCSSButton = document.getElementById('apply-custom-css');
+        if (customCSSTextarea) {
+            customCSSTextarea.value = this.settings.customCSS;
+            
+            if (applyCustomCSSButton) {
+                applyCustomCSSButton.addEventListener('click', () => {
+                    this.settings.customCSS = customCSSTextarea.value;
+                    this.saveSettings();
+                    this.applyCustomCSS();
+                    this.showToast('Custom CSS applied');
+                });
+            }
+        }
+        
+        // Keyboard shortcuts
+        const resetShortcutsButton = document.getElementById('reset-shortcuts');
+        if (resetShortcutsButton) {
+            resetShortcutsButton.addEventListener('click', () => {
+                this.settings.keyboardShortcuts = {
+                    'new-tab': 'Ctrl+T',
+                    'search': 'Ctrl+K',
+                    'settings': 'Ctrl+,',
+                    'filter': 'Ctrl+F'
+                };
+                this.saveSettings();
+                
+                // Update display
+                document.querySelectorAll('.shortcut-key').forEach(input => {
+                    const action = input.dataset.action;
+                    if (action && this.settings.keyboardShortcuts[action]) {
+                        input.value = this.settings.keyboardShortcuts[action];
+                        input.classList.remove('editing');
+                    }
+                });
+                
+                this.showToast('Keyboard shortcuts reset to defaults');
+            });
+        }
+        
+        // Add keyboard shortcut editing functionality
+        document.querySelectorAll('.shortcut-key').forEach(input => {
+            // Click to start editing
+            input.addEventListener('click', (e) => {
+                e.preventDefault();
+                input.classList.add('editing');
+                input.value = '';
+                input.placeholder = 'Press key combination...';
+                input.focus();
+            });
+            
+            // Capture key combination
+            input.addEventListener('keydown', (e) => {
+                if (!input.classList.contains('editing')) return;
+                
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Build key combination string
+                const keys = [];
+                if (e.ctrlKey || e.metaKey) keys.push('Ctrl');
+                if (e.altKey) keys.push('Alt');
+                if (e.shiftKey) keys.push('Shift');
+                
+                // Get the actual key
+                let key = e.key;
+                if (key === ' ') key = 'Space';
+                else if (key === 'Control' || key === 'Alt' || key === 'Shift' || key === 'Meta') {
+                    // Don't add modifier keys by themselves
+                    return;
+                }
+                else if (key.length === 1) {
+                    // Single character - uppercase it
+                    key = key.toUpperCase();
+                }
+                
+                keys.push(key);
+                
+                // Set the shortcut
+                const shortcut = keys.join('+');
+                input.value = shortcut;
+                input.classList.remove('editing');
+                
+                // Save to settings
+                const action = input.dataset.action;
+                if (action) {
+                    this.settings.keyboardShortcuts[action] = shortcut;
+                    this.saveSettings();
+                    this.showToast(`Shortcut updated: ${shortcut}`);
+                    
+                    // Update the keyboard event listener with new shortcut
+                    this.updateKeyboardShortcuts();
+                }
+            });
+            
+            // Cancel editing on blur or Escape
+            input.addEventListener('blur', () => {
+                if (input.classList.contains('editing')) {
+                    input.classList.remove('editing');
+                    const action = input.dataset.action;
+                    if (action && this.settings.keyboardShortcuts[action]) {
+                        input.value = this.settings.keyboardShortcuts[action];
+                    }
+                }
+            });
+        });
+        
         // Clear history button (if it exists in the HTML)
         const clearHistoryButton = document.getElementById('clear-history-button');
         if (clearHistoryButton) {
@@ -678,7 +892,8 @@ class NotesWiki {
         });
         
         // Global keyboard shortcuts - only essential ones
-        document.addEventListener('keydown', (e) => {
+        // Store keyboard handler reference for updating
+        this.keyboardHandler = (e) => {
             // Skip if user is typing in an input field
             const isTyping = e.target.matches('input, textarea, [contenteditable="true"]');
             
@@ -687,28 +902,35 @@ class NotesWiki {
                 this.hideSearch();
                 this.hideSettings();
                 this.hideTagsModal();
-            } else if ((e.ctrlKey || e.metaKey) && !isTyping) {
-                switch(e.key.toLowerCase()) {
-                    case 't': // New tab
+            } else if (!isTyping) {
+                // Check custom shortcuts
+                const pressedCombo = this.getKeyCombo(e);
+                
+                for (const [action, shortcut] of Object.entries(this.settings.keyboardShortcuts)) {
+                    if (pressedCombo === shortcut) {
                         e.preventDefault();
-                        this.createNewTab();
+                        switch(action) {
+                            case 'new-tab':
+                                this.createNewTab();
+                                break;
+                            case 'search':
+                                this.closeAllDropdowns();
+                                this.showSearch();
+                                break;
+                            case 'settings':
+                                this.showSettings();
+                                break;
+                            case 'filter':
+                                this.showTagsModal();
+                                break;
+                        }
                         break;
-                    case 'k': // Search
-                        e.preventDefault();
-                        this.closeAllDropdowns();
-                        this.showSearch();
-                        break;
-                    case ',': // Settings
-                        e.preventDefault();
-                        this.showSettings();
-                        break;
-                    case 'f': // Filter by tags
-                        e.preventDefault();
-                        this.showTagsModal();
-                        break;
+                    }
                 }
             }
-        });
+        };
+        
+        document.addEventListener('keydown', this.keyboardHandler);
         
         // Timer event listeners
         document.getElementById('timer-play-pause').addEventListener('click', () => {
@@ -853,7 +1075,7 @@ class NotesWiki {
         } catch (error) {
             console.error('Failed to load note:', error);
             mainContent.innerHTML = `
-                <div class="content-wrapper">
+                <div class="content-wrapper content-view">
                     <h1>Note Not Found</h1>
                     <p>The requested note could not be loaded.</p>
                     <p><a href="#/notes/index.md">Return to home</a></p>
@@ -1043,6 +1265,11 @@ class NotesWiki {
                 }
             }
             
+            // Use default code language if none specified
+            if (!language && self.settings.defaultCodeLanguage !== 'plaintext') {
+                language = self.settings.defaultCodeLanguage;
+            }
+            
             // Highlight code
             let highlightedCode = codeContent;
             if (language && Prism.languages[language]) {
@@ -1129,6 +1356,29 @@ class NotesWiki {
             return html;
         };  // No need to bind since we're using arrow function inside
         
+        // Custom link renderer for external links in new tabs
+        renderer.link = function(token) {
+            let href = token.href;
+            let text = token.text;
+            let title = token.title || '';
+            
+            // Check if it's an external link
+            const isExternal = href && (href.startsWith('http://') || href.startsWith('https://'));
+            
+            // Build link attributes
+            let attrs = `href="${href}"`;
+            if (title) {
+                attrs += ` title="${self.escapeHtml(title)}"`;
+            }
+            
+            // Add target="_blank" for external links if setting is enabled
+            if (isExternal && self.settings.externalLinksNewTab) {
+                attrs += ' target="_blank" rel="noopener noreferrer"';
+            }
+            
+            return `<a ${attrs}>${text}</a>`;
+        };
+        
         // Configure marked with custom renderer and options
         marked.use({
             renderer: renderer,
@@ -1142,7 +1392,7 @@ class NotesWiki {
         
         // Build note HTML
         mainContent.innerHTML = `
-            <div class="content-wrapper">
+            <div class="content-wrapper content-view">
                 <header class="note-header">
                     <div class="note-title-row">
                         <h1 class="note-title">${this.escapeHtml(metadata.title || 'Untitled')}</h1>
@@ -1734,6 +1984,69 @@ class NotesWiki {
         
         // Update auto-theme state for the new card-based layout
         this.updateAutoThemeState();
+        
+        // Initialize new settings UI elements
+        // Default home page
+        const defaultHomePageSelect = document.getElementById('default-home-page');
+        if (defaultHomePageSelect) {
+            defaultHomePageSelect.value = this.settings.defaultHomePage || 'home';
+        }
+        
+        // Specific home note
+        const specificHomeNoteInput = document.getElementById('specific-home-note');
+        if (specificHomeNoteInput) {
+            specificHomeNoteInput.value = this.settings.specificHomeNote || '';
+            // Set visibility based on defaultHomePage setting
+            if (this.settings.defaultHomePage === 'specific') {
+                specificHomeNoteInput.style.display = 'block';
+            } else {
+                specificHomeNoteInput.style.display = 'none';
+            }
+        }
+        
+        // External links new tab
+        const externalLinksCheckbox = document.getElementById('external-links-new-tab');
+        if (externalLinksCheckbox) {
+            externalLinksCheckbox.checked = this.settings.externalLinksNewTab !== false; // Default true
+        }
+        
+        // Font size
+        const fontSizeOptions = document.getElementById('font-size-options');
+        if (fontSizeOptions) {
+            fontSizeOptions.querySelectorAll('.option-pill').forEach(pill => {
+                pill.classList.remove('active');
+                if (pill.dataset.value === this.settings.fontSize) {
+                    pill.classList.add('active');
+                }
+            });
+        }
+        
+        // Font family
+        const fontFamilySelect = document.getElementById('font-family');
+        if (fontFamilySelect) {
+            fontFamilySelect.value = this.settings.fontFamily || 'system';
+        }
+        
+        // Default code language
+        const defaultCodeLanguageSelect = document.getElementById('default-code-language');
+        if (defaultCodeLanguageSelect) {
+            defaultCodeLanguageSelect.value = this.settings.defaultCodeLanguage || 'plaintext';
+        }
+        
+        // Custom CSS
+        const customCSSTextarea = document.getElementById('custom-css');
+        if (customCSSTextarea) {
+            customCSSTextarea.value = this.settings.customCSS || '';
+        }
+        
+        // Keyboard shortcuts
+        const shortcutInputs = document.querySelectorAll('.shortcut-key');
+        shortcutInputs.forEach(input => {
+            const action = input.dataset.action;
+            if (action && this.settings.keyboardShortcuts && this.settings.keyboardShortcuts[action]) {
+                input.value = this.settings.keyboardShortcuts[action];
+            }
+        });
     }
     
     hideSettings() {
@@ -3221,6 +3534,31 @@ class NotesWiki {
         localStorage.setItem('notesWiki_settings', JSON.stringify(this.settings));
     }
     
+    getKeyCombo(e) {
+        const keys = [];
+        if (e.ctrlKey || e.metaKey) keys.push('Ctrl');
+        if (e.altKey) keys.push('Alt');
+        if (e.shiftKey) keys.push('Shift');
+        
+        let key = e.key;
+        if (key === ' ') key = 'Space';
+        else if (key === 'Control' || key === 'Alt' || key === 'Shift' || key === 'Meta') {
+            return ''; // Don't return just modifier keys
+        }
+        else if (key.length === 1) {
+            key = key.toUpperCase();
+        }
+        
+        keys.push(key);
+        return keys.join('+');
+    }
+    
+    updateKeyboardShortcuts() {
+        // The keyboard handler automatically uses the updated shortcuts from settings
+        // No need to remove/re-add the listener since it reads from this.settings.keyboardShortcuts
+        this.showToast('Keyboard shortcuts updated');
+    }
+    
     // Utility functions
     escapeHtml(text) {
         const div = document.createElement('div');
@@ -3442,6 +3780,32 @@ class NotesWiki {
         document.body.classList.add(`content-width-${this.settings.contentWidth}`);
     }
     
+    applyFontSettings() {
+        // Apply font size
+        document.body.classList.remove('font-size-small', 'font-size-normal', 'font-size-large', 'font-size-extra-large');
+        document.body.classList.add(`font-size-${this.settings.fontSize}`);
+        
+        // Apply font family
+        document.body.classList.remove('font-family-system', 'font-family-sans-serif', 'font-family-serif', 'font-family-monospace');
+        document.body.classList.add(`font-family-${this.settings.fontFamily}`);
+    }
+    
+    applyCustomCSS() {
+        // Remove existing custom CSS element if it exists
+        const existingStyle = document.getElementById('custom-css-style');
+        if (existingStyle) {
+            existingStyle.remove();
+        }
+        
+        // Add new custom CSS if provided
+        if (this.settings.customCSS.trim()) {
+            const style = document.createElement('style');
+            style.id = 'custom-css-style';
+            style.textContent = this.settings.customCSS;
+            document.head.appendChild(style);
+        }
+    }
+    
     // Tab Management Methods
     initializeTabs() {
         // Set up event listeners for tab system
@@ -3454,9 +3818,28 @@ class NotesWiki {
         
         // Try to restore saved tabs
         if (!this.restoreTabState()) {
-            // Create initial tab if no saved state
-            const initialPath = this.initialHash ? this.initialHash.slice(1) : '/notes/index.md';
-            this.createNewTab(initialPath, 'Home');
+            // Create initial tab based on default home page setting
+            let initialPath = '/notes/index.md';
+            let initialTitle = 'Home';
+            
+            if (this.settings.defaultHomePage === 'last-viewed' && this.recentFiles.length > 0) {
+                // Use the most recent file
+                initialPath = this.recentFiles[0].path;
+                initialTitle = this.recentFiles[0].title;
+            } else if (this.settings.defaultHomePage === 'specific' && this.settings.specificHomeNote) {
+                // Use the specific note
+                initialPath = this.settings.specificHomeNote;
+                // Try to find the title from the notes index
+                const noteInfo = this.notesIndex?.notes?.find(note => note.path === initialPath);
+                if (noteInfo) {
+                    initialTitle = noteInfo.metadata.title;
+                }
+            } else if (this.initialHash) {
+                // Use the hash from the URL if provided
+                initialPath = this.initialHash.slice(1);
+            }
+            
+            this.createNewTab(initialPath, initialTitle);
         }
         
         // Global click handler removed - we now handle clicks on individual links

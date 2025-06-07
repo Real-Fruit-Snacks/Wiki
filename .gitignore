@@ -86,3 +86,15 @@ nohup.out
 # IDE specific
 .history/
 *.code-workspace
+
+# Custom CSS testing
+custom-css-test.css
+test-custom-*.css
+
+# Font testing files
+font-test-*.html
+font-demo-*.html
+
+# Keyboard shortcut testing
+shortcuts-test.html
+keybindings-test.json

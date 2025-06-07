@@ -3995,3 +3995,184 @@ select.dropdown:focus {
 .callout p {
     margin: var(--spacing-xs) 0;
 }
+
+/* New Settings Controls */
+.select-control,
+.input-control {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    transition: all var(--transition-fast);
+    min-width: 180px;
+}
+
+.select-control:hover,
+.input-control:hover {
+    border-color: var(--accent-primary);
+    background-color: var(--bg-hover);
+}
+
+.select-control:focus,
+.input-control:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input-control {
+    width: 100%;
+}
+
+/* Custom CSS Editor */
+.custom-css-editor {
+    width: 100%;
+    min-height: 200px;
+    padding: var(--spacing-md);
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: var(--text-sm);
+    resize: vertical;
+    transition: all var(--transition-fast);
+}
+
+.custom-css-editor:hover {
+    border-color: var(--accent-primary);
+}
+
+.custom-css-editor:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.setting-control.full-width {
+    flex: 1;
+    width: 100%;
+}
+
+.setting-item .setting-control.full-width {
+    margin-top: var(--spacing-md);
+}
+
+/* Keyboard Shortcuts List */
+.keyboard-shortcuts-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.shortcut-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-sm);
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-md);
+}
+
+.shortcut-action {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.shortcut-key {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: var(--text-sm);
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    width: 100px;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.shortcut-key:hover {
+    border-color: var(--accent-primary);
+    background-color: var(--bg-hover);
+}
+
+.shortcut-key:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.shortcut-key.editing {
+    background-color: var(--accent-primary);
+    color: white;
+    border-color: var(--accent-primary);
+}
+
+/* Font Size Classes */
+.font-size-small {
+    --content-font-size: 14px;
+    --content-line-height: 1.5;
+}
+
+.font-size-normal {
+    --content-font-size: 16px;
+    --content-line-height: 1.6;
+}
+
+.font-size-large {
+    --content-font-size: 18px;
+    --content-line-height: 1.65;
+}
+
+.font-size-extra-large {
+    --content-font-size: 20px;
+    --content-line-height: 1.7;
+}
+
+/* Font Family Classes */
+.font-family-system {
+    --content-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.font-family-sans-serif {
+    --content-font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.font-family-serif {
+    --content-font-family: 'Georgia', 'Times New Roman', Times, serif;
+}
+
+.font-family-monospace {
+    --content-font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+}
+
+/* Apply custom font settings to content */
+.content-view {
+    font-size: var(--content-font-size, 16px);
+    line-height: var(--content-line-height, 1.6);
+    font-family: var(--content-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif);
+}
+
+.content-view p,
+.content-view li,
+.content-view blockquote {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+/* Full width setting items */
+.setting-item.full-width-item {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.setting-item.full-width-item .setting-info {
+    padding-right: 0;
+    margin-bottom: var(--spacing-md);
+}

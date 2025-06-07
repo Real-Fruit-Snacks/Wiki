@@ -234,6 +234,30 @@
                                 </svg>
                                 <span>Appearance</span>
                             </button>
+                            <button class="settings-nav-item" data-section="navigation">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M1 4a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1H2a1 1 0 01-1-1V4zM7 4a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1H8a1 1 0 01-1-1V4zM13 4a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1h-2a1 1 0 01-1-1V4zM1 10a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1H2a1 1 0 01-1-1v-2zM7 10a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1H8a1 1 0 01-1-1v-2zM13 10a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2z"/>
+                                </svg>
+                                <span>Navigation & Behavior</span>
+                            </button>
+                            <button class="settings-nav-item" data-section="reading">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M2 3.5A1.5 1.5 0 013.5 2h1c1.09 0 2 .91 2 2v10c0 .55-.45 1-1 1h-1A1.5 1.5 0 012 13.5v-10zm6 0A1.5 1.5 0 019.5 2h1c1.09 0 2 .91 2 2v10c0 .55-.45 1-1 1h-1A1.5 1.5 0 018 13.5v-10zM3.5 3a.5.5 0 00-.5.5v10a.5.5 0 00.5.5h1a.5.5 0 00.5-.5V4a1 1 0 00-1-1h-1zm6 0a.5.5 0 00-.5.5v10a.5.5 0 00.5.5h1a.5.5 0 00.5-.5V4a1 1 0 00-1-1h-1z"/>
+                                </svg>
+                                <span>Reading & Display</span>
+                            </button>
+                            <button class="settings-nav-item" data-section="code">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.854 4.146a.5.5 0 010 .708L2.707 8l3.147 3.146a.5.5 0 01-.708.708l-3.5-3.5a.5.5 0 010-.708l3.5-3.5a.5.5 0 01.708 0zm4.292 0a.5.5 0 000 .708L13.293 8l-3.147 3.146a.5.5 0 00.708.708l3.5-3.5a.5.5 0 000-.708l-3.5-3.5a.5.5 0 00-.708 0z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Code & Technical</span>
+                            </button>
+                            <button class="settings-nav-item" data-section="advanced">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M1.5 3a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h13a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5h-13zM15 8H1v4.5a.5.5 0 00.5.5h13a.5.5 0 00.5-.5V8zM3 5.5a.5.5 0 110-1 .5.5 0 010 1zm2 0a.5.5 0 110-1 .5.5 0 010 1zm2 0a.5.5 0 110-1 .5.5 0 010 1z"/>
+                                </svg>
+                                <span>Advanced</span>
+                            </button>
                             <button class="settings-nav-item" data-section="history">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                     <path fill-rule="evenodd" d="M8 14A6 6 0 108 2a6 6 0 000 12zm1-8a1 1 0 10-2 0v2.586l-1.293 1.293a1 1 0 101.414 1.414l2-2A1 1 0 009 8V6z" clip-rule="evenodd"/>
@@ -389,6 +413,159 @@
                                 </div>
                                 <div class="setting-control">
                                     <button class="button button-danger" onclick="notesWiki.clearRecentFiles(); this.textContent = 'Cleared!'; setTimeout(() => this.textContent = 'Clear history', 2000)">Clear history</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Navigation & Behavior section -->
+                        <div class="settings-section" id="settings-section-navigation">
+                            <h3 class="settings-heading">Navigation & Behavior</h3>
+                            <p class="settings-description">Configure how the wiki behaves and navigates</p>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Default home page</div>
+                                    <div class="setting-description">Choose what loads when you open the wiki</div>
+                                </div>
+                                <div class="setting-control">
+                                    <select class="select-control" id="default-home-page">
+                                        <option value="home">Home page</option>
+                                        <option value="last-viewed">Last viewed note</option>
+                                        <option value="specific">Specific note</option>
+                                    </select>
+                                    <input type="text" class="input-control" id="specific-home-note" placeholder="e.g., notes/index" style="display: none; margin-top: 8px;">
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Open external links in new tabs</div>
+                                    <div class="setting-description">External links will open in a new browser tab</div>
+                                </div>
+                                <div class="setting-control">
+                                    <label class="toggle">
+                                        <input type="checkbox" id="external-links-new-tab" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Reading & Display section -->
+                        <div class="settings-section" id="settings-section-reading">
+                            <h3 class="settings-heading">Reading & Display</h3>
+                            <p class="settings-description">Customize how content is displayed</p>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Font size</div>
+                                    <div class="setting-description">Adjust the text size for comfortable reading</div>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="option-pills" id="font-size-options">
+                                        <button class="option-pill" data-value="small">Small</button>
+                                        <button class="option-pill active" data-value="normal">Normal</button>
+                                        <button class="option-pill" data-value="large">Large</button>
+                                        <button class="option-pill" data-value="extra-large">X-Large</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Font family</div>
+                                    <div class="setting-description">Choose your preferred font style</div>
+                                </div>
+                                <div class="setting-control">
+                                    <select class="select-control" id="font-family">
+                                        <option value="system">System default</option>
+                                        <option value="sans-serif">Sans-serif</option>
+                                        <option value="serif">Serif</option>
+                                        <option value="monospace">Monospace</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Code & Technical section -->
+                        <div class="settings-section" id="settings-section-code">
+                            <h3 class="settings-heading">Code & Technical</h3>
+                            <p class="settings-description">Settings for code blocks and technical content</p>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Default code language</div>
+                                    <div class="setting-description">Language to use when code blocks don't specify one</div>
+                                </div>
+                                <div class="setting-control">
+                                    <select class="select-control" id="default-code-language">
+                                        <option value="plaintext">Plain text</option>
+                                        <option value="javascript">JavaScript</option>
+                                        <option value="python">Python</option>
+                                        <option value="bash">Bash/Shell</option>
+                                        <option value="html">HTML</option>
+                                        <option value="css">CSS</option>
+                                        <option value="json">JSON</option>
+                                        <option value="yaml">YAML</option>
+                                        <option value="markdown">Markdown</option>
+                                        <option value="sql">SQL</option>
+                                        <option value="java">Java</option>
+                                        <option value="cpp">C++</option>
+                                        <option value="csharp">C#</option>
+                                        <option value="go">Go</option>
+                                        <option value="rust">Rust</option>
+                                        <option value="php">PHP</option>
+                                        <option value="ruby">Ruby</option>
+                                        <option value="swift">Swift</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Advanced section -->
+                        <div class="settings-section" id="settings-section-advanced">
+                            <h3 class="settings-heading">Advanced</h3>
+                            <p class="settings-description">Advanced customization options</p>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Custom CSS</div>
+                                    <div class="setting-description">Add your own CSS rules to customize the appearance</div>
+                                </div>
+                                <div class="setting-control full-width">
+                                    <textarea class="custom-css-editor" id="custom-css" placeholder="/* Add your custom CSS here */
+.main-content {
+  /* Your styles */
+}" rows="10"></textarea>
+                                    <button class="button button-small" id="apply-custom-css">Apply CSS</button>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Keyboard shortcuts</div>
+                                    <div class="setting-description">Customize keyboard shortcuts (click to edit)</div>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="keyboard-shortcuts-list">
+                                        <div class="shortcut-item">
+                                            <span class="shortcut-action">New tab</span>
+                                            <input type="text" class="shortcut-key" value="Ctrl+T" data-action="new-tab" placeholder="Click to set">
+                                        </div>
+                                        <div class="shortcut-item">
+                                            <span class="shortcut-action">Search</span>
+                                            <input type="text" class="shortcut-key" value="Ctrl+K" data-action="search" placeholder="Click to set">
+                                        </div>
+                                        <div class="shortcut-item">
+                                            <span class="shortcut-action">Settings</span>
+                                            <input type="text" class="shortcut-key" value="Ctrl+," data-action="settings" placeholder="Click to set">
+                                        </div>
+                                        <div class="shortcut-item">
+                                            <span class="shortcut-action">Filter tags</span>
+                                            <input type="text" class="shortcut-key" value="Ctrl+F" data-action="filter" placeholder="Click to set">
+                                        </div>
+                                    </div>
+                                    <button class="button button-small" id="reset-shortcuts">Reset to defaults</button>
                                 </div>
                             </div>
                         </div>

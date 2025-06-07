@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A self-contained static notes/wiki website for GitLab Pages that displays markdown files with advanced features including 34 built-in themes, real-time search, metadata parsing, and no external dependencies. All assets are bundled locally to ensure complete offline functionality.
+A self-contained static notes/wiki website for GitLab Pages that displays markdown files with advanced features including 50 built-in themes, real-time search, metadata parsing, and no external dependencies. All assets are bundled locally to ensure complete offline functionality.
 
 ## Development Commands
 
@@ -20,6 +20,10 @@ python3 build.py
 # - Parse YAML frontmatter
 # - Generate notes-index.json with metadata and content
 # - Output statistics about tags, authors, and categories
+
+# Testing fonts and themes in isolation
+# Create a test HTML file and open it directly in browser
+# See test-font-settings.html for an example
 ```
 
 ## Architecture
@@ -51,11 +55,13 @@ The `NotesWiki` class (in script.js) is the central controller that manages:
    - Routes: `/notes/`, `/search/`, `/tags/`, `/recent`
 
 2. **Theme System**
-   - 34 professional themes in `/themes/` (VSCode, Catppuccin, Rosé Pine, Material, Ayu, Matrix, Cyberpunk, etc.)
+   - 50 professional themes in `/themes/` (VSCode, Catppuccin, Rosé Pine, Material, Ayu, Matrix, Cyberpunk, ProtonMail, etc.)
    - Dynamic theme loading via CSS file switching
-   - Preview functionality with hover preview and save/cancel
+   - Live theme preview cards showing actual colors and syntax highlighting
+   - Alphabetical theme sorting for easier navigation
    - Auto-theme detection based on system preferences
    - Theme affects both UI and syntax highlighting
+   - Themes are loaded by changing the href of the theme-stylesheet link element
 
 3. **Search Implementation**
    - Client-side full-text search using notes-index.json
@@ -74,6 +80,13 @@ The `NotesWiki` class (in script.js) is the central controller that manages:
    - Top-level folders in `/notes/` become "contexts" for filtering
    - Dynamic filtering: navigation, search, tags respect active context
    - Persistent context saved in localStorage
+
+6. **Settings System**
+   - Settings modal with multiple sections accessed via sidebar navigation
+   - Settings include theme, font size/family, keyboard shortcuts, custom CSS
+   - Font settings applied via CSS classes on body element
+   - Custom CSS injected via dynamic style element
+   - Keyboard shortcuts customizable with live capture functionality
 
 ## Important Implementation Details
 
@@ -121,7 +134,20 @@ status: published    # optional
     "autoTheme": true,               // Follow system theme
     "activeContext": "technical",    // Current context filter
     "stickySearch": false,           // Preserve search queries
-    "contentWidth": "narrow"         // Content width preference
+    "contentWidth": "narrow",        // Content width preference
+    "defaultHomePage": "home",       // 'home', 'last-viewed', 'specific'
+    "specificHomeNote": "",          // Path to specific note if defaultHomePage is 'specific'
+    "externalLinksNewTab": true,     // Open external links in new tab
+    "fontSize": "normal",            // 'small', 'normal', 'large', 'extra-large'
+    "fontFamily": "system",          // 'system', 'sans-serif', 'serif', 'monospace'
+    "defaultCodeLanguage": "plaintext", // Default language for unmarked code blocks
+    "customCSS": "",                 // User's custom CSS rules
+    "keyboardShortcuts": {           // Customizable keyboard shortcuts
+      "new-tab": "Ctrl+T",
+      "search": "Ctrl+K",
+      "settings": "Ctrl+,",
+      "filter": "Ctrl+F"
+    }
   }
 }
 ```
@@ -133,12 +159,21 @@ status: published    # optional
 - Tab contents are cached for performance
 - Close all tabs functionality
 - Tab state persists during navigation
+- Fixed duplicate tab bug when Ctrl+clicking links
+- Closing last tab creates fresh Home tab
+
+### Keyboard Shortcuts
+- **Ctrl+T**: New tab
+- **Ctrl+K**: Search
+- **Ctrl+,**: Settings
+- **Ctrl+F**: Filter/find notes
+- Tooltips show shortcuts on hover
 
 ### Timer Widget
 - Integrated productivity timer in the header
 - Play/pause/reset controls
 - Long-press reset (3 seconds) with visual feedback
-- Theme-aware design adapts to all 34 themes
+- Theme-aware design adapts to all 50 themes
 - Timer state persists across navigation
 
 ### Code Block Copy Mechanism
@@ -166,6 +201,23 @@ The copy functionality for code blocks containing HTML requires special handling
 - Tab contents cached for quick switching
 - Lazy loading of markdown files
 
+### Recent Files Feature
+- Shows all files from all contexts with context badges
+- Badge colors match context colors for visual consistency
+- Recent files persist across sessions in localStorage
+- Limit of 20 recent files by default (configurable in settings: 10/20/30/50)
+
+### Font Settings Implementation
+- Font size and family settings applied via CSS classes on body element
+- Classes: `font-size-{small|normal|large|extra-large}`, `font-family-{system|sans-serif|serif|monospace}`
+- CSS custom properties used: `--content-font-size`, `--content-line-height`, `--content-font-family`
+- Content must have `content-view` class to inherit font settings
+
+### Custom Marked.js Renderers
+- Link renderer modified to respect `externalLinksNewTab` setting
+- External links automatically open in new tab when enabled
+- Internal links (starting with #) always open in same tab
+
 ## Key Files to Modify
 
 1. **script.js** - Main application logic
@@ -192,7 +244,7 @@ The copy functionality for code blocks containing HTML requires special handling
 
 When testing changes:
 1. Run `python3 build.py` after modifying notes
-2. Test all 34 themes for visual consistency
+2. Test all 50 themes for visual consistency
 3. Verify search with special characters and multiple terms
 4. Test deep linking to specific headings
 5. Check localStorage persistence across sessions
@@ -203,6 +255,13 @@ When testing changes:
 10. Test timer functionality across theme changes
 11. Verify tab management (create, close, reorder)
 12. Test context filtering across navigation and search
+13. Test keyboard shortcuts (Ctrl+T, Ctrl+K, Ctrl+,, Ctrl+F)
+14. Verify modal interactions (Escape key, click-outside to close)
+15. Test font size and font family changes apply to content
+16. Verify custom CSS injection and removal
+17. Test keyboard shortcut customization with various key combinations
+18. Verify default home page settings (home/last-viewed/specific)
+19. Test external links behavior with setting enabled/disabled
 
 ## Security Notes
 
