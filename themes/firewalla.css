@@ -1,0 +1,135 @@
+/* Firewalla Theme Variables - Cybersecurity aesthetic */
+:root[data-theme="firewalla"] {
+    /* Background Colors */
+    --bg-primary: #0a0e1a;
+    --bg-secondary: #111827;
+    --bg-sidebar: #050814;
+    --bg-code: #141b2d;
+    --bg-selection: rgba(0, 184, 217, 0.15);
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(0, 184, 217, 0.05);
+    --bg-tag: #1e293b;
+    
+    /* Text Colors */
+    --text-primary: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --text-heading: #f8fafc;
+    
+    /* Accent Colors - Security-focused palette */
+    --accent-primary: #00b8d9;
+    --accent-secondary: #0066cc;
+    --accent-warning: #ff9800;
+    --accent-error: #f44336;
+    --accent-info: #2196f3;
+    --accent-success: #4caf50;
+    
+    /* Border Colors */
+    --border-primary: #1e293b;
+    --border-secondary: #334155;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #0a0e1a;
+    
+    /* Shadows - Tech/cyber feel */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 184, 217, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 184, 217, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 184, 217, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(0, 184, 217, 0.1);
+    --bg-code-block: #141b2d;
+}
+
+/* Syntax Highlighting - Firewalla Theme */
+:root[data-theme="firewalla"] .token.comment,
+:root[data-theme="firewalla"] .token.prolog,
+:root[data-theme="firewalla"] .token.doctype,
+:root[data-theme="firewalla"] .token.cdata {
+    color: #64748b;
+    font-style: italic;
+}
+
+:root[data-theme="firewalla"] .token.punctuation {
+    color: #94a3b8;
+}
+
+:root[data-theme="firewalla"] .token.property,
+:root[data-theme="firewalla"] .token.tag,
+:root[data-theme="firewalla"] .token.boolean,
+:root[data-theme="firewalla"] .token.number,
+:root[data-theme="firewalla"] .token.constant,
+:root[data-theme="firewalla"] .token.symbol,
+:root[data-theme="firewalla"] .token.deleted {
+    color: #f44336;
+}
+
+:root[data-theme="firewalla"] .token.selector,
+:root[data-theme="firewalla"] .token.attr-name,
+:root[data-theme="firewalla"] .token.string,
+:root[data-theme="firewalla"] .token.char,
+:root[data-theme="firewalla"] .token.builtin,
+:root[data-theme="firewalla"] .token.inserted {
+    color: #4caf50;
+}
+
+:root[data-theme="firewalla"] .token.operator,
+:root[data-theme="firewalla"] .token.entity,
+:root[data-theme="firewalla"] .token.url,
+:root[data-theme="firewalla"] .language-css .token.string,
+:root[data-theme="firewalla"] .style .token.string {
+    color: #00b8d9;
+    background: transparent;
+}
+
+:root[data-theme="firewalla"] .token.atrule,
+:root[data-theme="firewalla"] .token.attr-value,
+:root[data-theme="firewalla"] .token.keyword {
+    color: #2196f3;
+}
+
+:root[data-theme="firewalla"] .token.function,
+:root[data-theme="firewalla"] .token.class-name {
+    color: #0066cc;
+}
+
+:root[data-theme="firewalla"] .token.regex,
+:root[data-theme="firewalla"] .token.important,
+:root[data-theme="firewalla"] .token.variable {
+    color: #ff9800;
+}
+
+/* Scrollbar Firewalla Theme */
+:root[data-theme="firewalla"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="firewalla"] ::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="firewalla"] ::-webkit-scrollbar-thumb:hover {
+    background: #334155;
+}
+
+/* Firefox Scrollbar Firewalla Theme */
+:root[data-theme="firewalla"] * {
+    scrollbar-color: #1e293b var(--bg-primary);
+}
+
+/* Security-focused styling */
+:root[data-theme="firewalla"] .accent-warning {
+    border-left: 3px solid var(--accent-warning);
+}
+
+:root[data-theme="firewalla"] .accent-error {
+    border-left: 3px solid var(--accent-error);
+}

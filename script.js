@@ -25,15 +25,18 @@ class NotesWiki {
             { id: 'atom-one-light', name: 'Atom One Light', description: 'Clean, bright theme from Atom editor' },
             { id: 'ayu-dark', name: 'Ayu Dark', description: 'Modern dark theme' },
             { id: 'ayu-light', name: 'Ayu Light', description: 'Modern light theme' },
+            { id: 'balatro', name: 'Balatro', description: 'Roguelike card game aesthetic with neon accents' },
             { id: 'bluloco-dark', name: 'Bluloco Dark', description: 'High contrast dark theme with vibrant colors' },
             { id: 'bluloco-light', name: 'Bluloco Light', description: 'High contrast light theme with blue accents' },
             { id: 'catppuccin-latte', name: 'Catppuccin Latte', description: 'Light theme with warm colors' },
             { id: 'catppuccin-mocha', name: 'Catppuccin Mocha', description: 'Dark theme with soft pastel colors' },
+            { id: 'claude', name: 'Claude AI', description: 'Clean and approachable with purple accents' },
             { id: 'cobalt2', name: 'Cobalt2', description: 'Wes Bos\'s iconic navy blue theme with vibrant accents' },
             { id: 'cyberpunk', name: 'Cyberpunk', description: 'Neon-lit dystopian future theme' },
             { id: 'dark', name: 'Dark', description: 'Easy on the eyes dark theme' },
             { id: 'dracula', name: 'Dracula', description: 'Dark theme with vibrant colors' },
             { id: 'everforest-dark', name: 'Everforest Dark', description: 'Forest-inspired dark theme' },
+            { id: 'firewalla', name: 'Firewalla', description: 'Cybersecurity-focused with cyan accents' },
             { id: 'flatland', name: 'Flatland', description: 'Flat design with muted colors' },
             { id: 'github-dark', name: 'GitHub Dark', description: 'GitHub\'s dark theme' },
             { id: 'github-light', name: 'GitHub Light', description: 'GitHub\'s clean light theme' },
@@ -55,6 +58,7 @@ class NotesWiki {
             { id: 'one-dark-pro', name: 'One Dark Pro', description: 'Atom-inspired dark theme' },
             { id: 'oxocarbon', name: 'Oxocarbon', description: 'IBM Carbon-inspired professional theme' },
             { id: 'palenight', name: 'Palenight', description: 'An elegant and juicy material-like theme' },
+            { id: 'protonmail', name: 'ProtonMail', description: 'Privacy-focused with signature purple' },
             { id: 'rose-pine', name: 'Rosé Pine', description: 'Dark theme with muted colors' },
             { id: 'rose-pine-dawn', name: 'Rosé Pine Dawn', description: 'Light variant of Rosé Pine' },
             { id: 'shades-of-purple', name: 'Shades of Purple', description: 'Unique purple-focused aesthetic' },
@@ -2390,6 +2394,13 @@ class NotesWiki {
                 text: '#4c4f69',
                 textMuted: '#7c7f93'
             },
+            'claude': {
+                bg: '#ffffff',
+                border: '#e5e7eb',
+                accent: '#8b5cf6',
+                text: '#1f2937',
+                textMuted: '#6b7280'
+            },
             'rose-pine': {
                 bg: '#191724',
                 border: '#403d52',
@@ -2425,12 +2436,26 @@ class NotesWiki {
                 text: '#5c6773',
                 textMuted: '#abb0b6'
             },
+            'balatro': {
+                bg: '#0d0d0d',
+                border: '#4d1a4d',
+                accent: '#ff007f',
+                text: '#e0d5e0',
+                textMuted: '#8066B0'
+            },
             'everforest-dark': {
                 bg: '#2d353b',
                 border: '#475258',
                 accent: '#7fbbb3',
                 text: '#d3c6aa',
                 textMuted: '#7a8478'
+            },
+            'firewalla': {
+                bg: '#0a0e1a',
+                border: '#1e293b',
+                accent: '#00b8d9',
+                text: '#e2e8f0',
+                textMuted: '#64748b'
             },
             'kanagawa': {
                 bg: '#1f1f28',
@@ -2606,6 +2631,13 @@ class NotesWiki {
                 accent: '#93c763',
                 text: '#cdd3d8',
                 textMuted: '#798188'
+            },
+            'protonmail': {
+                bg: '#1c1b24',
+                border: '#413e4f',
+                accent: '#8c6fd5',
+                text: '#e5e3ea',
+                textMuted: '#8e8b97'
             }
         };
         
@@ -2741,6 +2773,13 @@ class NotesWiki {
                 comment: '#7c7f93',
                 number: '#fe640b'
             },
+            'claude': {
+                keyword: '#8b5cf6',
+                function: '#3b82f6',
+                string: '#059669',
+                comment: '#6b7280',
+                number: '#dc2626'
+            },
             'rose-pine': {
                 keyword: '#ebbcba',
                 function: '#c4a7e7',
@@ -2776,12 +2815,26 @@ class NotesWiki {
                 comment: '#abb0b6',
                 number: '#fa8d3e'
             },
+            'balatro': {
+                keyword: '#ff007f',
+                function: '#9966ff',
+                string: '#00ff66',
+                comment: '#8066B0',
+                number: '#ff0040'
+            },
             'everforest-dark': {
                 keyword: '#e67e80',
                 function: '#7fbbb3',
                 string: '#a7c080',
                 comment: '#7a8478',
                 number: '#e69875'
+            },
+            'firewalla': {
+                keyword: '#2196f3',
+                function: '#0066cc',
+                string: '#4caf50',
+                comment: '#64748b',
+                number: '#f44336'
             },
             'kanagawa': {
                 keyword: '#957fb8',
@@ -2957,6 +3010,13 @@ class NotesWiki {
                 string: '#afc4db',
                 comment: '#798188',
                 number: '#cf6a4c'
+            },
+            'protonmail': {
+                keyword: '#8c6fd5',
+                function: '#6241c5',
+                string: '#44b662',
+                comment: '#8e8b97',
+                number: '#dc3545'
             }
         };
         

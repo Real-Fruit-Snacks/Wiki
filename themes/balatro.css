@@ -1,0 +1,135 @@
+/* Balatro Theme Variables - Roguelike card game aesthetic */
+:root[data-theme="balatro"] {
+    /* Background Colors */
+    --bg-primary: #0d0d0d;
+    --bg-secondary: #1a0f1a;
+    --bg-sidebar: #140a14;
+    --bg-code: #1a0f1a;
+    --bg-selection: rgba(255, 0, 127, 0.15);
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 0, 127, 0.05);
+    --bg-tag: #2d1a2d;
+    
+    /* Text Colors */
+    --text-primary: #e0d5e0;
+    --text-secondary: #c299c2;
+    --text-muted: #8066B0;
+    --text-heading: #ff00ff;
+    
+    /* Accent Colors - Card suits and neon */
+    --accent-primary: #ff007f;
+    --accent-secondary: #9966ff;
+    --accent-warning: #ffcc00;
+    --accent-error: #ff0040;
+    --accent-info: #00ccff;
+    --accent-success: #00ff66;
+    
+    /* Border Colors */
+    --border-primary: #4d1a4d;
+    --border-secondary: #662d66;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #0d0d0d;
+    
+    /* Shadows - Neon glow effect */
+    --shadow-sm: 0 1px 2px 0 rgba(255, 0, 127, 0.2);
+    --shadow-md: 0 4px 6px -1px rgba(255, 0, 127, 0.3), 0 2px 4px -1px rgba(153, 102, 255, 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(255, 0, 127, 0.4), 0 4px 6px -2px rgba(153, 102, 255, 0.3);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(255, 0, 127, 0.1);
+    --bg-code-block: #1a0f1a;
+}
+
+/* Syntax Highlighting - Balatro Theme */
+:root[data-theme="balatro"] .token.comment,
+:root[data-theme="balatro"] .token.prolog,
+:root[data-theme="balatro"] .token.doctype,
+:root[data-theme="balatro"] .token.cdata {
+    color: #8066B0;
+    font-style: italic;
+}
+
+:root[data-theme="balatro"] .token.punctuation {
+    color: #c299c2;
+}
+
+:root[data-theme="balatro"] .token.property,
+:root[data-theme="balatro"] .token.tag,
+:root[data-theme="balatro"] .token.boolean,
+:root[data-theme="balatro"] .token.number,
+:root[data-theme="balatro"] .token.constant,
+:root[data-theme="balatro"] .token.symbol,
+:root[data-theme="balatro"] .token.deleted {
+    color: #ff0040;
+}
+
+:root[data-theme="balatro"] .token.selector,
+:root[data-theme="balatro"] .token.attr-name,
+:root[data-theme="balatro"] .token.string,
+:root[data-theme="balatro"] .token.char,
+:root[data-theme="balatro"] .token.builtin,
+:root[data-theme="balatro"] .token.inserted {
+    color: #00ff66;
+}
+
+:root[data-theme="balatro"] .token.operator,
+:root[data-theme="balatro"] .token.entity,
+:root[data-theme="balatro"] .token.url,
+:root[data-theme="balatro"] .language-css .token.string,
+:root[data-theme="balatro"] .style .token.string {
+    color: #00ccff;
+    background: transparent;
+}
+
+:root[data-theme="balatro"] .token.atrule,
+:root[data-theme="balatro"] .token.attr-value,
+:root[data-theme="balatro"] .token.keyword {
+    color: #ff007f;
+}
+
+:root[data-theme="balatro"] .token.function,
+:root[data-theme="balatro"] .token.class-name {
+    color: #9966ff;
+}
+
+:root[data-theme="balatro"] .token.regex,
+:root[data-theme="balatro"] .token.important,
+:root[data-theme="balatro"] .token.variable {
+    color: #ffcc00;
+}
+
+/* Scrollbar Balatro Theme */
+:root[data-theme="balatro"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="balatro"] ::-webkit-scrollbar-thumb {
+    background: #4d1a4d;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="balatro"] ::-webkit-scrollbar-thumb:hover {
+    background: #662d66;
+}
+
+/* Firefox Scrollbar Balatro Theme */
+:root[data-theme="balatro"] * {
+    scrollbar-color: #4d1a4d var(--bg-primary);
+}
+
+/* Special neon glow for links and buttons */
+:root[data-theme="balatro"] a:hover {
+    text-shadow: 0 0 8px rgba(255, 0, 127, 0.6);
+}
+
+:root[data-theme="balatro"] .button:hover {
+    box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+}
