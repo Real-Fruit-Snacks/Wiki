@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A self-contained static notes/wiki website for GitLab Pages that displays markdown files with advanced features including 16 built-in themes, real-time search, metadata parsing, and no external dependencies. All assets are bundled locally to ensure complete offline functionality.
+A self-contained static notes/wiki website for GitLab Pages that displays markdown files with advanced features including 28 built-in themes, real-time search, metadata parsing, and no external dependencies. All assets are bundled locally to ensure complete offline functionality.
 
 ## Development Commands
 
@@ -31,6 +31,17 @@ python3 build.py
 - **js-yaml** - YAML frontmatter parsing (bundled in libs/)
 - **CSS Custom Properties** - Theme system implementation
 
+### Main Application Class
+
+The `NotesWiki` class (in script.js) is the central controller that manages:
+- Initialization and startup sequence
+- Router configuration and navigation
+- Theme management and preferences
+- Search functionality
+- Tab management
+- Timer widget
+- Event handling and state management
+
 ### Key Architectural Patterns
 
 1. **Client-Side Routing**
@@ -40,15 +51,16 @@ python3 build.py
    - Routes: `/notes/`, `/search/`, `/tags/`, `/recent`
 
 2. **Theme System**
-   - 16 VSCode-inspired themes in `/themes/`
+   - 28 professional themes in `/themes/` (VSCode, Catppuccin, Rosé Pine, Material, Ayu, etc.)
    - Dynamic theme loading via CSS file switching
-   - Preview functionality with save/cancel
+   - Preview functionality with hover preview and save/cancel
    - Auto-theme detection based on system preferences
    - Theme affects both UI and syntax highlighting
 
 3. **Search Implementation**
    - Client-side full-text search using notes-index.json
    - Fuzzy matching across title, content, tags, and author
+   - Search includes full content and code blocks (not truncated)
    - Search results limited to 10 items with pagination potential
    - Includes term highlighting in results
 
@@ -116,6 +128,19 @@ status: published    # optional
 
 ## Critical Implementation Notes
 
+### Tab Management
+- Multiple tabs support with drag-and-drop reordering
+- Tab contents are cached for performance
+- Close all tabs functionality
+- Tab state persists during navigation
+
+### Timer Widget
+- Integrated productivity timer in the header
+- Play/pause/reset controls
+- Long-press reset (3 seconds) with visual feedback
+- Theme-aware design adapts to all 28 themes
+- Timer state persists across navigation
+
 ### Code Block Copy Mechanism
 The copy functionality for code blocks containing HTML requires special handling:
 - HTML entities are escaped when storing in data attributes
@@ -123,7 +148,7 @@ The copy functionality for code blocks containing HTML requires special handling
 - Prevents angle brackets from being stripped when copying HTML code
 
 ### Search Index Generation
-- `build.py` extracts first 2KB of searchable content per note
+- `build.py` extracts full searchable content per note (no truncation)
 - Combines regular text and code block content for search
 - Generates context information from directory structure
 - Must be run after any note modifications
@@ -138,6 +163,8 @@ The copy functionality for code blocks containing HTML requires special handling
 - Search index loaded entirely into memory
 - Theme switching causes full page repaint
 - No pagination for search results (hardcoded limit of 10)
+- Tab contents cached for quick switching
+- Lazy loading of markdown files
 
 ## Key Files to Modify
 
@@ -165,7 +192,7 @@ The copy functionality for code blocks containing HTML requires special handling
 
 When testing changes:
 1. Run `python3 build.py` after modifying notes
-2. Test all 16 themes for visual consistency
+2. Test all 28 themes for visual consistency
 3. Verify search with special characters and multiple terms
 4. Test deep linking to specific headings
 5. Check localStorage persistence across sessions
@@ -173,6 +200,9 @@ When testing changes:
 7. Test offline functionality (all assets are local)
 8. Verify code block features (copy, line numbers, wrap)
 9. Test HTML code copying specifically
+10. Test timer functionality across theme changes
+11. Verify tab management (create, close, reorder)
+12. Test context filtering across navigation and search
 
 ## Security Notes
 
@@ -181,3 +211,11 @@ When testing changes:
 - No JavaScript execution from markdown content
 - All external assets are bundled locally
 - Theme files are loaded dynamically but from trusted local source
+
+## Deployment Options
+
+1. **GitLab Pages** - Use included `.gitlab-ci.yml` for automatic deployment
+2. **Static Hosting** - Upload all files to Netlify, Vercel, GitHub Pages, etc.
+3. **Direct File Access** - Limited functionality due to CORS (search disabled)
+
+Note: Full functionality requires HTTP server due to JavaScript module loading and CORS restrictions.

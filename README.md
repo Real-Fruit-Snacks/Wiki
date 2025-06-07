@@ -1,8 +1,8 @@
 # Notes Wiki
 
-A modern, self-contained static notes and documentation system designed for GitLab Pages with advanced features including 27 built-in themes, real-time search, metadata parsing, and complete offline functionality.
+A modern, self-contained static notes and documentation system designed for GitLab Pages with advanced features including 28 built-in themes, real-time search, metadata parsing, and complete offline functionality.
 
-![Wiki Screenshot](https://img.shields.io/badge/Status-Ready-green) ![No Dependencies](https://img.shields.io/badge/Dependencies-None-blue) ![Themes](https://img.shields.io/badge/Themes-27-purple)
+![Wiki Screenshot](https://img.shields.io/badge/Status-Ready-green) ![No Dependencies](https://img.shields.io/badge/Dependencies-None-blue) ![Themes](https://img.shields.io/badge/Themes-28-purple)
 
 ## 🌟 Features
 
@@ -11,11 +11,12 @@ A modern, self-contained static notes and documentation system designed for GitL
 - **Syntax Highlighting**: Code blocks with Prism.js for 150+ languages
 - **Callouts**: 13 different callout types (Warning, Info, Tip, Note, etc.)
 - **YAML Frontmatter**: Metadata support for tags, authors, categories, and more
+- **Image Support**: Embed images with alignment, sizing, captions, and hover effects
 
 ### 🎨 **Theme System**
-- **27 Professional Themes**: Including VSCode, Catppuccin, Rosé Pine, Material, Ayu, and more
+- **28 Professional Themes**: Including VSCode, Catppuccin, Rosé Pine, Material, Ayu, and more
 - **Auto Theme Detection**: Automatically switch based on system preferences
-- **Preview Mode**: Test themes before saving
+- **Preview Mode**: Test themes before saving with hover preview
 - **Consistent Styling**: All themes support both UI and syntax highlighting
 
 ### 🔍 **Advanced Search**
@@ -39,8 +40,9 @@ A modern, self-contained static notes and documentation system designed for GitL
 ### ⏱️ **Productivity Features**
 - **Built-in Timer**: Integrated timer widget with play/pause/reset functionality
 - **Long-press Reset**: Hold reset button for 3 seconds with visual feedback
-- **Theme-aware Design**: Timer adapts to all 27 themes automatically
+- **Theme-aware Design**: Timer adapts to all 28 themes automatically
 - **Persistent State**: Timer continues running even when switching between notes
+- **Tab Management**: Multiple tabs with drag-and-drop reordering and cached content
 
 ## 🚀 Quick Start
 
@@ -94,13 +96,18 @@ notes-wiki/
 │   ├── marked.min.js       # Markdown parser
 │   ├── prism.min.js        # Syntax highlighter
 │   └── js-yaml.min.js      # YAML frontmatter parser
-├── themes/                 # 27 built-in themes
+├── themes/                 # 28 built-in themes
 │   ├── light.css
 │   ├── dark.css
 │   ├── vscode-dark-plus.css
 │   └── ...
+├── images/                 # Image assets
+│   ├── notes/              # General note images
+│   ├── tutorials/          # Tutorial screenshots
+│   └── reference/          # Reference diagrams
 └── notes/                  # Your markdown content
     ├── index.md            # Welcome page
+    ├── images-demo.md      # Image usage guide
     ├── personal/           # Context folder
     ├── technical/          # Context folder
     ├── projects/           # Context folder
@@ -161,6 +168,20 @@ function greetUser(name) {
 }
 ```
 ````
+
+### Images
+Add images with various alignment and sizing options:
+
+```markdown
+![Basic image](/images/example.jpg)
+![left small: Left-aligned small image](/images/example.jpg)
+![right medium: Right-aligned medium image](/images/example.jpg)
+
+<figure>
+  <img src="/images/example.jpg" alt="Description">
+  <figcaption>Image with caption</figcaption>
+</figure>
+```
 
 ## 🔧 Configuration
 
