@@ -1,8 +1,8 @@
 # Notes Wiki
 
-A modern, self-contained static notes and documentation system designed for GitLab Pages with advanced features including 49 built-in themes, real-time search, metadata parsing, and complete offline functionality.
+A modern, self-contained static notes and documentation system designed for GitLab Pages with advanced features including 53 built-in themes, real-time search, metadata parsing, and complete offline functionality.
 
-![Wiki Screenshot](https://img.shields.io/badge/Status-Ready-green) ![No Dependencies](https://img.shields.io/badge/Dependencies-None-blue) ![Themes](https://img.shields.io/badge/Themes-49-purple)
+![Wiki Screenshot](https://img.shields.io/badge/Status-Ready-green) ![No Dependencies](https://img.shields.io/badge/Dependencies-None-blue) ![Themes](https://img.shields.io/badge/Themes-53-purple)
 
 ## 🌟 Features
 
@@ -14,7 +14,7 @@ A modern, self-contained static notes and documentation system designed for GitL
 - **Image Support**: Embed images with alignment, sizing, captions, and hover effects
 
 ### 🎨 **Theme System**
-- **49 Professional Themes**: Including VSCode, Catppuccin, Rosé Pine, Material, Ayu, Matrix, Cyberpunk, Cobalt2, Atom One, Winter Is Coming, and more
+- **53 Professional Themes**: Including VSCode, Catppuccin, Rosé Pine, Material, Ayu, Matrix, Cyberpunk, Cobalt2, Atom One, Winter Is Coming, Balatro, Claude AI, Firewalla, ProtonMail, and more
 - **Auto Theme Detection**: Automatically switch based on system preferences
 - **Live Theme Previews**: Each theme card shows its actual colors and syntax highlighting
 - **Consistent Styling**: All themes support both UI and syntax highlighting
@@ -40,7 +40,7 @@ A modern, self-contained static notes and documentation system designed for GitL
 ### ⏱️ **Productivity Features**
 - **Built-in Timer**: Integrated timer widget with play/pause/reset functionality
 - **Long-press Reset**: Hold reset button for 3 seconds with visual feedback
-- **Theme-aware Design**: Timer adapts to all 49 themes automatically
+- **Theme-aware Design**: Timer adapts to all 53 themes automatically
 - **Persistent State**: Timer continues running even when switching between notes
 - **Tab Management**: Multiple tabs with drag-and-drop reordering and cached content
 - **Keyboard Shortcuts**: Essential shortcuts (Ctrl+T new tab, Ctrl+K search, Ctrl+, settings, Ctrl+F filter)
@@ -98,7 +98,7 @@ notes-wiki/
 │   ├── marked.min.js       # Markdown parser
 │   ├── prism.min.js        # Syntax highlighter
 │   └── js-yaml.min.js      # YAML frontmatter parser
-├── themes/                 # 49 built-in themes
+├── themes/                 # 53 built-in themes
 │   ├── light.css
 │   ├── dark.css
 │   ├── vscode-dark-plus.css
@@ -223,7 +223,7 @@ Access settings via the gear icon to configure:
 ### Adding New Features
 1. Modify `script.js` for functionality
 2. Update `style.css` for styling
-3. Test across all 49 themes
+3. Test across all 53 themes
 4. Update documentation as needed
 
 ### Theme Development
@@ -232,7 +232,7 @@ Access settings via the gear icon to configure:
 - Ensure accessibility compliance
 - Validate syntax highlighting colors
 
-### Available Themes (49)
+### Available Themes (53)
 **Classic**: Light, Dark, Monokai, Dracula, Solarized (Light/Dark)  
 **Modern**: VSCode Dark+, One Dark Pro, Tokyo Night, Nord, Palenight, Tomorrow Night  
 **GitHub**: GitHub Light, GitHub Dark  
@@ -247,6 +247,7 @@ Access settings via the gear icon to configure:
 **Cobalt**: Cobalt2  
 **Winter**: Winter Is Coming Light, Winter Is Coming Dark  
 **Professional**: Oxocarbon, Spacegray, Flatland, Lucario, Nordic, Noctis  
+**Brand-Inspired**: Balatro, Claude AI, Firewalla, ProtonMail  
 **Unique**: Hotdog Stand, Matrix, Cyberpunk, Vaporwave, HackTheBox, ThinkUltra, Witch Hazel, 2077, Zenburn, Shades of Purple
 
 ## 📄 License
