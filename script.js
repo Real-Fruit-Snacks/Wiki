@@ -53,7 +53,23 @@ class NotesWiki {
             { id: 'vaporwave', name: 'Vaporwave', description: 'Retro aesthetic with neon pink and cyan' },
             { id: 'cyberpunk', name: 'Cyberpunk', description: 'Neon-lit dystopian future theme' },
             { id: 'hackthebox', name: 'HackTheBox', description: 'Inspired by the HTB platform colors' },
-            { id: 'thinkultra', name: 'ThinkUltra', description: 'ThinkPad-inspired minimalist black theme' }
+            { id: 'thinkultra', name: 'ThinkUltra', description: 'ThinkPad-inspired minimalist black theme' },
+            { id: 'cobalt2', name: 'Cobalt2', description: 'Wes Bos\'s iconic navy blue theme with vibrant accents' },
+            { id: 'shades-of-purple', name: 'Shades of Purple', description: 'Unique purple-focused aesthetic' },
+            { id: 'winter-is-coming-dark', name: 'Winter is Coming Dark', description: 'Cool blue color scheme with frosty appearance' },
+            { id: 'winter-is-coming-light', name: 'Winter is Coming Light', description: 'Light variant with cool blue accents' },
+            { id: 'atom-one-light', name: 'Atom One Light', description: 'Clean, bright theme from Atom editor' },
+            { id: 'material-palenight', name: 'Material Palenight', description: 'Material design with palenight colors' },
+            { id: 'material-darker', name: 'Material Darker', description: 'Darker variant of Material theme' },
+            { id: 'bluloco-light', name: 'Bluloco Light', description: 'High contrast light theme with blue accents' },
+            { id: 'bluloco-dark', name: 'Bluloco Dark', description: 'High contrast dark theme with vibrant colors' },
+            { id: '2077', name: '2077 Theme', description: 'Cyberpunk 2077 inspired neon colors' },
+            { id: 'oxocarbon', name: 'Oxocarbon', description: 'IBM Carbon-inspired professional theme' },
+            { id: 'spacegray', name: 'Spacegray', description: 'Minimalist gray theme from Sublime Text' },
+            { id: 'nordic', name: 'Nordic', description: 'Warmer and darker variant of Nord' },
+            { id: 'noctis', name: 'Noctis', description: 'Nature-inspired theme with blue tones' },
+            { id: 'lucario', name: 'Lucario', description: 'Minimalist dark theme with pastel colors' },
+            { id: 'flatland', name: 'Flatland', description: 'Flat design with muted colors' }
         ];
         
         // Settings
@@ -660,7 +676,7 @@ class NotesWiki {
             }
         });
         
-        // Global keyboard shortcuts
+        // Global keyboard shortcuts - only essential ones
         document.addEventListener('keydown', (e) => {
             // Skip if user is typing in an input field
             const isTyping = e.target.matches('input, textarea, [contenteditable="true"]');
@@ -670,41 +686,25 @@ class NotesWiki {
                 this.hideSearch();
                 this.hideSettings();
                 this.hideTagsModal();
-            } else if (e.key === '/' && !isTyping) {
-                e.preventDefault();
-                this.closeAllDropdowns();
-                this.showSearch();
-            } else if (e.key === '?' && !isTyping) {
-                e.preventDefault();
-                this.showKeyboardShortcuts();
             } else if ((e.ctrlKey || e.metaKey) && !isTyping) {
                 switch(e.key.toLowerCase()) {
-                    case 'k': // Quick search
-                    case 'f': // Find
+                    case 't': // New tab
+                        e.preventDefault();
+                        this.createNewTab();
+                        break;
+                    case 'k': // Search
                         e.preventDefault();
                         this.closeAllDropdowns();
                         this.showSearch();
                         break;
-                    case 's': // Save/bookmark
+                    case ',': // Settings
                         e.preventDefault();
-                        this.bookmarkCurrentNote();
+                        this.showSettings();
                         break;
-                    case 'w': // Close tab
+                    case 'f': // Filter by tags
                         e.preventDefault();
-                        this.closeTab(this.activeTabId);
+                        this.showTagsModal();
                         break;
-                    case 'Tab': // Switch tabs
-                        e.preventDefault();
-                        this.switchToNextTab(e.shiftKey);
-                        break;
-                }
-            } else if (e.altKey && !isTyping && e.key >= '1' && e.key <= '9') {
-                // Alt + number to switch to specific tab
-                e.preventDefault();
-                const tabIndex = parseInt(e.key) - 1;
-                const tabIds = Array.from(this.tabs.keys());
-                if (tabIndex < tabIds.length) {
-                    this.switchToTab(tabIds[tabIndex]);
                 }
             }
         });
@@ -1221,6 +1221,10 @@ class NotesWiki {
         
         // Handle internal links and tag links
         mainContent.querySelectorAll('a[href^="#"]').forEach(link => {
+            // Skip if already has listener (check with data attribute)
+            if (link.dataset.listenerAttached) return;
+            link.dataset.listenerAttached = 'true';
+            
             link.addEventListener('click', (e) => {
                 if (e.ctrlKey || e.metaKey) {
                     // Open in new tab
@@ -1501,7 +1505,19 @@ class NotesWiki {
             codeBlocksCount: note.code_blocks_count || 0
         }));
         
-        document.getElementById('search-overlay').style.display = 'block';
+        const overlay = document.getElementById('search-overlay');
+        overlay.style.display = 'block';
+        
+        // Add click-outside handler
+        const clickOutsideHandler = (e) => {
+            if (e.target === overlay) {
+                this.hideSearch();
+            }
+        };
+        overlay.addEventListener('click', clickOutsideHandler);
+        
+        // Store handler for cleanup
+        overlay._clickOutsideHandler = clickOutsideHandler;
         const searchInput = document.getElementById('search-input');
         const stickyCheckbox = document.getElementById('sticky-search');
         
@@ -1519,7 +1535,15 @@ class NotesWiki {
     }
     
     hideSearch() {
-        document.getElementById('search-overlay').style.display = 'none';
+        const overlay = document.getElementById('search-overlay');
+        overlay.style.display = 'none';
+        
+        // Remove click-outside handler
+        if (overlay._clickOutsideHandler) {
+            overlay.removeEventListener('click', overlay._clickOutsideHandler);
+            delete overlay._clickOutsideHandler;
+        }
+        
         const searchInput = document.getElementById('search-input');
         
         // Save the search query if sticky search is enabled
@@ -1641,7 +1665,19 @@ class NotesWiki {
     }
     
     showSettings() {
-        document.getElementById('settings-modal').style.display = 'flex';
+        const modal = document.getElementById('settings-modal');
+        modal.style.display = 'flex';
+        
+        // Add click-outside handler
+        const clickOutsideHandler = (e) => {
+            if (e.target === modal) {
+                this.hideSettings();
+            }
+        };
+        modal.addEventListener('click', clickOutsideHandler);
+        
+        // Store handler for cleanup
+        modal._clickOutsideHandler = clickOutsideHandler;
         
         // Update form values
         document.getElementById('track-recent').checked = this.settings.trackRecent;
@@ -1700,7 +1736,14 @@ class NotesWiki {
     }
     
     hideSettings() {
-        document.getElementById('settings-modal').style.display = 'none';
+        const modal = document.getElementById('settings-modal');
+        modal.style.display = 'none';
+        
+        // Remove click-outside handler
+        if (modal._clickOutsideHandler) {
+            modal.removeEventListener('click', modal._clickOutsideHandler);
+            delete modal._clickOutsideHandler;
+        }
     }
     
     switchSettingsPanel(panelName) {
@@ -1824,8 +1867,20 @@ class NotesWiki {
     }
     
     showTagsModal() {
-        document.getElementById('tags-modal').style.display = 'flex';
+        const modal = document.getElementById('tags-modal');
+        modal.style.display = 'flex';
         this.updateTagsUI();
+        
+        // Add click-outside handler
+        const clickOutsideHandler = (e) => {
+            if (e.target === modal) {
+                this.hideTagsModal();
+            }
+        };
+        modal.addEventListener('click', clickOutsideHandler);
+        
+        // Store handler for cleanup
+        modal._clickOutsideHandler = clickOutsideHandler;
         
         // Focus on search input if it exists
         const searchInput = document.getElementById('tag-search-input');
@@ -1837,7 +1892,14 @@ class NotesWiki {
     }
     
     hideTagsModal() {
-        document.getElementById('tags-modal').style.display = 'none';
+        const modal = document.getElementById('tags-modal');
+        modal.style.display = 'none';
+        
+        // Remove click-outside handler
+        if (modal._clickOutsideHandler) {
+            modal.removeEventListener('click', modal._clickOutsideHandler);
+            delete modal._clickOutsideHandler;
+        }
         
         // Clear search when closing modal
         const searchInput = document.getElementById('tag-search-input');
@@ -1996,27 +2058,72 @@ class NotesWiki {
             card.className = 'theme-card';
             card.dataset.themeId = theme.id;
             
+            // Get theme colors for preview
+            const previewColors = this.getThemePreviewColors(theme.id);
+            const syntaxColors = this.getThemeSyntaxColors(theme.id);
+            
+            // Apply theme-specific inline styles to the card
+            card.style.backgroundColor = previewColors.bg;
+            card.style.borderColor = previewColors.border;
+            card.style.setProperty('--theme-text-primary', previewColors.text);
+            card.style.setProperty('--theme-text-secondary', previewColors.textMuted);
+            card.style.setProperty('--theme-accent', previewColors.accent);
+            card.style.setProperty('--theme-border', previewColors.border);
+            
             // Mark current theme as active
             if (theme.id === this.settings.theme) {
                 card.classList.add('active');
+                card.style.borderColor = previewColors.accent;
+                card.style.boxShadow = `0 0 0 2px ${previewColors.accent}`;
             }
             
-            // Get theme colors for preview
-            const previewColors = this.getThemePreviewColors(theme.id);
-            
             card.innerHTML = `
-                <div class="theme-card-preview">
-                    <div class="preview-section">
-                        <div class="preview-bg" style="background: ${previewColors.bg};"></div>
-                        <div class="preview-accent" style="background: ${previewColors.accent};"></div>
-                    </div>
-                    <div class="preview-section">
-                        <div class="preview-bg" style="background: ${previewColors.text}; opacity: 0.1;"></div>
-                    </div>
+                <div class="theme-card-preview-full" style="
+                    background: ${previewColors.bg};
+                    border: 1px solid ${previewColors.border};
+                    border-radius: 6px;
+                    padding: 8px;
+                    margin-bottom: 8px;
+                    width: 100%;
+                    box-sizing: border-box;
+                ">
+                    <div style="
+                        background: ${previewColors.accent};
+                        height: 3px;
+                        border-radius: 2px;
+                        margin-bottom: 6px;
+                    "></div>
+                    <pre style="
+                        margin: 0;
+                        font-size: 10px;
+                        line-height: 1.3;
+                        font-family: 'Consolas', 'Monaco', monospace;
+                        background: transparent;
+                        padding: 0;
+                        white-space: pre;
+                        overflow: hidden;
+                    "><code style="background: transparent; padding: 0;"><span style="color: ${syntaxColors.keyword}">function</span> <span style="color: ${syntaxColors.function}">hello</span>() {
+  <span style="color: ${syntaxColors.keyword}">return</span> <span style="color: ${syntaxColors.string}">"world"</span>;
+}</code></pre>
                 </div>
-                <div class="theme-card-title">${theme.name}</div>
-                <div class="theme-card-description">${theme.description}</div>
+                <div class="theme-card-title" style="color: ${previewColors.text};">${theme.name}</div>
+                <div class="theme-card-description" style="color: ${previewColors.textMuted};">${theme.description}</div>
             `;
+            
+            // Add hover effect with theme colors
+            card.addEventListener('mouseenter', () => {
+                if (!card.classList.contains('active')) {
+                    card.style.borderColor = previewColors.accent;
+                    card.style.boxShadow = `0 4px 12px ${previewColors.accent}20`;
+                }
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                if (!card.classList.contains('active')) {
+                    card.style.borderColor = previewColors.border;
+                    card.style.boxShadow = '';
+                }
+            });
             
             // Handle theme selection
             card.addEventListener('click', () => {
@@ -2043,8 +2150,15 @@ class NotesWiki {
                 // Update visual state
                 themeCardsGrid.querySelectorAll('.theme-card').forEach(c => {
                     c.classList.remove('active');
+                    // Reset border color for non-active cards
+                    const themeId = c.dataset.themeId;
+                    const colors = this.getThemePreviewColors(themeId);
+                    c.style.borderColor = colors.border;
+                    c.style.boxShadow = '';
                 });
                 card.classList.add('active');
+                card.style.borderColor = previewColors.accent;
+                card.style.boxShadow = `0 0 0 2px ${previewColors.accent}`;
                 
                 // Show success feedback
                 this.showToast(`${theme.name} theme applied!`);
@@ -2380,10 +2494,473 @@ class NotesWiki {
                 accent: '#E60012',
                 text: '#E8E8E8',
                 textMuted: '#808080'
+            },
+            'cobalt2': {
+                bg: '#193549',
+                border: '#234E6D',
+                accent: '#ffc600',
+                text: '#ffffff',
+                textMuted: '#7fdbca'
+            },
+            'shades-of-purple': {
+                bg: '#2D2B55',
+                border: '#4D4A89',
+                accent: '#B362FF',
+                text: '#FFFFFF',
+                textMuted: '#A599E9'
+            },
+            'winter-is-coming-dark': {
+                bg: '#011627',
+                border: '#1e3a52',
+                accent: '#00bff9',
+                text: '#a7dbf7',
+                textMuted: '#5f7e97'
+            },
+            'winter-is-coming-light': {
+                bg: '#ffffff',
+                border: '#e5e7eb',
+                accent: '#0284c7',
+                text: '#1f2937',
+                textMuted: '#9ca3af'
+            },
+            'atom-one-light': {
+                bg: '#FAFAFA',
+                border: '#D3D3D3',
+                accent: '#4078F2',
+                text: '#383A42',
+                textMuted: '#A0A1A7'
+            },
+            'material-palenight': {
+                bg: '#292D3E',
+                border: '#444760',
+                accent: '#82AAFF',
+                text: '#A6ACCD',
+                textMuted: '#676E95'
+            },
+            'material-darker': {
+                bg: '#212121',
+                border: '#424242',
+                accent: '#80cbc4',
+                text: '#eeffff',
+                textMuted: '#616161'
+            },
+            'bluloco-light': {
+                bg: '#f9f9f9',
+                border: '#d0d0d0',
+                accent: '#0098dd',
+                text: '#383a42',
+                textMuted: '#a0a1a7'
+            },
+            'bluloco-dark': {
+                bg: '#282c34',
+                border: '#3e4451',
+                accent: '#10b1fe',
+                text: '#abb2bf',
+                textMuted: '#545862'
+            },
+            '2077': {
+                bg: '#030d22',
+                border: '#1a3a5a',
+                accent: '#ff2cf1',
+                text: '#0ef3ff',
+                textMuted: '#7a8bb1'
+            },
+            'oxocarbon': {
+                bg: '#161616',
+                border: '#393939',
+                accent: '#33b1ff',
+                text: '#f2f4f8',
+                textMuted: '#525252'
+            },
+            'spacegray': {
+                bg: '#2b303b',
+                border: '#4f5b66',
+                accent: '#8fa1b3',
+                text: '#eff1f5',
+                textMuted: '#65737e'
+            },
+            'nordic': {
+                bg: '#2e3440',
+                border: '#4c566a',
+                accent: '#88c0d0',
+                text: '#d8dee9',
+                textMuted: '#4c566a'
+            },
+            'noctis': {
+                bg: '#051f2e',
+                border: '#1f4662',
+                accent: '#0095a8',
+                text: '#c5cdd3',
+                textMuted: '#5b7083'
+            },
+            'lucario': {
+                bg: '#2b3e50',
+                border: '#3a526b',
+                accent: '#72c05d',
+                text: '#f8f8f2',
+                textMuted: '#5c98cd'
+            },
+            'flatland': {
+                bg: '#26292c',
+                border: '#3e4147',
+                accent: '#93c763',
+                text: '#cdd3d8',
+                textMuted: '#798188'
             }
         };
         
         return themeColors[themeId] || themeColors['light'];
+    }
+    
+    getThemeSyntaxColors(themeId) {
+        // Return syntax highlighting colors for each theme
+        const syntaxColors = {
+            'light': {
+                keyword: '#d73a49',
+                function: '#6f42c1',
+                string: '#032f62',
+                comment: '#6a737d',
+                number: '#005cc5'
+            },
+            'dark': {
+                keyword: '#ff79c6',
+                function: '#50fa7b',
+                string: '#f1fa8c',
+                comment: '#6272a4',
+                number: '#bd93f9'
+            },
+            'vscode-dark-plus': {
+                keyword: '#c586c0',
+                function: '#dcdcaa',
+                string: '#ce9178',
+                comment: '#6a9955',
+                number: '#b5cea8'
+            },
+            'monokai': {
+                keyword: '#f92672',
+                function: '#a6e22e',
+                string: '#e6db74',
+                comment: '#75715e',
+                number: '#ae81ff'
+            },
+            'dracula': {
+                keyword: '#ff79c6',
+                function: '#50fa7b',
+                string: '#f1fa8c',
+                comment: '#6272a4',
+                number: '#bd93f9'
+            },
+            'one-dark-pro': {
+                keyword: '#c678dd',
+                function: '#61afef',
+                string: '#98c379',
+                comment: '#5c6370',
+                number: '#d19a66'
+            },
+            'solarized-light': {
+                keyword: '#859900',
+                function: '#b58900',
+                string: '#2aa198',
+                comment: '#93a1a1',
+                number: '#dc322f'
+            },
+            'solarized-dark': {
+                keyword: '#859900',
+                function: '#b58900',
+                string: '#2aa198',
+                comment: '#586e75',
+                number: '#dc322f'
+            },
+            'github-light': {
+                keyword: '#d73a49',
+                function: '#6f42c1',
+                string: '#032f62',
+                comment: '#6a737d',
+                number: '#005cc5'
+            },
+            'github-dark': {
+                keyword: '#ff7b72',
+                function: '#d2a8ff',
+                string: '#a5d6ff',
+                comment: '#8b949e',
+                number: '#79c0ff'
+            },
+            'nord': {
+                keyword: '#81a1c1',
+                function: '#88c0d0',
+                string: '#a3be8c',
+                comment: '#616e88',
+                number: '#b48ead'
+            },
+            'gruvbox-dark': {
+                keyword: '#fb4934',
+                function: '#fabd2f',
+                string: '#b8bb26',
+                comment: '#928374',
+                number: '#d3869b'
+            },
+            'gruvbox-light': {
+                keyword: '#cc241d',
+                function: '#b57614',
+                string: '#79740e',
+                comment: '#928374',
+                number: '#8f3f71'
+            },
+            'tokyo-night': {
+                keyword: '#bb9af7',
+                function: '#7aa2f7',
+                string: '#9ece6a',
+                comment: '#565f89',
+                number: '#ff9e64'
+            },
+            'palenight': {
+                keyword: '#c792ea',
+                function: '#82aaff',
+                string: '#c3e88d',
+                comment: '#676e95',
+                number: '#f78c6c'
+            },
+            'hotdog-stand': {
+                keyword: '#ffeb3b',
+                function: '#fff59d',
+                string: '#ffeb3b',
+                comment: '#fff9c4',
+                number: '#ffeb3b'
+            },
+            'catppuccin-mocha': {
+                keyword: '#cba6f7',
+                function: '#89b4fa',
+                string: '#a6e3a1',
+                comment: '#6c7086',
+                number: '#fab387'
+            },
+            'catppuccin-latte': {
+                keyword: '#8839ef',
+                function: '#1e66f5',
+                string: '#40a02b',
+                comment: '#7c7f93',
+                number: '#fe640b'
+            },
+            'rose-pine': {
+                keyword: '#ebbcba',
+                function: '#c4a7e7',
+                string: '#f6c177',
+                comment: '#6e6a86',
+                number: '#eb6f92'
+            },
+            'rose-pine-dawn': {
+                keyword: '#d7827e',
+                function: '#907aa9',
+                string: '#ea9d34',
+                comment: '#9893a5',
+                number: '#b4637a'
+            },
+            'material-ocean': {
+                keyword: '#c792ea',
+                function: '#82aaff',
+                string: '#c3e88d',
+                comment: '#464b5d',
+                number: '#f78c6c'
+            },
+            'ayu-dark': {
+                keyword: '#ffa759',
+                function: '#ffee99',
+                string: '#c2d94c',
+                comment: '#626a73',
+                number: '#ff8f40'
+            },
+            'ayu-light': {
+                keyword: '#fa8d3e',
+                function: '#f2ae49',
+                string: '#86b300',
+                comment: '#abb0b6',
+                number: '#fa8d3e'
+            },
+            'everforest-dark': {
+                keyword: '#e67e80',
+                function: '#7fbbb3',
+                string: '#a7c080',
+                comment: '#7a8478',
+                number: '#e69875'
+            },
+            'kanagawa': {
+                keyword: '#957fb8',
+                function: '#7e9cd8',
+                string: '#98bb6c',
+                comment: '#727169',
+                number: '#ff5d62'
+            },
+            'zenburn': {
+                keyword: '#f0dfaf',
+                function: '#8cd0d3',
+                string: '#cc9393',
+                comment: '#7f9f7f',
+                number: '#dcdccc'
+            },
+            'tomorrow-night': {
+                keyword: '#b294bb',
+                function: '#81a2be',
+                string: '#b5bd68',
+                comment: '#969896',
+                number: '#de935f'
+            },
+            'matrix': {
+                keyword: '#00FF41',
+                function: '#00FF41',
+                string: '#008F11',
+                comment: '#006600',
+                number: '#00FF41'
+            },
+            'witch-hazel': {
+                keyword: '#c5a3ff',
+                function: '#1bc5e0',
+                string: '#c9d05c',
+                comment: '#a599c7',
+                number: '#f1b5c2'
+            },
+            'vaporwave': {
+                keyword: '#FF71CE',
+                function: '#01CDFE',
+                string: '#FFFB96',
+                comment: '#B967FF',
+                number: '#FF71CE'
+            },
+            'cyberpunk': {
+                keyword: '#EA00D9',
+                function: '#0ABDC6',
+                string: '#0ABDC6',
+                comment: '#7a8bb5',
+                number: '#EA00D9'
+            },
+            'hackthebox': {
+                keyword: '#9fef00',
+                function: '#9fef00',
+                string: '#a4b1cd',
+                comment: '#7d8ca8',
+                number: '#9fef00'
+            },
+            'thinkultra': {
+                keyword: '#E60012',
+                function: '#E8E8E8',
+                string: '#808080',
+                comment: '#4D4D4D',
+                number: '#E60012'
+            },
+            'cobalt2': {
+                keyword: '#ffc600',
+                function: '#0088ff',
+                string: '#a5ff90',
+                comment: '#0088ff',
+                number: '#ff628c'
+            },
+            'shades-of-purple': {
+                keyword: '#B362FF',
+                function: '#FAD000',
+                string: '#A5FF90',
+                comment: '#A599E9',
+                number: '#FF628C'
+            },
+            'winter-is-coming-dark': {
+                keyword: '#91dacd',
+                function: '#87bff5',
+                string: '#98e4df',
+                comment: '#5f7e97',
+                number: '#b48c8c'
+            },
+            'winter-is-coming-light': {
+                keyword: '#0284c7',
+                function: '#2563eb',
+                string: '#16a34a',
+                comment: '#9ca3af',
+                number: '#dc2626'
+            },
+            'atom-one-light': {
+                keyword: '#a626a4',
+                function: '#4078f2',
+                string: '#50a14f',
+                comment: '#a0a1a7',
+                number: '#986801'
+            },
+            'material-palenight': {
+                keyword: '#c792ea',
+                function: '#82aaff',
+                string: '#c3e88d',
+                comment: '#676e95',
+                number: '#f78c6c'
+            },
+            'material-darker': {
+                keyword: '#c792ea',
+                function: '#82aaff',
+                string: '#c3e88d',
+                comment: '#616161',
+                number: '#f78c6c'
+            },
+            'bluloco-light': {
+                keyword: '#0098dd',
+                function: '#0098dd',
+                string: '#23974a',
+                comment: '#a0a1a7',
+                number: '#d52753'
+            },
+            'bluloco-dark': {
+                keyword: '#10b1fe',
+                function: '#3fc56b',
+                string: '#f9c859',
+                comment: '#636d83',
+                number: '#ff6480'
+            },
+            '2077': {
+                keyword: '#ff2cf1',
+                function: '#0ef3ff',
+                string: '#ff2cf1',
+                comment: '#7a8bb1',
+                number: '#0ef3ff'
+            },
+            'oxocarbon': {
+                keyword: '#ff7eb6',
+                function: '#82cfff',
+                string: '#42be65',
+                comment: '#525252',
+                number: '#3ddbd9'
+            },
+            'spacegray': {
+                keyword: '#b48ead',
+                function: '#8fa1b3',
+                string: '#a3be8c',
+                comment: '#65737e',
+                number: '#d08770'
+            },
+            'nordic': {
+                keyword: '#81a1c1',
+                function: '#88c0d0',
+                string: '#a3be8c',
+                comment: '#4c566a',
+                number: '#b48ead'
+            },
+            'noctis': {
+                keyword: '#0095a8',
+                function: '#00bdd6',
+                string: '#00a99a',
+                comment: '#5b7083',
+                number: '#ff5792'
+            },
+            'lucario': {
+                keyword: '#ff6541',
+                function: '#72c05d',
+                string: '#e7c547',
+                comment: '#5c98cd',
+                number: '#ca94ff'
+            },
+            'flatland': {
+                keyword: '#93c763',
+                function: '#8f9d6a',
+                string: '#afc4db',
+                comment: '#798188',
+                number: '#cf6a4c'
+            }
+        };
+        
+        return syntaxColors[themeId] || syntaxColors['light'];
     }
     
     initializeTheme() {
@@ -2485,28 +3062,32 @@ class NotesWiki {
         const list = document.getElementById('recent-files-list');
         const count = document.getElementById('recent-count');
         
-        // Filter recent files by active context
-        const filteredRecent = this.activeContext 
-            ? this.recentFiles.filter(file => file.context === this.activeContext)
-            : this.recentFiles;
+        // Show all recent files regardless of context
+        const recentToShow = this.recentFiles;
         
-        if (filteredRecent.length === 0) {
+        if (recentToShow.length === 0) {
             list.innerHTML = '<li class="empty-state">No recent files</li>';
             count.style.display = 'none';
         } else {
-            count.textContent = filteredRecent.length;
+            count.textContent = recentToShow.length;
             count.style.display = 'flex';
             
             list.innerHTML = '';
-            filteredRecent.forEach(file => {
+            recentToShow.forEach(file => {
                 const li = document.createElement('li');
                 li.className = 'recent-file-item';
                 
                 const a = document.createElement('a');
                 a.href = `#${file.path}`;
                 a.className = 'recent-file-link';
+                
+                // Add context indicator if file has a context
+                const contextBadge = file.context 
+                    ? `<span class="recent-file-context">${file.context}</span>` 
+                    : '';
+                
                 a.innerHTML = `
-                    <div class="recent-file-title">${this.escapeHtml(file.title)}</div>
+                    <div class="recent-file-title">${this.escapeHtml(file.title)}${contextBadge}</div>
                     <div class="recent-file-path">${file.path}</div>
                     <div class="recent-file-time">${this.formatRelativeTime(file.lastViewed)}</div>
                 `;
@@ -2898,7 +3479,15 @@ class NotesWiki {
         const tab = this.tabs.get(tabId);
         if (!tab) return;
         
-        const tabElement = document.createElement('div');
+        // Check if tab element already exists
+        let tabElement = document.getElementById(tabId);
+        if (tabElement) {
+            // Update existing tab instead of creating new one
+            tabElement.querySelector('.tab-title').textContent = this.escapeHtml(tab.title);
+            return;
+        }
+        
+        tabElement = document.createElement('div');
         tabElement.className = 'tab';
         tabElement.id = tabId;
         tabElement.draggable = true;
@@ -2988,7 +3577,18 @@ class NotesWiki {
     
     switchToTab(tabId, preserveContext = false) {
         const tab = this.tabs.get(tabId);
-        if (!tab) return;
+        if (!tab) {
+            console.warn(`Tab ${tabId} not found in tabs Map`);
+            return;
+        }
+        
+        // Ensure tab element exists and is clickable
+        const tabElement = document.getElementById(tabId);
+        if (!tabElement) {
+            console.warn(`Tab element ${tabId} not found in DOM, re-rendering`);
+            this.renderTab(tabId);
+            return;
+        }
         
         // Save current tab's scroll position
         if (this.activeTabId) {
@@ -3074,7 +3674,8 @@ class NotesWiki {
     
     closeTab(tabId) {
         if (this.tabs.size <= 1) {
-            // Don't close the last tab
+            // If this is the last tab, act like "Close All Tabs"
+            this.closeAllTabs();
             return;
         }
         
@@ -3151,6 +3752,16 @@ class NotesWiki {
     }
     
     openInNewTab(path) {
+        // Prevent duplicate tabs by tracking pending tab creations
+        if (!this.pendingTabs) {
+            this.pendingTabs = new Set();
+        }
+        
+        // Check if we're already creating a tab for this path
+        if (this.pendingTabs.has(path)) {
+            return;
+        }
+        
         // Check if a tab with this path already exists
         const existingTabId = this.findTabByPath(path);
         
@@ -3158,6 +3769,9 @@ class NotesWiki {
             // Tab already exists, switch to it
             this.switchToTab(existingTabId);
         } else {
+            // Mark this path as pending
+            this.pendingTabs.add(path);
+            
             // Create new tab
             // Extract title from path or use default
             const parts = path.split('/');
@@ -3165,6 +3779,11 @@ class NotesWiki {
             const title = filename.replace('.md', '').replace(/-/g, ' ');
             
             this.createNewTab(path, title);
+            
+            // Remove from pending after a short delay
+            setTimeout(() => {
+                this.pendingTabs.delete(path);
+            }, 100);
         }
     }
     

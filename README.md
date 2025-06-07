@@ -1,8 +1,8 @@
 # Notes Wiki
 
-A modern, self-contained static notes and documentation system designed for GitLab Pages with advanced features including 34 built-in themes, real-time search, metadata parsing, and complete offline functionality.
+A modern, self-contained static notes and documentation system designed for GitLab Pages with advanced features including 49 built-in themes, real-time search, metadata parsing, and complete offline functionality.
 
-![Wiki Screenshot](https://img.shields.io/badge/Status-Ready-green) ![No Dependencies](https://img.shields.io/badge/Dependencies-None-blue) ![Themes](https://img.shields.io/badge/Themes-34-purple)
+![Wiki Screenshot](https://img.shields.io/badge/Status-Ready-green) ![No Dependencies](https://img.shields.io/badge/Dependencies-None-blue) ![Themes](https://img.shields.io/badge/Themes-49-purple)
 
 ## 🌟 Features
 
@@ -14,9 +14,9 @@ A modern, self-contained static notes and documentation system designed for GitL
 - **Image Support**: Embed images with alignment, sizing, captions, and hover effects
 
 ### 🎨 **Theme System**
-- **34 Professional Themes**: Including VSCode, Catppuccin, Rosé Pine, Material, Ayu, Matrix, Cyberpunk, and more
+- **49 Professional Themes**: Including VSCode, Catppuccin, Rosé Pine, Material, Ayu, Matrix, Cyberpunk, Cobalt2, Atom One, Winter Is Coming, and more
 - **Auto Theme Detection**: Automatically switch based on system preferences
-- **Preview Mode**: Test themes before saving with hover preview
+- **Live Theme Previews**: Each theme card shows its actual colors and syntax highlighting
 - **Consistent Styling**: All themes support both UI and syntax highlighting
 
 ### 🔍 **Advanced Search**
@@ -40,9 +40,11 @@ A modern, self-contained static notes and documentation system designed for GitL
 ### ⏱️ **Productivity Features**
 - **Built-in Timer**: Integrated timer widget with play/pause/reset functionality
 - **Long-press Reset**: Hold reset button for 3 seconds with visual feedback
-- **Theme-aware Design**: Timer adapts to all 34 themes automatically
+- **Theme-aware Design**: Timer adapts to all 49 themes automatically
 - **Persistent State**: Timer continues running even when switching between notes
 - **Tab Management**: Multiple tabs with drag-and-drop reordering and cached content
+- **Keyboard Shortcuts**: Essential shortcuts (Ctrl+T new tab, Ctrl+K search, Ctrl+, settings, Ctrl+F filter)
+- **Modal Interactions**: Escape key and click-outside to close modals
 
 ## 🚀 Quick Start
 
@@ -96,7 +98,7 @@ notes-wiki/
 │   ├── marked.min.js       # Markdown parser
 │   ├── prism.min.js        # Syntax highlighter
 │   └── js-yaml.min.js      # YAML frontmatter parser
-├── themes/                 # 34 built-in themes
+├── themes/                 # 49 built-in themes
 │   ├── light.css
 │   ├── dark.css
 │   ├── vscode-dark-plus.css
@@ -221,7 +223,7 @@ Access settings via the gear icon to configure:
 ### Adding New Features
 1. Modify `script.js` for functionality
 2. Update `style.css` for styling
-3. Test across all 28 themes
+3. Test across all 49 themes
 4. Update documentation as needed
 
 ### Theme Development
@@ -230,17 +232,22 @@ Access settings via the gear icon to configure:
 - Ensure accessibility compliance
 - Validate syntax highlighting colors
 
-### Available Themes (28)
+### Available Themes (49)
 **Classic**: Light, Dark, Monokai, Dracula, Solarized (Light/Dark)  
-**Modern**: VSCode Dark+, One Dark Pro, Tokyo Night, Nord, Palenight  
+**Modern**: VSCode Dark+, One Dark Pro, Tokyo Night, Nord, Palenight, Tomorrow Night  
 **GitHub**: GitHub Light, GitHub Dark  
 **Gruvbox**: Gruvbox Light, Gruvbox Dark  
-**Material**: Material Ocean  
+**Material**: Material Ocean, Material Darker, Material Palenight  
 **Catppuccin**: Mocha, Latte  
 **Rosé Pine**: Main, Dawn  
 **Ayu**: Light, Dark  
-**Nature**: Everforest Dark  
-**Unique**: Hotdog Stand, Kanagawa, Zenburn, Tomorrow Night, Cobalt2
+**Nature**: Everforest Dark, Kanagawa  
+**Atom**: Atom One Light  
+**Bluloco**: Light, Dark  
+**Cobalt**: Cobalt2  
+**Winter**: Winter Is Coming Light, Winter Is Coming Dark  
+**Professional**: Oxocarbon, Spacegray, Flatland, Lucario, Nordic, Noctis  
+**Unique**: Hotdog Stand, Matrix, Cyberpunk, Vaporwave, HackTheBox, ThinkUltra, Witch Hazel, 2077, Zenburn, Shades of Purple
 
 ## 📄 License
 

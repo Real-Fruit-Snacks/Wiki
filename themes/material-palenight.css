@@ -1,0 +1,126 @@
+/* Material Palenight Theme Variables */
+:root[data-theme="material-palenight"] {
+    /* Background Colors */
+    --bg-primary: #292D3E;
+    --bg-secondary: #32374D;
+    --bg-sidebar: #252837;
+    --bg-code: #32374D;
+    --bg-selection: rgba(130, 170, 255, 0.15);
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: #32374D;
+    
+    /* Text Colors */
+    --text-primary: #A6ACCD;
+    --text-secondary: #8B92B3;
+    --text-muted: #676E95;
+    --text-heading: #EEFFFF;
+    
+    /* Accent Colors */
+    --accent-primary: #82AAFF;
+    --accent-secondary: #C792EA;
+    --accent-warning: #FFCB6B;
+    --accent-error: #FF5370;
+    --accent-info: #82AAFF;
+    --accent-success: #C3E88D;
+    
+    /* Border Colors */
+    --border-primary: #444760;
+    --border-secondary: #3A3F58;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #292D3E;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(130, 170, 255, 0.1);
+    --bg-code-block: #32374D;
+}
+
+/* Syntax Highlighting - Material Palenight Theme */
+:root[data-theme="material-palenight"] .token.comment,
+:root[data-theme="material-palenight"] .token.prolog,
+:root[data-theme="material-palenight"] .token.doctype,
+:root[data-theme="material-palenight"] .token.cdata {
+    color: #676E95;
+    font-style: italic;
+}
+
+:root[data-theme="material-palenight"] .token.punctuation {
+    color: #89DDFF;
+}
+
+:root[data-theme="material-palenight"] .token.property,
+:root[data-theme="material-palenight"] .token.tag,
+:root[data-theme="material-palenight"] .token.boolean,
+:root[data-theme="material-palenight"] .token.number,
+:root[data-theme="material-palenight"] .token.constant,
+:root[data-theme="material-palenight"] .token.symbol,
+:root[data-theme="material-palenight"] .token.deleted {
+    color: #FF5370;
+}
+
+:root[data-theme="material-palenight"] .token.selector,
+:root[data-theme="material-palenight"] .token.attr-name,
+:root[data-theme="material-palenight"] .token.string,
+:root[data-theme="material-palenight"] .token.char,
+:root[data-theme="material-palenight"] .token.builtin,
+:root[data-theme="material-palenight"] .token.inserted {
+    color: #C3E88D;
+}
+
+:root[data-theme="material-palenight"] .token.operator,
+:root[data-theme="material-palenight"] .token.entity,
+:root[data-theme="material-palenight"] .token.url,
+:root[data-theme="material-palenight"] .language-css .token.string,
+:root[data-theme="material-palenight"] .style .token.string {
+    color: #89DDFF;
+    background: transparent;
+}
+
+:root[data-theme="material-palenight"] .token.atrule,
+:root[data-theme="material-palenight"] .token.attr-value,
+:root[data-theme="material-palenight"] .token.keyword {
+    color: #C792EA;
+}
+
+:root[data-theme="material-palenight"] .token.function,
+:root[data-theme="material-palenight"] .token.class-name {
+    color: #82AAFF;
+}
+
+:root[data-theme="material-palenight"] .token.regex,
+:root[data-theme="material-palenight"] .token.important,
+:root[data-theme="material-palenight"] .token.variable {
+    color: #EEFFFF;
+}
+
+/* Scrollbar Material Palenight Theme */
+:root[data-theme="material-palenight"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="material-palenight"] ::-webkit-scrollbar-thumb {
+    background: #444760;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="material-palenight"] ::-webkit-scrollbar-thumb:hover {
+    background: #545770;
+}
+
+/* Firefox Scrollbar Material Palenight Theme */
+:root[data-theme="material-palenight"] * {
+    scrollbar-color: #444760 var(--bg-primary);
+}

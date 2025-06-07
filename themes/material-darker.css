@@ -1,0 +1,126 @@
+/* Material Darker Theme Variables */
+:root[data-theme="material-darker"] {
+    /* Background Colors */
+    --bg-primary: #212121;
+    --bg-secondary: #2a2a2a;
+    --bg-sidebar: #1a1a1a;
+    --bg-code: #2a2a2a;
+    --bg-selection: rgba(128, 203, 196, 0.15);
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: #353535;
+    
+    /* Text Colors */
+    --text-primary: #eeffff;
+    --text-secondary: #b2ccd6;
+    --text-muted: #616161;
+    --text-heading: #ffffff;
+    
+    /* Accent Colors */
+    --accent-primary: #80cbc4;
+    --accent-secondary: #f07178;
+    --accent-warning: #ffcb6b;
+    --accent-error: #f07178;
+    --accent-info: #82aaff;
+    --accent-success: #c3e88d;
+    
+    /* Border Colors */
+    --border-primary: #424242;
+    --border-secondary: #515151;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #212121;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(128, 203, 196, 0.1);
+    --bg-code-block: #2a2a2a;
+}
+
+/* Syntax Highlighting - Material Darker Theme */
+:root[data-theme="material-darker"] .token.comment,
+:root[data-theme="material-darker"] .token.prolog,
+:root[data-theme="material-darker"] .token.doctype,
+:root[data-theme="material-darker"] .token.cdata {
+    color: #616161;
+    font-style: italic;
+}
+
+:root[data-theme="material-darker"] .token.punctuation {
+    color: #89ddff;
+}
+
+:root[data-theme="material-darker"] .token.property,
+:root[data-theme="material-darker"] .token.tag,
+:root[data-theme="material-darker"] .token.boolean,
+:root[data-theme="material-darker"] .token.number,
+:root[data-theme="material-darker"] .token.constant,
+:root[data-theme="material-darker"] .token.symbol,
+:root[data-theme="material-darker"] .token.deleted {
+    color: #f07178;
+}
+
+:root[data-theme="material-darker"] .token.selector,
+:root[data-theme="material-darker"] .token.attr-name,
+:root[data-theme="material-darker"] .token.string,
+:root[data-theme="material-darker"] .token.char,
+:root[data-theme="material-darker"] .token.builtin,
+:root[data-theme="material-darker"] .token.inserted {
+    color: #c3e88d;
+}
+
+:root[data-theme="material-darker"] .token.operator,
+:root[data-theme="material-darker"] .token.entity,
+:root[data-theme="material-darker"] .token.url,
+:root[data-theme="material-darker"] .language-css .token.string,
+:root[data-theme="material-darker"] .style .token.string {
+    color: #89ddff;
+    background: transparent;
+}
+
+:root[data-theme="material-darker"] .token.atrule,
+:root[data-theme="material-darker"] .token.attr-value,
+:root[data-theme="material-darker"] .token.keyword {
+    color: #c792ea;
+}
+
+:root[data-theme="material-darker"] .token.function,
+:root[data-theme="material-darker"] .token.class-name {
+    color: #82aaff;
+}
+
+:root[data-theme="material-darker"] .token.regex,
+:root[data-theme="material-darker"] .token.important,
+:root[data-theme="material-darker"] .token.variable {
+    color: #eeffff;
+}
+
+/* Scrollbar Material Darker Theme */
+:root[data-theme="material-darker"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="material-darker"] ::-webkit-scrollbar-thumb {
+    background: #424242;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="material-darker"] ::-webkit-scrollbar-thumb:hover {
+    background: #525252;
+}
+
+/* Firefox Scrollbar Material Darker Theme */
+:root[data-theme="material-darker"] * {
+    scrollbar-color: #424242 var(--bg-primary);
+}

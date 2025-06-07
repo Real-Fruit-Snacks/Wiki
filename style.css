@@ -3016,6 +3016,19 @@ select.dropdown:focus {
     font-weight: 500;
     color: var(--text-primary);
     margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.recent-file-context {
+    font-size: var(--text-xs);
+    padding: 2px 6px;
+    background-color: var(--accent-primary);
+    color: white;
+    border-radius: var(--radius-sm);
+    font-weight: normal;
+    text-transform: capitalize;
 }
 
 .recent-file-path {
@@ -3116,18 +3129,16 @@ select.dropdown:focus {
     text-align: center;
     min-height: 120px;
     position: relative;
+    /* Allow inline styles to override */
+    isolation: isolate;
 }
 
 .theme-card:hover {
-    border-color: var(--accent-primary);
     transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
 }
 
 .theme-card.active {
-    border-color: var(--accent-success);
-    background-color: var(--bg-hover);
-    box-shadow: 0 0 0 1px var(--accent-success);
+    /* Border and shadow are handled by inline styles */
 }
 
 .theme-card.active::after {
@@ -3147,6 +3158,7 @@ select.dropdown:focus {
     font-weight: bold;
 }
 
+/* Old preview style - kept for backward compatibility */
 .theme-card-preview {
     width: 60px;
     height: 36px;
@@ -3155,6 +3167,12 @@ select.dropdown:focus {
     display: flex;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* New full preview style */
+.theme-card-preview-full {
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .theme-card-preview .preview-section {
