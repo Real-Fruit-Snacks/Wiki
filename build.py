@@ -35,10 +35,7 @@ def extract_code_blocks(content):
         title = match.group(2) or ''
         code = match.group(3).strip()
         
-        # Limit code block size to prevent huge indices
-        if len(code) > 1000:
-            code = code[:1000] + '... (truncated)'
-        
+        # Include full code block content without truncation
         code_blocks.append({
             'language': language,
             'title': title,
@@ -47,31 +44,19 @@ def extract_code_blocks(content):
     
     return code_blocks
 
-def create_searchable_content(text_preview, code_blocks):
+def create_searchable_content(text_content, code_blocks):
     """Create searchable content combining text and code"""
-    # Start with text preview
-    searchable_parts = [text_preview]
+    # Start with full text content
+    searchable_parts = [text_content]
     
-    # Add code block content (limit total size)
-    total_length = len(text_preview)
-    max_total_length = 2000  # Maximum total searchable content
-    
+    # Add all code block content without any size limits
     for block in code_blocks:
         # Add language and title if present
         if block['title']:
             searchable_parts.append(f"{block['language']} {block['title']}")
         
-        # Add code content
-        code_snippet = block['code']
-        if total_length + len(code_snippet) > max_total_length:
-            # Truncate to fit within limit
-            remaining = max_total_length - total_length
-            if remaining > 50:  # Only add if we have reasonable space
-                searchable_parts.append(code_snippet[:remaining])
-            break
-        else:
-            searchable_parts.append(code_snippet)
-            total_length += len(code_snippet)
+        # Add full code content
+        searchable_parts.append(block['code'])
     
     return ' '.join(searchable_parts)
 
@@ -88,7 +73,7 @@ def parse_frontmatter(content):
             # Extract code blocks before stripping markdown
             code_blocks = extract_code_blocks(content_body)
             
-            # Extract content preview (first 200 characters of content)
+            # Create preview for display (first 200 characters)
             content_preview = content_body
             # Remove headers
             content_preview = re.sub(r'^#+\s+.*$', '', content_preview, flags=re.MULTILINE)
@@ -96,15 +81,22 @@ def parse_frontmatter(content):
             content_preview = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', content_preview)
             # Remove formatting
             content_preview = re.sub(r'[*_~`]', '', content_preview)
-            content_preview = content_preview.strip()[:200]
+            preview_text = content_preview.strip()[:200]
             
-            # Create searchable content that includes text preview and code blocks
-            searchable_content = create_searchable_content(content_preview, code_blocks)
+            # Create searchable content from FULL content
+            searchable_text = content_body
+            # Clean markdown for better search (but keep all content)
+            searchable_text = re.sub(r'^#+\s+', '', searchable_text, flags=re.MULTILINE)  # Remove # from headers
+            searchable_text = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', searchable_text)    # Convert links to text
+            searchable_text = re.sub(r'[*_~`]', '', searchable_text)                      # Remove formatting chars
+            
+            # Create searchable content that includes full text and all code blocks
+            searchable_content = create_searchable_content(searchable_text, code_blocks)
             
             return {
                 'metadata': metadata or {},
                 'content': content_body,
-                'contentPreview': content_preview + ('...' if len(content_preview) >= 200 else ''),
+                'contentPreview': preview_text + ('...' if len(preview_text) >= 200 else ''),
                 'searchableContent': searchable_content,
                 'codeBlocks': code_blocks
             }
@@ -115,8 +107,18 @@ def parse_frontmatter(content):
     # No frontmatter found
     # Extract code blocks from content
     code_blocks = extract_code_blocks(content)
-    content_preview = content[:200]
-    searchable_content = create_searchable_content(content_preview, code_blocks)
+    
+    # Create preview for display
+    preview_text = content[:200]
+    
+    # Create searchable content from FULL content
+    searchable_text = content
+    # Clean markdown for better search
+    searchable_text = re.sub(r'^#+\s+', '', searchable_text, flags=re.MULTILINE)  # Remove # from headers
+    searchable_text = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', searchable_text)    # Convert links to text
+    searchable_text = re.sub(r'[*_~`]', '', searchable_text)                      # Remove formatting chars
+    
+    searchable_content = create_searchable_content(searchable_text, code_blocks)
     
     return {
         'metadata': {
@@ -126,7 +128,7 @@ def parse_frontmatter(content):
             'author': 'Unknown'
         },
         'content': content,
-        'contentPreview': content_preview + ('...' if len(content) > 200 else ''),
+        'contentPreview': preview_text + ('...' if len(content) > 200 else ''),
         'searchableContent': searchable_content,
         'codeBlocks': code_blocks
     }
