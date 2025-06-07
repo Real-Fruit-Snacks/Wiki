@@ -10,6 +10,8 @@ class NotesWiki {
         this.searchIndex = [];
         this.recentFiles = [];
         this.selectedTags = new Set();
+        this.excludedTags = new Set();
+        this.tagFilterMode = 'OR'; // 'OR' or 'AND'
         this.activeContext = null;  // Track active context
         this.contexts = [];  // Store available contexts
         this.initialHash = window.location.hash;  // Store initial hash for later processing
@@ -97,7 +99,15 @@ class NotesWiki {
                 'search': 'Ctrl+K',
                 'settings': 'Ctrl+,',
                 'filter': 'Ctrl+F'
-            }
+            },
+            // Pomodoro settings
+            pomodoroEnabled: false,
+            pomodoroWorkMinutes: 25,
+            pomodoroShortBreakMinutes: 5,
+            pomodoroLongBreakMinutes: 15,
+            pomodoroSessionsBeforeLongBreak: 4,
+            pomodoroAutoStartNext: false,
+            pomodoroPlaySounds: true
         };
         
         // Search state
@@ -111,6 +121,11 @@ class NotesWiki {
         this.resetPressTimer = null;
         this.resetPressed = false;
         
+        // Pomodoro state
+        this.pomodoroMode = 'work'; // 'work', 'short-break', 'long-break'
+        this.pomodoroSessionCount = 0;
+        this.pomodoroTargetTime = 0; // Target time in milliseconds
+        
         this.init();
     }
     
@@ -120,6 +135,9 @@ class NotesWiki {
         
         // Initialize theme
         this.initializeTheme();
+        
+        // Initialize Pomodoro mode
+        this.initializePomodoroMode();
         
         // Apply line number setting
         this.applyLineNumberSetting();
@@ -395,14 +413,52 @@ class NotesWiki {
             if (this.selectedTags.has(tag)) {
                 pill.classList.add('active');
             }
+            if (this.excludedTags.has(tag)) {
+                pill.classList.add('excluded');
+            }
             
-            pill.addEventListener('click', () => {
-                if (this.selectedTags.has(tag)) {
+            pill.addEventListener('click', (e) => {
+                if (e.ctrlKey || e.metaKey) {
+                    // Ctrl+click to exclude
+                    if (this.excludedTags.has(tag)) {
+                        this.excludedTags.delete(tag);
+                        pill.classList.remove('excluded');
+                    } else {
+                        this.excludedTags.add(tag);
+                        pill.classList.add('excluded');
+                        // Remove from selected if excluded
+                        this.selectedTags.delete(tag);
+                        pill.classList.remove('active');
+                    }
+                } else {
+                    // Normal click to select
+                    if (this.selectedTags.has(tag)) {
+                        this.selectedTags.delete(tag);
+                        pill.classList.remove('active');
+                    } else {
+                        this.selectedTags.add(tag);
+                        pill.classList.add('active');
+                        // Remove from excluded if selected
+                        this.excludedTags.delete(tag);
+                        pill.classList.remove('excluded');
+                    }
+                }
+                this.filterNotesByTags();
+                this.updateTagsUI();
+            });
+            
+            // Right-click to exclude
+            pill.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                if (this.excludedTags.has(tag)) {
+                    this.excludedTags.delete(tag);
+                    pill.classList.remove('excluded');
+                } else {
+                    this.excludedTags.add(tag);
+                    pill.classList.add('excluded');
+                    // Remove from selected if excluded
                     this.selectedTags.delete(tag);
                     pill.classList.remove('active');
-                } else {
-                    this.selectedTags.add(tag);
-                    pill.classList.add('active');
                 }
                 this.filterNotesByTags();
                 this.updateTagsUI();
@@ -415,7 +471,7 @@ class NotesWiki {
     }
     
     filterNotesByTags() {
-        if (this.selectedTags.size === 0) {
+        if (this.selectedTags.size === 0 && this.excludedTags.size === 0) {
             // Show all notes
             this.buildNavigationTree();
             return;
@@ -426,10 +482,27 @@ class NotesWiki {
             ? this.notesIndex.notes.filter(note => note.context === this.activeContext)
             : this.notesIndex.notes;
         
-        // Filter notes by selected tags (OR logic - show notes with ANY selected tag)
+        // Filter notes by selected tags based on tag filter mode
         const filteredNotes = contextNotes.filter(note => {
             const noteTags = new Set(note.metadata.tags || []);
-            return Array.from(this.selectedTags).some(tag => noteTags.has(tag));
+            
+            // Check excluded tags first (NOT logic)
+            if (this.excludedTags.size > 0) {
+                const hasExcludedTag = Array.from(this.excludedTags).some(tag => noteTags.has(tag));
+                if (hasExcludedTag) return false;
+            }
+            
+            // If no selected tags, include all non-excluded notes
+            if (this.selectedTags.size === 0) return true;
+            
+            // Apply AND/OR logic based on mode
+            if (this.tagFilterMode === 'AND') {
+                // AND logic - show notes with ALL selected tags
+                return Array.from(this.selectedTags).every(tag => noteTags.has(tag));
+            } else {
+                // OR logic - show notes with ANY selected tag
+                return Array.from(this.selectedTags).some(tag => noteTags.has(tag));
+            }
         });
         
         // Update navigation with filtered notes
@@ -516,6 +589,7 @@ class NotesWiki {
         
         document.getElementById('clear-all-tags').addEventListener('click', () => {
             this.selectedTags.clear();
+            this.excludedTags.clear();
             this.filterNotesByTags();
             this.buildTagFilter();
         });
@@ -850,6 +924,59 @@ class NotesWiki {
             });
         });
         
+        // Pomodoro settings event handlers
+        document.getElementById('pomodoro-enabled').addEventListener('change', (e) => {
+            this.settings.pomodoroEnabled = e.target.checked;
+            this.saveSettings();
+            this.initializePomodoroMode();
+            this.showToast('Pomodoro mode ' + (e.target.checked ? 'enabled' : 'disabled'));
+        });
+        
+        document.getElementById('pomodoro-work-minutes').addEventListener('change', (e) => {
+            this.settings.pomodoroWorkMinutes = parseInt(e.target.value);
+            this.saveSettings();
+            if (this.settings.pomodoroEnabled) {
+                this.setPomodoroTarget();
+                this.showToast('Work session updated to ' + e.target.value + ' minutes');
+            }
+        });
+        
+        document.getElementById('pomodoro-short-break-minutes').addEventListener('change', (e) => {
+            this.settings.pomodoroShortBreakMinutes = parseInt(e.target.value);
+            this.saveSettings();
+            if (this.settings.pomodoroEnabled) {
+                this.setPomodoroTarget();
+                this.showToast('Short break updated to ' + e.target.value + ' minutes');
+            }
+        });
+        
+        document.getElementById('pomodoro-long-break-minutes').addEventListener('change', (e) => {
+            this.settings.pomodoroLongBreakMinutes = parseInt(e.target.value);
+            this.saveSettings();
+            if (this.settings.pomodoroEnabled) {
+                this.setPomodoroTarget();
+                this.showToast('Long break updated to ' + e.target.value + ' minutes');
+            }
+        });
+        
+        document.getElementById('pomodoro-sessions-before-long-break').addEventListener('change', (e) => {
+            this.settings.pomodoroSessionsBeforeLongBreak = parseInt(e.target.value);
+            this.saveSettings();
+            this.showToast('Sessions before long break updated to ' + e.target.value);
+        });
+        
+        document.getElementById('pomodoro-auto-start').addEventListener('change', (e) => {
+            this.settings.pomodoroAutoStartNext = e.target.checked;
+            this.saveSettings();
+            this.showToast('Auto-start ' + (e.target.checked ? 'enabled' : 'disabled'));
+        });
+        
+        document.getElementById('pomodoro-play-sounds').addEventListener('change', (e) => {
+            this.settings.pomodoroPlaySounds = e.target.checked;
+            this.saveSettings();
+            this.showToast('Sound notifications ' + (e.target.checked ? 'enabled' : 'disabled'));
+        });
+        
         // Clear history button (if it exists in the HTML)
         const clearHistoryButton = document.getElementById('clear-history-button');
         if (clearHistoryButton) {
@@ -902,7 +1029,14 @@ class NotesWiki {
                 this.hideSearch();
                 this.hideSettings();
                 this.hideTagsModal();
+                this.hideShortcutsCheatsheet();
             } else if (!isTyping) {
+                // Show shortcuts cheatsheet with '?' key
+                if (e.key === '?' && !e.ctrlKey && !e.altKey && !e.metaKey) {
+                    e.preventDefault();
+                    this.showShortcutsCheatsheet();
+                    return;
+                }
                 // Check custom shortcuts
                 const pressedCombo = this.getKeyCombo(e);
                 
@@ -1006,6 +1140,26 @@ class NotesWiki {
     async loadNote(path) {
         const mainContent = document.getElementById('main-content');
         
+        // Validate path
+        if (!path || typeof path !== 'string' || path.trim() === '') {
+            console.error('Invalid path provided to loadNote:', path);
+            mainContent.innerHTML = `
+                <div class="content-wrapper content-view">
+                    <h1>Invalid Path</h1>
+                    <p>The requested path is invalid.</p>
+                    <p><a href="#/notes/index.md">Return to home</a></p>
+                </div>
+            `;
+            return;
+        }
+        
+        // Prevent rapid successive loads of the same path
+        if (this.currentLoadingPath === path) {
+            console.log('Already loading this path, skipping:', path);
+            return;
+        }
+        this.currentLoadingPath = path;
+        
         // Add loading class to active tab
         if (this.activeTabId) {
             const tabElement = document.getElementById(this.activeTabId);
@@ -1028,9 +1182,19 @@ class NotesWiki {
                 path = '/' + path;
             }
             
-            const response = await fetch(path.slice(1)); // Remove leading slash for fetch
+            // Validate path format - should be /notes/something.md
+            if (!path.includes('.md') && !path.endsWith('/')) {
+                console.warn('Path does not appear to be a markdown file:', path);
+            }
+            
+            // Log the fetch attempt for debugging
+            const fetchPath = path.slice(1);
+            console.log('Loading note - Original path:', path, 'Fetch path:', fetchPath);
+            
+            const response = await fetch(fetchPath);
             if (!response.ok) {
-                throw new Error('Note not found');
+                console.error(`HTTP Error ${response.status} ${response.statusText} for path: ${fetchPath}`);
+                throw new Error(`Note not found: ${response.status} ${response.statusText}`);
             }
             
             const markdown = await response.text();
@@ -1074,10 +1238,28 @@ class NotesWiki {
             return true; // Return success
         } catch (error) {
             console.error('Failed to load note:', error);
+            
+            // Enhanced error reporting
+            let errorMessage = 'The requested note could not be loaded.';
+            let errorType = 'Unknown Error';
+            
+            if (error.name === 'TypeError' && error.message.includes('NetworkError')) {
+                errorType = 'Network Error';
+                errorMessage = 'Failed to fetch the note file. This might be due to a network issue or the file not existing.';
+                console.error('NetworkError details - Path:', path, 'FetchPath:', path.slice(1));
+            } else if (error.message.includes('404')) {
+                errorType = 'File Not Found';
+                errorMessage = 'The requested note file does not exist.';
+            } else if (error.message.includes('403')) {
+                errorType = 'Access Denied';
+                errorMessage = 'You do not have permission to access this file.';
+            }
+            
             mainContent.innerHTML = `
                 <div class="content-wrapper content-view">
-                    <h1>Note Not Found</h1>
-                    <p>The requested note could not be loaded.</p>
+                    <h1>${errorType}</h1>
+                    <p>${errorMessage}</p>
+                    <p><strong>Path:</strong> <code>${path}</code></p>
                     <p><a href="#/notes/index.md">Return to home</a></p>
                 </div>
             `;
@@ -1089,6 +1271,9 @@ class NotesWiki {
                     tabElement.classList.remove('loading');
                 }
             }
+            
+            // Clear current loading path
+            this.currentLoadingPath = null;
             
             throw error; // Re-throw for caller to handle
         }
@@ -1775,6 +1960,9 @@ class NotesWiki {
         // Update sticky checkbox state
         stickyCheckbox.checked = this.settings.stickySearch;
         
+        // Initialize search history
+        this.initializeSearchHistory();
+        
         // Restore search query if sticky search is enabled
         if (this.settings.stickySearch && this.lastSearchQuery) {
             searchInput.value = this.lastSearchQuery;
@@ -1811,42 +1999,69 @@ class NotesWiki {
         this.globalSearchIndex = null;
     }
     
-    performSearch(query) {
+    performSearch(query, append = false) {
         const results = document.getElementById('search-results');
         
         if (!query.trim()) {
             results.innerHTML = '';
+            this.searchResults = [];
+            this.searchResultsPage = 0;
             return;
         }
         
-        // Simple fuzzy search
-        const searchTerms = query.toLowerCase().split(' ');
+        // Add to search history if it's a new search
+        if (!append && query.trim()) {
+            this.addToSearchHistory(query);
+        }
+        
+        // Parse search query with operators
+        const parsedQuery = this.parseSearchQuery(query);
         
         // Use global search index if available (when search modal is open), otherwise use context-filtered index
         const searchIndex = this.globalSearchIndex || this.searchIndex;
         
         const matches = searchIndex.filter(item => {
-            const searchText = `${item.title} ${item.description} ${item.tags.join(' ')} ${item.author} ${item.content}`.toLowerCase();
-            return searchTerms.every(term => searchText.includes(term));
+            return this.matchesSearchQuery(item, parsedQuery);
         });
+        
+        // Store results for pagination
+        this.searchResults = matches;
+        this.searchResultsPage = append ? this.searchResultsPage : 0;
         
         if (matches.length === 0) {
             results.innerHTML = '<p class="empty-state">No results found</p>';
             return;
         }
         
+        // Pagination settings
+        const resultsPerPage = 20;
+        const startIndex = this.searchResultsPage * resultsPerPage;
+        const endIndex = startIndex + resultsPerPage;
+        const pageResults = matches.slice(startIndex, endIndex);
+        
         // Render results
-        results.innerHTML = '';
-        matches.slice(0, 10).forEach(match => {
+        if (!append) {
+            results.innerHTML = '';
+        }
+        
+        // Collect all terms for highlighting
+        const highlightTerms = [
+            ...parsedQuery.basic,
+            ...parsedQuery.phrases,
+            ...parsedQuery.tags,  // tags are already cleaned of 'tag:' prefix
+            parsedQuery.author
+        ].filter(Boolean);
+        
+        pageResults.forEach((match, index) => {
             const a = document.createElement('a');
             a.href = `#${match.path}`;
             a.className = 'search-result';
             a.innerHTML = `
-                <div class="search-result-title">${this.highlightText(match.title, searchTerms)}</div>
+                <div class="search-result-title">${this.highlightText(match.title, highlightTerms)}</div>
                 <div class="search-result-path">${match.path}</div>
                 ${match.description ? `
                     <div class="search-result-excerpt">
-                        ${this.highlightText(match.description, searchTerms)}
+                        ${this.highlightText(match.description, highlightTerms)}
                     </div>
                 ` : ''}
             `;
@@ -1892,7 +2107,201 @@ class NotesWiki {
             });
             
             results.appendChild(a);
+            
+            // Add data attribute for keyboard navigation
+            a.setAttribute('data-search-index', startIndex + index);
         });
+        
+        // Add pagination controls
+        if (matches.length > endIndex || this.searchResultsPage > 0) {
+            const paginationDiv = document.createElement('div');
+            paginationDiv.className = 'search-pagination';
+            
+            const info = document.createElement('span');
+            info.className = 'search-info';
+            info.textContent = `Showing ${startIndex + 1}-${Math.min(endIndex, matches.length)} of ${matches.length} results`;
+            paginationDiv.appendChild(info);
+            
+            if (matches.length > endIndex) {
+                const loadMoreBtn = document.createElement('button');
+                loadMoreBtn.className = 'button button-small';
+                loadMoreBtn.textContent = 'Load more results';
+                loadMoreBtn.onclick = () => {
+                    this.searchResultsPage++;
+                    this.performSearch(query, true);
+                };
+                paginationDiv.appendChild(loadMoreBtn);
+            }
+            
+            results.appendChild(paginationDiv);
+        }
+        
+        // Enable keyboard navigation
+        this.currentSearchResult = append ? this.currentSearchResult : 0;
+        this.enableSearchKeyboardNavigation();
+    }
+    
+    parseSearchQuery(query) {
+        const parsed = {
+            required: [],
+            excluded: [],
+            phrases: [],
+            tags: [],
+            author: null,
+            basic: []
+        };
+        
+        // Extract exact phrases
+        const phraseMatches = query.match(/"([^"]+)"/g);
+        if (phraseMatches) {
+            parsed.phrases = phraseMatches.map(p => p.slice(1, -1).toLowerCase());
+            query = query.replace(/"[^"]+"/g, '');
+        }
+        
+        // Extract excluded terms (prefixed with -)
+        const excludeMatches = query.match(/(^|\s)-(\S+)/g);
+        if (excludeMatches) {
+            parsed.excluded = excludeMatches.map(e => e.trim().slice(1).toLowerCase());
+            query = query.replace(/(^|\s)-\S+/g, ' ');
+        }
+        
+        // Extract tag filters
+        const tagMatches = query.match(/tag:(\S+)/g);
+        if (tagMatches) {
+            parsed.tags = tagMatches.map(t => t.slice(4).toLowerCase());
+            query = query.replace(/tag:\S+/g, '');
+        }
+        
+        // Extract author filter
+        const authorMatch = query.match(/author:(\S+)/);
+        if (authorMatch) {
+            parsed.author = authorMatch[1].toLowerCase();
+            query = query.replace(/author:\S+/g, '');
+        }
+        
+        // Remaining terms are basic search terms
+        parsed.basic = query.trim().toLowerCase().split(/\s+/).filter(t => t);
+        
+        return parsed;
+    }
+    
+    matchesSearchQuery(item, parsedQuery) {
+        const searchText = `${item.title} ${item.description} ${item.content}`.toLowerCase();
+        const itemTags = item.tags.map(t => t.toLowerCase());
+        const itemAuthor = item.author.toLowerCase();
+        
+        // Check excluded terms first
+        for (const excluded of parsedQuery.excluded) {
+            if (searchText.includes(excluded)) {
+                return false;
+            }
+        }
+        
+        // Check required phrases
+        for (const phrase of parsedQuery.phrases) {
+            if (!searchText.includes(phrase)) {
+                return false;
+            }
+        }
+        
+        // Check tag filters
+        for (const tag of parsedQuery.tags) {
+            if (!itemTags.includes(tag)) {
+                return false;
+            }
+        }
+        
+        // Check author filter
+        if (parsedQuery.author && !itemAuthor.includes(parsedQuery.author)) {
+            return false;
+        }
+        
+        // Check basic terms (all must match)
+        for (const term of parsedQuery.basic) {
+            if (!searchText.includes(term)) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    enableSearchKeyboardNavigation() {
+        const searchInput = document.getElementById('search-input');
+        if (!this.searchKeyHandler) {
+            this.searchKeyHandler = (e) => {
+                const results = document.querySelectorAll('.search-result');
+                if (results.length === 0) return;
+                
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    this.currentSearchResult = Math.min(this.currentSearchResult + 1, results.length - 1);
+                    this.highlightSearchResult(results);
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    this.currentSearchResult = Math.max(this.currentSearchResult - 1, 0);
+                    this.highlightSearchResult(results);
+                } else if (e.key === 'Enter' && this.currentSearchResult >= 0) {
+                    e.preventDefault();
+                    const current = results[this.currentSearchResult];
+                    if (current) {
+                        if (e.ctrlKey || e.metaKey) {
+                            const path = current.getAttribute('href').slice(1);
+                            this.openInNewTab(path);
+                        } else {
+                            current.click();
+                        }
+                    }
+                }
+            };
+            searchInput.addEventListener('keydown', this.searchKeyHandler);
+        }
+    }
+    
+    highlightSearchResult(results) {
+        results.forEach((result, index) => {
+            if (index === this.currentSearchResult) {
+                result.classList.add('search-result-active');
+                result.scrollIntoView({ block: 'nearest' });
+            } else {
+                result.classList.remove('search-result-active');
+            }
+        });
+    }
+    
+    initializeSearchHistory() {
+        const searchInput = document.getElementById('search-input');
+        
+        // Remove any existing datalist and list attribute to disable dropdown
+        const existingDatalist = document.getElementById('search-history-list');
+        if (existingDatalist) {
+            existingDatalist.remove();
+        }
+        searchInput.removeAttribute('list');
+        
+        // Load search history from localStorage
+        this.searchHistory = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+    }
+    
+    addToSearchHistory(query) {
+        // Remove duplicate if exists
+        this.searchHistory = this.searchHistory.filter(q => q !== query);
+        
+        // Add to beginning
+        this.searchHistory.unshift(query);
+        
+        // Limit to 50 entries
+        if (this.searchHistory.length > 50) {
+            this.searchHistory = this.searchHistory.slice(0, 50);
+        }
+        
+        // Save to localStorage
+        localStorage.setItem('searchHistory', JSON.stringify(this.searchHistory));
+    }
+    
+    toggleSearchHelp() {
+        const helpDiv = document.getElementById('search-help');
+        helpDiv.style.display = helpDiv.style.display === 'none' ? 'block' : 'none';
     }
     
     onSearchResultClick(path) {
@@ -2047,6 +2456,15 @@ class NotesWiki {
                 input.value = this.settings.keyboardShortcuts[action];
             }
         });
+        
+        // Pomodoro settings
+        document.getElementById('pomodoro-enabled').checked = this.settings.pomodoroEnabled || false;
+        document.getElementById('pomodoro-work-minutes').value = this.settings.pomodoroWorkMinutes || 25;
+        document.getElementById('pomodoro-short-break-minutes').value = this.settings.pomodoroShortBreakMinutes || 5;
+        document.getElementById('pomodoro-long-break-minutes').value = this.settings.pomodoroLongBreakMinutes || 15;
+        document.getElementById('pomodoro-sessions-before-long-break').value = this.settings.pomodoroSessionsBeforeLongBreak || 4;
+        document.getElementById('pomodoro-auto-start').checked = this.settings.pomodoroAutoStartNext || false;
+        document.getElementById('pomodoro-play-sounds').checked = this.settings.pomodoroPlaySounds !== false;
     }
     
     hideSettings() {
@@ -2289,16 +2707,37 @@ class NotesWiki {
     
     updateTagsUI() {
         // Update selected count
-        const count = this.selectedTags.size;
-        document.getElementById('selected-tags-count').textContent = `${count} selected`;
+        const selectedCount = this.selectedTags.size;
+        const excludedCount = this.excludedTags.size;
+        const countElement = document.getElementById('selected-tags-count');
+        const tagModeText = document.getElementById('tag-mode-text');
+        
+        let countText = '';
+        if (selectedCount > 0 && excludedCount > 0) {
+            countText = `${selectedCount} selected, ${excludedCount} excluded`;
+        } else if (selectedCount > 0) {
+            countText = selectedCount === 1 ? '1 tag selected' : `${selectedCount} tags selected`;
+        } else if (excludedCount > 0) {
+            countText = excludedCount === 1 ? '1 tag excluded' : `${excludedCount} tags excluded`;
+        } else {
+            countText = '0 selected';
+        }
+        
+        countElement.textContent = countText;
+        
+        // Update mode text
+        if (tagModeText) {
+            tagModeText.textContent = this.tagFilterMode;
+        }
         
         // Update button badge
         this.updateTagCountBadge();
     }
     
     updateTagCountBadge() {
-        const count = this.selectedTags.size;
+        const count = this.selectedTags.size + this.excludedTags.size;
         const badge = document.getElementById('active-tag-count');
+        const tagsButton = document.getElementById('tags-button');
         if (!badge) {
             return;
         }
@@ -2306,9 +2745,17 @@ class NotesWiki {
         if (count > 0) {
             badge.textContent = count;
             badge.style.display = 'inline-flex';
+            if (tagsButton) tagsButton.classList.add('active');
         } else {
             badge.style.display = 'none';
+            if (tagsButton) tagsButton.classList.remove('active');
         }
+    }
+    
+    toggleTagFilterMode() {
+        this.tagFilterMode = this.tagFilterMode === 'OR' ? 'AND' : 'OR';
+        this.updateTagsUI();
+        this.filterNotesByTags();
     }
     
     filterTagsBySearch(searchTerm) {
@@ -3369,13 +3816,19 @@ class NotesWiki {
         const note = this.notesIndex.notes.find(n => n.path === path);
         const context = note ? note.context : null;
         
+        // Check if file already exists to preserve pin status and increment view count
+        const existingFile = this.recentFiles.find(f => f.path === path);
+        const viewCount = existingFile ? existingFile.viewCount + 1 : 1;
+        const isPinned = existingFile ? existingFile.isPinned : false;
+        
         // Add to beginning
         this.recentFiles.unshift({
             path,
             title: metadata.title || 'Untitled',
             lastViewed: new Date().toISOString(),
-            viewCount: 1,
-            context: context
+            viewCount: viewCount,
+            context: context,
+            isPinned: isPinned
         });
         
         // Limit to settings
@@ -3390,76 +3843,252 @@ class NotesWiki {
         const list = document.getElementById('recent-files-list');
         const count = document.getElementById('recent-count');
         
-        // Show all recent files regardless of context
-        const recentToShow = this.recentFiles;
+        // Sort: pinned first, then by last viewed
+        const sortedFiles = [...this.recentFiles].sort((a, b) => {
+            // Pinned files always come first
+            if (a.isPinned && !b.isPinned) return -1;
+            if (!a.isPinned && b.isPinned) return 1;
+            
+            // Within same pin status, sort by last viewed
+            return new Date(b.lastViewed) - new Date(a.lastViewed);
+        });
         
-        if (recentToShow.length === 0) {
+        if (sortedFiles.length === 0) {
             list.innerHTML = '<li class="empty-state">No recent files</li>';
             count.style.display = 'none';
         } else {
-            count.textContent = recentToShow.length;
+            count.textContent = sortedFiles.length;
             count.style.display = 'flex';
             
+            // Group files by context for better organization
+            const groupedFiles = this.groupFilesByContext(sortedFiles);
+            
             list.innerHTML = '';
-            recentToShow.forEach(file => {
-                const li = document.createElement('li');
-                li.className = 'recent-file-item';
-                
-                const a = document.createElement('a');
-                a.href = `#${file.path}`;
-                a.className = 'recent-file-link';
-                
-                // Add context indicator if file has a context
-                const contextBadge = file.context 
-                    ? `<span class="recent-file-context">${file.context}</span>` 
-                    : '';
-                
-                a.innerHTML = `
-                    <div class="recent-file-title">${this.escapeHtml(file.title)}${contextBadge}</div>
-                    <div class="recent-file-path">${file.path}</div>
-                    <div class="recent-file-time">${this.formatRelativeTime(file.lastViewed)}</div>
-                `;
-                
-                // Handle click for tab navigation
-                a.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    
-                    // Check if should open in new tab
-                    if (e.ctrlKey || e.metaKey) {
-                        this.openInNewTab(file.path);
-                    } else {
-                        // Check if note is already open in another tab
-                        const existingTabId = this.findTabByPath(file.path);
-                        if (existingTabId && existingTabId !== this.activeTabId) {
-                            // Switch to existing tab
-                            this.switchToTab(existingTabId);
-                        } else {
-                            // Update current tab
-                            const tab = this.tabs.get(this.activeTabId);
-                            if (tab) {
-                                tab.path = file.path;
-                                this.loadNote(file.path);
-                            }
-                        }
-                    }
-                    
-                    // Close the dropdown
-                    document.getElementById('recent-dropdown').classList.remove('active');
-                });
-                
-                // Handle middle-click
-                a.addEventListener('mousedown', (e) => {
-                    if (e.button === 1) {
-                        e.preventDefault();
-                        this.openInNewTab(file.path);
-                        document.getElementById('recent-dropdown').classList.remove('active');
-                    }
-                });
-                
-                li.appendChild(a);
-                list.appendChild(li);
+            
+            // Render pinned files first (ungrouped)
+            const pinnedFiles = sortedFiles.filter(f => f.isPinned);
+            if (pinnedFiles.length > 0) {
+                const pinnedSection = this.createRecentFilesSection('📌 Pinned', pinnedFiles, true);
+                list.appendChild(pinnedSection);
+            }
+            
+            // Render grouped files (excluding pinned ones)
+            const unpinnedFiles = sortedFiles.filter(f => !f.isPinned);
+            const unpinnedGrouped = this.groupFilesByContext(unpinnedFiles);
+            
+            Object.entries(unpinnedGrouped).forEach(([contextName, files]) => {
+                const sectionTitle = contextName === 'null' ? '📄 General' : `📁 ${contextName}`;
+                const section = this.createRecentFilesSection(sectionTitle, files, false);
+                list.appendChild(section);
             });
         }
+    }
+    
+    groupFilesByContext(files) {
+        return files.reduce((groups, file) => {
+            const context = file.context || 'null';
+            if (!groups[context]) groups[context] = [];
+            groups[context].push(file);
+            return groups;
+        }, {});
+    }
+    
+    createRecentFilesSection(title, files, isExpanded = true) {
+        const section = document.createElement('li');
+        section.className = 'recent-files-section';
+        
+        const header = document.createElement('div');
+        header.className = 'recent-files-section-header';
+        header.innerHTML = `
+            <span class="section-toggle ${isExpanded ? 'expanded' : ''}">${isExpanded ? '▼' : '▶'}</span>
+            <span class="section-title">${title}</span>
+            <span class="section-count">${files.length}</span>
+        `;
+        
+        const content = document.createElement('ul');
+        content.className = 'recent-files-section-content';
+        content.style.display = isExpanded ? 'block' : 'none';
+        
+        // Add toggle functionality
+        header.addEventListener('click', () => {
+            const toggle = header.querySelector('.section-toggle');
+            const isCurrentlyExpanded = toggle.classList.contains('expanded');
+            
+            if (isCurrentlyExpanded) {
+                toggle.classList.remove('expanded');
+                toggle.textContent = '▶';
+                content.style.display = 'none';
+            } else {
+                toggle.classList.add('expanded');
+                toggle.textContent = '▼';
+                content.style.display = 'block';
+            }
+        });
+        
+        // Render files in this section
+        files.forEach(file => {
+            const li = document.createElement('li');
+            li.className = 'recent-file-item';
+            
+            const container = document.createElement('div');
+            container.className = 'recent-file-container';
+            
+            const a = document.createElement('a');
+            a.href = `#${file.path}`;
+            a.className = 'recent-file-link';
+            
+            // Pin indicator
+            const pinIcon = file.isPinned ? '<span class="pin-indicator">📌</span>' : '';
+            
+            // View count badge
+            const viewBadge = file.viewCount > 1 ? `<span class="view-count">${file.viewCount}</span>` : '';
+            
+            a.innerHTML = `
+                <div class="recent-file-main">
+                    <div class="recent-file-title">${pinIcon}${this.escapeHtml(file.title)}${viewBadge}</div>
+                    <div class="recent-file-meta">
+                        <span class="recent-file-path">${file.path}</span>
+                        <span class="recent-file-time">${this.formatRelativeTime(file.lastViewed)}</span>
+                    </div>
+                </div>
+            `;
+            
+            // Actions menu
+            const actionsBtn = document.createElement('button');
+            actionsBtn.className = 'recent-file-actions';
+            actionsBtn.innerHTML = '⋮';
+            actionsBtn.title = 'Actions';
+            
+            // Handle file click
+            a.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.handleRecentFileClick(file, e);
+            });
+            
+            // Handle middle-click
+            a.addEventListener('mousedown', (e) => {
+                if (e.button === 1) {
+                    e.preventDefault();
+                    this.openInNewTab(file.path);
+                    document.getElementById('recent-dropdown').classList.remove('active');
+                }
+            });
+            
+            // Handle actions menu
+            actionsBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.showRecentFileActions(file, actionsBtn);
+            });
+            
+            container.appendChild(a);
+            container.appendChild(actionsBtn);
+            li.appendChild(container);
+            content.appendChild(li);
+        });
+        
+        section.appendChild(header);
+        section.appendChild(content);
+        return section;
+    }
+    
+    handleRecentFileClick(file, event) {
+        // Check if should open in new tab
+        if (event.ctrlKey || event.metaKey) {
+            this.openInNewTab(file.path);
+        } else {
+            // Check if note is already open in another tab
+            const existingTabId = this.findTabByPath(file.path);
+            if (existingTabId && existingTabId !== this.activeTabId) {
+                this.switchToTab(existingTabId);
+            } else {
+                // Update current tab
+                const tab = this.tabs.get(this.activeTabId);
+                if (tab) {
+                    tab.path = file.path;
+                    this.loadNote(file.path);
+                }
+            }
+        }
+        
+        // Close the dropdown
+        document.getElementById('recent-dropdown').classList.remove('active');
+    }
+    
+    showRecentFileActions(file, button) {
+        // Remove any existing actions menu
+        const existingMenu = document.querySelector('.recent-file-actions-menu');
+        if (existingMenu) {
+            existingMenu.remove();
+        }
+        
+        const menu = document.createElement('div');
+        menu.className = 'recent-file-actions-menu';
+        
+        const actions = [
+            {
+                icon: file.isPinned ? '📌' : '📍',
+                label: file.isPinned ? 'Unpin' : 'Pin to top',
+                action: () => this.toggleRecentFilePin(file.path)
+            },
+            {
+                icon: '🗑️',
+                label: 'Remove from recent',
+                action: () => this.removeFromRecentFiles(file.path)
+            },
+            {
+                icon: '📋',
+                label: 'Copy path',
+                action: () => navigator.clipboard.writeText(file.path)
+            }
+        ];
+        
+        actions.forEach(action => {
+            const item = document.createElement('div');
+            item.className = 'actions-menu-item';
+            item.innerHTML = `<span class="action-icon">${action.icon}</span><span class="action-label">${action.label}</span>`;
+            item.addEventListener('click', () => {
+                action.action();
+                menu.remove();
+            });
+            menu.appendChild(item);
+        });
+        
+        // Position menu relative to button
+        const rect = button.getBoundingClientRect();
+        menu.style.position = 'fixed';
+        menu.style.top = `${rect.bottom + 5}px`;
+        menu.style.left = `${rect.left - 150}px`; // Offset to the left
+        
+        document.body.appendChild(menu);
+        
+        // Close menu when clicking outside
+        const closeMenu = (e) => {
+            if (!menu.contains(e.target) && e.target !== button) {
+                menu.remove();
+                document.removeEventListener('click', closeMenu);
+            }
+        };
+        
+        setTimeout(() => {
+            document.addEventListener('click', closeMenu);
+        }, 0);
+    }
+    
+    toggleRecentFilePin(path) {
+        const file = this.recentFiles.find(f => f.path === path);
+        if (file) {
+            file.isPinned = !file.isPinned;
+            localStorage.setItem('notesWiki_recentFiles', JSON.stringify(this.recentFiles));
+            this.updateRecentFilesUI();
+            this.showToast(file.isPinned ? 'File pinned' : 'File unpinned');
+        }
+    }
+    
+    removeFromRecentFiles(path) {
+        this.recentFiles = this.recentFiles.filter(f => f.path !== path);
+        localStorage.setItem('notesWiki_recentFiles', JSON.stringify(this.recentFiles));
+        this.updateRecentFilesUI();
+        this.showToast('Removed from recent files');
     }
     
     clearRecentFiles() {
@@ -3817,7 +4446,9 @@ class NotesWiki {
         }
         
         // Try to restore saved tabs
-        if (!this.restoreTabState()) {
+        const tabsRestored = this.restoreTabState();
+        
+        if (!tabsRestored) {
             // Create initial tab based on default home page setting
             let initialPath = '/notes/index.md';
             let initialTitle = 'Home';
@@ -3841,6 +4472,9 @@ class NotesWiki {
             
             this.createNewTab(initialPath, initialTitle);
         }
+        
+        // Save tab state whenever tabs change
+        this.enableAutoSaveTabState();
         
         // Global click handler removed - we now handle clicks on individual links
         // to avoid duplicate tab creation
@@ -3868,6 +4502,11 @@ class NotesWiki {
         // Load content for the tab
         if (path) {
             this.loadNoteInTab(path, tabId);
+        }
+        
+        // Save tab state
+        if (this.tabStateSaveDebounced) {
+            this.tabStateSaveDebounced();
         }
         
         return tabId;
@@ -3903,6 +4542,21 @@ class NotesWiki {
             if (!e.target.closest('.tab-close')) {
                 this.switchToTab(tabId);
             }
+        });
+        
+        // Add tab preview on hover
+        let hoverTimeout;
+        tabElement.addEventListener('mouseenter', (e) => {
+            if (tabId === this.activeTabId) return;
+            
+            hoverTimeout = setTimeout(() => {
+                this.showTabPreview(tabId, e.currentTarget);
+            }, 500);
+        });
+        
+        tabElement.addEventListener('mouseleave', () => {
+            clearTimeout(hoverTimeout);
+            this.hideTabPreview();
         });
         
         // Middle-click to close
@@ -4149,6 +4803,159 @@ class NotesWiki {
         this.switchToTab(tabIds[newIndex]);
     }
     
+    saveTabState() {
+        const tabState = {
+            tabs: Array.from(this.tabs.values()),
+            activeTabId: this.activeTabId,
+            tabIdCounter: this.tabIdCounter
+        };
+        localStorage.setItem('tabState', JSON.stringify(tabState));
+    }
+    
+    restoreTabState() {
+        const savedState = localStorage.getItem('tabState');
+        if (!savedState) return false;
+        
+        try {
+            const tabState = JSON.parse(savedState);
+            if (!tabState.tabs || tabState.tabs.length === 0) return false;
+            
+            console.log('Restoring tab state:', tabState);
+            
+            // Clear existing tabs
+            this.tabs.clear();
+            this.tabContents.clear();
+            document.getElementById('tabs-container').innerHTML = '';
+            
+            // Restore tab counter
+            this.tabIdCounter = tabState.tabIdCounter || 0;
+            
+            // Restore tabs
+            let activeTabFound = false;
+            tabState.tabs.forEach(tabData => {
+                console.log('Restoring tab:', tabData);
+                
+                // Validate tab data
+                if (!tabData.path || typeof tabData.path !== 'string') {
+                    console.warn('Invalid tab path, skipping:', tabData);
+                    return;
+                }
+                
+                this.tabs.set(tabData.id, {
+                    id: tabData.id,
+                    path: tabData.path,
+                    title: tabData.title || 'Untitled',
+                    scrollPosition: tabData.scrollPosition || 0
+                });
+                this.renderTab(tabData.id);
+                
+                if (tabData.id === tabState.activeTabId) {
+                    activeTabFound = true;
+                }
+            });
+            
+            // If no tabs were successfully restored, return false
+            if (this.tabs.size === 0) {
+                console.log('No valid tabs restored');
+                return false;
+            }
+            
+            // Restore active tab
+            const tabToActivate = activeTabFound ? tabState.activeTabId : Array.from(this.tabs.keys())[0];
+            this.switchToTab(tabToActivate, false);
+            
+            // Load content for active tab
+            const activeTab = this.tabs.get(tabToActivate);
+            if (activeTab && activeTab.path) {
+                console.log('Loading active tab content:', activeTab.path);
+                this.loadNoteInTab(activeTab.path, tabToActivate);
+            }
+            
+            return true;
+        } catch (e) {
+            console.error('Failed to restore tab state:', e);
+            localStorage.removeItem('tabState');
+            return false;
+        }
+    }
+    
+    enableAutoSaveTabState() {
+        // Save tab state whenever tabs change
+        if (!this.tabStateSaveTimeout) {
+            this.tabStateSaveDebounced = () => {
+                clearTimeout(this.tabStateSaveTimeout);
+                this.tabStateSaveTimeout = setTimeout(() => {
+                    this.saveTabState();
+                }, 500);
+            };
+        }
+    }
+    
+    showTabPreview(tabId, tabElement) {
+        const tab = this.tabs.get(tabId);
+        if (!tab) return;
+        
+        // Get cached content or load summary
+        let content = this.tabContents.get(tabId);
+        let preview = '';
+        
+        if (content) {
+            // Extract first paragraph or summary from content
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = content;
+            
+            // Try to get the first meaningful text
+            const firstParagraph = tempDiv.querySelector('p, .note-description, h1');
+            if (firstParagraph) {
+                preview = firstParagraph.textContent.trim().substring(0, 200) + '...';
+            } else {
+                preview = tempDiv.textContent.trim().substring(0, 200) + '...';
+            }
+        } else {
+            // Load note metadata from index
+            const noteInfo = this.notesIndex?.notes?.find(note => note.path === tab.path);
+            if (noteInfo?.metadata?.description) {
+                preview = noteInfo.metadata.description;
+            }
+        }
+        
+        // Create preview element
+        let previewEl = document.getElementById('tab-preview');
+        if (!previewEl) {
+            previewEl = document.createElement('div');
+            previewEl.id = 'tab-preview';
+            previewEl.className = 'tab-preview';
+            document.body.appendChild(previewEl);
+        }
+        
+        previewEl.innerHTML = `
+            <div class="tab-preview-title">${this.escapeHtml(tab.title)}</div>
+            <div class="tab-preview-path">${tab.path}</div>
+            ${preview ? `<div class="tab-preview-content">${this.escapeHtml(preview)}</div>` : ''}
+        `;
+        
+        // Position the preview
+        const rect = tabElement.getBoundingClientRect();
+        previewEl.style.display = 'block';
+        previewEl.style.top = `${rect.bottom + 5}px`;
+        previewEl.style.left = `${Math.max(10, rect.left)}px`;
+        
+        // Ensure preview doesn't go off screen
+        requestAnimationFrame(() => {
+            const previewRect = previewEl.getBoundingClientRect();
+            if (previewRect.right > window.innerWidth - 10) {
+                previewEl.style.left = `${window.innerWidth - previewRect.width - 10}px`;
+            }
+        });
+    }
+    
+    hideTabPreview() {
+        const previewEl = document.getElementById('tab-preview');
+        if (previewEl) {
+            previewEl.style.display = 'none';
+        }
+    }
+    
     openInNewTab(path) {
         // Prevent duplicate tabs by tracking pending tab creations
         if (!this.pendingTabs) {
@@ -4328,6 +5135,12 @@ class NotesWiki {
                 
                 // Restore tabs
                 tabs.forEach(tabData => {
+                    // Validate tab data
+                    if (!tabData.path || typeof tabData.path !== 'string' || tabData.path.trim() === '') {
+                        console.warn('Skipping tab with invalid path:', tabData);
+                        return;
+                    }
+                    
                     const tabId = tabData.id;
                     this.tabs.set(tabId, tabData);
                     this.renderTab(tabId);
@@ -4397,20 +5210,46 @@ class NotesWiki {
         const currentElapsed = this.timerRunning 
             ? Date.now() - this.timerStartTime 
             : this.timerElapsed;
+        
+        // Check if Pomodoro mode and if time has reached target
+        if (this.settings.pomodoroEnabled && this.pomodoroTargetTime > 0) {
+            if (currentElapsed >= this.pomodoroTargetTime && this.timerRunning) {
+                this.handlePomodoroComplete();
+                return;
+            }
             
-        const totalSeconds = Math.floor(currentElapsed / 1000);
-        const hours = Math.floor(totalSeconds / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
-        
-        const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        
-        document.getElementById('timer-display').textContent = timeString;
+            // Show countdown in Pomodoro mode
+            const remaining = Math.max(0, this.pomodoroTargetTime - currentElapsed);
+            const totalSeconds = Math.floor(remaining / 1000);
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            
+            const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Update progress bar
+            const progress = (currentElapsed / this.pomodoroTargetTime) * 100;
+            document.getElementById('progress-bar').style.width = `${Math.min(100, progress)}%`;
+            
+            document.getElementById('timer-display').textContent = timeString;
+        } else {
+            // Regular timer mode (count up)
+            const totalSeconds = Math.floor(currentElapsed / 1000);
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            
+            const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            document.getElementById('timer-display').textContent = timeString;
+        }
     }
     
     updateTimerUI() {
         const playPauseButton = document.getElementById('timer-play-pause');
         const timerWidget = document.querySelector('.timer-widget');
+        const modeIndicator = document.getElementById('timer-mode-indicator');
+        const progressBar = document.getElementById('timer-progress');
         
         if (this.timerRunning) {
             playPauseButton.classList.add('playing', 'active');
@@ -4418,6 +5257,25 @@ class NotesWiki {
         } else {
             playPauseButton.classList.remove('playing', 'active');
             timerWidget.classList.remove('running');
+        }
+        
+        // Update Pomodoro UI
+        if (this.settings.pomodoroEnabled) {
+            modeIndicator.style.display = 'flex';
+            progressBar.style.display = 'block';
+            
+            // Update mode indicator
+            this.updatePomodoroModeDisplay();
+            
+            // Add Pomodoro mode class
+            timerWidget.classList.remove('pomodoro-work', 'pomodoro-short-break', 'pomodoro-long-break');
+            timerWidget.classList.add(`pomodoro-${this.pomodoroMode}`);
+        } else {
+            modeIndicator.style.display = 'none';
+            progressBar.style.display = 'none';
+            
+            // Remove Pomodoro mode classes
+            timerWidget.classList.remove('pomodoro-work', 'pomodoro-short-break', 'pomodoro-long-break');
         }
     }
     
@@ -4446,6 +5304,216 @@ class NotesWiki {
             clearTimeout(this.resetPressTimer);
             this.resetPressTimer = null;
         }
+    }
+    
+    // Pomodoro Timer Functions
+    initializePomodoroMode() {
+        if (this.settings.pomodoroEnabled) {
+            this.setPomodoroTarget();
+        }
+        this.updateTimerUI();
+    }
+    
+    setPomodoroTarget() {
+        let minutes;
+        switch (this.pomodoroMode) {
+            case 'work':
+                minutes = this.settings.pomodoroWorkMinutes;
+                break;
+            case 'short-break':
+                minutes = this.settings.pomodoroShortBreakMinutes;
+                break;
+            case 'long-break':
+                minutes = this.settings.pomodoroLongBreakMinutes;
+                break;
+            default:
+                minutes = this.settings.pomodoroWorkMinutes;
+        }
+        this.pomodoroTargetTime = minutes * 60 * 1000; // Convert to milliseconds
+    }
+    
+    updatePomodoroModeDisplay() {
+        const modeIcon = document.getElementById('mode-icon');
+        const modeText = document.getElementById('mode-text');
+        
+        // Hide the icon element since we're not using emojis
+        modeIcon.style.display = 'none';
+        
+        switch (this.pomodoroMode) {
+            case 'work':
+                modeText.textContent = 'WORK';
+                break;
+            case 'short-break':
+                modeText.textContent = 'BREAK';
+                break;
+            case 'long-break':
+                modeText.textContent = 'LONG BREAK';
+                break;
+        }
+    }
+    
+    handlePomodoroComplete() {
+        // Stop the timer
+        this.pauseTimer();
+        
+        // Play notification sound if enabled
+        if (this.settings.pomodoroPlaySounds) {
+            this.playNotificationSound();
+        }
+        
+        // Determine next mode
+        if (this.pomodoroMode === 'work') {
+            this.pomodoroSessionCount++;
+            
+            // Check if it's time for a long break
+            if (this.pomodoroSessionCount % this.settings.pomodoroSessionsBeforeLongBreak === 0) {
+                this.pomodoroMode = 'long-break';
+            } else {
+                this.pomodoroMode = 'short-break';
+            }
+        } else {
+            // After any break, go back to work
+            this.pomodoroMode = 'work';
+        }
+        
+        // Reset timer for next session
+        this.resetTimer();
+        this.setPomodoroTarget();
+        
+        // Show completion notification
+        this.showPomodoroNotification();
+        
+        // Auto-start next session if enabled
+        if (this.settings.pomodoroAutoStartNext) {
+            setTimeout(() => {
+                this.startTimer();
+            }, 3000); // 3 second delay
+        }
+    }
+    
+    playNotificationSound() {
+        // Create a simple beep sound using Web Audio API
+        try {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 1);
+        } catch (error) {
+            console.log('Audio notification not available:', error);
+        }
+    }
+    
+    showPomodoroNotification() {
+        const modeNames = {
+            'work': 'Work Session',
+            'short-break': 'Short Break',
+            'long-break': 'Long Break'
+        };
+        
+        const currentSession = this.pomodoroMode === 'work' ? 
+            modeNames[Object.keys(modeNames).find(key => key !== 'work' && this.pomodoroSessionCount % this.settings.pomodoroSessionsBeforeLongBreak === 0 ? key === 'long-break' : key === 'short-break')] :
+            modeNames['work'];
+            
+        const nextSession = modeNames[this.pomodoroMode];
+        
+        this.showToast(`${currentSession} complete! Next: ${nextSession}`, 5000);
+        
+        // Browser notification if permitted
+        if (Notification.permission === 'granted') {
+            new Notification('Pomodoro Timer', {
+                body: `${currentSession} complete! Time for ${nextSession}.`,
+                icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🍅</text></svg>'
+            });
+        }
+    }
+    
+    // Override start/reset to handle Pomodoro mode
+    startTimer() {
+        if (this.settings.pomodoroEnabled && this.pomodoroTargetTime === 0) {
+            this.setPomodoroTarget();
+        }
+        
+        this.timerRunning = true;
+        this.timerStartTime = Date.now() - this.timerElapsed;
+        
+        this.timerInterval = setInterval(() => {
+            this.updateTimerDisplay();
+        }, 1000);
+        
+        this.updateTimerUI();
+        this.updateTimerDisplay();
+    }
+    
+    resetTimer() {
+        this.timerRunning = false;
+        this.timerElapsed = 0;
+        this.timerStartTime = null;
+        
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+            this.timerInterval = null;
+        }
+        
+        // Reset progress bar
+        document.getElementById('progress-bar').style.width = '0%';
+        
+        this.updateTimerDisplay();
+        this.updateTimerUI();
+    }
+    
+    // Keyboard Shortcuts Cheatsheet Modal
+    showShortcutsCheatsheet() {
+        const modal = document.getElementById('shortcuts-modal');
+        
+        // Update shortcuts display with current settings
+        this.updateShortcutsDisplay();
+        
+        modal.style.display = 'flex';
+        
+        // Add event listeners for this modal session
+        const closeButton = document.getElementById('shortcuts-modal-close');
+        const handleClose = () => this.hideShortcutsCheatsheet();
+        
+        closeButton.addEventListener('click', handleClose);
+        
+        // Close on click outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                handleClose();
+            }
+        });
+    }
+    
+    hideShortcutsCheatsheet() {
+        const modal = document.getElementById('shortcuts-modal');
+        modal.style.display = 'none';
+        
+        // Remove event listeners to prevent memory leaks
+        const closeButton = document.getElementById('shortcuts-modal-close');
+        closeButton.replaceWith(closeButton.cloneNode(true));
+        modal.replaceWith(modal.cloneNode(true));
+    }
+    
+    updateShortcutsDisplay() {
+        // Update the shortcut keys to show current custom shortcuts
+        const shortcuts = this.settings.keyboardShortcuts;
+        
+        // Update navigation shortcuts
+        document.getElementById('shortcut-new-tab').textContent = shortcuts['new-tab'] || 'Ctrl+T';
+        document.getElementById('shortcut-search').textContent = shortcuts['search'] || 'Ctrl+K';
+        document.getElementById('shortcut-filter').textContent = shortcuts['filter'] || 'Ctrl+F';
+        document.getElementById('shortcut-settings').textContent = shortcuts['settings'] || 'Ctrl+,';
     }
 }
 

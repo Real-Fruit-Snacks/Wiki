@@ -20,10 +20,6 @@ python3 build.py
 # - Parse YAML frontmatter
 # - Generate notes-index.json with metadata and content
 # - Output statistics about tags, authors, and categories
-
-# Testing fonts and themes in isolation
-# Create a test HTML file and open it directly in browser
-# See test-font-settings.html for an example
 ```
 
 ## Architecture
@@ -43,7 +39,9 @@ The `NotesWiki` class (in script.js) is the central controller that manages:
 - Theme management and preferences
 - Search functionality
 - Tab management
-- Timer widget
+- Timer widget (including Pomodoro mode)
+- Recent files tracking with pinning
+- Keyboard shortcuts handling
 - Event handling and state management
 
 ### Key Architectural Patterns
@@ -62,6 +60,7 @@ The `NotesWiki` class (in script.js) is the central controller that manages:
    - Auto-theme detection based on system preferences
    - Theme affects both UI and syntax highlighting
    - Themes are loaded by changing the href of the theme-stylesheet link element
+   - Preview cards generated dynamically with code samples
 
 3. **Search Implementation**
    - Client-side full-text search using notes-index.json
@@ -83,10 +82,11 @@ The `NotesWiki` class (in script.js) is the central controller that manages:
 
 6. **Settings System**
    - Settings modal with multiple sections accessed via sidebar navigation
-   - Settings include theme, font size/family, keyboard shortcuts, custom CSS
+   - Settings include theme, font size/family, keyboard shortcuts, custom CSS, Pomodoro timer
    - Font settings applied via CSS classes on body element
    - Custom CSS injected via dynamic style element
    - Keyboard shortcuts customizable with live capture functionality
+   - Settings persisted in localStorage with debounced saving
 
 ## Important Implementation Details
 
@@ -126,9 +126,17 @@ status: published    # optional
 ### localStorage Structure
 ```javascript
 {
-  "recentFiles": [...],              // Array of recently viewed notes
-  "theme": "dark",                   // Current theme selection
-  "preferences": {
+  "notesWiki_recentFiles": [         // Array of recently viewed notes with metadata
+    {
+      "path": "notes/index",
+      "title": "Welcome to Notes Wiki",
+      "context": "root",
+      "isPinned": false,
+      "lastVisited": 1704567890123
+    }
+  ],
+  "notesWiki_theme": "dark",         // Current theme selection
+  "notesWiki_preferences": {
     "showLineNumbers": true,         // Code block line numbers
     "wordWrap": false,               // Code block word wrap
     "autoTheme": true,               // Follow system theme
@@ -147,7 +155,15 @@ status: published    # optional
       "search": "Ctrl+K",
       "settings": "Ctrl+,",
       "filter": "Ctrl+F"
-    }
+    },
+    "pomodoroEnabled": false,        // Pomodoro timer mode
+    "pomodoroWorkMinutes": 25,      // Work session duration
+    "pomodoroShortBreakMinutes": 5, // Short break duration
+    "pomodoroLongBreakMinutes": 15, // Long break duration
+    "pomodoroSessionsBeforeLongBreak": 4, // Sessions before long break
+    "pomodoroAutoStart": false,      // Auto-start next session
+    "pomodoroPlaySounds": true,      // Sound notifications
+    "recentFilesLimit": 20           // Maximum recent files to keep
   }
 }
 ```
@@ -167,12 +183,21 @@ status: published    # optional
 - **Ctrl+K**: Search
 - **Ctrl+,**: Settings
 - **Ctrl+F**: Filter/find notes
+- **Ctrl+W**: Close current tab
+- **Ctrl+Shift+W**: Close all tabs
+- **Ctrl+1-9**: Switch to tab by number
+- **?**: Show keyboard shortcuts cheatsheet
+- **Escape**: Close modals/overlays
 - Tooltips show shortcuts on hover
+- All shortcuts are customizable in settings
 
 ### Timer Widget
-- Integrated productivity timer in the header
+- Integrated productivity timer in the sidebar
 - Play/pause/reset controls
 - Long-press reset (3 seconds) with visual feedback
+- Pomodoro mode with work/break sessions
+- Visual progress bar and mode indicators
+- Sound notifications (Web Audio API)
 - Theme-aware design adapts to all 50 themes
 - Timer state persists across navigation
 
@@ -206,6 +231,10 @@ The copy functionality for code blocks containing HTML requires special handling
 - Badge colors match context colors for visual consistency
 - Recent files persist across sessions in localStorage
 - Limit of 20 recent files by default (configurable in settings: 10/20/30/50)
+- Pin/unpin functionality to keep important files at top
+- Grouped by context with collapsible sections
+- Quick actions menu on hover (pin/unpin, remove)
+- Pinned files preserved across sessions
 
 ### Font Settings Implementation
 - Font size and family settings applied via CSS classes on body element
@@ -262,6 +291,10 @@ When testing changes:
 17. Test keyboard shortcut customization with various key combinations
 18. Verify default home page settings (home/last-viewed/specific)
 19. Test external links behavior with setting enabled/disabled
+20. Test recent files pinning and grouping functionality
+21. Verify Pomodoro timer mode switching and notifications
+22. Test keyboard shortcuts cheatsheet (? key)
+23. Verify search operators (exact phrase, exclude, tag:, author:)
 
 ## Security Notes
 
@@ -278,3 +311,24 @@ When testing changes:
 3. **Direct File Access** - Limited functionality due to CORS (search disabled)
 
 Note: Full functionality requires HTTP server due to JavaScript module loading and CORS restrictions.
+
+## Important Recent Features (v2.4.0)
+
+1. **Enhanced Recent Files**
+   - Pin/unpin files to keep frequently used notes at top
+   - Files grouped by context with collapsible sections
+   - Quick actions menu (appears on hover)
+   - Pinned state persists across sessions
+
+2. **Keyboard Shortcuts Cheatsheet**
+   - Press `?` to open shortcuts modal
+   - Organized into 6 categories
+   - Shows current custom key bindings
+   - Escape or click outside to close
+
+3. **Pomodoro Timer**
+   - Enable in Settings > Pomodoro Timer
+   - Automatic work/break session switching
+   - Visual progress bars and mode indicators
+   - Sound notifications on completion
+   - Customizable durations and auto-start option

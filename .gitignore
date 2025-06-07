@@ -12,6 +12,10 @@ theme_*.py
 *_verification*.json
 screenshots/
 
+# Release archives
+notes-wiki-*.tar.gz
+notes-wiki-*/
+
 # System files
 .DS_Store
 Thumbs.db
@@ -98,3 +102,6 @@ font-demo-*.html
 # Keyboard shortcut testing
 shortcuts-test.html
 keybindings-test.json
+
+# Release script
+create-release.sh

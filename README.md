@@ -2,7 +2,7 @@
 
 A modern, self-contained static notes and documentation system designed for GitLab Pages with advanced features including 50 built-in themes, real-time search, metadata parsing, and complete offline functionality.
 
-![Wiki Screenshot](https://img.shields.io/badge/Status-Ready-green) ![No Dependencies](https://img.shields.io/badge/Dependencies-None-blue) ![Themes](https://img.shields.io/badge/Themes-50-purple) ![Version](https://img.shields.io/badge/Version-2.2.0-blue)
+![Wiki Screenshot](https://img.shields.io/badge/Status-Ready-green) ![No Dependencies](https://img.shields.io/badge/Dependencies-None-blue) ![Themes](https://img.shields.io/badge/Themes-50-purple) ![Version](https://img.shields.io/badge/Version-2.4.0-blue)
 
 ## 🌟 Features
 
@@ -28,7 +28,11 @@ A modern, self-contained static notes and documentation system designed for GitL
 ### 🗂️ **Smart Organization**
 - **Context Folders**: Organize notes into logical groups (Personal, Technical, Projects, etc.)
 - **Dynamic Navigation**: Collapsible file tree with context filtering
-- **Recent Files**: Track and quickly access recently viewed notes
+- **Enhanced Recent Files**: 
+  - Pin frequently used files to the top
+  - Grouped by context with collapsible sections
+  - Quick actions menu (pin/unpin, remove)
+  - Visual organization with context badges
 - **Cross-linking**: Support for internal note links and heading anchors
 
 ### ⚙️ **Customization**
@@ -42,12 +46,19 @@ A modern, self-contained static notes and documentation system designed for GitL
 - **Offline First**: All assets bundled locally - no external dependencies
 
 ### ⏱️ **Productivity Features**
-- **Built-in Timer**: Integrated timer widget with play/pause/reset functionality
+- **Pomodoro Timer**: Full-featured Pomodoro technique implementation
+  - Customizable work sessions (default 25 minutes)
+  - Short breaks (default 5 minutes) and long breaks (default 15 minutes)
+  - Automatic session progression with 3-second countdown
+  - Visual progress bars and mode indicators
+  - Sound notifications on completion
+  - Auto-start next session option
+  - Theme-aware design adapts to all 50 themes
+- **Built-in Timer**: Standard timer with play/pause/reset functionality
 - **Long-press Reset**: Hold reset button for 3 seconds with visual feedback
-- **Theme-aware Design**: Timer adapts to all 50 themes automatically
-- **Persistent State**: Timer continues running even when switching between notes
 - **Tab Management**: Multiple tabs with drag-and-drop reordering and cached content
 - **Keyboard Shortcuts**: Customizable shortcuts (default: Ctrl+T new tab, Ctrl+K search, Ctrl+, settings, Ctrl+F filter)
+- **Keyboard Shortcuts Cheatsheet**: Press `?` to view all shortcuts in a organized modal
 - **Modal Interactions**: Escape key and click-outside to close modals
 - **Quick Access**: Set specific notes as default home page for instant access
 
@@ -236,6 +247,19 @@ Access settings via the gear icon (or Ctrl+,) to configure:
 - Custom CSS editor for personal styling
 - Keyboard shortcut customization (click to edit)
 
+**Files & History**
+- Maximum recent files limit (10/20/30/50)
+- Clear recent files history
+
+**Pomodoro Timer**
+- Enable/disable Pomodoro mode
+- Customize work session duration (1-60 minutes)
+- Customize short break duration (1-30 minutes)
+- Customize long break duration (1-60 minutes)
+- Sessions before long break (2-10)
+- Auto-start next session toggle
+- Sound notifications toggle
+
 ## 🎯 Use Cases
 
 - **Personal Knowledge Base**: Organize notes, ideas, and learning materials
@@ -296,7 +320,26 @@ MIT License - feel free to use for personal or commercial projects.
 
 ## 📋 Changelog
 
-### v2.3.0 (Latest)
+### v2.4.0 (Latest)
+- **Enhanced Recent Files** with advanced features:
+  - Pin/unpin files to keep them at the top
+  - Grouped display by context with collapsible sections
+  - Quick actions menu for each file
+  - Visual organization with context badges
+- **Keyboard Shortcuts Cheatsheet** - Press `?` key to view all shortcuts
+  - Organized into 6 categories (Navigation, Tab Management, Search, Content, Mouse, Timer)
+  - Shows current custom key bindings
+  - Interactive tips and visual layout
+- **Pomodoro Timer Mode** for focused work sessions:
+  - Configurable work/break durations
+  - Automatic session progression
+  - Visual progress bars and mode indicators
+  - Sound notifications on completion
+  - Persistent settings across sessions
+- **Fixed timer pause icon** rendering issue
+- **Removed redundant timer settings button**
+
+### v2.3.0
 - **Enhanced Settings Modal** with new customization options:
   - Font size adjustment (small/normal/large/extra-large)
   - Font family selection (system/sans-serif/serif/monospace)

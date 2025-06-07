@@ -112,6 +112,26 @@
                         <input type="checkbox" id="sticky-search" aria-label="Keep search query">
                         <span>Keep search query</span>
                     </label>
+                    <button class="text-button search-help-button" onclick="notesWiki.toggleSearchHelp()">
+                        <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Search tips</span>
+                    </button>
+                </div>
+                <div class="search-help" id="search-help" style="display: none;">
+                    <div class="search-help-content">
+                        <strong>Search Operators:</strong>
+                        <ul>
+                            <li><code>"exact phrase"</code> - Search for exact phrase</li>
+                            <li><code>-exclude</code> - Exclude terms</li>
+                            <li><code>tag:javascript</code> - Filter by tag</li>
+                            <li><code>author:name</code> - Filter by author</li>
+                            <li><code>↑↓</code> - Navigate results</li>
+                            <li><code>Enter</code> - Open result</li>
+                            <li><code>Ctrl+Enter</code> - Open in new tab</li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="search-results" id="search-results">
                     <!-- Search results will be populated here -->
@@ -145,22 +165,32 @@
                     
                     <!-- Timer widget - compact -->
                     <div class="timer-widget">
-                        <div class="timer-compact">
-                            <div class="timer-display-compact" id="timer-display">00:00:00</div>
-                            <div class="timer-controls-compact">
-                                <button class="timer-button-compact play-pause" id="timer-play-pause" aria-label="Play/Pause timer">
-                                    <svg class="play-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                                        <path d="M8 5v14l11-7z"/>
-                                    </svg>
-                                    <svg class="pause-icon hidden" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                                        <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-                                    </svg>
-                                </button>
-                                <button class="timer-button-compact reset" id="timer-reset" aria-label="Reset timer">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                                        <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
-                                    </svg>
-                                </button>
+                        <div class="timer-compact" id="timer-widget-main">
+                            <div class="timer-main-row">
+                                <div class="timer-display-compact" id="timer-display">00:00:00</div>
+                                <div class="timer-controls-compact">
+                                    <button class="timer-button-compact play-pause" id="timer-play-pause" aria-label="Play/Pause timer">
+                                        <svg class="play-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                        <svg class="pause-icon hidden" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                                            <rect x="6" y="4" width="4" height="16"/>
+                                            <rect x="14" y="4" width="4" height="16"/>
+                                        </svg>
+                                    </button>
+                                    <button class="timer-button-compact reset" id="timer-reset" aria-label="Reset timer">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                                            <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="timer-mode-indicator" id="timer-mode-indicator" style="display: none;">
+                                <span class="mode-icon" id="mode-icon">🍅</span>
+                                <span class="mode-text" id="mode-text">Work</span>
+                            </div>
+                            <div class="timer-progress" id="timer-progress" style="display: none;">
+                                <div class="progress-bar" id="progress-bar"></div>
                             </div>
                         </div>
                     </div>
@@ -257,6 +287,13 @@
                                     <path d="M1.5 3a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h13a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5h-13zM15 8H1v4.5a.5.5 0 00.5.5h13a.5.5 0 00.5-.5V8zM3 5.5a.5.5 0 110-1 .5.5 0 010 1zm2 0a.5.5 0 110-1 .5.5 0 010 1zm2 0a.5.5 0 110-1 .5.5 0 010 1z"/>
                                 </svg>
                                 <span>Advanced</span>
+                            </button>
+                            <button class="settings-nav-item" data-section="pomodoro">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M8 1a7 7 0 100 14A7 7 0 008 1zM8 3a5 5 0 11-3.53 8.5l-.47-.47a1 1 0 011.42-1.42l.47.47A5 5 0 018 3z"/>
+                                    <path d="M9 5a1 1 0 10-2 0v3.586l-1.707 1.707a1 1 0 001.414 1.414L8.414 9.586A1 1 0 009 9V5z"/>
+                                </svg>
+                                <span>Pomodoro Timer</span>
                             </button>
                             <button class="settings-nav-item" data-section="history">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -569,6 +606,103 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        <!-- Pomodoro Timer section -->
+                        <div class="settings-section" id="settings-section-pomodoro">
+                            <h3 class="settings-heading">Pomodoro Timer</h3>
+                            <p class="settings-description">Focus technique with work sessions and breaks</p>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Enable Pomodoro Mode</div>
+                                    <div class="setting-description">Use focused work sessions with automatic breaks</div>
+                                </div>
+                                <div class="setting-control">
+                                    <label class="toggle">
+                                        <input type="checkbox" id="pomodoro-enabled">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Work Session</div>
+                                    <div class="setting-description">Duration of focused work periods</div>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="input-control">
+                                        <input type="number" id="pomodoro-work-minutes" min="1" max="60" value="25">
+                                        <span class="input-unit">minutes</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Short Break</div>
+                                    <div class="setting-description">Duration of short breaks between work sessions</div>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="input-control">
+                                        <input type="number" id="pomodoro-short-break-minutes" min="1" max="30" value="5">
+                                        <span class="input-unit">minutes</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Long Break</div>
+                                    <div class="setting-description">Duration of long breaks after several work sessions</div>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="input-control">
+                                        <input type="number" id="pomodoro-long-break-minutes" min="1" max="60" value="15">
+                                        <span class="input-unit">minutes</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Sessions Before Long Break</div>
+                                    <div class="setting-description">Number of work sessions before a long break</div>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="input-control">
+                                        <input type="number" id="pomodoro-sessions-before-long-break" min="2" max="10" value="4">
+                                        <span class="input-unit">sessions</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Auto-start Next Session</div>
+                                    <div class="setting-description">Automatically start the next session after a 3-second delay</div>
+                                </div>
+                                <div class="setting-control">
+                                    <label class="toggle">
+                                        <input type="checkbox" id="pomodoro-auto-start">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Sound Notifications</div>
+                                    <div class="setting-description">Play sound when sessions complete</div>
+                                </div>
+                                <div class="setting-control">
+                                    <label class="toggle">
+                                        <input type="checkbox" id="pomodoro-play-sounds" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -604,10 +738,171 @@
                     </div>
                     <div class="tags-controls">
                         <button class="button button-small button-clear-all" id="clear-all-tags">Clear All</button>
+                        <div class="tag-filter-mode">
+                            <button class="tag-mode-toggle" id="tag-mode-toggle" onclick="notesWiki.toggleTagFilterMode()">
+                                Mode: <span id="tag-mode-text">OR</span>
+                            </button>
+                        </div>
                         <span class="selected-count" id="selected-tags-count">0 selected</span>
+                    </div>
+                    <div class="tag-filter-help">
+                        <small>Click to select • Ctrl+Click or Right-click to exclude • <span class="excluded-indicator">Red</span> = Excluded</small>
                     </div>
                     <div class="tag-filter" id="modal-tag-filter">
                         <!-- Tags will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Keyboard Shortcuts Cheatsheet Modal -->
+    <div class="modal" id="shortcuts-modal" style="display: none;">
+        <div class="modal-content shortcuts-modal-content">
+            <div class="modal-header">
+                <div class="modal-header-left">
+                    <svg class="modal-header-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="5" width="20" height="14" rx="2" ry="2"/>
+                        <line x1="6" y1="9" x2="6" y2="15"/>
+                        <line x1="10" y1="9" x2="10" y2="15"/>
+                        <line x1="14" y1="9" x2="14" y2="15"/>
+                        <line x1="18" y1="9" x2="18" y2="15"/>
+                    </svg>
+                    <h2>Keyboard Shortcuts</h2>
+                </div>
+                <button class="modal-close" id="shortcuts-modal-close">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body shortcuts-modal-body">
+                <div class="shortcuts-grid">
+                    <div class="shortcuts-section">
+                        <h3>⚡ Navigation</h3>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key" id="shortcut-new-tab">Ctrl+T</span>
+                            <span class="shortcut-desc">New tab</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key" id="shortcut-search">Ctrl+K</span>
+                            <span class="shortcut-desc">Search notes</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key" id="shortcut-filter">Ctrl+F</span>
+                            <span class="shortcut-desc">Filter notes</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key" id="shortcut-settings">Ctrl+,</span>
+                            <span class="shortcut-desc">Settings</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">?</span>
+                            <span class="shortcut-desc">Show this cheatsheet</span>
+                        </div>
+                    </div>
+                    
+                    <div class="shortcuts-section">
+                        <h3>📂 Tab Management</h3>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Ctrl+W</span>
+                            <span class="shortcut-desc">Close current tab</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Ctrl+Shift+W</span>
+                            <span class="shortcut-desc">Close all tabs</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Ctrl+1-9</span>
+                            <span class="shortcut-desc">Switch to tab by number</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Ctrl+PageUp/PageDown</span>
+                            <span class="shortcut-desc">Navigate between tabs</span>
+                        </div>
+                    </div>
+                    
+                    <div class="shortcuts-section">
+                        <h3>🔍 Search & Navigation</h3>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">"phrase"</span>
+                            <span class="shortcut-desc">Search exact phrase</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">-exclude</span>
+                            <span class="shortcut-desc">Exclude terms</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">tag:name</span>
+                            <span class="shortcut-desc">Filter by tag</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">author:name</span>
+                            <span class="shortcut-desc">Filter by author</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">↑↓ + Enter</span>
+                            <span class="shortcut-desc">Navigate & open results</span>
+                        </div>
+                    </div>
+                    
+                    <div class="shortcuts-section">
+                        <h3>📄 Content Actions</h3>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Click copy button</span>
+                            <span class="shortcut-desc">Copy code block</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Click line #</span>
+                            <span class="shortcut-desc">Toggle line numbers</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Click wrap button</span>
+                            <span class="shortcut-desc">Toggle word wrap</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Click collapse ▼</span>
+                            <span class="shortcut-desc">Collapse code block</span>
+                        </div>
+                    </div>
+                    
+                    <div class="shortcuts-section">
+                        <h3>🖱️ Mouse Actions</h3>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Ctrl+Click</span>
+                            <span class="shortcut-desc">Open link in new tab</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Middle-click</span>
+                            <span class="shortcut-desc">Open link in new tab</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Drag tab</span>
+                            <span class="shortcut-desc">Reorder tabs</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Hover theme</span>
+                            <span class="shortcut-desc">Preview theme</span>
+                        </div>
+                    </div>
+                    
+                    <div class="shortcuts-section">
+                        <h3>⏱️ Timer Controls</h3>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Click ▶/⏸</span>
+                            <span class="shortcut-desc">Start/pause timer</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Long-press ⏹</span>
+                            <span class="shortcut-desc">Reset timer (3 seconds)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="shortcuts-footer">
+                    <div class="shortcuts-tip">
+                        💡 <strong>Tip:</strong> Press <kbd>Esc</kbd> to close any modal or overlay
                     </div>
                 </div>
             </div>
