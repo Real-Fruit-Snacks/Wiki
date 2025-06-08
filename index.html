@@ -71,6 +71,23 @@
                         </div>
                     </div>
                     
+                    <!-- Bookmarks dropdown -->
+                    <div class="dropdown" id="bookmarks-dropdown">
+                        <button class="icon-button" aria-label="Bookmarks">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            <span class="badge" id="bookmarks-count" style="display: none;">0</span>
+                        </button>
+                        <div class="dropdown-content" id="bookmarks-dropdown-content">
+                            <div class="dropdown-header">
+                                <h3>Bookmarks</h3>
+                            </div>
+                            <ul class="bookmarks-list" id="bookmarks-list">
+                                <li class="empty-state">No bookmarks yet</li>
+                            </ul>
+                        </div>
+                    </div>
                     
                     <!-- Settings -->
                     <button class="icon-button" id="settings-toggle" aria-label="Settings" title="Settings (Ctrl+,)">
@@ -210,8 +227,13 @@
     
     <!-- Floating expand/collapse button -->
     <button class="floating-expand" onclick="notesWiki.toggleExpandAll()" aria-label="Expand all code blocks">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="6 9 12 15 18 9"></polyline>
+        <svg class="expand-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <!-- Expand all icon (default) -->
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+        </svg>
+        <svg class="collapse-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+            <!-- Collapse all icon -->
+            <path d="M19 13H5v-2h14v2z"/>
         </svg>
     </button>
     
@@ -450,6 +472,16 @@
                                 </div>
                                 <div class="setting-control">
                                     <button class="button button-danger" onclick="notesWiki.clearRecentFiles(); this.textContent = 'Cleared!'; setTimeout(() => this.textContent = 'Clear history', 2000)">Clear history</button>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Clear all bookmarks</div>
+                                    <div class="setting-description">Remove all bookmarked notes</div>
+                                </div>
+                                <div class="setting-control">
+                                    <button class="button button-danger" onclick="notesWiki.showConfirmation('Clear All Bookmarks?', 'This will permanently remove all your bookmarked notes. This action cannot be undone.', () => { notesWiki.clearAllBookmarks(); this.textContent = 'Cleared!'; setTimeout(() => this.textContent = 'Clear bookmarks', 2000); })">Clear bookmarks</button>
                                 </div>
                             </div>
                         </div>
@@ -798,6 +830,10 @@
                             <span class="shortcut-desc">Settings</span>
                         </div>
                         <div class="shortcut-item">
+                            <span class="shortcut-key" id="shortcut-bookmark">Ctrl+D</span>
+                            <span class="shortcut-desc">Bookmark current note</span>
+                        </div>
+                        <div class="shortcut-item">
                             <span class="shortcut-key">?</span>
                             <span class="shortcut-desc">Show this cheatsheet</span>
                         </div>
@@ -905,6 +941,25 @@
                         💡 <strong>Tip:</strong> Press <kbd>Esc</kbd> to close any modal or overlay
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Confirmation Modal -->
+    <div class="modal confirmation-modal" id="confirmation-modal" style="display: none;">
+        <div class="modal-content confirmation-modal-content">
+            <div class="confirmation-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                    <line x1="12" y1="9" x2="12" y2="13"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+            </div>
+            <h3 class="confirmation-title" id="confirmation-title">Are you sure?</h3>
+            <p class="confirmation-message" id="confirmation-message">This action cannot be undone.</p>
+            <div class="confirmation-buttons">
+                <button class="button button-secondary" id="confirmation-cancel">Cancel</button>
+                <button class="button button-danger" id="confirmation-confirm">Confirm</button>
             </div>
         </div>
     </div>

@@ -4,9 +4,14 @@ test-*.js
 debug-*.html
 verify-*.html
 verify-*.py
+verify-*.js
 fix-*.py
+quick-test.js
 *-summary.md
 *-fix-summary.md
+*-TEST-RESULTS.md
+CONSOLE-ERROR-FIX.md
+FEATURE-TEST-RESULTS.md
 gitlab-notes-wiki-docs.md
 theme_*.py
 *_verification*.json

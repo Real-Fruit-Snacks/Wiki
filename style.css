@@ -494,10 +494,11 @@ body {
     width: var(--sidebar-width);
     background-color: var(--bg-sidebar);
     border-right: 1px solid var(--border-primary);
-    overflow-y: auto;
+    overflow: hidden;
     transition: transform var(--transition-normal);
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .sidebar-nav {
@@ -505,6 +506,8 @@ body {
     display: flex;
     flex-direction: column;
     flex: 1;
+    overflow-y: auto;
+    padding-bottom: 120px; /* Space for timer widget */
 }
 
 .sidebar-section {
@@ -599,9 +602,14 @@ body {
 
 /* Timer widget - Professional media player design */
 .timer-widget {
-    margin-top: auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
     padding: 12px;
     border-top: 1px solid var(--border-primary);
+    background: var(--bg-sidebar);
+    z-index: 10;
 }
 
 .timer-compact {
@@ -984,6 +992,46 @@ body.content-width-full .content-wrapper {
     flex: 1;
 }
 
+.note-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+    align-items: center;
+}
+
+.note-action-btn {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    color: var(--text-muted);
+    font-size: var(--text-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+}
+
+.note-action-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: var(--border-focus);
+}
+
+.note-action-btn.bookmarked {
+    color: var(--color-primary);
+}
+
+.note-action-btn.bookmarked:hover {
+    color: var(--color-primary-dark);
+}
+
+.note-action-btn .icon {
+    font-style: normal;
+}
+
 .share-icon {
     position: relative;
     background: var(--bg-secondary);
@@ -1153,8 +1201,10 @@ body.content-width-full .content-wrapper {
     transition: transform var(--transition-fast);
 }
 
-.floating-expand.all-expanded svg {
-    transform: rotate(180deg);
+/* Icon styling for floating expand button */
+.floating-expand svg {
+    width: 24px;
+    height: 24px;
 }
 
 .floating-share.success {
@@ -1643,12 +1693,12 @@ body.content-width-full .content-wrapper {
 }
 
 .toggle-icon {
-    font-size: 10px;
-    transition: transform var(--transition-fast);
-}
-
-.code-block:not(.collapsed) .toggle-icon {
-    transform: rotate(90deg);
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity var(--transition-fast);
 }
 
 /* Code block content */
@@ -3186,7 +3236,8 @@ select.dropdown:focus {
 }
 
 /* Recent files list */
-.recent-files-list {
+.recent-files-list,
+.bookmarks-list {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -3251,11 +3302,13 @@ select.dropdown:focus {
 }
 
 /* Recent file items */
-.recent-file-item {
+.recent-file-item,
+.bookmark-item {
     border-bottom: 1px solid var(--border-primary);
 }
 
-.recent-file-item:last-child {
+.recent-file-item:last-child,
+.bookmark-item:last-child {
     border-bottom: none;
 }
 
@@ -3542,6 +3595,7 @@ select.dropdown:focus {
 }
 
 .theme-header {
+    margin-top: var(--spacing-xl);
     margin-bottom: var(--spacing-md);
     text-align: center;
 }
@@ -3987,7 +4041,8 @@ select.dropdown:focus {
 }
 
 /* Tags */
-.tags-button {
+.tags-button,
+.bookmarks-link {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
@@ -4638,9 +4693,10 @@ select.dropdown:focus {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
 }
 
-.shortcut-item {
+.keyboard-shortcuts-list .shortcut-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -4648,15 +4704,16 @@ select.dropdown:focus {
     padding: var(--spacing-sm) var(--spacing-md);
     background-color: var(--bg-secondary);
     border-radius: var(--radius-md);
+    border-bottom: none; /* Override the conflicting style */
 }
 
-.shortcut-action {
+.keyboard-shortcuts-list .shortcut-action {
     font-size: var(--text-sm);
     font-weight: 500;
     color: var(--text-primary);
 }
 
-.shortcut-key {
+.keyboard-shortcuts-list .shortcut-key {
     padding: var(--spacing-xs) var(--spacing-sm);
     background-color: var(--bg-primary);
     border: 1px solid var(--border-primary);
@@ -4748,4 +4805,222 @@ select.dropdown:focus {
 .setting-item.full-width-item .setting-info {
     padding-right: 0;
     margin-bottom: var(--spacing-md);
+}
+
+/* Bookmark items */
+.bookmark-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.bookmark-link {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    padding-right: 40px; /* Add space for remove button */
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: background-color var(--transition-fast);
+}
+
+.bookmark-link:hover {
+    background-color: var(--bg-hover);
+}
+
+.bookmark-title {
+    font-weight: 500;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.bookmark-context {
+    font-size: var(--text-xs);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-secondary);
+    color: var(--text-muted);
+    margin-left: var(--spacing-sm);
+    flex-shrink: 0;
+}
+
+.bookmark-remove {
+    position: absolute;
+    right: var(--spacing-sm);
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-sm);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-muted);
+    opacity: 0;
+    transition: all var(--transition-fast);
+    z-index: 1;
+}
+
+.bookmark-item:hover .bookmark-remove {
+    opacity: 0.6;
+}
+
+.bookmark-remove:hover {
+    opacity: 1 !important;
+    color: var(--color-danger);
+}
+
+/* Bookmarks view */
+.bookmarks-view {
+    padding: var(--spacing-lg) 0;
+}
+
+.bookmark-context-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.bookmark-context-header {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    display: inline-block;
+}
+
+.bookmark-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.bookmark-card {
+    position: relative;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.bookmark-card:hover {
+    border-color: var(--border-focus);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.bookmark-card-link {
+    display: block;
+    padding: var(--spacing-lg);
+    text-decoration: none;
+    color: inherit;
+}
+
+.bookmark-card h4 {
+    margin: 0 0 var(--spacing-sm) 0;
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.bookmark-date {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.bookmark-card-remove {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-sm);
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: all var(--transition-fast);
+    font-size: var(--text-xl);
+    color: var(--text-muted);
+}
+
+.bookmark-card:hover .bookmark-card-remove {
+    opacity: 0.8;
+}
+
+.bookmark-card-remove:hover {
+    opacity: 1 !important;
+    color: var(--color-danger);
+    border-color: var(--color-danger);
+}
+
+/* Bookmarks link in sidebar */
+.bookmarks-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.bookmark-count-sidebar {
+    margin-left: auto;
+    font-size: var(--text-xs);
+    background-color: var(--accent-secondary);
+    color: white;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    min-width: 20px;
+    text-align: center;
+    display: none;
+}
+
+/* Confirmation Modal */
+.modal#confirmation-modal {
+    z-index: 600; /* Higher than settings modal */
+}
+
+.confirmation-modal-content {
+    max-width: 400px;
+    text-align: center;
+    padding: var(--spacing-xl);
+}
+
+.confirmation-icon {
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-danger);
+}
+
+.confirmation-title {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--text-heading);
+}
+
+.confirmation-message {
+    color: var(--text-muted);
+    margin: 0 0 var(--spacing-xl) 0;
+}
+
+.confirmation-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+}
+
+.confirmation-buttons .button {
+    min-width: 100px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }

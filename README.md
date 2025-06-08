@@ -2,7 +2,7 @@
 
 A modern, self-contained static notes and documentation system designed for GitLab Pages with advanced features including 50 built-in themes, real-time search, metadata parsing, and complete offline functionality.
 
-![Wiki Screenshot](https://img.shields.io/badge/Status-Ready-green) ![No Dependencies](https://img.shields.io/badge/Dependencies-None-blue) ![Themes](https://img.shields.io/badge/Themes-50-purple) ![Version](https://img.shields.io/badge/Version-2.4.0-blue)
+![Wiki Screenshot](https://img.shields.io/badge/Status-Ready-green) ![No Dependencies](https://img.shields.io/badge/Dependencies-None-blue) ![Themes](https://img.shields.io/badge/Themes-50-purple) ![Version](https://img.shields.io/badge/Version-2.5.0-blue)
 
 ## 🌟 Features
 
@@ -33,6 +33,11 @@ A modern, self-contained static notes and documentation system designed for GitL
   - Grouped by context with collapsible sections
   - Quick actions menu (pin/unpin, remove)
   - Visual organization with context badges
+- **Bookmarks System**: 
+  - Bookmark any note with star icon or Ctrl+D
+  - Quick access via header dropdown
+  - Organized bookmarks view grouped by context
+  - Visual bookmark status on all notes
 - **Cross-linking**: Support for internal note links and heading anchors
 
 ### ⚙️ **Customization**
@@ -57,7 +62,7 @@ A modern, self-contained static notes and documentation system designed for GitL
 - **Built-in Timer**: Standard timer with play/pause/reset functionality
 - **Long-press Reset**: Hold reset button for 3 seconds with visual feedback
 - **Tab Management**: Multiple tabs with drag-and-drop reordering and cached content
-- **Keyboard Shortcuts**: Customizable shortcuts (default: Ctrl+T new tab, Ctrl+K search, Ctrl+, settings, Ctrl+F filter)
+- **Keyboard Shortcuts**: Customizable shortcuts (default: Ctrl+T new tab, Ctrl+K search, Ctrl+, settings, Ctrl+F filter, Ctrl+D bookmark)
 - **Keyboard Shortcuts Cheatsheet**: Press `?` to view all shortcuts in a organized modal
 - **Modal Interactions**: Escape key and click-outside to close modals
 - **Quick Access**: Set specific notes as default home page for instant access
@@ -320,7 +325,18 @@ MIT License - feel free to use for personal or commercial projects.
 
 ## 📋 Changelog
 
-### v2.4.0 (Latest)
+### v2.5.0 (Latest)
+- **Bookmarking System** for quick access to favorite notes:
+  - Star icon button on each note (Ctrl+D shortcut)
+  - Bookmarks dropdown in header navigation
+  - Dedicated bookmarks view with context grouping
+  - Clear all bookmarks in Settings → Files & History
+  - Custom confirmation modal matching app design
+- **Fixed Timer Widget Position** - Now anchored to bottom of sidebar
+- **Improved Navigation** - Fixed bookmark link navigation issues
+- **Enhanced UI** - Better spacing and visual hierarchy in dropdowns
+
+### v2.4.0
 - **Enhanced Recent Files** with advanced features:
   - Pin/unpin files to keep them at the top
   - Grouped display by context with collapsible sections

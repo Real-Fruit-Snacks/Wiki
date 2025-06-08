@@ -4,7 +4,7 @@ tags: [getting-started, documentation, wiki]
 created: 2024-01-15
 author: Wiki Admin
 description: A self-contained notes and documentation system with advanced features like themes, search, and metadata support
-updated: 2024-01-15
+updated: 2025-01-07
 category: documentation
 status: published
 ---
@@ -18,13 +18,16 @@ Welcome to your new self-contained notes wiki! This system is designed to be hos
 This wiki system offers a comprehensive set of features for managing and presenting your documentation:
 
 - **📝 Markdown-based** - Write your notes in standard Markdown with YAML frontmatter
-- **🎨 15+ Built-in Themes** - Including popular VSCode themes
-- **🔍 Full-text Search** - Search by title, content, tags, and metadata
-- **🏷️ Tag System** - Organize and filter notes by tags
-- **📊 Recent Files Tracking** - Quickly access your recently viewed notes
-- **🔗 Direct Sharing Links** - Share specific notes with direct URLs
-- **📱 Responsive Design** - Works perfectly on all devices
-- **🖨️ Print-friendly** - Optimized styles for printing
+- **🎨 50 Professional Themes** - VSCode, Catppuccin, Material, Tokyo Night, and more
+- **🔍 Advanced Search** - Full-text search with operators (`"exact"`, `-exclude`, `tag:`, `author:`)
+- **🏷️ Tag System** - Multi-select filtering with OR/AND logic and exclusions
+- **📌 Enhanced Recent Files** - Pin important files, grouped by context with quick actions
+- **⏱️ Pomodoro Timer** - Built-in productivity timer with customizable work/break sessions
+- **⌨️ Keyboard Shortcuts** - Customizable shortcuts with comprehensive cheatsheet (press `?`)
+- **📑 Tab Management** - Multiple tabs with drag-and-drop reordering
+- **🔗 Direct Sharing Links** - Share specific notes with deep linking to headings
+- **📱 Responsive Design** - Works perfectly on desktop, tablet, and mobile
+- **💾 Offline First** - All assets bundled locally, no internet required
 
 ## Key Features
 
@@ -46,25 +49,24 @@ description: Brief description of your note
 Write your content using standard Markdown syntax...
 ```
 
-### Code Blocks with Titles
+### Enhanced Code Blocks
 
-You can add descriptive titles to your code blocks:
+Code blocks support advanced features:
 
-```javascript title:"Example Function"
+```javascript title:"Example Function" collapse:true
 function greetUser(name) {
     console.log(`Hello, ${name}!`);
     return `Welcome to the Notes Wiki`;
 }
 ```
 
-```python title:"Data Processing Example"
-import pandas as pd
-
-def process_data(file_path):
-    """Process CSV data with pandas"""
-    df = pd.read_csv(file_path)
-    return df.describe()
-```
+**Features:**
+- **Titles**: Add descriptive headers with `title:"Your Title"`
+- **Collapsible**: Use `collapse:true` to start collapsed
+- **Line Numbers**: Toggle with the button or settings
+- **Word Wrap**: Enable for long lines
+- **Copy Button**: One-click code copying
+- **Expand/Collapse**: Plus/minus icons for easy toggling
 
 ### Navigation
 
@@ -75,12 +77,17 @@ def process_data(file_path):
 
 ### Keyboard Shortcuts
 
+Press `?` to see all shortcuts, or use these common ones:
+
 | Shortcut | Action |
 |----------|--------|
-| `/` | Open search |
-| `Esc` | Close search/modals |
-| `Ctrl+K` | Quick navigation (coming soon) |
-| `Ctrl+Shift+T` | Open theme picker |
+| `Ctrl+T` | New tab |
+| `Ctrl+K` | Open search |
+| `Ctrl+,` | Open settings |
+| `Ctrl+F` | Filter by tags |
+| `Ctrl+W` | Close current tab |
+| `?` | Show shortcuts cheatsheet |
+| `Esc` | Close modals/overlays |
 
 ### URL Structure
 
@@ -91,17 +98,27 @@ The wiki supports various URL patterns for direct access:
 - **Search queries**: `#/search/your+search+term`
 - **Deep linking**: `#/notes/path/to/note#specific-heading`
 
-## Themes
+## 🎨 Themes
 
-Choose from multiple themes to match your preference:
+Choose from **50 professional themes** to match your preference:
 
-- **Light** - Clean, bright theme for daytime use
-- **Dark** - Easy on the eyes for night-time reading
-- **VSCode Themes** - Popular themes from Visual Studio Code (coming soon)
-- **Solarized** - The classic color scheme (coming soon)
-- **Dracula** - Dark theme with vibrant colors (coming soon)
+**Popular Choices:**
+- **VSCode Dark+** - The classic VS Code dark theme
+- **Tokyo Night** - Inspired by Tokyo's neon lights
+- **Catppuccin Mocha/Latte** - Soothing pastel themes
+- **One Dark Pro** - Atom's iconic dark theme
+- **Material Ocean/Palenight** - Google's Material Design
+- **Dracula** - Dark theme with vibrant colors
+- **Nord** - Arctic, north-bluish color palette
+- **Rosé Pine** - All natural pine, faux fur and a bit of soho
 
-Access the theme picker using the sun/moon icon in the header.
+**Unique Themes:**
+- **Matrix** - Enter the digital rain
+- **Cyberpunk** - Neon-soaked future aesthetic
+- **Vaporwave** - 80s retro-futuristic vibes
+- **HackTheBox** - Hacker terminal style
+
+Access themes in Settings (Ctrl+,) → Appearance. Themes include live preview cards!
 
 ## Organization Tips
 
@@ -136,6 +153,30 @@ notes/
 
 ## Advanced Features
 
+### 🍅 Pomodoro Timer
+
+Boost your productivity with the built-in Pomodoro timer:
+
+- **Work Sessions** - Default 25 minutes of focused work
+- **Short Breaks** - 5-minute breaks between sessions
+- **Long Breaks** - 15-minute break after 4 sessions
+- **Customizable** - Adjust all durations in settings
+- **Auto-progression** - Automatically switch between work/break
+- **Sound Notifications** - Audio alerts when sessions complete
+- **Visual Progress** - Progress bar shows time remaining
+
+Enable in Settings → Pomodoro Timer
+
+### Advanced Search
+
+Use search operators for precise results:
+
+- `"exact phrase"` - Search for exact matches
+- `-exclude` - Exclude terms from results
+- `tag:javascript` - Filter by specific tag
+- `author:name` - Find notes by author
+- Combine operators: `tag:python -django "machine learning"`
+
 ### Metadata System
 
 Every note can include rich metadata in the frontmatter:
@@ -149,14 +190,16 @@ Every note can include rich metadata in the frontmatter:
 - **category**: Primary category (optional)
 - **status**: draft/published (optional)
 
-### Recent Files
+### Recent Files & Pinning
 
-The system automatically tracks your recently viewed notes:
+The enhanced recent files system helps you stay organized:
 
-- Access from the clock icon in the header
-- Shows up to 20 recent files (configurable)
-- Displays last viewed time
-- Can be cleared or disabled in settings
+- **Pin Important Files** - Click the pin icon to keep files at the top
+- **Grouped by Context** - Files organized by their folders (Personal, Technical, etc.)
+- **Quick Actions** - Hover for pin/unpin and remove options
+- **Collapsible Sections** - Expand/collapse context groups
+- **Smart Limits** - Configure max files (10/20/30/50) in settings
+- **Visual Badges** - Context badges show file location at a glance
 
 ### Share Functionality
 
@@ -167,15 +210,31 @@ Each note has a share button that:
 - Works with all URL patterns
 - Shows confirmation when copied
 
+## Settings & Customization
+
+Access comprehensive settings via the gear icon or `Ctrl+,`:
+
+**Available Settings:**
+- **General** - Auto-theme, recent files tracking
+- **Editor** - Line numbers, word wrap
+- **Appearance** - 50 themes, content width
+- **Navigation** - Default home page, link behavior
+- **Reading** - Font size and family
+- **Code** - Default language for unmarked blocks
+- **Advanced** - Custom CSS, keyboard shortcuts
+- **Pomodoro** - Timer durations and behavior
+- **Files & History** - Recent files limits
+
 ## Technical Details
 
 This wiki is built with:
 
 - **Pure JavaScript** - No framework dependencies
-- **Local Libraries** - All dependencies included
-- **GitLab Pages** - Static hosting compatible
-- **Service Worker** - Offline support (coming soon)
-- **Progressive Web App** - Install as an app (coming soon)
+- **Local Libraries** - All dependencies bundled
+- **GitLab Pages** - Automatic CI/CD deployment
+- **Zero External Deps** - Everything works offline
+- **50 Themes** - All included, no downloads
+- **Fast Search** - Client-side full-text indexing
 
 ## Next Steps
 
@@ -213,10 +272,12 @@ Here's a quick demonstration of various Markdown elements:
 
 | Feature | Description | Status |
 |---------|-------------|--------|
-| Themes | 15+ built-in themes | ✅ Ready |
-| Search | Full-text search | ✅ Ready |
-| Tags | Tag-based filtering | ✅ Ready |
-| Recent Files | Track viewed notes | ✅ Ready |
+| Themes | 50 professional themes | ✅ Ready |
+| Search | Advanced operators | ✅ Ready |
+| Recent Files | Pinning & grouping | ✅ Ready |
+| Pomodoro Timer | Productivity mode | ✅ Ready |
+| Keyboard Shortcuts | Customizable | ✅ Ready |
+| Tab Management | Multi-tab support | ✅ Ready |
 
 ### Task Lists
 
@@ -228,7 +289,15 @@ Here's a quick demonstration of various Markdown elements:
 
 ### Inline Elements
 
-You can use **bold text**, *italic text*, `inline code`, and ~~strikethrough~~. You can also add [links](https://gitlab.com) and keyboard shortcuts like <kbd>Ctrl</kbd>+<kbd>S</kbd>.
+You can use **bold text**, *italic text*, `inline code`, and ~~strikethrough~~. You can also add [links](https://gitlab.com) and keyboard shortcuts like <kbd>Ctrl</kbd>+<kbd>K</kbd> for search or press <kbd>?</kbd> for help.
+
+### Callouts
+
+> [!TIP] Pro Tip
+> Press `?` at any time to see all available keyboard shortcuts!
+
+> [!INFO] Promodor Feature
+> The Pomodoro timer helps you stay focused with timed work sessions.
 
 ---
 

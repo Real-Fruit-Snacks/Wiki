@@ -7,8 +7,10 @@ class NotesWiki {
     constructor() {
         this.notesIndex = null;
         this.currentNote = null;
+        this.currentNotePath = null;
         this.searchIndex = [];
         this.recentFiles = [];
+        this.bookmarks = [];
         this.selectedTags = new Set();
         this.excludedTags = new Set();
         this.tagFilterMode = 'OR'; // 'OR' or 'AND'
@@ -98,10 +100,11 @@ class NotesWiki {
                 'new-tab': 'Ctrl+T',
                 'search': 'Ctrl+K',
                 'settings': 'Ctrl+,',
-                'filter': 'Ctrl+F'
+                'filter': 'Ctrl+F',
+                'bookmark': 'Ctrl+D'
             },
             // Pomodoro settings
-            pomodoroEnabled: false,
+            pomodoroEnabled: true,
             pomodoroWorkMinutes: 25,
             pomodoroShortBreakMinutes: 5,
             pomodoroLongBreakMinutes: 15,
@@ -169,6 +172,9 @@ class NotesWiki {
         
         // Load recent files
         this.loadRecentFiles();
+        
+        // Load bookmarks
+        this.loadBookmarks();
         
         // Populate theme picker
         this.populateThemePicker();
@@ -563,6 +569,19 @@ class NotesWiki {
         // Clear recent files
         document.getElementById('clear-recent').addEventListener('click', () => {
             this.clearRecentFiles();
+        });
+        
+        // Bookmarks dropdown
+        const bookmarksDropdown = document.getElementById('bookmarks-dropdown');
+        bookmarksDropdown.querySelector('button').addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent document click handler
+            // Close other dropdowns
+            document.querySelectorAll('.dropdown').forEach(d => {
+                if (d !== bookmarksDropdown) {
+                    d.classList.remove('active');
+                }
+            });
+            bookmarksDropdown.classList.toggle('active');
         });
         
         // Theme dropdown is now in settings modal, no header event listener needed
@@ -1057,6 +1076,9 @@ class NotesWiki {
                             case 'filter':
                                 this.showTagsModal();
                                 break;
+                            case 'bookmark':
+                                this.bookmarkCurrentNote();
+                                break;
                         }
                         break;
                     }
@@ -1132,6 +1154,8 @@ class NotesWiki {
             }
             // Update tag count badge
             this.updateTagCountBadge();
+        } else if (hash === '/bookmarks') {
+            this.showBookmarks();
         } else {
             this.loadNote(hash);
         }
@@ -1204,6 +1228,7 @@ class NotesWiki {
             
             // Update current note
             this.currentNote = { path, metadata, content };
+            this.currentNotePath = path;
             
             // Render note
             this.renderNote();
@@ -1517,7 +1542,15 @@ class NotesWiki {
             
             // Always add toggle button
             html += '<button class="code-block-button toggle-button" onclick="notesWiki.toggleCodeBlock(\'' + blockId + '\')" aria-label="Toggle code">';
-            html += '<span class="toggle-icon">' + (collapse ? '▶' : '▼') + '</span>';
+            html += '<svg class="toggle-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">';
+            if (collapse) {
+                // Plus sign for collapsed state
+                html += '<path d="M8 2a.75.75 0 01.75.75v4.5h4.5a.75.75 0 010 1.5h-4.5v4.5a.75.75 0 01-1.5 0v-4.5h-4.5a.75.75 0 010-1.5h4.5v-4.5A.75.75 0 018 2z"/>';
+            } else {
+                // Minus sign for expanded state
+                html += '<path d="M2.75 7.25a.75.75 0 000 1.5h10.5a.75.75 0 000-1.5H2.75z"/>';
+            }
+            html += '</svg>';
             html += '</button>';
             
             html += '<button class="code-block-button copy-button" onclick="notesWiki.copyCode(\'' + blockId + '\')" aria-label="Copy code">';
@@ -1581,6 +1614,20 @@ class NotesWiki {
                 <header class="note-header">
                     <div class="note-title-row">
                         <h1 class="note-title">${this.escapeHtml(metadata.title || 'Untitled')}</h1>
+                        <div class="note-actions">
+                            <button class="note-action-btn bookmark-btn ${this.isBookmarked(this.currentNotePath) ? 'bookmarked' : ''}" 
+                                    onclick="notesWiki.toggleBookmark('${this.currentNotePath}', ${JSON.stringify(metadata).replace(/"/g, '&quot;')})" 
+                                    title="${this.isBookmarked(this.currentNotePath) ? 'Remove bookmark (Ctrl+D)' : 'Bookmark this note (Ctrl+D)'}"
+                                    aria-label="${this.isBookmarked(this.currentNotePath) ? 'Remove bookmark' : 'Bookmark this note'}">
+                                <i class="icon">${this.isBookmarked(this.currentNotePath) ? '★' : '☆'}</i>
+                            </button>
+                            <button class="note-action-btn" 
+                                    onclick="notesWiki.copyLinkToNote()" 
+                                    title="Copy link to this note"
+                                    aria-label="Copy link">
+                                <i class="icon">🔗</i>
+                            </button>
+                        </div>
                     </div>
                     
                     <div class="note-metadata">
@@ -1805,20 +1852,33 @@ class NotesWiki {
             if (shouldExpand) {
                 block.classList.remove('collapsed');
                 const icon = block.querySelector('.toggle-icon');
-                if (icon) icon.textContent = '▼';
+                if (icon) {
+                    // Minus sign for expanded state
+                    icon.innerHTML = '<path d="M2.75 7.25a.75.75 0 000 1.5h10.5a.75.75 0 000-1.5H2.75z"/>';
+                }
             } else {
                 block.classList.add('collapsed');
                 const icon = block.querySelector('.toggle-icon');
-                if (icon) icon.textContent = '▶';
+                if (icon) {
+                    // Plus sign for collapsed state
+                    icon.innerHTML = '<path d="M8 2a.75.75 0 01.75.75v4.5h4.5a.75.75 0 010 1.5h-4.5v4.5a.75.75 0 01-1.5 0v-4.5h-4.5a.75.75 0 010-1.5h4.5v-4.5A.75.75 0 018 2z"/>';
+                }
             }
         });
         
         // Update button state
         if (expandButton) {
+            const expandIcon = expandButton.querySelector('.expand-icon');
+            const collapseIcon = expandButton.querySelector('.collapse-icon');
+            
             if (shouldExpand) {
                 expandButton.classList.remove('all-expanded');
+                if (expandIcon) expandIcon.style.display = 'block';
+                if (collapseIcon) collapseIcon.style.display = 'none';
             } else {
                 expandButton.classList.add('all-expanded');
+                if (expandIcon) expandIcon.style.display = 'none';
+                if (collapseIcon) collapseIcon.style.display = 'block';
             }
         }
         
@@ -1842,11 +1902,33 @@ class NotesWiki {
         const currentExpanded = expandedFolders.length + expandedCodeBlocks.length;
         
         // Update button state
+        const expandIcon = expandButton.querySelector('.expand-icon');
+        const collapseIcon = expandButton.querySelector('.collapse-icon');
+        
         if (currentExpanded > totalExpandable / 2 || totalExpandable === 0) {
             expandButton.classList.add('all-expanded');
+            if (expandIcon) expandIcon.style.display = 'none';
+            if (collapseIcon) collapseIcon.style.display = 'block';
         } else {
             expandButton.classList.remove('all-expanded');
+            if (expandIcon) expandIcon.style.display = 'block';
+            if (collapseIcon) collapseIcon.style.display = 'none';
         }
+    }
+    
+    copyLinkToNote() {
+        if (!this.currentNote) {
+            this.showToast('No note to copy');
+            return;
+        }
+        
+        // Copy the URL to clipboard
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+            this.showToast('Note link copied to clipboard');
+        }).catch(() => {
+            this.showToast('Failed to copy link');
+        });
     }
     
     bookmarkCurrentNote() {
@@ -1855,16 +1937,8 @@ class NotesWiki {
             return;
         }
         
-        // For now, just copy the URL to clipboard
-        const url = window.location.href;
-        navigator.clipboard.writeText(url).then(() => {
-            this.showToast('Note link copied to clipboard');
-        }).catch(() => {
-            this.showToast('Failed to copy link');
-        });
-        
-        // TODO: In the future, implement actual bookmarking functionality
-        // This could save to a special bookmarks list in localStorage
+        // Toggle bookmark for current note
+        this.toggleBookmark(this.currentNotePath, this.currentNote.metadata);
     }
     
     toggleCodeBlock(blockId) {
@@ -1873,7 +1947,14 @@ class NotesWiki {
             codeBlock.classList.toggle('collapsed');
             const icon = codeBlock.querySelector('.toggle-icon');
             if (icon) {
-                icon.textContent = codeBlock.classList.contains('collapsed') ? '▶' : '▼';
+                // Update SVG icon based on collapsed state
+                if (codeBlock.classList.contains('collapsed')) {
+                    // Plus sign for collapsed state
+                    icon.innerHTML = '<path d="M8 2a.75.75 0 01.75.75v4.5h4.5a.75.75 0 010 1.5h-4.5v4.5a.75.75 0 01-1.5 0v-4.5h-4.5a.75.75 0 010-1.5h4.5v-4.5A.75.75 0 018 2z"/>';
+                } else {
+                    // Minus sign for expanded state
+                    icon.innerHTML = '<path d="M2.75 7.25a.75.75 0 000 1.5h10.5a.75.75 0 000-1.5H2.75z"/>';
+                }
             }
             this.updateExpandButtonState();
         }
@@ -2322,6 +2403,84 @@ class NotesWiki {
             highlighted = highlighted.replace(regex, '<span class="search-highlight">$1</span>');
         });
         return highlighted;
+    }
+    
+    showBookmarks() {
+        const mainContent = document.getElementById('main-content');
+        const bookmarks = this.getBookmarks();
+        
+        // Group bookmarks by context
+        const bookmarksByContext = {};
+        bookmarks.forEach(bookmark => {
+            const context = bookmark.context || 'root';
+            if (!bookmarksByContext[context]) {
+                bookmarksByContext[context] = [];
+            }
+            bookmarksByContext[context].push(bookmark);
+        });
+        
+        // Build HTML
+        let html = `
+            <div class="content-wrapper content-view">
+                <header class="note-header">
+                    <div class="note-title-row">
+                        <h1 class="note-title">Bookmarks</h1>
+                    </div>
+                </header>
+                
+                <div class="bookmarks-view">
+        `;
+        
+        if (bookmarks.length === 0) {
+            html += '<p class="empty-state">No bookmarks yet. Click the star icon on any note to bookmark it.</p>';
+        } else {
+            // Display bookmarks grouped by context
+            Object.entries(bookmarksByContext).forEach(([context, contextBookmarks]) => {
+                const contextClass = context !== 'root' ? `context-${context}` : '';
+                html += `
+                    <div class="bookmark-context-section">
+                        <h3 class="bookmark-context-header ${contextClass}">${context === 'root' ? 'General' : context}</h3>
+                        <div class="bookmark-grid">
+                `;
+                
+                contextBookmarks.forEach(bookmark => {
+                    html += `
+                        <div class="bookmark-card">
+                            <a href="#${bookmark.path.startsWith('/') ? bookmark.path : '/' + bookmark.path}" class="bookmark-card-link" onclick="event.preventDefault(); notesWiki.navigateToBookmark('${bookmark.path.startsWith('/') ? bookmark.path : '/' + bookmark.path}')">
+                                <h4>${this.escapeHtml(bookmark.title)}</h4>
+                                <p class="bookmark-date">Bookmarked ${this.formatDate(bookmark.bookmarkedAt)}</p>
+                            </a>
+                            <button class="bookmark-card-remove" onclick="notesWiki.removeBookmark('${bookmark.path}')" title="Remove bookmark">
+                                <i class="icon">×</i>
+                            </button>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        
+        html += `
+                </div>
+            </div>
+        `;
+        
+        mainContent.innerHTML = html;
+        
+        // Update page title
+        document.title = 'Bookmarks - Notes Wiki';
+        
+        // Update active tab
+        const activeTab = this.tabs.get(this.activeTabId);
+        if (activeTab) {
+            activeTab.title = 'Bookmarks';
+            activeTab.type = 'bookmarks';
+            this.updateTabUI();
+        }
     }
     
     showSettings() {
@@ -4097,6 +4256,156 @@ class NotesWiki {
         this.updateRecentFilesUI();
     }
     
+    // Bookmark Management Methods
+    loadBookmarks() {
+        const stored = localStorage.getItem('notesWiki_bookmarks');
+        if (stored) {
+            this.bookmarks = JSON.parse(stored);
+        } else {
+            this.bookmarks = [];
+        }
+        this.updateBookmarksUI();
+    }
+    
+    saveBookmarks() {
+        localStorage.setItem('notesWiki_bookmarks', JSON.stringify(this.bookmarks));
+        this.updateBookmarksUI();
+    }
+    
+    isBookmarked(path) {
+        const normalizedPath = path.startsWith('/') ? path : '/' + path;
+        return this.bookmarks.some(bookmark => bookmark.path === normalizedPath || bookmark.path === path);
+    }
+    
+    addBookmark(path, metadata) {
+        // Don't add if already bookmarked
+        if (this.isBookmarked(path)) return;
+        
+        // Ensure path starts with /
+        const normalizedPath = path.startsWith('/') ? path : '/' + path;
+        
+        // Find the note's context
+        const note = this.notesIndex.notes.find(n => n.path === normalizedPath || n.path === path);
+        const context = note ? note.context : null;
+        
+        // Add bookmark
+        this.bookmarks.push({
+            path: normalizedPath,
+            title: metadata.title || 'Untitled',
+            context: context,
+            bookmarkedAt: new Date().toISOString()
+        });
+        
+        // Save and update UI
+        this.saveBookmarks();
+        this.showToast('Bookmark added');
+    }
+    
+    removeBookmark(path) {
+        const normalizedPath = path.startsWith('/') ? path : '/' + path;
+        this.bookmarks = this.bookmarks.filter(b => b.path !== normalizedPath && b.path !== path);
+        this.saveBookmarks();
+        this.showToast('Bookmark removed');
+    }
+    
+    toggleBookmark(path, metadata) {
+        if (this.isBookmarked(path)) {
+            this.removeBookmark(path);
+            return false;
+        } else {
+            this.addBookmark(path, metadata);
+            return true;
+        }
+    }
+    
+    getBookmarks() {
+        // Sort bookmarks by title
+        return [...this.bookmarks].sort((a, b) => 
+            a.title.toLowerCase().localeCompare(b.title.toLowerCase())
+        );
+    }
+    
+    clearAllBookmarks() {
+        this.bookmarks = [];
+        localStorage.removeItem('notesWiki_bookmarks');
+        this.updateBookmarksUI();
+        this.showToast('All bookmarks cleared');
+    }
+    
+    navigateToBookmark(path) {
+        // Close dropdown
+        this.closeAllDropdowns();
+        
+        // Check if note is already open in another tab
+        const existingTabId = this.findTabByPath(path);
+        if (existingTabId && existingTabId !== this.activeTabId) {
+            this.switchToTab(existingTabId);
+        } else {
+            // Update current tab and load note
+            const tab = this.tabs.get(this.activeTabId);
+            if (tab) {
+                tab.path = path;
+                this.loadNote(path);
+            }
+        }
+    }
+    
+    updateBookmarksUI() {
+        // Update dropdown count
+        const count = document.getElementById('bookmarks-count');
+        if (count) {
+            count.textContent = this.bookmarks.length;
+            count.style.display = this.bookmarks.length > 0 ? 'inline' : 'none';
+        }
+        
+        // Update sidebar count
+        const sidebarCount = document.getElementById('bookmark-count-sidebar');
+        if (sidebarCount) {
+            sidebarCount.textContent = this.bookmarks.length;
+            sidebarCount.style.display = this.bookmarks.length > 0 ? 'inline-block' : 'none';
+        }
+        
+        // Update bookmarks list in dropdown
+        const list = document.getElementById('bookmarks-list');
+        if (list) {
+            if (this.bookmarks.length === 0) {
+                list.innerHTML = '<li class="empty-state">No bookmarks yet</li>';
+            } else {
+                const sortedBookmarks = this.getBookmarks();
+                list.innerHTML = sortedBookmarks.map(bookmark => {
+                    const contextClass = bookmark.context ? `context-${bookmark.context}` : '';
+                    const bookmarkPath = bookmark.path.startsWith('/') ? bookmark.path : '/' + bookmark.path;
+                    return `
+                        <li class="bookmark-item">
+                            <a href="#${bookmarkPath}" class="bookmark-link" onclick="event.preventDefault(); notesWiki.navigateToBookmark('${bookmarkPath}')">
+                                <span class="bookmark-title">${this.escapeHtml(bookmark.title)}</span>
+                                ${bookmark.context ? `<span class="bookmark-context ${contextClass}">${bookmark.context}</span>` : ''}
+                            </a>
+                            <button class="bookmark-remove" onclick="notesWiki.removeBookmark('${bookmark.path}')" aria-label="Remove bookmark">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L8 6.586l2.293-2.293a1 1 0 111.414 1.414L9.414 8l2.293 2.293a1 1 0 01-1.414 1.414L8 9.414l-2.293 2.293a1 1 0 01-1.414-1.414L6.586 8 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                        </li>
+                    `;
+                }).join('');
+            }
+        }
+        
+        // Update bookmark button if viewing a note
+        if (this.currentNotePath) {
+            const bookmarkBtn = document.querySelector('.bookmark-btn');
+            if (bookmarkBtn) {
+                const isBookmarked = this.isBookmarked(this.currentNotePath);
+                bookmarkBtn.innerHTML = isBookmarked ? 
+                    '<i class="icon">★</i>' : '<i class="icon">☆</i>';
+                bookmarkBtn.title = isBookmarked ? 
+                    'Remove bookmark (Ctrl+D)' : 'Bookmark this note (Ctrl+D)';
+                bookmarkBtn.classList.toggle('bookmarked', isBookmarked);
+            }
+        }
+    }
+    
     loadSettings() {
         const stored = localStorage.getItem('notesWiki_settings');
         if (stored) {
@@ -4485,7 +4794,7 @@ class NotesWiki {
         this.updateTagCountBadge();
     }
     
-    createNewTab(path = '/notes/index.md', title = 'New Tab') {
+    createNewTab(path = '/notes/index.md', title = 'New Tab', preserveContext = false) {
         const tabId = `tab-${this.tabIdCounter++}`;
         const tab = {
             id: tabId,
@@ -4496,8 +4805,8 @@ class NotesWiki {
         
         this.tabs.set(tabId, tab);
         this.renderTab(tabId);
-        // Switch to tab and update context if needed
-        this.switchToTab(tabId, false);
+        // Switch to tab and pass preserveContext flag
+        this.switchToTab(tabId, preserveContext);
         
         // Load content for the tab
         if (path) {
@@ -4972,7 +5281,9 @@ class NotesWiki {
         
         if (existingTabId) {
             // Tab already exists, switch to it
-            this.switchToTab(existingTabId);
+            // When in All context, preserve it
+            const preserveContext = this.activeContext === null;
+            this.switchToTab(existingTabId, preserveContext);
         } else {
             // Mark this path as pending
             this.pendingTabs.add(path);
@@ -4983,7 +5294,9 @@ class NotesWiki {
             const filename = parts[parts.length - 1];
             const title = filename.replace('.md', '').replace(/-/g, ' ');
             
-            this.createNewTab(path, title);
+            // When in All context, preserve it when creating new tab
+            const preserveContext = this.activeContext === null;
+            this.createNewTab(path, title, preserveContext);
             
             // Remove from pending after a short delay
             setTimeout(() => {
@@ -5514,6 +5827,64 @@ class NotesWiki {
         document.getElementById('shortcut-search').textContent = shortcuts['search'] || 'Ctrl+K';
         document.getElementById('shortcut-filter').textContent = shortcuts['filter'] || 'Ctrl+F';
         document.getElementById('shortcut-settings').textContent = shortcuts['settings'] || 'Ctrl+,';
+        document.getElementById('shortcut-bookmark').textContent = shortcuts['bookmark'] || 'Ctrl+D';
+    }
+    
+    showConfirmation(title, message, onConfirm) {
+        const modal = document.getElementById('confirmation-modal');
+        const titleEl = document.getElementById('confirmation-title');
+        const messageEl = document.getElementById('confirmation-message');
+        const confirmBtn = document.getElementById('confirmation-confirm');
+        const cancelBtn = document.getElementById('confirmation-cancel');
+        
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+        
+        modal.style.display = 'flex';
+        
+        // Handle confirm
+        const handleConfirm = () => {
+            modal.style.display = 'none';
+            cleanup();
+            if (onConfirm) onConfirm();
+        };
+        
+        // Handle cancel
+        const handleCancel = () => {
+            modal.style.display = 'none';
+            cleanup();
+        };
+        
+        // Handle click outside
+        const handleClickOutside = (e) => {
+            if (e.target === modal) {
+                handleCancel();
+            }
+        };
+        
+        // Handle escape key
+        const handleEscape = (e) => {
+            if (e.key === 'Escape') {
+                handleCancel();
+            }
+        };
+        
+        // Cleanup function
+        const cleanup = () => {
+            confirmBtn.removeEventListener('click', handleConfirm);
+            cancelBtn.removeEventListener('click', handleCancel);
+            modal.removeEventListener('click', handleClickOutside);
+            document.removeEventListener('keydown', handleEscape);
+        };
+        
+        // Add event listeners
+        confirmBtn.addEventListener('click', handleConfirm);
+        cancelBtn.addEventListener('click', handleCancel);
+        modal.addEventListener('click', handleClickOutside);
+        document.addEventListener('keydown', handleEscape);
+        
+        // Focus the cancel button for safety
+        cancelBtn.focus();
     }
 }
 
