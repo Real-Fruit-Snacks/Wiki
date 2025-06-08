@@ -22,8 +22,6 @@ server.log
 notes-wiki-*.tar.gz
 notes-wiki-*/
 create-release.sh
-release-*.md
-RELEASE-*.md
 github-release-instructions.md
 
 # Documentation files (not needed for runtime)
