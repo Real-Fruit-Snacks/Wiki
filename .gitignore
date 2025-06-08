@@ -16,10 +16,19 @@ gitlab-notes-wiki-docs.md
 theme_*.py
 *_verification*.json
 screenshots/
+server.log
 
-# Release archives
+# Release archives and scripts
 notes-wiki-*.tar.gz
 notes-wiki-*/
+create-release.sh
+release-*.md
+RELEASE-*.md
+github-release-instructions.md
+
+# Documentation files (not needed for runtime)
+INSTALL.md
+CLAUDE.md
 
 # System files
 .DS_Store
@@ -34,18 +43,22 @@ Thumbs.db
 *.swp
 *.swo
 *~
+*.sublime-*
 
-# Node.js (if used)
+# Node.js
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+package.json
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
 
 # Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
 .Python
 build/
 develop-eggs/
@@ -59,9 +72,16 @@ parts/
 sdist/
 var/
 wheels/
+pip-wheel-metadata/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
+venv/
+ENV/
+env/
+.venv
 
 # Local development
 .env
@@ -73,12 +93,13 @@ wheels/
 # Claude Code configuration
 .claude/
 
-# GitLab Pages build directory
+# GitLab Pages build directory (if using manual build)
 public/
 
 # Backup files
 *.bak
 *.backup
+*.orig
 *~
 
 # OS generated files
@@ -87,6 +108,9 @@ $RECYCLE.BIN/
 .Spotlight-V100
 .Trashes
 .fseventsd
+.AppleDouble
+.LSOverride
+._*
 
 # Local server files
 *.pid
@@ -95,6 +119,12 @@ nohup.out
 # IDE specific
 .history/
 *.code-workspace
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
 # Custom CSS testing
 custom-css-test.css
@@ -108,5 +138,8 @@ font-demo-*.html
 shortcuts-test.html
 keybindings-test.json
 
-# Release script
-create-release.sh
+# Temporary files
+.tmp/
+.temp/
+tmp/
+temp/
