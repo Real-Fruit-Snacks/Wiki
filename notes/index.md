@@ -11,7 +11,7 @@ status: published
 
 # Welcome to Notes Wiki
 
-Welcome to your new self-contained notes wiki! This system is designed to be hosted on GitLab Pages and provides a powerful, feature-rich documentation platform with no external dependencies.
+Welcome to your new self-contained notes wiki! This system is designed to be hosted on GitHub Pages and provides a powerful, feature-rich documentation platform with no external dependencies.
 
 ## 🚀 Getting Started
 
@@ -28,6 +28,8 @@ This wiki system offers a comprehensive set of features for managing and present
 - **🔗 Direct Sharing Links** - Share specific notes with deep linking to headings
 - **📱 Responsive Design** - Works perfectly on desktop, tablet, and mobile
 - **💾 Offline First** - All assets bundled locally, no internet required
+- **🔢 Line Numbers** - Toggle line numbers for code blocks with proper word-wrap alignment
+- **🔄 Alphabetical Sidebar** - Categories automatically sorted for better organization
 
 ## Key Features
 
@@ -63,9 +65,10 @@ function greetUser(name) {
 **Features:**
 - **Titles**: Add descriptive headers with `title:"Your Title"`
 - **Collapsible**: Use `collapse:true` to start collapsed
-- **Line Numbers**: Toggle with the button or settings
-- **Word Wrap**: Enable for long lines
-- **Copy Button**: One-click code copying
+- **Line Numbers**: Toggle with proper word-wrap alignment using CSS counters
+- **Word Wrap**: Enable for long lines with maintained line number alignment
+- **Copy Button**: One-click code copying with HTML entity handling
+- **Syntax Highlighting**: Support for 100+ programming languages
 - **Expand/Collapse**: Plus/minus icons for easy toggling
 
 ### Navigation
@@ -230,17 +233,18 @@ Access comprehensive settings via the gear icon or `Ctrl+,`:
 This wiki is built with:
 
 - **Pure JavaScript** - No framework dependencies
-- **Local Libraries** - All dependencies bundled
-- **GitLab Pages** - Automatic CI/CD deployment
+- **Local Libraries** - All dependencies bundled (Marked.js, Prism.js, JS-YAML)
+- **GitHub Pages** - Automatic CI/CD deployment with GitHub Actions
 - **Zero External Deps** - Everything works offline
-- **50 Themes** - All included, no downloads
-- **Fast Search** - Client-side full-text indexing
+- **50 Professional Themes** - All included, no downloads required
+- **Fast Search** - Client-side full-text indexing with advanced operators
+- **CSS Counter Line Numbers** - Modern line numbering with word-wrap support
 
 ## Next Steps
 
 1. **Create your first note** - Add a new `.md` file to the `/notes` directory
 2. **Add frontmatter** - Include metadata at the top of your file
-3. **Commit and push** - GitLab CI will build and deploy automatically
+3. **Commit and push** - GitHub Actions will build and deploy automatically
 4. **Explore themes** - Try different themes to find your favorite
 5. **Organize with tags** - Start building your tag taxonomy
 

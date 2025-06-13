@@ -1,45 +1,109 @@
 ---
 title: Theme Showcase & Test
-tags: [themes, test, showcase]
+tags: [themes, demo, showcase, styling]
 created: 2025-01-06
 author: Wiki Admin
-description: Comprehensive test of all 28 themes with various code examples
+description: Comprehensive showcase of all 50 professional themes with various code examples
+updated: 2025-06-13
 ---
 
 # Theme Showcase & Test
 
-This page tests all 28 available themes with various code examples to ensure syntax highlighting works correctly.
+This page showcases all **50 professional themes** available in the Notes Wiki system. Each theme is carefully crafted to provide excellent readability and beautiful syntax highlighting.
 
-## Available Themes
+## How to Test Themes
 
-1. **Light** - Clean light theme
-2. **Dark** - Easy on the eyes dark theme
-3. **VSCode Dark+** - Popular VSCode dark theme
-4. **Monokai** - Vibrant colors on dark background
-5. **Dracula** - Dark theme with vibrant colors
-6. **One Dark Pro** - Atom-inspired dark theme
-7. **Solarized Light** - Precision colors for machines and people
-8. **Solarized Dark** - Dark variant of Solarized
-9. **GitHub Light** - GitHub's clean light theme
-10. **GitHub Dark** - GitHub's dark theme
-11. **Nord** - Arctic, north-bluish color palette
-12. **Gruvbox Dark** - Retro groove dark theme
-13. **Gruvbox Light** - Retro groove light theme
-14. **Tokyo Night** - A clean dark theme that celebrates Tokyo at night
-15. **Palenight** - An elegant and juicy material-like theme
-16. **Hot Dog Stand** - Windows 3.1 classic - Bold red & yellow!
-17. **Catppuccin Mocha** - Dark theme with soft pastel colors
-18. **Catppuccin Latte** - Light theme with warm colors
-19. **Rosé Pine** - Dark theme with muted colors
-20. **Rosé Pine Dawn** - Light variant of Rosé Pine
-21. **Material Ocean** - Material design dark theme
-22. **Ayu Dark** - Modern dark theme
-23. **Ayu Light** - Modern light theme
-24. **Everforest Dark** - Forest-inspired dark theme
-25. **Kanagawa** - Japanese aesthetic inspired dark theme
-26. **Zenburn** - Low contrast theme for reduced eye strain
-27. **Tomorrow Night** - Popular dark theme from the Tomorrow theme family
-28. **Cobalt2** - Wes Bos's popular blue-based dark theme
+1. **Open Theme Picker** - Click the theme selector (🎨) in the header
+2. **Preview Themes** - Hover over any theme card to see a live preview
+3. **Apply Theme** - Click a theme card to apply it permanently
+4. **Auto Detection** - Enable auto light/dark theme detection in settings
+
+## Complete Theme Collection (50 Themes)
+
+### ✨ Classic Themes
+- **Light** - Clean, minimal light theme for daytime reading
+- **Dark** - Comfortable dark theme for extended coding sessions
+
+### 🎯 Editor-Inspired Themes
+- **VSCode Dark Plus** - The beloved VS Code default dark theme
+- **One Dark Pro** - Atom's iconic dark theme with enhanced colors
+- **Monokai** - The classic Sublime Text theme with vibrant syntax colors
+- **Palenight** - Material Theme's elegant purple-tinted dark theme
+- **Material Ocean** - Deep blue Material Design theme
+- **Material Darker** - Darker variant of Material theme
+- **Material Palenight** - Purple-hued Material theme variant
+
+### 🌸 Catppuccin Collection
+- **Catppuccin Mocha** - Warm, cozy dark theme with soft pastels
+- **Catppuccin Latte** - Light, cream-colored theme for bright environments
+
+### 🌹 Rosé Pine Collection  
+- **Rosé Pine** - Soho vibes with natural pine and faux fur tones
+- **Rosé Pine Dawn** - Light variant with warm morning colors
+
+### 🐙 GitHub Themes
+- **GitHub Light** - GitHub's clean, professional light theme
+- **GitHub Dark** - GitHub's modern dark theme
+
+### 🌊 Solarized Collection
+- **Solarized Light** - Precision colors for machines and people (light)
+- **Solarized Dark** - The dark variant of the scientifically designed palette
+
+### 🏔️ Nordic Themes
+- **Nord** - Arctic, north-bluish color palette inspired by the beauty of the arctic
+- **Nordic** - Scandinavian-inspired minimal theme
+
+### 🍂 Gruvbox Collection
+- **Gruvbox Dark** - Retro groove with warm, earthy dark colors
+- **Gruvbox Light** - Light variant with vintage paper tones
+
+### 🌃 Tokyo Night Collection
+- **Tokyo Night** - Inspired by the neon lights of Tokyo at night
+
+### 🎨 Ayu Collection
+- **Ayu Dark** - Modern dark theme with carefully balanced colors
+- **Ayu Light** - Clean, bright theme with excellent contrast
+
+### 🌲 Nature-Inspired Themes
+- **Everforest Dark** - Forest-inspired theme with natural green tones
+- **Kanagawa** - Japanese aesthetic inspired by "The Great Wave"
+- **Zenburn** - Low contrast theme designed to reduce eye strain
+
+### ⚡ High-Tech Themes
+- **Matrix** - Enter the digital rain with green-on-black cyberpunk vibes
+- **Cyberpunk** - Neon-soaked future aesthetic with electric colors
+- **2077** - Inspired by futuristic cityscapes and neon lights
+- **Hackthebox** - Hacker terminal aesthetic with green accent colors
+
+### 🌈 Colorful & Unique Themes
+- **Vaporwave** - 80s retro-futuristic vibes with pink and purple gradients
+- **Hotdog Stand** - Windows 3.1 classic with bold red and yellow contrast
+- **Shades of Purple** - Rich purple theme with excellent syntax highlighting
+- **Witch Hazel** - Mystical purple theme with magical color combinations
+
+### 🌙 Tomorrow Collection
+- **Tomorrow Night** - Part of the popular Tomorrow theme family
+
+### 💙 Blue-Tinted Themes
+- **Cobalt2** - Wes Bos's popular blue-based dark theme
+- **Bluloco Dark** - Blue-focused dark theme with vibrant syntax colors
+- **Bluloco Light** - Light variant with blue accents
+- **Spacegray** - Space-inspired gray-blue theme
+- **Flatland** - Flat design inspired theme with subtle colors
+
+### ❄️ Winter Themes
+- **Winter Is Coming Dark** - Dark theme inspired by winter landscapes
+- **Winter Is Coming Light** - Light winter theme with cool tones
+
+### 🎮 Gaming & Entertainment
+- **Lucario** - Pokémon-inspired blue and steel theme
+- **Oxocarbon** - IBM's modern design language theme
+- **Noctis** - Night-time inspired dark theme
+- **Thinkultra** - Minimalist theme with clean typography
+
+### 🎭 Specialized Themes  
+- **Atom One Light** - Atom's default light theme
+- **Protonmail** - Inspired by ProtonMail's clean interface
 
 ## How to Test
 
