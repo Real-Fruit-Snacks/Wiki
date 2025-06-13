@@ -29,6 +29,7 @@ class NotesWiki {
             { id: 'atom-one-light', name: 'Atom One Light', description: 'Clean, bright theme from Atom editor' },
             { id: 'ayu-dark', name: 'Ayu Dark', description: 'Modern dark theme' },
             { id: 'ayu-light', name: 'Ayu Light', description: 'Modern light theme' },
+            { id: 'ayu-mirage', name: 'Ayu Mirage', description: 'Perfect balance between light and dark with muted colors' },
             { id: 'bluloco-dark', name: 'Bluloco Dark', description: 'High contrast dark theme with vibrant colors' },
             { id: 'bluloco-light', name: 'Bluloco Light', description: 'High contrast light theme with blue accents' },
             { id: 'catppuccin-latte', name: 'Catppuccin Latte', description: 'Light theme with warm colors' },
@@ -38,7 +39,6 @@ class NotesWiki {
             { id: 'dark', name: 'Dark', description: 'Easy on the eyes dark theme' },
             { id: 'dracula', name: 'Dracula', description: 'Dark theme with vibrant colors' },
             { id: 'everforest-dark', name: 'Everforest Dark', description: 'Forest-inspired dark theme' },
-            { id: 'flatland', name: 'Flatland', description: 'Flat design with muted colors' },
             { id: 'github-dark', name: 'GitHub Dark', description: 'GitHub\'s dark theme' },
             { id: 'github-light', name: 'GitHub Light', description: 'GitHub\'s clean light theme' },
             { id: 'gruvbox-dark', name: 'Gruvbox Dark', description: 'Retro groove dark theme' },
@@ -3355,6 +3355,13 @@ class NotesWiki {
                 text: '#5c6773',
                 textMuted: '#abb0b6'
             },
+            'ayu-mirage': {
+                bg: '#1f2430',
+                border: '#2a2f3a',
+                accent: '#5ccfe6',
+                text: '#cbccc6',
+                textMuted: '#707a8c'
+            },
             'everforest-dark': {
                 bg: '#2d353b',
                 border: '#475258',
@@ -3529,13 +3536,6 @@ class NotesWiki {
                 accent: '#72c05d',
                 text: '#f8f8f2',
                 textMuted: '#5c98cd'
-            },
-            'flatland': {
-                bg: '#26292c',
-                border: '#3e4147',
-                accent: '#93c763',
-                text: '#cdd3d8',
-                textMuted: '#798188'
             },
             'protonmail': {
                 bg: '#1c1b24',
@@ -3713,6 +3713,13 @@ class NotesWiki {
                 comment: '#abb0b6',
                 number: '#fa8d3e'
             },
+            'ayu-mirage': {
+                keyword: '#ffc68d',
+                function: '#5ccfe6',
+                string: '#d5ff80',
+                comment: '#5c6773',
+                number: '#ffcc66'
+            },
             'everforest-dark': {
                 keyword: '#e67e80',
                 function: '#7fbbb3',
@@ -3887,13 +3894,6 @@ class NotesWiki {
                 string: '#e7c547',
                 comment: '#5c98cd',
                 number: '#ca94ff'
-            },
-            'flatland': {
-                keyword: '#93c763',
-                function: '#8f9d6a',
-                string: '#afc4db',
-                comment: '#798188',
-                number: '#cf6a4c'
             },
             'protonmail': {
                 keyword: '#8c6fd5',
