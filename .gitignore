@@ -1,12 +1,16 @@
 # Development and test files
 test-*.html
 test-*.js
+test-*.png
+test-*.jpg
+test-screenshot-*.png
 debug-*.html
 verify-*.html
 verify-*.py
 verify-*.js
 fix-*.py
 quick-test.js
+test-application.js
 *-summary.md
 *-fix-summary.md
 *-TEST-RESULTS.md

@@ -2,10 +2,13 @@
 
 A self-contained static notes/wiki system with advanced features including 50 built-in themes, real-time search, and metadata support. Perfect for documentation, personal knowledge management, or team wikis.
 
-## 🆕 Latest Updates (v2.6.1)
-- **Fixed Line Number Alignment**: Line numbers now properly align with their code lines even when word wrap is enabled
+## 🆕 Latest Updates (v2.8.0)
+- **New Default Theme**: Ayu Mirage theme is now the default for better visual appeal
+- **Enhanced Theme Collection**: Added Ayu Mirage theme to replace Flatland with modern design
+- **Fixed Line Number Alignment**: Line numbers properly align with code lines when word wrap is enabled
 - **Improved Code Display**: CSS counter-based line numbers for better performance and reliability
-- **Alphabetical Sidebar**: Categories in the sidebar are now sorted alphabetically for better organization
+- **Alphabetical Sidebar**: Categories in the sidebar are sorted alphabetically for better organization
+- **Comprehensive Demo Files**: Updated all demo files with current features and added new guides for keyboard shortcuts, search, tabs, and settings
 
 🔗 **Live Demo**: https://real-fruit-snacks.github.io/Wiki/
 
@@ -186,10 +189,10 @@ Access settings with `Ctrl+,` or the gear icon:
 ## 🎨 Available Themes
 
 50 professional themes including:
-- **Dark**: VSCode Dark, Dracula, Monokai, One Dark Pro, Tokyo Night
-- **Light**: GitHub Light, Solarized Light, Atom One Light
+- **Dark**: VSCode Dark, Dracula, Monokai, One Dark Pro, Tokyo Night, **Ayu Mirage (Default)**
+- **Light**: GitHub Light, Solarized Light, Atom One Light, Ayu Light
 - **Colorful**: Cyberpunk, Matrix, Vaporwave, Shades of Purple
-- **Minimal**: Nord, Gruvbox, Everforest
+- **Minimal**: Nord, Gruvbox, Everforest, Ayu Dark
 - **Brand**: Catppuccin (Mocha/Latte), Rosé Pine, Material themes
 
 ## 🔍 Search Operators

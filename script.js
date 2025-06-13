@@ -83,7 +83,7 @@ class NotesWiki {
             showLineNumbers: true,
             enableWordWrap: false,
             recentLimit: 20,
-            theme: 'tokyo-night',
+            theme: 'ayu-mirage',
             autoTheme: false, // Enable automatic theme switching based on system preferences
             activeContext: null,  // Store active context in settings
             stickySearch: false,  // Keep search query when reopening search
