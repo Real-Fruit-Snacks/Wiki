@@ -290,7 +290,11 @@ class NotesWiki {
             const ul = document.createElement('ul');
             ul.className = 'file-tree' + (level > 0 ? ' file-tree-folder' : '');
             
-            Object.entries(node).sort(([a], [b]) => a.localeCompare(b)).forEach(([name, value]) => {
+            Object.entries(node).sort(([aKey, aValue], [bKey, bValue]) => {
+                const aDisplayName = aValue.path ? (aValue.metadata.title || aKey.replace('.md', '')) : aKey;
+                const bDisplayName = bValue.path ? (bValue.metadata.title || bKey.replace('.md', '')) : bKey;
+                return aDisplayName.localeCompare(bDisplayName);
+            }).forEach(([name, value]) => {
                 const li = document.createElement('li');
                 li.className = 'file-tree-item';
                 
