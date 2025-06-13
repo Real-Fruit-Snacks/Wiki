@@ -62,6 +62,7 @@ This page showcases all **50 professional themes** available in the Notes Wiki s
 
 ### 🎨 Ayu Collection
 - **Ayu Dark** - Modern dark theme with carefully balanced colors
+- **Ayu Mirage** - Perfect balance between light and dark with muted colors
 - **Ayu Light** - Clean, bright theme with excellent contrast
 
 ### 🌲 Nature-Inspired Themes
@@ -89,7 +90,6 @@ This page showcases all **50 professional themes** available in the Notes Wiki s
 - **Bluloco Dark** - Blue-focused dark theme with vibrant syntax colors
 - **Bluloco Light** - Light variant with blue accents
 - **Spacegray** - Space-inspired gray-blue theme
-- **Flatland** - Flat design inspired theme with subtle colors
 
 ### ❄️ Winter Themes
 - **Winter Is Coming Dark** - Dark theme inspired by winter landscapes
