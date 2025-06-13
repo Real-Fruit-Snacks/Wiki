@@ -2,6 +2,11 @@
 
 A self-contained static notes/wiki system with advanced features including 50 built-in themes, real-time search, and metadata support. Perfect for documentation, personal knowledge management, or team wikis.
 
+## 🆕 Latest Updates (v2.6.1)
+- **Fixed Line Number Alignment**: Line numbers now properly align with their code lines even when word wrap is enabled
+- **Improved Code Display**: CSS counter-based line numbers for better performance and reliability
+- **Alphabetical Sidebar**: Categories in the sidebar are now sorted alphabetically for better organization
+
 🔗 **Live Demo**: https://real-fruit-snacks.github.io/Wiki/
 
 ## ✨ Features
@@ -96,11 +101,12 @@ function hello() {
 ````
 
 Features:
-- Copy button with HTML entity handling
-- Line numbers toggle
-- Word wrap toggle
-- Collapsible blocks
-- Title support
+- **Line Numbers** - Toggle line numbers for all code blocks with proper word-wrap alignment
+- **Word Wrap** - Enable/disable word wrapping with maintained line number alignment
+- **Copy Button** - Copy code with HTML entity handling
+- **Syntax Highlighting** - Support for 100+ programming languages
+- **Collapsible Blocks** - Use `collapse:true` to create collapsible code sections
+- **Title Support** - Add titles to code blocks with `title:"Your Title"`
 
 ### Callouts
 Use special blockquotes for callouts:

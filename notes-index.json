@@ -1,6 +1,27 @@
 {
   "notes": [
     {
+      "path": "/notes/test-line-wrap.md",
+      "context": null,
+      "metadata": {
+        "title": "Line Number Word Wrap Test",
+        "tags": [
+          "test",
+          "word-wrap",
+          "line-numbers"
+        ],
+        "created": "2025-06-13",
+        "author": "System",
+        "description": "Test file for verifying line number alignment with word wrap",
+        "updated": null,
+        "category": null,
+        "status": null
+      },
+      "content_preview": "This file tests whether line numbers stay aligned when code has very long lines that wrap.\n\n\n\njavascript\n// Short line\nconst shortVariable = 'test';\n\n// This is an extremely long line that should wrap...",
+      "searchable_content": "\nLine Number Word Wrap Test\n\nThis file tests whether line numbers stay aligned when code has very long lines that wrap.\n\nJavaScript with Long Lines\n\njavascript\n// Short line\nconst shortVariable = 'test';\n\n// This is an extremely long line that should wrap when word wrap is enabled in the browser - it contains a very long string literal that goes on and on and should definitely cause the line to wrap to multiple visual lines while still being logically line 4\nconst veryLongVariableNameThatShouldCauseWrapping = 'This is an extremely long string literal that contains a lot of text and should cause the line to wrap when word wrap is enabled, testing whether the line number 4 stays aligned with this logical line even when it spans multiple visual lines on the screen';\n\n// Another short line\nconsole.log('Line 6');\n\n// Another long line with a complex object literal that has many properties and values that should cause wrapping\nconst complexObject = { property1: 'value1', property2: 'value2', property3: 'value3', property4: 'value4', property5: 'value5', property6: 'value6', property7: 'value7', property8: 'value8', property9: 'value9', property10: 'value10' };\n\n// Final short line\nreturn true;\n\n\nPython with Long Lines\n\npython\nShort comment\ndef test():\n    # This is a very long comment that should wrap across multiple lines when word wrap is enabled, and we need to test that the line number stays with the logical line number 4 and doesn't get misaligned when the text wraps to multiple visual lines on the screen\n    verylongvariablenamethatcauseswrapping = \"This is a very long string that contains lots of text and should definitely cause line wrapping when word wrap is enabled in the browser, testing the line number alignment functionality\"\n    \n    # Another long line with a complex dictionary\n    complexdict = {\"key1\": \"value1\", \"key2\": \"value2\", \"key3\": \"value3\", \"key4\": \"value4\", \"key5\": \"value5\", \"key6\": \"value6\", \"key7\": \"value7\", \"key8\": \"value8\"}\n    \n    return True\n\n\nBash with Long Commands\n\nbash\nShort command\nls -la\n\nVery long command that should wrap\nfind /very/long/path/to/some/directory/structure -name \".txt\" -type f -exec grep -l \"search pattern that is quite long and specific\" {} \\; | sort | uniq | head -20 | xargs -I {} cp {} /another/very/long/destination/path/\n\nAnother long command with many pipes\ncat /path/to/large/file.txt | grep \"pattern\" | sed 's/old/new/g' | awk '{print $1, $2, $3}' | sort | uniq -c | sort -nr | head -10 | tee output.txt\n\necho \"Done\"\n\n\nWhen word wrap is enabled, the line numbers should stay aligned with their logical lines, not become misaligned due to visual line wrapping. // Short line\nconst shortVariable = 'test';\n\n// This is an extremely long line that should wrap when word wrap is enabled in the browser - it contains a very long string literal that goes on and on and should definitely cause the line to wrap to multiple visual lines while still being logically line 4\nconst veryLongVariableNameThatShouldCauseWrapping = 'This is an extremely long string literal that contains a lot of text and should cause the line to wrap when word wrap is enabled, testing whether the line number 4 stays aligned with this logical line even when it spans multiple visual lines on the screen';\n\n// Another short line\nconsole.log('Line 6');\n\n// Another long line with a complex object literal that has many properties and values that should cause wrapping\nconst complexObject = { property1: 'value1', property2: 'value2', property3: 'value3', property4: 'value4', property5: 'value5', property6: 'value6', property7: 'value7', property8: 'value8', property9: 'value9', property10: 'value10' };\n\n// Final short line\nreturn true; # Short comment\ndef test():\n    # This is a very long comment that should wrap across multiple lines when word wrap is enabled, and we need to test that the line number stays with the logical line number 4 and doesn't get misaligned when the text wraps to multiple visual lines on the screen\n    very_long_variable_name_that_causes_wrapping = \"This is a very long string that contains lots of text and should definitely cause line wrapping when word wrap is enabled in the browser, testing the line number alignment functionality\"\n    \n    # Another long line with a complex dictionary\n    complex_dict = {\"key1\": \"value1\", \"key2\": \"value2\", \"key3\": \"value3\", \"key4\": \"value4\", \"key5\": \"value5\", \"key6\": \"value6\", \"key7\": \"value7\", \"key8\": \"value8\"}\n    \n    return True # Short command\nls -la\n\n# Very long command that should wrap\nfind /very/long/path/to/some/directory/structure -name \"*.txt\" -type f -exec grep -l \"search pattern that is quite long and specific\" {} \\; | sort | uniq | head -20 | xargs -I {} cp {} /another/very/long/destination/path/\n\n# Another long command with many pipes\ncat /path/to/large/file.txt | grep \"pattern\" | sed 's/old/new/g' | awk '{print $1, $2, $3}' | sort | uniq -c | sort -nr | head -10 | tee output.txt\n\necho \"Done\"",
+      "code_blocks_count": 3
+    },
+    {
       "path": "/notes/test-code-blocks.md",
       "context": null,
       "metadata": {
@@ -481,7 +502,7 @@
     "getting-started": 1,
     "documentation": 3,
     "wiki": 1,
-    "test": 6,
+    "test": 7,
     "debugging": 2,
     "themes": 1,
     "showcase": 1,
@@ -494,6 +515,8 @@
     "images": 1,
     "search": 1,
     "links": 1,
+    "word-wrap": 1,
+    "line-numbers": 1,
     "personal": 3,
     "journal": 1,
     "thoughts": 1,
@@ -540,30 +563,30 @@
     "advanced": 1
   },
   "authors": [
-    "John Doe",
-    "Test User",
-    "Alex Chen",
-    "Dev Team",
-    "Tutorial Team",
-    "Blog Team",
-    "Jane Smith",
-    "DevOps Team",
-    "Maria Rodriguez",
     "Database Team",
-    "Sarah Johnson",
-    "Wiki Admin",
     "Project Team",
-    "System",
+    "Tutorial Team",
     "Debug",
-    "Architecture Team"
+    "DevOps Team",
+    "Dev Team",
+    "Blog Team",
+    "Wiki Admin",
+    "John Doe",
+    "Jane Smith",
+    "Sarah Johnson",
+    "Maria Rodriguez",
+    "Architecture Team",
+    "Alex Chen",
+    "System",
+    "Test User"
   ],
   "categories": [
-    "tutorials",
-    "technical",
-    "reference",
-    "personal",
     "documentation",
-    "projects"
+    "personal",
+    "projects",
+    "reference",
+    "tutorials",
+    "technical"
   ],
   "contexts": [
     {
@@ -592,6 +615,6 @@
       "noteCount": 2
     }
   ],
-  "generated": "2025-06-07T22:13:50.907488",
-  "totalNotes": 22
+  "generated": "2025-06-13T17:43:58.214621",
+  "totalNotes": 23
 }

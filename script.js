@@ -290,7 +290,7 @@ class NotesWiki {
             const ul = document.createElement('ul');
             ul.className = 'file-tree' + (level > 0 ? ' file-tree-folder' : '');
             
-            Object.entries(node).forEach(([name, value]) => {
+            Object.entries(node).sort(([a], [b]) => a.localeCompare(b)).forEach(([name, value]) => {
                 const li = document.createElement('li');
                 li.className = 'file-tree-item';
                 
@@ -1489,18 +1489,28 @@ class NotesWiki {
                 highlightedCode = self.escapeHtml(codeContent);
             }
             
-            // Add line numbers if enabled
+            // Add line numbers if enabled using CSS counters
             let codeHtml = highlightedCode;
             if (self.settings.showLineNumbers) {
                 const lines = codeContent.split('\n');
-                const lineNumbersHtml = lines.map((_, index) => 
-                    `<span class="line-number">${index + 1}</span>`
-                ).join('\n');
+                const codeLines = lines.map(line => {
+                    // Highlight each line individually to preserve syntax highlighting
+                    let highlightedLine = line;
+                    if (language && Prism.languages[language]) {
+                        highlightedLine = Prism.highlight(line, Prism.languages[language], language);
+                    } else {
+                        highlightedLine = self.escapeHtml(line);
+                    }
+                    
+                    // Handle empty lines
+                    if (highlightedLine.trim() === '') {
+                        highlightedLine = '&nbsp;';
+                    }
+                    
+                    return `<div class="code-line">${highlightedLine}</div>`;
+                }).join('');
                 
-                codeHtml = `<div class="code-with-line-numbers">
-                    <div class="line-numbers">${lineNumbersHtml}</div>
-                    <div class="code-content">${highlightedCode}</div>
-                </div>`;
+                codeHtml = `<div class="code-with-counters">${codeLines}</div>`;
             }
             
             // Generate unique ID for this code block

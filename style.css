@@ -1911,6 +1911,74 @@ body.enable-word-wrap .code-content {
     word-wrap: break-word;
 }
 
+/* Legacy: Hide old flex-based line numbers when word wrap is enabled */
+body.enable-word-wrap .line-numbers {
+    display: none;
+}
+
+body.enable-word-wrap .code-with-line-numbers {
+    display: block;
+}
+
+body.enable-word-wrap .code-with-line-numbers .code-content {
+    padding: var(--spacing-md);
+}
+
+/* CSS Counter-based line numbers (fixes word wrap alignment) */
+.code-with-counters {
+    counter-reset: line-counter;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+}
+
+.code-line {
+    counter-increment: line-counter;
+    position: relative;
+    padding-left: 4em; /* Space for line numbers */
+    padding-right: var(--spacing-md);
+    padding-top: 0;
+    padding-bottom: 0;
+    min-height: 1.5em; /* Ensure empty lines have height */
+}
+
+.code-line::before {
+    content: counter(line-counter);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3em;
+    padding: 0 var(--spacing-sm);
+    background-color: var(--bg-secondary);
+    border-right: 1px solid var(--border-primary);
+    color: var(--text-muted);
+    text-align: right;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+}
+
+/* Hide counter line numbers when line numbers are disabled */
+body:not(.show-line-numbers) .code-with-counters .code-line {
+    padding-left: var(--spacing-md);
+}
+
+body:not(.show-line-numbers) .code-with-counters .code-line::before {
+    display: none;
+}
+
+/* Print styles for counter line numbers */
+@media print {
+    .code-line::before {
+        background-color: transparent;
+        border-right: 1px solid #ddd;
+    }
+}
+
 /* Tables */
 .note-content table {
     width: 100%;
