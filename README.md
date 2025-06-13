@@ -30,14 +30,16 @@ A self-contained static notes/wiki system with advanced features including 50 bu
 ## 🚀 Quick Start
 
 ### Option 1: GitHub Pages (Recommended)
-1. Fork this repository
-2. Enable GitHub Pages in Settings → Pages → Source: GitHub Actions
-3. Your wiki will be available at `https://[username].github.io/[repository-name]/`
+1. **Fork or download** this repository
+2. **Enable GitHub Pages**: Settings → Pages → Source: GitHub Actions
+3. **Automatic deployment**: GitHub Actions will build and deploy automatically
+4. **Access your wiki**: `https://[username].github.io/[repository-name]/`
 
 ### Option 2: GitLab Pages
-1. Fork this repository
-2. The included `.gitlab-ci.yml` will automatically deploy to GitLab Pages
-3. Your wiki will be available at `https://[username].gitlab.io/[repository-name]/`
+1. **Import to GitLab**: Create new project from GitHub repository
+2. **Automatic deployment**: The included `.gitlab-ci.yml` handles everything
+3. **Zero configuration**: Just push to main branch to deploy
+4. **Access your wiki**: `https://[username].gitlab.io/[repository-name]/`
 
 ### Option 3: Local Development
 ```bash
@@ -52,6 +54,20 @@ python3 -m http.server 8000
 # Open in browser
 open http://localhost:8000
 ```
+
+### Option 4: Fully Offline Usage
+The wiki works completely offline with all dependencies bundled:
+
+1. **Download release**: Get the latest release zip from GitHub
+2. **Extract anywhere**: No installation required
+3. **Open index.html**: Works in any modern browser
+4. **No internet required**: All libraries and themes included
+
+**Perfect for:**
+- Air-gapped environments
+- Offline documentation
+- Portable knowledge bases
+- Team wikis without hosting
 
 ## 📁 Project Structure
 
