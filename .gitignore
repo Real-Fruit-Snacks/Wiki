@@ -1,15 +1,15 @@
 # Development files
-server.log
 *.log
+server.log
 
-# Release archives
+# Release files
+RELEASE-*.md
 notes-wiki-*.tar.gz
 notes-wiki-*/
 
 # System files
 .DS_Store
 Thumbs.db
-*.log
 *.tmp
 *.temp
 
@@ -26,8 +26,6 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-package.json
-package-lock.json
 pnpm-lock.yaml
 yarn.lock
 
@@ -76,7 +74,6 @@ public/
 *.bak
 *.backup
 *.orig
-*~
 
 # OS generated files
 Desktop.ini
@@ -102,17 +99,12 @@ nohup.out
 .settings/
 *.sublime-workspace
 
-# Custom CSS testing
-custom-css-test.css
-test-custom-*.css
-
-# Font testing files
-font-test-*.html
-font-demo-*.html
-
-# Keyboard shortcut testing
-shortcuts-test.html
-keybindings-test.json
+# Testing files
+test-*.html
+test-*.css
+test-*.js
+*-test.*
+*-demo.*
 
 # Temporary files
 .tmp/
