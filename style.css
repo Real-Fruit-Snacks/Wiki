@@ -523,6 +523,43 @@ body {
     color: var(--text-secondary);
 }
 
+/* Sidebar header with folder controls */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-md);
+}
+
+.folder-controls {
+    display: flex;
+    gap: 4px;
+}
+
+.folder-control-btn {
+    padding: 4px 6px;
+    background-color: transparent;
+    border: 1px solid var(--border-secondary);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.folder-control-btn:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: var(--accent-primary);
+}
+
+.folder-control-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
 /* File tree */
 .file-tree {
     margin: 0;

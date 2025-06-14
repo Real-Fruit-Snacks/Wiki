@@ -530,6 +530,15 @@ class NotesWiki {
             document.getElementById('sidebar').classList.toggle('open');
         });
         
+        // Folder expand/collapse all buttons
+        document.getElementById('expand-all-folders').addEventListener('click', () => {
+            this.expandAllFolders();
+        });
+        
+        document.getElementById('collapse-all-folders').addEventListener('click', () => {
+            this.collapseAllFolders();
+        });
+        
         // Search toggle
         document.getElementById('search-toggle').addEventListener('click', () => {
             this.closeAllDropdowns();
@@ -1928,6 +1937,22 @@ class NotesWiki {
             if (expandIcon) expandIcon.style.display = 'block';
             if (collapseIcon) collapseIcon.style.display = 'none';
         }
+    }
+    
+    expandAllFolders() {
+        document.querySelectorAll('.file-tree-folder-item').forEach(folder => {
+            folder.classList.add('expanded');
+        });
+        this.updateExpandButtonState();
+        this.showToast('Expanded all folders');
+    }
+    
+    collapseAllFolders() {
+        document.querySelectorAll('.file-tree-folder-item').forEach(folder => {
+            folder.classList.remove('expanded');
+        });
+        this.updateExpandButtonState();
+        this.showToast('Collapsed all folders');
     }
     
     copyLinkToNote() {
