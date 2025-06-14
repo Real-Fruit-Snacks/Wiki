@@ -1,36 +1,10 @@
-# Development and test files
-test-*.html
-test-*.js
-test-*.png
-test-*.jpg
-test-screenshot-*.png
-debug-*.html
-verify-*.html
-verify-*.py
-verify-*.js
-fix-*.py
-quick-test.js
-test-application.js
-*-summary.md
-*-fix-summary.md
-*-TEST-RESULTS.md
-CONSOLE-ERROR-FIX.md
-FEATURE-TEST-RESULTS.md
-gitlab-notes-wiki-docs.md
-theme_*.py
-*_verification*.json
-screenshots/
+# Development files
 server.log
+*.log
 
-# Release archives and scripts
+# Release archives
 notes-wiki-*.tar.gz
 notes-wiki-*/
-create-release.sh
-github-release-instructions.md
-
-# Documentation files (not needed for runtime)
-INSTALL.md
-CLAUDE.md
 
 # System files
 .DS_Store

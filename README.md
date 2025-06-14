@@ -84,6 +84,7 @@ Wiki/
 ├── style.css           # Base styles
 ├── build.py            # Search index generator
 ├── notes-index.json    # Generated search index
+├── CLAUDE.md           # Claude Code AI assistant guidance
 ├── libs/               # Bundled libraries
 │   ├── marked.min.js   # Markdown parser
 │   ├── prism.min.js    # Syntax highlighting
