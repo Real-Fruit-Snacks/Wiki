@@ -2,15 +2,15 @@
 
 A self-contained static notes/wiki system with advanced features including 50 built-in themes, real-time search, and metadata support. Perfect for documentation, personal knowledge management, or team wikis.
 
-## 🆕 Latest Updates (v2.8.2)
-- **Folder Management**: New expand/collapse all buttons in sidebar for easy navigation
-- **Improved Sidebar Sorting**: Files now sort alphabetically by display names, not filenames
+## 🆕 Latest Updates (v2.8.3)
+- **Enhanced Folder Controls**: Redesigned expand/collapse buttons with seamless visual integration
+- **Improved UI Design**: Folder controls now perfectly align with Filter by Tags button
+- **Better Visual Flow**: Buttons form one cohesive control group with connected borders
+- **Folder Management**: Expand/collapse all folders with vertically stacked buttons
+- **Improved Sidebar Sorting**: Files sort alphabetically by display names, not filenames
 - **New Default Theme**: Ayu Mirage theme is now the default for better visual appeal
-- **Enhanced Theme Collection**: Added Ayu Mirage theme to replace Flatland with modern design
 - **Fixed Line Number Alignment**: Line numbers properly align with code lines when word wrap is enabled
-- **Improved Code Display**: CSS counter-based line numbers for better performance and reliability
-- **Alphabetical Sidebar**: Categories and files in the sidebar are sorted alphabetically for better organization
-- **Comprehensive Demo Files**: Updated all demo files with current features and added new guides
+- **Alphabetical Sidebar**: Categories and files in the sidebar are sorted alphabetically
 
 🔗 **Live Demo**: https://real-fruit-snacks.github.io/Wiki/
 

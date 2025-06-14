@@ -161,22 +161,17 @@
             <!-- Sidebar -->
             <aside class="sidebar" id="sidebar">
                 <nav class="sidebar-nav">
-                    <!-- Tags button -->
+                    <!-- Tags button with folder controls -->
                     <div class="sidebar-section">
-                        <button class="tags-button" id="tags-button" aria-label="Filter by tags" title="Filter by Tags (Ctrl+F)">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
-                            </svg>
-                            <span>Filter by Tags</span>
-                            <span class="tag-count" id="active-tag-count"></span>
-                        </button>
-                    </div>
-                    
-                    <!-- Navigation tree -->
-                    <div class="sidebar-section">
-                        <div class="sidebar-header">
-                            <h2 class="sidebar-title">Navigation</h2>
-                            <div class="folder-controls">
+                        <div class="tags-and-folder-controls">
+                            <button class="tags-button" id="tags-button" aria-label="Filter by tags" title="Filter by Tags (Ctrl+F)">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Filter by Tags</span>
+                                <span class="tag-count" id="active-tag-count"></span>
+                            </button>
+                            <div class="folder-controls-vertical">
                                 <button class="folder-control-btn" id="expand-all-folders" title="Expand all folders">
                                     <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
                                         <path d="M1 2.75A.75.75 0 011.75 2h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 2.75zm0 5A.75.75 0 011.75 7h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 7.75zM1.75 12a.75.75 0 100 1.5h12.5a.75.75 0 100-1.5H1.75z"/>
@@ -189,6 +184,11 @@
                                 </button>
                             </div>
                         </div>
+                    </div>
+                    
+                    <!-- Navigation tree -->
+                    <div class="sidebar-section">
+                        <h2 class="sidebar-title">Navigation</h2>
                         <div class="file-tree" id="file-tree">
                             <!-- File tree will be populated by JavaScript -->
                         </div>

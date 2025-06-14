@@ -523,41 +523,65 @@ body {
     color: var(--text-secondary);
 }
 
-/* Sidebar header with folder controls */
-.sidebar-header {
+/* Tags and folder controls layout */
+.tags-and-folder-controls {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: var(--spacing-md);
+    gap: var(--spacing-xs);
+    align-items: stretch;
 }
 
-.folder-controls {
+.tags-and-folder-controls .tags-button {
+    flex: 1;
+    border-radius: var(--radius-md) 0 0 var(--radius-md);
+}
+
+.folder-controls-vertical {
     display: flex;
-    gap: 4px;
+    flex-direction: column;
+    gap: 0;
 }
 
 .folder-control-btn {
-    padding: 4px 6px;
-    background-color: transparent;
-    border: 1px solid var(--border-secondary);
-    border-radius: var(--radius-sm);
+    padding: var(--spacing-sm) var(--spacing-sm);
+    background-color: var(--button-bg);
+    border: 1px solid var(--border-primary);
     color: var(--text-secondary);
     cursor: pointer;
     transition: all var(--transition-fast);
     display: flex;
     align-items: center;
     justify-content: center;
+    flex: 1;
+    min-height: 25px;
+    width: 40px;
+    border-left: none;
+}
+
+.folder-control-btn:first-child {
+    border-radius: 0 var(--radius-md) 0 0;
+}
+
+.folder-control-btn:last-child {
+    border-radius: 0 0 var(--radius-md) 0;
+    border-top: none;
 }
 
 .folder-control-btn:hover {
-    background-color: var(--bg-hover);
+    background-color: var(--button-hover);
     color: var(--text-primary);
     border-color: var(--accent-primary);
+    z-index: 1;
+    position: relative;
+}
+
+/* Fix hover border alignment */
+.tags-and-folder-controls .tags-button:hover {
+    border-right-color: var(--accent-primary);
 }
 
 .folder-control-btn svg {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
 }
 
 /* File tree */
