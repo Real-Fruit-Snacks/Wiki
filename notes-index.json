@@ -1,6 +1,27 @@
 {
   "notes": [
     {
+      "path": "/notes/test-new-features.md",
+      "context": null,
+      "metadata": {
+        "title": "Testing New Wiki Features",
+        "tags": [
+          "test",
+          "features",
+          "documentation"
+        ],
+        "created": "2025-06-16",
+        "author": "Claude",
+        "description": "A comprehensive test of all the new features added to the Wiki system",
+        "updated": null,
+        "category": null,
+        "status": null
+      },
+      "content_preview": "This note tests all 5 new features that were implemented.\n\n\n\nThe Table of Contents should appear on the right side of the screen for this note since it has multiple headings. You can click on any head...",
+      "searchable_content": "\nTesting New Wiki Features\n\nThis note tests all 5 new features that were implemented.\n\nTable of Contents Test\n\nThe Table of Contents should appear on the right side of the screen for this note since it has multiple headings. You can click on any heading to jump to that section.\n\nFeature 1: Table of Contents\n- Automatically generated from headings\n- Shows current reading position\n- Collapsible sidebar\n- Click to navigate\n\nFeature 2: Wiki-style Links\nHere's a wiki-style link to another note: [[Keyboard Shortcuts Demo]]\n\nAnd here's a broken link that doesn't exist: [[Non-existent Note]]\n\nFeature 3: Reading Progress\nLook at the top of the page - you should see:\n- Reading time estimate (based on word count)\n- Progress bar at the very top showing scroll position\n- Time updates as you read\n\nAdvanced Features\n\nFeature 4: Focus Mode\nPress the 'F' key or click the eye icon in the note header to toggle focus mode:\n- Hides the sidebar\n- Centers content\n- Increases font size\n- Better reading experience\n\nFeature 5: Search Within Note\nPress Ctrl+F (or Cmd+F on Mac) to search within this note:\n- Highlights all matches\n- Shows match count\n- Navigate with Enter/Shift+Enter\n- Close with Escape\n\nCode Examples\n\nHere's some code to make the note longer and test the TOC with code blocks:\n\njavascript title:\"Example JavaScript\"\nfunction testFeatures() {\n    // Table of Contents\n    const toc = document.getElementById('table-of-contents');\n    console.log('TOC generated:', toc !== null);\n    \n    // Wiki links\n    const wikiLinks = document.querySelectorAll('.wiki-link');\n    console.log('Wiki links found:', wikiLinks.length);\n    \n    // Reading progress\n    const progressBar = document.querySelector('.reading-progress-bar');\n    console.log('Progress bar active:', progressBar !== null);\n    \n    // Focus mode\n    const focusMode = document.body.classList.contains('focus-mode');\n    console.log('Focus mode enabled:', focusMode);\n    \n    // Note search\n    const searchUI = document.getElementById('note-search-ui');\n    console.log('Search UI visible:', searchUI !== null);\n}\n\n\npython title:\"Python Example\"\ndef analyzefeatures():\n    \"\"\"Analyze the new Wiki features.\"\"\"\n    features = {\n        'tableofcontents': True,\n        'wikilinks': True,\n        'readingprogress': True,\n        'focusmode': True,\n        'notesearch': True\n    }\n    \n    for feature, enabled in features.items():\n        print(f\"{feature}: {'\u2713' if enabled else '\u2717'}\")\n    \n    return all(features.values())\n\n\nTesting Instructions\n\n1. Table of Contents: Check that the TOC appears on the right side\n2. Wiki Links: Click on [[Keyboard Shortcuts Demo]] - it should navigate to that note\n3. Reading Progress: Scroll down and watch the progress bar at the top\n4. Focus Mode: Press 'F' to toggle focus mode\n5. Search: Press Ctrl+F and search for \"feature\" - it should highlight all occurrences\n\nSummary\n\nAll five features work together to create a better reading and navigation experience:\n\n- TOC helps navigate long documents\n- Wiki links create connections between notes\n- Reading progress shows how much is left to read\n- Focus mode removes distractions\n- Note search helps find specific content quickly\n\nThe Wiki system is now more powerful and user-friendly than ever! javascript Example JavaScript function testFeatures() {\n    // Table of Contents\n    const toc = document.getElementById('table-of-contents');\n    console.log('TOC generated:', toc !== null);\n    \n    // Wiki links\n    const wikiLinks = document.querySelectorAll('.wiki-link');\n    console.log('Wiki links found:', wikiLinks.length);\n    \n    // Reading progress\n    const progressBar = document.querySelector('.reading-progress-bar');\n    console.log('Progress bar active:', progressBar !== null);\n    \n    // Focus mode\n    const focusMode = document.body.classList.contains('focus-mode');\n    console.log('Focus mode enabled:', focusMode);\n    \n    // Note search\n    const searchUI = document.getElementById('note-search-ui');\n    console.log('Search UI visible:', searchUI !== null);\n} python Python Example def analyze_features():\n    \"\"\"Analyze the new Wiki features.\"\"\"\n    features = {\n        'table_of_contents': True,\n        'wiki_links': True,\n        'reading_progress': True,\n        'focus_mode': True,\n        'note_search': True\n    }\n    \n    for feature, enabled in features.items():\n        print(f\"{feature}: {'\u2713' if enabled else '\u2717'}\")\n    \n    return all(features.values())",
+      "code_blocks_count": 2
+    },
+    {
       "path": "/notes/test-line-wrap.md",
       "context": null,
       "metadata": {
@@ -637,7 +658,7 @@
   ],
   "tags": {
     "getting-started": 1,
-    "documentation": 3,
+    "documentation": 4,
     "wiki": 1,
     "demo": 9,
     "code-blocks": 1,
@@ -647,7 +668,7 @@
     "showcase": 1,
     "styling": 1,
     "callouts": 1,
-    "test": 5,
+    "test": 6,
     "html": 2,
     "code": 2,
     "alignment": 1,
@@ -672,6 +693,7 @@
     "recent-files": 1,
     "pinning": 1,
     "organization": 1,
+    "features": 1,
     "personal": 3,
     "journal": 1,
     "thoughts": 1,
@@ -718,30 +740,31 @@
     "advanced": 1
   },
   "authors": [
-    "Architecture Team",
-    "Test User",
-    "Jane Smith",
-    "Blog Team",
-    "Sarah Johnson",
-    "System",
     "John Doe",
-    "DevOps Team",
+    "Claude",
     "Debug",
     "Maria Rodriguez",
-    "Database Team",
-    "Alex Chen",
-    "Wiki Admin",
-    "Dev Team",
     "Project Team",
-    "Tutorial Team"
+    "System",
+    "Jane Smith",
+    "Database Team",
+    "Dev Team",
+    "Alex Chen",
+    "Architecture Team",
+    "Blog Team",
+    "Tutorial Team",
+    "DevOps Team",
+    "Test User",
+    "Sarah Johnson",
+    "Wiki Admin"
   ],
   "categories": [
     "tutorials",
-    "technical",
-    "documentation",
     "projects",
-    "reference",
-    "personal"
+    "technical",
+    "personal",
+    "documentation",
+    "reference"
   ],
   "contexts": [
     {
@@ -770,6 +793,6 @@
       "noteCount": 2
     }
   ],
-  "generated": "2025-06-14T14:21:02.029182",
-  "totalNotes": 29
+  "generated": "2025-06-16T17:21:30.890953",
+  "totalNotes": 30
 }

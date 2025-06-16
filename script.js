@@ -88,6 +88,7 @@ class NotesWiki {
             activeContext: null,  // Store active context in settings
             stickySearch: false,  // Keep search query when reopening search
             contentWidth: 'narrow',  // Default to narrow width
+            focusMode: false, // Focus mode state
             // New settings
             defaultHomePage: 'home', // 'home', 'last-viewed', 'specific'
             specificHomeNote: '', // Path to specific note
@@ -138,6 +139,13 @@ class NotesWiki {
         
         // Initialize theme
         this.initializeTheme();
+        
+        // Apply focus mode if it was enabled
+        if (this.settings.focusMode) {
+            document.body.classList.add('focus-mode');
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar) sidebar.style.display = 'none';
+        }
         
         // Initialize Pomodoro mode
         this.initializePomodoroMode();
@@ -1069,8 +1077,27 @@ class NotesWiki {
                     this.showShortcutsCheatsheet();
                     return;
                 }
+                
+                // Focus mode toggle with 'f' or 'F' key
+                if ((e.key === 'f' || e.key === 'F') && !e.ctrlKey && !e.altKey && !e.metaKey) {
+                    e.preventDefault();
+                    this.toggleFocusMode();
+                    return;
+                }
                 // Check custom shortcuts
                 const pressedCombo = this.getKeyCombo(e);
+                
+                // Override Ctrl+F for in-note search
+                if (pressedCombo === 'Ctrl+F' || pressedCombo === 'Cmd+F') {
+                    e.preventDefault();
+                    // If note is loaded, show in-note search; otherwise show global search
+                    if (this.currentNote) {
+                        this.showNoteSearch();
+                    } else {
+                        this.showSearch();
+                    }
+                    return;
+                }
                 
                 for (const [action, shortcut] of Object.entries(this.settings.keyboardShortcuts)) {
                     if (pressedCombo === shortcut) {
@@ -1433,6 +1460,186 @@ class NotesWiki {
         };
     }
     
+    generateTableOfContents() {
+        const noteContent = document.querySelector('.note-content');
+        if (!noteContent) return;
+        
+        // Find all headings
+        const headings = noteContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        if (headings.length < 2) return; // Don't show TOC for less than 2 headings
+        
+        // Remove existing TOC if any
+        const existingToc = document.getElementById('table-of-contents');
+        if (existingToc) existingToc.remove();
+        
+        // Create TOC structure
+        const toc = document.createElement('div');
+        toc.id = 'table-of-contents';
+        toc.className = 'table-of-contents';
+        
+        const tocHeader = document.createElement('div');
+        tocHeader.className = 'toc-header';
+        tocHeader.innerHTML = `
+            <h3>Table of Contents</h3>
+            <button class="toc-toggle" aria-label="Toggle table of contents">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M12.78 6.22a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06 0L3.22 7.28a.75.75 0 011.06-1.06L8 9.94l3.72-3.72a.75.75 0 011.06 0z"/>
+                </svg>
+            </button>
+        `;
+        
+        const tocContent = document.createElement('div');
+        tocContent.className = 'toc-content';
+        
+        const tocList = document.createElement('ul');
+        tocList.className = 'toc-list';
+        
+        // Build TOC items
+        headings.forEach((heading, index) => {
+            // Add ID to heading if it doesn't have one
+            if (!heading.id) {
+                heading.id = `heading-${index}`;
+            }
+            
+            const level = parseInt(heading.tagName.charAt(1));
+            const listItem = document.createElement('li');
+            listItem.className = `toc-item toc-level-${level}`;
+            
+            const link = document.createElement('a');
+            link.href = `#${heading.id}`;
+            link.className = 'toc-link';
+            link.textContent = heading.textContent;
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // Update active state
+                document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+            
+            listItem.appendChild(link);
+            tocList.appendChild(listItem);
+        });
+        
+        tocContent.appendChild(tocList);
+        toc.appendChild(tocHeader);
+        toc.appendChild(tocContent);
+        
+        // Add to page
+        document.querySelector('.content-wrapper').appendChild(toc);
+        
+        // Toggle functionality
+        const toggleBtn = toc.querySelector('.toc-toggle');
+        toggleBtn.addEventListener('click', () => {
+            toc.classList.toggle('collapsed');
+        });
+        
+        // Highlight current section on scroll
+        let scrollTimeout;
+        const mainContent = document.getElementById('main-content');
+        mainContent.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                let currentHeading = null;
+                const scrollTop = mainContent.scrollTop;
+                
+                headings.forEach(heading => {
+                    const rect = heading.getBoundingClientRect();
+                    const mainRect = mainContent.getBoundingClientRect();
+                    const relativeTop = rect.top - mainRect.top;
+                    
+                    if (relativeTop <= 100) {
+                        currentHeading = heading;
+                    }
+                });
+                
+                if (currentHeading) {
+                    document.querySelectorAll('.toc-link').forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${currentHeading.id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            }, 100);
+        });
+    }
+    
+    setupReadingProgress() {
+        const noteContent = document.querySelector('.note-content');
+        const mainContent = document.getElementById('main-content');
+        if (!noteContent || !mainContent) return;
+        
+        // Calculate word count
+        const text = noteContent.textContent || '';
+        const wordCount = text.trim().split(/\s+/).filter(word => word.length > 0).length;
+        
+        // Estimate reading time (average 250 words per minute)
+        const wordsPerMinute = 250;
+        const readingTimeMinutes = Math.ceil(wordCount / wordsPerMinute);
+        
+        // Remove existing progress elements if any
+        const existingProgress = document.getElementById('reading-progress');
+        const existingTime = document.getElementById('reading-time');
+        if (existingProgress) existingProgress.remove();
+        if (existingTime) existingTime.remove();
+        
+        // Create progress bar
+        const progressBar = document.createElement('div');
+        progressBar.id = 'reading-progress';
+        progressBar.className = 'reading-progress';
+        progressBar.innerHTML = '<div class="reading-progress-bar"></div>';
+        document.body.appendChild(progressBar);
+        
+        // Create reading time indicator
+        const readingTime = document.createElement('div');
+        readingTime.id = 'reading-time';
+        readingTime.className = 'reading-time';
+        readingTime.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path fill-rule="evenodd" d="M8 3.5a.5.5 0 00-1 0V9a.5.5 0 00.252.434l3.5 2a.5.5 0 00.496-.868L8 8.71V3.5z"/>
+                <path fill-rule="evenodd" d="M8 16A8 8 0 108 0a8 8 0 000 16zm7-8A7 7 0 111 8a7 7 0 0114 0z"/>
+            </svg>
+            <span>${readingTimeMinutes} min read</span>
+            <span class="word-count">(${wordCount.toLocaleString()} words)</span>
+        `;
+        
+        // Add reading time to note header
+        const noteHeader = document.querySelector('.note-header');
+        if (noteHeader) {
+            const noteMetadata = noteHeader.querySelector('.note-metadata');
+            if (noteMetadata) {
+                // Insert reading time as first item
+                noteMetadata.insertBefore(readingTime, noteMetadata.firstChild);
+            }
+        }
+        
+        // Update progress bar on scroll
+        const progressBarElement = progressBar.querySelector('.reading-progress-bar');
+        let scrollTimeout;
+        
+        mainContent.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                const scrollTop = mainContent.scrollTop;
+                const scrollHeight = mainContent.scrollHeight - mainContent.clientHeight;
+                const scrollPercentage = (scrollTop / scrollHeight) * 100;
+                
+                progressBarElement.style.width = `${Math.min(scrollPercentage, 100)}%`;
+                
+                // Update reading time based on progress
+                const remainingPercentage = Math.max(0, 100 - scrollPercentage) / 100;
+                const remainingMinutes = Math.ceil(readingTimeMinutes * remainingPercentage);
+                
+                if (remainingMinutes > 0 && scrollPercentage < 95) {
+                    readingTime.querySelector('span').textContent = `${remainingMinutes} min left`;
+                } else if (scrollPercentage >= 95) {
+                    readingTime.querySelector('span').textContent = 'Almost done!';
+                }
+            }, 50);
+        });
+    }
+    
     renderNote() {
         const mainContent = document.getElementById('main-content');
         const { metadata, content } = this.currentNote;
@@ -1625,7 +1832,7 @@ class NotesWiki {
             renderer: renderer,
             breaks: true,
             gfm: true,
-            extensions: [this.createCalloutExtension()]
+            extensions: [this.createCalloutExtension(), this.createWikiLinkExtension()]
         });
         
         // Parse markdown
@@ -1649,6 +1856,15 @@ class NotesWiki {
                                     title="Copy link to this note"
                                     aria-label="Copy link">
                                 <i class="icon">🔗</i>
+                            </button>
+                            <button class="note-action-btn focus-mode-btn" 
+                                    onclick="notesWiki.toggleFocusMode()" 
+                                    title="Toggle focus mode (F)"
+                                    aria-label="Toggle focus mode">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                                    <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+                                </svg>
                             </button>
                         </div>
                     </div>
@@ -1724,6 +1940,12 @@ class NotesWiki {
         
         // Update expand button state after rendering
         this.updateExpandButtonState();
+        
+        // Generate and setup Table of Contents
+        this.generateTableOfContents();
+        
+        // Setup reading progress and time
+        this.setupReadingProgress();
         
         // Handle internal links and tag links
         mainContent.querySelectorAll('a[href^="#"]').forEach(link => {
@@ -1853,6 +2075,266 @@ class NotesWiki {
             toast.classList.remove('show');
             setTimeout(() => toast.remove(), 300);
         }, 2000);
+    }
+    
+    toggleFocusMode() {
+        this.settings.focusMode = !this.settings.focusMode;
+        this.saveSettings();
+        
+        const body = document.body;
+        const sidebar = document.getElementById('sidebar');
+        const container = document.querySelector('.container');
+        
+        if (this.settings.focusMode) {
+            body.classList.add('focus-mode');
+            if (sidebar) sidebar.style.display = 'none';
+            this.showToast('Focus mode enabled');
+        } else {
+            body.classList.remove('focus-mode');
+            if (sidebar) sidebar.style.display = '';
+            this.showToast('Focus mode disabled');
+        }
+        
+        // Update button state
+        const focusBtn = document.querySelector('.focus-mode-btn');
+        if (focusBtn) {
+            focusBtn.classList.toggle('active', this.settings.focusMode);
+        }
+    }
+    
+    showNoteSearch() {
+        // Remove existing search UI if any
+        const existingSearch = document.getElementById('note-search-ui');
+        if (existingSearch) existingSearch.remove();
+        
+        // Create search UI
+        const searchUI = document.createElement('div');
+        searchUI.id = 'note-search-ui';
+        searchUI.className = 'note-search-ui';
+        searchUI.innerHTML = `
+            <div class="note-search-container">
+                <input type="text" id="note-search-input" class="note-search-input" placeholder="Search in note...">
+                <span class="note-search-count">0 of 0</span>
+                <button class="note-search-btn" id="note-search-prev" title="Previous match">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path fill-rule="evenodd" d="M7.78 12.53a.75.75 0 01-1.06 0l-4.25-4.25a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"/>
+                    </svg>
+                </button>
+                <button class="note-search-btn" id="note-search-next" title="Next match">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8.22 3.47a.75.75 0 011.06 0l4.25 4.25a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06-1.06L11.19 9H3.75a.75.75 0 010-1.5h7.44L8.22 4.53a.75.75 0 010-1.06z"/>
+                    </svg>
+                </button>
+                <button class="note-search-btn" id="note-search-close" title="Close (Esc)">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"/>
+                    </svg>
+                </button>
+            </div>
+        `;
+        
+        document.body.appendChild(searchUI);
+        
+        // Initialize search
+        const input = document.getElementById('note-search-input');
+        const prevBtn = document.getElementById('note-search-prev');
+        const nextBtn = document.getElementById('note-search-next');
+        const closeBtn = document.getElementById('note-search-close');
+        
+        this.noteSearchMatches = [];
+        this.noteSearchCurrentIndex = 0;
+        
+        // Focus input
+        input.focus();
+        
+        // Event listeners
+        input.addEventListener('input', () => this.performNoteSearch(input.value));
+        prevBtn.addEventListener('click', () => this.navigateNoteSearch(-1));
+        nextBtn.addEventListener('click', () => this.navigateNoteSearch(1));
+        closeBtn.addEventListener('click', () => this.closeNoteSearch());
+        
+        // Keyboard navigation
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.navigateNoteSearch(e.shiftKey ? -1 : 1);
+            } else if (e.key === 'Escape') {
+                e.preventDefault();
+                this.closeNoteSearch();
+            }
+        });
+        
+        // Close on escape
+        const escapeHandler = (e) => {
+            if (e.key === 'Escape') {
+                this.closeNoteSearch();
+                document.removeEventListener('keydown', escapeHandler);
+            }
+        };
+        document.addEventListener('keydown', escapeHandler);
+    }
+    
+    performNoteSearch(query) {
+        // Clear previous highlights
+        this.clearNoteSearchHighlights();
+        
+        if (!query || query.length < 1) {
+            this.updateNoteSearchCount(0, 0);
+            return;
+        }
+        
+        const noteContent = document.querySelector('.note-content');
+        if (!noteContent) return;
+        
+        // Create regex for case-insensitive search
+        const regex = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+        
+        // Find all text nodes and highlight matches
+        this.noteSearchMatches = [];
+        this.highlightTextNodes(noteContent, regex);
+        
+        // Update count and navigate to first match
+        this.updateNoteSearchCount(this.noteSearchMatches.length, this.noteSearchMatches.length > 0 ? 1 : 0);
+        if (this.noteSearchMatches.length > 0) {
+            this.noteSearchCurrentIndex = 0;
+            this.scrollToMatch(0);
+        }
+    }
+    
+    highlightTextNodes(element, regex) {
+        // Skip certain elements
+        if (element.classList && (element.classList.contains('note-search-highlight') || 
+            element.classList.contains('code-block'))) {
+            return;
+        }
+        
+        for (let node of element.childNodes) {
+            if (node.nodeType === Node.TEXT_NODE) {
+                const text = node.textContent;
+                const matches = [...text.matchAll(regex)];
+                
+                if (matches.length > 0) {
+                    const fragment = document.createDocumentFragment();
+                    let lastIndex = 0;
+                    
+                    matches.forEach(match => {
+                        // Add text before match
+                        if (match.index > lastIndex) {
+                            fragment.appendChild(
+                                document.createTextNode(text.slice(lastIndex, match.index))
+                            );
+                        }
+                        
+                        // Add highlighted match
+                        const highlight = document.createElement('mark');
+                        highlight.className = 'note-search-highlight';
+                        highlight.textContent = match[0];
+                        fragment.appendChild(highlight);
+                        this.noteSearchMatches.push(highlight);
+                        
+                        lastIndex = match.index + match[0].length;
+                    });
+                    
+                    // Add remaining text
+                    if (lastIndex < text.length) {
+                        fragment.appendChild(
+                            document.createTextNode(text.slice(lastIndex))
+                        );
+                    }
+                    
+                    // Replace original text node
+                    node.parentNode.replaceChild(fragment, node);
+                }
+            } else if (node.nodeType === Node.ELEMENT_NODE) {
+                this.highlightTextNodes(node, regex);
+            }
+        }
+    }
+    
+    navigateNoteSearch(direction) {
+        if (this.noteSearchMatches.length === 0) return;
+        
+        // Remove current highlight
+        if (this.noteSearchMatches[this.noteSearchCurrentIndex]) {
+            this.noteSearchMatches[this.noteSearchCurrentIndex].classList.remove('current');
+        }
+        
+        // Calculate new index
+        this.noteSearchCurrentIndex += direction;
+        if (this.noteSearchCurrentIndex < 0) {
+            this.noteSearchCurrentIndex = this.noteSearchMatches.length - 1;
+        } else if (this.noteSearchCurrentIndex >= this.noteSearchMatches.length) {
+            this.noteSearchCurrentIndex = 0;
+        }
+        
+        // Highlight and scroll to new match
+        this.scrollToMatch(this.noteSearchCurrentIndex);
+        this.updateNoteSearchCount(this.noteSearchMatches.length, this.noteSearchCurrentIndex + 1);
+    }
+    
+    scrollToMatch(index) {
+        if (!this.noteSearchMatches[index]) return;
+        
+        const match = this.noteSearchMatches[index];
+        match.classList.add('current');
+        
+        // Scroll into view
+        match.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+    }
+    
+    updateNoteSearchCount(total, current) {
+        const countElement = document.querySelector('.note-search-count');
+        if (countElement) {
+            countElement.textContent = total > 0 ? `${current} of ${total}` : '0 of 0';
+        }
+    }
+    
+    clearNoteSearchHighlights() {
+        // Remove all highlight marks
+        document.querySelectorAll('.note-search-highlight').forEach(mark => {
+            const parent = mark.parentNode;
+            while (mark.firstChild) {
+                parent.insertBefore(mark.firstChild, mark);
+            }
+            parent.removeChild(mark);
+        });
+        
+        // Normalize text nodes
+        const noteContent = document.querySelector('.note-content');
+        if (noteContent) {
+            this.normalizeTextNodes(noteContent);
+        }
+    }
+    
+    normalizeTextNodes(element) {
+        let child = element.firstChild;
+        while (child) {
+            const next = child.nextSibling;
+            
+            if (child.nodeType === Node.TEXT_NODE) {
+                // Merge with next text node if exists
+                while (next && next.nodeType === Node.TEXT_NODE) {
+                    child.textContent += next.textContent;
+                    element.removeChild(next);
+                    next = child.nextSibling;
+                }
+            } else if (child.nodeType === Node.ELEMENT_NODE) {
+                this.normalizeTextNodes(child);
+            }
+            
+            child = next;
+        }
+    }
+    
+    closeNoteSearch() {
+        this.clearNoteSearchHighlights();
+        const searchUI = document.getElementById('note-search-ui');
+        if (searchUI) searchUI.remove();
+        this.noteSearchMatches = [];
+        this.noteSearchCurrentIndex = 0;
     }
     
     toggleExpandAll() {
@@ -4673,6 +5155,53 @@ class NotesWiki {
                         ${renderedContent}
                     </div>
                 </div>`;
+            }
+        };
+    }
+    
+    createWikiLinkExtension() {
+        const self = this;
+        
+        return {
+            name: 'wikiLink',
+            level: 'inline',
+            start(src) {
+                const match = src.match(/\[\[/);
+                return match ? match.index : -1;
+            },
+            tokenizer(src, tokens) {
+                const rule = /^\[\[([^\[\]]+)\]\]/;
+                const match = rule.exec(src);
+                
+                if (match) {
+                    const noteTitle = match[1].trim();
+                    
+                    return {
+                        type: 'wikiLink',
+                        raw: match[0],
+                        noteTitle: noteTitle
+                    };
+                }
+            },
+            renderer(token) {
+                const noteTitle = token.noteTitle;
+                
+                // Try to find the note in the index by title
+                let targetNote = null;
+                if (self.notesIndex && self.notesIndex.notes) {
+                    targetNote = self.notesIndex.notes.find(note => 
+                        note.metadata.title.toLowerCase() === noteTitle.toLowerCase()
+                    );
+                }
+                
+                if (targetNote) {
+                    // Note exists, create a link to it
+                    const href = `#${targetNote.path}`;
+                    return `<a href="${href}" class="wiki-link" title="Go to: ${self.escapeHtml(noteTitle)}">${self.escapeHtml(noteTitle)}</a>`;
+                } else {
+                    // Note doesn't exist, show as broken link
+                    return `<span class="wiki-link wiki-link-broken" title="Note not found: ${self.escapeHtml(noteTitle)}">${self.escapeHtml(noteTitle)}</span>`;
+                }
             }
         };
     }

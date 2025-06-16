@@ -62,3 +62,11 @@ This is a **single-page application (SPA)** built with vanilla JavaScript - no f
 - Settings and recent files are persisted to localStorage
 - Code syntax highlighting uses Prism.js with 20+ language support
 - Markdown rendering supports custom callouts, collapsible sections, and code block titles
+
+### Recently Added Features (v2.8.4+)
+
+1. **Table of Contents** - Auto-generated from headings, collapsible, tracks reading position
+2. **Wiki-style Links** - `[[Note Title]]` syntax creates internal links between notes
+3. **Reading Progress** - Progress bar and time estimation based on word count
+4. **Focus Mode** - Press 'F' to hide sidebar and center content for distraction-free reading
+5. **In-Note Search** - Ctrl+F to search within current note with highlighting and navigation
