@@ -79,15 +79,22 @@
 - Failed: 0
 - Missing features: 1
 - Critical bugs fixed: 5
+- Browser compatibility issues addressed: 4
 
 ## Issues Found and Fixed
 
 1. **🚨 CRITICAL: Missing Tab Management Shortcuts**
-   - **Issue**: Ctrl+W, Ctrl+Shift+W, Ctrl+1-9, and Ctrl+PageUp/PageDown were documented in the shortcuts modal but not implemented
+   - **Issue**: Ctrl+W, Ctrl+Shift+W, Ctrl+1-9, and Ctrl+PageUp/PageDown were documented but not implemented
    - **Fix**: Added keyboard handlers and implemented missing functions: `closeCurrentTab()`, `switchToTabByIndex()`, `switchToPreviousTab()`
    - **Status**: ✅ Fixed
 
-2. **Missing Theme Hover Previews**
+2. **🚨 CRITICAL: Browser Shortcut Conflicts**
+   - **Issue**: Ctrl+W, Ctrl+T, Ctrl+1-9 conflict with browser shortcuts and may not work reliably
+   - **Fix**: Added Alt+W, Alt+T, Alt+1-9, Alt+PageUp/PageDown as browser-compatible alternatives
+   - **Updated**: Shortcuts modal now shows Alt shortcuts as primary, with browser compatibility warnings
+   - **Status**: ✅ Fixed with alternatives
+
+3. **Missing Theme Hover Previews**
    - **Issue**: Theme cards don't show preview on hover as documented
    - **Status**: ❌ Still missing (lower priority)
 
@@ -103,22 +110,51 @@
 
 ### 🔧 Fixed During Testing
 - Complete tab management keyboard shortcuts suite
-- Proper tab switching with Ctrl+1-9
-- Tab navigation with Ctrl+PageUp/PageDown
-- Close current tab with Ctrl+W
-- Close all tabs with Ctrl+Shift+W
+- Browser-compatible alternatives (Alt+W, Alt+T, Alt+1-9, Alt+PageUp/PageDown)
+- Dual support: Alt shortcuts (reliable) + Ctrl shortcuts (may conflict)
+- Updated shortcuts modal with compatibility warnings
+- Default new tab shortcut changed from Ctrl+T to Alt+T
+
+### 🌐 Browser Compatibility Improvements
+- **Primary shortcuts**: Alt+W, Alt+T, Alt+1-9, Alt+PageUp/PageDown (reliable)
+- **Legacy shortcuts**: Ctrl+W, Ctrl+T, Ctrl+1-9, Ctrl+PageUp/PageDown (may conflict)
+- **Browser warning**: Added compatibility note in shortcuts modal
+- **Graceful degradation**: Both shortcuts work where possible
 
 ### ⚠️ Minor Issues
 - Theme hover previews not implemented (documented but missing)
+- Some Ctrl shortcuts may still conflict with browser defaults (expected)
 
 ## Browser Compatibility
 
-- Chrome/Edge: ⏳ Testing
-- Firefox: ⏳ Testing  
-- Safari: ⏳ Testing
+### Expected Compatibility by Shortcut Type
 
-## Notes
+| Shortcut Category | Chrome/Edge | Firefox | Safari | Notes |
+|-------------------|-------------|---------|---------|-------|
+| **Alt shortcuts** | ✅ Reliable | ✅ Reliable | ✅ Reliable | Primary recommendation |
+| **Ctrl+K, Ctrl+,** | ✅ Usually works | ✅ Usually works | ⚠️ May conflict | Context-dependent |
+| **Ctrl+F** | ⚠️ May conflict | ⚠️ May conflict | ⚠️ May conflict | Browser find overrides |
+| **Ctrl+W, Ctrl+T** | ❌ Likely blocked | ❌ Likely blocked | ❌ Likely blocked | Security restrictions |
+| **Ctrl+1-9** | ⚠️ Context-dependent | ⚠️ Context-dependent | ⚠️ Context-dependent | Browser tab switching |
+| **F, ?, Esc** | ✅ Reliable | ✅ Reliable | ✅ Reliable | No conflicts |
 
-- Some shortcuts are context-dependent (e.g., Ctrl+F behavior changes based on whether a note is loaded)
-- Timer shortcuts require Pomodoro mode to be enabled
-- Tab shortcuts require multiple tabs to be open for proper testing
+### Browser-Specific Notes
+- **Chrome/Edge**: May allow some Ctrl shortcuts in fullscreen mode
+- **Firefox**: Generally more restrictive with system shortcuts
+- **Safari**: Uses Cmd instead of Ctrl on macOS (handled in code)
+- **All browsers**: Alt shortcuts are least likely to conflict
+
+## Implementation Notes
+
+- **Dual support**: Both Alt (primary) and Ctrl (legacy) shortcuts implemented
+- **Context-dependent**: Ctrl+F behavior changes based on whether a note is loaded
+- **Timer shortcuts**: Require Pomodoro mode to be enabled
+- **Tab shortcuts**: Require multiple tabs to be open for proper testing
+- **preventDefault()**: Used for all shortcuts but may not work for system-level ones
+
+## Recommendation for Users
+
+1. **Use Alt shortcuts** for most reliable experience
+2. **Ctrl shortcuts** may work but browser behavior varies
+3. **Check shortcuts modal** (?) for current mappings
+4. **Browser conflicts** are normal and expected for some shortcuts

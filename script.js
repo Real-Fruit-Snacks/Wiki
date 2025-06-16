@@ -98,7 +98,7 @@ class NotesWiki {
             defaultCodeLanguage: 'plaintext',
             customCSS: '',
             keyboardShortcuts: {
-                'new-tab': 'Ctrl+T',
+                'new-tab': 'Alt+T',
                 'search': 'Ctrl+K',
                 'settings': 'Ctrl+,',
                 'filter': 'Ctrl+F',
@@ -1103,10 +1103,16 @@ class NotesWiki {
                     return;
                 }
                 
-                // Tab management shortcuts
-                if (pressedCombo === 'Ctrl+W' || pressedCombo === 'Cmd+W') {
+                // Alternative tab management shortcuts (browser-compatible)
+                if (pressedCombo === 'Alt+W') {
                     e.preventDefault();
                     this.closeCurrentTab();
+                    return;
+                }
+                
+                if (pressedCombo === 'Alt+T') {
+                    e.preventDefault();
+                    this.createNewTab();
                     return;
                 }
                 
@@ -1116,7 +1122,35 @@ class NotesWiki {
                     return;
                 }
                 
-                // Tab switching with Ctrl+1-9
+                // Alternative tab switching with Alt+1-9 (browser-compatible)
+                if (e.altKey && e.key >= '1' && e.key <= '9') {
+                    e.preventDefault();
+                    const tabIndex = parseInt(e.key) - 1;
+                    this.switchToTabByIndex(tabIndex);
+                    return;
+                }
+                
+                // Alternative tab navigation with Alt+PageUp/PageDown (browser-compatible)
+                if (pressedCombo === 'Alt+PageUp') {
+                    e.preventDefault();
+                    this.switchToPreviousTab();
+                    return;
+                }
+                
+                if (pressedCombo === 'Alt+PageDown') {
+                    e.preventDefault();
+                    this.switchToNextTab();
+                    return;
+                }
+                
+                // Legacy shortcuts (may conflict with browser but try anyway)
+                if (pressedCombo === 'Ctrl+W' || pressedCombo === 'Cmd+W') {
+                    e.preventDefault();
+                    this.closeCurrentTab();
+                    return;
+                }
+                
+                // Legacy tab switching with Ctrl+1-9 (may conflict)
                 if ((e.ctrlKey || e.metaKey) && e.key >= '1' && e.key <= '9') {
                     e.preventDefault();
                     const tabIndex = parseInt(e.key) - 1;
@@ -1124,7 +1158,7 @@ class NotesWiki {
                     return;
                 }
                 
-                // Tab navigation with Ctrl+PageUp/PageDown
+                // Legacy tab navigation (may conflict)
                 if (pressedCombo === 'Ctrl+PageUp' || pressedCombo === 'Cmd+PageUp') {
                     e.preventDefault();
                     this.switchToPreviousTab();
