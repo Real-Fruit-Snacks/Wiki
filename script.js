@@ -89,6 +89,7 @@ class NotesWiki {
             stickySearch: false,  // Keep search query when reopening search
             contentWidth: 'narrow',  // Default to narrow width
             focusMode: false, // Focus mode state
+            showTableOfContents: true, // Show/hide table of contents for notes with multiple headings
             // New settings
             defaultHomePage: 'home', // 'home', 'last-viewed', 'specific'
             specificHomeNote: '', // Path to specific note
