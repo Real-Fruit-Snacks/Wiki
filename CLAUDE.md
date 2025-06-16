@@ -70,3 +70,32 @@ This is a **single-page application (SPA)** built with vanilla JavaScript - no f
 3. **Reading Progress** - Progress bar and time estimation based on word count
 4. **Focus Mode** - Press 'F' to hide sidebar and center content for distraction-free reading
 5. **In-Note Search** - Ctrl+F to search within current note with highlighting and navigation
+
+### Best Practices for Event Listeners
+
+1. **Always clean up event listeners** when features are removed/regenerated:
+   - Store handler references (e.g., `window.tocScrollHandler`)
+   - Remove listeners before removing DOM elements
+   - Use `delete` to clean up stored references
+
+2. **Prevent duplicate listeners** by:
+   - Checking if handler already exists before adding
+   - Using data attributes to mark elements with listeners
+   - Removing existing elements before recreating
+
+3. **Common patterns used**:
+   ```javascript
+   // Store handler for cleanup
+   this.someHandler = (e) => { /* handler code */ };
+   element.addEventListener('event', this.someHandler);
+   
+   // Cleanup later
+   element.removeEventListener('event', this.someHandler);
+   delete this.someHandler;
+   ```
+
+### Known Bugs Fixed (v2.8.4+)
+
+1. **Note Search Memory Leak** - Escape handler wasn't removed when closing via X button
+2. **Modal Ctrl+F Conflict** - Search would open even with other modals active  
+3. **TOC Event Cleanup** - Toggle button listeners weren't cleaned up on regeneration
