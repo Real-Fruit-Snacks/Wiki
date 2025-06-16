@@ -1090,6 +1090,10 @@ class NotesWiki {
                 // Override Ctrl+F for in-note search
                 if (pressedCombo === 'Ctrl+F' || pressedCombo === 'Cmd+F') {
                     e.preventDefault();
+                    // Don't open search if another modal is already open
+                    const hasOpenModal = document.querySelector('.settings-modal.active, .tags-modal.active, .shortcuts-modal.active');
+                    if (hasOpenModal) return;
+                    
                     // If note is loaded, show in-note search; otherwise show global search
                     if (this.currentNote) {
                         this.showNoteSearch();
@@ -1468,9 +1472,23 @@ class NotesWiki {
         const headings = noteContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
         if (headings.length < 2) return; // Don't show TOC for less than 2 headings
         
-        // Remove existing TOC if any
+        // Remove existing TOC and cleanup
         const existingToc = document.getElementById('table-of-contents');
-        if (existingToc) existingToc.remove();
+        if (existingToc) {
+            // Remove scroll event listener if exists
+            if (window.tocScrollHandler) {
+                const mainContent = document.getElementById('main-content');
+                if (mainContent) {
+                    mainContent.removeEventListener('scroll', window.tocScrollHandler);
+                }
+                delete window.tocScrollHandler;
+            }
+            // Remove toggle button listener if exists
+            if (window.tocToggleHandler) {
+                delete window.tocToggleHandler;
+            }
+            existingToc.remove();
+        }
         
         // Create TOC structure
         const toc = document.createElement('div');
@@ -1509,12 +1527,18 @@ class NotesWiki {
             link.href = `#${heading.id}`;
             link.className = 'toc-link';
             link.textContent = heading.textContent;
+            // Use dataset to avoid duplicate listeners and enable cleanup
+            link.dataset.targetHeadingId = heading.id;
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                // Update active state
-                document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
+                const targetId = e.currentTarget.dataset.targetHeadingId;
+                const targetHeading = document.getElementById(targetId);
+                if (targetHeading) {
+                    targetHeading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Update active state
+                    document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+                    e.currentTarget.classList.add('active');
+                }
             });
             
             listItem.appendChild(link);
@@ -1530,14 +1554,18 @@ class NotesWiki {
         
         // Toggle functionality
         const toggleBtn = toc.querySelector('.toc-toggle');
-        toggleBtn.addEventListener('click', () => {
+        const toggleHandler = () => {
             toc.classList.toggle('collapsed');
-        });
+        };
+        toggleBtn.addEventListener('click', toggleHandler);
+        window.tocToggleHandler = toggleHandler;
         
         // Highlight current section on scroll
         let scrollTimeout;
         const mainContent = document.getElementById('main-content');
-        mainContent.addEventListener('scroll', () => {
+        
+        // Store scroll handler for cleanup
+        const scrollHandler = () => {
             clearTimeout(scrollTimeout);
             scrollTimeout = setTimeout(() => {
                 let currentHeading = null;
@@ -1562,7 +1590,13 @@ class NotesWiki {
                     });
                 }
             }, 100);
-        });
+        };
+        
+        mainContent.addEventListener('scroll', scrollHandler);
+        
+        // Store handler for cleanup
+        toc.dataset.scrollHandler = 'attached';
+        window.tocScrollHandler = scrollHandler;
     }
     
     setupReadingProgress() {
@@ -1578,11 +1612,17 @@ class NotesWiki {
         const wordsPerMinute = 250;
         const readingTimeMinutes = Math.ceil(wordCount / wordsPerMinute);
         
-        // Remove existing progress elements if any
+        // Remove existing progress elements and cleanup
         const existingProgress = document.getElementById('reading-progress');
         const existingTime = document.getElementById('reading-time');
         if (existingProgress) existingProgress.remove();
         if (existingTime) existingTime.remove();
+        
+        // Remove scroll event listener if exists
+        if (window.progressScrollHandler) {
+            mainContent.removeEventListener('scroll', window.progressScrollHandler);
+            delete window.progressScrollHandler;
+        }
         
         // Create progress bar
         const progressBar = document.createElement('div');
@@ -1592,16 +1632,17 @@ class NotesWiki {
         document.body.appendChild(progressBar);
         
         // Create reading time indicator
-        const readingTime = document.createElement('div');
-        readingTime.id = 'reading-time';
-        readingTime.className = 'reading-time';
-        readingTime.innerHTML = `
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                <path fill-rule="evenodd" d="M8 3.5a.5.5 0 00-1 0V9a.5.5 0 00.252.434l3.5 2a.5.5 0 00.496-.868L8 8.71V3.5z"/>
-                <path fill-rule="evenodd" d="M8 16A8 8 0 108 0a8 8 0 000 16zm7-8A7 7 0 111 8a7 7 0 0114 0z"/>
-            </svg>
-            <span>${readingTimeMinutes} min read</span>
-            <span class="word-count">(${wordCount.toLocaleString()} words)</span>
+        const readingTimeItem = document.createElement('div');
+        readingTimeItem.className = 'note-metadata-item';
+        readingTimeItem.innerHTML = `
+            <div id="reading-time" class="reading-time">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 3.5a.5.5 0 00-1 0V9a.5.5 0 00.252.434l3.5 2a.5.5 0 00.496-.868L8 8.71V3.5z"/>
+                    <path fill-rule="evenodd" d="M8 16A8 8 0 108 0a8 8 0 000 16zm7-8A7 7 0 111 8a7 7 0 0114 0z"/>
+                </svg>
+                <span>${readingTimeMinutes} min read</span>
+                <span class="word-count">(${wordCount.toLocaleString()} words)</span>
+            </div>
         `;
         
         // Add reading time to note header
@@ -1610,15 +1651,18 @@ class NotesWiki {
             const noteMetadata = noteHeader.querySelector('.note-metadata');
             if (noteMetadata) {
                 // Insert reading time as first item
-                noteMetadata.insertBefore(readingTime, noteMetadata.firstChild);
+                noteMetadata.insertBefore(readingTimeItem, noteMetadata.firstChild);
             }
         }
+        
+        // Keep reference to the reading time element for updates
+        const readingTime = readingTimeItem.querySelector('#reading-time');
         
         // Update progress bar on scroll
         const progressBarElement = progressBar.querySelector('.reading-progress-bar');
         let scrollTimeout;
         
-        mainContent.addEventListener('scroll', () => {
+        const progressScrollHandler = () => {
             clearTimeout(scrollTimeout);
             scrollTimeout = setTimeout(() => {
                 const scrollTop = mainContent.scrollTop;
@@ -1637,7 +1681,12 @@ class NotesWiki {
                     readingTime.querySelector('span').textContent = 'Almost done!';
                 }
             }, 50);
-        });
+        };
+        
+        mainContent.addEventListener('scroll', progressScrollHandler);
+        
+        // Store handler for cleanup
+        window.progressScrollHandler = progressScrollHandler;
     }
     
     renderNote() {
@@ -2164,14 +2213,13 @@ class NotesWiki {
             }
         });
         
-        // Close on escape
-        const escapeHandler = (e) => {
+        // Close on escape - store handler for cleanup
+        this.noteSearchEscapeHandler = (e) => {
             if (e.key === 'Escape') {
                 this.closeNoteSearch();
-                document.removeEventListener('keydown', escapeHandler);
             }
         };
-        document.addEventListener('keydown', escapeHandler);
+        document.addEventListener('keydown', this.noteSearchEscapeHandler);
     }
     
     performNoteSearch(query) {
@@ -2335,6 +2383,12 @@ class NotesWiki {
         if (searchUI) searchUI.remove();
         this.noteSearchMatches = [];
         this.noteSearchCurrentIndex = 0;
+        
+        // Clean up escape handler
+        if (this.noteSearchEscapeHandler) {
+            document.removeEventListener('keydown', this.noteSearchEscapeHandler);
+            delete this.noteSearchEscapeHandler;
+        }
     }
     
     toggleExpandAll() {
