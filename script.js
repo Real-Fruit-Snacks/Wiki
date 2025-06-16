@@ -134,21 +134,22 @@ class NotesWiki {
     }
     
     async init() {
-        // Load settings from localStorage
-        this.loadSettings();
-        
-        // Initialize theme
-        this.initializeTheme();
-        
-        // Apply focus mode if it was enabled
-        if (this.settings.focusMode) {
-            document.body.classList.add('focus-mode');
-            const sidebar = document.getElementById('sidebar');
-            if (sidebar) sidebar.style.display = 'none';
-        }
-        
-        // Initialize Pomodoro mode
-        this.initializePomodoroMode();
+        try {
+            // Load settings from localStorage
+            this.loadSettings();
+            
+            // Initialize theme
+            this.initializeTheme();
+            
+            // Apply focus mode if it was enabled
+            if (this.settings.focusMode) {
+                document.body.classList.add('focus-mode');
+                const sidebar = document.getElementById('sidebar');
+                if (sidebar) sidebar.style.display = 'none';
+            }
+            
+            // Initialize Pomodoro mode
+            this.initializePomodoroMode();
         
         // Apply line number setting
         this.applyLineNumberSetting();
@@ -187,11 +188,28 @@ class NotesWiki {
         // Populate theme picker
         this.populateThemePicker();
         
-        // Build context switcher
-        this.buildContextSwitcher();
-        
-        // Initialize tab system
-        this.initializeTabs();
+            // Build context switcher
+            this.buildContextSwitcher();
+            
+            // Initialize tab system
+            this.initializeTabs();
+        } catch (error) {
+            console.error('Failed to initialize application:', error);
+            
+            // Show user-friendly error message
+            const mainContent = document.getElementById('main-content');
+            if (mainContent) {
+                mainContent.innerHTML = `
+                    <div class="content-wrapper content-view">
+                        <h1>Application Error</h1>
+                        <p>The Notes Wiki application failed to initialize properly.</p>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <p>Please refresh the page to try again.</p>
+                        <button onclick="window.location.reload()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: var(--accent-primary); color: white; border: none; border-radius: 4px; cursor: pointer;">Refresh Page</button>
+                    </div>
+                `;
+            }
+        }
     }
     
     async loadNotesIndex() {
@@ -558,9 +576,13 @@ class NotesWiki {
             this.hideSearch();
         });
         
-        // Search input
+        // Search input with debouncing to improve performance
+        let searchTimeout;
         document.getElementById('search-input').addEventListener('input', (e) => {
-            this.performSearch(e.target.value);
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                this.performSearch(e.target.value);
+            }, 150); // 150ms debounce delay
         });
         
         // Sticky search checkbox
@@ -2709,6 +2731,11 @@ class NotesWiki {
         
         const searchInput = document.getElementById('search-input');
         
+        // Clean up search key handler to prevent memory leak
+        if (this.searchKeyHandler && searchInput) {
+            searchInput.removeEventListener('keydown', this.searchKeyHandler);
+        }
+        
         // Save the search query if sticky search is enabled
         if (this.settings.stickySearch) {
             this.lastSearchQuery = searchInput.value;
@@ -4847,7 +4874,19 @@ class NotesWiki {
         actions.forEach(action => {
             const item = document.createElement('div');
             item.className = 'actions-menu-item';
-            item.innerHTML = `<span class="action-icon">${action.icon}</span><span class="action-label">${action.label}</span>`;
+            
+            // Create elements safely to prevent XSS
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'action-icon';
+            iconSpan.innerHTML = action.icon; // Icon should be safe SVG
+            
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'action-label';
+            labelSpan.textContent = action.label; // Use textContent for label
+            
+            item.appendChild(iconSpan);
+            item.appendChild(labelSpan);
+            
             item.addEventListener('click', () => {
                 action.action();
                 menu.remove();
@@ -5050,11 +5089,17 @@ class NotesWiki {
     }
     
     loadSettings() {
-        const stored = localStorage.getItem('notesWiki_settings');
-        if (stored) {
-            this.settings = { ...this.settings, ...JSON.parse(stored) };
-            // Restore active context
-            this.activeContext = this.settings.activeContext;
+        try {
+            const stored = localStorage.getItem('notesWiki_settings');
+            if (stored) {
+                this.settings = { ...this.settings, ...JSON.parse(stored) };
+                // Restore active context
+                this.activeContext = this.settings.activeContext;
+            }
+        } catch (error) {
+            console.warn('Failed to load settings from localStorage:', error);
+            // Continue with default settings
+            console.log('Using default settings due to localStorage error');
         }
     }
     
@@ -5073,7 +5118,12 @@ class NotesWiki {
         this.contexts.forEach(context => {
             const button = document.createElement('button');
             button.className = 'context-button' + (this.activeContext === context.id ? ' active' : '');
-            button.innerHTML = `<span>${context.name}</span>`;
+            
+            // Use textContent instead of innerHTML to prevent XSS
+            const span = document.createElement('span');
+            span.textContent = context.name;
+            button.appendChild(span);
+            
             button.addEventListener('click', () => this.setActiveContext(context.id));
             contextSwitcher.appendChild(button);
         });
@@ -5112,7 +5162,13 @@ class NotesWiki {
     }
     
     saveSettings() {
-        localStorage.setItem('notesWiki_settings', JSON.stringify(this.settings));
+        try {
+            localStorage.setItem('notesWiki_settings', JSON.stringify(this.settings));
+        } catch (error) {
+            console.warn('Failed to save settings to localStorage:', error);
+            // Show user notification about storage issue
+            this.showToast('Settings could not be saved (storage full or disabled)');
+        }
     }
     
     getKeyCombo(e) {

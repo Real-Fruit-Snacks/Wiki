@@ -22,6 +22,48 @@
       "code_blocks_count": 2
     },
     {
+      "path": "/notes/comprehensive-testing.md",
+      "context": null,
+      "metadata": {
+        "title": "Comprehensive Wiki Testing Guide",
+        "tags": [
+          "testing",
+          "qa",
+          "documentation"
+        ],
+        "created": "2025-06-16",
+        "author": "Claude",
+        "description": "Complete testing checklist for all Wiki features",
+        "updated": null,
+        "category": null,
+        "status": null
+      },
+      "content_preview": "This document contains test cases for all Wiki features to ensure full functionality.\n\n\n\n\n- [ ] Homepage loads correctly at #/notes/index.md\n- [ ] Direct URL navigation works (e.g., #/notes/personal/d...",
+      "searchable_content": "\nComprehensive Wiki Testing Guide\n\nThis document contains test cases for all Wiki features to ensure full functionality.\n\nCore Functionality Tests\n\n1. Navigation & Routing\n- [ ] Homepage loads correctly at #/notes/index.md\n- [ ] Direct URL navigation works (e.g., #/notes/personal/daily-journal.md)\n- [ ] Back/forward browser buttons work correctly\n- [ ] Invalid paths show error message\n- [ ] Relative links in notes work properly\n\n2. Tab Management\n- [ ] Create new tab with Ctrl+T\n- [ ] Switch between tabs by clicking\n- [ ] Switch with Ctrl+1-9 shortcuts\n- [ ] Close tab with X button\n- [ ] Close tab with Ctrl+W\n- [ ] Close all tabs with Ctrl+Shift+W\n- [ ] Drag and drop tabs to reorder\n- [ ] Tab state persists (scroll position, content)\n- [ ] Maximum tab limit works\n\n3. Sidebar Navigation\n- [ ] Expand/collapse folders\n- [ ] Click files to load notes\n- [ ] Context filtering works\n- [ ] File counts are accurate\n- [ ] Alphabetical sorting is correct\n- [ ] Expand/collapse all buttons work\n\n4. Search Functionality (Ctrl+K)\n- [ ] Basic text search works\n- [ ] \"exact phrase\" search works\n- [ ] -exclude operator works\n- [ ] tag:tagname operator works\n- [ ] author:name operator works\n- [ ] code:javascript operator works\n- [ ] Combined operators work\n- [ ] Search results show previews\n- [ ] Click result opens note\n- [ ] Ctrl+click opens in new tab\n\n5. Tag Filtering\n- [ ] Open with Ctrl+F (when not in note)\n- [ ] Select multiple tags\n- [ ] OR mode combines tags\n- [ ] AND mode requires all tags\n- [ ] Exclude tags with right-click\n- [ ] Clear all selections\n- [ ] Tag counts are accurate\n\n6. Recent Files & Bookmarks\n- [ ] Recent files tracked correctly\n- [ ] Pin/unpin recent files\n- [ ] Bookmark current note (Ctrl+D)\n- [ ] Remove bookmarks\n- [ ] Clear all bookmarks\n- [ ] Navigate to bookmarked notes\n\n7. Settings (Ctrl+,)\n- [ ] Theme switching works\n- [ ] Auto-theme follows system\n- [ ] Line numbers toggle\n- [ ] Word wrap toggle\n- [ ] Font size changes\n- [ ] Font family changes\n- [ ] Content width changes\n- [ ] Custom CSS applies\n- [ ] Settings persist after refresh\n\n8. Pomodoro Timer\n- [ ] Start/pause timer\n- [ ] Reset timer\n- [ ] Work/break intervals switch\n- [ ] Sound notifications work\n- [ ] Settings persist\n\nNew Feature Tests\n\n1. Table of Contents\n- [ ] TOC generates for notes with 2+ headings\n- [ ] All heading levels (h1-h6) included\n- [ ] Click heading jumps to section\n- [ ] Current section highlighted on scroll\n- [ ] Collapse/expand TOC works\n- [ ] TOC hidden on mobile (<1200px)\n- [ ] TOC adjusts in focus mode\n- [ ] No TOC for notes with <2 headings\n\n2. Wiki-style Links\n- [ ] [[Note Title]] creates working link\n- [ ] Case-insensitive matching\n- [ ] Broken links show in red\n- [ ] Links have proper hover states\n- [ ] Clicking link navigates correctly\n- [ ] Links work in preview mode\n- [ ] Special characters in titles handled\n\n3. Reading Progress\n- [ ] Progress bar shows at top\n- [ ] Progress updates on scroll\n- [ ] Reading time calculated correctly\n- [ ] Word count is accurate\n- [ ] Time updates to \"X min left\"\n- [ ] Shows \"Almost done!\" at 95%\n- [ ] Removed on non-note pages\n\n4. Focus Mode\n- [ ] Toggle with F key\n- [ ] Toggle with eye icon button\n- [ ] Sidebar hides/shows\n- [ ] Content centers properly\n- [ ] Font size increases\n- [ ] TOC remains visible\n- [ ] Setting persists on refresh\n- [ ] Escape key doesn't exit focus mode\n\n5. In-Note Search\n- [ ] Ctrl+F opens search (overrides browser)\n- [ ] Search highlights all matches\n- [ ] Current match highlighted differently\n- [ ] Match counter shows \"X of Y\"\n- [ ] Enter navigates forward\n- [ ] Shift+Enter navigates backward\n- [ ] Arrow buttons work\n- [ ] Escape closes search\n- [ ] X button closes search\n- [ ] Search cleared on close\n- [ ] Doesn't search in code blocks\n\nEdge Cases & Interactions\n\nFeature Interactions\n- [ ] TOC + Focus mode work together\n- [ ] Wiki links + Search highlighting\n- [ ] Progress bar + Focus mode\n- [ ] Note search + Wiki links\n- [ ] Multiple features in same note\n- [ ] Tab switching preserves TOC state\n- [ ] Tab switching clears note search\n- [ ] Settings changes apply to new features\n\nEdge Cases\n- [ ] Empty notes don't break features\n- [ ] Very long notes (1000+ lines)\n- [ ] Notes with 50+ headings\n- [ ] Notes with no headings\n- [ ] Notes with only code blocks\n- [ ] Circular wiki links\n- [ ] Wiki links to same note\n- [ ] Search with no results\n- [ ] Search with 100+ matches\n- [ ] Special characters in search\n- [ ] Rapid feature toggling\n- [ ] Multiple browser tabs\n\nPerformance Tests\n- [ ] 10+ tabs open simultaneously\n- [ ] Large note (10,000+ words)\n- [ ] Search in large index\n- [ ] TOC with 100+ headings\n- [ ] Note search with 500+ matches\n- [ ] Rapid scrolling with progress bar\n- [ ] Theme switching speed\n- [ ] Initial load time\n\nResponsive Design\n- [ ] Mobile (<768px) layout\n- [ ] Tablet (768-1200px) layout\n- [ ] Desktop (>1200px) layout\n- [ ] TOC hidden on mobile\n- [ ] Focus mode on mobile\n- [ ] Search UI on mobile\n- [ ] Touch interactions work\n- [ ] Pinch zoom doesn't break layout\n\nBrowser Compatibility\n- [ ] Chrome/Edge\n- [ ] Firefox\n- [ ] Safari\n- [ ] Mobile Chrome\n- [ ] Mobile Safari\n- [ ] Keyboard shortcuts work\n- [ ] Local storage works\n- [ ] Smooth scrolling works\n\nBug Checklist\n\nKnown Issues to Verify\n- [ ] TOC links with special characters\n- [ ] Wiki links with quotes in titles\n- [ ] Search highlighting in nested elements\n- [ ] Progress bar with dynamic content\n- [ ] Focus mode with multiple monitors\n- [ ] Note search with regex characters\n- [ ] Memory leaks with many tabs\n- [ ] Event listener cleanup\n\nPotential Bugs\n- [ ] Duplicate event listeners\n- [ ] Memory leaks from uncleaned DOm\n- [ ] Race conditions in async operations\n- [ ] State sync between features\n- [ ] CSS conflicts between themes\n- [ ] JavaScript errors in console\n- [ ] Accessibility issues\n- [ ] Security (XSS) concerns\n\nTest Data\n\nTest Notes\n1. Short note - No headings, <100 words\n2. Long note - Multiple headings, 5000+ words\n3. Code heavy - Mostly code blocks\n4. Link heavy - Many wiki links\n5. Special chars - Unicode, emoji, symbols\n6. Nested headings - Deep hierarchy\n7. Mixed content - All features combined\n\nTest Searches\n1. Single word: javascript\n2. Phrase: \"table of contents\"\n3. Exclude: python -django\n4. Tags: tag:tutorial tag:beginner\n5. Complex: react -class tag:javascript author:john\n6. Special: C++ \"async/await\" -promise\n\nTest Links\n1. Normal: [[JavaScript Tips]]\n2. Special: [[C++ Guide]]\n3. Broken: [[Does Not Exist]]\n4. Long: [[This Is A Very Long Note Title That Should Still Work]]\n5. Symbols: [[Guide: How-to & Tips!]]\n\nPerformance Benchmarks\n\n| Test | Target | Actual |\n|------|--------|--------|\n| Initial load | <1s |  |\n| Note switch | <200ms |  |\n| Search results | <100ms |  |\n| TOC generation | <50ms |  |\n| Focus mode toggle | <50ms |  |\n| Note search | <100ms |  |\n| Theme switch | <100ms |  |\n\nSign-off\n\n- [ ] All core features working\n- [ ] All new features working\n- [ ] No console errors\n- [ ] Performance acceptable\n- [ ] Responsive design intact\n- [ ] No regressions found\n- [ ] Ready for release",
+      "code_blocks_count": 0
+    },
+    {
+      "path": "/notes/edge-cases-test.md",
+      "context": null,
+      "metadata": {
+        "title": "Edge Cases & Special Characters Test",
+        "tags": [
+          "test",
+          "edge-cases",
+          "special-characters"
+        ],
+        "created": "2025-06-16",
+        "author": "Test Suite",
+        "description": "Testing edge cases and special characters in all features",
+        "updated": null,
+        "category": null,
+        "status": null
+      },
+      "content_preview": "This note tests edge cases and special characters that might break features.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n- Basic link: [[JavaScript Tips]]\n- Link with spaces: [[Daily Journal]]\n- Link with special chars: [[Edge Cas...",
+      "searchable_content": "\nEdge Cases & Special Characters Test\n\nThis note tests edge cases and special characters that might break features.\n\nSpecial Characters in Headings: !@#$%^&()+{}|:\"<>?\n\nHeading with \"Quotes\" and 'Apostrophes'\n\nCode: inline code in heading\n\nVery Long Heading That Should Still Work In The Table Of Contents Even Though It's Extremely Long And Might Overflow\n\nH6: The deepest level (should work)\n\nWiki Links Edge Cases\n\nNormal Links\n- Basic link: [[JavaScript Tips]]\n- Link with spaces: [[Daily Journal]]\n- Link with special chars: [[Edge Cases & Special Characters Test]]\n\nBroken Links\n- Non-existent: [[This Note Does Not Exist At All]]\n- Special chars broken: [[Test!@#$%^&()]]\n- Empty link: [[]]\n- Just spaces: [[   ]]\n\nEdge Case Links\n- Self-reference: [[Edge Cases & Special Characters Test]]\n- Case variations: [[JAVASCRIPT TIPS]], [[javascript tips]], [[JaVaScRiPt TiPs]]\n- Unicode: [[\u0422\u0435\u0441\u0442 \u042e\u043d\u0438\u043a\u043e\u0434]], [[\u6d4b\u8bd5\u4e2d\u6587]], [[\u30c6\u30b9\u30c8\u65e5\u672c\u8a9e]]\n- Emoji in title: [[Test \ud83c\udf89 Emoji \ud83d\ude80]]\n\nSearch Test Patterns\n\nSearch for these patterns to test the in-note search:\n\n- Simple word: test\n- Special chars: !@#$%^&()\n- Regex chars: .+?^${}()|[\\]\n- Quotes: \"double quotes\" and 'single quotes'\n- HTML-like: <script>alert('test')</script>\n- Unicode: \u041f\u0440\u0438\u0432\u0435\u0442 \u043c\u0438\u0440, \u4f60\u597d\u4e16\u754c, \u3053\u3093\u306b\u3061\u306f\u4e16\u754c\n- Mixed: test-123ABC.xyz@email.com\n- Repeated: test test test test test\n\nVery Long Content for Reading Progress\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. This paragraph repeats many times to create a long document for testing reading progress and time estimation.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. This paragraph repeats many times to create a long document for testing reading progress and time estimation.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. This paragraph repeats many times to create a long document for testing reading progress and time estimation.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. This paragraph repeats many times to create a long document for testing reading progress and time estimation.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. This paragraph repeats many times to create a long document for testing reading progress and time estimation.\n\nCode Blocks with Special Characters\n\njavascript title:\"Special <>&\\\"' Characters\"\n// Test special characters in code\nconst special = \"!@#$%^&()+{}|:\\\"<>?\";\nconst regex = /.+?^${}()|[\\]/g;\nconst html = '<div class=\"test\">Content</div>';\nconst unicode = \"\u041f\u0440\u0438\u0432\u0435\u0442 \u043c\u0438\u0440 \u4f60\u597d\u4e16\u754c \u3053\u3093\u306b\u3061\u306f\u4e16\u754c\";\n\n\nhtml title:\"HTML with <script> tags\"\n<!DOCTYPE html>\n<html>\n<head>\n    <title>Test &amp; Special &lt;Characters&gt;</title>\n    <script>\n        alert(\"This should not execute!\");\n    </script>\n</head>\n<body>\n    <div class=\"test\">Content with \"quotes\" and 'apostrophes'</div>\n</body>\n</html>\n\n\nEmpty Sections\n\nPerformance Test Section\n\nMany Headings Follow\n\nHeading 1\nHeading 2\nHeading 3\nHeading 4\nHeading 5\nHeading 6\nHeading 7\nHeading 8\nHeading 9\nHeading 10\nHeading 11\nHeading 12\nHeading 13\nHeading 14\nHeading 15\nHeading 16\nHeading 17\nHeading 18\nHeading 19\nHeading 20\n\n(Continue this pattern for performance testing)\n\nXSS Test Vectors\n\nThese should all be safely escaped:\n\n- <script>alert('XSS')</script>\n- <img src=x onerror=alert('XSS')>\n- <svg onload=alert('XSS')>\n- javascript:alert('XSS')\n- <iframe src=\"javascript:alert('XSS')\"></iframe>\n- Wiki link XSS: [[<script>alert('XSS')</script>]]\n- Search for: <script>alert('XSS')</script>\n\nCallouts with Special Characters\n\n> [!WARNING] Warning with \"quotes\" and <html>\n> This callout contains special characters: !@#$%^&()+{}|:\"<>?\n> And HTML-like content: <div class=\"test\">Should be escaped</div>\n\n> [!TIP] Multi-line with code\n> Line 1 with special chars: ${}\n> javascript\n> console.log(\"Code in callout\");\n> \n> Line 3 with more text\n\nEdge Case Scenarios\n\n1. Empty note - What if there's no content after frontmatter?\n2. No headings - TOC should not appear\n3. Only H1 - TOC should not appear (needs 2+ headings)\n4. Circular references - [[Edge Cases & Special Characters Test]]\n5. Rapid scrolling - Progress bar should handle smoothly\n6. Multiple searches - Rapid Ctrl+F shouldn't break\n7. Tab overflow - What happens with 50+ tabs?\n8. Theme switching - While features are active\n9. Resize window - Responsive behavior with TOC\n10. Print view - How do features look when printing?\n\nSummary\n\nIf all features work correctly with this edge case test file, the implementation is robust!  ## Empty Sections\n\n### \n\n#### \n\n##### \n\n###### \n\n## Performance Test Section\n\n### Many Headings Follow\n\n#### Heading 1\n#### Heading 2\n#### Heading 3\n#### Heading 4\n#### Heading 5\n#### Heading 6\n#### Heading 7\n#### Heading 8\n#### Heading 9\n#### Heading 10\n#### Heading 11\n#### Heading 12\n#### Heading 13\n#### Heading 14\n#### Heading 15\n#### Heading 16\n#### Heading 17\n#### Heading 18\n#### Heading 19\n#### Heading 20\n\n(Continue this pattern for performance testing)\n\n## XSS Test Vectors\n\nThese should all be safely escaped:\n\n- `<script>alert('XSS')</script>`\n- `<img src=x onerror=alert('XSS')>`\n- `<svg onload=alert('XSS')>`\n- `javascript:alert('XSS')`\n- `<iframe src=\"javascript:alert('XSS')\"></iframe>`\n- Wiki link XSS: [[<script>alert('XSS')</script>]]\n- Search for: <script>alert('XSS')</script>\n\n## Callouts with Special Characters\n\n> [!WARNING] Warning with \"quotes\" and <html>\n> This callout contains special characters: !@#$%^&*()_+{}|:\"<>?\n> And HTML-like content: <div class=\"test\">Should be escaped</div>\n\n> [!TIP] Multi-line with > Line 1 with special chars: ${}\n>",
+      "code_blocks_count": 3
+    },
+    {
       "path": "/notes/test-line-wrap.md",
       "context": null,
       "metadata": {
@@ -658,7 +700,7 @@
   ],
   "tags": {
     "getting-started": 1,
-    "documentation": 4,
+    "documentation": 5,
     "wiki": 1,
     "demo": 9,
     "code-blocks": 1,
@@ -668,7 +710,7 @@
     "showcase": 1,
     "styling": 1,
     "callouts": 1,
-    "test": 6,
+    "test": 7,
     "html": 2,
     "code": 2,
     "alignment": 1,
@@ -694,6 +736,10 @@
     "pinning": 1,
     "organization": 1,
     "features": 1,
+    "testing": 1,
+    "qa": 1,
+    "edge-cases": 1,
+    "special-characters": 1,
     "personal": 3,
     "journal": 1,
     "thoughts": 1,
@@ -740,30 +786,31 @@
     "advanced": 1
   },
   "authors": [
-    "John Doe",
-    "Claude",
-    "Debug",
-    "Maria Rodriguez",
-    "Project Team",
-    "System",
-    "Jane Smith",
-    "Database Team",
-    "Dev Team",
-    "Alex Chen",
     "Architecture Team",
-    "Blog Team",
-    "Tutorial Team",
     "DevOps Team",
-    "Test User",
+    "John Doe",
+    "Maria Rodriguez",
+    "Wiki Admin",
+    "Tutorial Team",
+    "Database Team",
+    "Debug",
+    "Test Suite",
+    "Project Team",
+    "Claude",
+    "Jane Smith",
+    "System",
+    "Blog Team",
+    "Alex Chen",
+    "Dev Team",
     "Sarah Johnson",
-    "Wiki Admin"
+    "Test User"
   ],
   "categories": [
-    "tutorials",
-    "projects",
-    "technical",
     "personal",
+    "projects",
     "documentation",
+    "technical",
+    "tutorials",
     "reference"
   ],
   "contexts": [
@@ -793,6 +840,6 @@
       "noteCount": 2
     }
   ],
-  "generated": "2025-06-16T17:21:30.890953",
-  "totalNotes": 30
+  "generated": "2025-06-16T18:22:54.490994",
+  "totalNotes": 32
 }
