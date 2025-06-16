@@ -1103,6 +1103,40 @@ class NotesWiki {
                     return;
                 }
                 
+                // Tab management shortcuts
+                if (pressedCombo === 'Ctrl+W' || pressedCombo === 'Cmd+W') {
+                    e.preventDefault();
+                    this.closeCurrentTab();
+                    return;
+                }
+                
+                if (pressedCombo === 'Ctrl+Shift+W' || pressedCombo === 'Cmd+Shift+W') {
+                    e.preventDefault();
+                    this.closeAllTabs();
+                    return;
+                }
+                
+                // Tab switching with Ctrl+1-9
+                if ((e.ctrlKey || e.metaKey) && e.key >= '1' && e.key <= '9') {
+                    e.preventDefault();
+                    const tabIndex = parseInt(e.key) - 1;
+                    this.switchToTabByIndex(tabIndex);
+                    return;
+                }
+                
+                // Tab navigation with Ctrl+PageUp/PageDown
+                if (pressedCombo === 'Ctrl+PageUp' || pressedCombo === 'Cmd+PageUp') {
+                    e.preventDefault();
+                    this.switchToPreviousTab();
+                    return;
+                }
+                
+                if (pressedCombo === 'Ctrl+PageDown' || pressedCombo === 'Cmd+PageDown') {
+                    e.preventDefault();
+                    this.switchToNextTab();
+                    return;
+                }
+                
                 for (const [action, shortcut] of Object.entries(this.settings.keyboardShortcuts)) {
                     if (pressedCombo === shortcut) {
                         e.preventDefault();
@@ -5716,6 +5750,23 @@ class NotesWiki {
         
         // Show a confirmation toast
         this.showToast('All tabs closed');
+    }
+    
+    closeCurrentTab() {
+        if (this.activeTabId) {
+            this.closeTab(this.activeTabId);
+        }
+    }
+    
+    switchToTabByIndex(index) {
+        const tabIds = Array.from(this.tabs.keys());
+        if (index >= 0 && index < tabIds.length) {
+            this.switchToTab(tabIds[index]);
+        }
+    }
+    
+    switchToPreviousTab() {
+        this.switchToNextTab(true);
     }
     
     switchToNextTab(reverse = false) {
