@@ -1502,18 +1502,6 @@ body.content-width-full .content-wrapper {
     font-family: var(--font-mono);
 }
 
-/* Adjust main content margin when statistics panel is visible */
-@media (min-width: 1200px) {
-    .content-wrapper {
-        margin-right: 300px;
-        transition: margin-right var(--transition-normal);
-    }
-    
-    .note-statistics.collapsed ~ .content-wrapper,
-    body:not(.show-statistics) .content-wrapper {
-        margin-right: 0;
-    }
-}
 
 /* Mobile responsive */
 @media (max-width: 768px) {
@@ -5435,12 +5423,6 @@ select.dropdown:focus {
     }
 }
 
-/* Adjust main content to make room for TOC on large screens */
-@media (min-width: 1400px) {
-    .content-wrapper {
-        margin-right: 280px;
-    }
-}
 
 /* Wiki-style links */
 .wiki-link {
