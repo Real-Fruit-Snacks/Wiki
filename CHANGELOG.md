@@ -1,5 +1,32 @@
 # Changelog
 
+## [2.9.0] - 2025-06-17
+
+### Added
+- **Breadcrumb Navigation**: Shows hierarchical path for better context (e.g., Home › Technical › JavaScript)
+- **Export to PDF**: New button to export notes as PDF files with print-optimized styles
+- **Note Statistics Sidebar**: Comprehensive statistics panel showing:
+  - Content metrics: word count, character count
+  - Structure analysis: headings, paragraphs, lists
+  - Media tracking: links, images, code blocks
+- **Statistics Toggle**: Collapsible statistics panel with state persistence
+
+### Fixed
+- **Critical Search Fix**: Search functionality now works reliably with proper null checks
+- **Search Index Loading**: Added validation to ensure index is loaded before search operations
+
+### Improved
+- **Print Styles**: Comprehensive CSS for clean PDF export
+- **Error Handling**: Better validation throughout the application
+- **Memory Management**: Proper cleanup for all new features
+
+### Technical Details
+- Added `generateBreadcrumbs()` method for navigation context
+- Added `exportToPDF()` method with print dialog integration
+- Added `generateNoteStatistics()` method for content analysis
+- Added `toggleStatistics()` method for panel visibility
+- Fixed search with null checks in `showSearch()` and `buildSearchIndex()`
+
 ## [2.8.9] - 2025-06-16
 
 ### Added

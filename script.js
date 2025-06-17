@@ -2044,6 +2044,10 @@ class NotesWiki {
                         </div>
                     </div>
                     
+                    <div class="breadcrumbs">
+                        ${this.generateBreadcrumbs(this.currentNotePath)}
+                    </div>
+                    
                     <div class="note-metadata">
                         ${metadata.author ? `
                             <div class="note-metadata-item">
@@ -2118,6 +2122,9 @@ class NotesWiki {
         
         // Generate and setup Table of Contents
         this.generateTableOfContents();
+        
+        // Generate note statistics
+        this.generateNoteStatistics();
         
         // Setup reading progress and time
         this.setupReadingProgress();
@@ -2326,6 +2333,132 @@ class NotesWiki {
         });
         
         return breadcrumbs.join(' <span class="breadcrumb-separator">›</span> ');
+    }
+    
+    generateNoteStatistics() {
+        const noteContent = document.querySelector('.note-content');
+        if (!noteContent) return;
+        
+        // Remove existing statistics if any
+        const existingStats = document.getElementById('note-statistics');
+        if (existingStats) existingStats.remove();
+        
+        // Calculate statistics
+        const text = noteContent.textContent || '';
+        const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+        const wordCount = words.length;
+        const charCount = text.length;
+        const charCountNoSpaces = text.replace(/\s/g, '').length;
+        
+        // Count various elements
+        const headings = noteContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        const paragraphs = noteContent.querySelectorAll('p');
+        const codeBlocks = noteContent.querySelectorAll('.code-block');
+        const links = noteContent.querySelectorAll('a');
+        const internalLinks = Array.from(links).filter(link => {
+            const href = link.getAttribute('href');
+            return href && href.startsWith('#/');
+        });
+        const externalLinks = Array.from(links).filter(link => {
+            const href = link.getAttribute('href');
+            return href && (href.startsWith('http://') || href.startsWith('https://'));
+        });
+        const images = noteContent.querySelectorAll('img');
+        const lists = noteContent.querySelectorAll('ul, ol');
+        const listItems = noteContent.querySelectorAll('li');
+        
+        // Create statistics container
+        const statsContainer = document.createElement('div');
+        statsContainer.id = 'note-statistics';
+        statsContainer.className = 'note-statistics';
+        statsContainer.innerHTML = `
+            <div class="note-statistics-header">
+                <h3>Note Statistics</h3>
+                <button class="note-statistics-toggle" onclick="notesWiki.toggleStatistics()" aria-label="Toggle statistics">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M9.5 13A1.5 1.5 0 0 1 8 14.5H7a1.5 1.5 0 0 1 0-3h1a1.5 1.5 0 0 1 1.5 1.5zm-3-8.5a1 1 0 0 1 1-1h1a1 1 0 0 1 0 2h-1a1 1 0 0 1-1-1z"/>
+                        <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm14 1H2v10h12V3z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="note-statistics-content">
+                <div class="stat-section">
+                    <h4>Content</h4>
+                    <div class="stat-item">
+                        <span class="stat-label">Words</span>
+                        <span class="stat-value">${wordCount.toLocaleString()}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Characters</span>
+                        <span class="stat-value">${charCount.toLocaleString()}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Characters (no spaces)</span>
+                        <span class="stat-value">${charCountNoSpaces.toLocaleString()}</span>
+                    </div>
+                </div>
+                
+                <div class="stat-section">
+                    <h4>Structure</h4>
+                    <div class="stat-item">
+                        <span class="stat-label">Headings</span>
+                        <span class="stat-value">${headings.length}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Paragraphs</span>
+                        <span class="stat-value">${paragraphs.length}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Lists</span>
+                        <span class="stat-value">${lists.length}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">List items</span>
+                        <span class="stat-value">${listItems.length}</span>
+                    </div>
+                </div>
+                
+                <div class="stat-section">
+                    <h4>Media & Links</h4>
+                    <div class="stat-item">
+                        <span class="stat-label">Internal links</span>
+                        <span class="stat-value">${internalLinks.length}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">External links</span>
+                        <span class="stat-value">${externalLinks.length}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Images</span>
+                        <span class="stat-value">${images.length}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Code blocks</span>
+                        <span class="stat-value">${codeBlocks.length}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Insert after the main content
+        const mainContent = document.getElementById('main-content');
+        if (mainContent) {
+            mainContent.appendChild(statsContainer);
+        }
+        
+        // Restore collapsed state if previously set
+        if (localStorage.getItem('noteStatisticsCollapsed') === 'true') {
+            statsContainer.classList.add('collapsed');
+        }
+    }
+    
+    toggleStatistics() {
+        const statsContainer = document.getElementById('note-statistics');
+        if (statsContainer) {
+            statsContainer.classList.toggle('collapsed');
+            localStorage.setItem('noteStatisticsCollapsed', 
+                statsContainer.classList.contains('collapsed').toString());
+        }
     }
     
     showNoteSearch() {
