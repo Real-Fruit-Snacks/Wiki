@@ -69,7 +69,7 @@ When making significant changes, consider the modular refactoring plan:
 1. **Entry Point**: `index.html` - Single HTML file that loads all resources
 2. **Main Application**: `script.js` - Contains the monolithic `NotesWiki` class that handles:
    - Tab management with drag-and-drop
-   - Advanced search with operators (`tag:`, `author:`, `code:`, etc.)
+   - Advanced search with operators (`tag:`, `author:`, `"phrase"`, `-exclude`, etc.)
    - Theme switching (50 themes in `/themes/`)
    - Settings persistence via localStorage
    - Pomodoro timer, keyboard shortcuts, context filtering

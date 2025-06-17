@@ -3768,6 +3768,21 @@ select.dropdown:focus {
     border-bottom: none;
 }
 
+.shortcut-item.browser-warning {
+    background-color: var(--bg-secondary);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-primary);
+    margin: var(--spacing-sm) 0;
+    opacity: 0.8;
+}
+
+.shortcut-item.browser-warning .shortcut-desc {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    line-height: 1.4;
+}
+
 .shortcut-key {
     font-family: var(--font-mono);
     background-color: var(--bg-tertiary);

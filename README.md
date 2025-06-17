@@ -185,7 +185,7 @@ Features line numbers, syntax highlighting, collapsible sections, and copy butto
 - `"exact phrase"` - Find exact matches
 - `javascript -jquery` - Include/exclude terms
 - `tag:tutorial author:john` - Filter by metadata
-- `code:python` - Search within code blocks
+- `term1 term2` - Multiple terms (AND logic)
 </details>
 
 ---
