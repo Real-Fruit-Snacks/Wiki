@@ -1531,6 +1531,24 @@ body.content-width-full .content-wrapper {
     transform: translateX(-50%) translateY(0);
 }
 
+.toast-error {
+    background-color: var(--error-bg, #fee);
+    color: var(--error-text, #c53030);
+    border-left: 4px solid var(--error-color, #e53e3e);
+}
+
+.toast-success {
+    background-color: var(--success-bg, #f0fff4);
+    color: var(--success-text, #276749);
+    border-left: 4px solid var(--success-color, #38a169);
+}
+
+.toast-info {
+    background-color: var(--info-bg, #ebf8ff);
+    color: var(--info-text, #2b6cb0);
+    border-left: 4px solid var(--info-color, #4299e1);
+}
+
 /* Buttons */
 .button {
     display: inline-flex;

@@ -99,7 +99,7 @@ class NotesWiki {
             defaultCodeLanguage: 'plaintext',
             customCSS: '',
             keyboardShortcuts: {
-                'new-tab': 'Alt+T',
+                'new-tab': 'Ctrl+T',
                 'search': 'Ctrl+K',
                 'settings': 'Ctrl+,',
                 'filter': 'Ctrl+F',
@@ -143,11 +143,7 @@ class NotesWiki {
             this.initializeTheme();
             
             // Apply focus mode if it was enabled
-            if (this.settings.focusMode) {
-                document.body.classList.add('focus-mode');
-                const sidebar = document.getElementById('sidebar');
-                if (sidebar) sidebar.style.display = 'none';
-            }
+            this.initializeFocusMode();
             
             // Initialize Pomodoro mode
             this.initializePomodoroMode();
@@ -194,6 +190,9 @@ class NotesWiki {
             
             // Initialize tab system
             this.initializeTabs();
+            
+            // Setup page lifecycle cleanup handlers
+            this.setupCleanupHandlers();
         } catch (error) {
             console.error('Failed to initialize application:', error);
             
@@ -563,7 +562,16 @@ class NotesWiki {
         // Sidebar toggle
         document.getElementById('sidebar-toggle').addEventListener('click', () => {
             this.closeAllDropdowns();
-            document.getElementById('sidebar').classList.toggle('open');
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar) {
+                // Check if focus mode is active
+                if (this.settings.focusMode) {
+                    // In focus mode, don't allow sidebar toggle
+                    this.showToast('Exit focus mode to access sidebar', 'info');
+                    return;
+                }
+                sidebar.classList.toggle('open');
+            }
         });
         
         // Folder expand/collapse all buttons
@@ -1020,36 +1028,64 @@ class NotesWiki {
         });
         
         document.getElementById('pomodoro-work-minutes').addEventListener('change', (e) => {
-            this.settings.pomodoroWorkMinutes = parseInt(e.target.value);
-            this.saveSettings();
-            if (this.settings.pomodoroEnabled) {
-                this.setPomodoroTarget();
-                this.showToast('Work session updated to ' + e.target.value + ' minutes');
+            const value = this.validateTimerDuration(e.target.value, 1, 120, 25);
+            if (value !== null) {
+                this.settings.pomodoroWorkMinutes = value;
+                e.target.value = value; // Update input to validated value
+                this.saveSettings();
+                if (this.settings.pomodoroEnabled) {
+                    this.setPomodoroTarget();
+                    this.showToast('Work session updated to ' + value + ' minutes');
+                }
+            } else {
+                e.target.value = this.settings.pomodoroWorkMinutes; // Reset to previous valid value
+                this.showToast('Invalid work session duration. Must be 1-120 minutes.', 'error');
             }
         });
         
         document.getElementById('pomodoro-short-break-minutes').addEventListener('change', (e) => {
-            this.settings.pomodoroShortBreakMinutes = parseInt(e.target.value);
-            this.saveSettings();
-            if (this.settings.pomodoroEnabled) {
-                this.setPomodoroTarget();
-                this.showToast('Short break updated to ' + e.target.value + ' minutes');
+            const value = this.validateTimerDuration(e.target.value, 1, 60, 5);
+            if (value !== null) {
+                this.settings.pomodoroShortBreakMinutes = value;
+                e.target.value = value; // Update input to validated value
+                this.saveSettings();
+                if (this.settings.pomodoroEnabled) {
+                    this.setPomodoroTarget();
+                    this.showToast('Short break updated to ' + value + ' minutes');
+                }
+            } else {
+                e.target.value = this.settings.pomodoroShortBreakMinutes; // Reset to previous valid value
+                this.showToast('Invalid short break duration. Must be 1-60 minutes.', 'error');
             }
         });
         
         document.getElementById('pomodoro-long-break-minutes').addEventListener('change', (e) => {
-            this.settings.pomodoroLongBreakMinutes = parseInt(e.target.value);
-            this.saveSettings();
-            if (this.settings.pomodoroEnabled) {
-                this.setPomodoroTarget();
-                this.showToast('Long break updated to ' + e.target.value + ' minutes');
+            const value = this.validateTimerDuration(e.target.value, 1, 120, 15);
+            if (value !== null) {
+                this.settings.pomodoroLongBreakMinutes = value;
+                e.target.value = value; // Update input to validated value
+                this.saveSettings();
+                if (this.settings.pomodoroEnabled) {
+                    this.setPomodoroTarget();
+                    this.showToast('Long break updated to ' + value + ' minutes');
+                }
+            } else {
+                e.target.value = this.settings.pomodoroLongBreakMinutes; // Reset to previous valid value
+                this.showToast('Invalid long break duration. Must be 1-120 minutes.', 'error');
             }
         });
         
         document.getElementById('pomodoro-sessions-before-long-break').addEventListener('change', (e) => {
-            this.settings.pomodoroSessionsBeforeLongBreak = parseInt(e.target.value);
-            this.saveSettings();
-            this.showToast('Sessions before long break updated to ' + e.target.value);
+            const value = this.validateTimerDuration(e.target.value, 1, 20, 4);
+            if (value !== null) {
+                this.settings.pomodoroSessionsBeforeLongBreak = value;
+                e.target.value = value; // Update input to validated value
+                this.saveSettings();
+                this.showToast('Sessions before long break updated to ' + value);
+            } else {
+                e.target.value = this.settings.pomodoroSessionsBeforeLongBreak; // Reset to previous valid value
+                this.showToast('Invalid session count. Must be 1-20 sessions.', 'error');
+            }
         });
         
         document.getElementById('pomodoro-auto-start').addEventListener('change', (e) => {
@@ -1127,8 +1163,17 @@ class NotesWiki {
                 
                 // Focus mode toggle with 'f' or 'F' key
                 if ((e.key === 'f' || e.key === 'F') && !e.ctrlKey && !e.altKey && !e.metaKey) {
-                    e.preventDefault();
-                    this.toggleFocusMode();
+                    // Additional safety check for focus mode
+                    try {
+                        e.preventDefault();
+                        this.toggleFocusMode();
+                    } catch (error) {
+                        console.error('Focus mode keyboard toggle failed:', error);
+                        // Provide user feedback even if toast fails
+                        if (typeof this.showToast === 'function') {
+                            this.showToast('Focus mode shortcut failed', 'error');
+                        }
+                    }
                     return;
                 }
                 // Check custom shortcuts
@@ -1194,6 +1239,13 @@ class NotesWiki {
                 if (pressedCombo === 'Ctrl+W' || pressedCombo === 'Cmd+W') {
                     e.preventDefault();
                     this.closeCurrentTab();
+                    return;
+                }
+                
+                // Legacy new tab shortcut (may conflict with browser but try anyway)
+                if (pressedCombo === 'Ctrl+T' || pressedCombo === 'Cmd+T') {
+                    e.preventDefault();
+                    this.createNewTab();
                     return;
                 }
                 
@@ -1580,141 +1632,230 @@ class NotesWiki {
     }
     
     generateTableOfContents() {
-        // Check if TOC is enabled in settings
-        if (!this.settings.showTableOfContents) return;
-        
-        const noteContent = document.querySelector('.note-content');
-        if (!noteContent) return;
-        
-        // Find all headings
-        const headings = noteContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
-        if (headings.length < 2) return; // Don't show TOC for less than 2 headings
-        
-        // Remove existing TOC and cleanup
-        const existingToc = document.getElementById('table-of-contents');
-        if (existingToc) {
-            // Remove scroll event listener if exists
-            if (window.tocScrollHandler) {
-                const mainContent = document.getElementById('main-content');
-                if (mainContent) {
-                    mainContent.removeEventListener('scroll', window.tocScrollHandler);
-                }
-                delete window.tocScrollHandler;
+        try {
+            // Check if TOC is enabled in settings
+            if (!this.settings.showTableOfContents) return;
+            
+            const noteContent = document.querySelector('.note-content');
+            if (!noteContent) return;
+            
+            // Find all headings
+            const headings = noteContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            if (headings.length < 2) return; // Don't show TOC for less than 2 headings
+            
+            // Remove existing TOC and cleanup
+            this.cleanupExistingTOC();
+            
+            // Create TOC structure
+            const toc = document.createElement('div');
+            toc.id = 'table-of-contents';
+            toc.className = 'table-of-contents';
+            
+            const tocHeader = document.createElement('div');
+            tocHeader.className = 'toc-header';
+            tocHeader.innerHTML = `
+                <h3>Table of Contents</h3>
+                <button class="toc-toggle" aria-label="Toggle table of contents">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M12.78 6.22a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06 0L3.22 7.28a.75.75 0 011.06-1.06L8 9.94l3.72-3.72a.75.75 0 011.06 0z"/>
+                    </svg>
+                </button>
+            `;
+            
+            const tocContent = document.createElement('div');
+            tocContent.className = 'toc-content';
+            
+            const tocList = document.createElement('ul');
+            tocList.className = 'toc-list';
+            
+            // Build TOC items with error handling
+            this.buildTOCItems(headings, tocList);
+            
+            tocContent.appendChild(tocList);
+            toc.appendChild(tocHeader);
+            toc.appendChild(tocContent);
+            
+            // Add to page with validation
+            const contentWrapper = document.querySelector('.content-wrapper');
+            if (!contentWrapper) {
+                console.error('Content wrapper not found, cannot add TOC');
+                return;
             }
-            // Remove toggle button listener if exists
-            if (window.tocToggleHandler) {
-                delete window.tocToggleHandler;
-            }
-            existingToc.remove();
+            contentWrapper.appendChild(toc);
+            
+            // Setup toggle functionality with error handling
+            this.setupTOCToggle(toc);
+            
+            // Setup scroll handler with error handling
+            this.setupTOCScrollHandler(toc, headings);
+            
+        } catch (error) {
+            console.error('Error generating table of contents:', error);
+            this.showToast('Failed to generate table of contents', 'error');
         }
-        
-        // Create TOC structure
-        const toc = document.createElement('div');
-        toc.id = 'table-of-contents';
-        toc.className = 'table-of-contents';
-        
-        const tocHeader = document.createElement('div');
-        tocHeader.className = 'toc-header';
-        tocHeader.innerHTML = `
-            <h3>Table of Contents</h3>
-            <button class="toc-toggle" aria-label="Toggle table of contents">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                    <path d="M12.78 6.22a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06 0L3.22 7.28a.75.75 0 011.06-1.06L8 9.94l3.72-3.72a.75.75 0 011.06 0z"/>
-                </svg>
-            </button>
-        `;
-        
-        const tocContent = document.createElement('div');
-        tocContent.className = 'toc-content';
-        
-        const tocList = document.createElement('ul');
-        tocList.className = 'toc-list';
-        
-        // Build TOC items
-        headings.forEach((heading, index) => {
-            // Add ID to heading if it doesn't have one
-            if (!heading.id) {
-                heading.id = `heading-${index}`;
-            }
-            
-            const level = parseInt(heading.tagName.charAt(1));
-            const listItem = document.createElement('li');
-            listItem.className = `toc-item toc-level-${level}`;
-            
-            const link = document.createElement('a');
-            link.href = `#${heading.id}`;
-            link.className = 'toc-link';
-            link.textContent = heading.textContent;
-            // Use dataset to avoid duplicate listeners and enable cleanup
-            link.dataset.targetHeadingId = heading.id;
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = e.currentTarget.dataset.targetHeadingId;
-                const targetHeading = document.getElementById(targetId);
-                if (targetHeading) {
-                    targetHeading.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    // Update active state
-                    document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
-                    e.currentTarget.classList.add('active');
-                }
-            });
-            
-            listItem.appendChild(link);
-            tocList.appendChild(listItem);
-        });
-        
-        tocContent.appendChild(tocList);
-        toc.appendChild(tocHeader);
-        toc.appendChild(tocContent);
-        
-        // Add to page
-        document.querySelector('.content-wrapper').appendChild(toc);
-        
-        // Toggle functionality
-        const toggleBtn = toc.querySelector('.toc-toggle');
-        const toggleHandler = () => {
-            toc.classList.toggle('collapsed');
-        };
-        toggleBtn.addEventListener('click', toggleHandler);
-        window.tocToggleHandler = toggleHandler;
-        
-        // Highlight current section on scroll
-        let scrollTimeout;
-        const mainContent = document.getElementById('main-content');
-        
-        // Store scroll handler for cleanup
-        const scrollHandler = () => {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                let currentHeading = null;
-                const scrollTop = mainContent.scrollTop;
-                
-                headings.forEach(heading => {
-                    const rect = heading.getBoundingClientRect();
-                    const mainRect = mainContent.getBoundingClientRect();
-                    const relativeTop = rect.top - mainRect.top;
-                    
-                    if (relativeTop <= 100) {
-                        currentHeading = heading;
+    }
+    
+    cleanupExistingTOC() {
+        try {
+            const existingToc = document.getElementById('table-of-contents');
+            if (existingToc) {
+                // Remove scroll event listener if exists
+                if (window.tocScrollHandler) {
+                    const mainContent = document.getElementById('main-content');
+                    if (mainContent) {
+                        mainContent.removeEventListener('scroll', window.tocScrollHandler);
                     }
-                });
-                
-                if (currentHeading) {
-                    document.querySelectorAll('.toc-link').forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href') === `#${currentHeading.id}`) {
-                            link.classList.add('active');
+                    delete window.tocScrollHandler;
+                }
+                // Remove toggle button listener if exists
+                if (window.tocToggleHandler) {
+                    delete window.tocToggleHandler;
+                }
+                existingToc.remove();
+            }
+        } catch (error) {
+            console.warn('Error cleaning up existing TOC:', error);
+        }
+    }
+    
+    buildTOCItems(headings, tocList) {
+        try {
+            headings.forEach((heading, index) => {
+                try {
+                    // Add ID to heading if it doesn't have one
+                    if (!heading.id) {
+                        heading.id = `heading-${index}`;
+                    }
+                    
+                    const level = parseInt(heading.tagName.charAt(1));
+                    if (isNaN(level) || level < 1 || level > 6) {
+                        console.warn(`Invalid heading level for element: ${heading.tagName}`);
+                        return;
+                    }
+                    
+                    const listItem = document.createElement('li');
+                    listItem.className = `toc-item toc-level-${level}`;
+                    
+                    const link = document.createElement('a');
+                    link.href = `#${heading.id}`;
+                    link.className = 'toc-link';
+                    link.textContent = heading.textContent || 'Untitled';
+                    // Use dataset to avoid duplicate listeners and enable cleanup
+                    link.dataset.targetHeadingId = heading.id;
+                    
+                    link.addEventListener('click', (e) => {
+                        try {
+                            e.preventDefault();
+                            const targetId = e.currentTarget.dataset.targetHeadingId;
+                            const targetHeading = document.getElementById(targetId);
+                            if (targetHeading) {
+                                targetHeading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                // Update active state
+                                document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+                                e.currentTarget.classList.add('active');
+                            }
+                        } catch (clickError) {
+                            console.error('Error handling TOC link click:', clickError);
                         }
                     });
+                    
+                    listItem.appendChild(link);
+                    tocList.appendChild(listItem);
+                } catch (itemError) {
+                    console.warn('Error building TOC item:', itemError);
                 }
-            }, 100);
-        };
-        
-        mainContent.addEventListener('scroll', scrollHandler);
-        
-        // Store handler for cleanup
-        toc.dataset.scrollHandler = 'attached';
-        window.tocScrollHandler = scrollHandler;
+            });
+        } catch (error) {
+            console.error('Error building TOC items:', error);
+        }
+    }
+    
+    setupTOCToggle(toc) {
+        try {
+            const toggleBtn = toc.querySelector('.toc-toggle');
+            if (!toggleBtn) {
+                console.warn('TOC toggle button not found');
+                return;
+            }
+            
+            const toggleHandler = () => {
+                try {
+                    toc.classList.toggle('collapsed');
+                } catch (error) {
+                    console.error('Error toggling TOC:', error);
+                }
+            };
+            
+            toggleBtn.addEventListener('click', toggleHandler);
+            window.tocToggleHandler = toggleHandler;
+        } catch (error) {
+            console.error('Error setting up TOC toggle:', error);
+        }
+    }
+    
+    setupTOCScrollHandler(toc, headings) {
+        try {
+            const mainContent = document.getElementById('main-content');
+            if (!mainContent) {
+                console.warn('Main content element not found, TOC scroll highlighting disabled');
+                return;
+            }
+            
+            let scrollTimeout;
+            
+            // Store scroll handler for cleanup
+            const scrollHandler = () => {
+                try {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(() => {
+                        try {
+                            let currentHeading = null;
+                            const scrollTop = mainContent.scrollTop;
+                            
+                            headings.forEach(heading => {
+                                try {
+                                    const rect = heading.getBoundingClientRect();
+                                    const mainRect = mainContent.getBoundingClientRect();
+                                    const relativeTop = rect.top - mainRect.top;
+                                    
+                                    if (relativeTop <= 100) {
+                                        currentHeading = heading;
+                                    }
+                                } catch (rectError) {
+                                    // Skip this heading if getBoundingClientRect fails
+                                    console.warn('Error getting heading bounds:', rectError);
+                                }
+                            });
+                            
+                            if (currentHeading) {
+                                document.querySelectorAll('.toc-link').forEach(link => {
+                                    try {
+                                        link.classList.remove('active');
+                                        if (link.getAttribute('href') === `#${currentHeading.id}`) {
+                                            link.classList.add('active');
+                                        }
+                                    } catch (linkError) {
+                                        console.warn('Error updating TOC link active state:', linkError);
+                                    }
+                                });
+                            }
+                        } catch (scrollError) {
+                            console.warn('Error in TOC scroll handler:', scrollError);
+                        }
+                    }, 100);
+                } catch (timeoutError) {
+                    console.error('Error in TOC scroll timeout:', timeoutError);
+                }
+            };
+            
+            mainContent.addEventListener('scroll', scrollHandler);
+            
+            // Store handler for cleanup
+            toc.dataset.scrollHandler = 'attached';
+            window.tocScrollHandler = scrollHandler;
+        } catch (error) {
+            console.error('Error setting up TOC scroll handler:', error);
+        }
     }
     
     setupReadingProgress() {
@@ -1867,34 +2008,21 @@ class NotesWiki {
                 language = self.settings.defaultCodeLanguage;
             }
             
-            // Highlight code
-            let highlightedCode = codeContent;
-            if (language && Prism.languages[language]) {
-                highlightedCode = Prism.highlight(codeContent, Prism.languages[language], language);
-            } else {
-                // If no language specified or Prism doesn't support it, escape the code
-                highlightedCode = self.escapeHtml(codeContent);
-            }
+            // Escape HTML entities for security - Prism.highlightAll() will handle highlighting
+            const escapedCode = self.escapeHtml(codeContent);
             
             // Add line numbers if enabled using CSS counters
-            let codeHtml = highlightedCode;
+            let codeHtml = escapedCode;
             if (self.settings.showLineNumbers) {
                 const lines = codeContent.split('\n');
                 const codeLines = lines.map(line => {
-                    // Highlight each line individually to preserve syntax highlighting
-                    let highlightedLine = line;
-                    if (language && Prism.languages[language]) {
-                        highlightedLine = Prism.highlight(line, Prism.languages[language], language);
-                    } else {
-                        highlightedLine = self.escapeHtml(line);
+                    // Escape each line and handle empty lines
+                    let escapedLine = self.escapeHtml(line);
+                    if (escapedLine.trim() === '') {
+                        escapedLine = '&nbsp;';
                     }
                     
-                    // Handle empty lines
-                    if (highlightedLine.trim() === '') {
-                        highlightedLine = '&nbsp;';
-                    }
-                    
-                    return `<div class="code-line">${highlightedLine}</div>`;
+                    return `<div class="code-line">${escapedLine}</div>`;
                 }).join('');
                 
                 codeHtml = `<div class="code-with-counters">${codeLines}</div>`;
@@ -2111,6 +2239,9 @@ class NotesWiki {
             </button>
         `;
         
+        // Highlight all code blocks with Prism after DOM injection
+        Prism.highlightAll();
+        
         // Scroll to top
         mainContent.scrollTop = 0;
         
@@ -2237,47 +2368,290 @@ class NotesWiki {
         });
     }
     
-    showToast(message) {
-        // Create toast element
-        const toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.textContent = message;
-        
-        // Add to body
-        document.body.appendChild(toast);
-        
-        // Trigger animation
-        setTimeout(() => toast.classList.add('show'), 10);
-        
-        // Remove after delay
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => toast.remove(), 300);
-        }, 2000);
+    showToast(message, type = 'info') {
+        try {
+            // Validate inputs
+            if (!message || typeof message !== 'string') {
+                console.warn('Invalid toast message:', message);
+                return;
+            }
+            
+            // Validate DOM availability
+            if (!document.body) {
+                console.warn('Cannot show toast: document.body not available');
+                return;
+            }
+            
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            
+            // Add aria attributes for accessibility
+            toast.setAttribute('role', 'alert');
+            toast.setAttribute('aria-live', 'polite');
+            
+            // Add to body
+            document.body.appendChild(toast);
+            
+            // Trigger animation with error handling
+            const showTimer = setTimeout(() => {
+                try {
+                    toast.classList.add('show');
+                } catch (error) {
+                    console.warn('Toast animation failed:', error);
+                }
+            }, 10);
+            
+            // Remove after delay with error handling
+            const hideTimer = setTimeout(() => {
+                try {
+                    toast.classList.remove('show');
+                    const removeTimer = setTimeout(() => {
+                        try {
+                            if (toast.parentNode) {
+                                toast.remove();
+                            }
+                        } catch (error) {
+                            console.warn('Toast removal failed:', error);
+                        }
+                    }, 300);
+                } catch (error) {
+                    console.warn('Toast hide failed:', error);
+                }
+            }, type === 'error' ? 4000 : 2000); // Show errors longer
+            
+            // Store timers for cleanup if needed
+            toast._showTimer = showTimer;
+            toast._hideTimer = hideTimer;
+            
+        } catch (error) {
+            console.error('Toast creation failed:', error);
+            // Fallback to console log if toast system fails
+            console.log(`Toast message (${type}): ${message}`);
+        }
     }
     
     toggleFocusMode() {
-        this.settings.focusMode = !this.settings.focusMode;
-        this.saveSettings();
-        
-        const body = document.body;
-        const sidebar = document.getElementById('sidebar');
-        const container = document.querySelector('.container');
-        
-        if (this.settings.focusMode) {
-            body.classList.add('focus-mode');
-            if (sidebar) sidebar.style.display = 'none';
-            this.showToast('Focus mode enabled');
-        } else {
-            body.classList.remove('focus-mode');
-            if (sidebar) sidebar.style.display = '';
-            this.showToast('Focus mode disabled');
+        try {
+            // Toggle focus mode state
+            this.settings.focusMode = !this.settings.focusMode;
+            
+            // Save settings with error handling
+            this.saveSettings();
+            
+            // Apply focus mode with comprehensive error handling
+            this.applyFocusMode();
+            
+        } catch (error) {
+            console.error('Focus mode toggle failed:', error);
+            // Revert state on error
+            this.settings.focusMode = !this.settings.focusMode;
+            this.showToast('Focus mode toggle failed. Please try again.', 'error');
         }
-        
-        // Update button state
-        const focusBtn = document.querySelector('.focus-mode-btn');
-        if (focusBtn) {
-            focusBtn.classList.toggle('active', this.settings.focusMode);
+    }
+    
+    applyFocusMode() {
+        try {
+            // Validate essential DOM elements
+            const body = document.body;
+            if (!body) {
+                throw new Error('Document body not available');
+            }
+            
+            const sidebar = document.getElementById('sidebar');
+            const container = document.querySelector('.container');
+            
+            // Store original sidebar display state if not already stored
+            if (sidebar && !sidebar.hasAttribute('data-original-display')) {
+                const originalDisplay = window.getComputedStyle(sidebar).display;
+                sidebar.setAttribute('data-original-display', originalDisplay === 'none' ? '' : originalDisplay);
+            }
+            
+            if (this.settings.focusMode) {
+                // Enable focus mode
+                body.classList.add('focus-mode');
+                
+                // Hide sidebar if available
+                if (sidebar) {
+                    sidebar.style.display = 'none';
+                    sidebar.setAttribute('data-focus-mode-hidden', 'true');
+                }
+                
+                // Validate that focus mode was applied
+                if (!body.classList.contains('focus-mode')) {
+                    throw new Error('Focus mode CSS class could not be applied');
+                }
+                
+                this.showToast('Focus mode enabled', 'success');
+                
+            } else {
+                // Disable focus mode
+                body.classList.remove('focus-mode');
+                
+                // Restore sidebar display if it was hidden by focus mode
+                if (sidebar && sidebar.hasAttribute('data-focus-mode-hidden')) {
+                    const originalDisplay = sidebar.getAttribute('data-original-display') || '';
+                    sidebar.style.display = originalDisplay;
+                    sidebar.removeAttribute('data-focus-mode-hidden');
+                }
+                
+                this.showToast('Focus mode disabled', 'success');
+            }
+            
+            // Update button state with error handling
+            this.updateFocusModeButton();
+            
+        } catch (error) {
+            console.error('Focus mode application failed:', error);
+            throw error; // Re-throw to be caught by toggleFocusMode
+        }
+    }
+    
+    updateFocusModeButton() {
+        try {
+            const focusButtons = document.querySelectorAll('.focus-mode-btn');
+            
+            if (focusButtons.length === 0) {
+                console.warn('Focus mode button not found in DOM');
+                return;
+            }
+            
+            // Handle multiple buttons (edge case)
+            focusButtons.forEach(button => {
+                button.classList.toggle('active', this.settings.focusMode);
+                
+                // Update aria-pressed for accessibility
+                button.setAttribute('aria-pressed', this.settings.focusMode.toString());
+                
+                // Update title text
+                const newTitle = this.settings.focusMode ? 
+                    'Exit focus mode (F)' : 'Toggle focus mode (F)';
+                button.setAttribute('title', newTitle);
+            });
+            
+        } catch (error) {
+            console.warn('Focus mode button update failed:', error);
+            // Don't throw - button state is not critical for functionality
+        }
+    }
+    
+    initializeFocusMode() {
+        try {
+            // Only apply focus mode if it was enabled in settings
+            if (!this.settings.focusMode) {
+                return;
+            }
+            
+            // Validate DOM is ready
+            if (!document.body) {
+                // Defer initialization if DOM not ready
+                console.warn('DOM not ready for focus mode initialization, deferring...');
+                setTimeout(() => this.initializeFocusMode(), 100);
+                return;
+            }
+            
+            // Wait for sidebar to be available in DOM
+            const sidebar = document.getElementById('sidebar');
+            if (!sidebar) {
+                console.warn('Sidebar not found during focus mode initialization, continuing without sidebar hide');
+            }
+            
+            // Apply focus mode using the comprehensive method
+            this.applyFocusMode();
+            
+        } catch (error) {
+            console.error('Focus mode initialization failed:', error);
+            // Reset focus mode setting if initialization fails
+            this.settings.focusMode = false;
+            this.saveSettings();
+            this.showToast('Focus mode could not be initialized', 'error');
+        }
+    }
+    
+    cleanupFocusMode() {
+        try {
+            // Remove focus mode class
+            if (document.body) {
+                document.body.classList.remove('focus-mode');
+            }
+            
+            // Restore sidebar if it was hidden by focus mode
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar && sidebar.hasAttribute('data-focus-mode-hidden')) {
+                const originalDisplay = sidebar.getAttribute('data-original-display') || '';
+                sidebar.style.display = originalDisplay;
+                sidebar.removeAttribute('data-focus-mode-hidden');
+                sidebar.removeAttribute('data-original-display');
+            }
+            
+            // Reset button states
+            const focusButtons = document.querySelectorAll('.focus-mode-btn');
+            focusButtons.forEach(button => {
+                button.classList.remove('active');
+                button.setAttribute('aria-pressed', 'false');
+                button.setAttribute('title', 'Toggle focus mode (F)');
+            });
+            
+            // Reset settings
+            this.settings.focusMode = false;
+            
+            console.log('Focus mode cleanup completed');
+            
+        } catch (error) {
+            console.error('Focus mode cleanup failed:', error);
+        }
+    }
+    
+    validateFocusModeState() {
+        try {
+            const body = document.body;
+            const sidebar = document.getElementById('sidebar');
+            const focusButtons = document.querySelectorAll('.focus-mode-btn');
+            
+            const hasBodyClass = body && body.classList.contains('focus-mode');
+            const sidebarHidden = sidebar && sidebar.hasAttribute('data-focus-mode-hidden');
+            const settingEnabled = this.settings.focusMode;
+            
+            // Check for inconsistencies
+            const inconsistencies = [];
+            
+            if (settingEnabled !== hasBodyClass) {
+                inconsistencies.push(`Setting (${settingEnabled}) vs Body class (${hasBodyClass})`);
+            }
+            
+            if (settingEnabled && sidebar && !sidebarHidden) {
+                inconsistencies.push('Focus mode enabled but sidebar not marked as hidden');
+            }
+            
+            if (!settingEnabled && sidebarHidden) {
+                inconsistencies.push('Focus mode disabled but sidebar marked as hidden');
+            }
+            
+            // Check button states
+            focusButtons.forEach((button, index) => {
+                const buttonActive = button.classList.contains('active');
+                const ariaPressed = button.getAttribute('aria-pressed') === 'true';
+                
+                if (settingEnabled !== buttonActive) {
+                    inconsistencies.push(`Button ${index} active state (${buttonActive}) doesn't match setting (${settingEnabled})`);
+                }
+                
+                if (buttonActive !== ariaPressed) {
+                    inconsistencies.push(`Button ${index} aria-pressed (${ariaPressed}) doesn't match active state (${buttonActive})`);
+                }
+            });
+            
+            if (inconsistencies.length > 0) {
+                console.warn('Focus mode state inconsistencies detected:', inconsistencies);
+                return false;
+            }
+            
+            return true;
+            
+        } catch (error) {
+            console.error('Focus mode state validation failed:', error);
+            return false;
         }
     }
     
@@ -4714,17 +5088,47 @@ class NotesWiki {
     }
     
     applyTheme(themeId) {
-        const link = document.getElementById('theme-stylesheet');
-        link.href = `themes/${themeId}.css`;
-        document.documentElement.setAttribute('data-theme', themeId);
-        
-        // Update current theme in settings if not using auto theme
-        if (!this.settings.autoTheme) {
-            this.settings.theme = themeId;
+        // Validate theme exists
+        const themeExists = this.themes.find(t => t.id === themeId);
+        if (!themeExists) {
+            console.warn(`Theme '${themeId}' not found, falling back to default`);
+            themeId = 'ayu-mirage'; // Default theme
         }
         
-        // Update current theme display in settings modal
-        this.updateCurrentThemeDisplay();
+        const link = document.getElementById('theme-stylesheet');
+        if (!link) {
+            console.error('Theme stylesheet link element not found');
+            return;
+        }
+        
+        // Set up error handling for CSS loading
+        const handleThemeLoad = () => {
+            document.documentElement.setAttribute('data-theme', themeId);
+            // Update current theme in settings if not using auto theme
+            if (!this.settings.autoTheme) {
+                this.settings.theme = themeId;
+            }
+            // Update current theme display in settings modal
+            this.updateCurrentThemeDisplay();
+        };
+        
+        const handleThemeError = () => {
+            console.error(`Failed to load theme: ${themeId}`);
+            this.showToast(`Failed to load theme: ${themeId}`, 'error');
+            if (themeId !== 'ayu-mirage') {
+                // Fallback to default theme
+                this.applyTheme('ayu-mirage');
+            }
+        };
+        
+        // Remove any existing event listeners to prevent memory leaks
+        link.onload = null;
+        link.onerror = null;
+        
+        // Set up new event listeners
+        link.onload = handleThemeLoad;
+        link.onerror = handleThemeError;
+        link.href = `themes/${themeId}.css`;
     }
     
     loadRecentFiles() {
@@ -5038,18 +5442,55 @@ class NotesWiki {
     
     // Bookmark Management Methods
     loadBookmarks() {
-        const stored = localStorage.getItem('notesWiki_bookmarks');
-        if (stored) {
-            this.bookmarks = JSON.parse(stored);
-        } else {
+        try {
+            const stored = localStorage.getItem('notesWiki_bookmarks');
+            if (stored) {
+                const parsed = JSON.parse(stored);
+                // Validate data structure
+                if (Array.isArray(parsed)) {
+                    this.bookmarks = parsed.filter(this.validateBookmark.bind(this));
+                } else {
+                    console.warn('Invalid bookmark data structure, resetting bookmarks');
+                    this.bookmarks = [];
+                }
+            } else {
+                this.bookmarks = [];
+            }
+        } catch (error) {
+            console.warn('Failed to load bookmarks:', error);
             this.bookmarks = [];
+            // Clear corrupted data
+            try {
+                localStorage.removeItem('notesWiki_bookmarks');
+            } catch (removeError) {
+                console.warn('Failed to clear corrupted bookmark data:', removeError);
+            }
+            this.showToast('Bookmark data was corrupted and has been reset', 'warning');
         }
         this.updateBookmarksUI();
     }
     
     saveBookmarks() {
-        localStorage.setItem('notesWiki_bookmarks', JSON.stringify(this.bookmarks));
+        try {
+            localStorage.setItem('notesWiki_bookmarks', JSON.stringify(this.bookmarks));
+        } catch (error) {
+            console.warn('Failed to save bookmarks:', error);
+            if (error.name === 'QuotaExceededError') {
+                this.showToast('Could not save bookmarks - storage quota exceeded', 'error');
+            } else {
+                this.showToast('Could not save bookmarks - storage may be disabled', 'error');
+            }
+        }
         this.updateBookmarksUI();
+    }
+    
+    validateBookmark(bookmark) {
+        return bookmark && 
+               typeof bookmark.path === 'string' && 
+               bookmark.path.length > 0 &&
+               typeof bookmark.title === 'string' && 
+               typeof bookmark.context === 'string' &&
+               typeof bookmark.bookmarkedAt === 'string';
     }
     
     isBookmarked(path) {
@@ -5058,34 +5499,86 @@ class NotesWiki {
     }
     
     addBookmark(path, metadata) {
-        // Don't add if already bookmarked
-        if (this.isBookmarked(path)) return;
-        
-        // Ensure path starts with /
-        const normalizedPath = path.startsWith('/') ? path : '/' + path;
-        
-        // Find the note's context
-        const note = this.notesIndex.notes.find(n => n.path === normalizedPath || n.path === path);
-        const context = note ? note.context : null;
-        
-        // Add bookmark
-        this.bookmarks.push({
-            path: normalizedPath,
-            title: metadata.title || 'Untitled',
-            context: context,
-            bookmarkedAt: new Date().toISOString()
-        });
-        
-        // Save and update UI
-        this.saveBookmarks();
-        this.showToast('Bookmark added');
+        try {
+            // Validate inputs
+            if (!path || typeof path !== 'string') {
+                console.warn('Invalid bookmark path:', path);
+                this.showToast('Cannot bookmark - invalid path', 'error');
+                return;
+            }
+            
+            if (!metadata || typeof metadata !== 'object') {
+                console.warn('Invalid bookmark metadata:', metadata);
+                this.showToast('Cannot bookmark - invalid metadata', 'error');
+                return;
+            }
+            
+            // Don't add if already bookmarked
+            if (this.isBookmarked(path)) {
+                this.showToast('Note is already bookmarked', 'info');
+                return;
+            }
+            
+            // Ensure path starts with /
+            const normalizedPath = path.startsWith('/') ? path : '/' + path;
+            
+            // Find the note's context with error handling
+            let context = null;
+            if (this.notesIndex && this.notesIndex.notes) {
+                const note = this.notesIndex.notes.find(n => n.path === normalizedPath || n.path === path);
+                context = note ? note.context : 'Unknown';
+            } else {
+                context = 'Unknown';
+            }
+            
+            // Create bookmark object
+            const bookmark = {
+                path: normalizedPath,
+                title: (metadata.title && typeof metadata.title === 'string') ? metadata.title : 'Untitled',
+                context: context || 'Unknown',
+                bookmarkedAt: new Date().toISOString()
+            };
+            
+            // Validate the bookmark before adding
+            if (this.validateBookmark(bookmark)) {
+                this.bookmarks.push(bookmark);
+                // Save and update UI
+                this.saveBookmarks();
+                this.showToast('Bookmark added');
+            } else {
+                console.error('Invalid bookmark object:', bookmark);
+                this.showToast('Failed to create bookmark - invalid data', 'error');
+            }
+        } catch (error) {
+            console.error('Error adding bookmark:', error);
+            this.showToast('Failed to add bookmark', 'error');
+        }
     }
     
     removeBookmark(path) {
-        const normalizedPath = path.startsWith('/') ? path : '/' + path;
-        this.bookmarks = this.bookmarks.filter(b => b.path !== normalizedPath && b.path !== path);
-        this.saveBookmarks();
-        this.showToast('Bookmark removed');
+        try {
+            // Validate input
+            if (!path || typeof path !== 'string') {
+                console.warn('Invalid bookmark path for removal:', path);
+                this.showToast('Cannot remove bookmark - invalid path', 'error');
+                return;
+            }
+            
+            const normalizedPath = path.startsWith('/') ? path : '/' + path;
+            const initialLength = this.bookmarks.length;
+            
+            this.bookmarks = this.bookmarks.filter(b => b.path !== normalizedPath && b.path !== path);
+            
+            if (this.bookmarks.length < initialLength) {
+                this.saveBookmarks();
+                this.showToast('Bookmark removed');
+            } else {
+                this.showToast('Bookmark not found', 'warning');
+            }
+        } catch (error) {
+            console.error('Error removing bookmark:', error);
+            this.showToast('Failed to remove bookmark', 'error');
+        }
     }
     
     toggleBookmark(path, metadata) {
@@ -6481,6 +6974,30 @@ class NotesWiki {
     }
     
     // Pomodoro Timer Functions
+    validateTimerDuration(value, min, max, defaultValue) {
+        // Parse and validate timer duration input
+        try {
+            const parsed = parseInt(value, 10);
+            
+            // Check if parsing was successful and value is a valid number
+            if (isNaN(parsed) || !isFinite(parsed)) {
+                console.warn('Invalid timer duration - not a number:', value);
+                return null;
+            }
+            
+            // Check bounds
+            if (parsed < min || parsed > max) {
+                console.warn(`Timer duration out of bounds: ${parsed}, valid range: ${min}-${max}`);
+                return null;
+            }
+            
+            return parsed;
+        } catch (error) {
+            console.warn('Error validating timer duration:', error);
+            return null;
+        }
+    }
+    
     initializePomodoroMode() {
         if (this.settings.pomodoroEnabled) {
             this.setPomodoroTarget();
@@ -6565,10 +7082,30 @@ class NotesWiki {
         }
     }
     
+    getAudioContext() {
+        // Create shared AudioContext to prevent memory leaks
+        if (!this.audioContext) {
+            try {
+                this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            } catch (error) {
+                console.warn('AudioContext not available:', error);
+                return null;
+            }
+        }
+        return this.audioContext;
+    }
+    
     playNotificationSound() {
         // Create a simple beep sound using Web Audio API
         try {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const audioContext = this.getAudioContext();
+            if (!audioContext) return;
+            
+            // Resume context if it's suspended (browser autoplay policy)
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+            
             const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
             
@@ -6583,6 +7120,12 @@ class NotesWiki {
             
             oscillator.start(audioContext.currentTime);
             oscillator.stop(audioContext.currentTime + 1);
+            
+            // Clean up oscillator references
+            oscillator.onended = () => {
+                oscillator.disconnect();
+                gainNode.disconnect();
+            };
         } catch (error) {
             console.log('Audio notification not available:', error);
         }
@@ -6746,6 +7289,66 @@ class NotesWiki {
         
         // Focus the cancel button for safety
         cancelBtn.focus();
+    }
+    
+    setupCleanupHandlers() {
+        // Setup page lifecycle cleanup to prevent memory leaks
+        const cleanup = () => {
+            try {
+                // Clear timer interval
+                if (this.timerInterval) {
+                    clearInterval(this.timerInterval);
+                    this.timerInterval = null;
+                }
+                
+                // Clear auto-start timeout
+                if (this.autoStartTimeout) {
+                    clearTimeout(this.autoStartTimeout);
+                    this.autoStartTimeout = null;
+                }
+                
+                // Clear reset press timer
+                if (this.resetPressTimer) {
+                    clearTimeout(this.resetPressTimer);
+                    this.resetPressTimer = null;
+                }
+                
+                // Close AudioContext if it exists
+                if (this.audioContext && this.audioContext.state !== 'closed') {
+                    this.audioContext.close();
+                    this.audioContext = null;
+                }
+                
+                // Clear any global handlers
+                if (window.tocScrollHandler) {
+                    const mainContent = document.getElementById('main-content');
+                    if (mainContent) {
+                        mainContent.removeEventListener('scroll', window.tocScrollHandler);
+                    }
+                    delete window.tocScrollHandler;
+                }
+                
+                if (window.progressScrollHandler) {
+                    const mainContent = document.getElementById('main-content');
+                    if (mainContent) {
+                        mainContent.removeEventListener('scroll', window.progressScrollHandler);
+                    }
+                    delete window.progressScrollHandler;
+                }
+                
+                console.log('Application cleanup completed');
+            } catch (error) {
+                console.warn('Error during cleanup:', error);
+            }
+        };
+        
+        // Add event listeners for various page lifecycle events
+        window.addEventListener('beforeunload', cleanup);
+        window.addEventListener('unload', cleanup);
+        window.addEventListener('pagehide', cleanup);
+        
+        // For single-page apps, cleanup on popstate
+        window.addEventListener('popstate', cleanup);
     }
 }
 
