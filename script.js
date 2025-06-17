@@ -5698,14 +5698,21 @@ class NotesWiki {
         const contextSwitcher = document.getElementById('context-switcher');
         if (!contextSwitcher || !this.contexts || this.contexts.length === 0) return;
         
-        // Add "All" button
+        // Clear existing content
+        contextSwitcher.innerHTML = '';
+        
+        // Create buttons wrapper for desktop view
+        const buttonsWrapper = document.createElement('div');
+        buttonsWrapper.className = 'context-buttons-wrapper';
+        
+        // Add "All" button to buttons wrapper
         const allButton = document.createElement('button');
         allButton.className = 'context-button' + (!this.activeContext ? ' active' : '');
         allButton.innerHTML = `<span>All</span>`;
         allButton.addEventListener('click', () => this.setActiveContext(null));
-        contextSwitcher.appendChild(allButton);
+        buttonsWrapper.appendChild(allButton);
         
-        // Add context buttons
+        // Add context buttons to buttons wrapper
         this.contexts.forEach(context => {
             const button = document.createElement('button');
             button.className = 'context-button' + (this.activeContext === context.id ? ' active' : '');
@@ -5716,8 +5723,80 @@ class NotesWiki {
             button.appendChild(span);
             
             button.addEventListener('click', () => this.setActiveContext(context.id));
-            contextSwitcher.appendChild(button);
+            buttonsWrapper.appendChild(button);
         });
+        
+        // Create dropdown for mobile/tablet view
+        const dropdown = document.createElement('div');
+        dropdown.className = 'context-dropdown';
+        
+        // Create dropdown toggle button
+        const dropdownToggle = document.createElement('button');
+        dropdownToggle.className = 'context-dropdown-toggle';
+        const activeContextName = this.activeContext ? 
+            this.contexts.find(c => c.id === this.activeContext)?.name || 'Unknown' : 
+            'All';
+        dropdownToggle.innerHTML = `
+            <span>${activeContextName}</span>
+            <svg class="context-dropdown-chevron" width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+        `;
+        
+        // Create dropdown menu
+        const dropdownMenu = document.createElement('div');
+        dropdownMenu.className = 'context-dropdown-menu';
+        
+        // Add "All" option to dropdown
+        const allDropdownItem = document.createElement('button');
+        allDropdownItem.className = 'context-dropdown-item' + (!this.activeContext ? ' active' : '');
+        allDropdownItem.innerHTML = `<span>All</span>`;
+        allDropdownItem.addEventListener('click', () => {
+            this.setActiveContext(null);
+            dropdown.classList.remove('active');
+            dropdownToggle.querySelector('span').textContent = 'All';
+        });
+        dropdownMenu.appendChild(allDropdownItem);
+        
+        // Add context options to dropdown
+        this.contexts.forEach(context => {
+            const item = document.createElement('button');
+            item.className = 'context-dropdown-item' + (this.activeContext === context.id ? ' active' : '');
+            
+            const span = document.createElement('span');
+            span.textContent = context.name;
+            item.appendChild(span);
+            
+            item.addEventListener('click', () => {
+                this.setActiveContext(context.id);
+                dropdown.classList.remove('active');
+                dropdownToggle.querySelector('span').textContent = context.name;
+            });
+            dropdownMenu.appendChild(item);
+        });
+        
+        // Toggle dropdown on click
+        dropdownToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle('active');
+        });
+        
+        // Store dropdown close handler for cleanup
+        this.dropdownCloseHandler = (e) => {
+            if (!dropdown.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        };
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', this.dropdownCloseHandler);
+        
+        dropdown.appendChild(dropdownToggle);
+        dropdown.appendChild(dropdownMenu);
+        
+        // Add both structures to the context switcher
+        contextSwitcher.appendChild(buttonsWrapper);
+        contextSwitcher.appendChild(dropdown);
     }
     
     setActiveContext(contextId) {
@@ -5725,18 +5804,46 @@ class NotesWiki {
         this.settings.activeContext = contextId;
         this.saveSettings();
         
-        // Update UI
+        // Update button UI
         document.querySelectorAll('.context-button').forEach(btn => {
             btn.classList.remove('active');
         });
         
+        // Update dropdown UI
+        document.querySelectorAll('.context-dropdown-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
         if (contextId) {
+            // Update buttons
             const activeBtn = Array.from(document.querySelectorAll('.context-button')).find(
                 btn => btn.textContent.toLowerCase().includes(contextId.replace('-', ' '))
             );
             if (activeBtn) activeBtn.classList.add('active');
+            
+            // Update dropdown items
+            const activeDropdownItem = Array.from(document.querySelectorAll('.context-dropdown-item')).find(
+                item => item.textContent.toLowerCase().includes(contextId.replace('-', ' '))
+            );
+            if (activeDropdownItem) activeDropdownItem.classList.add('active');
+            
+            // Update dropdown toggle text
+            const dropdownToggle = document.querySelector('.context-dropdown-toggle span');
+            if (dropdownToggle) {
+                const context = this.contexts.find(c => c.id === contextId);
+                if (context) dropdownToggle.textContent = context.name;
+            }
         } else {
-            document.querySelector('.context-button').classList.add('active');
+            // Set "All" as active
+            const allButton = document.querySelector('.context-button');
+            if (allButton) allButton.classList.add('active');
+            
+            const allDropdownItem = document.querySelector('.context-dropdown-item');
+            if (allDropdownItem) allDropdownItem.classList.add('active');
+            
+            // Update dropdown toggle text
+            const dropdownToggle = document.querySelector('.context-dropdown-toggle span');
+            if (dropdownToggle) dropdownToggle.textContent = 'All';
         }
         
         // Rebuild navigation with filtered notes
@@ -7263,6 +7370,12 @@ class NotesWiki {
                 const tabPreview = document.getElementById('tab-preview');
                 if (tabPreview) {
                     tabPreview.remove();
+                }
+                
+                // Remove dropdown close handler
+                if (this.dropdownCloseHandler) {
+                    document.removeEventListener('click', this.dropdownCloseHandler);
+                    this.dropdownCloseHandler = null;
                 }
                 
                 console.log('Application cleanup completed');
