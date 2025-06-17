@@ -5460,3 +5460,211 @@ body.focus-mode .floating-share {
     background-color: var(--accent-color);
     color: white;
 }
+
+/* Print Styles for Export to PDF */
+@media print {
+    /* Hide UI elements */
+    .sidebar,
+    .header,
+    .tab-bar,
+    .floating-expand,
+    .note-actions,
+    .note-bookmark,
+    .export-pdf,
+    .reading-progress-bar,
+    .focus-mode-toggle,
+    #table-of-contents .toc-toggle,
+    #note-search-ui {
+        display: none !important;
+    }
+    
+    /* Reset layout for print */
+    body {
+        background: white;
+        color: black;
+        font-size: 12pt;
+        line-height: 1.6;
+    }
+    
+    .main-layout {
+        display: block;
+    }
+    
+    .main-content {
+        margin: 0;
+        padding: 0;
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    .note-container {
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .note-header {
+        margin-bottom: 20pt;
+        padding-bottom: 10pt;
+        border-bottom: 2pt solid #ccc;
+    }
+    
+    .note-header h1 {
+        font-size: 24pt;
+        margin: 0 0 10pt 0;
+        color: black;
+    }
+    
+    .note-metadata {
+        font-size: 10pt;
+        color: #666;
+    }
+    
+    /* Content styles */
+    .note-content {
+        font-size: 11pt;
+        line-height: 1.8;
+    }
+    
+    .note-content h1 { font-size: 20pt; margin-top: 20pt; }
+    .note-content h2 { font-size: 18pt; margin-top: 18pt; }
+    .note-content h3 { font-size: 16pt; margin-top: 16pt; }
+    .note-content h4 { font-size: 14pt; margin-top: 14pt; }
+    .note-content h5 { font-size: 12pt; margin-top: 12pt; }
+    .note-content h6 { font-size: 11pt; margin-top: 11pt; }
+    
+    /* Ensure headings don't break from content */
+    .note-content h1,
+    .note-content h2,
+    .note-content h3,
+    .note-content h4,
+    .note-content h5,
+    .note-content h6 {
+        page-break-after: avoid;
+        page-break-inside: avoid;
+    }
+    
+    /* Code blocks */
+    pre {
+        background-color: #f5f5f5 !important;
+        border: 1pt solid #ddd !important;
+        padding: 10pt !important;
+        margin: 10pt 0 !important;
+        page-break-inside: avoid;
+        font-size: 9pt;
+        line-height: 1.4;
+    }
+    
+    code {
+        background-color: #f5f5f5 !important;
+        padding: 2pt 4pt !important;
+        font-size: 9pt;
+        color: black !important;
+    }
+    
+    /* Tables */
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 10pt 0;
+        page-break-inside: avoid;
+    }
+    
+    th, td {
+        border: 1pt solid #ddd;
+        padding: 6pt;
+        text-align: left;
+    }
+    
+    th {
+        background-color: #f5f5f5;
+        font-weight: bold;
+    }
+    
+    /* Links */
+    a {
+        color: black;
+        text-decoration: underline;
+    }
+    
+    /* Show link URLs */
+    a[href]:after {
+        content: " (" attr(href) ")";
+        font-size: 9pt;
+        color: #666;
+    }
+    
+    /* But not for internal links */
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+        content: "";
+    }
+    
+    /* Images */
+    img {
+        max-width: 100%;
+        page-break-inside: avoid;
+    }
+    
+    /* Blockquotes */
+    blockquote {
+        border-left: 3pt solid #ddd;
+        padding-left: 10pt;
+        margin: 10pt 0;
+        font-style: italic;
+    }
+    
+    /* Table of Contents for print */
+    #table-of-contents {
+        position: static;
+        width: 100%;
+        margin-bottom: 20pt;
+        padding: 10pt;
+        background-color: #f9f9f9;
+        border: 1pt solid #ddd;
+        page-break-after: always;
+    }
+    
+    #table-of-contents .toc-header h3 {
+        font-size: 16pt;
+        margin-bottom: 10pt;
+    }
+    
+    #table-of-contents .toc-entry {
+        page-break-inside: avoid;
+    }
+    
+    #table-of-contents .toc-entry a {
+        text-decoration: none;
+        color: black;
+    }
+    
+    #table-of-contents .toc-entry a:after {
+        content: "";
+    }
+    
+    /* Page numbers for TOC entries would need JavaScript */
+    
+    /* Footer for each page */
+    @page {
+        margin: 1in;
+        @bottom-right {
+            content: counter(page);
+        }
+    }
+    
+    /* Avoid breaking inside important elements */
+    p, li, blockquote {
+        page-break-inside: avoid;
+    }
+    
+    /* Force page break before main sections */
+    .note-content > h1 {
+        page-break-before: always;
+    }
+    
+    /* First h1 shouldn't have page break */
+    .note-content > h1:first-child {
+        page-break-before: avoid;
+    }
+}
