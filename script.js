@@ -5797,6 +5797,79 @@ class NotesWiki {
         // Add both structures to the context switcher
         contextSwitcher.appendChild(buttonsWrapper);
         contextSwitcher.appendChild(dropdown);
+        
+        // Set up overflow detection
+        this.setupContextOverflowDetection(contextSwitcher, buttonsWrapper, dropdown);
+    }
+    
+    setupContextOverflowDetection(container, buttonsWrapper, dropdown) {
+        // Function to check if buttons overflow
+        const checkOverflow = () => {
+            // Get available space
+            const containerWidth = container.offsetWidth;
+            const searchContainer = document.querySelector('.search-container');
+            const logoWidth = document.querySelector('.logo-link')?.offsetWidth || 0;
+            const searchWidth = searchContainer?.offsetWidth || 0;
+            const spacing = 40; // Account for margins and gaps
+            
+            // Calculate available space for context switcher
+            const headerWidth = container.parentElement.offsetWidth;
+            const availableWidth = headerWidth - logoWidth - searchWidth - spacing;
+            
+            // Calculate total width of all buttons
+            let totalButtonsWidth = 0;
+            const buttons = buttonsWrapper.querySelectorAll('.context-button');
+            
+            // Temporarily show buttons to measure
+            buttonsWrapper.style.display = 'flex';
+            dropdown.style.display = 'none';
+            
+            buttons.forEach(button => {
+                totalButtonsWidth += button.offsetWidth + 8; // Include gap
+            });
+            
+            // Check if buttons fit
+            const hasOverflow = totalButtonsWidth > availableWidth || buttons.length > 8;
+            
+            if (hasOverflow) {
+                // Switch to dropdown
+                buttonsWrapper.classList.add('has-overflow');
+                dropdown.classList.add('show-for-overflow');
+                buttonsWrapper.style.display = 'none';
+                dropdown.style.display = 'block';
+            } else {
+                // Show buttons
+                buttonsWrapper.classList.remove('has-overflow');
+                dropdown.classList.remove('show-for-overflow');
+                buttonsWrapper.style.display = 'flex';
+                dropdown.style.display = 'none';
+            }
+        };
+        
+        // Check on load
+        setTimeout(checkOverflow, 100);
+        
+        // Check on window resize
+        let resizeTimeout;
+        const handleResize = () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(checkOverflow, 150);
+        };
+        
+        window.addEventListener('resize', handleResize);
+        
+        // Store handler for cleanup
+        this.contextResizeHandler = handleResize;
+        
+        // Use ResizeObserver if available for more accurate detection
+        if (window.ResizeObserver) {
+            const resizeObserver = new ResizeObserver(() => {
+                checkOverflow();
+            });
+            
+            resizeObserver.observe(container.parentElement); // Observe header
+            this.contextResizeObserver = resizeObserver;
+        }
     }
     
     setActiveContext(contextId) {
@@ -7376,6 +7449,18 @@ class NotesWiki {
                 if (this.dropdownCloseHandler) {
                     document.removeEventListener('click', this.dropdownCloseHandler);
                     this.dropdownCloseHandler = null;
+                }
+                
+                // Remove context resize handler
+                if (this.contextResizeHandler) {
+                    window.removeEventListener('resize', this.contextResizeHandler);
+                    this.contextResizeHandler = null;
+                }
+                
+                // Disconnect ResizeObserver
+                if (this.contextResizeObserver) {
+                    this.contextResizeObserver.disconnect();
+                    this.contextResizeObserver = null;
                 }
                 
                 console.log('Application cleanup completed');

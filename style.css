@@ -149,18 +149,32 @@ body {
     margin-left: auto;
     margin-right: var(--spacing-lg);
     position: relative;
+    min-width: 0; /* Allow shrinking */
 }
 
 /* Context buttons wrapper for default display */
 .context-buttons-wrapper {
     display: flex;
     gap: var(--spacing-xs);
+    flex-wrap: nowrap;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+/* Hide wrapper when overflow is detected */
+.context-buttons-wrapper.has-overflow {
+    display: none;
 }
 
 /* Context dropdown - hidden by default */
 .context-dropdown {
     position: relative;
     display: none;
+}
+
+/* Show dropdown when overflow is detected */
+.context-dropdown.show-for-overflow {
+    display: block;
 }
 
 .context-dropdown-toggle {
@@ -4640,11 +4654,11 @@ select.dropdown:focus {
 
 /* Medium screens - switch to dropdown at 1024px */
 @media (max-width: 1024px) and (min-width: 769px) {
-    .context-buttons-wrapper {
+    .context-buttons-wrapper:not(.has-overflow) {
         display: none;
     }
     
-    .context-dropdown {
+    .context-dropdown:not(.show-for-overflow) {
         display: block;
     }
 }
@@ -4718,11 +4732,11 @@ select.dropdown:focus {
     }
     
     /* Show dropdown on mobile */
-    .context-buttons-wrapper {
+    .context-buttons-wrapper:not(.has-overflow) {
         display: none;
     }
     
-    .context-dropdown {
+    .context-dropdown:not(.show-for-overflow) {
         display: block;
     }
     
