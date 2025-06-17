@@ -95,10 +95,12 @@ body {
     justify-content: space-between;
     height: 100%;
     padding: 0 var(--spacing-lg);
+    gap: var(--spacing-md);
 }
 
 .header-left {
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     gap: var(--spacing-md);
 }
@@ -146,10 +148,11 @@ body {
     display: flex;
     align-items: center;
     gap: var(--spacing-xs);
-    margin-left: auto;
-    margin-right: var(--spacing-lg);
+    flex: 1 1 auto; /* Allow growing and shrinking */
+    min-width: 0; /* Allow shrinking below content size */
+    max-width: 600px; /* Maximum width to prevent too much spreading */
     position: relative;
-    min-width: 0; /* Allow shrinking */
+    overflow: hidden; /* Hide overflow */
 }
 
 /* Context buttons wrapper for default display */
@@ -158,7 +161,8 @@ body {
     gap: var(--spacing-xs);
     flex-wrap: nowrap;
     overflow: hidden;
-    max-width: 100%;
+    width: 100%;
+    min-width: 0; /* Allow shrinking */
 }
 
 /* Hide wrapper when overflow is detected */
@@ -311,6 +315,7 @@ body {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
+    flex-shrink: 0;
 }
 
 /* Buttons */

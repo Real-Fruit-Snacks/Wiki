@@ -5805,31 +5805,49 @@ class NotesWiki {
     setupContextOverflowDetection(container, buttonsWrapper, dropdown) {
         // Function to check if buttons overflow
         const checkOverflow = () => {
-            // Get available space
-            const containerWidth = container.offsetWidth;
-            const searchContainer = document.querySelector('.search-container');
-            const logoWidth = document.querySelector('.logo-link')?.offsetWidth || 0;
-            const searchWidth = searchContainer?.offsetWidth || 0;
-            const spacing = 40; // Account for margins and gaps
-            
-            // Calculate available space for context switcher
-            const headerWidth = container.parentElement.offsetWidth;
-            const availableWidth = headerWidth - logoWidth - searchWidth - spacing;
-            
-            // Calculate total width of all buttons
-            let totalButtonsWidth = 0;
-            const buttons = buttonsWrapper.querySelectorAll('.context-button');
-            
-            // Temporarily show buttons to measure
+            // First, ensure buttons are visible to measure
             buttonsWrapper.style.display = 'flex';
+            buttonsWrapper.style.visibility = 'visible';
+            buttonsWrapper.style.position = 'relative';
             dropdown.style.display = 'none';
             
-            buttons.forEach(button => {
-                totalButtonsWidth += button.offsetWidth + 8; // Include gap
+            // Force layout recalculation
+            buttonsWrapper.offsetHeight;
+            
+            const buttons = buttonsWrapper.querySelectorAll('.context-button');
+            
+            // Method 1: Check if wrapper scrollWidth exceeds clientWidth
+            const wrapperOverflows = buttonsWrapper.scrollWidth > buttonsWrapper.clientWidth;
+            
+            // Method 2: Check if last button is cut off
+            let lastButtonCutOff = false;
+            if (buttons.length > 0) {
+                const lastButton = buttons[buttons.length - 1];
+                const wrapperRect = buttonsWrapper.getBoundingClientRect();
+                const buttonRect = lastButton.getBoundingClientRect();
+                lastButtonCutOff = buttonRect.right > wrapperRect.right;
+            }
+            
+            // Method 3: Check against container width
+            const containerRect = container.getBoundingClientRect();
+            const buttonsRect = buttonsWrapper.getBoundingClientRect();
+            const containerOverflow = buttonsRect.width > containerRect.width;
+            
+            // Method 4: Calculate total button width
+            let totalButtonsWidth = 0;
+            buttons.forEach((button, index) => {
+                totalButtonsWidth += button.offsetWidth;
+                if (index < buttons.length - 1) {
+                    totalButtonsWidth += 8; // gap between buttons
+                }
             });
             
-            // Check if buttons fit
-            const hasOverflow = totalButtonsWidth > availableWidth || buttons.length > 8;
+            // Get actual available space for buttons wrapper
+            const availableSpace = container.offsetWidth - 20; // small margin
+            
+            // Check if we have overflow or too many buttons
+            const hasOverflow = wrapperOverflows || lastButtonCutOff || containerOverflow || 
+                              totalButtonsWidth > availableSpace || buttons.length > 8;
             
             if (hasOverflow) {
                 // Switch to dropdown
@@ -5838,7 +5856,7 @@ class NotesWiki {
                 buttonsWrapper.style.display = 'none';
                 dropdown.style.display = 'block';
             } else {
-                // Show buttons
+                // Show buttons  
                 buttonsWrapper.classList.remove('has-overflow');
                 dropdown.classList.remove('show-for-overflow');
                 buttonsWrapper.style.display = 'flex';
@@ -5846,8 +5864,13 @@ class NotesWiki {
             }
         };
         
-        // Check on load
+        // Check on load with multiple attempts to ensure DOM is ready
         setTimeout(checkOverflow, 100);
+        setTimeout(checkOverflow, 300);
+        setTimeout(checkOverflow, 500);
+        
+        // Also check when window loads completely
+        window.addEventListener('load', checkOverflow);
         
         // Check on window resize
         let resizeTimeout;
