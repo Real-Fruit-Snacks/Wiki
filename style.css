@@ -299,36 +299,6 @@ body {
     font-weight: 600;
 }
 
-/* Tab preview */
-.tab-preview {
-    position: absolute;
-    z-index: 1000;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-primary);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-md);
-    box-shadow: var(--shadow-lg);
-    max-width: 400px;
-    display: none;
-}
-
-.tab-preview-title {
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 0.25rem;
-}
-
-.tab-preview-path {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    margin-bottom: 0.5rem;
-}
-
-.tab-preview-content {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    line-height: 1.4;
-}
 
 /* Tab bar */
 .tab-bar {

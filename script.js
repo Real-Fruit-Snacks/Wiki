@@ -6190,20 +6190,7 @@ class NotesWiki {
             }
         });
         
-        // Add tab preview on hover
-        let hoverTimeout;
-        tabElement.addEventListener('mouseenter', (e) => {
-            if (tabId === this.activeTabId) return;
-            
-            hoverTimeout = setTimeout(() => {
-                this.showTabPreview(tabId, e.currentTarget);
-            }, 500);
-        });
-        
-        tabElement.addEventListener('mouseleave', () => {
-            clearTimeout(hoverTimeout);
-            this.hideTabPreview();
-        });
+        // Removed tab preview functionality - no longer needed
         
         // Middle-click to close
         tabElement.addEventListener('mousedown', (e) => {
@@ -6554,70 +6541,6 @@ class NotesWiki {
         }
     }
     
-    showTabPreview(tabId, tabElement) {
-        const tab = this.tabs.get(tabId);
-        if (!tab) return;
-        
-        // Get cached content or load summary
-        let content = this.tabContents.get(tabId);
-        let preview = '';
-        
-        if (content) {
-            // Extract first paragraph or summary from content
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = content;
-            
-            // Try to get the first meaningful text
-            const firstParagraph = tempDiv.querySelector('p, .note-description, h1');
-            if (firstParagraph) {
-                preview = firstParagraph.textContent.trim().substring(0, 200) + '...';
-            } else {
-                preview = tempDiv.textContent.trim().substring(0, 200) + '...';
-            }
-        } else {
-            // Load note metadata from index
-            const noteInfo = this.notesIndex?.notes?.find(note => note.path === tab.path);
-            if (noteInfo?.metadata?.description) {
-                preview = noteInfo.metadata.description;
-            }
-        }
-        
-        // Create preview element
-        let previewEl = document.getElementById('tab-preview');
-        if (!previewEl) {
-            previewEl = document.createElement('div');
-            previewEl.id = 'tab-preview';
-            previewEl.className = 'tab-preview';
-            document.body.appendChild(previewEl);
-        }
-        
-        previewEl.innerHTML = `
-            <div class="tab-preview-title">${this.escapeHtml(tab.title)}</div>
-            <div class="tab-preview-path">${tab.path}</div>
-            ${preview ? `<div class="tab-preview-content">${this.escapeHtml(preview)}</div>` : ''}
-        `;
-        
-        // Position the preview
-        const rect = tabElement.getBoundingClientRect();
-        previewEl.style.display = 'block';
-        previewEl.style.top = `${rect.bottom + 5}px`;
-        previewEl.style.left = `${Math.max(10, rect.left)}px`;
-        
-        // Ensure preview doesn't go off screen
-        requestAnimationFrame(() => {
-            const previewRect = previewEl.getBoundingClientRect();
-            if (previewRect.right > window.innerWidth - 10) {
-                previewEl.style.left = `${window.innerWidth - previewRect.width - 10}px`;
-            }
-        });
-    }
-    
-    hideTabPreview() {
-        const previewEl = document.getElementById('tab-preview');
-        if (previewEl) {
-            previewEl.style.display = 'none';
-        }
-    }
     
     openInNewTab(path) {
         // Prevent duplicate tabs by tracking pending tab creations
@@ -7334,6 +7257,12 @@ class NotesWiki {
                         mainContent.removeEventListener('scroll', window.progressScrollHandler);
                     }
                     delete window.progressScrollHandler;
+                }
+                
+                // Remove any leftover tab preview elements
+                const tabPreview = document.getElementById('tab-preview');
+                if (tabPreview) {
+                    tabPreview.remove();
                 }
                 
                 console.log('Application cleanup completed');
