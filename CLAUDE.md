@@ -49,7 +49,7 @@ This is a **single-page application (SPA)** built with vanilla JavaScript - no f
 ### Critical Architecture Issues
 
 ⚠️ **MONOLITHIC DESIGN WARNING**: The application currently suffers from severe architectural debt:
-- **7,355 lines** in a single `script.js` file
+- **7,284 lines** in a single `script.js` file (reduced from 7,355 after recent cleanup)
 - **~180+ methods** in one `NotesWiki` class
 - **Difficult to maintain, test, and extend**
 
@@ -137,13 +137,13 @@ When making significant changes, consider the modular refactoring plan:
    ```
 
 2. **Common leak sources** (now addressed but require vigilance):
-   - Scroll handlers with timeouts (TOC, reading progress)
-   - Search key handlers (now cleaned up properly)
-   - Tab hover timeouts
-   - Modal escape handlers
-   - Drag-and-drop handlers
-   - AudioContext instances (now reused)
-   - Pomodoro timer intervals (now cleaned up on page lifecycle)
+   - Scroll handlers with timeouts (TOC, reading progress) - ✅ cleanup implemented
+   - Search key handlers - ✅ cleanup implemented  
+   - Modal escape handlers - ✅ cleanup implemented
+   - Drag-and-drop handlers - ⚠️ still requires manual cleanup
+   - AudioContext instances - ✅ now reused and properly closed
+   - Pomodoro timer intervals - ✅ cleaned up on page lifecycle
+   - Tab preview handlers - ✅ removed entirely
 
 3. **Error handling requirements** (now implemented throughout):
    ```javascript
@@ -192,6 +192,8 @@ element.innerHTML = userInput; // Only for trusted SVG/static content
 8. **Memory Management**: Added page lifecycle cleanup handlers (`setupCleanupHandlers()`) to prevent memory leaks
 9. **Error Handling**: Application initialization with user-friendly error display and graceful degradation
 10. **localStorage Safety**: Comprehensive error handling for storage quota/disabled scenarios across all features
+11. **Tab Preview Removal**: Eliminated problematic tab hover preview system that caused `tabElement is null` errors
+12. **Help Menu Accuracy**: Corrected all keyboard shortcuts and functionality descriptions in the help modal (? key)
 
 ### Layout and Styling Architecture
 
@@ -207,8 +209,21 @@ The application uses a flexbox-based layout:
 
 🎯 **Browser conflict resolution**: 
 - Primary shortcuts: `Alt+W`, `Alt+T`, `Alt+1-9` (browser-compatible)
-- Legacy shortcuts: `Ctrl+W`, `Ctrl+T`, `Ctrl+1-9` (may conflict)
+- Legacy shortcuts: `Ctrl+W`, `Ctrl+T`, `Ctrl+1-9` (may conflict with browser)
+- Focus mode: `F` key (no conflicts)
+- Help menu: `?` key (no conflicts)
 - The application includes dual shortcut support for maximum compatibility
+
+### Help System
+
+The application includes a comprehensive help modal accessible via the `?` key:
+- **Dynamic shortcut display**: Shows current custom shortcuts from settings
+- **Accurate functionality**: All descriptions match actual implementation
+- **Professional styling**: Consistent with app design system
+- **Organized sections**: Navigation, Search, Content Actions, Mouse Actions, Timer
+- **Browser warnings**: Clear notes about potential shortcut conflicts
+
+⚠️ **Help Menu Maintenance**: When adding new functionality, update both the implementation AND the help content in `index.html` (shortcuts-modal section).
 
 ### Testing and Quality Assurance
 
@@ -256,3 +271,23 @@ description: Brief description
 ```
 
 The build system (`build.py`) processes these files to create a searchable index with full-text content, code blocks, and metadata.
+
+## Recent Development Notes
+
+### Completed Bug Fixes (Latest Session)
+All major issues identified in comprehensive testing have been resolved:
+- ✅ **Syntax highlighting** fully functional with Prism.js
+- ✅ **Tab creation** (Ctrl+T) working correctly
+- ✅ **Theme switching** with robust error handling
+- ✅ **Navigation features** (TOC, bookmarks, focus mode) stable
+- ✅ **Memory management** comprehensive cleanup implemented
+- ✅ **Tab preview removal** eliminated console errors
+- ✅ **Help documentation** accurate and professional
+
+### Development Workflow
+When making changes to this codebase:
+1. **Test syntax**: `npm run validate` after any JavaScript changes
+2. **Rebuild index**: `npm run build` after adding/modifying notes
+3. **Local testing**: `npm run serve` for manual verification
+4. **Help updates**: Update help modal content when adding features
+5. **Memory management**: Implement proper event listener cleanup
