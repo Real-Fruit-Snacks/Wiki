@@ -8,22 +8,31 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 The application requires a search index to be generated from markdown files:
 ```bash
 python3 build.py
+# or use npm script:
+npm run build
 ```
 This command scans all markdown files in the `/notes/` directory and generates `notes-index.json`.
 
 ### Local Development Server
 ```bash
 python3 -m http.server 8000
+# or use npm script:
+npm run serve
 ```
 Then navigate to `http://localhost:8000`
 
-### Validation and Testing
+### Testing and Validation
 ```bash
 # Check JavaScript syntax
 node -c script.js
+# or use npm script:
+npm run validate
 
-# Test locally before deployment
-python3 -m http.server 8000
+# Run comprehensive Puppeteer tests
+npm test
+
+# Run tests with debug output
+npm run test:debug
 
 # Validate search index generation
 python3 build.py  # Should output "Build complete!" with stats
@@ -40,8 +49,8 @@ This is a **single-page application (SPA)** built with vanilla JavaScript - no f
 ### Critical Architecture Issues
 
 ⚠️ **MONOLITHIC DESIGN WARNING**: The application currently suffers from severe architectural debt:
-- **6,598 lines** in a single `script.js` file
-- **159 methods** in one `NotesWiki` class
+- **6,752 lines** in a single `script.js` file
+- **~150+ methods** in one `NotesWiki` class
 - **Difficult to maintain, test, and extend**
 
 When making significant changes, consider the modular refactoring plan:
@@ -61,7 +70,7 @@ When making significant changes, consider the modular refactoring plan:
 2. **Main Application**: `script.js` - Contains the monolithic `NotesWiki` class that handles:
    - Tab management with drag-and-drop
    - Advanced search with operators (`tag:`, `author:`, `code:`, etc.)
-   - Theme switching (50+ themes in `/themes/`)
+   - Theme switching (50 themes in `/themes/`)
    - Settings persistence via localStorage
    - Pomodoro timer, keyboard shortcuts, context filtering
 
@@ -102,17 +111,19 @@ When making significant changes, consider the modular refactoring plan:
 - Code syntax highlighting uses Prism.js with 20+ language support
 - Markdown rendering supports custom callouts, collapsible sections, and code block titles
 
-### Recently Added Features (v2.8.4+)
+### Recent Features (v2.9.0)
 
 1. **Table of Contents** - Auto-generated from headings, collapsible, tracks reading position
 2. **Wiki-style Links** - `[[Note Title]]` syntax creates internal links between notes
 3. **Reading Progress** - Progress bar and time estimation based on word count
 4. **Focus Mode** - Press 'F' to hide sidebar and center content for distraction-free reading
 5. **In-Note Search** - Ctrl+F to search within current note with highlighting and navigation
+6. **PDF Export** - Print-optimized styles with breadcrumb navigation
+7. **Enhanced Navigation** - Improved UI/UX for file tree and context switching
 
 ### Memory Management Critical Patterns
 
-⚠️ **MEMORY LEAK RISK**: The codebase has 111 `addEventListener` calls vs only 13 `removeEventListener` calls. **Always implement cleanup when modifying event handling.**
+⚠️ **MEMORY LEAK RISK**: The codebase has 112 `addEventListener` calls vs only 14 `removeEventListener` calls. **Always implement cleanup when modifying event handling.**
 
 1. **Required cleanup patterns**:
    ```javascript
@@ -154,7 +165,7 @@ element.textContent = userInput;
 element.innerHTML = userInput; // Only for trusted SVG/static content
 ```
 
-### Recently Applied Fixes (v2.8.5+)
+### Recently Applied Fixes (v2.9.0)
 
 ✅ **Critical fixes implemented**:
 1. **Memory Leak**: Search key handler cleanup in `hideSearch()`
@@ -162,6 +173,18 @@ element.innerHTML = userInput; // Only for trusted SVG/static content
 3. **localStorage Safety**: Error handling for storage quota/disabled scenarios
 4. **XSS Prevention**: Context name and action label sanitization
 5. **Performance**: Search input debouncing (150ms)
+6. **UI Centering**: Removed note statistics panel and fixed content centering
+7. **Layout Issues**: Corrected content positioning after panel removal
+
+### Layout and Styling Architecture
+
+The application uses a flexbox-based layout:
+- **Main Layout**: `.main-layout` contains sidebar and main content
+- **Sidebar**: Fixed 280px width (`--sidebar-width` CSS variable)
+- **Content**: Auto-centered with `margin: 0 auto` in `.content-wrapper`
+- **Responsive**: Transforms to mobile layout at 768px breakpoint
+
+⚠️ **Content Centering**: The content is automatically centered. Avoid adding transforms or margin adjustments that could offset the natural centering.
 
 ### Browser Keyboard Shortcuts
 
@@ -170,10 +193,30 @@ element.innerHTML = userInput; // Only for trusted SVG/static content
 - Legacy shortcuts: `Ctrl+W`, `Ctrl+T`, `Ctrl+1-9` (may conflict)
 - The application includes dual shortcut support for maximum compatibility
 
-### Recent Feature Additions (v2.8.4+)
+### Testing Infrastructure
 
-1. **Table of Contents** - Auto-generated from headings, collapsible, tracks reading position
-2. **Wiki-style Links** - `[[Note Title]]` syntax creates internal links between notes
-3. **Reading Progress** - Progress bar and time estimation based on word count
-4. **Focus Mode** - Press 'F' to hide sidebar and center content for distraction-free reading
-5. **In-Note Search** - Ctrl+F to search within current note with highlighting and navigation
+The project includes comprehensive Puppeteer-based testing:
+- **Layout Testing**: Automated content centering verification
+- **Feature Testing**: Search, navigation, tab management
+- **Responsive Testing**: Mobile and desktop viewport testing
+- **Visual Testing**: Screenshot generation for manual verification
+
+Test files:
+- `test-layout.js` - Layout and centering tests
+- `test-puppeteer.js` - Comprehensive feature testing
+
+### Content Management
+
+Notes are organized in `/notes/` with frontmatter support:
+```yaml
+---
+title: Note Title
+tags: [tag1, tag2]
+author: Author Name
+created: 2024-01-01
+updated: 2024-01-02
+description: Brief description
+---
+```
+
+The build system (`build.py`) processes these files to create a searchable index with full-text content, code blocks, and metadata.
