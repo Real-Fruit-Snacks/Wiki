@@ -711,6 +711,21 @@ class NotesWiki {
             this.applyWordWrapSetting();
         });
         
+        document.getElementById('show-table-of-contents').addEventListener('change', (e) => {
+            this.settings.showTableOfContents = e.target.checked;
+            this.saveSettings();
+            // Regenerate or remove TOC based on setting
+            if (this.settings.showTableOfContents) {
+                this.generateTableOfContents();
+            } else {
+                // Remove existing TOC
+                const existingToc = document.getElementById('table-of-contents');
+                if (existingToc) {
+                    existingToc.remove();
+                }
+            }
+        });
+        
         // Recent limit option pills
         const recentLimitOptions = document.getElementById('recent-limit-options');
         if (recentLimitOptions) {
@@ -1556,6 +1571,9 @@ class NotesWiki {
     }
     
     generateTableOfContents() {
+        // Check if TOC is enabled in settings
+        if (!this.settings.showTableOfContents) return;
+        
         const noteContent = document.querySelector('.note-content');
         if (!noteContent) return;
         
@@ -3173,6 +3191,7 @@ class NotesWiki {
         document.getElementById('track-recent').checked = this.settings.trackRecent;
         document.getElementById('show-line-numbers').checked = this.settings.showLineNumbers;
         document.getElementById('enable-word-wrap').checked = this.settings.enableWordWrap;
+        document.getElementById('show-table-of-contents').checked = this.settings.showTableOfContents;
         // Update recent limit option pills
         const recentLimitOptions = document.getElementById('recent-limit-options');
         if (recentLimitOptions) {
