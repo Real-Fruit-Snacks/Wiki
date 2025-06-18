@@ -3178,9 +3178,9 @@ class NotesWiki {
         }
     }
     
-    generateCombinedCodeBlock(metadata) {
-        // Get all code blocks from the current page
-        const codeBlocks = document.querySelectorAll('.code-block');
+    generateCombinedCodeBlock(metadata, container = document) {
+        // Get all code blocks from the current page or specified container
+        const codeBlocks = container.querySelectorAll('.code-block');
         if (codeBlocks.length === 0) return;
         
         // Parse options with defaults
@@ -3291,7 +3291,7 @@ class NotesWiki {
         `;
         
         // Insert at the end of the note content
-        const noteContent = document.querySelector('.note-content');
+        const noteContent = container.querySelector('.note-content');
         if (noteContent) {
             // Create a temporary div to hold the HTML
             const tempDiv = document.createElement('div');
@@ -3301,7 +3301,7 @@ class NotesWiki {
             noteContent.appendChild(tempDiv.firstElementChild);
             
             // Set the text content and highlight
-            const codeElement = document.getElementById(blockId + '-code');
+            const codeElement = container.querySelector(`#${blockId}-code`);
             if (codeElement) {
                 codeElement.textContent = combinedContent;
                 Prism.highlightElement(codeElement);
@@ -7897,6 +7897,46 @@ class NotesWiki {
             document.getElementById('main-content').id = tempId;
             document.getElementById('temp-original-main').id = 'main-content';
             paneContent.id = `main-content-${paneId.split('-')[1]}`;
+            
+            // Re-highlight code blocks in this specific pane
+            const codeBlocks = paneContent.querySelectorAll('pre code');
+            codeBlocks.forEach(block => {
+                Prism.highlightElement(block);
+            });
+            
+            // Re-apply line numbers if enabled
+            if (this.settings.showLineNumbers) {
+                paneContent.querySelectorAll('pre.with-line-numbers code').forEach(codeElement => {
+                    // Get the highlighted HTML from Prism
+                    const highlightedHtml = codeElement.innerHTML;
+                    
+                    // Split by line breaks, preserving empty lines
+                    const lines = highlightedHtml.split('\n');
+                    
+                    // Create numbered content
+                    const numberedContent = lines.map((line, index) => {
+                        const lineNumber = index + 1;
+                        const lineContent = line || ' '; // Preserve empty lines
+                        return `<span class="line-number" data-line="${lineNumber}"></span>${lineContent}`;
+                    }).join('\n');
+                    
+                    codeElement.innerHTML = numberedContent;
+                    codeElement.classList.add('code-with-counters');
+                });
+            }
+            
+            // Re-generate combined code block if enabled
+            const contentWrapper = paneContent.querySelector('.content-wrapper');
+            if (contentWrapper && contentWrapper.dataset.metadata) {
+                try {
+                    const metadata = JSON.parse(contentWrapper.dataset.metadata);
+                    if (metadata.combineCodeBlocks) {
+                        this.generateCombinedCodeBlock(metadata, paneContent);
+                    }
+                } catch (e) {
+                    console.warn('Failed to parse metadata for combined code blocks:', e);
+                }
+            }
         }
     }
     
