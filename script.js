@@ -2183,14 +2183,6 @@ class NotesWiki {
                                     <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
                                 </svg>
                             </button>
-                            <button class="note-action-btn export-pdf" 
-                                    onclick="notesWiki.exportToPDF()" 
-                                    title="Export to PDF / Print"
-                                    aria-label="Export to PDF">
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clip-rule="evenodd"/>
-                                </svg>
-                            </button>
                         </div>
                     </div>
                     
@@ -2677,27 +2669,6 @@ class NotesWiki {
         }
     }
     
-    exportToPDF() {
-        // Get current note title for filename
-        const noteTitle = document.querySelector('.note-title')?.textContent || 'note';
-        const safeTitle = noteTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-        const filename = `${safeTitle}_${new Date().toISOString().split('T')[0]}.pdf`;
-        
-        // Set document title for print
-        const originalTitle = document.title;
-        document.title = noteTitle;
-        
-        // Trigger print dialog
-        window.print();
-        
-        // Restore original title
-        setTimeout(() => {
-            document.title = originalTitle;
-        }, 1000);
-        
-        // Show toast notification
-        this.showToast('Opening print dialog... Use "Save as PDF" to export');
-    }
     
     generateBreadcrumbs(notePath) {
         // Remove leading slash and .md extension
