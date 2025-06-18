@@ -8193,11 +8193,11 @@ class NotesWiki {
         const container = document.getElementById('sticky-notes-container');
         
         const noteEl = document.createElement('div');
-        noteEl.className = `sticky-note sticky-note-${note.color}`;
+        noteEl.className = `sticky-note sticky-note-${note.color}${note.minimized ? ' minimized' : ''}`;
         noteEl.id = note.id;
         noteEl.style.left = `${note.position.x}px`;
         noteEl.style.top = `${note.position.y}px`;
-        noteEl.style.width = `${note.size.width}px`;
+        noteEl.style.width = note.minimized ? '180px' : `${note.size.width}px`;
         noteEl.style.height = note.minimized ? '44px' : `${note.size.height}px`;
         noteEl.style.zIndex = note.zIndex;
         
