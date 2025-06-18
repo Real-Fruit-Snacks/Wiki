@@ -1680,27 +1680,19 @@ class NotesWiki {
         try {
             // Check if TOC is enabled in settings and split view is not active
             if (!this.settings.showTableOfContents || this.settings.splitViewEnabled) {
-                console.log('TOC generation skipped:', {
-                    showTableOfContents: this.settings.showTableOfContents,
-                    splitViewEnabled: this.settings.splitViewEnabled
-                });
                 return;
             }
             
             const noteContent = document.querySelector('.note-content');
             if (!noteContent) {
-                console.log('TOC generation skipped: no .note-content found');
                 return;
             }
             
             // Find all headings
             const headings = noteContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
             if (headings.length < 2) {
-                console.log('TOC generation skipped: less than 2 headings found');
                 return; // Don't show TOC for less than 2 headings
             }
-            
-            console.log('Generating TOC with', headings.length, 'headings');
             
             // Remove existing TOC and cleanup
             this.cleanupExistingTOC();
@@ -7049,6 +7041,14 @@ class NotesWiki {
         // Re-setup floating share button
         this.setupFloatingShareButton();
         
+        // Regenerate Table of Contents when restoring cached content
+        requestAnimationFrame(() => {
+            this.generateTableOfContents();
+        });
+        
+        // Re-setup reading progress
+        this.setupReadingProgress();
+        
         // Re-setup internal links and tag links
         mainContent.querySelectorAll('a[href^="#"]').forEach(link => {
             // Skip if already has listener (check with data attribute)
@@ -8185,6 +8185,7 @@ class NotesWiki {
     createStickyNote(options = {}) {
         const note = {
             id: `sticky-${Date.now()}`,
+            title: options.title || 'Note',
             content: options.content || '',
             position: options.position || { x: 100 + Math.random() * 200, y: 100 + Math.random() * 200 },
             size: options.size || { width: 280, height: 200 },
@@ -8221,7 +8222,14 @@ class NotesWiki {
         
         noteEl.innerHTML = `
             <div class="sticky-note-header">
-                <div class="sticky-note-title">✨ Quick Note</div>
+                <input class="sticky-note-title" 
+                       type="text" 
+                       value="${this.escapeHtml(note.title)}" 
+                       placeholder="Note title..."
+                       onchange="notesWiki.updateStickyTitle('${note.id}', this.value)"
+                       onclick="event.stopPropagation()"
+                       onmousedown="event.stopPropagation()"
+                       onkeydown="if(event.key === 'Enter') this.blur(); if(event.key === 'Escape') { this.value = '${this.escapeHtml(note.title)}'; this.blur(); }">
                 <div class="sticky-note-actions">
                     <button class="sticky-note-btn minimize-btn" onclick="notesWiki.toggleStickyMinimize('${note.id}')" title="${note.minimized ? 'Expand' : 'Minimize'}">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -8348,6 +8356,14 @@ class NotesWiki {
         if (note) {
             note.content = content;
             this.throttledSaveStickyNotes();
+        }
+    }
+    
+    updateStickyTitle(noteId, title) {
+        const note = this.stickyNotes.get(noteId);
+        if (note) {
+            note.title = title || 'Quick Note';
+            this.saveStickyNotes();
         }
     }
     
