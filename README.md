@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-2.9.0-green?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/Version-3.0.0-green?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/Themes-50+-purple?style=flat-square" alt="Themes">
   <img src="https://img.shields.io/badge/Dependencies-Zero-orange?style=flat-square" alt="Zero Dependencies">
