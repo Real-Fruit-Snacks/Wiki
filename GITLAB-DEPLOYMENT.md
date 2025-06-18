@@ -75,7 +75,7 @@ your-project/
 │   ├── marked.min.js       # Markdown parser
 │   ├── prism.min.js        # Syntax highlighting
 │   └── js-yaml.min.js      # YAML parser
-├── themes/                 # 50 professional themes
+├── themes/                 # 50+ professional themes with responsive context filtering
 ├── notes/                  # Your content (markdown files)
 ├── images/                 # Image assets
 └── public/                 # Generated during build (GitLab Pages)

@@ -76,10 +76,10 @@ This release includes everything needed for complete offline hosting on GitLab P
 - ✅ Keyboard shortcuts
 
 #### New in v2.9.0
-- ✅ **Breadcrumb Navigation** - Hierarchical context
-- ✅ **Export to PDF** - Print-optimized styles
-- ✅ **Note Statistics** - Comprehensive content metrics
-- ✅ **Search Fix** - Reliable search functionality
+- ✅ **Responsive Context Filtering** - Smart dropdown that adapts to screen size
+- ✅ **Mobile Optimization** - Touch-friendly interface for all devices
+- ✅ **Enhanced Memory Management** - Proper cleanup for all UI components
+- ✅ **Professional UI/UX** - Improved visual consistency and highlighting
 
 #### Advanced Features
 - ✅ Table of Contents (toggleable)

@@ -1,31 +1,35 @@
 # Changelog
 
-## [2.9.0] - 2025-06-17
+## [2.9.0] - 2025-06-18
 
 ### Added
-- **Breadcrumb Navigation**: Shows hierarchical path for better context (e.g., Home › Technical › JavaScript)
-- **Export to PDF**: New button to export notes as PDF files with print-optimized styles
-- **Note Statistics Sidebar**: Comprehensive statistics panel showing:
-  - Content metrics: word count, character count
-  - Structure analysis: headings, paragraphs, lists
-  - Media tracking: links, images, code blocks
-- **Statistics Toggle**: Collapsible statistics panel with state persistence
+- **Responsive Context Filtering**: Smart dropdown system that adapts to screen size and category count
+  - Automatically switches to dropdown on mobile (≤768px) or when 6+ categories exist
+  - Categories positioned next to search button for consistent UX
+  - Full-width dropdown prevents text truncation
+  - Professional active state highlighting across all UI modes
+- **Mobile Optimization**: Touch-friendly interface with improved mobile navigation
+- **Enhanced Memory Management**: Comprehensive cleanup for context dropdown event handlers
 
 ### Fixed
-- **Critical Search Fix**: Search functionality now works reliably with proper null checks
-- **Search Index Loading**: Added validation to ensure index is loaded before search operations
+- **Context Switcher Positioning**: Categories now properly positioned next to search button
+- **Dropdown Width Issues**: Full category names displayed without truncation
+- **Active State Highlighting**: Selected contexts properly highlighted in both button and dropdown views
+- **Memory Leaks**: Proper cleanup of ResizeObserver and dropdown event handlers
 
 ### Improved
-- **Print Styles**: Comprehensive CSS for clean PDF export
-- **Error Handling**: Better validation throughout the application
-- **Memory Management**: Proper cleanup for all new features
+- **Responsive Design**: Better adaptation to different screen sizes and device orientations  
+- **Touch Experience**: Optimized dropdown interactions for mobile devices
+- **Visual Consistency**: Professional styling across all context switching modes
+- **Error Handling**: Graceful fallbacks for ResizeObserver and DOM manipulation
 
 ### Technical Details
-- Added `generateBreadcrumbs()` method for navigation context
-- Added `exportToPDF()` method with print dialog integration
-- Added `generateNoteStatistics()` method for content analysis
-- Added `toggleStatistics()` method for panel visibility
-- Fixed search with null checks in `showSearch()` and `buildSearchIndex()`
+- Completely rewrote `buildContextSwitcher()` method with responsive logic
+- Added `setupContextDropdownHandlers()` for memory-efficient event management
+- Added `updateContextHighlighting()` for synchronized highlighting
+- Implemented intelligent breakpoint detection (768px mobile, 6+ category threshold)
+- Enhanced CSS with `.context-dropdown` and related responsive classes
+- Moved context switcher from center to header-nav area for better UX
 
 ## [2.8.9] - 2025-06-16
 

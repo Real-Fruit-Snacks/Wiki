@@ -30,6 +30,7 @@ This wiki system offers a comprehensive set of features for managing and present
 - **💾 Offline First** - All assets bundled locally, no internet required
 - **🔢 Line Numbers** - Toggle line numbers for code blocks with proper word-wrap alignment
 - **🔄 Alphabetical Sidebar** - Categories automatically sorted for better organization
+- **📋 Smart Context Filtering** - Responsive dropdown adapts to screen size and category count
 
 ## Key Features
 
