@@ -92,7 +92,7 @@ class NotesWiki {
         this.settings = {
             trackRecent: true,
             showLineNumbers: true,
-            enableWordWrap: false,
+            enableWordWrap: true,
             recentLimit: 20,
             theme: 'ayu-mirage',
             autoTheme: false, // Enable automatic theme switching based on system preferences
@@ -1678,8 +1678,8 @@ class NotesWiki {
     
     generateTableOfContents() {
         try {
-            // Check if TOC is enabled in settings
-            if (!this.settings.showTableOfContents) return;
+            // Check if TOC is enabled in settings and split view is not active
+            if (!this.settings.showTableOfContents || this.settings.splitViewEnabled) return;
             
             const noteContent = document.querySelector('.note-content');
             if (!noteContent) return;
@@ -7625,6 +7625,15 @@ class NotesWiki {
         
         this.saveSettings();
         this.showToast(this.settings.splitViewEnabled ? 'Split view enabled' : 'Split view disabled');
+        
+        // Handle TOC visibility based on split view state
+        if (this.settings.splitViewEnabled) {
+            // Hide TOC when split view is enabled
+            this.cleanupExistingTOC();
+        } else {
+            // Regenerate TOC when split view is disabled
+            this.generateTableOfContents();
+        }
     }
     
     enableSplitView() {
