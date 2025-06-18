@@ -9,7 +9,6 @@ combinedBlockLanguage: yaml
 combinedBlockTitle: "Example Combined Configuration"
 combinedBlockOptions:
   includeBlockTitles: true
-  separator: "\n# ---\n"
 ---
 
 # Combined Code Blocks - Automatic Code Aggregation
