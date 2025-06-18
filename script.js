@@ -5701,209 +5701,126 @@ class NotesWiki {
         // Clear existing content
         contextSwitcher.innerHTML = '';
         
-        // Create a wrapper for buttons
-        const buttonsWrapper = document.createElement('div');
-        buttonsWrapper.className = 'context-buttons-wrapper';
-        buttonsWrapper.style.display = 'flex';
-        buttonsWrapper.style.gap = 'var(--spacing-xs)';
+        // Check if we need dropdown view (mobile or too many contexts)
+        const isMobile = window.innerWidth <= 768;
+        const needsDropdown = isMobile || this.contexts.length > 6;
         
-        // Add "All" button
-        const allButton = document.createElement('button');
-        allButton.className = 'context-button' + (!this.activeContext ? ' active' : '');
-        allButton.innerHTML = `<span>All</span>`;
-        allButton.addEventListener('click', () => this.setActiveContext(null));
-        buttonsWrapper.appendChild(allButton);
-        
-        // Add context buttons
-        this.contexts.forEach(context => {
-            const button = document.createElement('button');
-            button.className = 'context-button' + (this.activeContext === context.id ? ' active' : '');
+        if (needsDropdown) {
+            // Create dropdown view
+            const dropdown = document.createElement('div');
+            dropdown.className = 'context-dropdown';
             
-            // Use textContent instead of innerHTML to prevent XSS
-            const span = document.createElement('span');
-            span.textContent = context.name;
-            button.appendChild(span);
+            // Create dropdown toggle button
+            const dropdownToggle = document.createElement('button');
+            dropdownToggle.className = 'icon-button context-dropdown-toggle';
+            const activeContextName = this.activeContext ? 
+                this.contexts.find(c => c.id === this.activeContext)?.name || 'Unknown' : 
+                'All';
+            dropdownToggle.innerHTML = `
+                <span class="context-dropdown-label">${activeContextName}</span>
+                <svg class="context-dropdown-chevron" width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                    <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                </svg>
+            `;
             
-            button.addEventListener('click', () => this.setActiveContext(context.id));
-            buttonsWrapper.appendChild(button);
-        });
-        
-        // Add wrapper to context switcher
-        contextSwitcher.appendChild(buttonsWrapper);
-        
-        // Create dropdown for overflow situations - add to header-nav
-        const headerNav = document.querySelector('.header-nav');
-        const searchToggle = document.getElementById('search-toggle');
-        
-        // Create dropdown container
-        const dropdown = document.createElement('div');
-        dropdown.className = 'context-dropdown';
-        dropdown.id = 'context-dropdown-nav';
-        dropdown.style.display = 'none'; // Hidden by default
-        
-        // Create dropdown toggle button
-        const dropdownToggle = document.createElement('button');
-        dropdownToggle.className = 'icon-button context-dropdown-toggle';
-        const activeContextName = this.activeContext ? 
-            this.contexts.find(c => c.id === this.activeContext)?.name || 'Unknown' : 
-            'All';
-        dropdownToggle.innerHTML = `
-            <span class="context-dropdown-label">${activeContextName}</span>
-            <svg class="context-dropdown-chevron" width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
-                <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            </svg>
-        `;
-        
-        // Create dropdown menu
-        const dropdownMenu = document.createElement('div');
-        dropdownMenu.className = 'context-dropdown-menu';
-        
-        // Add "All" option to dropdown
-        const allDropdownItem = document.createElement('button');
-        allDropdownItem.className = 'context-dropdown-item' + (!this.activeContext ? ' active' : '');
-        allDropdownItem.innerHTML = `<span>All</span>`;
-        allDropdownItem.addEventListener('click', () => {
-            this.setActiveContext(null);
-            dropdown.classList.remove('active');
-            dropdownToggle.querySelector('.context-dropdown-label').textContent = 'All';
-        });
-        dropdownMenu.appendChild(allDropdownItem);
-        
-        // Add context options to dropdown
-        this.contexts.forEach(context => {
-            const item = document.createElement('button');
-            item.className = 'context-dropdown-item' + (this.activeContext === context.id ? ' active' : '');
+            // Create dropdown menu
+            const dropdownMenu = document.createElement('div');
+            dropdownMenu.className = 'context-dropdown-menu';
             
-            const span = document.createElement('span');
-            span.textContent = context.name;
-            item.appendChild(span);
-            
-            item.addEventListener('click', () => {
-                this.setActiveContext(context.id);
+            // Add "All" option to dropdown
+            const allDropdownItem = document.createElement('button');
+            allDropdownItem.className = 'context-dropdown-item' + (!this.activeContext ? ' active' : '');
+            allDropdownItem.innerHTML = `<span>All</span>`;
+            allDropdownItem.addEventListener('click', () => {
+                this.setActiveContext(null);
                 dropdown.classList.remove('active');
-                dropdownToggle.querySelector('.context-dropdown-label').textContent = context.name;
+                dropdownToggle.querySelector('.context-dropdown-label').textContent = 'All';
             });
-            dropdownMenu.appendChild(item);
-        });
+            dropdownMenu.appendChild(allDropdownItem);
+            
+            // Add context options to dropdown
+            this.contexts.forEach(context => {
+                const item = document.createElement('button');
+                item.className = 'context-dropdown-item' + (this.activeContext === context.id ? ' active' : '');
+                
+                const span = document.createElement('span');
+                span.textContent = context.name;
+                item.appendChild(span);
+                
+                item.addEventListener('click', () => {
+                    this.setActiveContext(context.id);
+                    dropdown.classList.remove('active');
+                    dropdownToggle.querySelector('.context-dropdown-label').textContent = context.name;
+                });
+                dropdownMenu.appendChild(item);
+            });
+            
+            // Toggle dropdown on click
+            dropdownToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdown.classList.toggle('active');
+            });
+            
+            // Store dropdown close handler for cleanup
+            this.dropdownCloseHandler = (e) => {
+                if (!dropdown.contains(e.target)) {
+                    dropdown.classList.remove('active');
+                }
+            };
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', this.dropdownCloseHandler);
+            
+            dropdown.appendChild(dropdownToggle);
+            dropdown.appendChild(dropdownMenu);
+            contextSwitcher.appendChild(dropdown);
+        } else {
+            // Create button view
+            const buttonsWrapper = document.createElement('div');
+            buttonsWrapper.className = 'context-buttons-wrapper';
+            
+            // Add "All" button
+            const allButton = document.createElement('button');
+            allButton.className = 'context-button' + (!this.activeContext ? ' active' : '');
+            allButton.innerHTML = `<span>All</span>`;
+            allButton.addEventListener('click', () => this.setActiveContext(null));
+            buttonsWrapper.appendChild(allButton);
+            
+            // Add context buttons
+            this.contexts.forEach(context => {
+                const button = document.createElement('button');
+                button.className = 'context-button' + (this.activeContext === context.id ? ' active' : '');
+                
+                // Use textContent instead of innerHTML to prevent XSS
+                const span = document.createElement('span');
+                span.textContent = context.name;
+                button.appendChild(span);
+                
+                button.addEventListener('click', () => this.setActiveContext(context.id));
+                buttonsWrapper.appendChild(button);
+            });
+            
+            contextSwitcher.appendChild(buttonsWrapper);
+        }
         
-        // Toggle dropdown on click
-        dropdownToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdown.classList.toggle('active');
-        });
-        
-        // Store dropdown close handler for cleanup
-        this.dropdownCloseHandler = (e) => {
-            if (!dropdown.contains(e.target)) {
-                dropdown.classList.remove('active');
-            }
-        };
-        
-        // Close dropdown when clicking outside
-        document.addEventListener('click', this.dropdownCloseHandler);
-        
-        dropdown.appendChild(dropdownToggle);
-        dropdown.appendChild(dropdownMenu);
-        
-        // Insert dropdown before search button
-        headerNav.insertBefore(dropdown, searchToggle);
-        
-        // Set up overflow detection
-        this.setupContextOverflowDetection(contextSwitcher, buttonsWrapper, dropdown);
+        // Set up responsive handler
+        this.setupContextResponsive();
     }
     
-    setupContextOverflowDetection(contextSwitcher, buttonsWrapper, dropdown) {
-        // Function to check if buttons overflow
-        const checkOverflow = () => {
-            // Temporarily show buttons wrapper to measure
-            buttonsWrapper.style.display = 'flex';
-            buttonsWrapper.style.visibility = 'hidden';
-            buttonsWrapper.style.position = 'absolute';
-            dropdown.style.display = 'none';
-            
-            // Force layout recalculation
-            buttonsWrapper.offsetHeight;
-            
-            const buttons = buttonsWrapper.querySelectorAll('.context-button');
-            
-            // Method 1: Check if wrapper scrollWidth exceeds clientWidth
-            const wrapperOverflows = buttonsWrapper.scrollWidth > buttonsWrapper.clientWidth;
-            
-            // Method 2: Check if last button is cut off
-            let lastButtonCutOff = false;
-            if (buttons.length > 0) {
-                const lastButton = buttons[buttons.length - 1];
-                const containerRect = contextSwitcher.getBoundingClientRect();
-                const buttonRect = lastButton.getBoundingClientRect();
-                lastButtonCutOff = buttonRect.right > containerRect.right;
-            }
-            
-            // Method 3: Calculate total button width
-            let totalButtonsWidth = 0;
-            buttons.forEach((button, index) => {
-                totalButtonsWidth += button.offsetWidth;
-                if (index < buttons.length - 1) {
-                    totalButtonsWidth += 8; // gap between buttons
-                }
-            });
-            
-            // Get available space for context switcher
-            const headerContent = contextSwitcher.parentElement;
-            const headerLeft = headerContent.querySelector('.header-left');
-            const headerNav = headerContent.querySelector('.header-nav');
-            const availableSpace = headerContent.offsetWidth - headerLeft.offsetWidth - headerNav.offsetWidth - 60; // margins
-            
-            // Check if we're on mobile
-            const isMobile = window.innerWidth <= 768;
-            
-            // Check if we have overflow or too many buttons
-            const hasOverflow = isMobile || wrapperOverflows || lastButtonCutOff || 
-                              totalButtonsWidth > availableSpace || buttons.length > 8;
-            
-            // Reset visibility and position
-            buttonsWrapper.style.visibility = '';
-            buttonsWrapper.style.position = '';
-            
-            if (hasOverflow) {
-                // Hide buttons wrapper and show dropdown
-                buttonsWrapper.style.display = 'none';
-                dropdown.style.display = 'inline-block';
-            } else {
-                // Show buttons wrapper and hide dropdown
-                buttonsWrapper.style.display = 'flex';
-                dropdown.style.display = 'none';
-            }
-        };
-        
-        // Check on load with multiple attempts to ensure DOM is ready
-        setTimeout(checkOverflow, 100);
-        setTimeout(checkOverflow, 300);
-        setTimeout(checkOverflow, 500);
-        
-        // Also check when window loads completely
-        window.addEventListener('load', checkOverflow);
-        
-        // Check on window resize
+    setupContextResponsive() {
+        // Handle window resize
         let resizeTimeout;
         const handleResize = () => {
             clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(checkOverflow, 150);
+            resizeTimeout = setTimeout(() => {
+                this.buildContextSwitcher(); // Rebuild on resize
+            }, 150);
         };
         
         window.addEventListener('resize', handleResize);
         
         // Store handler for cleanup
         this.contextResizeHandler = handleResize;
-        
-        // Use ResizeObserver if available for more accurate detection
-        if (window.ResizeObserver) {
-            const resizeObserver = new ResizeObserver(() => {
-                checkOverflow();
-            });
-            
-            resizeObserver.observe(contextSwitcher.parentElement); // Observe header
-            this.contextResizeObserver = resizeObserver;
-        }
     }
     
     setActiveContext(contextId) {

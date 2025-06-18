@@ -147,13 +147,8 @@ body {
     display: flex;
     align-items: center;
     gap: var(--spacing-xs);
-    margin-left: var(--spacing-md);
-    margin-right: var(--spacing-md);
-    min-width: 0; /* Allow shrinking below content size */
-    flex: 1 1 auto; /* Allow growing to fill available space */
-    max-width: 600px; /* Maximum width to prevent too much spreading */
-    position: relative;
-    overflow: hidden; /* Hide overflow */
+    margin-right: var(--spacing-sm);
+    order: -1; /* Place before other nav items */
 }
 
 
@@ -164,11 +159,10 @@ body {
     align-items: center;
 }
 
-/* Context dropdown - hidden by default */
+/* Context dropdown */
 .context-dropdown {
     position: relative;
-    display: none;
-    margin-right: var(--spacing-xs);
+    display: inline-block;
 }
 
 /* Icon button style for context dropdown toggle */
@@ -326,6 +320,8 @@ body {
     gap: var(--spacing-sm);
     flex-shrink: 0;
     margin-left: auto;
+    flex: 1;
+    justify-content: flex-end;
 }
 
 /* Buttons */
@@ -4719,7 +4715,6 @@ select.dropdown:focus {
     
     /* Context switcher responsive */
     .context-switcher {
-        margin-left: var(--spacing-xs);
         margin-right: var(--spacing-xs);
     }
     
