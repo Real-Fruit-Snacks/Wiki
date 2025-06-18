@@ -33,8 +33,9 @@ When split view is enabled:
 
 ### 📋 Opening Notes
 - **Click any note** to open it in the active pane
+- **Drag and drop** notes from sidebar directly into any pane
 - **Click a pane** to make it active
-- **Ctrl+Click** (future) to open in the other pane
+- **Visual feedback**: Panes highlight when dragging notes over them
 
 ### 📏 Resizing Panes
 - **Drag the divider** between panes to adjust widths
@@ -45,6 +46,12 @@ When split view is enabled:
 - The active pane has a **colored border**
 - New notes open in the **active pane**
 - Click any pane to make it active
+
+### 🖱️ Drag & Drop
+- **Drag notes** from the sidebar file tree into any pane
+- **Visual feedback**: Notes show grab cursor when draggable
+- **Drop zones**: Panes highlight with colored border during drag
+- **Auto-activate**: Dropping a note automatically makes that pane active
 
 ## Use Cases
 

@@ -451,6 +451,9 @@ class NotesWiki {
         
         // Update expand button state after building tree
         this.updateExpandButtonState();
+        
+        // Update drag state for split view
+        this.updateFileTreeDragState();
     }
     
     buildTagFilter() {
@@ -7695,6 +7698,7 @@ class NotesWiki {
         this.activePaneId = 'pane-1';
         this.setupPaneResizing(divider);
         this.setupPaneNavigation();
+        this.setupPaneDragDrop();
     }
     
     disableSplitView() {
@@ -7724,6 +7728,9 @@ class NotesWiki {
             this.loadNote = this.originalLoadNote;
             this.originalLoadNote = null;
         }
+        
+        // Clean up drag and drop state
+        this.updateFileTreeDragState();
     }
     
     setupPaneResizing(divider) {
@@ -7798,6 +7805,62 @@ class NotesWiki {
                 return this.originalLoadNote(path);
             };
         }
+    }
+    
+    setupPaneDragDrop() {
+        // Make file tree links draggable
+        this.updateFileTreeDragState();
+        
+        // Set up drop zones on panes
+        document.querySelectorAll('.split-pane').forEach(pane => {
+            pane.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'copy';
+                pane.classList.add('drag-over');
+            });
+            
+            pane.addEventListener('dragleave', (e) => {
+                // Only remove highlight if we're leaving the pane entirely
+                if (!pane.contains(e.relatedTarget)) {
+                    pane.classList.remove('drag-over');
+                }
+            });
+            
+            pane.addEventListener('drop', (e) => {
+                e.preventDefault();
+                pane.classList.remove('drag-over');
+                
+                const notePath = e.dataTransfer.getData('text/plain');
+                if (notePath) {
+                    this.setActivePane(pane.id);
+                    this.loadNoteInPane(notePath, pane.id);
+                }
+            });
+        });
+    }
+    
+    updateFileTreeDragState() {
+        document.querySelectorAll('.file-tree-link').forEach(link => {
+            if (this.settings.splitViewEnabled) {
+                link.draggable = true;
+                link.addEventListener('dragstart', this.handleFileDragStart.bind(this));
+            } else {
+                link.draggable = false;
+                link.removeEventListener('dragstart', this.handleFileDragStart.bind(this));
+            }
+        });
+    }
+    
+    handleFileDragStart(e) {
+        const notePath = e.target.dataset.path;
+        e.dataTransfer.setData('text/plain', notePath);
+        e.dataTransfer.effectAllowed = 'copy';
+        
+        // Visual feedback
+        e.target.classList.add('dragging');
+        setTimeout(() => {
+            e.target.classList.remove('dragging');
+        }, 0);
     }
     
     setActivePane(paneId) {

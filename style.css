@@ -6072,6 +6072,25 @@ body.focus-mode .floating-share {
     overflow: auto;
 }
 
+/* Split View Drag and Drop */
+.split-pane.drag-over {
+    background-color: var(--accent-primary-light);
+    border: 2px dashed var(--accent-primary);
+    border-radius: var(--radius-md);
+}
+
+.file-tree-link.dragging {
+    opacity: 0.5;
+}
+
+.file-tree-link[draggable="true"] {
+    cursor: grab;
+}
+
+.file-tree-link[draggable="true"]:active {
+    cursor: grabbing;
+}
+
 /* ============================================
    STICKY NOTES STYLES
    ============================================ */
