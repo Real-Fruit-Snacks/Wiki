@@ -156,10 +156,6 @@ body {
     overflow: hidden; /* Hide overflow */
 }
 
-/* Hide entire context switcher when overflow detected */
-.context-switcher.has-overflow {
-    display: none;
-}
 
 /* Context dropdown - hidden by default */
 .context-dropdown {
@@ -4713,12 +4709,10 @@ select.dropdown:focus {
     
     /* Context switcher responsive */
     .context-switcher {
-        display: none; /* Hide on mobile */
-    }
-    
-    /* Always show dropdown on mobile */
-    #context-dropdown-nav {
-        display: block !important;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-left: var(--spacing-sm);
+        margin-right: var(--spacing-sm);
     }
     
     .context-button {

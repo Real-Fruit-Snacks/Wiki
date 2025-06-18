@@ -5806,9 +5806,14 @@ class NotesWiki {
     setupContextOverflowDetection(contextSwitcher, dropdown) {
         // Function to check if buttons overflow
         const checkOverflow = () => {
+            // Store current display states
+            const currentSwitcherDisplay = contextSwitcher.style.display;
+            const currentDropdownDisplay = dropdown.style.display;
+            
             // Temporarily show context switcher to measure
             contextSwitcher.style.display = 'flex';
-            contextSwitcher.classList.remove('has-overflow');
+            contextSwitcher.style.visibility = 'hidden';
+            contextSwitcher.style.position = 'absolute';
             dropdown.style.display = 'none';
             
             // Force layout recalculation
@@ -5843,17 +5848,24 @@ class NotesWiki {
             const headerNav = headerContent.querySelector('.header-nav');
             const availableSpace = headerContent.offsetWidth - headerLeft.offsetWidth - headerNav.offsetWidth - 60; // margins
             
+            // Check if we're on mobile
+            const isMobile = window.innerWidth <= 768;
+            
             // Check if we have overflow or too many buttons
-            const hasOverflow = containerOverflows || lastButtonCutOff || 
+            const hasOverflow = isMobile || containerOverflows || lastButtonCutOff || 
                               totalButtonsWidth > availableSpace || buttons.length > 8;
+            
+            // Reset visibility and position
+            contextSwitcher.style.visibility = '';
+            contextSwitcher.style.position = '';
             
             if (hasOverflow) {
                 // Hide context switcher and show dropdown
-                contextSwitcher.classList.add('has-overflow');
+                contextSwitcher.style.display = 'none';
                 dropdown.style.display = 'block';
             } else {
                 // Show context switcher and hide dropdown
-                contextSwitcher.classList.remove('has-overflow');
+                contextSwitcher.style.display = 'flex';
                 dropdown.style.display = 'none';
             }
         };
