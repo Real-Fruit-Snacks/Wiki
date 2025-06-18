@@ -1,0 +1,122 @@
+/* Ayu Light Theme for Notes Wiki */
+:root[data-theme="ayu-light"] {
+    /* Background Colors */
+    --bg-primary: #fafafa;
+    --bg-secondary: #f8f8f8;
+    --bg-sidebar: #f3f3f3;
+    --bg-code: #f8f8f8;
+    --bg-selection: #86b30033;
+    --bg-dropdown: #f8f8f8;
+    --bg-hover: #ebebeb;
+    --bg-tag: #ebebeb;
+    
+    /* Text Colors */
+    --text-primary: #5c6773;
+    --text-secondary: #828c99;
+    --text-muted: #abb0b6;
+    --text-heading: #fa8419;
+    
+    /* Accent Colors */
+    --accent-primary: #41a6d9;
+    --accent-secondary: #86b300;
+    --accent-warning: #fa8419;
+    --accent-error: #f07178;
+    --accent-danger: #f07178;
+    --accent-info: #41a6d9;
+    --accent-success: #86b300;
+    
+    /* Border Colors */
+    --border-primary: #e7e8e9;
+    --border-secondary: #d8d8d8;
+    
+    /* Button Colors */
+    --button-bg: #f8f8f8;
+    --button-hover: #ebebeb;
+    --button-active: #41a6d9;
+    
+    /* Badge Colors */
+    --badge-bg: #f07178;
+    --badge-text: #fafafa;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(92, 103, 115, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(92, 103, 115, 0.15), 0 2px 4px -1px rgba(92, 103, 115, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(92, 103, 115, 0.2), 0 4px 6px -2px rgba(92, 103, 115, 0.15);
+    --shadow-xl: 0 20px 25px -5px rgba(92, 103, 115, 0.25), 0 10px 10px -5px rgba(92, 103, 115, 0.2);
+}
+
+/* Syntax Highlighting - Ayu Light */
+:root[data-theme="ayu-light"] .token.comment,
+:root[data-theme="ayu-light"] .token.prolog,
+:root[data-theme="ayu-light"] .token.doctype,
+:root[data-theme="ayu-light"] .token.cdata {
+    color: #abb0b6;
+}
+
+:root[data-theme="ayu-light"] .token.punctuation {
+    color: #5c6773;
+}
+
+:root[data-theme="ayu-light"] .token.property,
+:root[data-theme="ayu-light"] .token.tag,
+:root[data-theme="ayu-light"] .token.boolean,
+:root[data-theme="ayu-light"] .token.number,
+:root[data-theme="ayu-light"] .token.constant,
+:root[data-theme="ayu-light"] .token.symbol,
+:root[data-theme="ayu-light"] .token.deleted {
+    color: #ff6a00;
+}
+
+:root[data-theme="ayu-light"] .token.selector,
+:root[data-theme="ayu-light"] .token.attr-name,
+:root[data-theme="ayu-light"] .token.string,
+:root[data-theme="ayu-light"] .token.char,
+:root[data-theme="ayu-light"] .token.builtin,
+:root[data-theme="ayu-light"] .token.inserted {
+    color: #86b300;
+}
+
+:root[data-theme="ayu-light"] .token.operator,
+:root[data-theme="ayu-light"] .token.entity,
+:root[data-theme="ayu-light"] .token.url,
+:root[data-theme="ayu-light"] .language-css .token.string,
+:root[data-theme="ayu-light"] .style .token.string {
+    color: #4dbf99;
+    background: transparent;
+}
+
+:root[data-theme="ayu-light"] .token.atrule,
+:root[data-theme="ayu-light"] .token.attr-value,
+:root[data-theme="ayu-light"] .token.keyword {
+    color: #ff6a00;
+}
+
+:root[data-theme="ayu-light"] .token.function,
+:root[data-theme="ayu-light"] .token.class-name {
+    color: #f29718;
+}
+
+:root[data-theme="ayu-light"] .token.regex,
+:root[data-theme="ayu-light"] .token.important,
+:root[data-theme="ayu-light"] .token.variable {
+    color: #fa8419;
+}
+
+/* Scrollbar Ayu Light Theme */
+:root[data-theme="ayu-light"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="ayu-light"] ::-webkit-scrollbar-thumb {
+    background: #d8d8d8;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="ayu-light"] ::-webkit-scrollbar-thumb:hover {
+    background: #c8c8c8;
+}
+
+/* Firefox Scrollbar Ayu Light Theme */
+:root[data-theme="ayu-light"] * {
+    scrollbar-color: #d8d8d8 var(--bg-primary);
+}

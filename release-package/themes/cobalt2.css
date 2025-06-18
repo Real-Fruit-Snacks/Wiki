@@ -1,0 +1,126 @@
+/* Cobalt2 Theme Variables - By Wes Bos */
+:root[data-theme="cobalt2"] {
+    /* Background Colors */
+    --bg-primary: #193549;
+    --bg-secondary: #122738;
+    --bg-sidebar: #1F4662;
+    --bg-code: #122738;
+    --bg-selection: #234E6D;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.1);
+    --bg-tag: #234E6D;
+    
+    /* Text Colors */
+    --text-primary: #ffffff;
+    --text-secondary: #e1efff;
+    --text-muted: #7fdbca;
+    --text-heading: #ffc600;
+    
+    /* Accent Colors */
+    --accent-primary: #9EFFFF;
+    --accent-secondary: #ffc600;
+    --accent-warning: #ffc600;
+    --accent-error: #ff628c;
+    --accent-info: #0088ff;
+    --accent-success: #80ffbb;
+    
+    /* Border Colors */
+    --border-primary: #234E6D;
+    --border-secondary: #1F4662;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-secondary);
+    --badge-text: #193549;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(158, 255, 255, 0.1);
+    --bg-code-block: #122738;
+}
+
+/* Syntax Highlighting - Cobalt2 Theme */
+:root[data-theme="cobalt2"] .token.comment,
+:root[data-theme="cobalt2"] .token.prolog,
+:root[data-theme="cobalt2"] .token.doctype,
+:root[data-theme="cobalt2"] .token.cdata {
+    color: #0088ff;
+    font-style: italic;
+}
+
+:root[data-theme="cobalt2"] .token.punctuation {
+    color: #e1efff;
+}
+
+:root[data-theme="cobalt2"] .token.property,
+:root[data-theme="cobalt2"] .token.tag,
+:root[data-theme="cobalt2"] .token.boolean,
+:root[data-theme="cobalt2"] .token.number,
+:root[data-theme="cobalt2"] .token.constant,
+:root[data-theme="cobalt2"] .token.symbol,
+:root[data-theme="cobalt2"] .token.deleted {
+    color: #ff628c;
+}
+
+:root[data-theme="cobalt2"] .token.selector,
+:root[data-theme="cobalt2"] .token.attr-name,
+:root[data-theme="cobalt2"] .token.string,
+:root[data-theme="cobalt2"] .token.char,
+:root[data-theme="cobalt2"] .token.builtin,
+:root[data-theme="cobalt2"] .token.inserted {
+    color: #ffee80;
+}
+
+:root[data-theme="cobalt2"] .token.operator,
+:root[data-theme="cobalt2"] .token.entity,
+:root[data-theme="cobalt2"] .token.url,
+:root[data-theme="cobalt2"] .language-css .token.string,
+:root[data-theme="cobalt2"] .style .token.string {
+    color: #ff9d00;
+    background: transparent;
+}
+
+:root[data-theme="cobalt2"] .token.atrule,
+:root[data-theme="cobalt2"] .token.attr-value,
+:root[data-theme="cobalt2"] .token.keyword {
+    color: #ffc600;
+}
+
+:root[data-theme="cobalt2"] .token.function,
+:root[data-theme="cobalt2"] .token.class-name {
+    color: #9EFFFF;
+}
+
+:root[data-theme="cobalt2"] .token.regex,
+:root[data-theme="cobalt2"] .token.important,
+:root[data-theme="cobalt2"] .token.variable {
+    color: #e1efff;
+}
+
+/* Scrollbar Cobalt2 Theme */
+:root[data-theme="cobalt2"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="cobalt2"] ::-webkit-scrollbar-thumb {
+    background: #234E6D;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="cobalt2"] ::-webkit-scrollbar-thumb:hover {
+    background: #2a5d7f;
+}
+
+/* Firefox Scrollbar Cobalt2 Theme */
+:root[data-theme="cobalt2"] * {
+    scrollbar-color: #234E6D var(--bg-primary);
+}

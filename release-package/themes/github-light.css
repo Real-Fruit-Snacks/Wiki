@@ -1,0 +1,125 @@
+/* GitHub Light Theme Variables */
+:root[data-theme="github-light"] {
+    /* Background Colors */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f6f8fa;
+    --bg-sidebar: #f0f3f6;
+    --bg-code: #f6f8fa;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(0, 0, 0, 0.03);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Text Colors */
+    --text-primary: #24292f;
+    --text-secondary: #57606a;
+    --text-muted: #6e7781;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors */
+    --accent-primary: #0969da;
+    --accent-secondary: #0860ca;
+    --accent-warning: #fbbf24;
+    --accent-error: #ef4444;
+    --accent-info: var(--accent-primary);
+    --accent-success: #10b981;
+    
+    /* Border Colors */
+    --border-primary: #d0d7de;
+    --border-secondary: #e2e8ef;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-error);
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 0 rgba(27, 31, 36, 0.04);
+    --shadow-md: 0 3px 6px rgba(140, 149, 159, 0.15);
+    --shadow-lg: 0 8px 24px rgba(140, 149, 159, 0.2);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(9, 105, 218, 0.1);
+    --bg-code-block: #f6f8fa;
+}
+
+/* Syntax Highlighting - GitHub Light Theme */
+:root[data-theme="github-light"] .token.comment,
+:root[data-theme="github-light"] .token.prolog,
+:root[data-theme="github-light"] .token.doctype,
+:root[data-theme="github-light"] .token.cdata {
+    color: #6e7781;
+}
+
+:root[data-theme="github-light"] .token.punctuation {
+    color: #24292f;
+}
+
+:root[data-theme="github-light"] .token.property,
+:root[data-theme="github-light"] .token.tag,
+:root[data-theme="github-light"] .token.boolean,
+:root[data-theme="github-light"] .token.number,
+:root[data-theme="github-light"] .token.constant,
+:root[data-theme="github-light"] .token.symbol,
+:root[data-theme="github-light"] .token.deleted {
+    color: #0550ae;
+}
+
+:root[data-theme="github-light"] .token.selector,
+:root[data-theme="github-light"] .token.attr-name,
+:root[data-theme="github-light"] .token.string,
+:root[data-theme="github-light"] .token.char,
+:root[data-theme="github-light"] .token.builtin,
+:root[data-theme="github-light"] .token.inserted {
+    color: #0a3069;
+}
+
+:root[data-theme="github-light"] .token.operator,
+:root[data-theme="github-light"] .token.entity,
+:root[data-theme="github-light"] .token.url,
+:root[data-theme="github-light"] .language-css .token.string,
+:root[data-theme="github-light"] .style .token.string {
+    color: #cf222e;
+    background: transparent;
+}
+
+:root[data-theme="github-light"] .token.atrule,
+:root[data-theme="github-light"] .token.attr-value,
+:root[data-theme="github-light"] .token.keyword {
+    color: #cf222e;
+}
+
+:root[data-theme="github-light"] .token.function,
+:root[data-theme="github-light"] .token.class-name {
+    color: #8250df;
+}
+
+:root[data-theme="github-light"] .token.regex,
+:root[data-theme="github-light"] .token.important,
+:root[data-theme="github-light"] .token.variable {
+    color: #953800;
+}
+
+/* Scrollbar GitHub Light Theme */
+:root[data-theme="github-light"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="github-light"] ::-webkit-scrollbar-thumb {
+    background: #afb8c1;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="github-light"] ::-webkit-scrollbar-thumb:hover {
+    background: #8c959f;
+}
+
+/* Firefox Scrollbar GitHub Light Theme */
+:root[data-theme="github-light"] * {
+    scrollbar-color: #afb8c1 var(--bg-primary);
+}

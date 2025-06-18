@@ -1,0 +1,122 @@
+/* Cyberpunk Theme for Notes Wiki */
+:root[data-theme="cyberpunk"] {
+    /* Background Colors */
+    --bg-primary: #091833;
+    --bg-secondary: #133E7C;
+    --bg-sidebar: #0a1628;
+    --bg-code: #0d1f3c;
+    --bg-selection: #0ABDC633;
+    --bg-dropdown: #133E7C;
+    --bg-hover: #1a4d95;
+    --bg-tag: #133E7C;
+    
+    /* Text Colors */
+    --text-primary: #0ABDC6;
+    --text-secondary: #EA00D9;
+    --text-muted: #7a8bb5;
+    --text-heading: #02D7F2;
+    
+    /* Accent Colors */
+    --accent-primary: #0ABDC6;
+    --accent-secondary: #EA00D9;
+    --accent-warning: #FFC857;
+    --accent-error: #FF4A57;
+    --accent-danger: #FF4A57;
+    --accent-info: #02D7F2;
+    --accent-success: #00FFC8;
+    
+    /* Border Colors */
+    --border-primary: #0ABDC6;
+    --border-secondary: #EA00D9;
+    
+    /* Button Colors */
+    --button-bg: #133E7C;
+    --button-hover: #1a4d95;
+    --button-active: #0ABDC6;
+    
+    /* Badge Colors */
+    --badge-bg: #EA00D9;
+    --badge-text: #091833;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(10, 189, 198, 0.2);
+    --shadow-md: 0 4px 6px -1px rgba(10, 189, 198, 0.3), 0 2px 4px -1px rgba(234, 0, 217, 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(10, 189, 198, 0.3), 0 4px 6px -2px rgba(234, 0, 217, 0.2);
+    --shadow-xl: 0 20px 25px -5px rgba(10, 189, 198, 0.3), 0 10px 10px -5px rgba(234, 0, 217, 0.2);
+}
+
+/* Syntax Highlighting - Cyberpunk Theme */
+:root[data-theme="cyberpunk"] .token.comment,
+:root[data-theme="cyberpunk"] .token.prolog,
+:root[data-theme="cyberpunk"] .token.doctype,
+:root[data-theme="cyberpunk"] .token.cdata {
+    color: #7a8bb5;
+}
+
+:root[data-theme="cyberpunk"] .token.punctuation {
+    color: #0ABDC6;
+}
+
+:root[data-theme="cyberpunk"] .token.property,
+:root[data-theme="cyberpunk"] .token.tag,
+:root[data-theme="cyberpunk"] .token.boolean,
+:root[data-theme="cyberpunk"] .token.number,
+:root[data-theme="cyberpunk"] .token.constant,
+:root[data-theme="cyberpunk"] .token.symbol,
+:root[data-theme="cyberpunk"] .token.deleted {
+    color: #FF008D;
+}
+
+:root[data-theme="cyberpunk"] .token.selector,
+:root[data-theme="cyberpunk"] .token.attr-name,
+:root[data-theme="cyberpunk"] .token.string,
+:root[data-theme="cyberpunk"] .token.char,
+:root[data-theme="cyberpunk"] .token.builtin,
+:root[data-theme="cyberpunk"] .token.inserted {
+    color: #00FFC8;
+}
+
+:root[data-theme="cyberpunk"] .token.operator,
+:root[data-theme="cyberpunk"] .token.entity,
+:root[data-theme="cyberpunk"] .token.url,
+:root[data-theme="cyberpunk"] .language-css .token.string,
+:root[data-theme="cyberpunk"] .style .token.string {
+    color: #02D7F2;
+    background: transparent;
+}
+
+:root[data-theme="cyberpunk"] .token.atrule,
+:root[data-theme="cyberpunk"] .token.attr-value,
+:root[data-theme="cyberpunk"] .token.keyword {
+    color: #EA00D9;
+}
+
+:root[data-theme="cyberpunk"] .token.function,
+:root[data-theme="cyberpunk"] .token.class-name {
+    color: #0ABDC6;
+}
+
+:root[data-theme="cyberpunk"] .token.regex,
+:root[data-theme="cyberpunk"] .token.important,
+:root[data-theme="cyberpunk"] .token.variable {
+    color: #CC11F0;
+}
+
+/* Scrollbar Cyberpunk Theme */
+:root[data-theme="cyberpunk"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="cyberpunk"] ::-webkit-scrollbar-thumb {
+    background: #0ABDC6;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="cyberpunk"] ::-webkit-scrollbar-thumb:hover {
+    background: #EA00D9;
+}
+
+/* Firefox Scrollbar Cyberpunk Theme */
+:root[data-theme="cyberpunk"] * {
+    scrollbar-color: #0ABDC6 var(--bg-primary);
+}

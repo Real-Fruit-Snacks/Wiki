@@ -1,0 +1,122 @@
+/* Matrix Theme for Notes Wiki */
+:root[data-theme="matrix"] {
+    /* Background Colors */
+    --bg-primary: #0D0208;
+    --bg-secondary: #003B00;
+    --bg-sidebar: #0a0a0a;
+    --bg-code: #001a00;
+    --bg-selection: #00ff4133;
+    --bg-dropdown: #003B00;
+    --bg-hover: #004400;
+    --bg-tag: #003300;
+    
+    /* Text Colors */
+    --text-primary: #00FF41;
+    --text-secondary: #008F11;
+    --text-muted: #006600;
+    --text-heading: #41FF00;
+    
+    /* Accent Colors */
+    --accent-primary: #00FF41;
+    --accent-secondary: #80ce87;
+    --accent-warning: #41FF00;
+    --accent-error: #FF0000;
+    --accent-danger: #FF0000;
+    --accent-info: #00FF41;
+    --accent-success: #00FF41;
+    
+    /* Border Colors */
+    --border-primary: #008F11;
+    --border-secondary: #00FF41;
+    
+    /* Button Colors */
+    --button-bg: #003B00;
+    --button-hover: #005500;
+    --button-active: #00FF41;
+    
+    /* Badge Colors */
+    --badge-bg: #00FF41;
+    --badge-text: #0D0208;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 255, 65, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 255, 65, 0.1), 0 2px 4px -1px rgba(0, 255, 65, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 255, 65, 0.1), 0 4px 6px -2px rgba(0, 255, 65, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 255, 65, 0.1), 0 10px 10px -5px rgba(0, 255, 65, 0.04);
+}
+
+/* Syntax Highlighting - Matrix Theme */
+:root[data-theme="matrix"] .token.comment,
+:root[data-theme="matrix"] .token.prolog,
+:root[data-theme="matrix"] .token.doctype,
+:root[data-theme="matrix"] .token.cdata {
+    color: #006600;
+}
+
+:root[data-theme="matrix"] .token.punctuation {
+    color: #008F11;
+}
+
+:root[data-theme="matrix"] .token.property,
+:root[data-theme="matrix"] .token.tag,
+:root[data-theme="matrix"] .token.boolean,
+:root[data-theme="matrix"] .token.number,
+:root[data-theme="matrix"] .token.constant,
+:root[data-theme="matrix"] .token.symbol,
+:root[data-theme="matrix"] .token.deleted {
+    color: #41FF00;
+}
+
+:root[data-theme="matrix"] .token.selector,
+:root[data-theme="matrix"] .token.attr-name,
+:root[data-theme="matrix"] .token.string,
+:root[data-theme="matrix"] .token.char,
+:root[data-theme="matrix"] .token.builtin,
+:root[data-theme="matrix"] .token.inserted {
+    color: #00FF41;
+}
+
+:root[data-theme="matrix"] .token.operator,
+:root[data-theme="matrix"] .token.entity,
+:root[data-theme="matrix"] .token.url,
+:root[data-theme="matrix"] .language-css .token.string,
+:root[data-theme="matrix"] .style .token.string {
+    color: #20C20E;
+    background: transparent;
+}
+
+:root[data-theme="matrix"] .token.atrule,
+:root[data-theme="matrix"] .token.attr-value,
+:root[data-theme="matrix"] .token.keyword {
+    color: #80ce87;
+}
+
+:root[data-theme="matrix"] .token.function,
+:root[data-theme="matrix"] .token.class-name {
+    color: #41FF00;
+}
+
+:root[data-theme="matrix"] .token.regex,
+:root[data-theme="matrix"] .token.important,
+:root[data-theme="matrix"] .token.variable {
+    color: #00FF41;
+}
+
+/* Scrollbar Matrix Theme */
+:root[data-theme="matrix"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="matrix"] ::-webkit-scrollbar-thumb {
+    background: #008F11;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="matrix"] ::-webkit-scrollbar-thumb:hover {
+    background: #00FF41;
+}
+
+/* Firefox Scrollbar Matrix Theme */
+:root[data-theme="matrix"] * {
+    scrollbar-color: #008F11 var(--bg-primary);
+}

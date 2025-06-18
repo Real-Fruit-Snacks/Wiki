@@ -1,0 +1,126 @@
+/* Lucario Theme Variables */
+:root[data-theme="lucario"] {
+    /* Background Colors */
+    --bg-primary: #2b3e50;
+    --bg-secondary: #243443;
+    --bg-sidebar: #1c2a39;
+    --bg-code: #243443;
+    --bg-selection: #19242f;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: #3a526b;
+    
+    /* Text Colors */
+    --text-primary: #f8f8f2;
+    --text-secondary: #ccd7e6;
+    --text-muted: #5c98cd;
+    --text-heading: #ffffff;
+    
+    /* Accent Colors */
+    --accent-primary: #72c05d;
+    --accent-secondary: #ff6541;
+    --accent-warning: #ffab28;
+    --accent-error: #ff6541;
+    --accent-info: #5c98cd;
+    --accent-success: #72c05d;
+    
+    /* Border Colors */
+    --border-primary: #3a526b;
+    --border-secondary: #445a73;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #2b3e50;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(114, 192, 93, 0.1);
+    --bg-code-block: #243443;
+}
+
+/* Syntax Highlighting - Lucario Theme */
+:root[data-theme="lucario"] .token.comment,
+:root[data-theme="lucario"] .token.prolog,
+:root[data-theme="lucario"] .token.doctype,
+:root[data-theme="lucario"] .token.cdata {
+    color: #5c98cd;
+    font-style: italic;
+}
+
+:root[data-theme="lucario"] .token.punctuation {
+    color: #f8f8f2;
+}
+
+:root[data-theme="lucario"] .token.property,
+:root[data-theme="lucario"] .token.tag,
+:root[data-theme="lucario"] .token.boolean,
+:root[data-theme="lucario"] .token.number,
+:root[data-theme="lucario"] .token.constant,
+:root[data-theme="lucario"] .token.symbol,
+:root[data-theme="lucario"] .token.deleted {
+    color: #ca94ff;
+}
+
+:root[data-theme="lucario"] .token.selector,
+:root[data-theme="lucario"] .token.attr-name,
+:root[data-theme="lucario"] .token.string,
+:root[data-theme="lucario"] .token.char,
+:root[data-theme="lucario"] .token.builtin,
+:root[data-theme="lucario"] .token.inserted {
+    color: #e6db74;
+}
+
+:root[data-theme="lucario"] .token.operator,
+:root[data-theme="lucario"] .token.entity,
+:root[data-theme="lucario"] .token.url,
+:root[data-theme="lucario"] .language-css .token.string,
+:root[data-theme="lucario"] .style .token.string {
+    color: #ffab28;
+    background: transparent;
+}
+
+:root[data-theme="lucario"] .token.atrule,
+:root[data-theme="lucario"] .token.attr-value,
+:root[data-theme="lucario"] .token.keyword {
+    color: #ff6541;
+}
+
+:root[data-theme="lucario"] .token.function,
+:root[data-theme="lucario"] .token.class-name {
+    color: #72c05d;
+}
+
+:root[data-theme="lucario"] .token.regex,
+:root[data-theme="lucario"] .token.important,
+:root[data-theme="lucario"] .token.variable {
+    color: #ffab28;
+}
+
+/* Scrollbar Lucario Theme */
+:root[data-theme="lucario"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="lucario"] ::-webkit-scrollbar-thumb {
+    background: #3a526b;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="lucario"] ::-webkit-scrollbar-thumb:hover {
+    background: #4a627b;
+}
+
+/* Firefox Scrollbar Lucario Theme */
+:root[data-theme="lucario"] * {
+    scrollbar-color: #3a526b var(--bg-primary);
+}

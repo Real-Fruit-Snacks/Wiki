@@ -1,0 +1,126 @@
+/* Atom One Light Theme Variables */
+:root[data-theme="atom-one-light"] {
+    /* Background Colors */
+    --bg-primary: #FAFAFA;
+    --bg-secondary: #F3F3F3;
+    --bg-sidebar: #EAEAEB;
+    --bg-code: #F3F3F3;
+    --bg-selection: rgba(64, 120, 242, 0.15);
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(0, 0, 0, 0.05);
+    --bg-tag: #E8E8E8;
+    
+    /* Text Colors */
+    --text-primary: #383A42;
+    --text-secondary: #545862;
+    --text-muted: #A0A1A7;
+    --text-heading: #383A42;
+    
+    /* Accent Colors */
+    --accent-primary: #4078F2;
+    --accent-secondary: #A626A4;
+    --accent-warning: #986801;
+    --accent-error: #E45649;
+    --accent-info: #4078F2;
+    --accent-success: #50A14F;
+    
+    /* Border Colors */
+    --border-primary: #D3D3D3;
+    --border-secondary: #E1E1E1;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #FFFFFF;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(64, 120, 242, 0.1);
+    --bg-code-block: #F3F3F3;
+}
+
+/* Syntax Highlighting - Atom One Light Theme */
+:root[data-theme="atom-one-light"] .token.comment,
+:root[data-theme="atom-one-light"] .token.prolog,
+:root[data-theme="atom-one-light"] .token.doctype,
+:root[data-theme="atom-one-light"] .token.cdata {
+    color: #A0A1A7;
+    font-style: italic;
+}
+
+:root[data-theme="atom-one-light"] .token.punctuation {
+    color: #383A42;
+}
+
+:root[data-theme="atom-one-light"] .token.property,
+:root[data-theme="atom-one-light"] .token.tag,
+:root[data-theme="atom-one-light"] .token.boolean,
+:root[data-theme="atom-one-light"] .token.number,
+:root[data-theme="atom-one-light"] .token.constant,
+:root[data-theme="atom-one-light"] .token.symbol,
+:root[data-theme="atom-one-light"] .token.deleted {
+    color: #986801;
+}
+
+:root[data-theme="atom-one-light"] .token.selector,
+:root[data-theme="atom-one-light"] .token.attr-name,
+:root[data-theme="atom-one-light"] .token.string,
+:root[data-theme="atom-one-light"] .token.char,
+:root[data-theme="atom-one-light"] .token.builtin,
+:root[data-theme="atom-one-light"] .token.inserted {
+    color: #50A14F;
+}
+
+:root[data-theme="atom-one-light"] .token.operator,
+:root[data-theme="atom-one-light"] .token.entity,
+:root[data-theme="atom-one-light"] .token.url,
+:root[data-theme="atom-one-light"] .language-css .token.string,
+:root[data-theme="atom-one-light"] .style .token.string {
+    color: #0184BC;
+    background: transparent;
+}
+
+:root[data-theme="atom-one-light"] .token.atrule,
+:root[data-theme="atom-one-light"] .token.attr-value,
+:root[data-theme="atom-one-light"] .token.keyword {
+    color: #A626A4;
+}
+
+:root[data-theme="atom-one-light"] .token.function,
+:root[data-theme="atom-one-light"] .token.class-name {
+    color: #4078F2;
+}
+
+:root[data-theme="atom-one-light"] .token.regex,
+:root[data-theme="atom-one-light"] .token.important,
+:root[data-theme="atom-one-light"] .token.variable {
+    color: #E45649;
+}
+
+/* Scrollbar Atom One Light Theme */
+:root[data-theme="atom-one-light"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="atom-one-light"] ::-webkit-scrollbar-thumb {
+    background: #D3D3D3;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="atom-one-light"] ::-webkit-scrollbar-thumb:hover {
+    background: #C0C0C0;
+}
+
+/* Firefox Scrollbar Atom One Light Theme */
+:root[data-theme="atom-one-light"] * {
+    scrollbar-color: #D3D3D3 var(--bg-primary);
+}
