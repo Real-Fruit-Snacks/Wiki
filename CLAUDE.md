@@ -72,7 +72,7 @@ When making significant changes, consider the modular refactoring plan:
    - Advanced search with operators (`tag:`, `author:`, `"phrase"`, `-exclude`, etc.)
    - Theme switching (50 themes in `/themes/`)
    - Settings persistence via localStorage
-   - Pomodoro timer, keyboard shortcuts, context filtering
+   - Pomodoro timer, keyboard shortcuts, responsive context filtering with dropdown
 
 3. **Build System**: `build.py` - Python script that:
    - Scans `/notes/` directory recursively
@@ -119,7 +119,8 @@ When making significant changes, consider the modular refactoring plan:
 4. **Focus Mode** - Press 'F' to hide sidebar and center content for distraction-free reading
 5. **In-Note Search** - Ctrl+F to search within current note with highlighting and navigation
 6. **PDF Export** - Print-optimized styles with breadcrumb navigation
-7. **Enhanced Navigation** - Improved UI/UX for file tree and context switching
+7. **Enhanced Navigation** - Improved UI/UX for file tree and responsive context switching
+8. **Responsive Context Filtering** - Dynamic dropdown for category selection that adapts to screen size and category count
 
 ### Memory Management Critical Patterns
 
@@ -144,6 +145,7 @@ When making significant changes, consider the modular refactoring plan:
    - AudioContext instances - ✅ now reused and properly closed
    - Pomodoro timer intervals - ✅ cleaned up on page lifecycle
    - Tab preview handlers - ✅ removed entirely
+   - Context dropdown handlers - ✅ proper cleanup implemented with stored references
 
 3. **Error handling requirements** (now implemented throughout):
    ```javascript
@@ -194,6 +196,7 @@ element.innerHTML = userInput; // Only for trusted SVG/static content
 10. **localStorage Safety**: Comprehensive error handling for storage quota/disabled scenarios across all features
 11. **Tab Preview Removal**: Eliminated problematic tab hover preview system that caused `tabElement is null` errors
 12. **Help Menu Accuracy**: Corrected all keyboard shortcuts and functionality descriptions in the help modal (? key)
+13. **Context Switcher Enhancement**: Implemented responsive dropdown system for context filtering with proper overflow detection, active state highlighting, and memory-efficient event handling
 
 ### Layout and Styling Architecture
 
@@ -291,3 +294,50 @@ When making changes to this codebase:
 3. **Local testing**: `npm run serve` for manual verification
 4. **Help updates**: Update help modal content when adding features
 5. **Memory management**: Implement proper event listener cleanup
+
+## Context Switching Implementation (v2.9.0)
+
+### Overview
+The context switcher provides responsive category filtering that adapts to screen size and available space:
+- **Button view**: Shows individual category buttons on larger screens with adequate space
+- **Dropdown view**: Compact dropdown menu for mobile devices or when many categories exist
+- **Positioned next to search**: Located in header navigation area for consistent UX
+
+### Technical Implementation
+
+#### Key Methods in `script.js`:
+- `buildContextSwitcher()` - Main method that determines view type and builds appropriate UI
+- `setupContextDropdownHandlers()` - Event handling for dropdown interactions with proper cleanup
+- `updateContextHighlighting()` - Synchronized highlighting across both view types
+
+#### CSS Classes in `style.css`:
+```css
+.context-dropdown          /* Dropdown container */
+.context-dropdown-toggle    /* Dropdown button with active state support */
+.context-dropdown-menu      /* Dropdown menu with proper z-index and positioning */
+.context-buttons           /* Button container for normal view */
+```
+
+#### Responsive Logic:
+```javascript
+const isMobile = window.innerWidth <= 768;
+const needsDropdown = isMobile || this.contexts.length > 6;
+```
+
+#### Memory Management:
+- Event handlers are stored as class properties for proper cleanup
+- ResizeObserver properly removes listeners on component destruction
+- Dropdown click handlers use event delegation to prevent memory leaks
+
+### Configuration Parameters:
+- **Mobile breakpoint**: 768px width triggers dropdown view
+- **Category threshold**: 6+ categories force dropdown even on desktop
+- **Dropdown width**: 200px max-width on desktop, 120px on mobile
+- **Active highlighting**: Uses `--accent-primary` and `--accent-primary-light` CSS variables
+
+### Error Handling:
+- Graceful fallback if ResizeObserver is unsupported
+- Safe DOM manipulation with existence checks
+- localStorage errors handled for context persistence
+
+This implementation replaces the previous complex dual-structure approach with a single, maintainable system that provides excellent UX across all device sizes.

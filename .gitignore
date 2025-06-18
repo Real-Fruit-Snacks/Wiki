@@ -105,6 +105,9 @@ test-*.css
 test-*.js
 *-test.*
 *-demo.*
+screenshots/
+audit-results/
+test-outputs/
 
 # Temporary files
 .tmp/
