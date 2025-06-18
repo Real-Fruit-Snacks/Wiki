@@ -28,16 +28,16 @@ node -c script.js
 # or use npm script:
 npm run validate
 
-# Note: Test files referenced in package.json are currently missing
-# Tests would run with: npm test
+# Validate search index generation
+python3 build.py  # Should output "Build complete!" with stats
 ```
 
 ### Release Packaging
+⚠️ **Note**: The `npm run package` script is not currently implemented. To create a release:
 ```bash
-# Create release package with all assets
-npm run package
+# Manual packaging (adjust version as needed)
+zip -r notes-wiki-v3.0.0-complete.zip index.html 404.html style.css script.js libs themes notes images build.py package.json README.md CLAUDE.md *.md _config.yml .gitlab-ci.yml
 ```
-Creates a versioned zip file with complete application bundle.
 
 ## Architecture Overview
 
@@ -88,9 +88,9 @@ When making significant changes, consider the modular refactoring plan:
 ### Deployment Configuration
 
 - **GitHub Pages**: 
-  - Automatic deployment via GitHub Actions (`.github/workflows/deploy.yml`)
   - Jekyll bypass configured in `_config.yml`
   - Custom 404 page (`404.html`) with theme support
+  - Note: GitHub Actions workflow referenced but not implemented
 - **GitLab Pages**: 
   - Automatic deployment via `.gitlab-ci.yml`
   - See `GITLAB-DEPLOYMENT.md` for detailed instructions
@@ -123,6 +123,7 @@ When making significant changes, consider the modular refactoring plan:
 - Code syntax highlighting uses Prism.js with 20+ language support
 - Markdown rendering supports custom callouts, collapsible sections, and code block titles
 - Jekyll bypass prevents GitHub Pages from processing the site
+- Code blocks support line numbers via CSS counters (toggle in settings)
 
 ### Recent Features (v3.0.0)
 
@@ -214,6 +215,9 @@ element.innerHTML = userInput; // Only for trusted SVG/static content
 13. **Context Switcher Enhancement**: Implemented responsive dropdown system for context filtering with proper overflow detection, active state highlighting, and memory-efficient event handling
 14. **GitHub Pages Compatibility**: Added dynamic base path detection in `getBasePath()` method for proper resource loading
 15. **PDF Export Removal**: Removed PDF export functionality per user request
+16. **Line Numbers for Code Blocks**: Implemented CSS counter-based line numbers with proper Prism.js integration
+17. **Multi-Search Tool Removal**: Removed the multi-search feature to simplify the codebase
+18. **Enhanced Combined Code Blocks Styling**: Added theme-aware colored borders and visual effects for better distinction
 
 ### Layout and Styling Architecture
 
@@ -247,12 +251,12 @@ The application includes a comprehensive help modal accessible via the `?` key:
 
 ### Testing Infrastructure
 
-⚠️ **Current Testing Status**: Test files referenced in package.json are currently missing. The project structure suggests tests should be located in a `test/` directory but none exist at present.
+⚠️ **Current Testing Status**: While test scripts are defined in package.json, the actual test files are not implemented. The referenced test files (test-puppeteer.js, comprehensive-audit.js, extended-comprehensive-audit.js) do not exist.
 
-Expected test commands (when tests are implemented):
+Available validation commands:
 ```bash
-npm test              # Run all tests
-npm run test:debug    # Run tests with debug output
+npm run validate      # Check JavaScript syntax
+python3 build.py      # Validate and build search index
 ```
 
 ### Content Management
@@ -424,6 +428,6 @@ When making changes to this codebase:
 
 ### Release Process
 1. Update version in `package.json`
-2. Run `npm run package` to create release bundle
+2. Create release bundle manually (see Release Packaging section above)
 3. Tag release in git with version number
 4. Upload release zip to GitHub/GitLab releases

@@ -2312,26 +2312,88 @@ body:not(.show-line-numbers) .code-with-counters .code-line::before {
 /* Combined Code Section */
 .combined-code-section {
     margin-top: calc(var(--spacing-lg) * 2);
-    padding-top: var(--spacing-lg);
-    border-top: 2px dashed var(--border-primary);
+    padding: var(--spacing-lg);
+    border: 3px solid var(--accent-primary);
+    border-radius: var(--radius-lg);
+    /* Fallback for browsers without color-mix support */
+    background: var(--bg-secondary);
+    /* Modern browsers with color-mix support */
+    background: color-mix(in srgb, var(--accent-primary) 5%, var(--bg-primary));
+    position: relative;
+    overflow: hidden;
+}
+
+/* Gradient border effect for combined code section */
+.combined-code-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, 
+        var(--accent-primary), 
+        var(--accent-secondary, var(--accent-primary)), 
+        var(--accent-primary)
+    );
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
 }
 
 .combined-code-section h2 {
     margin-bottom: var(--spacing-md);
-    color: var(--text-primary);
+    color: var(--accent-primary);
     font-size: 1.5rem;
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+/* Add icon before the heading */
+.combined-code-section h2::before {
+    content: '⚡';
+    font-size: 1.25rem;
 }
 
 .combined-code-section .code-block {
     background: var(--bg-secondary);
-    border: 2px solid var(--accent-primary-alpha);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    /* Fallback border color */
+    border: 2px solid var(--accent-primary);
+    /* Modern browsers */
+    border: 2px solid color-mix(in srgb, var(--accent-primary) 50%, var(--border-primary));
+    /* Fallback shadow */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    /* Modern shadow with accent color */
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--accent-primary) 20%, transparent);
 }
 
 .combined-code-section .code-block-header {
+    /* Fallback background */
     background: var(--bg-tertiary);
-    border-bottom: 2px solid var(--accent-primary-alpha);
+    /* Modern browsers with subtle accent tint */
+    background: color-mix(in srgb, var(--accent-primary) 15%, var(--bg-tertiary));
+    /* Fallback border */
+    border-bottom: 2px solid var(--accent-primary);
+    /* Modern border with mixed color */
+    border-bottom: 2px solid color-mix(in srgb, var(--accent-primary) 50%, var(--border-primary));
+    color: var(--accent-primary);
+    font-weight: 500;
+}
+
+/* Hover effect for combined code section */
+.combined-code-section:hover {
+    border-color: var(--accent-secondary, var(--accent-primary));
+    /* Fallback shadow */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    /* Modern shadow with accent glow */
+    box-shadow: 0 0 20px color-mix(in srgb, var(--accent-primary) 30%, transparent);
+    transition: all 0.3s ease;
 }
 
 /* Tables */
