@@ -105,7 +105,9 @@ body {
 }
 
 .sidebar-toggle {
-    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: var(--spacing-sm);
     background: transparent;
     border: none;

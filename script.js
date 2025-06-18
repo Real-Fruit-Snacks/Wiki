@@ -1679,14 +1679,28 @@ class NotesWiki {
     generateTableOfContents() {
         try {
             // Check if TOC is enabled in settings and split view is not active
-            if (!this.settings.showTableOfContents || this.settings.splitViewEnabled) return;
+            if (!this.settings.showTableOfContents || this.settings.splitViewEnabled) {
+                console.log('TOC generation skipped:', {
+                    showTableOfContents: this.settings.showTableOfContents,
+                    splitViewEnabled: this.settings.splitViewEnabled
+                });
+                return;
+            }
             
             const noteContent = document.querySelector('.note-content');
-            if (!noteContent) return;
+            if (!noteContent) {
+                console.log('TOC generation skipped: no .note-content found');
+                return;
+            }
             
             // Find all headings
             const headings = noteContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
-            if (headings.length < 2) return; // Don't show TOC for less than 2 headings
+            if (headings.length < 2) {
+                console.log('TOC generation skipped: less than 2 headings found');
+                return; // Don't show TOC for less than 2 headings
+            }
+            
+            console.log('Generating TOC with', headings.length, 'headings');
             
             // Remove existing TOC and cleanup
             this.cleanupExistingTOC();
@@ -2318,8 +2332,10 @@ class NotesWiki {
         // Update expand button state after rendering
         this.updateExpandButtonState();
         
-        // Generate and setup Table of Contents
-        this.generateTableOfContents();
+        // Generate and setup Table of Contents (use requestAnimationFrame to ensure DOM is ready)
+        requestAnimationFrame(() => {
+            this.generateTableOfContents();
+        });
         
         // Setup reading progress and time
         this.setupReadingProgress();
@@ -7632,7 +7648,9 @@ class NotesWiki {
             this.cleanupExistingTOC();
         } else {
             // Regenerate TOC when split view is disabled
-            this.generateTableOfContents();
+            requestAnimationFrame(() => {
+                this.generateTableOfContents();
+            });
         }
     }
     
