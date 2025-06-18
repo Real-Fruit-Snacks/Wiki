@@ -7912,11 +7912,12 @@ class NotesWiki {
                 throw new Error(`Note not found: ${path}`);
             }
             
-            // Fetch note content
-            const fetchPath = this.basePath + path.replace(/^\//, '');
+            // Fetch note content  
+            const fetchPath = path.slice(1);
             console.log('Loading note - Original path:', path, 'Fetch path:', fetchPath);
             
-            const response = await fetch(fetchPath);
+            const fullPath = this.basePath ? `${this.basePath}${fetchPath}` : fetchPath;
+            const response = await fetch(fullPath);
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
@@ -8055,12 +8056,22 @@ class NotesWiki {
             return html;
         };
         
-        // Configure marked options
-        const markedHtml = marked(content, {
+        // Check if marked is available
+        if (typeof marked === 'undefined') {
+            throw new Error('marked library is not loaded');
+        }
+        
+        // Create a temporary marked instance to avoid global config conflicts
+        const tempMarked = new marked.Marked();
+        tempMarked.use({
             renderer: renderer,
             breaks: true,
-            gfm: true
+            gfm: true,
+            extensions: [this.createCalloutExtension(), this.createWikiLinkExtension()]
         });
+        
+        // Parse markdown with isolated instance
+        const markedHtml = tempMarked.parse(content);
         
         // Build note HTML structure
         const noteHtml = `
