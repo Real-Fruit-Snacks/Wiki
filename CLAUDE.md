@@ -121,6 +121,7 @@ When making significant changes, consider the modular refactoring plan:
 6. **Enhanced Navigation** - Improved UI/UX for file tree and responsive context switching
 7. **Responsive Context Filtering** - Dynamic dropdown for category selection that adapts to screen size and category count
 8. **GitHub Pages Path Fix** - Dynamic base path detection for proper resource loading
+9. **Combined Code Blocks** - Automatically combine all code blocks from a page into a single copyable block
 
 ### Memory Management Critical Patterns
 
@@ -281,7 +282,8 @@ The build system (`build.py`) processes these files to create a searchable index
 
 ### Completed Bug Fixes (Latest Session)
 All major issues identified in comprehensive testing have been resolved:
-- ✅ **Syntax highlighting** fully functional with Prism.js
+- ✅ **Syntax highlighting** fully functional with Prism.js (fixed HTML escaping issues)
+- ✅ **Line numbers** CSS counter-based implementation working with proper DOM structure
 - ✅ **Tab creation** (Ctrl+T) working correctly
 - ✅ **Theme switching** with robust error handling
 - ✅ **Navigation features** (TOC, bookmarks, focus mode) stable
@@ -289,6 +291,7 @@ All major issues identified in comprehensive testing have been resolved:
 - ✅ **Tab preview removal** eliminated console errors
 - ✅ **Help documentation** accurate and professional
 - ✅ **GitHub Pages themes** fixed with dynamic base path loading
+- ✅ **Combined code blocks** automatic generation from YAML configuration
 
 ### Development Workflow
 When making changes to this codebase:
@@ -384,3 +387,47 @@ The application includes a custom 404.html page that:
 - Provides helpful navigation options
 - Works with dynamic base path detection
 - Automatically served by GitHub Pages and GitLab Pages for missing routes
+
+## Combined Code Blocks Feature
+
+The application can automatically combine all code blocks from a page into a single, copyable block at the end of the note.
+
+### Configuration
+Add to your note's frontmatter:
+
+```yaml
+---
+title: Your Note Title
+combineCodeBlocks: true
+combinedBlockLanguage: javascript  # Language for syntax highlighting
+combinedBlockTitle: "Complete Code"  # Optional custom title
+combinedBlockOptions:
+  includeBlockTitles: true      # Add section comments with block titles
+  includeOnlyLanguage: javascript  # Filter by specific language
+  skipEmptyBlocks: true         # Ignore empty code blocks
+  separator: "\n// ---\n"       # Custom separator between blocks
+  excludePatterns: ["test", "example"]  # Skip blocks with these patterns in title
+---
+```
+
+### How It Works
+1. When a note with `combineCodeBlocks: true` is loaded, all code blocks are collected
+2. Filters are applied based on the configuration options
+3. A new code block is generated at the end of the note containing all matching code
+4. The combined block includes proper syntax highlighting and copy functionality
+5. Block titles are preserved as comments using language-appropriate syntax
+
+### Supported Comment Prefixes
+The feature automatically detects the correct comment syntax for 30+ languages:
+- JavaScript, Java, C++: `//`
+- Python, Ruby, Bash: `#`
+- HTML, XML: `<!--`
+- CSS: `/*`
+- SQL, Lua: `--`
+- And many more...
+
+### Use Cases
+- **Tutorials**: Combine step-by-step code into a complete working example
+- **Documentation**: Create a single copyable implementation from multiple examples
+- **Learning**: Aggregate related code snippets for easy reference
+- **Development**: Quickly combine modular code blocks into a full script
