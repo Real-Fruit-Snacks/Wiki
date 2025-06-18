@@ -50,7 +50,6 @@ New to Notes Wiki? Start here:
 ## 🚀 Advanced Features
 
 - **[[tutorials/advanced/combined-code-blocks|Combined Code Blocks]]** - Auto-aggregate code from notes
-- **[[tutorials/advanced/multi-search-tool|Multi-Search Tool]]** - Search multiple engines at once
 
 ## 🎯 Common Workflows
 

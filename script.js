@@ -2132,29 +2132,12 @@ class NotesWiki {
             return `<a ${attrs}>${text}</a>`;
         };
         
-        // Override the HTML renderer to pass through raw HTML
-        renderer.html = function(token) {
-            // Return HTML as-is without escaping
-            return token.text || token.raw || '';
-        };
-        
         // Configure marked with custom renderer and options
         marked.use({
             renderer: renderer,
             breaks: true,
             gfm: true,
-            extensions: [this.createCalloutExtension(), this.createWikiLinkExtension()],
-            // Add hooks to prevent HTML escaping
-            hooks: {
-                preprocess(markdown) {
-                    // No preprocessing needed
-                    return markdown;
-                },
-                postprocess(html) {
-                    // No post-processing needed - HTML should pass through
-                    return html;
-                }
-            }
+            extensions: [this.createCalloutExtension(), this.createWikiLinkExtension()]
         });
         
         // Parse markdown
