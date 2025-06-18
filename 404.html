@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Page not found - Notes Wiki">
+    <title>404 - Page Not Found | Notes Wiki</title>
+    
+    <!-- Base styles with dynamic path detection -->
+    <script>
+        // Load base styles with correct path
+        (function() {
+            const pathname = window.location.pathname;
+            let basePath = '';
+            if (pathname.includes('/Wiki/') || pathname.includes('/wiki/')) {
+                const match = pathname.match(/\/(Wiki|wiki)\//);
+                if (match) {
+                    basePath = pathname.substring(0, pathname.indexOf(match[0]) + match[0].length);
+                }
+            }
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = basePath ? `${basePath}style.css` : 'style.css';
+            document.head.appendChild(link);
+        })();
+    </script>
+    
+    <!-- Theme stylesheet - dynamically loaded -->
+    <link rel="stylesheet" href="" id="theme-stylesheet">
+    
+    <!-- Set initial theme path -->
+    <script>
+        (function() {
+            // Detect base path
+            const pathname = window.location.pathname;
+            let basePath = '';
+            if (pathname.includes('/Wiki/') || pathname.includes('/wiki/')) {
+                const match = pathname.match(/\/(Wiki|wiki)\//);
+                if (match) {
+                    basePath = pathname.substring(0, pathname.indexOf(match[0]) + match[0].length);
+                }
+            }
+            
+            // Set default theme
+            const defaultTheme = 'tokyo-night';
+            const savedTheme = localStorage.getItem('notesWiki_theme') || defaultTheme;
+            const themeLink = document.getElementById('theme-stylesheet');
+            if (themeLink) {
+                themeLink.href = basePath ? `${basePath}themes/${savedTheme}.css` : `themes/${savedTheme}.css`;
+            }
+        })();
+    </script>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234f46e5'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z'/%3E%3Cpath stroke='white' stroke-width='2' d='M14 2v6h6M16 13H8M16 17H8M10 9H8'/%3E%3C/svg%3E">
+    
+    <style>
+        /* 404 Page Specific Styles */
+        .error-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .error-content {
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: 700;
+            line-height: 1;
+            margin: 0;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        
+        .error-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 1rem 0;
+            color: var(--text-primary);
+        }
+        
+        .error-message {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin: 1.5rem 0 2rem;
+            line-height: 1.6;
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .error-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .error-button-primary {
+            background: var(--accent-primary);
+            color: white;
+        }
+        
+        .error-button-primary:hover {
+            background: var(--accent-primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .error-button-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .error-button-secondary:hover {
+            background: var(--bg-tertiary);
+            transform: translateY(-1px);
+        }
+        
+        .error-illustration {
+            margin: 2rem 0;
+            opacity: 0.8;
+        }
+        
+        .error-suggestions {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .error-suggestions h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .error-suggestions ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .error-suggestions li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+        }
+        
+        .error-suggestions a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+        
+        .error-suggestions a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 5rem;
+            }
+            
+            .error-title {
+                font-size: 1.5rem;
+            }
+            
+            .error-message {
+                font-size: 1rem;
+            }
+            
+            .error-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .error-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-content">
+            <h1 class="error-code">404</h1>
+            
+            <div class="error-illustration">
+                <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="80" stroke="var(--text-tertiary)" stroke-width="2" stroke-dasharray="5 5" opacity="0.5"/>
+                    <path d="M70 70L130 130M130 70L70 130" stroke="var(--accent-primary)" stroke-width="4" stroke-linecap="round"/>
+                    <circle cx="60" cy="80" r="3" fill="var(--text-secondary)"/>
+                    <circle cx="140" cy="80" r="3" fill="var(--text-secondary)"/>
+                    <path d="M70 130Q100 120 130 130" stroke="var(--text-secondary)" stroke-width="3" stroke-linecap="round" fill="none"/>
+                </svg>
+            </div>
+            
+            <h2 class="error-title">Page Not Found</h2>
+            
+            <p class="error-message">
+                The page you're looking for doesn't exist or has been moved. 
+                Don't worry, let's get you back on track!
+            </p>
+            
+            <div class="error-actions">
+                <a href="#/" class="error-button error-button-primary" onclick="goHome(event)">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                    </svg>
+                    Go to Homepage
+                </a>
+                <button onclick="goBack()" class="error-button error-button-secondary">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+                    </svg>
+                    Go Back
+                </button>
+            </div>
+            
+            <div class="error-suggestions">
+                <h3>Helpful Links</h3>
+                <ul>
+                    <li>📚 Browse the <a href="#/" onclick="goHome(event)">documentation homepage</a></li>
+                    <li>🔍 Try <a href="#/" onclick="goToSearch(event)">searching</a> for what you need</li>
+                    <li>📋 Check out <a href="#/notes/index.md" onclick="navigate(event, '#/notes/index.md')">getting started guide</a></li>
+                    <li>🎨 Explore <a href="#/notes/theme-showcase.md" onclick="navigate(event, '#/notes/theme-showcase.md')">available themes</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Detect base path for navigation
+        function getBasePath() {
+            const pathname = window.location.pathname;
+            if (pathname.includes('/Wiki/') || pathname.includes('/wiki/')) {
+                const match = pathname.match(/\/(Wiki|wiki)\//);
+                if (match) {
+                    return pathname.substring(0, pathname.indexOf(match[0]) + match[0].length);
+                }
+            }
+            return '/';
+        }
+        
+        // Navigation functions
+        function goHome(event) {
+            event.preventDefault();
+            const basePath = getBasePath();
+            window.location.href = basePath;
+        }
+        
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                const basePath = getBasePath();
+                window.location.href = basePath;
+            }
+        }
+        
+        function goToSearch(event) {
+            event.preventDefault();
+            const basePath = getBasePath();
+            window.location.href = basePath + '#/';
+            // The search will be triggered by the main app when it loads
+        }
+        
+        function navigate(event, hash) {
+            event.preventDefault();
+            const basePath = getBasePath();
+            window.location.href = basePath + hash;
+        }
+        
+        // Log 404 for analytics (if you add analytics later)
+        console.log('404 Error - Page not found:', window.location.pathname);
+    </script>
+</body>
+</html>

@@ -17,10 +17,7 @@ build:
     - mkdir -p public
     
     # Copy all static assets to public directory
-    - cp -r index.html style.css script.js libs themes notes images public/
-    
-    # Create 404 page from index.html (for client-side routing)
-    - cp public/index.html public/404.html
+    - cp -r index.html 404.html style.css script.js libs themes notes images public/
     
     # Run build script to generate notes-index.json
     - python3 build.py
