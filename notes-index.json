@@ -222,6 +222,46 @@
       "code_blocks_count": 5
     },
     {
+      "path": "/notes/multi-search-demo.md",
+      "context": null,
+      "metadata": {
+        "title": "Multi-Search Engine Tool",
+        "tags": [
+          "tools",
+          "search",
+          "productivity"
+        ],
+        "created": "2025-01-18",
+        "author": "Wiki Admin",
+        "description": "Search multiple search engines with one keyword input",
+        "updated": null,
+        "category": null,
+        "status": null
+      },
+      "content_preview": "This page demonstrates a multi-search tool that lets you search different search engines with a single keyword input.\n\n\n\n<div class=\"multi-search-container\">\n    <div class=\"search-input-group\">\n     ...",
+      "searchable_content": "\nMulti-Search Engine Tool\n\nThis page demonstrates a multi-search tool that lets you search different search engines with a single keyword input.\n\nQuick Search Tool\n\n<div class=\"multi-search-container\">\n    <div class=\"search-input-group\">\n        <input type=\"text\" \n               id=\"multi-search-input\" \n               class=\"multi-search-input\" \n               placeholder=\"Enter search keywords...\" \n               onkeypress=\"if(event.key === 'Enter') searchMulti('google')\">\n        <button class=\"clear-search-btn\" onclick=\"clearMultiSearch()\" title=\"Clear search\">\n            <svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"currentColor\">\n                <path d=\"M5.28 4.22a.75.75 0 00-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 101.06 1.06L8 9.06l2.72 2.72a.75.75 0 101.06-1.06L9.06 8l2.72-2.72a.75.75 0 00-1.06-1.06L8 6.94 5.28 4.22z\"/>\n            </svg>\n        </button>\n    </div>\n    \n    <div class=\"search-engines-grid\">\n        <!-- General Search Engines -->\n        <div class=\"search-category\">\n            <h3>\ud83d\udd0d General Search</h3>\n            <div class=\"search-buttons\">\n                <button class=\"search-engine-btn google\" onclick=\"searchMulti('google')\" title=\"Search with Google\">\n                    <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"currentColor\">\n                        <path d=\"M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z\" fill=\"#4285F4\"/>\n                        <path d=\"M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z\" fill=\"#34A853\"/>\n                        <path d=\"M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z\" fill=\"#FBBC05\"/>\n                        <path d=\"M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z\" fill=\"#EA4335\"/>\n                    </svg>\n                    Google\n                </button>\n                <button class=\"search-engine-btn bing\" onclick=\"searchMulti('bing')\" title=\"Search with Bing\">\n                    <span class=\"bing-logo\">B</span>\n                    Bing\n                </button>\n                <button class=\"search-engine-btn duckduckgo\" onclick=\"searchMulti('duckduckgo')\" title=\"Search with DuckDuckGo\">\n                    <span class=\"duck-logo\">\ud83e\udd86</span>\n                    DuckDuckGo\n                </button>\n                <button class=\"search-engine-btn brave\" onclick=\"searchMulti('brave')\" title=\"Search with Brave\">\n                    <span class=\"brave-logo\">\ud83e\udd81</span>\n                    Brave\n                </button>\n            </div>\n        </div>\n        \n        <!-- Developer Resources -->\n        <div class=\"search-category\">\n            <h3>\ud83d\udc68\u200d\ud83d\udcbb Developer</h3>\n            <div class=\"search-buttons\">\n                <button class=\"search-engine-btn stackoverflow\" onclick=\"searchMulti('stackoverflow')\" title=\"Search Stack Overflow\">\n                    <span class=\"so-logo\">SO</span>\n                    Stack Overflow\n                </button>\n                <button class=\"search-engine-btn github\" onclick=\"searchMulti('github')\" title=\"Search GitHub\">\n                    <svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"currentColor\">\n                        <path d=\"M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z\"/>\n                    </svg>\n                    GitHub\n                </button>\n                <button class=\"search-engine-btn mdn\" onclick=\"searchMulti('mdn')\" title=\"Search MDN\">\n                    <span class=\"mdn-logo\">MDN</span>\n                    MDN Docs\n                </button>\n                <button class=\"search-engine-btn npm\" onclick=\"searchMulti('npm')\" title=\"Search npm\">\n                    <span class=\"npm-logo\">npm</span>\n                    npm\n                </button>\n            </div>\n        </div>\n        \n        <!-- Knowledge & Reference -->\n        <div class=\"search-category\">\n            <h3>\ud83d\udcda Knowledge</h3>\n            <div class=\"search-buttons\">\n                <button class=\"search-engine-btn wikipedia\" onclick=\"searchMulti('wikipedia')\" title=\"Search Wikipedia\">\n                    <span class=\"wiki-logo\">W</span>\n                    Wikipedia\n                </button>\n                <button class=\"search-engine-btn youtube\" onclick=\"searchMulti('youtube')\" title=\"Search YouTube\">\n                    <span class=\"yt-logo\">\u25b6</span>\n                    YouTube\n                </button>\n                <button class=\"search-engine-btn reddit\" onclick=\"searchMulti('reddit')\" title=\"Search Reddit\">\n                    <span class=\"reddit-logo\">R</span>\n                    Reddit\n                </button>\n                <button class=\"search-engine-btn arxiv\" onclick=\"searchMulti('arxiv')\" title=\"Search arXiv\">\n                    <span class=\"arxiv-logo\">arXiv</span>\n                    arXiv\n                </button>\n            </div>\n        </div>\n        \n        <!-- Shopping -->\n        <div class=\"search-category\">\n            <h3>\ud83d\uded2 Shopping</h3>\n            <div class=\"search-buttons\">\n                <button class=\"search-engine-btn amazon\" onclick=\"searchMulti('amazon')\" title=\"Search Amazon\">\n                    <span class=\"amazon-logo\">A</span>\n                    Amazon\n                </button>\n                <button class=\"search-engine-btn ebay\" onclick=\"searchMulti('ebay')\" title=\"Search eBay\">\n                    <span class=\"ebay-logo\">e</span>\n                    eBay\n                </button>\n                <button class=\"search-engine-btn etsy\" onclick=\"searchMulti('etsy')\" title=\"Search Etsy\">\n                    <span class=\"etsy-logo\">E</span>\n                    Etsy\n                </button>\n            </div>\n        </div>\n    </div>\n    \n    <div class=\"search-history\">\n        <h3>Recent Searches</h3>\n        <ul id=\"search-history-list\" class=\"search-history-list\">\n            <li class=\"empty-history\">No recent searches</li>\n        </ul>\n    </div>\n</div>\n\n<style>\n.multi-search-container {\n    max-width: 800px;\n    margin: 2rem auto;\n    padding: 2rem;\n    background: var(--bg-secondary);\n    border-radius: 12px;\n    border: 1px solid var(--border-color);\n}\n\n.search-input-group {\n    display: flex;\n    gap: 0.5rem;\n    margin-bottom: 2rem;\n}\n\n.multi-search-input {\n    flex: 1;\n    padding: 0.75rem 1rem;\n    font-size: 1.125rem;\n    background: var(--bg-primary);\n    color: var(--text-primary);\n    border: 2px solid var(--border-color);\n    border-radius: 8px;\n    transition: all 0.2s ease;\n}\n\n.multi-search-input:focus {\n    outline: none;\n    border-color: var(--accent-primary);\n    box-shadow: 0 0 0 3px var(--accent-primary-alpha);\n}\n\n.clear-search-btn {\n    padding: 0.75rem;\n    background: var(--bg-tertiary);\n    color: var(--text-secondary);\n    border: 1px solid var(--border-color);\n    border-radius: 8px;\n    cursor: pointer;\n    transition: all 0.2s ease;\n}\n\n.clear-search-btn:hover {\n    background: var(--bg-hover);\n    color: var(--text-primary);\n}\n\n.search-engines-grid {\n    display: grid;\n    gap: 2rem;\n    margin-bottom: 2rem;\n}\n\n.search-category {\n    background: var(--bg-primary);\n    padding: 1.5rem;\n    border-radius: 8px;\n    border: 1px solid var(--border-color);\n}\n\n.search-category h3 {\n    margin: 0 0 1rem 0;\n    font-size: 1.125rem;\n    color: var(--text-primary);\n}\n\n.search-buttons {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));\n    gap: 0.75rem;\n}\n\n.search-engine-btn {\n    display: flex;\n    align-items: center;\n    gap: 0.5rem;\n    padding: 0.75rem 1rem;\n    font-size: 0.875rem;\n    font-weight: 500;\n    background: var(--bg-secondary);\n    color: var(--text-primary);\n    border: 1px solid var(--border-color);\n    border-radius: 6px;\n    cursor: pointer;\n    transition: all 0.2s ease;\n}\n\n.search-engine-btn:hover {\n    transform: translateY(-1px);\n    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\n}\n\n/ Search Engine Specific Styles /\n.search-engine-btn.google:hover {\n    background: #4285F4;\n    color: white;\n    border-color: #4285F4;\n}\n\n.search-engine-btn.bing:hover {\n    background: #00809d;\n    color: white;\n    border-color: #00809d;\n}\n\n.search-engine-btn.duckduckgo:hover {\n    background: #de5833;\n    color: white;\n    border-color: #de5833;\n}\n\n.search-engine-btn.brave:hover {\n    background: #fb542b;\n    color: white;\n    border-color: #fb542b;\n}\n\n.search-engine-btn.stackoverflow:hover {\n    background: #f48024;\n    color: white;\n    border-color: #f48024;\n}\n\n.search-engine-btn.github:hover {\n    background: #24292e;\n    color: white;\n    border-color: #24292e;\n}\n\n.search-engine-btn.wikipedia:hover {\n    background: #000;\n    color: white;\n    border-color: #000;\n}\n\n.search-engine-btn.youtube:hover {\n    background: #ff0000;\n    color: white;\n    border-color: #ff0000;\n}\n\n.search-engine-btn.reddit:hover {\n    background: #ff4500;\n    color: white;\n    border-color: #ff4500;\n}\n\n.search-engine-btn.amazon:hover {\n    background: #ff9900;\n    color: black;\n    border-color: #ff9900;\n}\n\n/ Logo Styles /\n.bing-logo {\n    font-weight: bold;\n    color: #00809d;\n}\n\n.duck-logo, .brave-logo {\n    font-size: 1.125rem;\n}\n\n.so-logo {\n    font-weight: bold;\n    font-size: 0.75rem;\n    padding: 0.125rem 0.25rem;\n    background: #f48024;\n    color: white;\n    border-radius: 2px;\n}\n\n.mdn-logo {\n    font-weight: bold;\n    font-size: 0.75rem;\n    color: #545454;\n}\n\n.npm-logo {\n    font-weight: bold;\n    color: #cb3837;\n}\n\n.wiki-logo {\n    font-weight: bold;\n    font-family: serif;\n}\n\n.yt-logo {\n    color: #ff0000;\n}\n\n.reddit-logo {\n    font-weight: bold;\n    color: #ff4500;\n}\n\n.arxiv-logo {\n    font-size: 0.875rem;\n    font-weight: 600;\n}\n\n.amazon-logo {\n    font-weight: bold;\n    color: #ff9900;\n}\n\n.ebay-logo {\n    font-weight: bold;\n    color: #e53238;\n    font-style: italic;\n}\n\n.etsy-logo {\n    font-weight: bold;\n    color: #f1641e;\n}\n\n/ Search History /\n.search-history {\n    background: var(--bg-primary);\n    padding: 1.5rem;\n    border-radius: 8px;\n    border: 1px solid var(--border-color);\n}\n\n.search-history h3 {\n    margin: 0 0 1rem 0;\n    font-size: 1rem;\n    color: var(--text-secondary);\n}\n\n.search-history-list {\n    list-style: none;\n    padding: 0;\n    margin: 0;\n}\n\n.search-history-list li {\n    padding: 0.5rem 0.75rem;\n    background: var(--bg-secondary);\n    border-radius: 4px;\n    margin-bottom: 0.5rem;\n    color: var(--text-secondary);\n    font-size: 0.875rem;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n}\n\n.search-history-list li:last-child {\n    margin-bottom: 0;\n}\n\n.empty-history {\n    text-align: center;\n    color: var(--text-tertiary);\n    font-style: italic;\n}\n\n.history-keyword {\n    font-weight: 500;\n    color: var(--text-primary);\n}\n\n.history-engine {\n    font-size: 0.75rem;\n    color: var(--text-tertiary);\n}\n\n/ Mobile Responsive /\n@media (max-width: 768px) {\n    .multi-search-container {\n        padding: 1rem;\n    }\n    \n    .search-buttons {\n        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));\n    }\n    \n    .search-engine-btn {\n        font-size: 0.813rem;\n        padding: 0.625rem 0.75rem;\n    }\n}\n</style>\n\n<script>\n// Search engine URLs\nconst searchEngines = {\n    google: 'https://www.google.com/search?q=',\n    bing: 'https://www.bing.com/search?q=',\n    duckduckgo: 'https://duckduckgo.com/?q=',\n    brave: 'https://search.brave.com/search?q=',\n    stackoverflow: 'https://stackoverflow.com/search?q=',\n    github: 'https://github.com/search?q=',\n    mdn: 'https://developer.mozilla.org/en-US/search?q=',\n    npm: 'https://www.npmjs.com/search?q=',\n    wikipedia: 'https://en.wikipedia.org/w/index.php?search=',\n    youtube: 'https://www.youtube.com/results?searchquery=',\n    reddit: 'https://www.reddit.com/search/?q=',\n    arxiv: 'https://arxiv.org/search/?query=',\n    amazon: 'https://www.amazon.com/s?k=',\n    ebay: 'https://www.ebay.com/sch/i.html?nkw=',\n    etsy: 'https://www.etsy.com/search?q='\n};\n\n// Search history (stored in localStorage)\nlet searchHistory = JSON.parse(localStorage.getItem('multiSearchHistory') || '[]');\n\nfunction searchMulti(engine) {\n    const input = document.getElementById('multi-search-input');\n    const keyword = input.value.trim();\n    \n    if (!keyword) {\n        input.focus();\n        return;\n    }\n    \n    // Get the search URL\n    const searchUrl = searchEngines[engine] + encodeURIComponent(keyword);\n    \n    // Open in new tab\n    window.open(searchUrl, 'blank');\n    \n    // Add to history\n    addToHistory(keyword, engine);\n    \n    // Optional: Clear input after search\n    // input.value = '';\n}\n\nfunction clearMultiSearch() {\n    document.getElementById('multi-search-input').value = '';\n    document.getElementById('multi-search-input').focus();\n}\n\nfunction addToHistory(keyword, engine) {\n    // Remove duplicates\n    searchHistory = searchHistory.filter(item => \n        !(item.keyword === keyword && item.engine === engine)\n    );\n    \n    // Add to beginning\n    searchHistory.unshift({\n        keyword: keyword,\n        engine: engine,\n        timestamp: new Date().toISOString()\n    });\n    \n    // Keep only last 10 searches\n    searchHistory = searchHistory.slice(0, 10);\n    \n    // Save to localStorage\n    localStorage.setItem('multiSearchHistory', JSON.stringify(searchHistory));\n    \n    // Update display\n    updateHistoryDisplay();\n}\n\nfunction updateHistoryDisplay() {\n    const historyList = document.getElementById('search-history-list');\n    \n    if (searchHistory.length === 0) {\n        historyList.innerHTML = '<li class=\"empty-history\">No recent searches</li>';\n        return;\n    }\n    \n    historyList.innerHTML = searchHistory.map(item => \n        <li>\n            <span class=\"history-keyword\">${item.keyword}</span>\n            <span class=\"history-engine\">${item.engine}</span>\n        </li>\n    ).join('');\n}\n\n// Initialize history display on page load\ndocument.addEventListener('DOMContentLoaded', updateHistoryDisplay);\n</script>\n\nHow to Use\n\n1. Enter Keywords: Type your search terms in the input box\n2. Choose Search Engine: Click any button to search with that specific engine\n3. Quick Search: Press Enter to search with Google (default)\n4. Clear Input: Click the \u2715 button to clear the search box\n5. View History: Your last 10 searches are shown below\n\nFeatures\n\n- Multiple Search Engines: Search across 15+ different platforms\n- Categorized: Organized by search type (General, Developer, Knowledge, Shopping)\n- Search History: Tracks your recent searches (stored locally)\n- Keyboard Support: Press Enter to quickly search with Google\n- New Tab Opening: All searches open in new tabs to preserve your current page\n- Mobile Friendly: Responsive design works on all devices\n\nCustomization Tips\n\nYou can easily add more search engines by modifying the JavaScript:\n\njavascript\n// Add a new search engine\nsearchEngines.mysite = 'https://mysite.com/search?q=';\n\n// Then add a button in the HTML\n<button class=\"search-engine-btn\" onclick=\"searchMulti('mysite')\">\n    My Site\n</button>\n\n\nPrivacy Note\n\n- All searches open in new tabs\n- Search history is stored locally in your browser only\n- No data is sent to any external servers\n- Clear your browser's localStorage to remove search history // Add a new search engine\nsearchEngines.mysite = 'https://mysite.com/search?q=';\n\n// Then add a button in the HTML\n<button class=\"search-engine-btn\" onclick=\"searchMulti('mysite')\">\n    My Site\n</button>",
+      "code_blocks_count": 1
+    },
+    {
+      "path": "/notes/test-syntax-fix.md",
+      "context": null,
+      "metadata": {
+        "title": "Test Syntax Highlighting Fix",
+        "tags": [
+          "test"
+        ],
+        "created": "2025-01-18",
+        "author": "Unknown",
+        "description": "",
+        "updated": null,
+        "category": null,
+        "status": null
+      },
+      "content_preview": "Testing if the syntax highlighting works correctly after the fix:\n\njavascript\n// This is a comment\nconst message = \"Hello, world!\";\nconsole.log(message); // Should display properly\n\n// Special charact...",
+      "searchable_content": "\nTest Syntax Highlighting Fix\n\nTesting if the syntax highlighting works correctly after the fix:\n\njavascript\n// This is a comment\nconst message = \"Hello, world!\";\nconsole.log(message); // Should display properly\n\n// Special characters test\nconst html = '<div class=\"test\">Content</div>';\nconst comparison = 5 > 3 && 10 < 20;\nconst quotes = 'Single quotes' + \"Double quotes\";\n\n\npython\nPython test\ndef helloworld():\n    \"\"\"Docstring with special chars: <>&\"\"\"\n    print(\"Hello, world!\")\n    return True\n\nSpecial operators\nif x > 5 and y < 10:\n    result = \"Valid range\"\n\n\nhtml\n<!-- HTML test -->\n<div class=\"container\">\n    <h1>Title with special chars: &amp; &lt; &gt;</h1>\n    <p>Content here</p>\n</div>\n\n\nThe code blocks above should display with proper syntax highlighting, not showing escaped HTML entities. // This is a comment\nconst message = \"Hello, world!\";\nconsole.log(message); // Should display properly\n\n// Special characters test\nconst html = '<div class=\"test\">Content</div>';\nconst comparison = 5 > 3 && 10 < 20;\nconst quotes = 'Single quotes' + \"Double quotes\"; # Python test\ndef hello_world():\n    \"\"\"Docstring with special chars: <>&\"\"\"\n    print(\"Hello, world!\")\n    return True\n\n# Special operators\nif x > 5 and y < 10:\n    result = \"Valid range\" <!-- HTML test -->\n<div class=\"container\">\n    <h1>Title with special chars: &amp; &lt; &gt;</h1>\n    <p>Content here</p>\n</div>",
+      "code_blocks_count": 3
+    },
+    {
       "path": "/notes/test-code-blocks.md",
       "context": null,
       "metadata": {
@@ -715,18 +755,18 @@
     "showcase": 2,
     "styling": 1,
     "callouts": 1,
-    "test": 6,
+    "test": 7,
     "html": 2,
     "code": 2,
     "alignment": 1,
     "guide": 2,
     "images": 1,
-    "search": 2,
+    "search": 3,
     "debugging": 1,
     "links": 1,
     "word-wrap": 1,
     "shortcuts": 1,
-    "productivity": 4,
+    "productivity": 5,
     "navigation": 2,
     "operators": 1,
     "filtering": 1,
@@ -747,6 +787,7 @@
     "qa": 1,
     "edge-cases": 1,
     "special-characters": 1,
+    "tools": 1,
     "personal": 3,
     "journal": 1,
     "thoughts": 1,
@@ -792,32 +833,32 @@
     "advanced": 1
   },
   "authors": [
-    "Sarah Johnson",
-    "Database Team",
-    "Test Suite",
-    "Jane Smith",
-    "Wiki Admin",
-    "System",
-    "Alex Chen",
-    "Maria Rodriguez",
     "Debug",
-    "DevOps Team",
-    "Claude",
-    "Tutorial Team",
-    "Blog Team",
-    "Dev Team",
+    "Test Suite",
     "John Doe",
-    "Project Team",
+    "Alex Chen",
     "Test User",
-    "Architecture Team"
+    "Wiki Admin",
+    "Database Team",
+    "DevOps Team",
+    "Tutorial Team",
+    "Dev Team",
+    "Blog Team",
+    "Project Team",
+    "Sarah Johnson",
+    "Architecture Team",
+    "Jane Smith",
+    "Maria Rodriguez",
+    "System",
+    "Claude"
   ],
   "categories": [
-    "projects",
-    "personal",
     "technical",
-    "documentation",
+    "reference",
     "tutorials",
-    "reference"
+    "projects",
+    "documentation",
+    "personal"
   ],
   "contexts": [
     {
@@ -846,6 +887,6 @@
       "noteCount": 2
     }
   ],
-  "generated": "2025-06-18T14:40:53.671535",
-  "totalNotes": 32
+  "generated": "2025-06-18T15:05:27.324350",
+  "totalNotes": 34
 }

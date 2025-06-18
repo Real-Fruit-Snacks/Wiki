@@ -49,7 +49,7 @@ This is a **single-page application (SPA)** built with vanilla JavaScript - no f
 ### Critical Architecture Issues
 
 ⚠️ **MONOLITHIC DESIGN WARNING**: The application currently suffers from severe architectural debt:
-- **7,284 lines** in a single `script.js` file (reduced from 7,355 after recent cleanup)
+- **7,000+ lines** in a single `script.js` file
 - **~180+ methods** in one `NotesWiki` class
 - **Difficult to maintain, test, and extend**
 
@@ -66,7 +66,7 @@ When making significant changes, consider the modular refactoring plan:
 
 ### Core Components
 
-1. **Entry Point**: `index.html` - Single HTML file that loads all resources
+1. **Entry Point**: `index.html` - Single HTML file that loads all resources with dynamic base path detection for GitHub Pages compatibility
 2. **Main Application**: `script.js` - Contains the monolithic `NotesWiki` class that handles:
    - Tab management with drag-and-drop
    - Advanced search with operators (`tag:`, `author:`, `"phrase"`, `-exclude`, etc.)
@@ -111,16 +111,16 @@ When making significant changes, consider the modular refactoring plan:
 - Code syntax highlighting uses Prism.js with 20+ language support
 - Markdown rendering supports custom callouts, collapsible sections, and code block titles
 
-### Recent Features (v2.9.0)
+### Recent Features (v3.0.0)
 
 1. **Table of Contents** - Auto-generated from headings, collapsible, tracks reading position
 2. **Wiki-style Links** - `[[Note Title]]` syntax creates internal links between notes
 3. **Reading Progress** - Progress bar and time estimation based on word count
 4. **Focus Mode** - Press 'F' to hide sidebar and center content for distraction-free reading
 5. **In-Note Search** - Ctrl+F to search within current note with highlighting and navigation
-6. **PDF Export** - Print-optimized styles with breadcrumb navigation
-7. **Enhanced Navigation** - Improved UI/UX for file tree and responsive context switching
-8. **Responsive Context Filtering** - Dynamic dropdown for category selection that adapts to screen size and category count
+6. **Enhanced Navigation** - Improved UI/UX for file tree and responsive context switching
+7. **Responsive Context Filtering** - Dynamic dropdown for category selection that adapts to screen size and category count
+8. **GitHub Pages Path Fix** - Dynamic base path detection for proper resource loading
 
 ### Memory Management Critical Patterns
 
@@ -181,7 +181,7 @@ element.textContent = userInput;
 element.innerHTML = userInput; // Only for trusted SVG/static content
 ```
 
-### Recently Applied Fixes (v2.9.0)
+### Recently Applied Fixes (v3.0.0)
 
 ✅ **Critical fixes and improvements implemented**:
 1. **Syntax Highlighting**: Fixed Prism.js integration with proper `Prism.highlightAll()` calls after DOM injection
@@ -197,6 +197,8 @@ element.innerHTML = userInput; // Only for trusted SVG/static content
 11. **Tab Preview Removal**: Eliminated problematic tab hover preview system that caused `tabElement is null` errors
 12. **Help Menu Accuracy**: Corrected all keyboard shortcuts and functionality descriptions in the help modal (? key)
 13. **Context Switcher Enhancement**: Implemented responsive dropdown system for context filtering with proper overflow detection, active state highlighting, and memory-efficient event handling
+14. **GitHub Pages Compatibility**: Added dynamic base path detection in `getBasePath()` method for proper resource loading
+15. **PDF Export Removal**: Removed PDF export functionality per user request
 
 ### Layout and Styling Architecture
 
@@ -286,6 +288,7 @@ All major issues identified in comprehensive testing have been resolved:
 - ✅ **Memory management** comprehensive cleanup implemented
 - ✅ **Tab preview removal** eliminated console errors
 - ✅ **Help documentation** accurate and professional
+- ✅ **GitHub Pages themes** fixed with dynamic base path loading
 
 ### Development Workflow
 When making changes to this codebase:
@@ -341,3 +344,43 @@ const needsDropdown = isMobile || this.contexts.length > 6;
 - localStorage errors handled for context persistence
 
 This implementation replaces the previous complex dual-structure approach with a single, maintainable system that provides excellent UX across all device sizes.
+
+## GitHub Pages Dynamic Path Resolution
+
+The application includes dynamic base path detection to work correctly when hosted on GitHub Pages subdirectories:
+
+### Implementation in `script.js`:
+```javascript
+getBasePath() {
+    // Detect if we're running on GitHub Pages or locally
+    const pathname = window.location.pathname;
+    // GitHub Pages serves from /repository-name/
+    if (pathname.includes('/Wiki/') || pathname.includes('/wiki/')) {
+        const match = pathname.match(/\/(Wiki|wiki)\//);
+        if (match) {
+            return pathname.substring(0, pathname.indexOf(match[0]) + match[0].length);
+        }
+    }
+    return '';
+}
+```
+
+### Resource Loading:
+- All resources (themes, scripts, notes, images) use the detected base path
+- Initial theme loading handled by inline script in `index.html`
+- Script and style loading dynamically adjusted for correct paths
+
+### Affected Resources:
+- Theme CSS files: `themes/${themeId}.css`
+- Search index: `notes-index.json`
+- Note markdown files: `notes/**/*.md`
+- JavaScript libraries: `libs/*.js`
+- Base stylesheet: `style.css`
+
+## Custom 404 Page
+
+The application includes a custom 404.html page that:
+- Maintains theme consistency with user's selected theme
+- Provides helpful navigation options
+- Works with dynamic base path detection
+- Automatically served by GitHub Pages and GitLab Pages for missing routes

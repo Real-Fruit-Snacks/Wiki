@@ -2030,21 +2030,20 @@ class NotesWiki {
                 language = self.settings.defaultCodeLanguage;
             }
             
-            // Escape HTML entities for security - Prism.highlightAll() will handle highlighting
-            const escapedCode = self.escapeHtml(codeContent);
+            // For Prism.js highlighting, we need the raw code content
+            // The browser will handle escaping when rendering in the <code> element
+            let codeHtml = codeContent;
             
             // Add line numbers if enabled using CSS counters
-            let codeHtml = escapedCode;
             if (self.settings.showLineNumbers) {
                 const lines = codeContent.split('\n');
                 const codeLines = lines.map(line => {
-                    // Escape each line and handle empty lines
-                    let escapedLine = self.escapeHtml(line);
-                    if (escapedLine.trim() === '') {
-                        escapedLine = '&nbsp;';
+                    // Handle empty lines without escaping (browser will handle it)
+                    if (line.trim() === '') {
+                        line = '\u00A0'; // Non-breaking space
                     }
                     
-                    return `<div class="code-line">${escapedLine}</div>`;
+                    return `<div class="code-line">${line}</div>`;
                 }).join('');
                 
                 codeHtml = `<div class="code-with-counters">${codeLines}</div>`;
