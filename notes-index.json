@@ -243,10 +243,10 @@
       "code_blocks_count": 1
     },
     {
-      "path": "/notes/test-syntax-fix.md",
+      "path": "/notes/test-line-numbers.md",
       "context": null,
       "metadata": {
-        "title": "Test Syntax Highlighting Fix",
+        "title": "Line Numbers Test",
         "tags": [
           "test"
         ],
@@ -257,29 +257,9 @@
         "category": null,
         "status": null
       },
-      "content_preview": "Testing if the syntax highlighting works correctly after the fix:\n\njavascript\n// This is a comment\nconst message = \"Hello, world!\";\nconsole.log(message); // Should display properly\n\n// Special charact...",
-      "searchable_content": "\nTest Syntax Highlighting Fix\n\nTesting if the syntax highlighting works correctly after the fix:\n\njavascript\n// This is a comment\nconst message = \"Hello, world!\";\nconsole.log(message); // Should display properly\n\n// Special characters test\nconst html = '<div class=\"test\">Content</div>';\nconst comparison = 5 > 3 && 10 < 20;\nconst quotes = 'Single quotes' + \"Double quotes\";\n\n\npython\nPython test\ndef helloworld():\n    \"\"\"Docstring with special chars: <>&\"\"\"\n    print(\"Hello, world!\")\n    return True\n\nSpecial operators\nif x > 5 and y < 10:\n    result = \"Valid range\"\n\n\nhtml\n<!-- HTML test -->\n<div class=\"container\">\n    <h1>Title with special chars: &amp; &lt; &gt;</h1>\n    <p>Content here</p>\n</div>\n\n\nThe code blocks above should display with proper syntax highlighting, not showing escaped HTML entities. // This is a comment\nconst message = \"Hello, world!\";\nconsole.log(message); // Should display properly\n\n// Special characters test\nconst html = '<div class=\"test\">Content</div>';\nconst comparison = 5 > 3 && 10 < 20;\nconst quotes = 'Single quotes' + \"Double quotes\"; # Python test\ndef hello_world():\n    \"\"\"Docstring with special chars: <>&\"\"\"\n    print(\"Hello, world!\")\n    return True\n\n# Special operators\nif x > 5 and y < 10:\n    result = \"Valid range\" <!-- HTML test -->\n<div class=\"container\">\n    <h1>Title with special chars: &amp; &lt; &gt;</h1>\n    <p>Content here</p>\n</div>",
-      "code_blocks_count": 3
-    },
-    {
-      "path": "/notes/verify-syntax-fix.md",
-      "context": null,
-      "metadata": {
-        "title": "Verify Syntax Highlighting Fix",
-        "tags": [
-          "test",
-          "code-blocks"
-        ],
-        "created": "2025-01-18",
-        "author": "Unknown",
-        "description": "",
-        "updated": null,
-        "category": null,
-        "status": null
-      },
-      "content_preview": "Testing if the code block fix works correctly. The code below should display with proper syntax highlighting, not showing escaped HTML entities or broken formatting.\n\n\n\njavascript\n// This comment shou...",
-      "searchable_content": "\nVerify Syntax Highlighting Fix\n\nTesting if the code block fix works correctly. The code below should display with proper syntax highlighting, not showing escaped HTML entities or broken formatting.\n\nJavaScript Test\n\njavascript\n// This comment should display normally\nconst DataProcessor = {\n    #privateData: new Map(),\n    \n    async processData(input) {\n        // Special characters test\n        const isValid = input > 0 && input < 100;\n        const html = '<div class=\"test\">Content</div>';\n        const message = \"String with 'quotes'\";\n        \n        // Template literals\n        console.log(Processing ${input} items...);\n        \n        return { success: true, data: processed };\n    }\n};\n\n\nPython Test  \n\npython\nPython comment should work\ndef processdata(items):\n    \"\"\"Docstring with <html> tags & special chars\"\"\"\n    result = []\n    \n    for item in items:\n        if item > 0 and item < 100:\n            result.append(item  2)\n    \n    return result\n\n\nHTML Test\n\nhtml\n<!DOCTYPE html>\n<html>\n<head>\n    <title>Test Page</title>\n</head>\n<body>\n    <!-- HTML comment -->\n    <div class=\"container\">\n        <h1>Title & Special Chars</h1>\n        <p>Content with &lt;escaped&gt; entities</p>\n    </div>\n</body>\n</html>\n\n\nAll code blocks above should now render correctly with proper syntax highlighting. // This comment should display normally\nconst DataProcessor = {\n    #privateData: new Map(),\n    \n    async processData(input) {\n        // Special characters test\n        const isValid = input > 0 && input < 100;\n        const html = '<div class=\"test\">Content</div>';\n        const message = \"String with 'quotes'\";\n        \n        // Template literals\n        console.log(`Processing ${input} items...`);\n        \n        return { success: true, data: processed };\n    }\n}; # Python comment should work\ndef process_data(items):\n    \"\"\"Docstring with <html> tags & special chars\"\"\"\n    result = []\n    \n    for item in items:\n        if item > 0 and item < 100:\n            result.append(item * 2)\n    \n    return result <!DOCTYPE html>\n<html>\n<head>\n    <title>Test Page</title>\n</head>\n<body>\n    <!-- HTML comment -->\n    <div class=\"container\">\n        <h1>Title & Special Chars</h1>\n        <p>Content with &lt;escaped&gt; entities</p>\n    </div>\n</body>\n</html>",
-      "code_blocks_count": 3
+      "content_preview": "Testing if line numbers display correctly when enabled in settings.\n\n\n\njavascript\n// Line 1: Comment\nconst x = 5;     // Line 2\nconst y = 10;    // Line 3\n\n// Line 5: Empty line above\nfunction add(a, ...",
+      "searchable_content": "\nLine Numbers Test\n\nTesting if line numbers display correctly when enabled in settings.\n\nSimple Code Test\n\njavascript\n// Line 1: Comment\nconst x = 5;     // Line 2\nconst y = 10;    // Line 3\n\n// Line 5: Empty line above\nfunction add(a, b) {  // Line 6\n    return a + b;     // Line 7\n}                     // Line 8\n\nconsole.log(add(x, y)); // Line 10\n\n\nTest with Empty Lines\n\npython\nLine 1\ndef test():\n    # Line 3 (empty line above)\n    pass\n\nLine 6\n\nLine 8\nprint(\"Hello\")\n\n\nThe line numbers should appear on the left side of each line when \"Show line numbers\" is enabled in settings. // Line 1: Comment\nconst x = 5;     // Line 2\nconst y = 10;    // Line 3\n\n// Line 5: Empty line above\nfunction add(a, b) {  // Line 6\n    return a + b;     // Line 7\n}                     // Line 8\n\nconsole.log(add(x, y)); // Line 10 # Line 1\ndef test():\n    # Line 3 (empty line above)\n    pass\n\n# Line 6\n\n# Line 8\nprint(\"Hello\")",
+      "code_blocks_count": 2
     },
     {
       "path": "/notes/test-code-blocks.md",
@@ -767,7 +747,7 @@
     "documentation": 4,
     "wiki": 1,
     "demo": 10,
-    "code-blocks": 2,
+    "code-blocks": 1,
     "syntax-highlighting": 1,
     "line-numbers": 2,
     "programming": 3,
@@ -775,7 +755,7 @@
     "showcase": 2,
     "styling": 1,
     "callouts": 1,
-    "test": 8,
+    "test": 7,
     "html": 2,
     "code": 2,
     "alignment": 1,
@@ -853,32 +833,32 @@
     "advanced": 1
   },
   "authors": [
-    "Alex Chen",
-    "Test Suite",
-    "System",
-    "DevOps Team",
-    "Database Team",
     "Claude",
-    "Sarah Johnson",
     "Jane Smith",
-    "Wiki Admin",
-    "Project Team",
-    "Maria Rodriguez",
-    "Test User",
-    "Architecture Team",
-    "John Doe",
-    "Blog Team",
+    "Test Suite",
+    "Sarah Johnson",
+    "DevOps Team",
     "Debug",
+    "John Doe",
+    "Project Team",
+    "Blog Team",
+    "System",
+    "Wiki Admin",
+    "Alex Chen",
+    "Tutorial Team",
+    "Architecture Team",
+    "Database Team",
+    "Maria Rodriguez",
     "Dev Team",
-    "Tutorial Team"
+    "Test User"
   ],
   "categories": [
-    "projects",
     "reference",
-    "documentation",
-    "tutorials",
     "technical",
-    "personal"
+    "tutorials",
+    "personal",
+    "documentation",
+    "projects"
   ],
   "contexts": [
     {
@@ -907,6 +887,6 @@
       "noteCount": 2
     }
   ],
-  "generated": "2025-06-18T15:13:52.340635",
-  "totalNotes": 35
+  "generated": "2025-06-18T15:21:48.153417",
+  "totalNotes": 34
 }

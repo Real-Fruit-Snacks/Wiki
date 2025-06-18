@@ -2256,6 +2256,31 @@ class NotesWiki {
         // Highlight all code blocks with Prism after DOM injection
         Prism.highlightAll();
         
+        // Add line numbers after Prism highlighting if enabled
+        if (this.settings.showLineNumbers) {
+            document.querySelectorAll('pre.with-line-numbers code').forEach(codeElement => {
+                // Get the highlighted HTML from Prism
+                const highlightedHtml = codeElement.innerHTML;
+                
+                // Split by line breaks, preserving empty lines
+                const lines = highlightedHtml.split('\n');
+                
+                // Wrap each line in a div for CSS counter
+                const wrappedLines = lines.map(line => {
+                    // Handle empty lines
+                    if (line.trim() === '') {
+                        line = '&nbsp;';
+                    }
+                    return `<div class="code-line">${line}</div>`;
+                }).join('');
+                
+                // Add the code-with-counters class to the code element
+                codeElement.classList.add('code-with-counters');
+                // Replace the code element content with the wrapped lines
+                codeElement.innerHTML = wrappedLines;
+            });
+        }
+        
         // Scroll to top
         mainContent.scrollTop = 0;
         
