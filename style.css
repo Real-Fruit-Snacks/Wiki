@@ -92,9 +92,9 @@ body {
 .header-content {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     height: 100%;
     padding: 0 var(--spacing-lg);
+    gap: var(--spacing-md);
 }
 
 .header-left {
@@ -147,10 +147,10 @@ body {
     display: flex;
     align-items: center;
     gap: var(--spacing-xs);
-    margin-left: auto;
-    margin-right: var(--spacing-lg);
+    margin-left: var(--spacing-md);
+    margin-right: var(--spacing-md);
     min-width: 0; /* Allow shrinking below content size */
-    flex: 1 1 auto; /* Allow growing and shrinking */
+    flex: 1 1 auto; /* Allow growing to fill available space */
     max-width: 600px; /* Maximum width to prevent too much spreading */
     position: relative;
     overflow: hidden; /* Hide overflow */
@@ -168,7 +168,7 @@ body {
 .context-dropdown {
     position: relative;
     display: none;
-    margin-right: var(--spacing-sm);
+    margin-right: var(--spacing-xs);
 }
 
 /* Icon button style for context dropdown toggle */
@@ -325,6 +325,7 @@ body {
     align-items: center;
     gap: var(--spacing-sm);
     flex-shrink: 0;
+    margin-left: auto;
 }
 
 /* Buttons */
@@ -4718,8 +4719,8 @@ select.dropdown:focus {
     
     /* Context switcher responsive */
     .context-switcher {
-        margin-left: var(--spacing-sm);
-        margin-right: var(--spacing-sm);
+        margin-left: var(--spacing-xs);
+        margin-right: var(--spacing-xs);
     }
     
     .context-buttons-wrapper {
