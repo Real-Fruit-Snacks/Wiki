@@ -5712,7 +5712,7 @@ class NotesWiki {
             
             // Create dropdown toggle button
             const dropdownToggle = document.createElement('button');
-            dropdownToggle.className = 'icon-button context-dropdown-toggle';
+            dropdownToggle.className = 'icon-button context-dropdown-toggle' + (this.activeContext ? ' active' : '');
             const activeContextName = this.activeContext ? 
                 this.contexts.find(c => c.id === this.activeContext)?.name || 'Unknown' : 
                 'All';
@@ -5735,6 +5735,12 @@ class NotesWiki {
                 this.setActiveContext(null);
                 dropdown.classList.remove('active');
                 dropdownToggle.querySelector('.context-dropdown-label').textContent = 'All';
+                // Update toggle appearance
+                if (!this.activeContext) {
+                    dropdownToggle.classList.add('active');
+                } else {
+                    dropdownToggle.classList.remove('active');
+                }
             });
             dropdownMenu.appendChild(allDropdownItem);
             
@@ -5751,6 +5757,8 @@ class NotesWiki {
                     this.setActiveContext(context.id);
                     dropdown.classList.remove('active');
                     dropdownToggle.querySelector('.context-dropdown-label').textContent = context.name;
+                    // Update toggle appearance
+                    dropdownToggle.classList.add('active');
                 });
                 dropdownMenu.appendChild(item);
             });
@@ -5838,6 +5846,9 @@ class NotesWiki {
             item.classList.remove('active');
         });
         
+        // Update dropdown toggle state
+        const dropdownToggle = document.querySelector('.context-dropdown-toggle');
+        
         if (contextId) {
             // Update buttons
             const activeBtn = Array.from(document.querySelectorAll('.context-button')).find(
@@ -5851,12 +5862,13 @@ class NotesWiki {
             );
             if (activeDropdownItem) activeDropdownItem.classList.add('active');
             
-            // Update dropdown toggle text
+            // Update dropdown toggle text and state
             const dropdownLabel = document.querySelector('.context-dropdown-label');
             if (dropdownLabel) {
                 const context = this.contexts.find(c => c.id === contextId);
                 if (context) dropdownLabel.textContent = context.name;
             }
+            if (dropdownToggle) dropdownToggle.classList.add('active');
         } else {
             // Set "All" as active
             const allButton = document.querySelector('.context-button');
@@ -5865,9 +5877,10 @@ class NotesWiki {
             const allDropdownItem = document.querySelector('.context-dropdown-item');
             if (allDropdownItem) allDropdownItem.classList.add('active');
             
-            // Update dropdown toggle text
+            // Update dropdown toggle text and state
             const dropdownLabel = document.querySelector('.context-dropdown-label');
             if (dropdownLabel) dropdownLabel.textContent = 'All';
+            if (dropdownToggle) dropdownToggle.classList.remove('active');
         }
         
         // Rebuild navigation with filtered notes
