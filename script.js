@@ -7624,14 +7624,31 @@ class NotesWiki {
     }
     
     enableSplitView() {
-        const mainContent = document.querySelector('.main-layout main');
-        mainContent.classList.add('split-view-active');
+        const mainElement = document.querySelector('.main-layout main');
+        if (!mainElement) {
+            console.error('Main element not found');
+            return;
+        }
         
-        // Create split pane structure
+        mainElement.classList.add('split-view-active');
+        
+        // Get existing elements
         const tabBar = document.getElementById('tab-bar');
         const content = document.getElementById('main-content');
         
-        // Wrap existing content in first pane
+        if (!tabBar || !content) {
+            console.error('Required elements not found');
+            return;
+        }
+        
+        // Create container for split view
+        const splitContainer = document.createElement('div');
+        splitContainer.className = 'split-container';
+        splitContainer.style.display = 'flex';
+        splitContainer.style.flexDirection = 'row';
+        splitContainer.style.height = '100%';
+        
+        // Create first pane with current content
         const pane1 = document.createElement('div');
         pane1.className = 'split-pane active';
         pane1.id = 'pane-1';
@@ -7657,19 +7674,22 @@ class NotesWiki {
         pane2TabBar.id = 'tab-bar-2';
         pane2.appendChild(pane2TabBar);
         
-        const pane2Content = content.cloneNode(true);
+        const pane2Content = document.createElement('div');
         pane2Content.id = 'main-content-2';
         pane2Content.innerHTML = '<div class="content-wrapper empty-state"><h2>Click a note to open it here</h2></div>';
         pane2.appendChild(pane2Content);
+        
+        // Add panes to split container
+        splitContainer.appendChild(pane1);
+        splitContainer.appendChild(divider);
+        splitContainer.appendChild(pane2);
         
         // Hide original elements
         tabBar.style.display = 'none';
         content.style.display = 'none';
         
-        // Insert panes
-        mainContent.insertBefore(pane1, tabBar);
-        mainContent.insertBefore(divider, tabBar);
-        mainContent.insertBefore(pane2, tabBar);
+        // Insert split container after the original content
+        content.parentNode.insertBefore(splitContainer, content.nextSibling);
         
         // Initialize pane state
         this.activePaneId = 'pane-1';
@@ -7678,23 +7698,26 @@ class NotesWiki {
     }
     
     disableSplitView() {
-        const mainContent = document.querySelector('.main-layout main');
-        mainContent.classList.remove('split-view-active');
+        const mainElement = document.querySelector('.main-layout main');
+        if (mainElement) {
+            mainElement.classList.remove('split-view-active');
+        }
         
-        // Remove split panes
-        const pane1 = document.getElementById('pane-1');
-        const pane2 = document.getElementById('pane-2');
-        const divider = document.querySelector('.pane-divider');
-        
-        if (pane1) pane1.remove();
-        if (pane2) pane2.remove();
-        if (divider) divider.remove();
+        // Remove split container
+        const splitContainer = document.querySelector('.split-container');
+        if (splitContainer) {
+            splitContainer.remove();
+        }
         
         // Show original elements
         const tabBar = document.getElementById('tab-bar');
         const content = document.getElementById('main-content');
-        tabBar.style.display = '';
-        content.style.display = '';
+        
+        if (tabBar) tabBar.style.display = '';
+        if (content) content.style.display = '';
+        
+        // Reset active pane
+        this.activePaneId = null;
     }
     
     setupPaneResizing(divider) {
@@ -7715,9 +7738,12 @@ class NotesWiki {
             if (!isResizing) return;
             
             const deltaX = e.clientX - startX;
-            const containerWidth = document.querySelector('.main-layout main').offsetWidth;
+            const splitContainer = document.querySelector('.split-container');
+            const containerWidth = splitContainer ? splitContainer.offsetWidth : 800;
             const pane1 = document.getElementById('pane-1');
             const pane2 = document.getElementById('pane-2');
+            
+            if (!pane1 || !pane2) return;
             
             const newWidth1 = startWidths[0] + deltaX;
             const newWidth2 = startWidths[1] - deltaX;

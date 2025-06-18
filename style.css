@@ -6019,10 +6019,11 @@ body.focus-mode .floating-share {
    SPLIT VIEW STYLES
    ============================================ */
 
-.split-view-active .main-layout main {
+.split-container {
     display: flex;
     flex-direction: row;
     height: 100%;
+    flex: 1;
 }
 
 .split-pane {
@@ -6066,7 +6067,7 @@ body.focus-mode .floating-share {
     border-bottom: 1px solid var(--border-primary);
 }
 
-.split-pane #main-content {
+.split-pane > div[id^="main-content"] {
     flex: 1;
     overflow: auto;
 }
@@ -6202,7 +6203,7 @@ body.focus-mode .floating-share {
 
 /* Mobile adjustments */
 @media (max-width: 768px) {
-    .split-view-active .main-layout main {
+    .split-container {
         flex-direction: column;
     }
     
