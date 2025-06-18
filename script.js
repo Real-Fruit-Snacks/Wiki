@@ -3165,7 +3165,7 @@ class NotesWiki {
         const includeBlockTitles = options.includeBlockTitles !== false;
         const includeOnlyLanguage = options.includeOnlyLanguage || null;
         const skipEmptyBlocks = options.skipEmptyBlocks !== false;
-        const separator = options.separator || '\n// ---\n';
+        const separator = options.separator !== undefined ? options.separator : '\n\n';
         const excludePatterns = options.excludePatterns || [];
         
         // Collect code blocks that match criteria
