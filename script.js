@@ -18,6 +18,9 @@ class NotesWiki {
         this.contexts = [];  // Store available contexts
         this.initialHash = window.location.hash;  // Store initial hash for later processing
         
+        // Determine base path for GitHub Pages compatibility
+        this.basePath = this.getBasePath();
+        
         // Tab management
         this.tabs = new Map(); // Map of tab ID to tab data
         this.activeTabId = null;
@@ -134,6 +137,22 @@ class NotesWiki {
         this.init();
     }
     
+    getBasePath() {
+        // Detect if we're running on GitHub Pages or locally
+        const pathname = window.location.pathname;
+        // GitHub Pages serves from /repository-name/
+        // Local serves from / or /index.html
+        if (pathname.includes('/Wiki/') || pathname.includes('/wiki/')) {
+            // We're on GitHub Pages
+            const match = pathname.match(/\/(Wiki|wiki)\//);
+            if (match) {
+                return pathname.substring(0, pathname.indexOf(match[0]) + match[0].length);
+            }
+        }
+        // Local development - use relative paths
+        return '';
+    }
+    
     async init() {
         try {
             // Load settings from localStorage
@@ -214,7 +233,8 @@ class NotesWiki {
     
     async loadNotesIndex() {
         try {
-            const response = await fetch('notes-index.json');
+            const indexPath = this.basePath ? `${this.basePath}notes-index.json` : 'notes-index.json';
+            const response = await fetch(indexPath);
             this.notesIndex = await response.json();
             
             // Expose index state for debugging
@@ -1426,7 +1446,9 @@ class NotesWiki {
             const fetchPath = path.slice(1);
             console.log('Loading note - Original path:', path, 'Fetch path:', fetchPath);
             
-            const response = await fetch(fetchPath);
+            // Use base path for GitHub Pages compatibility
+            const fullPath = this.basePath ? `${this.basePath}${fetchPath}` : fetchPath;
+            const response = await fetch(fullPath);
             if (!response.ok) {
                 console.error(`HTTP Error ${response.status} ${response.statusText} for path: ${fetchPath}`);
                 throw new Error(`Note not found: ${response.status} ${response.statusText}`);
@@ -5128,7 +5150,10 @@ class NotesWiki {
         // Set up new event listeners
         link.onload = handleThemeLoad;
         link.onerror = handleThemeError;
-        link.href = `themes/${themeId}.css`;
+        
+        // Use base path for GitHub Pages compatibility
+        const themePath = this.basePath ? `${this.basePath}themes/${themeId}.css` : `themes/${themeId}.css`;
+        link.href = themePath;
     }
     
     loadRecentFiles() {
