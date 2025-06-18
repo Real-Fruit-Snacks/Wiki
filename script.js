@@ -3243,7 +3243,8 @@ class NotesWiki {
         const combinedContent = combinedParts.join('\n');
         
         // Generate unique ID for this code block
-        const blockId = `code-block-combined`;
+        const paneIdentifier = container === document ? '' : `-p${container.id.split('-').pop()}`;
+        const blockId = `code-block-combined${paneIdentifier}`;
         
         // Store content for later processing
         if (!this.pendingCodeBlocks) {
@@ -7898,6 +7899,9 @@ class NotesWiki {
             document.getElementById('temp-original-main').id = 'main-content';
             paneContent.id = `main-content-${paneId.split('-')[1]}`;
             
+            // Make all IDs unique for this pane
+            this.makeIdsUniqueForPane(paneContent, paneId);
+            
             // Re-highlight code blocks in this specific pane
             const codeBlocks = paneContent.querySelectorAll('pre code');
             codeBlocks.forEach(block => {
@@ -7932,12 +7936,75 @@ class NotesWiki {
                     const metadata = JSON.parse(contentWrapper.dataset.metadata);
                     if (metadata.combineCodeBlocks) {
                         this.generateCombinedCodeBlock(metadata, paneContent);
+                        
+                        // Process any new pending code blocks immediately for this pane
+                        if (this.pendingCodeBlocks && this.pendingCodeBlocks.size > 0) {
+                            this.pendingCodeBlocks.forEach((codeContent, blockId) => {
+                                const codeElement = paneContent.querySelector(`#${blockId}-code`);
+                                if (codeElement) {
+                                    codeElement.textContent = codeContent;
+                                    Prism.highlightElement(codeElement);
+                                }
+                            });
+                            this.pendingCodeBlocks.clear();
+                        }
                     }
                 } catch (e) {
                     console.warn('Failed to parse metadata for combined code blocks:', e);
                 }
             }
         }
+    }
+    
+    makeIdsUniqueForPane(paneContent, paneId) {
+        const paneNumber = paneId.split('-')[1];
+        const paneSuffix = `-p${paneNumber}`;
+        
+        // Find all elements with IDs and make them unique
+        const elementsWithIds = paneContent.querySelectorAll('[id]');
+        const idMap = new Map(); // Track old ID -> new ID mappings
+        
+        elementsWithIds.forEach(element => {
+            const oldId = element.id;
+            if (!oldId.endsWith(paneSuffix)) {
+                const newId = oldId + paneSuffix;
+                element.id = newId;
+                idMap.set(oldId, newId);
+            }
+        });
+        
+        // Update onclick handlers for copy buttons
+        const copyButtons = paneContent.querySelectorAll('.copy-button[onclick]');
+        copyButtons.forEach(button => {
+            const onclick = button.getAttribute('onclick');
+            // Update the onclick to use the new ID
+            idMap.forEach((newId, oldId) => {
+                const oldPattern = `'${oldId}'`;
+                const newPattern = `'${newId}'`;
+                if (onclick.includes(oldPattern)) {
+                    button.setAttribute('onclick', onclick.replace(oldPattern, newPattern));
+                }
+            });
+        });
+        
+        // Update any href attributes that reference IDs
+        const links = paneContent.querySelectorAll('a[href^="#"]');
+        links.forEach(link => {
+            const href = link.getAttribute('href');
+            const targetId = href.substring(1);
+            if (idMap.has(targetId)) {
+                link.setAttribute('href', '#' + idMap.get(targetId));
+            }
+        });
+        
+        // Update any for attributes in labels
+        const labels = paneContent.querySelectorAll('label[for]');
+        labels.forEach(label => {
+            const forId = label.getAttribute('for');
+            if (idMap.has(forId)) {
+                label.setAttribute('for', idMap.get(forId));
+            }
+        });
     }
     
     // ============================================
