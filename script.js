@@ -8215,8 +8215,8 @@ class NotesWiki {
         noteEl.id = note.id;
         noteEl.style.left = `${note.position.x}px`;
         noteEl.style.top = `${note.position.y}px`;
-        noteEl.style.width = note.minimized ? '180px' : `${note.size.width}px`;
-        noteEl.style.height = note.minimized ? '44px' : `${note.size.height}px`;
+        noteEl.style.width = note.minimized ? '120px' : `${note.size.width}px`;
+        noteEl.style.height = note.minimized ? '32px' : `${note.size.height}px`;
         noteEl.style.zIndex = note.zIndex;
         
         noteEl.innerHTML = `
@@ -8363,16 +8363,28 @@ class NotesWiki {
             const minimizeBtn = element.querySelector('.minimize-btn');
             
             if (note.minimized) {
-                element.style.height = '40px';
+                element.style.height = '32px';
+                element.style.width = '120px';
+                element.classList.add('minimized');
                 content.style.display = 'none';
                 resizeHandle.style.display = 'none';
-                minimizeBtn.innerHTML = '□';
+                minimizeBtn.innerHTML = `
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 13H5c-1.1 0-2-.9-2-2s.9-2 2-2h14c1.1 0 2 .9 2 2s-.9 2-2 2zm0 6H5c-1.1 0-2-.9-2-2s.9-2 2-2h14c1.1 0 2 .9 2 2s-.9 2-2 2z"/>
+                    </svg>
+                `;
                 minimizeBtn.title = 'Expand';
             } else {
                 element.style.height = `${note.size.height}px`;
+                element.style.width = `${note.size.width}px`;
+                element.classList.remove('minimized');
                 content.style.display = 'block';
                 resizeHandle.style.display = 'block';
-                minimizeBtn.innerHTML = '−';
+                minimizeBtn.innerHTML = `
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 13H5c-1.1 0-2-.9-2-2s.9-2 2-2h14c1.1 0 2 .9 2 2s-.9 2-2 2z"/>
+                    </svg>
+                `;
                 minimizeBtn.title = 'Minimize';
             }
             
