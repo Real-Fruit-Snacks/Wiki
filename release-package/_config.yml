@@ -1,3 +1,0 @@
-# Jekyll configuration to bypass Jekyll processing
-# This ensures GitHub Pages serves files as-is without Jekyll processing
-jekyll: false
