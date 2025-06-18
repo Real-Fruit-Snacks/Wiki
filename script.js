@@ -2281,6 +2281,11 @@ class NotesWiki {
             });
         }
         
+        // Generate combined code block if enabled in metadata
+        if (metadata.combineCodeBlocks) {
+            this.generateCombinedCodeBlock(metadata);
+        }
+        
         // Scroll to top
         mainContent.scrollTop = 0;
         
@@ -3148,6 +3153,201 @@ class NotesWiki {
                 }, 2000);
             });
         }
+    }
+    
+    generateCombinedCodeBlock(metadata) {
+        // Get all code blocks from the current page
+        const codeBlocks = document.querySelectorAll('.code-block');
+        if (codeBlocks.length === 0) return;
+        
+        // Parse options with defaults
+        const options = metadata.combinedBlockOptions || {};
+        const includeBlockTitles = options.includeBlockTitles !== false;
+        const includeOnlyLanguage = options.includeOnlyLanguage || null;
+        const skipEmptyBlocks = options.skipEmptyBlocks !== false;
+        const separator = options.separator || '\n// ---\n';
+        const excludePatterns = options.excludePatterns || [];
+        
+        // Collect code blocks that match criteria
+        const combinedParts = [];
+        let blockCount = 0;
+        
+        codeBlocks.forEach((block, index) => {
+            // Get block details
+            const languageEl = block.querySelector('.code-block-language');
+            const titleEl = block.querySelector('.code-block-title');
+            const language = languageEl ? languageEl.dataset.lang : '';
+            const title = titleEl ? titleEl.textContent : '';
+            const codeContent = block.dataset.codeContent || '';
+            
+            // Apply filters
+            if (includeOnlyLanguage && language !== includeOnlyLanguage) return;
+            if (skipEmptyBlocks && !codeContent.trim()) return;
+            
+            // Check exclude patterns
+            if (excludePatterns.length > 0 && title) {
+                const shouldExclude = excludePatterns.some(pattern => 
+                    title.toLowerCase().includes(pattern.toLowerCase())
+                );
+                if (shouldExclude) return;
+            }
+            
+            // Decode HTML entities from stored code content
+            const tempTextarea = document.createElement('textarea');
+            tempTextarea.innerHTML = codeContent;
+            const decodedCode = tempTextarea.value;
+            
+            // Build the combined section
+            if (blockCount > 0) {
+                combinedParts.push(separator);
+            }
+            
+            if (includeBlockTitles) {
+                const blockLabel = title || `Block ${index + 1}`;
+                const commentPrefix = this.getCommentPrefix(metadata.combinedBlockLanguage || language);
+                combinedParts.push(`${commentPrefix} ${blockLabel}`);
+            }
+            
+            combinedParts.push(decodedCode);
+            blockCount++;
+        });
+        
+        if (blockCount === 0) return;
+        
+        // Create the combined code block element
+        const combinedLanguage = metadata.combinedBlockLanguage || 'text';
+        const combinedTitle = metadata.combinedBlockTitle || `All Code Combined (${blockCount} blocks)`;
+        const combinedContent = combinedParts.join('\n');
+        
+        // Generate unique ID for this code block
+        const blockId = `code-block-combined`;
+        
+        // Store content for later processing
+        if (!this.pendingCodeBlocks) {
+            this.pendingCodeBlocks = new Map();
+        }
+        this.pendingCodeBlocks.set(blockId, combinedContent);
+        
+        // Escape content for data attribute
+        const escapedCodeContent = combinedContent
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+        
+        // Build the HTML
+        let html = `
+            <div class="combined-code-section">
+                <h2>Combined Code</h2>
+                <div class="code-block" id="${blockId}" data-code-content="${escapedCodeContent}">
+                    <div class="code-block-header">
+                        <div class="code-block-info">
+                            <div class="code-block-language-section">
+                                <span class="code-block-language" data-lang="${combinedLanguage}">${combinedLanguage}</span>
+                            </div>
+                            <div class="code-block-separator"></div>
+                            <div class="code-block-title-section">
+                                <span class="code-block-title">${this.escapeHtml(combinedTitle)}</span>
+                            </div>
+                        </div>
+                        <div class="code-block-actions">
+                            <button class="code-block-button copy-button" onclick="notesWiki.copyCode('${blockId}')" aria-label="Copy code">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"/>
+                                    <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="code-block-content">
+                        <pre class="${this.settings.showLineNumbers ? 'with-line-numbers' : ''}"><code id="${blockId}-code" class="language-${combinedLanguage}"></code></pre>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Insert at the end of the note content
+        const noteContent = document.querySelector('.note-content');
+        if (noteContent) {
+            // Create a temporary div to hold the HTML
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            
+            // Append the combined code section
+            noteContent.appendChild(tempDiv.firstElementChild);
+            
+            // Set the text content and highlight
+            const codeElement = document.getElementById(blockId + '-code');
+            if (codeElement) {
+                codeElement.textContent = combinedContent;
+                Prism.highlightElement(codeElement);
+                
+                // Apply line numbers if enabled
+                if (this.settings.showLineNumbers) {
+                    const highlightedHtml = codeElement.innerHTML;
+                    const lines = highlightedHtml.split('\n');
+                    const wrappedLines = lines.map(line => {
+                        if (line.trim() === '') {
+                            line = '&nbsp;';
+                        }
+                        return `<div class="code-line">${line}</div>`;
+                    }).join('');
+                    
+                    codeElement.classList.add('code-with-counters');
+                    codeElement.innerHTML = wrappedLines;
+                }
+            }
+        }
+    }
+    
+    getCommentPrefix(language) {
+        // Return appropriate comment prefix based on language
+        const commentPrefixes = {
+            'javascript': '//',
+            'js': '//',
+            'typescript': '//',
+            'ts': '//',
+            'java': '//',
+            'c': '//',
+            'cpp': '//',
+            'csharp': '//',
+            'go': '//',
+            'rust': '//',
+            'swift': '//',
+            'kotlin': '//',
+            'python': '#',
+            'py': '#',
+            'ruby': '#',
+            'rb': '#',
+            'perl': '#',
+            'bash': '#',
+            'sh': '#',
+            'yaml': '#',
+            'yml': '#',
+            'toml': '#',
+            'ini': '#',
+            'r': '#',
+            'julia': '#',
+            'powershell': '#',
+            'ps1': '#',
+            'html': '<!--',
+            'xml': '<!--',
+            'css': '/*',
+            'scss': '//',
+            'sass': '//',
+            'sql': '--',
+            'lua': '--',
+            'haskell': '--',
+            'elm': '--',
+            'vb': "'",
+            'vbnet': "'",
+            'matlab': '%',
+            'latex': '%',
+            'tex': '%'
+        };
+        
+        return commentPrefixes[language.toLowerCase()] || '//';
     }
     
     closeAllDropdowns() {

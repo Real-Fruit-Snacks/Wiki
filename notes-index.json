@@ -46,10 +46,10 @@
       "code_blocks_count": 0
     },
     {
-      "path": "/notes/edge-cases-test.md",
+      "path": "/notes/edge-cases.md",
       "context": null,
       "metadata": {
-        "title": "Edge Cases & Special Characters Test",
+        "title": "Edge Cases & Special Characters",
         "tags": [
           "test",
           "edge-cases",
@@ -260,6 +260,47 @@
       "content_preview": "Testing if line numbers display correctly when enabled in settings.\n\n\n\njavascript\n// Line 1: Comment\nconst x = 5;     // Line 2\nconst y = 10;    // Line 3\n\n// Line 5: Empty line above\nfunction add(a, ...",
       "searchable_content": "\nLine Numbers Test\n\nTesting if line numbers display correctly when enabled in settings.\n\nSimple Code Test\n\njavascript\n// Line 1: Comment\nconst x = 5;     // Line 2\nconst y = 10;    // Line 3\n\n// Line 5: Empty line above\nfunction add(a, b) {  // Line 6\n    return a + b;     // Line 7\n}                     // Line 8\n\nconsole.log(add(x, y)); // Line 10\n\n\nTest with Empty Lines\n\npython\nLine 1\ndef test():\n    # Line 3 (empty line above)\n    pass\n\nLine 6\n\nLine 8\nprint(\"Hello\")\n\n\nThe line numbers should appear on the left side of each line when \"Show line numbers\" is enabled in settings. // Line 1: Comment\nconst x = 5;     // Line 2\nconst y = 10;    // Line 3\n\n// Line 5: Empty line above\nfunction add(a, b) {  // Line 6\n    return a + b;     // Line 7\n}                     // Line 8\n\nconsole.log(add(x, y)); // Line 10 # Line 1\ndef test():\n    # Line 3 (empty line above)\n    pass\n\n# Line 6\n\n# Line 8\nprint(\"Hello\")",
       "code_blocks_count": 2
+    },
+    {
+      "path": "/notes/test-combined-code.md",
+      "context": null,
+      "metadata": {
+        "title": "Combined Code Blocks Demo",
+        "tags": [
+          "demo",
+          "code",
+          "features"
+        ],
+        "created": "2025-01-18",
+        "author": "Unknown",
+        "description": "",
+        "updated": null,
+        "category": null,
+        "status": null
+      },
+      "content_preview": "This page demonstrates the automatic code block combination feature. All JavaScript code blocks below will be automatically combined into a single block at the end of the page.\n\n\n\nFirst, let's set up ...",
+      "searchable_content": "\nCombined Code Blocks Demo\n\nThis page demonstrates the automatic code block combination feature. All JavaScript code blocks below will be automatically combined into a single block at the end of the page.\n\nSetup Configuration\n\nFirst, let's set up our configuration:\n\njavascript title:\"Configuration Setup\"\nconst config = {\n    apiUrl: 'https://api.example.com',\n    timeout: 5000,\n    retries: 3,\n    headers: {\n        'Content-Type': 'application/json',\n        'Authorization': 'Bearer token'\n    }\n};\n\nexport default config;\n\n\nAPI Client Class\n\nNow let's create our API client:\n\njavascript title:\"API Client Implementation\"\nimport config from './config';\n\nclass APIClient {\n    constructor(baseConfig = config) {\n        this.config = baseConfig;\n        this.requestQueue = [];\n    }\n    \n    async get(endpoint, options = {}) {\n        return this.request('GET', endpoint, null, options);\n    }\n    \n    async post(endpoint, data, options = {}) {\n        return this.request('POST', endpoint, data, options);\n    }\n    \n    async request(method, endpoint, data, options) {\n        const url = ${this.config.apiUrl}${endpoint};\n        const requestOptions = {\n            method,\n            headers: { ...this.config.headers, ...options.headers },\n            ...options\n        };\n        \n        if (data && method !== 'GET') {\n            requestOptions.body = JSON.stringify(data);\n        }\n        \n        try {\n            const response = await fetch(url, requestOptions);\n            if (!response.ok) {\n                throw new Error(HTTP error! status: ${response.status});\n            }\n            return await response.json();\n        } catch (error) {\n            console.error('API request failed:', error);\n            throw error;\n        }\n    }\n}\n\nexport default APIClient;\n\n\nUtility Functions\n\nHere are some utility functions:\n\njavascript title:\"Utility Functions\"\n// Date formatting utilities\nexport function formatDate(date, format = 'YYYY-MM-DD') {\n    const d = new Date(date);\n    const year = d.getFullYear();\n    const month = String(d.getMonth() + 1).padStart(2, '0');\n    const day = String(d.getDate()).padStart(2, '0');\n    \n    return format\n        .replace('YYYY', year)\n        .replace('MM', month)\n        .replace('DD', day);\n}\n\n// Debounce function\nexport function debounce(func, wait) {\n    let timeout;\n    return function executedFunction(...args) {\n        const later = () => {\n            clearTimeout(timeout);\n            func(...args);\n        };\n        clearTimeout(timeout);\n        timeout = setTimeout(later, wait);\n    };\n}\n\n// Deep clone utility\nexport function deepClone(obj) {\n    if (obj === null || typeof obj !== 'object') return obj;\n    if (obj instanceof Date) return new Date(obj.getTime());\n    if (obj instanceof Array) return obj.map(item => deepClone(item));\n    \n    const clonedObj = {};\n    for (const key in obj) {\n        if (obj.hasOwnProperty(key)) {\n            clonedObj[key] = deepClone(obj[key]);\n        }\n    }\n    return clonedObj;\n}\n\n\nExample Usage\n\nLet's see how to use our API client:\n\njavascript title:\"Usage Example\"\nimport APIClient from './api-client';\nimport { formatDate, debounce } from './utils';\n\nconst api = new APIClient();\n\n// Fetch user data\nasync function fetchUserData(userId) {\n    try {\n        const user = await api.get(/users/${userId});\n        console.log('User data:', user);\n        console.log('Joined:', formatDate(user.createdAt));\n        return user;\n    } catch (error) {\n        console.error('Failed to fetch user:', error);\n    }\n}\n\n// Search with debouncing\nconst searchUsers = debounce(async (query) => {\n    try {\n        const results = await api.get('/users/search', {\n            params: { q: query }\n        });\n        console.log('Search results:', results);\n    } catch (error) {\n        console.error('Search failed:', error);\n    }\n}, 300);\n\n// Example: Create a new post\nasync function createPost(title, content) {\n    try {\n        const post = await api.post('/posts', {\n            title,\n            content,\n            publishedAt: new Date().toISOString()\n        });\n        console.log('Post created:', post);\n        return post;\n    } catch (error) {\n        console.error('Failed to create post:', error);\n    }\n}\n\n\nTest Code (Should be Excluded)\n\nThis code block should be excluded because it has \"test\" in the title:\n\njavascript title:\"Test Functions\"\n// This should not appear in the combined code\nfunction testFunction() {\n    console.log('This is a test');\n}\n\n\nPython Code (Should be Excluded)\n\nThis Python code should be excluded because we're only including JavaScript:\n\npython title:\"Python Example\"\nThis Python code should not be included\ndef helloworld():\n    print(\"Hello from Python!\")\n\n\nEmpty Block (Should be Excluded)\n\njavascript title:\"Empty Block\"\n\n\n---\n\nThe combined code block below is automatically generated from all the JavaScript code blocks above (excluding test blocks, empty blocks, and non-JavaScript code). javascript Configuration Setup const config = {\n    apiUrl: 'https://api.example.com',\n    timeout: 5000,\n    retries: 3,\n    headers: {\n        'Content-Type': 'application/json',\n        'Authorization': 'Bearer token'\n    }\n};\n\nexport default config; javascript API Client Implementation import config from './config';\n\nclass APIClient {\n    constructor(baseConfig = config) {\n        this.config = baseConfig;\n        this.requestQueue = [];\n    }\n    \n    async get(endpoint, options = {}) {\n        return this.request('GET', endpoint, null, options);\n    }\n    \n    async post(endpoint, data, options = {}) {\n        return this.request('POST', endpoint, data, options);\n    }\n    \n    async request(method, endpoint, data, options) {\n        const url = `${this.config.apiUrl}${endpoint}`;\n        const requestOptions = {\n            method,\n            headers: { ...this.config.headers, ...options.headers },\n            ...options\n        };\n        \n        if (data && method !== 'GET') {\n            requestOptions.body = JSON.stringify(data);\n        }\n        \n        try {\n            const response = await fetch(url, requestOptions);\n            if (!response.ok) {\n                throw new Error(`HTTP error! status: ${response.status}`);\n            }\n            return await response.json();\n        } catch (error) {\n            console.error('API request failed:', error);\n            throw error;\n        }\n    }\n}\n\nexport default APIClient; javascript Utility Functions // Date formatting utilities\nexport function formatDate(date, format = 'YYYY-MM-DD') {\n    const d = new Date(date);\n    const year = d.getFullYear();\n    const month = String(d.getMonth() + 1).padStart(2, '0');\n    const day = String(d.getDate()).padStart(2, '0');\n    \n    return format\n        .replace('YYYY', year)\n        .replace('MM', month)\n        .replace('DD', day);\n}\n\n// Debounce function\nexport function debounce(func, wait) {\n    let timeout;\n    return function executedFunction(...args) {\n        const later = () => {\n            clearTimeout(timeout);\n            func(...args);\n        };\n        clearTimeout(timeout);\n        timeout = setTimeout(later, wait);\n    };\n}\n\n// Deep clone utility\nexport function deepClone(obj) {\n    if (obj === null || typeof obj !== 'object') return obj;\n    if (obj instanceof Date) return new Date(obj.getTime());\n    if (obj instanceof Array) return obj.map(item => deepClone(item));\n    \n    const clonedObj = {};\n    for (const key in obj) {\n        if (obj.hasOwnProperty(key)) {\n            clonedObj[key] = deepClone(obj[key]);\n        }\n    }\n    return clonedObj;\n} javascript Usage Example import APIClient from './api-client';\nimport { formatDate, debounce } from './utils';\n\nconst api = new APIClient();\n\n// Fetch user data\nasync function fetchUserData(userId) {\n    try {\n        const user = await api.get(`/users/${userId}`);\n        console.log('User data:', user);\n        console.log('Joined:', formatDate(user.createdAt));\n        return user;\n    } catch (error) {\n        console.error('Failed to fetch user:', error);\n    }\n}\n\n// Search with debouncing\nconst searchUsers = debounce(async (query) => {\n    try {\n        const results = await api.get('/users/search', {\n            params: { q: query }\n        });\n        console.log('Search results:', results);\n    } catch (error) {\n        console.error('Search failed:', error);\n    }\n}, 300);\n\n// Example: Create a new post\nasync function createPost(title, content) {\n    try {\n        const post = await api.post('/posts', {\n            title,\n            content,\n            publishedAt: new Date().toISOString()\n        });\n        console.log('Post created:', post);\n        return post;\n    } catch (error) {\n        console.error('Failed to create post:', error);\n    }\n} javascript Test Functions // This should not appear in the combined code\nfunction testFunction() {\n    console.log('This is a test');\n} python Python Example # This Python code should not be included\ndef hello_world():\n    print(\"Hello from Python!\") javascript Empty Block ",
+      "code_blocks_count": 7
+    },
+    {
+      "path": "/notes/combined-code-simple.md",
+      "context": null,
+      "metadata": {
+        "title": "Simple Combined Code Example",
+        "tags": [
+          "demo",
+          "code"
+        ],
+        "created": "2025-01-18",
+        "author": "Unknown",
+        "description": "",
+        "updated": null,
+        "category": null,
+        "status": null
+      },
+      "content_preview": "This demonstrates a simple use case where all code blocks are combined into one.\n\n\n\npython\nimport os\nimport json\nfrom datetime import datetime\n\n\n\n\npython\nCONFIG = {\n    'debug': True,\n    'port': 8080...",
+      "searchable_content": "\nSimple Combined Code Example\n\nThis demonstrates a simple use case where all code blocks are combined into one.\n\nImport Section\n\npython\nimport os\nimport json\nfrom datetime import datetime\n\n\nConfiguration\n\npython\nCONFIG = {\n    'debug': True,\n    'port': 8080,\n    'host': 'localhost'\n}\n\n\nMain Functions\n\npython\ndef loaddata(filename):\n    \"\"\"Load data from JSON file\"\"\"\n    with open(filename, 'r') as f:\n        return json.load(f)\n\ndef savedata(data, filename):\n    \"\"\"Save data to JSON file\"\"\"\n    with open(filename, 'w') as f:\n        json.dump(data, f, indent=2)\n\n\nApplication Entry Point\n\npython\nif name == 'main':\n    print(f\"Starting server on {CONFIG['host']}:{CONFIG['port']}\")\n    data = loaddata('data.json')\n    print(f\"Loaded {len(data)} items\")\n\n\nAll the code blocks above are automatically combined below into a single, copyable Python script. import os\nimport json\nfrom datetime import datetime CONFIG = {\n    'debug': True,\n    'port': 8080,\n    'host': 'localhost'\n} def load_data(filename):\n    \"\"\"Load data from JSON file\"\"\"\n    with open(filename, 'r') as f:\n        return json.load(f)\n\ndef save_data(data, filename):\n    \"\"\"Save data to JSON file\"\"\"\n    with open(filename, 'w') as f:\n        json.dump(data, f, indent=2) if __name__ == '__main__':\n    print(f\"Starting server on {CONFIG['host']}:{CONFIG['port']}\")\n    data = load_data('data.json')\n    print(f\"Loaded {len(data)} items\")",
+      "code_blocks_count": 4
     },
     {
       "path": "/notes/test-code-blocks.md",
@@ -746,7 +787,7 @@
     "getting-started": 1,
     "documentation": 4,
     "wiki": 1,
-    "demo": 10,
+    "demo": 12,
     "code-blocks": 1,
     "syntax-highlighting": 1,
     "line-numbers": 2,
@@ -757,7 +798,7 @@
     "callouts": 1,
     "test": 7,
     "html": 2,
-    "code": 2,
+    "code": 4,
     "alignment": 1,
     "guide": 2,
     "images": 1,
@@ -781,13 +822,13 @@
     "pinning": 1,
     "organization": 1,
     "testing": 2,
-    "features": 1,
+    "features": 2,
     "v2.9.0": 1,
     "functionality": 1,
     "qa": 1,
+    "tools": 1,
     "edge-cases": 1,
     "special-characters": 1,
-    "tools": 1,
     "personal": 3,
     "journal": 1,
     "thoughts": 1,
@@ -833,32 +874,32 @@
     "advanced": 1
   },
   "authors": [
-    "Claude",
-    "Jane Smith",
-    "Test Suite",
-    "Sarah Johnson",
-    "DevOps Team",
-    "Debug",
-    "John Doe",
-    "Project Team",
-    "Blog Team",
-    "System",
-    "Wiki Admin",
-    "Alex Chen",
-    "Tutorial Team",
-    "Architecture Team",
-    "Database Team",
     "Maria Rodriguez",
+    "John Doe",
+    "Jane Smith",
+    "Blog Team",
+    "Debug",
+    "System",
+    "Project Team",
+    "Database Team",
     "Dev Team",
-    "Test User"
+    "Architecture Team",
+    "DevOps Team",
+    "Sarah Johnson",
+    "Claude",
+    "Alex Chen",
+    "Wiki Admin",
+    "Test Suite",
+    "Test User",
+    "Tutorial Team"
   ],
   "categories": [
-    "reference",
-    "technical",
     "tutorials",
+    "reference",
     "personal",
+    "projects",
     "documentation",
-    "projects"
+    "technical"
   ],
   "contexts": [
     {
@@ -887,6 +928,6 @@
       "noteCount": 2
     }
   ],
-  "generated": "2025-06-18T15:21:48.153417",
-  "totalNotes": 34
+  "generated": "2025-06-18T15:39:54.280241",
+  "totalNotes": 36
 }
