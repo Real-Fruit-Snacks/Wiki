@@ -8169,7 +8169,7 @@ class NotesWiki {
             id: `sticky-${Date.now()}`,
             content: options.content || '',
             position: options.position || { x: 100 + Math.random() * 200, y: 100 + Math.random() * 200 },
-            size: options.size || { width: 300, height: 200 },
+            size: options.size || { width: 280, height: 200 },
             color: options.color || this.stickyColors[0],
             minimized: options.minimized || false,
             createdAt: options.createdAt || new Date().toISOString(),
@@ -8198,27 +8198,36 @@ class NotesWiki {
         noteEl.style.left = `${note.position.x}px`;
         noteEl.style.top = `${note.position.y}px`;
         noteEl.style.width = `${note.size.width}px`;
-        noteEl.style.height = note.minimized ? '40px' : `${note.size.height}px`;
+        noteEl.style.height = note.minimized ? '44px' : `${note.size.height}px`;
         noteEl.style.zIndex = note.zIndex;
         
         noteEl.innerHTML = `
             <div class="sticky-note-header">
-                <div class="sticky-note-title">Quick Note</div>
+                <div class="sticky-note-title">✨ Quick Note</div>
                 <div class="sticky-note-actions">
                     <button class="sticky-note-btn minimize-btn" onclick="notesWiki.toggleStickyMinimize('${note.id}')" title="${note.minimized ? 'Expand' : 'Minimize'}">
-                        ${note.minimized ? '□' : '−'}
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            ${note.minimized ? 
+                                '<path d="M19 13H5c-1.1 0-2-.9-2-2s.9-2 2-2h14c1.1 0 2 .9 2 2s-.9 2-2 2zm0 6H5c-1.1 0-2-.9-2-2s.9-2 2-2h14c1.1 0 2 .9 2 2s-.9 2-2 2z"/>' :
+                                '<path d="M19 13H5c-1.1 0-2-.9-2-2s.9-2 2-2h14c1.1 0 2 .9 2 2s-.9 2-2 2z"/>'
+                            }
+                        </svg>
                     </button>
                     <button class="sticky-note-btn color-btn" onclick="notesWiki.cycleStickyColor('${note.id}')" title="Change color">
-                        🎨
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 22C6.49 22 2 17.51 2 12S6.49 2 12 2s10 4.49 10 10-4.49 10-10 10zm0-18c-4.41 0-8 3.59-8 8 0 1.82.62 3.49 1.64 4.83 1.43-1.74 4.9-2.33 6.36-2.33s4.93.59 6.36 2.33C19.38 15.49 20 13.82 20 12c0-4.41-3.59-8-8-8z"/>
+                        </svg>
                     </button>
                     <button class="sticky-note-btn close-btn" onclick="notesWiki.closeStickyNote('${note.id}')" title="Close">
-                        ×
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
                     </button>
                 </div>
             </div>
             <div class="sticky-note-content" style="display: ${note.minimized ? 'none' : 'block'}">
                 <textarea class="sticky-note-textarea" 
-                          placeholder="Type your note here..." 
+                          placeholder="Start typing your thoughts..." 
                           oninput="notesWiki.updateStickyContent('${note.id}', this.value)">${note.content}</textarea>
             </div>
             <div class="sticky-note-resize-handle" style="display: ${note.minimized ? 'none' : 'block'}"></div>
@@ -8297,8 +8306,8 @@ class NotesWiki {
             const deltaX = e.clientX - startX;
             const deltaY = e.clientY - startY;
             
-            const newWidth = Math.max(200, startWidth + deltaX);
-            const newHeight = Math.max(150, startHeight + deltaY);
+            const newWidth = Math.max(240, startWidth + deltaX);
+            const newHeight = Math.max(180, startHeight + deltaY);
             
             note.size.width = newWidth;
             note.size.height = newHeight;

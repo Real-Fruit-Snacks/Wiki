@@ -6092,7 +6092,7 @@ body.focus-mode .floating-share {
 }
 
 /* ============================================
-   STICKY NOTES STYLES
+   STICKY NOTES STYLES - MODERN REVAMP
    ============================================ */
 
 .sticky-notes-container {
@@ -6107,64 +6107,110 @@ body.focus-mode .floating-share {
 
 .sticky-note {
     position: absolute;
-    min-width: 200px;
-    min-height: 150px;
-    background: var(--sticky-bg, #fffacd);
-    border: 1px solid var(--sticky-border, #e6d567);
-    border-radius: 4px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 240px;
+    min-height: 180px;
+    background: var(--sticky-gradient);
+    border: 1px solid var(--sticky-border);
+    border-radius: 12px;
+    box-shadow: 
+        0 4px 20px var(--sticky-shadow-color),
+        0 1px 3px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 var(--sticky-highlight);
     pointer-events: auto;
     display: flex;
     flex-direction: column;
-    transition: box-shadow 0.2s;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow: hidden;
+    transform: translateZ(0); /* Force hardware acceleration */
 }
 
 .sticky-note:hover {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 
+        0 8px 30px var(--sticky-shadow-color),
+        0 4px 12px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 var(--sticky-highlight);
+}
+
+.sticky-note.dragging {
+    transform: scale(1.05) rotate(2deg);
+    cursor: move;
+    z-index: 1001;
+    box-shadow: 
+        0 12px 40px var(--sticky-shadow-color),
+        0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.sticky-note.resizing {
+    transition: none;
 }
 
 .sticky-note-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px;
-    background: rgba(0, 0, 0, 0.05);
-    border-radius: 4px 4px 0 0;
+    padding: 12px 16px 8px 16px;
+    background: var(--sticky-header-bg);
+    border-radius: 12px 12px 0 0;
     cursor: move;
+    border-bottom: 1px solid var(--sticky-border);
+    backdrop-filter: blur(20px);
 }
 
 .sticky-note-title {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-primary);
-    opacity: 0.8;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sticky-title-color);
+    letter-spacing: 0.2px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    user-select: none;
 }
 
 .sticky-note-actions {
     display: flex;
-    gap: 4px;
+    gap: 6px;
+    align-items: center;
 }
 
 .sticky-note-btn {
-    background: none;
-    border: none;
+    background: var(--sticky-btn-bg);
+    border: 1px solid var(--sticky-btn-border);
     cursor: pointer;
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-size: 14px;
-    color: var(--text-secondary);
-    transition: all 0.2s;
+    padding: 6px 8px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--sticky-btn-color);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .sticky-note-btn:hover {
-    background: rgba(0, 0, 0, 0.1);
-    color: var(--text-primary);
+    background: var(--sticky-btn-hover-bg);
+    border-color: var(--sticky-btn-hover-border);
+    color: var(--sticky-btn-hover-color);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.sticky-note-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .sticky-note-content {
     flex: 1;
-    padding: 8px;
+    padding: 16px;
     overflow: hidden;
+    background: var(--sticky-content-bg);
 }
 
 .sticky-note-textarea {
@@ -6174,50 +6220,114 @@ body.focus-mode .floating-share {
     background: transparent;
     resize: none;
     padding: 0;
-    font-family: inherit;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-size: 14px;
-    color: var(--text-primary);
+    line-height: 1.5;
+    color: var(--sticky-text-color);
     outline: none;
+    font-weight: 400;
+    letter-spacing: 0.1px;
+}
+
+.sticky-note-textarea::placeholder {
+    color: var(--sticky-placeholder-color);
+    font-style: italic;
+    opacity: 0.7;
 }
 
 .sticky-note-resize-handle {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 16px;
-    height: 16px;
+    bottom: 4px;
+    right: 4px;
+    width: 20px;
+    height: 20px;
     cursor: nwse-resize;
-    background: linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.1) 50%);
+    background: radial-gradient(circle at center, var(--sticky-handle-color) 30%, transparent 30%);
+    background-size: 6px 6px;
+    border-radius: 0 0 12px 0;
+    opacity: 0.4;
+    transition: opacity 0.2s;
 }
 
-.sticky-note.dragging {
-    opacity: 0.8;
-    cursor: move;
+.sticky-note:hover .sticky-note-resize-handle {
+    opacity: 0.7;
 }
 
-.sticky-note.resizing {
-    opacity: 0.8;
-}
-
-/* Sticky Note Colors */
+/* Modern Color Schemes */
 .sticky-note-yellow {
-    --sticky-bg: #fffacd;
-    --sticky-border: #e6d567;
+    --sticky-gradient: linear-gradient(135deg, #fef7cd 0%, #fef08a 100%);
+    --sticky-border: rgba(251, 191, 36, 0.3);
+    --sticky-shadow-color: rgba(251, 191, 36, 0.25);
+    --sticky-highlight: rgba(255, 255, 255, 0.8);
+    --sticky-header-bg: rgba(254, 240, 138, 0.8);
+    --sticky-content-bg: rgba(255, 255, 255, 0.1);
+    --sticky-title-color: #92400e;
+    --sticky-text-color: #451a03;
+    --sticky-placeholder-color: #a16207;
+    --sticky-handle-color: rgba(180, 83, 9, 0.4);
+    --sticky-btn-bg: rgba(255, 255, 255, 0.3);
+    --sticky-btn-border: rgba(251, 191, 36, 0.3);
+    --sticky-btn-color: #92400e;
+    --sticky-btn-hover-bg: rgba(255, 255, 255, 0.5);
+    --sticky-btn-hover-border: rgba(251, 191, 36, 0.5);
+    --sticky-btn-hover-color: #78350f;
 }
 
 .sticky-note-blue {
-    --sticky-bg: #cfe8ff;
-    --sticky-border: #7eb6e6;
+    --sticky-gradient: linear-gradient(135deg, #dbeafe 0%, #93c5fd 100%);
+    --sticky-border: rgba(59, 130, 246, 0.3);
+    --sticky-shadow-color: rgba(59, 130, 246, 0.25);
+    --sticky-highlight: rgba(255, 255, 255, 0.8);
+    --sticky-header-bg: rgba(147, 197, 253, 0.8);
+    --sticky-content-bg: rgba(255, 255, 255, 0.1);
+    --sticky-title-color: #1e40af;
+    --sticky-text-color: #1e3a8a;
+    --sticky-placeholder-color: #3730a3;
+    --sticky-handle-color: rgba(29, 78, 216, 0.4);
+    --sticky-btn-bg: rgba(255, 255, 255, 0.3);
+    --sticky-btn-border: rgba(59, 130, 246, 0.3);
+    --sticky-btn-color: #1e40af;
+    --sticky-btn-hover-bg: rgba(255, 255, 255, 0.5);
+    --sticky-btn-hover-border: rgba(59, 130, 246, 0.5);
+    --sticky-btn-hover-color: #1d4ed8;
 }
 
 .sticky-note-green {
-    --sticky-bg: #d4f8d4;
-    --sticky-border: #7ec77e;
+    --sticky-gradient: linear-gradient(135deg, #dcfce7 0%, #86efac 100%);
+    --sticky-border: rgba(34, 197, 94, 0.3);
+    --sticky-shadow-color: rgba(34, 197, 94, 0.25);
+    --sticky-highlight: rgba(255, 255, 255, 0.8);
+    --sticky-header-bg: rgba(134, 239, 172, 0.8);
+    --sticky-content-bg: rgba(255, 255, 255, 0.1);
+    --sticky-title-color: #15803d;
+    --sticky-text-color: #14532d;
+    --sticky-placeholder-color: #166534;
+    --sticky-handle-color: rgba(21, 128, 61, 0.4);
+    --sticky-btn-bg: rgba(255, 255, 255, 0.3);
+    --sticky-btn-border: rgba(34, 197, 94, 0.3);
+    --sticky-btn-color: #15803d;
+    --sticky-btn-hover-bg: rgba(255, 255, 255, 0.5);
+    --sticky-btn-hover-border: rgba(34, 197, 94, 0.5);
+    --sticky-btn-hover-color: #166534;
 }
 
 .sticky-note-pink {
-    --sticky-bg: #ffd6e8;
-    --sticky-border: #e67eb6;
+    --sticky-gradient: linear-gradient(135deg, #fce7f3 0%, #f9a8d4 100%);
+    --sticky-border: rgba(236, 72, 153, 0.3);
+    --sticky-shadow-color: rgba(236, 72, 153, 0.25);
+    --sticky-highlight: rgba(255, 255, 255, 0.8);
+    --sticky-header-bg: rgba(249, 168, 212, 0.8);
+    --sticky-content-bg: rgba(255, 255, 255, 0.1);
+    --sticky-title-color: #be185d;
+    --sticky-text-color: #831843;
+    --sticky-placeholder-color: #9d174d;
+    --sticky-handle-color: rgba(190, 24, 93, 0.4);
+    --sticky-btn-bg: rgba(255, 255, 255, 0.3);
+    --sticky-btn-border: rgba(236, 72, 153, 0.3);
+    --sticky-btn-color: #be185d;
+    --sticky-btn-hover-bg: rgba(255, 255, 255, 0.5);
+    --sticky-btn-hover-border: rgba(236, 72, 153, 0.5);
+    --sticky-btn-hover-color: #a21caf;
 }
 
 /* Mobile adjustments */
