@@ -7879,132 +7879,258 @@ class NotesWiki {
             return;
         }
         
-        // Use the original loadNote logic but target the specific pane
-        const originalMainContent = document.getElementById('main-content');
+        // Validate path
+        if (!path || typeof path !== 'string' || path.trim() === '') {
+            console.error('Invalid path provided to loadNoteInPane:', path);
+            paneContent.innerHTML = `
+                <div class="content-wrapper content-view">
+                    <h1>Invalid Path</h1>
+                    <p>The requested path is invalid.</p>
+                    <p><a href="#/notes/index.md">Return to home</a></p>
+                </div>
+            `;
+            return;
+        }
         
-        // Temporarily switch the main content target
-        const tempId = 'temp-main-content-id';
-        paneContent.id = tempId;
+        // Show loading state
+        paneContent.innerHTML = `
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Loading...</p>
+            </div>
+        `;
         
         try {
-            // Call original loadNote with swapped element
-            document.getElementById('main-content').id = 'temp-original-main';
-            paneContent.id = 'main-content';
-            
-            await this.originalLoadNote(path);
-            
-        } finally {
-            // Restore original IDs
-            document.getElementById('main-content').id = tempId;
-            document.getElementById('temp-original-main').id = 'main-content';
-            paneContent.id = `main-content-${paneId.split('-')[1]}`;
-            
-            // Make all IDs unique for this pane
-            this.makeIdsUniqueForPane(paneContent, paneId);
-            
-            // Re-highlight code blocks in this specific pane
-            const codeBlocks = paneContent.querySelectorAll('pre code');
-            codeBlocks.forEach(block => {
-                Prism.highlightElement(block);
-            });
-            
-            // Re-apply line numbers if enabled
-            if (this.settings.showLineNumbers) {
-                paneContent.querySelectorAll('pre.with-line-numbers code').forEach(codeElement => {
-                    // Get the highlighted HTML from Prism
-                    const highlightedHtml = codeElement.innerHTML;
-                    
-                    // Split by line breaks, preserving empty lines
-                    const lines = highlightedHtml.split('\n');
-                    
-                    // Create numbered content
-                    const numberedContent = lines.map((line, index) => {
-                        const lineNumber = index + 1;
-                        const lineContent = line || ' '; // Preserve empty lines
-                        return `<span class="line-number" data-line="${lineNumber}"></span>${lineContent}`;
-                    }).join('\n');
-                    
-                    codeElement.innerHTML = numberedContent;
-                    codeElement.classList.add('code-with-counters');
-                });
+            // Normalize path
+            if (!path.startsWith('/')) {
+                path = '/' + path;
             }
             
-            // Re-generate combined code block if enabled
-            const contentWrapper = paneContent.querySelector('.content-wrapper');
-            if (contentWrapper && contentWrapper.dataset.metadata) {
-                try {
-                    const metadata = JSON.parse(contentWrapper.dataset.metadata);
-                    if (metadata.combineCodeBlocks) {
-                        this.generateCombinedCodeBlock(metadata, paneContent);
-                        
-                        // Process any new pending code blocks immediately for this pane
-                        if (this.pendingCodeBlocks && this.pendingCodeBlocks.size > 0) {
-                            this.pendingCodeBlocks.forEach((codeContent, blockId) => {
-                                const codeElement = paneContent.querySelector(`#${blockId}-code`);
-                                if (codeElement) {
-                                    codeElement.textContent = codeContent;
-                                    Prism.highlightElement(codeElement);
-                                }
-                            });
-                            this.pendingCodeBlocks.clear();
-                        }
-                    }
-                } catch (e) {
-                    console.warn('Failed to parse metadata for combined code blocks:', e);
-                }
+            // Load note data (reusing the existing logic)
+            const note = this.notesIndex.notes.find(n => n.path === path);
+            if (!note) {
+                throw new Error(`Note not found: ${path}`);
             }
+            
+            // Fetch note content
+            const fetchPath = this.basePath + path.replace(/^\//, '');
+            console.log('Loading note - Original path:', path, 'Fetch path:', fetchPath);
+            
+            const response = await fetch(fetchPath);
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            const content = await response.text();
+            const { metadata, content: body } = this.parseFrontmatter(content);
+            
+            // Render the note in this specific pane
+            this.renderNoteInPane(paneContent, { metadata, content: body }, paneId);
+            
+        } catch (error) {
+            console.error('Error loading note in pane:', error);
+            paneContent.innerHTML = `
+                <div class="content-wrapper content-view">
+                    <h1>Error Loading Note</h1>
+                    <p>Failed to load: ${path}</p>
+                    <p>Error: ${error.message}</p>
+                    <p><a href="#/notes/index.md">Return to home</a></p>
+                </div>
+            `;
         }
     }
     
-    makeIdsUniqueForPane(paneContent, paneId) {
+    renderNoteInPane(container, noteData, paneId) {
+        const { metadata, content } = noteData;
         const paneNumber = paneId.split('-')[1];
-        const paneSuffix = `-p${paneNumber}`;
         
-        // Find all elements with IDs and make them unique
-        const elementsWithIds = paneContent.querySelectorAll('[id]');
-        const idMap = new Map(); // Track old ID -> new ID mappings
+        // Create custom renderer for code blocks  
+        const renderer = new marked.Renderer();
+        let codeBlockId = 0;
+        const self = this;
         
-        elementsWithIds.forEach(element => {
-            const oldId = element.id;
-            if (!oldId.endsWith(paneSuffix)) {
-                const newId = oldId + paneSuffix;
-                element.id = newId;
-                idMap.set(oldId, newId);
+        renderer.code = function(token) {
+            let codeContent = '';
+            let info = '';
+            
+            if (typeof token === 'object' && token !== null) {
+                codeContent = token.text || '';
+                info = token.lang || '';
+            } else {
+                codeContent = String(token);
             }
+            
+            codeContent = codeContent.replace(/\n$/, '');
+            
+            let language = '';
+            let title = '';
+            let collapse = false;
+            
+            if (info) {
+                const parts = info.split(' ');
+                language = parts[0];
+                const attrString = parts.slice(1).join(' ');
+                
+                const titleMatch = attrString.match(/title:["']([^"']+)["']/i);
+                if (titleMatch) {
+                    title = titleMatch[1];
+                }
+                
+                const collapseMatch = attrString.match(/collapse[:=]["']?(true|yes|1)["']?/i);
+                if (collapseMatch) {
+                    collapse = true;
+                }
+            }
+            
+            if (!language && self.settings.defaultCodeLanguage !== 'plaintext') {
+                language = self.settings.defaultCodeLanguage;
+            }
+            
+            // Generate unique ID for this code block with pane suffix
+            const blockId = `code-block-${codeBlockId++}-p${paneNumber}`;
+            
+            // Store code content for later processing
+            if (!self.pendingCodeBlocks) {
+                self.pendingCodeBlocks = new Map();
+            }
+            self.pendingCodeBlocks.set(blockId, codeContent);
+            
+            // Escape code content for data attribute
+            const escapedCodeContent = codeContent
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+            
+            // Build code block HTML
+            let html = '<div class="code-block' + (collapse ? ' collapsed' : '') + '" id="' + blockId + '" data-code-content="' + escapedCodeContent + '">';
+            html += '<div class="code-block-header">';
+            html += '<div class="code-block-info">';
+            
+            html += '<div class="code-block-language-section">';
+            if (language) {
+                html += '<span class="code-block-language" data-lang="' + language.toLowerCase() + '">' + language + '</span>';
+            }
+            html += '</div>';
+            
+            html += '<div class="code-block-separator"></div>';
+            
+            html += '<div class="code-block-title-section">';
+            if (title) {
+                html += '<span class="code-block-title">' + self.escapeHtml(title) + '</span>';
+            }
+            html += '</div>';
+            
+            html += '</div>'; // close .code-block-info
+            html += '<div class="code-block-actions">';
+            
+            // Toggle button
+            html += '<button class="code-block-button toggle-button" onclick="notesWiki.toggleCodeBlock(\'' + blockId + '\')" aria-label="Toggle code">';
+            html += '<svg class="toggle-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">';
+            if (collapse) {
+                html += '<path d="M8 2a.75.75 0 01.75.75v4.5h4.5a.75.75 0 010 1.5h-4.5v4.5a.75.75 0 01-1.5 0v-4.5h-4.5a.75.75 0 010-1.5h4.5v-4.5A.75.75 0 018 2z"/>';
+            } else {
+                html += '<path d="M3.75 7.25a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5z"/>';
+            }
+            html += '</svg>';
+            html += '</button>';
+            
+            // Copy button
+            html += '<button class="code-block-button copy-button" onclick="notesWiki.copyCode(\'' + blockId + '\')" aria-label="Copy code">';
+            html += '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">';
+            html += '<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"/>';
+            html += '<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"/>';
+            html += '</svg>';
+            html += '</button>';
+            
+            html += '</div>'; // close .code-block-actions
+            html += '</div>'; // close .code-block-header
+            
+            html += '<div class="code-block-content">';
+            html += '<pre class="' + (self.settings.showLineNumbers ? 'with-line-numbers' : '') + '"><code id="' + blockId + '-code" class="language-' + (language || 'text') + '"></code></pre>';
+            html += '</div>';
+            html += '</div>';
+            
+            return html;
+        };
+        
+        // Configure marked options
+        const markedHtml = marked(content, {
+            renderer: renderer,
+            breaks: true,
+            gfm: true
         });
         
-        // Update onclick handlers for copy buttons
-        const copyButtons = paneContent.querySelectorAll('.copy-button[onclick]');
-        copyButtons.forEach(button => {
-            const onclick = button.getAttribute('onclick');
-            // Update the onclick to use the new ID
-            idMap.forEach((newId, oldId) => {
-                const oldPattern = `'${oldId}'`;
-                const newPattern = `'${newId}'`;
-                if (onclick.includes(oldPattern)) {
-                    button.setAttribute('onclick', onclick.replace(oldPattern, newPattern));
+        // Build note HTML structure
+        const noteHtml = `
+            <div class="content-wrapper content-view" data-metadata='${JSON.stringify(metadata)}'>
+                <div class="note-header">
+                    <h1 class="note-title">${this.escapeHtml(metadata.title || 'Untitled')}</h1>
+                    <div class="note-metadata">
+                        ${metadata.author ? `<span class="note-author"><svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>${this.escapeHtml(metadata.author)}</span>` : ''}
+                        ${metadata.created ? `<span class="note-date"><svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>${this.escapeHtml(metadata.created)}</span>` : ''}
+                    </div>
+                    ${metadata.description ? `<div class="note-description">${this.escapeHtml(metadata.description)}</div>` : ''}
+                </div>
+                <div class="note-content">
+                    ${markedHtml}
+                </div>
+            </div>
+        `;
+        
+        // Insert the HTML
+        container.innerHTML = noteHtml;
+        
+        // Process pending code blocks
+        if (this.pendingCodeBlocks && this.pendingCodeBlocks.size > 0) {
+            this.pendingCodeBlocks.forEach((codeContent, blockId) => {
+                const codeElement = container.querySelector(`#${blockId}-code`);
+                if (codeElement) {
+                    codeElement.textContent = codeContent;
                 }
             });
+            this.pendingCodeBlocks.clear();
+        }
+        
+        // Apply syntax highlighting
+        const codeBlocks = container.querySelectorAll('pre code');
+        codeBlocks.forEach(block => {
+            Prism.highlightElement(block);
         });
         
-        // Update any href attributes that reference IDs
-        const links = paneContent.querySelectorAll('a[href^="#"]');
-        links.forEach(link => {
-            const href = link.getAttribute('href');
-            const targetId = href.substring(1);
-            if (idMap.has(targetId)) {
-                link.setAttribute('href', '#' + idMap.get(targetId));
-            }
-        });
+        // Apply line numbers if enabled
+        if (this.settings.showLineNumbers) {
+            container.querySelectorAll('pre.with-line-numbers code').forEach(codeElement => {
+                const highlightedHtml = codeElement.innerHTML;
+                const lines = highlightedHtml.split('\n');
+                const numberedContent = lines.map((line, index) => {
+                    const lineNumber = index + 1;
+                    const lineContent = line || ' ';
+                    return `<span class="line-number" data-line="${lineNumber}"></span>${lineContent}`;
+                }).join('\n');
+                
+                codeElement.innerHTML = numberedContent;
+                codeElement.classList.add('code-with-counters');
+            });
+        }
         
-        // Update any for attributes in labels
-        const labels = paneContent.querySelectorAll('label[for]');
-        labels.forEach(label => {
-            const forId = label.getAttribute('for');
-            if (idMap.has(forId)) {
-                label.setAttribute('for', idMap.get(forId));
+        // Generate combined code block if enabled
+        if (metadata.combineCodeBlocks) {
+            this.generateCombinedCodeBlock(metadata, container);
+            
+            // Process new pending code blocks
+            if (this.pendingCodeBlocks && this.pendingCodeBlocks.size > 0) {
+                this.pendingCodeBlocks.forEach((codeContent, blockId) => {
+                    const codeElement = container.querySelector(`#${blockId}-code`);
+                    if (codeElement) {
+                        codeElement.textContent = codeContent;
+                        Prism.highlightElement(codeElement);
+                    }
+                });
+                this.pendingCodeBlocks.clear();
             }
-        });
+        }
     }
     
     // ============================================
