@@ -8175,19 +8175,28 @@ class NotesWiki {
             Prism.highlightElement(block);
         });
         
-        // Apply line numbers if enabled
+        // Apply line numbers if enabled (matching main view implementation)
         if (this.settings.showLineNumbers) {
             container.querySelectorAll('pre.with-line-numbers code').forEach(codeElement => {
+                // Get the highlighted HTML from Prism
                 const highlightedHtml = codeElement.innerHTML;
-                const lines = highlightedHtml.split('\n');
-                const numberedContent = lines.map((line, index) => {
-                    const lineNumber = index + 1;
-                    const lineContent = line || ' ';
-                    return `<span class="line-number" data-line="${lineNumber}"></span>${lineContent}`;
-                }).join('\n');
                 
-                codeElement.innerHTML = numberedContent;
+                // Split by line breaks, preserving empty lines
+                const lines = highlightedHtml.split('\n');
+                
+                // Wrap each line in a div for CSS counter
+                const wrappedLines = lines.map(line => {
+                    // Handle empty lines
+                    if (line.trim() === '') {
+                        line = '&nbsp;';
+                    }
+                    return `<div class="code-line">${line}</div>`;
+                }).join('');
+                
+                // Add the code-with-counters class to the code element
                 codeElement.classList.add('code-with-counters');
+                // Replace the code element content with the wrapped lines
+                codeElement.innerHTML = wrappedLines;
             });
         }
         

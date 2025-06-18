@@ -2241,6 +2241,12 @@ body.enable-word-wrap .code-block pre code,
 body.enable-word-wrap .code-content {
     white-space: pre-wrap;
     word-wrap: break-word;
+    overflow-x: visible !important;
+}
+
+/* Ensure code block content respects word wrap */
+body.enable-word-wrap .code-block-content {
+    overflow-x: visible;
 }
 
 /* Legacy: Hide old flex-based line numbers when word wrap is enabled */
