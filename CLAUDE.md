@@ -28,19 +28,16 @@ node -c script.js
 # or use npm script:
 npm run validate
 
-# Run comprehensive Puppeteer tests
-npm test
-
-# Run tests with debug output
-npm run test:debug
-
-# Validate search index generation
-python3 build.py  # Should output "Build complete!" with stats
+# Note: Test files referenced in package.json are currently missing
+# Tests would run with: npm test
 ```
 
-### Deployment
-- **GitHub Pages**: Automatic deployment via GitHub Actions on push to main branch
-- **GitLab Pages**: Automatic deployment via `.gitlab-ci.yml` on push
+### Release Packaging
+```bash
+# Create release package with all assets
+npm run package
+```
+Creates a versioned zip file with complete application bundle.
 
 ## Architecture Overview
 
@@ -82,8 +79,23 @@ When making significant changes, consider the modular refactoring plan:
 
 4. **Content Structure**:
    - `/notes/` - All markdown content organized by context (top-level folders)
-   - Each context folder (personal, technical, projects, etc.) acts as a filterable category
+   - `/images/` - Image assets organized by purpose:
+     - `/images/reference/` - Reference documentation images
+     - `/images/tutorials/` - Tutorial screenshots and diagrams
+   - Each context folder acts as a filterable category
    - Markdown files support frontmatter with: title, tags, author, created, updated, description
+
+### Deployment Configuration
+
+- **GitHub Pages**: 
+  - Automatic deployment via GitHub Actions (`.github/workflows/deploy.yml`)
+  - Jekyll bypass configured in `_config.yml`
+  - Custom 404 page (`404.html`) with theme support
+- **GitLab Pages**: 
+  - Automatic deployment via `.gitlab-ci.yml`
+  - See `GITLAB-DEPLOYMENT.md` for detailed instructions
+- **General Deployment**: 
+  - See `DEPLOYMENT-GUIDE.md` for platform-agnostic instructions
 
 ### Key Design Principles
 
@@ -110,6 +122,7 @@ When making significant changes, consider the modular refactoring plan:
 - Settings and recent files are persisted to localStorage
 - Code syntax highlighting uses Prism.js with 20+ language support
 - Markdown rendering supports custom callouts, collapsible sections, and code block titles
+- Jekyll bypass prevents GitHub Pages from processing the site
 
 ### Recent Features (v3.0.0)
 
@@ -122,6 +135,7 @@ When making significant changes, consider the modular refactoring plan:
 7. **Responsive Context Filtering** - Dynamic dropdown for category selection that adapts to screen size and category count
 8. **GitHub Pages Path Fix** - Dynamic base path detection for proper resource loading
 9. **Combined Code Blocks** - Automatically combine all code blocks from a page into a single copyable block
+10. **Custom 404 Page** - Themed error page for missing routes
 
 ### Memory Management Critical Patterns
 
@@ -231,36 +245,15 @@ The application includes a comprehensive help modal accessible via the `?` key:
 
 ⚠️ **Help Menu Maintenance**: When adding new functionality, update both the implementation AND the help content in `index.html` (shortcuts-modal section).
 
-### Testing and Quality Assurance
+### Testing Infrastructure
 
-The project includes comprehensive testing infrastructure:
+⚠️ **Current Testing Status**: Test files referenced in package.json are currently missing. The project structure suggests tests should be located in a `test/` directory but none exist at present.
 
-#### **Automated Testing**
-- **`test-puppeteer.js`** - Main comprehensive test suite
-- **`comprehensive-audit.js`** - Normal vs incognito browser testing
-- **`extended-comprehensive-audit.js`** - Advanced feature testing
-- **Layout verification** and content centering validation
-- **Cross-browser compatibility** testing (normal vs private modes)
-- **Screenshot generation** for visual regression testing
-
-#### **Manual Validation**
+Expected test commands (when tests are implemented):
 ```bash
-# Syntax validation
-npm run validate
-
-# Build verification  
-npm run build  # Should output "Build complete!" with stats
-
-# Local testing
-npm run serve  # Test at http://localhost:8000
+npm test              # Run all tests
+npm run test:debug    # Run tests with debug output
 ```
-
-#### **Quality Metrics**
-The recent comprehensive audit showed:
-- **100% functional parity** between normal and private browsing modes
-- **Zero critical differences** in 13 major test categories
-- **90+ screenshots** captured for verification
-- **Exceptional quality rating** with robust error handling
 
 ### Content Management
 
@@ -273,35 +266,22 @@ author: Author Name
 created: 2024-01-01
 updated: 2024-01-02
 description: Brief description
+combineCodeBlocks: true  # Optional: enable code block combination
 ---
 ```
 
 The build system (`build.py`) processes these files to create a searchable index with full-text content, code blocks, and metadata.
 
-## Recent Development Notes
+### Asset Organization
 
-### Completed Bug Fixes (Latest Session)
-All major issues identified in comprehensive testing have been resolved:
-- ✅ **Syntax highlighting** fully functional with Prism.js (fixed HTML escaping issues)
-- ✅ **Line numbers** CSS counter-based implementation working with proper DOM structure
-- ✅ **Tab creation** (Ctrl+T) working correctly
-- ✅ **Theme switching** with robust error handling
-- ✅ **Navigation features** (TOC, bookmarks, focus mode) stable
-- ✅ **Memory management** comprehensive cleanup implemented
-- ✅ **Tab preview removal** eliminated console errors
-- ✅ **Help documentation** accurate and professional
-- ✅ **GitHub Pages themes** fixed with dynamic base path loading
-- ✅ **Combined code blocks** automatic generation from YAML configuration
+```
+/images/
+├── reference/      # Reference documentation images
+├── tutorials/      # Tutorial screenshots and guides
+└── [other]/       # Additional image categories as needed
+```
 
-### Development Workflow
-When making changes to this codebase:
-1. **Test syntax**: `npm run validate` after any JavaScript changes
-2. **Rebuild index**: `npm run build` after adding/modifying notes
-3. **Local testing**: `npm run serve` for manual verification
-4. **Help updates**: Update help modal content when adding features
-5. **Memory management**: Implement proper event listener cleanup
-
-## Context Switching Implementation (v2.9.0)
+## Context Switching Implementation (v3.0.0)
 
 ### Overview
 The context switcher provides responsive category filtering that adapts to screen size and available space:
@@ -431,3 +411,19 @@ The feature automatically detects the correct comment syntax for 30+ languages:
 - **Documentation**: Create a single copyable implementation from multiple examples
 - **Learning**: Aggregate related code snippets for easy reference
 - **Development**: Quickly combine modular code blocks into a full script
+
+## Development Workflow
+
+When making changes to this codebase:
+1. **Test syntax**: `npm run validate` after any JavaScript changes
+2. **Rebuild index**: `npm run build` after adding/modifying notes
+3. **Local testing**: `npm run serve` for manual verification
+4. **Help updates**: Update help modal content when adding features
+5. **Memory management**: Implement proper event listener cleanup
+6. **Deployment**: Push to main branch for automatic deployment
+
+### Release Process
+1. Update version in `package.json`
+2. Run `npm run package` to create release bundle
+3. Tag release in git with version number
+4. Upload release zip to GitHub/GitLab releases
