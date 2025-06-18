@@ -262,6 +262,26 @@
       "code_blocks_count": 3
     },
     {
+      "path": "/notes/verify-syntax-fix.md",
+      "context": null,
+      "metadata": {
+        "title": "Verify Syntax Highlighting Fix",
+        "tags": [
+          "test",
+          "code-blocks"
+        ],
+        "created": "2025-01-18",
+        "author": "Unknown",
+        "description": "",
+        "updated": null,
+        "category": null,
+        "status": null
+      },
+      "content_preview": "Testing if the code block fix works correctly. The code below should display with proper syntax highlighting, not showing escaped HTML entities or broken formatting.\n\n\n\njavascript\n// This comment shou...",
+      "searchable_content": "\nVerify Syntax Highlighting Fix\n\nTesting if the code block fix works correctly. The code below should display with proper syntax highlighting, not showing escaped HTML entities or broken formatting.\n\nJavaScript Test\n\njavascript\n// This comment should display normally\nconst DataProcessor = {\n    #privateData: new Map(),\n    \n    async processData(input) {\n        // Special characters test\n        const isValid = input > 0 && input < 100;\n        const html = '<div class=\"test\">Content</div>';\n        const message = \"String with 'quotes'\";\n        \n        // Template literals\n        console.log(Processing ${input} items...);\n        \n        return { success: true, data: processed };\n    }\n};\n\n\nPython Test  \n\npython\nPython comment should work\ndef processdata(items):\n    \"\"\"Docstring with <html> tags & special chars\"\"\"\n    result = []\n    \n    for item in items:\n        if item > 0 and item < 100:\n            result.append(item  2)\n    \n    return result\n\n\nHTML Test\n\nhtml\n<!DOCTYPE html>\n<html>\n<head>\n    <title>Test Page</title>\n</head>\n<body>\n    <!-- HTML comment -->\n    <div class=\"container\">\n        <h1>Title & Special Chars</h1>\n        <p>Content with &lt;escaped&gt; entities</p>\n    </div>\n</body>\n</html>\n\n\nAll code blocks above should now render correctly with proper syntax highlighting. // This comment should display normally\nconst DataProcessor = {\n    #privateData: new Map(),\n    \n    async processData(input) {\n        // Special characters test\n        const isValid = input > 0 && input < 100;\n        const html = '<div class=\"test\">Content</div>';\n        const message = \"String with 'quotes'\";\n        \n        // Template literals\n        console.log(`Processing ${input} items...`);\n        \n        return { success: true, data: processed };\n    }\n}; # Python comment should work\ndef process_data(items):\n    \"\"\"Docstring with <html> tags & special chars\"\"\"\n    result = []\n    \n    for item in items:\n        if item > 0 and item < 100:\n            result.append(item * 2)\n    \n    return result <!DOCTYPE html>\n<html>\n<head>\n    <title>Test Page</title>\n</head>\n<body>\n    <!-- HTML comment -->\n    <div class=\"container\">\n        <h1>Title & Special Chars</h1>\n        <p>Content with &lt;escaped&gt; entities</p>\n    </div>\n</body>\n</html>",
+      "code_blocks_count": 3
+    },
+    {
       "path": "/notes/test-code-blocks.md",
       "context": null,
       "metadata": {
@@ -747,7 +767,7 @@
     "documentation": 4,
     "wiki": 1,
     "demo": 10,
-    "code-blocks": 1,
+    "code-blocks": 2,
     "syntax-highlighting": 1,
     "line-numbers": 2,
     "programming": 3,
@@ -755,7 +775,7 @@
     "showcase": 2,
     "styling": 1,
     "callouts": 1,
-    "test": 7,
+    "test": 8,
     "html": 2,
     "code": 2,
     "alignment": 1,
@@ -833,31 +853,31 @@
     "advanced": 1
   },
   "authors": [
-    "Debug",
-    "Test Suite",
-    "John Doe",
     "Alex Chen",
-    "Test User",
-    "Wiki Admin",
-    "Database Team",
-    "DevOps Team",
-    "Tutorial Team",
-    "Dev Team",
-    "Blog Team",
-    "Project Team",
-    "Sarah Johnson",
-    "Architecture Team",
-    "Jane Smith",
-    "Maria Rodriguez",
+    "Test Suite",
     "System",
-    "Claude"
+    "DevOps Team",
+    "Database Team",
+    "Claude",
+    "Sarah Johnson",
+    "Jane Smith",
+    "Wiki Admin",
+    "Project Team",
+    "Maria Rodriguez",
+    "Test User",
+    "Architecture Team",
+    "John Doe",
+    "Blog Team",
+    "Debug",
+    "Dev Team",
+    "Tutorial Team"
   ],
   "categories": [
-    "technical",
-    "reference",
-    "tutorials",
     "projects",
+    "reference",
     "documentation",
+    "tutorials",
+    "technical",
     "personal"
   ],
   "contexts": [
@@ -887,6 +907,6 @@
       "noteCount": 2
     }
   ],
-  "generated": "2025-06-18T15:05:27.324350",
-  "totalNotes": 34
+  "generated": "2025-06-18T15:13:52.340635",
+  "totalNotes": 35
 }

@@ -2030,27 +2030,14 @@ class NotesWiki {
                 language = self.settings.defaultCodeLanguage;
             }
             
-            // For Prism.js highlighting, we need the raw code content
-            // The browser will handle escaping when rendering in the <code> element
-            let codeHtml = codeContent;
-            
-            // Add line numbers if enabled using CSS counters
-            if (self.settings.showLineNumbers) {
-                const lines = codeContent.split('\n');
-                const codeLines = lines.map(line => {
-                    // Handle empty lines without escaping (browser will handle it)
-                    if (line.trim() === '') {
-                        line = '\u00A0'; // Non-breaking space
-                    }
-                    
-                    return `<div class="code-line">${line}</div>`;
-                }).join('');
-                
-                codeHtml = `<div class="code-with-counters">${codeLines}</div>`;
-            }
-            
             // Generate unique ID for this code block
             const blockId = `code-block-${codeBlockId++}`;
+            
+            // Store code content temporarily to set it properly after DOM insertion
+            if (!self.pendingCodeBlocks) {
+                self.pendingCodeBlocks = new Map();
+            }
+            self.pendingCodeBlocks.set(blockId, codeContent);
             
             // Escape the original code content for storing in data attribute
             // Important: escape HTML entities to prevent browser from parsing HTML tags
@@ -2109,10 +2096,12 @@ class NotesWiki {
             html += '</div>';
             html += '</div>';
             html += '<div class="code-block-content">';
+            // Add a data attribute to identify this code element for later processing
+            const codeElementId = blockId + '-code';
             if (self.settings.showLineNumbers) {
-                html += '<pre class="with-line-numbers"><code class="language-' + language + '">' + codeHtml + '</code></pre>';
+                html += '<pre class="with-line-numbers"><code id="' + codeElementId + '" class="language-' + language + '"></code></pre>';
             } else {
-                html += '<pre><code class="language-' + language + '">' + codeHtml + '</code></pre>';
+                html += '<pre><code id="' + codeElementId + '" class="language-' + language + '"></code></pre>';
             }
             html += '</div>';
             html += '</div>';
@@ -2251,6 +2240,18 @@ class NotesWiki {
                 </svg>
             </button>
         `;
+        
+        // Set the text content of code blocks before highlighting
+        if (this.pendingCodeBlocks && this.pendingCodeBlocks.size > 0) {
+            this.pendingCodeBlocks.forEach((codeContent, blockId) => {
+                const codeElement = document.getElementById(blockId + '-code');
+                if (codeElement) {
+                    codeElement.textContent = codeContent;
+                }
+            });
+            // Clear pending code blocks
+            this.pendingCodeBlocks.clear();
+        }
         
         // Highlight all code blocks with Prism after DOM injection
         Prism.highlightAll();
