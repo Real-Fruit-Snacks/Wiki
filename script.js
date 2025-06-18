@@ -5884,7 +5884,7 @@ class NotesWiki {
                 checkOverflow();
             });
             
-            resizeObserver.observe(container.parentElement); // Observe header
+            resizeObserver.observe(contextSwitcher.parentElement); // Observe header
             this.contextResizeObserver = resizeObserver;
         }
     }
