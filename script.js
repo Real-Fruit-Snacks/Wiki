@@ -7777,9 +7777,9 @@ class NotesWiki {
         this.originalLoadNote = this.loadNote;
         this.loadNote = (path) => {
             if (this.settings.splitViewEnabled && this.activePaneId) {
-                this.loadNoteInPane(path, this.activePaneId);
+                return this.loadNoteInPane(path, this.activePaneId);
             } else {
-                this.originalLoadNote(path);
+                return this.originalLoadNote(path);
             }
         };
     }
@@ -7792,12 +7792,32 @@ class NotesWiki {
         this.activePaneId = paneId;
     }
     
-    loadNoteInPane(path, paneId) {
+    async loadNoteInPane(path, paneId) {
         const paneContent = document.getElementById(`main-content-${paneId.split('-')[1]}`);
-        if (paneContent) {
-            // Load note content into specific pane
-            // This is a simplified version - would need full implementation
-            paneContent.innerHTML = `<div class="content-wrapper"><h2>Loading ${path}...</h2></div>`;
+        if (!paneContent) {
+            console.error('Pane content not found:', paneId);
+            return;
+        }
+        
+        // Use the original loadNote logic but target the specific pane
+        const originalMainContent = document.getElementById('main-content');
+        
+        // Temporarily switch the main content target
+        const tempId = 'temp-main-content-id';
+        paneContent.id = tempId;
+        
+        try {
+            // Call original loadNote with swapped element
+            document.getElementById('main-content').id = 'temp-original-main';
+            paneContent.id = 'main-content';
+            
+            await this.originalLoadNote(path);
+            
+        } finally {
+            // Restore original IDs
+            document.getElementById('main-content').id = tempId;
+            document.getElementById('temp-original-main').id = 'main-content';
+            paneContent.id = `main-content-${paneId.split('-')[1]}`;
         }
     }
     
