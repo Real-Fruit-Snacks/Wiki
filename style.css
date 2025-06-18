@@ -95,7 +95,6 @@ body {
     justify-content: space-between;
     height: 100%;
     padding: 0 var(--spacing-lg);
-    gap: var(--spacing-md);
 }
 
 .header-left {
@@ -148,11 +147,11 @@ body {
     display: flex;
     align-items: center;
     gap: var(--spacing-xs);
-    flex: 1 1 auto; /* Allow growing and shrinking */
     min-width: 0; /* Allow shrinking below content size */
-    max-width: 600px; /* Maximum width to prevent too much spreading */
+    max-width: 400px; /* Maximum width to prevent too much spreading */
     position: relative;
     overflow: hidden; /* Hide overflow */
+    margin-left: var(--spacing-md); /* Space after other nav items */
 }
 
 /* Context buttons wrapper for default display */
@@ -4720,8 +4719,8 @@ select.dropdown:focus {
     /* Context switcher responsive */
     .context-switcher {
         gap: 4px;
-        margin-left: var(--spacing-sm);
-        margin-right: var(--spacing-sm);
+        margin-left: var(--spacing-xs);
+        max-width: 150px; /* Smaller on mobile */
     }
     
     .context-button {
