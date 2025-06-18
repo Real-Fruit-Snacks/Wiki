@@ -33,11 +33,14 @@ python3 build.py  # Should output "Build complete!" with stats
 ```
 
 ### Release Packaging
-⚠️ **Note**: The `npm run package` script is not currently implemented. To create a release:
 ```bash
-# Manual packaging (adjust version as needed)
-zip -r notes-wiki-v3.0.0-complete.zip index.html 404.html style.css script.js libs themes notes images build.py package.json README.md CLAUDE.md *.md _config.yml .gitlab-ci.yml
+# Create release package with all assets
+npm run package
 ```
+This will:
+1. Validate JavaScript syntax
+2. Build the search index
+3. Create a versioned zip file with all required files
 
 ## Architecture Overview
 
@@ -428,6 +431,6 @@ When making changes to this codebase:
 
 ### Release Process
 1. Update version in `package.json`
-2. Create release bundle manually (see Release Packaging section above)
+2. Run `npm run package` to create release bundle
 3. Tag release in git with version number
 4. Upload release zip to GitHub/GitLab releases

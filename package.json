@@ -8,7 +8,8 @@
     "test:debug": "node test-puppeteer.js --debug",
     "build": "python3 build.py",
     "serve": "python3 -m http.server 8000",
-    "validate": "node -c script.js"
+    "validate": "node -c script.js",
+    "package": "npm run validate && npm run build && node create-release.js"
   },
   "devDependencies": {
     "puppeteer": "^24.10.1"
