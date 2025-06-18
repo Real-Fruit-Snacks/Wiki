@@ -7716,8 +7716,14 @@ class NotesWiki {
         if (tabBar) tabBar.style.display = '';
         if (content) content.style.display = '';
         
-        // Reset active pane
+        // Reset active pane and restore original loadNote method
         this.activePaneId = null;
+        
+        // Restore original loadNote method
+        if (this.originalLoadNote) {
+            this.loadNote = this.originalLoadNote;
+            this.originalLoadNote = null;
+        }
     }
     
     setupPaneResizing(divider) {
@@ -7773,15 +7779,25 @@ class NotesWiki {
             });
         });
         
-        // Modify tab click behavior for split view
-        this.originalLoadNote = this.loadNote;
-        this.loadNote = (path) => {
-            if (this.settings.splitViewEnabled && this.activePaneId) {
-                return this.loadNoteInPane(path, this.activePaneId);
-            } else {
+        // Modify tab click behavior for split view (only if not already overridden)
+        if (!this.originalLoadNote) {
+            this.originalLoadNote = this.loadNote;
+            this.loadNote = (path) => {
+                // Check if split view is enabled and we have a valid active pane
+                if (this.settings.splitViewEnabled && this.activePaneId) {
+                    // Verify the pane actually exists before trying to load into it
+                    const paneContent = document.getElementById(`main-content-${this.activePaneId.split('-')[1]}`);
+                    if (paneContent) {
+                        return this.loadNoteInPane(path, this.activePaneId);
+                    } else {
+                        // Pane doesn't exist, clear the active pane and fall back to normal loading
+                        console.warn('Active pane not found, falling back to normal loading');
+                        this.activePaneId = null;
+                    }
+                }
                 return this.originalLoadNote(path);
-            }
-        };
+            };
+        }
     }
     
     setActivePane(paneId) {
