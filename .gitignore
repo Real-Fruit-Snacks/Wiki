@@ -109,6 +109,9 @@ screenshots/
 audit-results/
 test-outputs/
 
+# Exceptions - demo files we want to keep
+!notes/*-demo.md
+
 # Temporary files
 .tmp/
 .temp/
