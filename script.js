@@ -5701,18 +5701,14 @@ class NotesWiki {
         // Clear existing content
         contextSwitcher.innerHTML = '';
         
-        // Create buttons wrapper for desktop view
-        const buttonsWrapper = document.createElement('div');
-        buttonsWrapper.className = 'context-buttons-wrapper';
-        
-        // Add "All" button to buttons wrapper
+        // Add "All" button
         const allButton = document.createElement('button');
         allButton.className = 'context-button' + (!this.activeContext ? ' active' : '');
         allButton.innerHTML = `<span>All</span>`;
         allButton.addEventListener('click', () => this.setActiveContext(null));
-        buttonsWrapper.appendChild(allButton);
+        contextSwitcher.appendChild(allButton);
         
-        // Add context buttons to buttons wrapper
+        // Add context buttons
         this.contexts.forEach(context => {
             const button = document.createElement('button');
             button.className = 'context-button' + (this.activeContext === context.id ? ' active' : '');
@@ -5723,21 +5719,27 @@ class NotesWiki {
             button.appendChild(span);
             
             button.addEventListener('click', () => this.setActiveContext(context.id));
-            buttonsWrapper.appendChild(button);
+            contextSwitcher.appendChild(button);
         });
         
-        // Create dropdown for mobile/tablet view
+        // Create dropdown for overflow situations - add to header-nav
+        const headerNav = document.querySelector('.header-nav');
+        const searchToggle = document.getElementById('search-toggle');
+        
+        // Create dropdown container
         const dropdown = document.createElement('div');
         dropdown.className = 'context-dropdown';
+        dropdown.id = 'context-dropdown-nav';
+        dropdown.style.display = 'none'; // Hidden by default
         
         // Create dropdown toggle button
         const dropdownToggle = document.createElement('button');
-        dropdownToggle.className = 'context-dropdown-toggle';
+        dropdownToggle.className = 'icon-button context-dropdown-toggle';
         const activeContextName = this.activeContext ? 
             this.contexts.find(c => c.id === this.activeContext)?.name || 'Unknown' : 
             'All';
         dropdownToggle.innerHTML = `
-            <span>${activeContextName}</span>
+            <span class="context-dropdown-label">${activeContextName}</span>
             <svg class="context-dropdown-chevron" width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
                 <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
             </svg>
@@ -5754,7 +5756,7 @@ class NotesWiki {
         allDropdownItem.addEventListener('click', () => {
             this.setActiveContext(null);
             dropdown.classList.remove('active');
-            dropdownToggle.querySelector('span').textContent = 'All';
+            dropdownToggle.querySelector('.context-dropdown-label').textContent = 'All';
         });
         dropdownMenu.appendChild(allDropdownItem);
         
@@ -5770,7 +5772,7 @@ class NotesWiki {
             item.addEventListener('click', () => {
                 this.setActiveContext(context.id);
                 dropdown.classList.remove('active');
-                dropdownToggle.querySelector('span').textContent = context.name;
+                dropdownToggle.querySelector('.context-dropdown-label').textContent = context.name;
             });
             dropdownMenu.appendChild(item);
         });
@@ -5794,46 +5796,39 @@ class NotesWiki {
         dropdown.appendChild(dropdownToggle);
         dropdown.appendChild(dropdownMenu);
         
-        // Add both structures to the context switcher
-        contextSwitcher.appendChild(buttonsWrapper);
-        contextSwitcher.appendChild(dropdown);
+        // Insert dropdown after search button
+        headerNav.insertBefore(dropdown, searchToggle.nextSibling);
         
         // Set up overflow detection
-        this.setupContextOverflowDetection(contextSwitcher, buttonsWrapper, dropdown);
+        this.setupContextOverflowDetection(contextSwitcher, dropdown);
     }
     
-    setupContextOverflowDetection(container, buttonsWrapper, dropdown) {
+    setupContextOverflowDetection(contextSwitcher, dropdown) {
         // Function to check if buttons overflow
         const checkOverflow = () => {
-            // First, ensure buttons are visible to measure
-            buttonsWrapper.style.display = 'flex';
-            buttonsWrapper.style.visibility = 'visible';
-            buttonsWrapper.style.position = 'relative';
+            // Temporarily show context switcher to measure
+            contextSwitcher.style.display = 'flex';
+            contextSwitcher.classList.remove('has-overflow');
             dropdown.style.display = 'none';
             
             // Force layout recalculation
-            buttonsWrapper.offsetHeight;
+            contextSwitcher.offsetHeight;
             
-            const buttons = buttonsWrapper.querySelectorAll('.context-button');
+            const buttons = contextSwitcher.querySelectorAll('.context-button');
             
-            // Method 1: Check if wrapper scrollWidth exceeds clientWidth
-            const wrapperOverflows = buttonsWrapper.scrollWidth > buttonsWrapper.clientWidth;
+            // Method 1: Check if container scrollWidth exceeds clientWidth
+            const containerOverflows = contextSwitcher.scrollWidth > contextSwitcher.clientWidth;
             
             // Method 2: Check if last button is cut off
             let lastButtonCutOff = false;
             if (buttons.length > 0) {
                 const lastButton = buttons[buttons.length - 1];
-                const wrapperRect = buttonsWrapper.getBoundingClientRect();
+                const containerRect = contextSwitcher.getBoundingClientRect();
                 const buttonRect = lastButton.getBoundingClientRect();
-                lastButtonCutOff = buttonRect.right > wrapperRect.right;
+                lastButtonCutOff = buttonRect.right > containerRect.right;
             }
             
-            // Method 3: Check against container width
-            const containerRect = container.getBoundingClientRect();
-            const buttonsRect = buttonsWrapper.getBoundingClientRect();
-            const containerOverflow = buttonsRect.width > containerRect.width;
-            
-            // Method 4: Calculate total button width
+            // Method 3: Calculate total button width
             let totalButtonsWidth = 0;
             buttons.forEach((button, index) => {
                 totalButtonsWidth += button.offsetWidth;
@@ -5842,24 +5837,23 @@ class NotesWiki {
                 }
             });
             
-            // Get actual available space for buttons wrapper
-            const availableSpace = container.offsetWidth - 20; // small margin
+            // Get available space for context switcher
+            const headerContent = contextSwitcher.parentElement;
+            const headerLeft = headerContent.querySelector('.header-left');
+            const headerNav = headerContent.querySelector('.header-nav');
+            const availableSpace = headerContent.offsetWidth - headerLeft.offsetWidth - headerNav.offsetWidth - 60; // margins
             
             // Check if we have overflow or too many buttons
-            const hasOverflow = wrapperOverflows || lastButtonCutOff || containerOverflow || 
+            const hasOverflow = containerOverflows || lastButtonCutOff || 
                               totalButtonsWidth > availableSpace || buttons.length > 8;
             
             if (hasOverflow) {
-                // Switch to dropdown
-                buttonsWrapper.classList.add('has-overflow');
-                dropdown.classList.add('show-for-overflow');
-                buttonsWrapper.style.display = 'none';
+                // Hide context switcher and show dropdown
+                contextSwitcher.classList.add('has-overflow');
                 dropdown.style.display = 'block';
             } else {
-                // Show buttons  
-                buttonsWrapper.classList.remove('has-overflow');
-                dropdown.classList.remove('show-for-overflow');
-                buttonsWrapper.style.display = 'flex';
+                // Show context switcher and hide dropdown
+                contextSwitcher.classList.remove('has-overflow');
                 dropdown.style.display = 'none';
             }
         };
@@ -5924,10 +5918,10 @@ class NotesWiki {
             if (activeDropdownItem) activeDropdownItem.classList.add('active');
             
             // Update dropdown toggle text
-            const dropdownToggle = document.querySelector('.context-dropdown-toggle span');
-            if (dropdownToggle) {
+            const dropdownLabel = document.querySelector('.context-dropdown-label');
+            if (dropdownLabel) {
                 const context = this.contexts.find(c => c.id === contextId);
-                if (context) dropdownToggle.textContent = context.name;
+                if (context) dropdownLabel.textContent = context.name;
             }
         } else {
             // Set "All" as active
@@ -5938,8 +5932,8 @@ class NotesWiki {
             if (allDropdownItem) allDropdownItem.classList.add('active');
             
             // Update dropdown toggle text
-            const dropdownToggle = document.querySelector('.context-dropdown-toggle span');
-            if (dropdownToggle) dropdownToggle.textContent = 'All';
+            const dropdownLabel = document.querySelector('.context-dropdown-label');
+            if (dropdownLabel) dropdownLabel.textContent = 'All';
         }
         
         // Rebuild navigation with filtered notes

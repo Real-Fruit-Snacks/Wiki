@@ -147,25 +147,17 @@ body {
     display: flex;
     align-items: center;
     gap: var(--spacing-xs);
+    margin-left: auto;
+    margin-right: var(--spacing-lg);
     min-width: 0; /* Allow shrinking below content size */
-    max-width: 400px; /* Maximum width to prevent too much spreading */
+    flex: 1 1 auto; /* Allow growing and shrinking */
+    max-width: 600px; /* Maximum width to prevent too much spreading */
     position: relative;
     overflow: hidden; /* Hide overflow */
-    margin-left: var(--spacing-md); /* Space after other nav items */
 }
 
-/* Context buttons wrapper for default display */
-.context-buttons-wrapper {
-    display: flex;
-    gap: var(--spacing-xs);
-    flex-wrap: nowrap;
-    overflow: hidden;
-    width: 100%;
-    min-width: 0; /* Allow shrinking */
-}
-
-/* Hide wrapper when overflow is detected */
-.context-buttons-wrapper.has-overflow {
+/* Hide entire context switcher when overflow detected */
+.context-switcher.has-overflow {
     display: none;
 }
 
@@ -175,9 +167,22 @@ body {
     display: none;
 }
 
-/* Show dropdown when overflow is detected */
-.context-dropdown.show-for-overflow {
-    display: block;
+/* Icon button style for context dropdown toggle */
+.context-dropdown-toggle.icon-button {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    min-width: auto;
+}
+
+.context-dropdown-label {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .context-dropdown-toggle {
@@ -4656,16 +4661,6 @@ select.dropdown:focus {
     background: var(--bg-hover);
 }
 
-/* Medium screens - switch to dropdown at 1024px */
-@media (max-width: 1024px) and (min-width: 769px) {
-    .context-buttons-wrapper:not(.has-overflow) {
-        display: none;
-    }
-    
-    .context-dropdown:not(.show-for-overflow) {
-        display: block;
-    }
-}
 
 .tag-filter-help {
     padding: 0.5rem 1rem;
@@ -4718,9 +4713,12 @@ select.dropdown:focus {
     
     /* Context switcher responsive */
     .context-switcher {
-        gap: 4px;
-        margin-left: var(--spacing-xs);
-        max-width: 150px; /* Smaller on mobile */
+        display: none; /* Hide on mobile */
+    }
+    
+    /* Always show dropdown on mobile */
+    #context-dropdown-nav {
+        display: block !important;
     }
     
     .context-button {
@@ -4735,22 +4733,17 @@ select.dropdown:focus {
         font-size: 10px;
     }
     
-    /* Show dropdown on mobile */
-    .context-buttons-wrapper:not(.has-overflow) {
-        display: none;
-    }
-    
-    .context-dropdown:not(.show-for-overflow) {
-        display: block;
-    }
-    
-    .context-dropdown-toggle {
-        padding: 4px 8px;
+    .context-dropdown-label {
+        max-width: 60px;
         font-size: var(--text-xs);
     }
     
+    .context-dropdown-toggle.icon-button {
+        padding: var(--spacing-xs);
+    }
+    
     .context-dropdown-menu {
-        min-width: 150px;
+        min-width: 120px;
     }
     
     /* Mobile adjustments for floating buttons */
