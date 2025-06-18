@@ -5805,8 +5805,8 @@ class NotesWiki {
         dropdown.appendChild(dropdownToggle);
         dropdown.appendChild(dropdownMenu);
         
-        // Insert dropdown after search button
-        headerNav.insertBefore(dropdown, searchToggle.nextSibling);
+        // Insert dropdown before search button
+        headerNav.insertBefore(dropdown, searchToggle);
         
         // Set up overflow detection
         this.setupContextOverflowDetection(contextSwitcher, buttonsWrapper, dropdown);
@@ -5867,7 +5867,7 @@ class NotesWiki {
             if (hasOverflow) {
                 // Hide buttons wrapper and show dropdown
                 buttonsWrapper.style.display = 'none';
-                dropdown.style.display = 'block';
+                dropdown.style.display = 'inline-block';
             } else {
                 // Show buttons wrapper and hide dropdown
                 buttonsWrapper.style.display = 'flex';
