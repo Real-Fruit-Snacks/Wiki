@@ -40,11 +40,6 @@ Each sticky note has a header with several action buttons:
 - **Button**: Paint palette icon
 - **Action**: Click to cycle through yellow → blue → green → pink
 
-### 📄 Convert to Note
-- **Button**: Document icon  
-- **Action**: Converts sticky content to a full markdown note
-- **Result**: Shows suggested content, closes sticky note
-
 ### 🗕 Minimize/Maximize
 - **Minimize (−)**: Collapses to header only
 - **Maximize (□)**: Restores to full size
@@ -95,30 +90,6 @@ Each sticky note has a header with several action buttons:
 - Temporary project reminders
 - Daily goals and priorities
 
-## Converting to Full Notes
-
-When you click the **📄 Convert** button:
-
-1. **Title**: First line becomes the note title (max 50 characters)
-2. **Metadata**: Auto-generated with current date and tags
-3. **Content**: Full sticky content is preserved
-4. **Template**: Creates properly formatted markdown
-
-Example conversion:
-```markdown
----
-title: API Research Notes
-created: 2025-01-18
-tags: [quick-note, sticky-note]
----
-
-Remember to check the new API docs
-Look into rate limiting strategies
-Compare with current implementation
-
-*Converted from sticky note on 1/18/2025, 2:30:45 PM*
-```
-
 ## Mobile Experience
 
 ### 📱 Touch Support
@@ -148,8 +119,7 @@ Compare with current implementation
 ### ⚡ Workflow Tips
 1. **Use colors meaningfully**: Yellow for ideas, blue for tasks, green for research, pink for urgent
 2. **Keep content short**: Stickies work best for brief notes
-3. **Convert when ready**: Turn valuable insights into full notes
-4. **Position strategically**: Place where they won't block important content
+3. **Position strategically**: Place where they won't block important content
 
 ### 🎨 Organization
 - **Group by color** for related thoughts

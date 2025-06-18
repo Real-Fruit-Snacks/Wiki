@@ -7895,9 +7895,6 @@ class NotesWiki {
                     <button class="sticky-note-btn color-btn" onclick="notesWiki.cycleStickyColor('${note.id}')" title="Change color">
                         🎨
                     </button>
-                    <button class="sticky-note-btn convert-btn" onclick="notesWiki.convertStickyToNote('${note.id}')" title="Convert to full note">
-                        📄
-                    </button>
                     <button class="sticky-note-btn close-btn" onclick="notesWiki.closeStickyNote('${note.id}')" title="Close">
                         ×
                     </button>
@@ -8059,31 +8056,6 @@ class NotesWiki {
         }
     }
     
-    convertStickyToNote(noteId) {
-        const note = this.stickyNotes.get(noteId);
-        if (!note || !note.content.trim()) {
-            this.showToast('Sticky note is empty', 'warning');
-            return;
-        }
-        
-        const timestamp = new Date().toISOString().split('T')[0];
-        const title = note.content.split('\n')[0].slice(0, 50) || 'Quick Note';
-        
-        const content = `---
-title: ${title}
-created: ${timestamp}
-tags: [quick-note, sticky-note]
----
-
-${note.content}
-
-*Converted from sticky note on ${new Date().toLocaleString()}*
-`;
-        
-        // Create a new tab with this content
-        this.showToast('Sticky note converted! Create this note in your notes folder.', 'success');
-        this.closeStickyNote(noteId);
-    }
     
     closeStickyNote(noteId) {
         const element = document.getElementById(noteId);
