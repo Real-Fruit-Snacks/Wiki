@@ -5701,12 +5701,18 @@ class NotesWiki {
         // Clear existing content
         contextSwitcher.innerHTML = '';
         
+        // Create a wrapper for buttons
+        const buttonsWrapper = document.createElement('div');
+        buttonsWrapper.className = 'context-buttons-wrapper';
+        buttonsWrapper.style.display = 'flex';
+        buttonsWrapper.style.gap = 'var(--spacing-xs)';
+        
         // Add "All" button
         const allButton = document.createElement('button');
         allButton.className = 'context-button' + (!this.activeContext ? ' active' : '');
         allButton.innerHTML = `<span>All</span>`;
         allButton.addEventListener('click', () => this.setActiveContext(null));
-        contextSwitcher.appendChild(allButton);
+        buttonsWrapper.appendChild(allButton);
         
         // Add context buttons
         this.contexts.forEach(context => {
@@ -5719,8 +5725,11 @@ class NotesWiki {
             button.appendChild(span);
             
             button.addEventListener('click', () => this.setActiveContext(context.id));
-            contextSwitcher.appendChild(button);
+            buttonsWrapper.appendChild(button);
         });
+        
+        // Add wrapper to context switcher
+        contextSwitcher.appendChild(buttonsWrapper);
         
         // Create dropdown for overflow situations - add to header-nav
         const headerNav = document.querySelector('.header-nav');
@@ -5800,29 +5809,25 @@ class NotesWiki {
         headerNav.insertBefore(dropdown, searchToggle.nextSibling);
         
         // Set up overflow detection
-        this.setupContextOverflowDetection(contextSwitcher, dropdown);
+        this.setupContextOverflowDetection(contextSwitcher, buttonsWrapper, dropdown);
     }
     
-    setupContextOverflowDetection(contextSwitcher, dropdown) {
+    setupContextOverflowDetection(contextSwitcher, buttonsWrapper, dropdown) {
         // Function to check if buttons overflow
         const checkOverflow = () => {
-            // Store current display states
-            const currentSwitcherDisplay = contextSwitcher.style.display;
-            const currentDropdownDisplay = dropdown.style.display;
-            
-            // Temporarily show context switcher to measure
-            contextSwitcher.style.display = 'flex';
-            contextSwitcher.style.visibility = 'hidden';
-            contextSwitcher.style.position = 'absolute';
+            // Temporarily show buttons wrapper to measure
+            buttonsWrapper.style.display = 'flex';
+            buttonsWrapper.style.visibility = 'hidden';
+            buttonsWrapper.style.position = 'absolute';
             dropdown.style.display = 'none';
             
             // Force layout recalculation
-            contextSwitcher.offsetHeight;
+            buttonsWrapper.offsetHeight;
             
-            const buttons = contextSwitcher.querySelectorAll('.context-button');
+            const buttons = buttonsWrapper.querySelectorAll('.context-button');
             
-            // Method 1: Check if container scrollWidth exceeds clientWidth
-            const containerOverflows = contextSwitcher.scrollWidth > contextSwitcher.clientWidth;
+            // Method 1: Check if wrapper scrollWidth exceeds clientWidth
+            const wrapperOverflows = buttonsWrapper.scrollWidth > buttonsWrapper.clientWidth;
             
             // Method 2: Check if last button is cut off
             let lastButtonCutOff = false;
@@ -5852,20 +5857,20 @@ class NotesWiki {
             const isMobile = window.innerWidth <= 768;
             
             // Check if we have overflow or too many buttons
-            const hasOverflow = isMobile || containerOverflows || lastButtonCutOff || 
+            const hasOverflow = isMobile || wrapperOverflows || lastButtonCutOff || 
                               totalButtonsWidth > availableSpace || buttons.length > 8;
             
             // Reset visibility and position
-            contextSwitcher.style.visibility = '';
-            contextSwitcher.style.position = '';
+            buttonsWrapper.style.visibility = '';
+            buttonsWrapper.style.position = '';
             
             if (hasOverflow) {
-                // Hide context switcher and show dropdown
-                contextSwitcher.style.display = 'none';
+                // Hide buttons wrapper and show dropdown
+                buttonsWrapper.style.display = 'none';
                 dropdown.style.display = 'block';
             } else {
-                // Show context switcher and hide dropdown
-                contextSwitcher.style.display = 'flex';
+                // Show buttons wrapper and hide dropdown
+                buttonsWrapper.style.display = 'flex';
                 dropdown.style.display = 'none';
             }
         };

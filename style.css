@@ -157,6 +157,13 @@ body {
 }
 
 
+/* Context buttons wrapper */
+.context-buttons-wrapper {
+    display: flex;
+    gap: var(--spacing-xs);
+    align-items: center;
+}
+
 /* Context dropdown - hidden by default */
 .context-dropdown {
     position: relative;
@@ -4709,10 +4716,12 @@ select.dropdown:focus {
     
     /* Context switcher responsive */
     .context-switcher {
-        flex-wrap: wrap;
-        gap: 4px;
         margin-left: var(--spacing-sm);
         margin-right: var(--spacing-sm);
+    }
+    
+    .context-buttons-wrapper {
+        gap: 4px;
     }
     
     .context-button {
