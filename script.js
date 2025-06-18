@@ -27,6 +27,14 @@ class NotesWiki {
         this.tabIdCounter = 0;
         this.tabContents = new Map(); // Map of tab ID to content HTML
         this.draggedTabId = null; // For drag and drop
+        
+        // Split view
+        this.activePaneId = null;
+        
+        // Sticky notes
+        this.stickyNotes = new Map();
+        this.stickyColors = ['yellow', 'blue', 'green', 'pink'];
+        this.stickyZIndex = 1001;
         this.themes = [
             { id: '2077', name: '2077 Theme', description: 'Cyberpunk 2077 inspired neon colors' },
             { id: 'atom-one-light', name: 'Atom One Light', description: 'Clean, bright theme from Atom editor' },
@@ -93,6 +101,7 @@ class NotesWiki {
             contentWidth: 'narrow',  // Default to narrow width
             focusMode: false, // Focus mode state
             showTableOfContents: true, // Show/hide table of contents for notes with multiple headings
+            splitViewEnabled: false, // Split view state
             // New settings
             defaultHomePage: 'home', // 'home', 'last-viewed', 'specific'
             specificHomeNote: '', // Path to specific note
@@ -200,6 +209,9 @@ class NotesWiki {
         
         // Load bookmarks
         this.loadBookmarks();
+        
+        // Initialize sticky notes
+        this.initializeStickyNotes();
         
         // Populate theme picker
         this.populateThemePicker();
@@ -1196,6 +1208,14 @@ class NotesWiki {
                     }
                     return;
                 }
+                
+                // Sticky note creation with Ctrl+Shift+S
+                if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'S') {
+                    e.preventDefault();
+                    this.createStickyNote();
+                    return;
+                }
+                
                 // Check custom shortcuts
                 const pressedCombo = this.getKeyCombo(e);
                 
@@ -7584,6 +7604,466 @@ class NotesWiki {
         
         // Focus the cancel button for safety
         cancelBtn.focus();
+    }
+    
+    // ============================================
+    // SPLIT VIEW IMPLEMENTATION
+    // ============================================
+    
+    toggleSplitView() {
+        this.settings.splitViewEnabled = !this.settings.splitViewEnabled;
+        
+        if (this.settings.splitViewEnabled) {
+            this.enableSplitView();
+        } else {
+            this.disableSplitView();
+        }
+        
+        this.saveSettings();
+        this.showToast(this.settings.splitViewEnabled ? 'Split view enabled' : 'Split view disabled');
+    }
+    
+    enableSplitView() {
+        const mainContent = document.querySelector('.main-layout main');
+        mainContent.classList.add('split-view-active');
+        
+        // Create split pane structure
+        const tabBar = document.getElementById('tab-bar');
+        const content = document.getElementById('main-content');
+        
+        // Wrap existing content in first pane
+        const pane1 = document.createElement('div');
+        pane1.className = 'split-pane active';
+        pane1.id = 'pane-1';
+        
+        const pane1TabBar = tabBar.cloneNode(true);
+        pane1TabBar.id = 'tab-bar-1';
+        pane1.appendChild(pane1TabBar);
+        
+        const pane1Content = content.cloneNode(true);
+        pane1Content.id = 'main-content-1';
+        pane1.appendChild(pane1Content);
+        
+        // Create divider
+        const divider = document.createElement('div');
+        divider.className = 'pane-divider';
+        
+        // Create second pane
+        const pane2 = document.createElement('div');
+        pane2.className = 'split-pane';
+        pane2.id = 'pane-2';
+        
+        const pane2TabBar = tabBar.cloneNode(true);
+        pane2TabBar.id = 'tab-bar-2';
+        pane2.appendChild(pane2TabBar);
+        
+        const pane2Content = content.cloneNode(true);
+        pane2Content.id = 'main-content-2';
+        pane2Content.innerHTML = '<div class="content-wrapper empty-state"><h2>Click a note to open it here</h2></div>';
+        pane2.appendChild(pane2Content);
+        
+        // Hide original elements
+        tabBar.style.display = 'none';
+        content.style.display = 'none';
+        
+        // Insert panes
+        mainContent.insertBefore(pane1, tabBar);
+        mainContent.insertBefore(divider, tabBar);
+        mainContent.insertBefore(pane2, tabBar);
+        
+        // Initialize pane state
+        this.activePaneId = 'pane-1';
+        this.setupPaneResizing(divider);
+        this.setupPaneNavigation();
+    }
+    
+    disableSplitView() {
+        const mainContent = document.querySelector('.main-layout main');
+        mainContent.classList.remove('split-view-active');
+        
+        // Remove split panes
+        const pane1 = document.getElementById('pane-1');
+        const pane2 = document.getElementById('pane-2');
+        const divider = document.querySelector('.pane-divider');
+        
+        if (pane1) pane1.remove();
+        if (pane2) pane2.remove();
+        if (divider) divider.remove();
+        
+        // Show original elements
+        const tabBar = document.getElementById('tab-bar');
+        const content = document.getElementById('main-content');
+        tabBar.style.display = '';
+        content.style.display = '';
+    }
+    
+    setupPaneResizing(divider) {
+        let isResizing = false;
+        let startX = 0;
+        let startWidths = [];
+        
+        divider.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            startX = e.clientX;
+            const panes = document.querySelectorAll('.split-pane');
+            startWidths = Array.from(panes).map(p => p.offsetWidth);
+            document.body.style.cursor = 'col-resize';
+            e.preventDefault();
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!isResizing) return;
+            
+            const deltaX = e.clientX - startX;
+            const containerWidth = document.querySelector('.main-layout main').offsetWidth;
+            const pane1 = document.getElementById('pane-1');
+            const pane2 = document.getElementById('pane-2');
+            
+            const newWidth1 = startWidths[0] + deltaX;
+            const newWidth2 = startWidths[1] - deltaX;
+            
+            const minWidth = 300;
+            if (newWidth1 >= minWidth && newWidth2 >= minWidth) {
+                pane1.style.width = `${newWidth1}px`;
+                pane2.style.width = `${newWidth2}px`;
+                pane1.style.flex = 'none';
+                pane2.style.flex = 'none';
+            }
+        });
+        
+        document.addEventListener('mouseup', () => {
+            if (isResizing) {
+                isResizing = false;
+                document.body.style.cursor = '';
+            }
+        });
+    }
+    
+    setupPaneNavigation() {
+        // Handle clicks on split panes to set active pane
+        document.querySelectorAll('.split-pane').forEach(pane => {
+            pane.addEventListener('click', () => {
+                this.setActivePane(pane.id);
+            });
+        });
+        
+        // Modify tab click behavior for split view
+        this.originalLoadNote = this.loadNote;
+        this.loadNote = (path) => {
+            if (this.settings.splitViewEnabled && this.activePaneId) {
+                this.loadNoteInPane(path, this.activePaneId);
+            } else {
+                this.originalLoadNote(path);
+            }
+        };
+    }
+    
+    setActivePane(paneId) {
+        document.querySelectorAll('.split-pane').forEach(pane => {
+            pane.classList.remove('active');
+        });
+        document.getElementById(paneId).classList.add('active');
+        this.activePaneId = paneId;
+    }
+    
+    loadNoteInPane(path, paneId) {
+        const paneContent = document.getElementById(`main-content-${paneId.split('-')[1]}`);
+        if (paneContent) {
+            // Load note content into specific pane
+            // This is a simplified version - would need full implementation
+            paneContent.innerHTML = `<div class="content-wrapper"><h2>Loading ${path}...</h2></div>`;
+        }
+    }
+    
+    // ============================================
+    // STICKY NOTES IMPLEMENTATION
+    // ============================================
+    
+    initializeStickyNotes() {
+        this.stickyNotes = new Map();
+        this.stickyColors = ['yellow', 'blue', 'green', 'pink'];
+        this.stickyZIndex = 1001;
+        this.loadStickyNotes();
+    }
+    
+    createStickyNote(options = {}) {
+        const note = {
+            id: `sticky-${Date.now()}`,
+            content: options.content || '',
+            position: options.position || { x: 100 + Math.random() * 200, y: 100 + Math.random() * 200 },
+            size: options.size || { width: 300, height: 200 },
+            color: options.color || this.stickyColors[0],
+            minimized: options.minimized || false,
+            createdAt: options.createdAt || new Date().toISOString(),
+            zIndex: this.stickyZIndex++
+        };
+        
+        this.stickyNotes.set(note.id, note);
+        this.renderStickyNote(note);
+        this.saveStickyNotes();
+        
+        // Focus the textarea
+        setTimeout(() => {
+            const textarea = document.querySelector(`#${note.id} .sticky-note-textarea`);
+            if (textarea) textarea.focus();
+        }, 100);
+        
+        return note;
+    }
+    
+    renderStickyNote(note) {
+        const container = document.getElementById('sticky-notes-container');
+        
+        const noteEl = document.createElement('div');
+        noteEl.className = `sticky-note sticky-note-${note.color}`;
+        noteEl.id = note.id;
+        noteEl.style.left = `${note.position.x}px`;
+        noteEl.style.top = `${note.position.y}px`;
+        noteEl.style.width = `${note.size.width}px`;
+        noteEl.style.height = note.minimized ? '40px' : `${note.size.height}px`;
+        noteEl.style.zIndex = note.zIndex;
+        
+        noteEl.innerHTML = `
+            <div class="sticky-note-header">
+                <div class="sticky-note-title">Quick Note</div>
+                <div class="sticky-note-actions">
+                    <button class="sticky-note-btn minimize-btn" onclick="notesWiki.toggleStickyMinimize('${note.id}')" title="${note.minimized ? 'Expand' : 'Minimize'}">
+                        ${note.minimized ? '□' : '−'}
+                    </button>
+                    <button class="sticky-note-btn color-btn" onclick="notesWiki.cycleStickyColor('${note.id}')" title="Change color">
+                        🎨
+                    </button>
+                    <button class="sticky-note-btn convert-btn" onclick="notesWiki.convertStickyToNote('${note.id}')" title="Convert to full note">
+                        📄
+                    </button>
+                    <button class="sticky-note-btn close-btn" onclick="notesWiki.closeStickyNote('${note.id}')" title="Close">
+                        ×
+                    </button>
+                </div>
+            </div>
+            <div class="sticky-note-content" style="display: ${note.minimized ? 'none' : 'block'}">
+                <textarea class="sticky-note-textarea" 
+                          placeholder="Type your note here..." 
+                          oninput="notesWiki.updateStickyContent('${note.id}', this.value)">${note.content}</textarea>
+            </div>
+            <div class="sticky-note-resize-handle" style="display: ${note.minimized ? 'none' : 'block'}"></div>
+        `;
+        
+        container.appendChild(noteEl);
+        this.makeStickyDraggable(noteEl, note);
+        this.makeStickyResizable(noteEl, note);
+    }
+    
+    makeStickyDraggable(element, note) {
+        const header = element.querySelector('.sticky-note-header');
+        let isDragging = false;
+        let startX, startY, initialX, initialY;
+        
+        header.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            initialX = note.position.x;
+            initialY = note.position.y;
+            
+            element.style.zIndex = this.stickyZIndex++;
+            note.zIndex = element.style.zIndex;
+            element.classList.add('dragging');
+            e.preventDefault();
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            
+            const deltaX = e.clientX - startX;
+            const deltaY = e.clientY - startY;
+            
+            const newX = initialX + deltaX;
+            const newY = initialY + deltaY;
+            
+            const maxX = window.innerWidth - element.offsetWidth;
+            const maxY = window.innerHeight - element.offsetHeight;
+            
+            note.position.x = Math.max(0, Math.min(newX, maxX));
+            note.position.y = Math.max(0, Math.min(newY, maxY));
+            
+            element.style.left = `${note.position.x}px`;
+            element.style.top = `${note.position.y}px`;
+        });
+        
+        document.addEventListener('mouseup', () => {
+            if (isDragging) {
+                isDragging = false;
+                element.classList.remove('dragging');
+                this.saveStickyNotes();
+            }
+        });
+    }
+    
+    makeStickyResizable(element, note) {
+        const handle = element.querySelector('.sticky-note-resize-handle');
+        let isResizing = false;
+        let startX, startY, startWidth, startHeight;
+        
+        handle.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            startWidth = note.size.width;
+            startHeight = note.size.height;
+            element.classList.add('resizing');
+            e.preventDefault();
+            e.stopPropagation();
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!isResizing) return;
+            
+            const deltaX = e.clientX - startX;
+            const deltaY = e.clientY - startY;
+            
+            const newWidth = Math.max(200, startWidth + deltaX);
+            const newHeight = Math.max(150, startHeight + deltaY);
+            
+            note.size.width = newWidth;
+            note.size.height = newHeight;
+            
+            element.style.width = `${newWidth}px`;
+            element.style.height = `${newHeight}px`;
+        });
+        
+        document.addEventListener('mouseup', () => {
+            if (isResizing) {
+                isResizing = false;
+                element.classList.remove('resizing');
+                this.saveStickyNotes();
+            }
+        });
+    }
+    
+    updateStickyContent(noteId, content) {
+        const note = this.stickyNotes.get(noteId);
+        if (note) {
+            note.content = content;
+            this.throttledSaveStickyNotes();
+        }
+    }
+    
+    toggleStickyMinimize(noteId) {
+        const note = this.stickyNotes.get(noteId);
+        const element = document.getElementById(noteId);
+        
+        if (note && element) {
+            note.minimized = !note.minimized;
+            
+            const content = element.querySelector('.sticky-note-content');
+            const resizeHandle = element.querySelector('.sticky-note-resize-handle');
+            const minimizeBtn = element.querySelector('.minimize-btn');
+            
+            if (note.minimized) {
+                element.style.height = '40px';
+                content.style.display = 'none';
+                resizeHandle.style.display = 'none';
+                minimizeBtn.innerHTML = '□';
+                minimizeBtn.title = 'Expand';
+            } else {
+                element.style.height = `${note.size.height}px`;
+                content.style.display = 'block';
+                resizeHandle.style.display = 'block';
+                minimizeBtn.innerHTML = '−';
+                minimizeBtn.title = 'Minimize';
+            }
+            
+            this.saveStickyNotes();
+        }
+    }
+    
+    cycleStickyColor(noteId) {
+        const note = this.stickyNotes.get(noteId);
+        const element = document.getElementById(noteId);
+        
+        if (note && element) {
+            const currentIndex = this.stickyColors.indexOf(note.color);
+            const nextIndex = (currentIndex + 1) % this.stickyColors.length;
+            note.color = this.stickyColors[nextIndex];
+            
+            // Remove old color class and add new one
+            this.stickyColors.forEach(color => {
+                element.classList.remove(`sticky-note-${color}`);
+            });
+            element.classList.add(`sticky-note-${note.color}`);
+            
+            this.saveStickyNotes();
+        }
+    }
+    
+    convertStickyToNote(noteId) {
+        const note = this.stickyNotes.get(noteId);
+        if (!note || !note.content.trim()) {
+            this.showToast('Sticky note is empty', 'warning');
+            return;
+        }
+        
+        const timestamp = new Date().toISOString().split('T')[0];
+        const title = note.content.split('\n')[0].slice(0, 50) || 'Quick Note';
+        
+        const content = `---
+title: ${title}
+created: ${timestamp}
+tags: [quick-note, sticky-note]
+---
+
+${note.content}
+
+*Converted from sticky note on ${new Date().toLocaleString()}*
+`;
+        
+        // Create a new tab with this content
+        this.showToast('Sticky note converted! Create this note in your notes folder.', 'success');
+        this.closeStickyNote(noteId);
+    }
+    
+    closeStickyNote(noteId) {
+        const element = document.getElementById(noteId);
+        if (element) {
+            element.remove();
+        }
+        this.stickyNotes.delete(noteId);
+        this.saveStickyNotes();
+    }
+    
+    saveStickyNotes() {
+        try {
+            const notes = Array.from(this.stickyNotes.values());
+            localStorage.setItem('stickyNotes', JSON.stringify(notes));
+        } catch (error) {
+            console.warn('Failed to save sticky notes:', error);
+        }
+    }
+    
+    loadStickyNotes() {
+        try {
+            const stored = localStorage.getItem('stickyNotes');
+            if (stored) {
+                const notes = JSON.parse(stored);
+                notes.forEach(noteData => {
+                    this.stickyNotes.set(noteData.id, noteData);
+                    this.renderStickyNote(noteData);
+                });
+            }
+        } catch (error) {
+            console.warn('Failed to load sticky notes:', error);
+        }
+    }
+    
+    // Throttled save for performance
+    throttledSaveStickyNotes() {
+        if (this.stickyNoteSaveTimeout) {
+            clearTimeout(this.stickyNoteSaveTimeout);
+        }
+        this.stickyNoteSaveTimeout = setTimeout(() => {
+            this.saveStickyNotes();
+        }, 1000);
     }
     
     setupCleanupHandlers() {

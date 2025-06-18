@@ -6014,3 +6014,207 @@ body.focus-mode .floating-share {
         page-break-before: avoid;
     }
 }
+
+/* ============================================
+   SPLIT VIEW STYLES
+   ============================================ */
+
+.split-view-active .main-layout main {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.split-pane {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+    position: relative;
+    overflow: hidden;
+}
+
+.split-pane.active {
+    box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--accent-primary) 20%, transparent);
+}
+
+.pane-divider {
+    width: 4px;
+    background: var(--border-primary);
+    cursor: col-resize;
+    position: relative;
+    flex-shrink: 0;
+    transition: background 0.2s;
+}
+
+.pane-divider:hover {
+    background: var(--accent-primary);
+}
+
+.pane-divider::after {
+    content: '⋮';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--text-secondary);
+    font-size: 16px;
+    pointer-events: none;
+}
+
+.split-pane .tab-bar {
+    border-bottom: 1px solid var(--border-primary);
+}
+
+.split-pane #main-content {
+    flex: 1;
+    overflow: auto;
+}
+
+/* ============================================
+   STICKY NOTES STYLES
+   ============================================ */
+
+.sticky-notes-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.sticky-note {
+    position: absolute;
+    min-width: 200px;
+    min-height: 150px;
+    background: var(--sticky-bg, #fffacd);
+    border: 1px solid var(--sticky-border, #e6d567);
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s;
+}
+
+.sticky-note:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.sticky-note-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px 4px 0 0;
+    cursor: move;
+}
+
+.sticky-note-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-primary);
+    opacity: 0.8;
+}
+
+.sticky-note-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.sticky-note-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+}
+
+.sticky-note-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--text-primary);
+}
+
+.sticky-note-content {
+    flex: 1;
+    padding: 8px;
+    overflow: hidden;
+}
+
+.sticky-note-textarea {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    resize: none;
+    padding: 0;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text-primary);
+    outline: none;
+}
+
+.sticky-note-resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 16px;
+    height: 16px;
+    cursor: nwse-resize;
+    background: linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.1) 50%);
+}
+
+.sticky-note.dragging {
+    opacity: 0.8;
+    cursor: move;
+}
+
+.sticky-note.resizing {
+    opacity: 0.8;
+}
+
+/* Sticky Note Colors */
+.sticky-note-yellow {
+    --sticky-bg: #fffacd;
+    --sticky-border: #e6d567;
+}
+
+.sticky-note-blue {
+    --sticky-bg: #cfe8ff;
+    --sticky-border: #7eb6e6;
+}
+
+.sticky-note-green {
+    --sticky-bg: #d4f8d4;
+    --sticky-border: #7ec77e;
+}
+
+.sticky-note-pink {
+    --sticky-bg: #ffd6e8;
+    --sticky-border: #e67eb6;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .split-view-active .main-layout main {
+        flex-direction: column;
+    }
+    
+    .pane-divider {
+        display: none;
+    }
+    
+    .split-pane {
+        min-width: unset;
+    }
+    
+    .split-pane:not(.active) {
+        display: none;
+    }
+}

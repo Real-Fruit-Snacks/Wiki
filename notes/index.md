@@ -45,6 +45,8 @@ New to Notes Wiki? Start here:
 
 ### 🛠️ Productivity Tools
 - **[[tutorials/features/pomodoro-timer|Pomodoro Timer]]** - Built-in focus timer
+- **[[tutorials/features/split-view|Split View]]** - Work with multiple notes side-by-side
+- **[[tutorials/features/sticky-notes|Sticky Notes]]** - Floating mini-notes for quick thoughts
 - **[[tutorials/features/keyboard-shortcuts|Keyboard Shortcuts]]** - Complete shortcut guide
 
 ## 🚀 Advanced Features

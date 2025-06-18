@@ -221,6 +221,8 @@ element.innerHTML = userInput; // Only for trusted SVG/static content
 16. **Line Numbers for Code Blocks**: Implemented CSS counter-based line numbers with proper Prism.js integration
 17. **Multi-Search Tool Removal**: Removed the multi-search feature to simplify the codebase
 18. **Enhanced Combined Code Blocks Styling**: Added theme-aware colored borders and visual effects for better distinction
+19. **Split View Implementation**: Added side-by-side note viewing with draggable pane resizing
+20. **Sticky Notes Feature**: Implemented floating mini-notes with drag, resize, and color options
 
 ### Layout and Styling Architecture
 
