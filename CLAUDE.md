@@ -34,13 +34,9 @@ python3 build.py  # Should output "Build complete!" with stats
 
 ### Release Packaging
 ```bash
-# Create release package with all assets
 npm run package
 ```
-This will:
-1. Validate JavaScript syntax
-2. Build the search index
-3. Create a versioned zip file with all required files
+This creates a versioned zip file with all necessary assets for offline deployment.
 
 ## Architecture Overview
 

@@ -180,7 +180,7 @@ body {
     font-size: var(--text-sm);
     font-weight: 500;
     min-width: 80px;
-    max-width: 200px;
+    max-width: none;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -199,6 +199,7 @@ body {
     font-weight: 500;
     cursor: pointer;
     transition: all var(--transition-fast);
+    max-width: min(300px, 40vw);
 }
 
 .context-dropdown-toggle:hover {
@@ -227,7 +228,7 @@ body {
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-lg);
     min-width: 200px;
-    max-width: 250px;
+    max-width: min(400px, 90vw);
     max-height: 400px;
     overflow-y: auto;
     z-index: 1000;
