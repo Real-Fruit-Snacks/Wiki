@@ -381,11 +381,12 @@ body {
     min-width: 18px;
     height: 18px;
     padding: 0 4px;
-    background-color: var(--badge-bg);
+    background-color: var(--accent-primary);
     border-radius: 9px;
-    color: var(--badge-text);
+    color: white;
     font-size: 11px;
     font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 /* Dropdown */
