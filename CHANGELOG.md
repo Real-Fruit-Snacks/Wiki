@@ -1,5 +1,32 @@
 # Changelog
 
+## [3.2.0] - 2025-06-19
+
+### 🎨 Theme System Overhaul & Application Cleanup
+
+This release focuses on theme system improvements and application maintenance for better user experience and cleaner codebase.
+
+### ✨ Improvements
+- **Classic Theme Collection**: Replaced modern themes with 50 classic themes from the original collection
+  - All themes updated with required CSS variables for compatibility
+  - Fixed 800+ rgba syntax errors across all theme files
+  - Enhanced theme preview cards with proper rendering
+- **Application Cleanup**: Removed development artifacts and test files
+  - Cleaned up test scripts, screenshots, and backup directories
+  - Removed development documentation and temporary files
+  - Streamlined application folder for production deployment
+- **Bug Fixes**:
+  - Fixed header scrolling issues with proper event handling
+  - Fixed theme card decoration rendering (Kanagawa wave animation)
+  - Fixed modal transparency issues across all themes
+
+### 🔧 Technical Changes
+- **CSS Variable Standardization**: Added 8 required variables to all themes:
+  - `--bg-modal`, `--bg-tooltip`, `--bg-input`, `--bg-highlight`
+  - `--text-link`, `--text-code`, `--text-inverse`, `--button-text`
+- **Repository Maintenance**: Cleaned up Git repository to match local directory
+- **Deployment Ready**: Optimized for offline GitLab Pages deployment
+
 ## [3.0.0] - 2025-06-18
 
 ### 🚀 Major Release: Complete Feature Maturity & Production Readiness
