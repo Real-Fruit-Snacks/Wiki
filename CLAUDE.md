@@ -36,7 +36,7 @@ python3 build.py  # Should output "Build complete!" with stats
 ```bash
 npm run package
 ```
-This creates a versioned zip file (`notes-wiki-v3.2.0-complete.zip`) with all necessary assets for offline deployment.
+This creates a versioned zip file (`notes-wiki-v3.3.0-complete.zip`) with all necessary assets for offline deployment.
 
 ## Architecture Overview
 
@@ -124,7 +124,7 @@ When making significant changes, consider the modular refactoring plan:
 - Jekyll bypass prevents GitHub Pages from processing the site
 - Code blocks support line numbers via CSS counters (toggle in settings)
 
-### Recent Updates (v3.2.0)
+### Recent Updates (v3.3.0)
 
 1. **Theme System Overhaul** - Replaced modern themes with 50 classic themes from original collection
 2. **CSS Variable Fixes** - Added 8 required variables to all themes for compatibility
@@ -194,7 +194,7 @@ element.textContent = userInput;
 element.innerHTML = userInput; // Only for trusted SVG/static content
 ```
 
-### Recently Applied Fixes (v3.1.0 - v3.2.0)
+### Recently Applied Fixes (v3.1.0 - v3.3.0)
 
 ✅ **Critical fixes and improvements implemented**:
 1. **Syntax Highlighting**: Fixed Prism.js integration with proper `Prism.highlightAll()` calls after DOM injection
