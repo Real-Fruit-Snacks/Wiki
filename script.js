@@ -8289,6 +8289,21 @@ class NotesWiki {
                     if (codeElement) {
                         codeElement.textContent = codeContent;
                         Prism.highlightElement(codeElement);
+                        
+                        // Apply line numbers if enabled (for combined code blocks)
+                        if (this.settings.showLineNumbers && codeElement.closest('pre.with-line-numbers')) {
+                            const highlightedHtml = codeElement.innerHTML;
+                            const lines = highlightedHtml.split('\n');
+                            const wrappedLines = lines.map(line => {
+                                if (line.trim() === '') {
+                                    line = '&nbsp;';
+                                }
+                                return `<div class="code-line">${line}</div>`;
+                            }).join('');
+                            
+                            codeElement.classList.add('code-with-counters');
+                            codeElement.innerHTML = wrappedLines;
+                        }
                     }
                 });
                 this.pendingCodeBlocks.clear();
