@@ -201,26 +201,36 @@ element.textContent = userInput;
 element.innerHTML = userInput; // Only for trusted SVG/static content
 ```
 
-### Scroll Handling Fixes (v3.1.2)
+### Scroll Handling Fixes (v3.1.2 - v3.1.3)
 
 Fixed unintended scrolling issues in header and tab sections:
 
 🔧 **Issues Fixed**:
 - **Header scrolling**: Dropdown menus (context, recent files, bookmarks) were causing scroll events
 - **Tab bar scrolling**: Horizontal tab container was capturing vertical scroll events
+- **Comprehensive header scroll prevention**: Added catch-all prevention for any remaining scroll capture
 
 📋 **Solutions Implemented**:
-1. **CSS**: Added `overscroll-behavior: contain` to prevent scroll chaining
-2. **JavaScript**: Added wheel event handlers to:
+1. **CSS**: Added `overscroll-behavior: contain` to prevent scroll chaining:
+   - `.header` - Entire header container
+   - `.dropdown-content` - All dropdown content containers
+   - `.context-dropdown-menu` - Context switcher dropdown
+2. **JavaScript**: Enhanced wheel event handlers:
+   - Extended to dropdown content containers (not just lists)
+   - Added comprehensive header-wide scroll prevention
    - Prevent scroll at boundaries in dropdowns
    - Convert vertical scroll to horizontal in tabs container
    - Stop event propagation to prevent body scrolling
 
 🎯 **Affected Elements**:
+- `.header` - Entire header container
+- `.dropdown-content` - All dropdown containers
 - `.context-dropdown-menu` - Context switcher dropdown
 - `.recent-files-list` - Recent files dropdown list
 - `.bookmarks-list` - Bookmarks dropdown list
 - `.tabs-container` - Horizontal tab scrolling area
+- `#recent-dropdown-content` - Recent files dropdown container
+- `#bookmarks-dropdown-content` - Bookmarks dropdown container
 
 ### Theme Card Enhancements (v3.1.1)
 

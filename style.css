@@ -87,6 +87,7 @@ body {
     background-color: var(--bg-secondary);
     border-bottom: 1px solid var(--border-primary);
     box-shadow: var(--shadow-sm);
+    overscroll-behavior: contain;
 }
 
 .header-content {
@@ -407,6 +408,7 @@ body {
     border: 1px solid var(--border-primary);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
+    overscroll-behavior: contain;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);

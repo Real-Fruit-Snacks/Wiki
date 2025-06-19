@@ -763,16 +763,50 @@ class NotesWiki {
             }, { passive: false });
         };
         
-        // Apply to recent files list
+        // Apply to recent files list and its container
         const recentFilesList = document.getElementById('recent-files-list');
         if (recentFilesList) {
             preventScrollPropagation(recentFilesList);
         }
+        const recentDropdownContent = document.getElementById('recent-dropdown-content');
+        if (recentDropdownContent) {
+            preventScrollPropagation(recentDropdownContent);
+        }
         
-        // Apply to bookmarks list
+        // Apply to bookmarks list and its container
         const bookmarksList = document.querySelector('.bookmarks-list');
         if (bookmarksList) {
             preventScrollPropagation(bookmarksList);
+        }
+        const bookmarksDropdownContent = document.getElementById('bookmarks-dropdown-content');
+        if (bookmarksDropdownContent) {
+            preventScrollPropagation(bookmarksDropdownContent);
+        }
+        
+        // Apply to all dropdown content containers in header
+        const headerDropdowns = document.querySelectorAll('.header .dropdown-content');
+        headerDropdowns.forEach(dropdown => {
+            preventScrollPropagation(dropdown);
+        });
+        
+        // Additional comprehensive header scroll prevention
+        const header = document.querySelector('.header');
+        if (header) {
+            header.addEventListener('wheel', (e) => {
+                // Check if the target is a scrollable element
+                const target = e.target.closest('.dropdown-content, .recent-files-list, .bookmarks-list, .context-dropdown-menu');
+                if (target) {
+                    // Let the specific element handlers deal with it
+                    return;
+                }
+                
+                // For any other elements in header, prevent scroll propagation to body
+                const hasScrollableParent = e.target.closest('[style*="overflow"], .tab, .tabs-container');
+                if (!hasScrollableParent) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            }, { passive: false });
         }
         
         // Fix scrolling in tabs container - convert vertical scroll to horizontal
