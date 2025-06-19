@@ -70,6 +70,19 @@ env/
 # GitLab Pages build directory (if using manual build)
 public/
 
+# Release packaging
+*.zip
+*.tar.gz
+*.7z
+releases/
+dist/
+
+# But keep essential offline files
+!libs/*.js
+!libs/*.css
+!themes/*.css
+!notes-index.json
+
 # Backup files
 *.bak
 *.backup
