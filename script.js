@@ -6042,6 +6042,867 @@ class NotesWiki {
                         );
                     "></div>
                 </div>
+            `,
+            // Classic Dark Themes
+            'dark': `
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    right: 10px;
+                    font-size: 24px;
+                    opacity: 0.15;
+                    animation: pulse 2s ease-in-out infinite;
+                ">🌙</div>
+            `,
+            'halcyon': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 100%;
+                    background: linear-gradient(135deg, 
+                        transparent 30%, 
+                        rgba(92, 207, 230, 0.05) 50%, 
+                        transparent 70%
+                    );
+                    animation: shimmer 3s ease-in-out infinite;
+                    pointer-events: none;
+                "></div>
+            `,
+            'monokai': `
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    width: 30px;
+                    height: 30px;
+                    border: 2px solid rgba(102, 217, 239, 0.3);
+                    border-radius: 50%;
+                    animation: rotate 4s linear infinite;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 15px;
+                    right: 15px;
+                    width: 20px;
+                    height: 20px;
+                    border: 2px solid rgba(249, 38, 114, 0.3);
+                    border-radius: 50%;
+                    animation: rotate 3s linear infinite reverse;
+                "></div>
+            `,
+            'night-owl': `
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    font-size: 20px;
+                    opacity: 0.2;
+                    animation: float 3s ease-in-out infinite;
+                ">🦉</div>
+            `,
+            'one-dark-pro': `
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 3px;
+                    background: linear-gradient(90deg, 
+                        #61afef 0%, 
+                        #c678dd 25%, 
+                        #98c379 50%, 
+                        #e06c75 75%, 
+                        #61afef 100%
+                    );
+                    animation: slide 3s linear infinite;
+                    opacity: 0.5;
+                "></div>
+            `,
+            'tomorrow-night': `
+                <div style="
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 50%;
+                    background: radial-gradient(circle at 30% 30%, 
+                        rgba(129, 162, 190, 0.1), 
+                        transparent 70%
+                    );
+                    animation: breathe 4s ease-in-out infinite;
+                "></div>
+            `,
+            'zenburn': `
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    width: 40px;
+                    height: 40px;
+                    background: linear-gradient(45deg, 
+                        rgba(220, 220, 204, 0.1) 25%, 
+                        transparent 25%
+                    );
+                    opacity: 0.3;
+                "></div>
+            `,
+            
+            // Classic Light Themes
+            'atom-one-light': `
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    width: 20px;
+                    height: 20px;
+                    background: radial-gradient(circle, 
+                        rgba(1, 132, 188, 0.2), 
+                        transparent
+                    );
+                    animation: pulse 2s ease-in-out infinite;
+                "></div>
+            `,
+            'github-light': `
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    right: 10px;
+                    font-size: 20px;
+                    opacity: 0.1;
+                    animation: rotate 10s linear infinite;
+                ">⚙️</div>
+            `,
+            'light': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 50px;
+                    height: 50px;
+                    background: linear-gradient(135deg, 
+                        rgba(255, 193, 7, 0.1), 
+                        transparent
+                    );
+                    animation: shine 3s ease-in-out infinite;
+                "></div>
+            `,
+            'solarized-light': `
+                <div style="
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    font-size: 30px;
+                    opacity: 0.08;
+                    animation: rotate 20s linear infinite;
+                ">☀️</div>
+            `,
+            
+            // Material Design Themes
+            'material-darker': `
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 4px;
+                    background: linear-gradient(90deg, 
+                        #ff5370 0%, 
+                        #f78c6c 20%, 
+                        #ffcb6b 40%, 
+                        #c3e88d 60%, 
+                        #82aaff 80%, 
+                        #c792ea 100%
+                    );
+                    opacity: 0.4;
+                "></div>
+            `,
+            'material-ocean': `
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 30px;
+                    background: linear-gradient(to top, 
+                        rgba(130, 170, 255, 0.1), 
+                        transparent
+                    );
+                    animation: wave 4s ease-in-out infinite;
+                "></div>
+            `,
+            'material-palenight': `
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    width: 30px;
+                    height: 30px;
+                    background: conic-gradient(
+                        from 0deg,
+                        rgba(199, 146, 234, 0.2),
+                        rgba(130, 170, 255, 0.2),
+                        rgba(199, 146, 234, 0.2)
+                    );
+                    border-radius: 50%;
+                    animation: rotate 6s linear infinite;
+                "></div>
+            `,
+            'material': `
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    left: 10px;
+                    width: 25px;
+                    height: 25px;
+                    background: rgba(128, 203, 196, 0.2);
+                    transform: rotate(45deg);
+                    animation: bounce 2s ease-in-out infinite;
+                "></div>
+            `,
+            
+            // Nature & Earth Themes
+            'ayu-light': `
+                <div style="
+                    position: absolute;
+                    bottom: 5px;
+                    right: 10px;
+                    font-size: 16px;
+                    opacity: 0.15;
+                    animation: sway 3s ease-in-out infinite;
+                ">🌿</div>
+            `,
+            'bear': `
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    left: 10px;
+                    font-size: 20px;
+                    opacity: 0.15;
+                    animation: wobble 4s ease-in-out infinite;
+                ">🐻</div>
+            `,
+            'gruvbox-dark': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background-image: repeating-linear-gradient(
+                        45deg,
+                        transparent,
+                        transparent 10px,
+                        rgba(254, 128, 25, 0.03) 10px,
+                        rgba(254, 128, 25, 0.03) 20px
+                    );
+                    pointer-events: none;
+                "></div>
+            `,
+            'gruvbox-light': `
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    font-size: 18px;
+                    opacity: 0.12;
+                    animation: float 4s ease-in-out infinite;
+                ">☕</div>
+            `,
+            'rose-pine-dawn': `
+                <div style="
+                    position: absolute;
+                    top: 50%;
+                    right: 10px;
+                    transform: translateY(-50%);
+                    font-size: 16px;
+                    opacity: 0.15;
+                    animation: bloom 3s ease-in-out infinite;
+                ">🌸</div>
+            `,
+            
+            // Arctic & Winter Themes  
+            'nordic': `
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    font-size: 20px;
+                    opacity: 0.15;
+                    animation: glow 2s ease-in-out infinite;
+                ">🔥</div>
+            `,
+            'winter-is-coming-light': `
+                <div style="
+                    position: absolute;
+                    top: 20px;
+                    right: 20px;
+                    width: 8px;
+                    height: 8px;
+                    background: rgba(0, 122, 204, 0.2);
+                    border-radius: 50%;
+                    box-shadow: 
+                        -10px -10px 0 rgba(0, 122, 204, 0.15),
+                        10px 10px 0 rgba(0, 122, 204, 0.1);
+                    animation: sparkle 3s ease-in-out infinite;
+                "></div>
+            `,
+            
+            // Ocean & Sky Themes
+            'ayu-dark': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 100%;
+                    background: linear-gradient(180deg, 
+                        transparent 60%, 
+                        rgba(255, 180, 84, 0.05) 100%
+                    );
+                    pointer-events: none;
+                "></div>
+            `,
+            'ayu-mirage': `
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 2px;
+                    background: linear-gradient(90deg, 
+                        transparent, 
+                        rgba(255, 204, 102, 0.5), 
+                        transparent
+                    );
+                    animation: scan 3s linear infinite;
+                "></div>
+            `,
+            'base16-ocean': `
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    font-size: 20px;
+                    opacity: 0.15;
+                    animation: float 5s ease-in-out infinite;
+                ">⚓</div>
+            `,
+            'bluloco-dark': `
+                <div style="
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 40px;
+                    height: 40px;
+                    border: 2px solid rgba(61, 184, 255, 0.2);
+                    border-radius: 8px;
+                    animation: rotate 8s linear infinite;
+                "></div>
+            `,
+            'bluloco-light': `
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    width: 15px;
+                    height: 15px;
+                    background: rgba(39, 119, 252, 0.15);
+                    border-radius: 3px;
+                    animation: blink 2s ease-in-out infinite;
+                "></div>
+            `,
+            'cobalt2': `
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 3px;
+                    background: linear-gradient(90deg, 
+                        #ffc600 0%, 
+                        #ff9d00 50%, 
+                        #ffc600 100%
+                    );
+                    animation: slide 2s linear infinite;
+                    opacity: 0.6;
+                "></div>
+            `,
+            'firefly': `
+                <div style="
+                    position: absolute;
+                    top: 30%;
+                    left: 20%;
+                    width: 4px;
+                    height: 4px;
+                    background: rgba(255, 255, 0, 0.6);
+                    border-radius: 50%;
+                    box-shadow: 0 0 10px rgba(255, 255, 0, 0.4);
+                    animation: firefly 4s ease-in-out infinite;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 60%;
+                    right: 30%;
+                    width: 3px;
+                    height: 3px;
+                    background: rgba(255, 255, 0, 0.5);
+                    border-radius: 50%;
+                    box-shadow: 0 0 8px rgba(255, 255, 0, 0.3);
+                    animation: firefly 4s ease-in-out infinite;
+                    animation-delay: -2s;
+                "></div>
+            `,
+            'iceberg': `
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 0;
+                    height: 0;
+                    border-left: 15px solid transparent;
+                    border-right: 15px solid transparent;
+                    border-bottom: 25px solid rgba(132, 160, 198, 0.15);
+                    animation: float 4s ease-in-out infinite;
+                "></div>
+            `,
+            'noctis': `
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    font-size: 18px;
+                    opacity: 0.15;
+                    animation: twinkle 3s ease-in-out infinite;
+                ">⭐</div>
+            `,
+            'oceanic-next': `
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 20px;
+                    background: repeating-linear-gradient(
+                        90deg,
+                        transparent,
+                        transparent 10px,
+                        rgba(102, 153, 204, 0.1) 10px,
+                        rgba(102, 153, 204, 0.1) 20px
+                    );
+                    animation: drift 10s linear infinite;
+                "></div>
+            `,
+            'spacegray': `
+                <div style="
+                    position: absolute;
+                    top: 20px;
+                    left: 20px;
+                    font-size: 16px;
+                    opacity: 0.1;
+                    animation: orbit 15s linear infinite;
+                ">🚀</div>
+            `,
+            
+            // Cyberpunk & Neon Themes
+            'city-lights': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 40px;
+                    height: 40px;
+                    background: radial-gradient(
+                        circle at center,
+                        rgba(112, 225, 232, 0.3),
+                        transparent 70%
+                    );
+                    animation: pulse 2s ease-in-out infinite;
+                "></div>
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 30px;
+                    height: 30px;
+                    background: radial-gradient(
+                        circle at center,
+                        rgba(252, 127, 160, 0.3),
+                        transparent 70%
+                    );
+                    animation: pulse 2s ease-in-out infinite;
+                    animation-delay: -1s;
+                "></div>
+            `,
+            'outrun': `
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 50%;
+                    background: linear-gradient(
+                        180deg,
+                        transparent 0%,
+                        rgba(255, 0, 128, 0.05) 50%,
+                        rgba(0, 238, 255, 0.05) 100%
+                    );
+                    pointer-events: none;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    right: 0;
+                    height: 1px;
+                    background: linear-gradient(90deg, 
+                        transparent, 
+                        rgba(255, 0, 255, 0.5), 
+                        transparent
+                    );
+                    animation: scan 2s linear infinite;
+                "></div>
+            `,
+            'snazzy': `
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    width: 8px;
+                    height: 8px;
+                    background: #ff6ac1;
+                    opacity: 0.4;
+                    animation: blink 1s ease-in-out infinite;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 22px;
+                    width: 8px;
+                    height: 8px;
+                    background: #57c7ff;
+                    opacity: 0.4;
+                    animation: blink 1s ease-in-out infinite;
+                    animation-delay: -0.5s;
+                "></div>
+            `,
+            'synthwave-84': `
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 60%;
+                    background: linear-gradient(
+                        0deg,
+                        rgba(255, 126, 219, 0.1) 0%,
+                        transparent 100%
+                    );
+                    pointer-events: none;
+                "></div>
+                <div style="
+                    position: absolute;
+                    bottom: 20px;
+                    left: 0;
+                    right: 0;
+                    height: 2px;
+                    background: rgba(114, 241, 184, 0.5);
+                    box-shadow: 0 0 10px rgba(114, 241, 184, 0.3);
+                "></div>
+            `,
+            
+            // Elegant & Pastel Themes
+            'andromeda': `
+                <div style="
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 60px;
+                    height: 30px;
+                    border: 2px solid rgba(255, 127, 219, 0.2);
+                    border-radius: 50%;
+                    transform: translate(-50%, -50%) rotate(45deg);
+                    animation: orbit 8s linear infinite;
+                "></div>
+            `,
+            'catppuccin-latte': `
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    right: 10px;
+                    font-size: 20px;
+                    opacity: 0.15;
+                    animation: wiggle 2s ease-in-out infinite;
+                ">☕</div>
+            `,
+            'catppuccin-mocha': `
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    font-size: 16px;
+                    opacity: 0.2;
+                    animation: float 3s ease-in-out infinite;
+                ">🍫</div>
+            `,
+            'horizon': `
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 40%;
+                    background: linear-gradient(
+                        180deg,
+                        transparent,
+                        rgba(250, 155, 133, 0.05) 50%,
+                        rgba(248, 140, 161, 0.05) 100%
+                    );
+                    pointer-events: none;
+                "></div>
+            `,
+            'lucario': `
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    width: 30px;
+                    height: 30px;
+                    background: linear-gradient(
+                        135deg,
+                        rgba(255, 101, 65, 0.2),
+                        rgba(202, 148, 255, 0.2)
+                    );
+                    border-radius: 50%;
+                    animation: pulse 3s ease-in-out infinite;
+                "></div>
+            `,
+            'moonlight': `
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    font-size: 20px;
+                    opacity: 0.2;
+                    animation: glow 3s ease-in-out infinite;
+                ">🌙</div>
+            `,
+            'palenight': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 100%;
+                    background: radial-gradient(
+                        ellipse at top right,
+                        rgba(199, 146, 234, 0.08),
+                        transparent 60%
+                    );
+                    pointer-events: none;
+                "></div>
+            `,
+            'shades-of-purple': `
+                <div style="
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 4px;
+                    height: 4px;
+                    background: rgba(250, 208, 0, 0.6);
+                    border-radius: 50%;
+                    box-shadow: 
+                        0 0 20px 10px rgba(162, 129, 255, 0.2),
+                        0 0 40px 20px rgba(162, 129, 255, 0.1);
+                    animation: sparkle 3s ease-in-out infinite;
+                "></div>
+            `,
+            'soft-era': `
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    left: 10px;
+                    font-size: 16px;
+                    opacity: 0.1;
+                    animation: sway 4s ease-in-out infinite;
+                ">🌷</div>
+            `,
+            'witch-hazel': `
+                <div style="
+                    position: absolute;
+                    top: 20px;
+                    right: 20px;
+                    font-size: 18px;
+                    opacity: 0.15;
+                    animation: twinkle 2s ease-in-out infinite;
+                ">✨</div>
+            `,
+            
+            // Professional Themes
+            'apprentice': `
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 3px;
+                    background: linear-gradient(
+                        90deg,
+                        rgba(135, 175, 215, 0.3) 0%,
+                        rgba(135, 175, 215, 0) 100%
+                    );
+                "></div>
+            `,
+            'flatland': `
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    width: 20px;
+                    height: 20px;
+                    background: rgba(82, 218, 178, 0.2);
+                    border: 1px solid rgba(82, 218, 178, 0.3);
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 15px;
+                    left: 15px;
+                    width: 20px;
+                    height: 20px;
+                    background: rgba(238, 90, 95, 0.2);
+                    border: 1px solid rgba(238, 90, 95, 0.3);
+                "></div>
+            `,
+            'github-dark': `
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    right: 10px;
+                    width: 20px;
+                    height: 20px;
+                    border: 2px solid rgba(88, 166, 255, 0.3);
+                    border-radius: 50%;
+                    position: relative;
+                ">
+                    <div style="
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        width: 10px;
+                        height: 10px;
+                        background: rgba(88, 166, 255, 0.3);
+                        border-radius: 50%;
+                    "></div>
+                </div>
+            `,
+            'oxocarbon': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background-image: repeating-linear-gradient(
+                        0deg,
+                        transparent,
+                        transparent 20px,
+                        rgba(120, 134, 156, 0.03) 20px,
+                        rgba(120, 134, 156, 0.03) 21px
+                    ),
+                    repeating-linear-gradient(
+                        90deg,
+                        transparent,
+                        transparent 20px,
+                        rgba(120, 134, 156, 0.03) 20px,
+                        rgba(120, 134, 156, 0.03) 21px
+                    );
+                    pointer-events: none;
+                "></div>
+            `,
+            'protonmail': `
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    font-size: 18px;
+                    opacity: 0.15;
+                    animation: pulse 3s ease-in-out infinite;
+                ">🔒</div>
+            `,
+            'solarized-dark': `
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 40px;
+                    height: 2px;
+                    background: rgba(181, 137, 0, 0.4);
+                    animation: breathe 3s ease-in-out infinite;
+                "></div>
+            `,
+            'thinkultra': `
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    width: 8px;
+                    height: 8px;
+                    background: #e74c3c;
+                    border-radius: 50%;
+                    opacity: 0.6;
+                    animation: blink 2s ease-in-out infinite;
+                "></div>
+            `,
+            'vim': `
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    right: 10px;
+                    font-family: monospace;
+                    font-size: 12px;
+                    color: rgba(0, 175, 255, 0.4);
+                    animation: blink 1s step-start infinite;
+                ">_</div>
+            `,
+            'vscode-dark-plus': `
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    width: 25px;
+                    height: 25px;
+                    background: linear-gradient(
+                        135deg,
+                        rgba(0, 122, 204, 0.2) 25%,
+                        transparent 25%,
+                        transparent 75%,
+                        rgba(0, 122, 204, 0.2) 75%
+                    );
+                    animation: rotate 10s linear infinite;
+                "></div>
+            `,
+            
+            // Special Effects Themes
+            'panda': `
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    right: 10px;
+                    font-size: 20px;
+                    opacity: 0.15;
+                    animation: wobble 3s ease-in-out infinite;
+                ">🐼</div>
             `
         };
         
