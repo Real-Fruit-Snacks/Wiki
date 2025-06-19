@@ -8216,20 +8216,88 @@ class NotesWiki {
         // Parse markdown with isolated instance
         const markedHtml = tempMarked.parse(content);
         
-        // Build note HTML structure
+        // Get note path from the split view state
+        const noteData = this.notesIndex.notes.find(n => 
+            n.metadata && n.metadata.title === metadata.title
+        );
+        const notePath = noteData ? noteData.path : '';
+        
+        // Calculate word count and reading time
+        const text = content || '';
+        const wordCount = text.trim().split(/\s+/).filter(word => word.length > 0).length;
+        const wordsPerMinute = 250;
+        const readingTimeMinutes = Math.ceil(wordCount / wordsPerMinute);
+        
+        // Build note HTML structure matching normal view
         const noteHtml = `
             <div class="content-wrapper content-view" data-metadata='${JSON.stringify(metadata)}'>
-                <div class="note-header">
-                    <h1 class="note-title">${this.escapeHtml(metadata.title || 'Untitled')}</h1>
-                    <div class="note-metadata">
-                        ${metadata.author ? `<span class="note-author"><svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>${this.escapeHtml(metadata.author)}</span>` : ''}
-                        ${metadata.created ? `<span class="note-date"><svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>${this.escapeHtml(metadata.created)}</span>` : ''}
+                <header class="note-header">
+                    <div class="note-header-top">
+                        <h1 class="note-title">${this.escapeHtml(metadata.title || 'Untitled')}</h1>
                     </div>
-                    ${metadata.description ? `<div class="note-description">${this.escapeHtml(metadata.description)}</div>` : ''}
-                </div>
-                <div class="note-content">
+                    
+                    <div class="breadcrumbs">
+                        ${notePath ? this.generateBreadcrumbs(notePath) : ''}
+                    </div>
+                    
+                    <div class="note-metadata">
+                        <div class="note-metadata-item">
+                            <div class="reading-time">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M8 3.5a.5.5 0 00-1 0V9a.5.5 0 00.252.434l3.5 2a.5.5 0 00.496-.868L8 8.71V3.5z"/>
+                                    <path fill-rule="evenodd" d="M8 16A8 8 0 108 0a8 8 0 000 16zm7-8A7 7 0 111 8a7 7 0 0114 0z"/>
+                                </svg>
+                                <span>${readingTimeMinutes} min read</span>
+                                <span class="word-count">(${wordCount.toLocaleString()} words)</span>
+                            </div>
+                        </div>
+                        
+                        ${metadata.author ? `
+                            <div class="note-metadata-item">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M8 8a3 3 0 100-6 3 3 0 000 6zM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 00-11.215 0c-.22.578.254 1.139.872 1.139h9.47z"/>
+                                </svg>
+                                <span>${this.escapeHtml(metadata.author)}</span>
+                            </div>
+                        ` : ''}
+                        
+                        ${metadata.created ? `
+                            <div class="note-metadata-item">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h4a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>${this.formatDate(metadata.created)}</span>
+                            </div>
+                        ` : ''}
+                        
+                        ${metadata.updated ? `
+                            <div class="note-metadata-item">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+                                </svg>
+                                <span>Updated ${this.formatDate(metadata.updated)}</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                    
+                    ${metadata.description ? `
+                        <p class="note-description">${this.escapeHtml(metadata.description)}</p>
+                    ` : ''}
+                    
+                    ${metadata.tags && metadata.tags.length > 0 ? `
+                        <div class="note-tags">
+                            ${metadata.tags.map(tag => `
+                                <a href="#/tags/${encodeURIComponent(tag)}" class="note-tag">
+                                    ${this.escapeHtml(tag)}
+                                </a>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </header>
+                
+                <article class="note-content">
                     ${markedHtml}
-                </div>
+                </article>
             </div>
         `;
         
