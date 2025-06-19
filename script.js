@@ -2553,6 +2553,21 @@ class NotesWiki {
                     sidebar.setAttribute('data-focus-mode-hidden', 'true');
                 }
                 
+                // Store original content width and set to wide
+                if (!this.originalContentWidth) {
+                    this.originalContentWidth = this.settings.contentWidth;
+                }
+                this.settings.contentWidth = 'wide';
+                this.applyContentWidthSetting();
+                
+                // Update content width UI if settings modal is open
+                const contentWidthOptions = document.getElementById('content-width-options');
+                if (contentWidthOptions) {
+                    contentWidthOptions.querySelectorAll('.option-pill').forEach(pill => {
+                        pill.classList.toggle('active', pill.dataset.value === 'wide');
+                    });
+                }
+                
                 // Validate that focus mode was applied
                 if (!body.classList.contains('focus-mode')) {
                     throw new Error('Focus mode CSS class could not be applied');
@@ -2569,6 +2584,22 @@ class NotesWiki {
                     const originalDisplay = sidebar.getAttribute('data-original-display') || '';
                     sidebar.style.display = originalDisplay;
                     sidebar.removeAttribute('data-focus-mode-hidden');
+                }
+                
+                // Restore original content width
+                if (this.originalContentWidth) {
+                    this.settings.contentWidth = this.originalContentWidth;
+                    this.applyContentWidthSetting();
+                    
+                    // Update content width UI if settings modal is open
+                    const contentWidthOptions = document.getElementById('content-width-options');
+                    if (contentWidthOptions) {
+                        contentWidthOptions.querySelectorAll('.option-pill').forEach(pill => {
+                            pill.classList.toggle('active', pill.dataset.value === this.settings.contentWidth);
+                        });
+                    }
+                    
+                    this.originalContentWidth = null;
                 }
                 
                 this.showToast('Focus mode disabled', 'success');
