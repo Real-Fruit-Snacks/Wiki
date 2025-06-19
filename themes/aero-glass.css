@@ -1,0 +1,273 @@
+/* Aero Glass Theme - Windows Vista/7 Inspired */
+:root[data-theme="aero-glass"] {
+    /* Background Colors */
+    --bg-primary: rgba(240, 248, 255, 0.85);
+    --bg-secondary: rgba(230, 240, 255, 0.9);
+    --bg-sidebar: rgba(235, 245, 255, 0.9);
+    --bg-code: rgba(240, 248, 255, 0.9);
+    --bg-selection: rgba(0, 120, 215, 0.3);
+    --bg-dropdown: rgba(255, 255, 255, 0.95);
+    --bg-hover: rgba(0, 120, 215, 0.1);
+    --bg-tag: rgba(230, 240, 255, 0.9);
+    --bg-accent-subtle: rgba(0, 120, 215, 0.1);
+    
+    /* Text Colors */
+    --text-primary: #1a1a1a;
+    --text-secondary: #404040;
+    --text-muted: #666666;
+    --text-heading: #0078d7;
+    
+    /* Accent Colors */
+    --accent-primary: #0078d7;
+    --accent-secondary: #106ebe;
+    --accent-warning: #ff8c00;
+    --accent-error: #d13438;
+    --accent-info: #00bcf2;
+    --accent-success: #107c10;
+    --accent-primary-light: rgba(0, 120, 215, 0.2);
+    
+    /* Border Colors */
+    --border-primary: rgba(0, 120, 215, 0.3);
+    --border-secondary: rgba(0, 120, 215, 0.2);
+    
+    /* Button Colors */
+    --button-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(240, 248, 255, 0.8));
+    --button-hover: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(230, 240, 255, 0.9));
+    --button-active: #0078d7;
+    
+    /* Badge Colors */
+    --badge-bg: #0078d7;
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 120, 215, 0.1);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2), 0 4px 16px rgba(0, 120, 215, 0.15);
+    --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.25), 0 8px 24px rgba(0, 120, 215, 0.2);
+    
+    /* Other */
+    --accent-color-alpha: rgba(0, 120, 215, 0.1);
+    --bg-code-block: rgba(240, 248, 255, 0.9);
+}
+
+/* Glass morphism effects */
+:root[data-theme="aero-glass"] .header {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 120, 215, 0.2);
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+:root[data-theme="aero-glass"] .sidebar {
+    background: rgba(235, 245, 255, 0.8);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-right: 1px solid rgba(0, 120, 215, 0.2);
+    box-shadow: 
+        1px 0 3px rgba(0, 0, 0, 0.1),
+        inset -1px 0 0 rgba(255, 255, 255, 0.6);
+}
+
+:root[data-theme="aero-glass"] .site-title {
+    color: #0078d7;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    font-weight: 600;
+}
+
+:root[data-theme="aero-glass"] .tab {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 120, 215, 0.2);
+    border-radius: 6px 6px 0 0;
+    transition: all 0.3s ease;
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+:root[data-theme="aero-glass"] .tab.active {
+    background: rgba(0, 120, 215, 0.9);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: #ffffff;
+    border: 1px solid rgba(0, 120, 215, 0.4);
+    box-shadow: 
+        0 4px 12px rgba(0, 120, 215, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+:root[data-theme="aero-glass"] .tab:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 120, 215, 0.3);
+    box-shadow: 
+        0 3px 8px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+:root[data-theme="aero-glass"] .icon-button {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 120, 215, 0.2);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="aero-glass"] .icon-button:hover {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 120, 215, 0.3);
+    box-shadow: 
+        0 4px 12px rgba(0, 120, 215, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    transform: translateY(-1px);
+}
+
+:root[data-theme="aero-glass"] .main-content {
+    background: 
+        radial-gradient(ellipse at 20% 20%, rgba(0, 120, 215, 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(0, 120, 215, 0.03) 0%, transparent 50%),
+        rgba(248, 252, 255, 0.7);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+:root[data-theme="aero-glass"] .note-content {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 120, 215, 0.1);
+    border-radius: 8px;
+    padding: 2rem;
+    margin: 1rem;
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+:root[data-theme="aero-glass"] .note-content h1,
+:root[data-theme="aero-glass"] .note-content h2,
+:root[data-theme="aero-glass"] .note-content h3 {
+    color: #0078d7;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+:root[data-theme="aero-glass"] .code-block {
+    background: rgba(240, 248, 255, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 120, 215, 0.2);
+    border-radius: 6px;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+:root[data-theme="aero-glass"] .search-result-item {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 120, 215, 0.1);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="aero-glass"] .search-result-item:hover {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 120, 215, 0.3);
+    box-shadow: 
+        0 4px 16px rgba(0, 120, 215, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+:root[data-theme="aero-glass"] .dropdown {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 120, 215, 0.2);
+    border-radius: 8px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+:root[data-theme="aero-glass"] .context-switcher button {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 120, 215, 0.2);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="aero-glass"] .context-switcher button.active {
+    background: rgba(0, 120, 215, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #ffffff;
+    box-shadow: 
+        0 3px 8px rgba(0, 120, 215, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Syntax Highlighting - Aero Glass Theme */
+:root[data-theme="aero-glass"] .token.comment,
+:root[data-theme="aero-glass"] .token.prolog,
+:root[data-theme="aero-glass"] .token.doctype,
+:root[data-theme="aero-glass"] .token.cdata {
+    color: #666666;
+    font-style: italic;
+}
+
+:root[data-theme="aero-glass"] .token.property,
+:root[data-theme="aero-glass"] .token.tag,
+:root[data-theme="aero-glass"] .token.boolean,
+:root[data-theme="aero-glass"] .token.number,
+:root[data-theme="aero-glass"] .token.constant,
+:root[data-theme="aero-glass"] .token.symbol,
+:root[data-theme="aero-glass"] .token.deleted {
+    color: #0078d7;
+}
+
+:root[data-theme="aero-glass"] .token.selector,
+:root[data-theme="aero-glass"] .token.attr-name,
+:root[data-theme="aero-glass"] .token.string,
+:root[data-theme="aero-glass"] .token.char,
+:root[data-theme="aero-glass"] .token.builtin,
+:root[data-theme="aero-glass"] .token.inserted {
+    color: #107c10;
+}
+
+:root[data-theme="aero-glass"] .token.operator,
+:root[data-theme="aero-glass"] .token.entity,
+:root[data-theme="aero-glass"] .token.url,
+:root[data-theme="aero-glass"] .language-css .token.string,
+:root[data-theme="aero-glass"] .style .token.string {
+    color: #ff8c00;
+}
+
+:root[data-theme="aero-glass"] .token.atrule,
+:root[data-theme="aero-glass"] .token.attr-value,
+:root[data-theme="aero-glass"] .token.keyword {
+    color: #106ebe;
+}
+
+:root[data-theme="aero-glass"] .token.function,
+:root[data-theme="aero-glass"] .token.class-name {
+    color: #d13438;
+}
+
+:root[data-theme="aero-glass"] .token.regex,
+:root[data-theme="aero-glass"] .token.important,
+:root[data-theme="aero-glass"] .token.variable {
+    color: #7c3aed;
+}

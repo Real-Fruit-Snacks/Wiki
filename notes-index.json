@@ -612,8 +612,8 @@
     "build": 1
   },
   "authors": [
-    "Wiki Team",
-    "Wiki Admin"
+    "Wiki Admin",
+    "Wiki Team"
   ],
   "categories": [],
   "contexts": [
@@ -623,6 +623,6 @@
       "noteCount": 25
     }
   ],
-  "generated": "2025-06-18T22:28:39.291082",
+  "generated": "2025-06-18T22:41:00.155924",
   "totalNotes": 26
 }

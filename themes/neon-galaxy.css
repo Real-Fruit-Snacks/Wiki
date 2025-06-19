@@ -1,0 +1,214 @@
+/* Neon Galaxy Theme - Amazing & Vibrant */
+:root[data-theme="neon-galaxy"] {
+    /* Background Colors */
+    --bg-primary: #0a0a1f;
+    --bg-secondary: #1a1a3a;
+    --bg-sidebar: #0f0f2a;
+    --bg-code: #1a1a3a;
+    --bg-selection: rgba(0, 255, 204, 0.3);
+    --bg-dropdown: #1a1a3a;
+    --bg-hover: rgba(255, 0, 127, 0.1);
+    --bg-tag: #1a1a3a;
+    --bg-accent-subtle: rgba(0, 255, 204, 0.1);
+    
+    /* Text Colors */
+    --text-primary: #ffffff;
+    --text-secondary: #e0e0ff;
+    --text-muted: #9d9dff;
+    --text-heading: #00ffcc;
+    
+    /* Accent Colors */
+    --accent-primary: #00ffcc;
+    --accent-secondary: #ff007f;
+    --accent-warning: #ffcc00;
+    --accent-error: #ff0066;
+    --accent-info: #00ccff;
+    --accent-success: #00ff66;
+    --accent-primary-light: rgba(0, 255, 204, 0.2);
+    
+    /* Border Colors */
+    --border-primary: #00ffcc;
+    --border-secondary: #ff007f;
+    
+    /* Button Colors */
+    --button-bg: linear-gradient(135deg, #00ffcc, #ff007f, #ffcc00);
+    --button-hover: linear-gradient(135deg, #ff007f, #00ccff, #00ff66);
+    --button-active: #00ffcc;
+    
+    /* Badge Colors */
+    --badge-bg: linear-gradient(135deg, #00ffcc, #ff007f);
+    --badge-text: #0a0a1f;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 255, 204, 0.3);
+    --shadow-md: 0 4px 16px rgba(0, 255, 204, 0.4), 0 2px 8px rgba(255, 0, 127, 0.3);
+    --shadow-lg: 0 8px 32px rgba(0, 255, 204, 0.5), 0 4px 16px rgba(255, 0, 127, 0.4);
+    --shadow-xl: 0 16px 48px rgba(0, 255, 204, 0.6), 0 8px 24px rgba(255, 0, 127, 0.5);
+    
+    /* Other */
+    --accent-color-alpha: rgba(0, 255, 204, 0.1);
+    --bg-code-block: #1a1a3a;
+}
+
+/* Amazing neon galaxy effects */
+:root[data-theme="neon-galaxy"] .header {
+    background: linear-gradient(135deg, #0a0a1f 0%, #1a1a3a 50%, #0a0a1f 100%);
+    border-bottom: 2px solid;
+    border-image: linear-gradient(90deg, #00ffcc, #ff007f, #ffcc00, #00ccff) 1;
+    box-shadow: 0 4px 24px rgba(0, 255, 204, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="neon-galaxy"] .header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.1), transparent);
+    animation: neon-sweep 3s ease-in-out infinite;
+}
+
+@keyframes neon-sweep {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+:root[data-theme="neon-galaxy"] .sidebar {
+    background: linear-gradient(180deg, #0f0f2a 0%, #1a1a3a 50%, #0f0f2a 100%);
+    border-right: 2px solid;
+    border-image: linear-gradient(180deg, #00ffcc, #ff007f, #00ccff) 1;
+    box-shadow: 4px 0 16px rgba(255, 0, 127, 0.3);
+}
+
+:root[data-theme="neon-galaxy"] .site-title {
+    background: linear-gradient(45deg, #00ffcc, #ff007f, #ffcc00, #00ccff, #00ff66, #00ffcc);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: neon-rainbow 3s ease infinite;
+    text-shadow: 0 0 20px rgba(0, 255, 204, 0.8);
+}
+
+@keyframes neon-rainbow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+:root[data-theme="neon-galaxy"] .tab {
+    background: linear-gradient(135deg, #1a1a3a 0%, #2a2a4a 100%);
+    border: 1px solid rgba(0, 255, 204, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="neon-galaxy"] .tab.active {
+    background: linear-gradient(135deg, #00ffcc 0%, #ff007f 50%, #ffcc00 100%);
+    color: #0a0a1f;
+    box-shadow: 0 4px 20px rgba(0, 255, 204, 0.8);
+    animation: neon-pulse 2s ease-in-out infinite;
+}
+
+@keyframes neon-pulse {
+    0%, 100% { 
+        box-shadow: 0 4px 20px rgba(0, 255, 204, 0.8);
+        transform: scale(1);
+    }
+    50% { 
+        box-shadow: 0 8px 32px rgba(255, 0, 127, 0.9);
+        transform: scale(1.02);
+    }
+}
+
+:root[data-theme="neon-galaxy"] .icon-button:hover {
+    background: linear-gradient(135deg, rgba(0, 255, 204, 0.2), rgba(255, 0, 127, 0.2));
+    box-shadow: 0 4px 16px rgba(0, 255, 204, 0.6);
+    transform: translateY(-2px);
+}
+
+:root[data-theme="neon-galaxy"] .main-content {
+    background: 
+        radial-gradient(ellipse at 20% 50%, rgba(0, 255, 204, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(255, 0, 127, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 40% 80%, rgba(255, 204, 0, 0.1) 0%, transparent 50%);
+}
+
+:root[data-theme="neon-galaxy"] .note-content h1,
+:root[data-theme="neon-galaxy"] .note-content h2,
+:root[data-theme="neon-galaxy"] .note-content h3 {
+    background: linear-gradient(45deg, #00ffcc, #ff007f, #ffcc00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+}
+
+:root[data-theme="neon-galaxy"] .search-result-item:hover {
+    background: linear-gradient(135deg, rgba(0, 255, 204, 0.1), rgba(255, 0, 127, 0.1));
+    border-left: 4px solid #00ffcc;
+    box-shadow: 0 4px 16px rgba(0, 255, 204, 0.3);
+}
+
+/* Syntax Highlighting - Neon Galaxy Theme */
+:root[data-theme="neon-galaxy"] .token.comment,
+:root[data-theme="neon-galaxy"] .token.prolog,
+:root[data-theme="neon-galaxy"] .token.doctype,
+:root[data-theme="neon-galaxy"] .token.cdata {
+    color: #9d9dff;
+    font-style: italic;
+}
+
+:root[data-theme="neon-galaxy"] .token.property,
+:root[data-theme="neon-galaxy"] .token.tag,
+:root[data-theme="neon-galaxy"] .token.boolean,
+:root[data-theme="neon-galaxy"] .token.number,
+:root[data-theme="neon-galaxy"] .token.constant,
+:root[data-theme="neon-galaxy"] .token.symbol,
+:root[data-theme="neon-galaxy"] .token.deleted {
+    color: #00ffcc;
+    text-shadow: 0 0 5px rgba(0, 255, 204, 0.5);
+}
+
+:root[data-theme="neon-galaxy"] .token.selector,
+:root[data-theme="neon-galaxy"] .token.attr-name,
+:root[data-theme="neon-galaxy"] .token.string,
+:root[data-theme="neon-galaxy"] .token.char,
+:root[data-theme="neon-galaxy"] .token.builtin,
+:root[data-theme="neon-galaxy"] .token.inserted {
+    color: #ff007f;
+    text-shadow: 0 0 5px rgba(255, 0, 127, 0.5);
+}
+
+:root[data-theme="neon-galaxy"] .token.operator,
+:root[data-theme="neon-galaxy"] .token.entity,
+:root[data-theme="neon-galaxy"] .token.url,
+:root[data-theme="neon-galaxy"] .language-css .token.string,
+:root[data-theme="neon-galaxy"] .style .token.string {
+    color: #ffcc00;
+    text-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+}
+
+:root[data-theme="neon-galaxy"] .token.atrule,
+:root[data-theme="neon-galaxy"] .token.attr-value,
+:root[data-theme="neon-galaxy"] .token.keyword {
+    color: #00ccff;
+    text-shadow: 0 0 5px rgba(0, 204, 255, 0.5);
+}
+
+:root[data-theme="neon-galaxy"] .token.function,
+:root[data-theme="neon-galaxy"] .token.class-name {
+    color: #00ff66;
+    text-shadow: 0 0 5px rgba(0, 255, 102, 0.5);
+}
+
+:root[data-theme="neon-galaxy"] .token.regex,
+:root[data-theme="neon-galaxy"] .token.important,
+:root[data-theme="neon-galaxy"] .token.variable {
+    color: #ff0066;
+    text-shadow: 0 0 5px rgba(255, 0, 102, 0.5);
+}

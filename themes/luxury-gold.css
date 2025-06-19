@@ -1,0 +1,141 @@
+/* Luxury Gold Theme - Fancy & Elegant */
+:root[data-theme="luxury-gold"] {
+    /* Background Colors */
+    --bg-primary: #0d0c0a;
+    --bg-secondary: #1a1611;
+    --bg-sidebar: #0f0e0c;
+    --bg-code: #1a1611;
+    --bg-selection: rgba(212, 175, 55, 0.3);
+    --bg-dropdown: #1a1611;
+    --bg-hover: rgba(212, 175, 55, 0.1);
+    --bg-tag: #1a1611;
+    --bg-accent-subtle: rgba(212, 175, 55, 0.1);
+    
+    /* Text Colors */
+    --text-primary: #f7e7ce;
+    --text-secondary: #e6d2aa;
+    --text-muted: #b8a584;
+    --text-heading: #ffd700;
+    
+    /* Accent Colors */
+    --accent-primary: #d4af37;
+    --accent-secondary: #ffd700;
+    --accent-warning: #ff8c42;
+    --accent-error: #dc3545;
+    --accent-info: #c9a96e;
+    --accent-success: #52c41a;
+    --accent-primary-light: rgba(212, 175, 55, 0.2);
+    
+    /* Border Colors */
+    --border-primary: #d4af37;
+    --border-secondary: #b8a584;
+    
+    /* Button Colors */
+    --button-bg: linear-gradient(135deg, #d4af37, #ffd700);
+    --button-hover: linear-gradient(135deg, #ffd700, #ffed4e);
+    --button-active: #d4af37;
+    
+    /* Badge Colors */
+    --badge-bg: #d4af37;
+    --badge-text: #0d0c0a;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(212, 175, 55, 0.2);
+    --shadow-md: 0 4px 12px rgba(212, 175, 55, 0.3), 0 2px 6px rgba(255, 215, 0, 0.2);
+    --shadow-lg: 0 8px 24px rgba(212, 175, 55, 0.4), 0 4px 12px rgba(255, 215, 0, 0.3);
+    --shadow-xl: 0 12px 32px rgba(212, 175, 55, 0.5), 0 6px 16px rgba(255, 215, 0, 0.4);
+    
+    /* Other */
+    --accent-color-alpha: rgba(212, 175, 55, 0.1);
+    --bg-code-block: #1a1611;
+}
+
+/* Special luxury effects */
+:root[data-theme="luxury-gold"] .header {
+    background: linear-gradient(135deg, #0d0c0a 0%, #1a1611 50%, #0d0c0a 100%);
+    border-bottom: 2px solid #d4af37;
+    box-shadow: 0 2px 20px rgba(212, 175, 55, 0.3);
+}
+
+:root[data-theme="luxury-gold"] .sidebar {
+    background: linear-gradient(180deg, #0f0e0c 0%, #1a1611 100%);
+    border-right: 1px solid #d4af37;
+}
+
+:root[data-theme="luxury-gold"] .site-title {
+    background: linear-gradient(45deg, #d4af37, #ffd700, #ffed4e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+
+:root[data-theme="luxury-gold"] .tab {
+    background: linear-gradient(135deg, #1a1611 0%, #2a241d 100%);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="luxury-gold"] .tab.active {
+    background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
+    color: #0d0c0a;
+    box-shadow: 0 4px 16px rgba(212, 175, 55, 0.6);
+}
+
+:root[data-theme="luxury-gold"] .icon-button:hover {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(255, 215, 0, 0.2));
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+}
+
+/* Syntax Highlighting - Luxury Gold Theme */
+:root[data-theme="luxury-gold"] .token.comment,
+:root[data-theme="luxury-gold"] .token.prolog,
+:root[data-theme="luxury-gold"] .token.doctype,
+:root[data-theme="luxury-gold"] .token.cdata {
+    color: #b8a584;
+    font-style: italic;
+}
+
+:root[data-theme="luxury-gold"] .token.property,
+:root[data-theme="luxury-gold"] .token.tag,
+:root[data-theme="luxury-gold"] .token.boolean,
+:root[data-theme="luxury-gold"] .token.number,
+:root[data-theme="luxury-gold"] .token.constant,
+:root[data-theme="luxury-gold"] .token.symbol,
+:root[data-theme="luxury-gold"] .token.deleted {
+    color: #ffd700;
+}
+
+:root[data-theme="luxury-gold"] .token.selector,
+:root[data-theme="luxury-gold"] .token.attr-name,
+:root[data-theme="luxury-gold"] .token.string,
+:root[data-theme="luxury-gold"] .token.char,
+:root[data-theme="luxury-gold"] .token.builtin,
+:root[data-theme="luxury-gold"] .token.inserted {
+    color: #d4af37;
+}
+
+:root[data-theme="luxury-gold"] .token.operator,
+:root[data-theme="luxury-gold"] .token.entity,
+:root[data-theme="luxury-gold"] .token.url,
+:root[data-theme="luxury-gold"] .language-css .token.string,
+:root[data-theme="luxury-gold"] .style .token.string {
+    color: #c9a96e;
+}
+
+:root[data-theme="luxury-gold"] .token.atrule,
+:root[data-theme="luxury-gold"] .token.attr-value,
+:root[data-theme="luxury-gold"] .token.keyword {
+    color: #ffed4e;
+}
+
+:root[data-theme="luxury-gold"] .token.function,
+:root[data-theme="luxury-gold"] .token.class-name {
+    color: #f7e7ce;
+}
+
+:root[data-theme="luxury-gold"] .token.regex,
+:root[data-theme="luxury-gold"] .token.important,
+:root[data-theme="luxury-gold"] .token.variable {
+    color: #ff8c42;
+}

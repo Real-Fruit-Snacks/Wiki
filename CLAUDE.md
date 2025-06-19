@@ -38,7 +38,7 @@ npm run package
 ```
 This creates a versioned zip file (`notes-wiki-v3.1.0-complete.zip`) with all necessary assets for offline deployment including:
 - Complete application files (HTML, CSS, JS)
-- All 50+ theme files
+- All 55+ theme files
 - Bundled JavaScript libraries
 - Documentation and tutorials
 - Build tools and configuration files

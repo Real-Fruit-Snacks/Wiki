@@ -1,0 +1,256 @@
+/* Holographic Blue Theme - Futuristic & Sci-Fi */
+:root[data-theme="holographic-blue"] {
+    /* Background Colors */
+    --bg-primary: #050b1a;
+    --bg-secondary: #0d1836;
+    --bg-sidebar: #08102b;
+    --bg-code: #0d1836;
+    --bg-selection: rgba(0, 191, 255, 0.3);
+    --bg-dropdown: #0d1836;
+    --bg-hover: rgba(0, 191, 255, 0.1);
+    --bg-tag: #0d1836;
+    --bg-accent-subtle: rgba(0, 191, 255, 0.1);
+    
+    /* Text Colors */
+    --text-primary: #e6f7ff;
+    --text-secondary: #b3e6ff;
+    --text-muted: #7cc7ff;
+    --text-heading: #00bfff;
+    
+    /* Accent Colors */
+    --accent-primary: #00bfff;
+    --accent-secondary: #4da6ff;
+    --accent-warning: #ffb366;
+    --accent-error: #ff4757;
+    --accent-info: #00e6ff;
+    --accent-success: #00ff88;
+    --accent-primary-light: rgba(0, 191, 255, 0.2);
+    
+    /* Border Colors */
+    --border-primary: #00bfff;
+    --border-secondary: #4da6ff;
+    
+    /* Button Colors */
+    --button-bg: linear-gradient(135deg, #00bfff, #4da6ff);
+    --button-hover: linear-gradient(135deg, #4da6ff, #00e6ff);
+    --button-active: #00bfff;
+    
+    /* Badge Colors */
+    --badge-bg: #00bfff;
+    --badge-text: #050b1a;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 191, 255, 0.3);
+    --shadow-md: 0 4px 16px rgba(0, 191, 255, 0.4), 0 2px 8px rgba(77, 166, 255, 0.3);
+    --shadow-lg: 0 8px 32px rgba(0, 191, 255, 0.5), 0 4px 16px rgba(77, 166, 255, 0.4);
+    --shadow-xl: 0 16px 48px rgba(0, 191, 255, 0.6), 0 8px 24px rgba(77, 166, 255, 0.5);
+    
+    /* Other */
+    --accent-color-alpha: rgba(0, 191, 255, 0.1);
+    --bg-code-block: #0d1836;
+}
+
+/* Futuristic holographic effects */
+:root[data-theme="holographic-blue"] .header {
+    background: linear-gradient(135deg, #050b1a 0%, #0d1836 50%, #050b1a 100%);
+    border-bottom: 2px solid #00bfff;
+    box-shadow: 
+        0 4px 24px rgba(0, 191, 255, 0.4),
+        inset 0 1px 0 rgba(0, 191, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="holographic-blue"] .header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 191, 255, 0.1), 
+        rgba(0, 230, 255, 0.2), 
+        rgba(0, 191, 255, 0.1), 
+        transparent
+    );
+    animation: holographic-scan 4s ease-in-out infinite;
+}
+
+@keyframes holographic-scan {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+:root[data-theme="holographic-blue"] .sidebar {
+    background: linear-gradient(180deg, #08102b 0%, #0d1836 50%, #08102b 100%);
+    border-right: 2px solid #00bfff;
+    box-shadow: 
+        4px 0 16px rgba(0, 191, 255, 0.3),
+        inset -1px 0 0 rgba(0, 191, 255, 0.2);
+}
+
+:root[data-theme="holographic-blue"] .site-title {
+    background: linear-gradient(45deg, #00bfff, #4da6ff, #00e6ff, #00bfff);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: holographic-shimmer 3s ease infinite;
+    filter: drop-shadow(0 0 10px rgba(0, 191, 255, 0.8));
+}
+
+@keyframes holographic-shimmer {
+    0%, 100% { 
+        background-position: 0% 50%; 
+        filter: drop-shadow(0 0 10px rgba(0, 191, 255, 0.8));
+    }
+    50% { 
+        background-position: 100% 50%; 
+        filter: drop-shadow(0 0 15px rgba(0, 230, 255, 0.9));
+    }
+}
+
+:root[data-theme="holographic-blue"] .tab {
+    background: linear-gradient(135deg, #0d1836 0%, #1a2b4a 100%);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="holographic-blue"] .tab::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 191, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+:root[data-theme="holographic-blue"] .tab:hover::before {
+    left: 100%;
+}
+
+:root[data-theme="holographic-blue"] .tab.active {
+    background: linear-gradient(135deg, #00bfff 0%, #4da6ff 100%);
+    color: #050b1a;
+    box-shadow: 
+        0 4px 20px rgba(0, 191, 255, 0.8),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(0, 230, 255, 0.6);
+}
+
+:root[data-theme="holographic-blue"] .icon-button:hover {
+    background: linear-gradient(135deg, rgba(0, 191, 255, 0.2), rgba(77, 166, 255, 0.2));
+    box-shadow: 0 4px 16px rgba(0, 191, 255, 0.6);
+    transform: translateY(-2px);
+    border: 1px solid rgba(0, 191, 255, 0.4);
+}
+
+:root[data-theme="holographic-blue"] .main-content {
+    background: 
+        radial-gradient(ellipse at 20% 30%, rgba(0, 191, 255, 0.05) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 70%, rgba(77, 166, 255, 0.05) 0%, transparent 60%),
+        linear-gradient(180deg, transparent 0%, rgba(0, 191, 255, 0.02) 100%);
+}
+
+:root[data-theme="holographic-blue"] .note-content h1,
+:root[data-theme="holographic-blue"] .note-content h2,
+:root[data-theme="holographic-blue"] .note-content h3 {
+    background: linear-gradient(45deg, #00bfff, #4da6ff, #00e6ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+    position: relative;
+}
+
+:root[data-theme="holographic-blue"] .note-content h1::after,
+:root[data-theme="holographic-blue"] .note-content h2::after,
+:root[data-theme="holographic-blue"] .note-content h3::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, #00bfff, transparent);
+}
+
+:root[data-theme="holographic-blue"] .search-result-item:hover {
+    background: linear-gradient(135deg, rgba(0, 191, 255, 0.1), rgba(77, 166, 255, 0.1));
+    border-left: 4px solid #00bfff;
+    box-shadow: 
+        0 4px 16px rgba(0, 191, 255, 0.3),
+        inset 0 0 20px rgba(0, 191, 255, 0.05);
+}
+
+:root[data-theme="holographic-blue"] .code-block {
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    box-shadow: 
+        0 4px 12px rgba(0, 191, 255, 0.2),
+        inset 0 1px 0 rgba(0, 191, 255, 0.1);
+}
+
+/* Syntax Highlighting - Holographic Blue Theme */
+:root[data-theme="holographic-blue"] .token.comment,
+:root[data-theme="holographic-blue"] .token.prolog,
+:root[data-theme="holographic-blue"] .token.doctype,
+:root[data-theme="holographic-blue"] .token.cdata {
+    color: #7cc7ff;
+    font-style: italic;
+}
+
+:root[data-theme="holographic-blue"] .token.property,
+:root[data-theme="holographic-blue"] .token.tag,
+:root[data-theme="holographic-blue"] .token.boolean,
+:root[data-theme="holographic-blue"] .token.number,
+:root[data-theme="holographic-blue"] .token.constant,
+:root[data-theme="holographic-blue"] .token.symbol,
+:root[data-theme="holographic-blue"] .token.deleted {
+    color: #00bfff;
+    text-shadow: 0 0 5px rgba(0, 191, 255, 0.5);
+}
+
+:root[data-theme="holographic-blue"] .token.selector,
+:root[data-theme="holographic-blue"] .token.attr-name,
+:root[data-theme="holographic-blue"] .token.string,
+:root[data-theme="holographic-blue"] .token.char,
+:root[data-theme="holographic-blue"] .token.builtin,
+:root[data-theme="holographic-blue"] .token.inserted {
+    color: #4da6ff;
+    text-shadow: 0 0 5px rgba(77, 166, 255, 0.5);
+}
+
+:root[data-theme="holographic-blue"] .token.operator,
+:root[data-theme="holographic-blue"] .token.entity,
+:root[data-theme="holographic-blue"] .token.url,
+:root[data-theme="holographic-blue"] .language-css .token.string,
+:root[data-theme="holographic-blue"] .style .token.string {
+    color: #00e6ff;
+    text-shadow: 0 0 5px rgba(0, 230, 255, 0.5);
+}
+
+:root[data-theme="holographic-blue"] .token.atrule,
+:root[data-theme="holographic-blue"] .token.attr-value,
+:root[data-theme="holographic-blue"] .token.keyword {
+    color: #66d9ff;
+    text-shadow: 0 0 5px rgba(102, 217, 255, 0.5);
+}
+
+:root[data-theme="holographic-blue"] .token.function,
+:root[data-theme="holographic-blue"] .token.class-name {
+    color: #99e6ff;
+    text-shadow: 0 0 5px rgba(153, 230, 255, 0.5);
+}
+
+:root[data-theme="holographic-blue"] .token.regex,
+:root[data-theme="holographic-blue"] .token.important,
+:root[data-theme="holographic-blue"] .token.variable {
+    color: #00ff88;
+    text-shadow: 0 0 5px rgba(0, 255, 136, 0.5);
+}

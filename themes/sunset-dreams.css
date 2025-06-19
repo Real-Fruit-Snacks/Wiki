@@ -1,0 +1,163 @@
+/* Sunset Dreams Theme - Unique & Warm */
+:root[data-theme="sunset-dreams"] {
+    /* Background Colors */
+    --bg-primary: #1a0f0a;
+    --bg-secondary: #2d1b14;
+    --bg-sidebar: #1f1409;
+    --bg-code: #2d1b14;
+    --bg-selection: rgba(255, 107, 107, 0.3);
+    --bg-dropdown: #2d1b14;
+    --bg-hover: rgba(255, 154, 0, 0.1);
+    --bg-tag: #2d1b14;
+    --bg-accent-subtle: rgba(255, 107, 107, 0.1);
+    
+    /* Text Colors */
+    --text-primary: #fff4e6;
+    --text-secondary: #ffd4a3;
+    --text-muted: #d4a574;
+    --text-heading: #ff6b6b;
+    
+    /* Accent Colors */
+    --accent-primary: #ff6b6b;
+    --accent-secondary: #ff9a00;
+    --accent-warning: #feca57;
+    --accent-error: #ff3838;
+    --accent-info: #54a0ff;
+    --accent-success: #5f27cd;
+    --accent-primary-light: rgba(255, 107, 107, 0.2);
+    
+    /* Border Colors */
+    --border-primary: #ff6b6b;
+    --border-secondary: #ff9a00;
+    
+    /* Button Colors */
+    --button-bg: linear-gradient(135deg, #ff6b6b, #ff9a00);
+    --button-hover: linear-gradient(135deg, #ff9a00, #feca57);
+    --button-active: #ff6b6b;
+    
+    /* Badge Colors */
+    --badge-bg: #ff6b6b;
+    --badge-text: #1a0f0a;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(255, 107, 107, 0.2);
+    --shadow-md: 0 4px 12px rgba(255, 107, 107, 0.3), 0 2px 6px rgba(255, 154, 0, 0.2);
+    --shadow-lg: 0 8px 24px rgba(255, 107, 107, 0.4), 0 4px 12px rgba(255, 154, 0, 0.3);
+    --shadow-xl: 0 12px 32px rgba(255, 107, 107, 0.5), 0 6px 16px rgba(255, 154, 0, 0.4);
+    
+    /* Other */
+    --accent-color-alpha: rgba(255, 107, 107, 0.1);
+    --bg-code-block: #2d1b14;
+}
+
+/* Special sunset gradient effects */
+:root[data-theme="sunset-dreams"] .header {
+    background: linear-gradient(135deg, #1a0f0a 0%, #2d1b14 50%, #1a0f0a 100%);
+    border-bottom: 2px solid;
+    border-image: linear-gradient(90deg, #ff6b6b, #ff9a00, #feca57) 1;
+    box-shadow: 0 2px 20px rgba(255, 107, 107, 0.3);
+}
+
+:root[data-theme="sunset-dreams"] .sidebar {
+    background: linear-gradient(180deg, #1f1409 0%, #2d1b14 50%, #1f1409 100%);
+    border-right: 2px solid;
+    border-image: linear-gradient(180deg, #ff6b6b, #ff9a00) 1;
+}
+
+:root[data-theme="sunset-dreams"] .site-title {
+    background: linear-gradient(45deg, #ff6b6b, #ff9a00, #feca57, #ff6b6b);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: sunset-gradient 4s ease infinite;
+}
+
+@keyframes sunset-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+:root[data-theme="sunset-dreams"] .tab {
+    background: linear-gradient(135deg, #2d1b14 0%, #3d2820 100%);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="sunset-dreams"] .tab.active {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff9a00 100%);
+    color: #1a0f0a;
+    box-shadow: 0 4px 16px rgba(255, 107, 107, 0.6);
+}
+
+:root[data-theme="sunset-dreams"] .icon-button:hover {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(255, 154, 0, 0.2));
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+}
+
+:root[data-theme="sunset-dreams"] .main-content {
+    background: radial-gradient(ellipse at top, rgba(255, 107, 107, 0.05) 0%, transparent 70%);
+}
+
+:root[data-theme="sunset-dreams"] .note-content h1,
+:root[data-theme="sunset-dreams"] .note-content h2,
+:root[data-theme="sunset-dreams"] .note-content h3 {
+    background: linear-gradient(45deg, #ff6b6b, #ff9a00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Syntax Highlighting - Sunset Dreams Theme */
+:root[data-theme="sunset-dreams"] .token.comment,
+:root[data-theme="sunset-dreams"] .token.prolog,
+:root[data-theme="sunset-dreams"] .token.doctype,
+:root[data-theme="sunset-dreams"] .token.cdata {
+    color: #d4a574;
+    font-style: italic;
+}
+
+:root[data-theme="sunset-dreams"] .token.property,
+:root[data-theme="sunset-dreams"] .token.tag,
+:root[data-theme="sunset-dreams"] .token.boolean,
+:root[data-theme="sunset-dreams"] .token.number,
+:root[data-theme="sunset-dreams"] .token.constant,
+:root[data-theme="sunset-dreams"] .token.symbol,
+:root[data-theme="sunset-dreams"] .token.deleted {
+    color: #ff6b6b;
+}
+
+:root[data-theme="sunset-dreams"] .token.selector,
+:root[data-theme="sunset-dreams"] .token.attr-name,
+:root[data-theme="sunset-dreams"] .token.string,
+:root[data-theme="sunset-dreams"] .token.char,
+:root[data-theme="sunset-dreams"] .token.builtin,
+:root[data-theme="sunset-dreams"] .token.inserted {
+    color: #ff9a00;
+}
+
+:root[data-theme="sunset-dreams"] .token.operator,
+:root[data-theme="sunset-dreams"] .token.entity,
+:root[data-theme="sunset-dreams"] .token.url,
+:root[data-theme="sunset-dreams"] .language-css .token.string,
+:root[data-theme="sunset-dreams"] .style .token.string {
+    color: #feca57;
+}
+
+:root[data-theme="sunset-dreams"] .token.atrule,
+:root[data-theme="sunset-dreams"] .token.attr-value,
+:root[data-theme="sunset-dreams"] .token.keyword {
+    color: #54a0ff;
+}
+
+:root[data-theme="sunset-dreams"] .token.function,
+:root[data-theme="sunset-dreams"] .token.class-name {
+    color: #5f27cd;
+}
+
+:root[data-theme="sunset-dreams"] .token.regex,
+:root[data-theme="sunset-dreams"] .token.important,
+:root[data-theme="sunset-dreams"] .token.variable {
+    color: #ff3838;
+}
