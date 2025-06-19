@@ -15,7 +15,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Version-3.1.0-green?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License">
-  <img src="https://img.shields.io/badge/Themes-60+-purple?style=flat-square" alt="Themes">
+  <img src="https://img.shields.io/badge/Themes-70+-purple?style=flat-square" alt="Themes">
   <img src="https://img.shields.io/badge/Dependencies-Zero-orange?style=flat-square" alt="Zero Dependencies">
   <img src="https://img.shields.io/badge/Offline-Ready-red?style=flat-square" alt="Offline Ready">
 </p>
@@ -32,7 +32,7 @@
 
 - **⚡ Lightning Fast**: Pure JavaScript with zero server dependencies means instant page loads
 - **🔒 Privacy First**: Your data never leaves your device - perfect for sensitive documentation
-- **🎨 Beautiful by Default**: 60 professional themes including VSCode, Dracula, Night Owl, and Synthwave '84
+- **🎨 Beautiful by Default**: 70 professional themes including VSCode, Dracula, Night Owl, and Synthwave '84
 - **📱 Works Everywhere**: Desktop, tablet, mobile - even offline or in air-gapped environments
 - **🔍 Enterprise Search**: Advanced operators, full-text search, and code-aware indexing
 - **🛠️ Zero Configuration**: Deploy in minutes with GitHub/GitLab Pages or any static host
@@ -70,7 +70,7 @@
 <td width="50%">
 
 ### 🎨 Customization
-- **60 Professional Themes** - From minimal to vibrant
+- **70 Professional Themes** - From minimal to vibrant
 - **Custom CSS Support** - Make it truly yours
 - **Flexible Layouts** - Narrow, wide, or custom widths
 - **Font Controls** - Size, family, and line spacing
@@ -382,7 +382,7 @@ Features line numbers, syntax highlighting, collapsible sections, and copy butto
 
 ## 🎨 Stunning Themes
 
-Choose from 55+ professionally crafted themes:
+Choose from 70+ professionally crafted themes:
 
 | Dark Themes | Light Themes | Special Themes |
 |------------|--------------|----------------|
@@ -484,7 +484,7 @@ See our [Contributing Guide](CONTRIBUTING.md) for details.
 
 - **🚀 Zero Runtime Dependencies** - Everything is bundled
 - **📦 ~44MB Total Package** - Including all themes, libraries, and documentation
-- **🎨 55+ Professional Themes** - Carefully curated collection
+- **🎨 70+ Professional Themes** - Carefully curated collection
 - **📝 8,800+ Lines of Code** - Comprehensive single-page application
 - **⚡ < 100ms Load Time** - Measured on average hardware
 - **🌍 100% Offline Capable** - No internet required after initial load

@@ -1,0 +1,151 @@
+/* Snazzy Theme - Terminal-inspired colorful theme based on Hyper Snazzy */
+:root[data-theme="snazzy"] {
+    /* Background Colors */
+    --bg-primary: #282a36;
+    --bg-secondary: #21222c;
+    --bg-sidebar: #1a1b23;
+    --bg-code: #2a2c3a;
+    --bg-selection: #44475a;
+    --bg-dropdown: #21222c;
+    --bg-hover: #3c3f52;
+    --bg-tag: #3c3f52;
+    
+    /* Additional Background Colors */
+    --bg-modal: #282a36ee;
+    --bg-tooltip: #3c3f52;
+    --bg-input: #2a2c3a;
+    --bg-highlight: #44475a;
+    --text-link: #57c7ff;
+    --text-code: #ff6ac1;
+    --text-inverse: #282a36;
+    --button-text: #eff0eb;
+    
+    /* Text Colors */
+    --text-primary: #eff0eb;
+    --text-secondary: #a5a5a9;
+    --text-muted: #6c6c70;
+    --text-heading: #57c7ff;
+    
+    /* Accent Colors */
+    --accent-primary: #57c7ff;
+    --accent-secondary: #ff6ac1;
+    --accent-warning: #f3f99d;
+    --accent-error: #ff5c57;
+    --accent-danger: #ff5c57;
+    --accent-info: #57c7ff;
+    --accent-success: #5af78e;
+    
+    /* Border Colors */
+    --border-primary: #44475a;
+    --border-secondary: #6272a4;
+    
+    /* Button Colors */
+    --button-bg: #3c3f52;
+    --button-hover: #44475a;
+    --button-active: #57c7ff;
+    
+    /* Badge Colors */
+    --badge-bg: #ff6ac1;
+    --badge-text: #282a36;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.6);
+}
+
+/* Syntax Highlighting - Snazzy Theme */
+:root[data-theme="snazzy"] .token.comment,
+:root[data-theme="snazzy"] .token.prolog,
+:root[data-theme="snazzy"] .token.doctype,
+:root[data-theme="snazzy"] .token.cdata {
+    color: #6c6c70;
+    font-style: italic;
+}
+
+:root[data-theme="snazzy"] .token.punctuation {
+    color: #a5a5a9;
+}
+
+:root[data-theme="snazzy"] .token.property,
+:root[data-theme="snazzy"] .token.tag,
+:root[data-theme="snazzy"] .token.boolean,
+:root[data-theme="snazzy"] .token.number,
+:root[data-theme="snazzy"] .token.constant,
+:root[data-theme="snazzy"] .token.symbol,
+:root[data-theme="snazzy"] .token.deleted {
+    color: #ff5c57;
+}
+
+:root[data-theme="snazzy"] .token.selector,
+:root[data-theme="snazzy"] .token.attr-name,
+:root[data-theme="snazzy"] .token.string,
+:root[data-theme="snazzy"] .token.char,
+:root[data-theme="snazzy"] .token.builtin,
+:root[data-theme="snazzy"] .token.inserted {
+    color: #5af78e;
+}
+
+:root[data-theme="snazzy"] .token.operator,
+:root[data-theme="snazzy"] .token.entity,
+:root[data-theme="snazzy"] .token.url,
+:root[data-theme="snazzy"] .language-css .token.string,
+:root[data-theme="snazzy"] .style .token.string {
+    color: #57c7ff;
+}
+
+:root[data-theme="snazzy"] .token.atrule,
+:root[data-theme="snazzy"] .token.attr-value,
+:root[data-theme="snazzy"] .token.keyword {
+    color: #ff6ac1;
+}
+
+:root[data-theme="snazzy"] .token.function,
+:root[data-theme="snazzy"] .token.class-name {
+    color: #f3f99d;
+}
+
+:root[data-theme="snazzy"] .token.regex,
+:root[data-theme="snazzy"] .token.important,
+:root[data-theme="snazzy"] .token.variable {
+    color: #9aedfe;
+}
+
+/* Terminal-like feel with bold colors */
+:root[data-theme="snazzy"] h1,
+:root[data-theme="snazzy"] h2,
+:root[data-theme="snazzy"] h3 {
+    font-weight: 700;
+}
+
+:root[data-theme="snazzy"] .active,
+:root[data-theme="snazzy"] .selected {
+    background-color: rgba(87, 199, 255, 0.15);
+    border-left: 3px solid var(--accent-primary);
+}
+
+/* Bright link hover effects */
+:root[data-theme="snazzy"] a:hover {
+    color: #ff6ac1;
+    text-decoration: underline;
+}
+
+/* Scrollbar Snazzy Theme */
+:root[data-theme="snazzy"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="snazzy"] ::-webkit-scrollbar-thumb {
+    background: #44475a;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="snazzy"] ::-webkit-scrollbar-thumb:hover {
+    background: #6272a4;
+}
+
+/* Firefox Scrollbar Snazzy Theme */
+:root[data-theme="snazzy"] * {
+    scrollbar-color: #44475a var(--bg-primary);
+}

@@ -1,0 +1,143 @@
+/* City Lights Theme - Dark theme with vibrant cyan and pink accents */
+:root[data-theme="city-lights"] {
+    /* Background Colors */
+    --bg-primary: #1d252c;
+    --bg-secondary: #181e24;
+    --bg-sidebar: #151a1f;
+    --bg-code: #171d22;
+    --bg-selection: #2a3d4e;
+    --bg-dropdown: #181e24;
+    --bg-hover: #28323b;
+    --bg-tag: #28323b;
+    
+    /* Additional Background Colors */
+    --bg-modal: #1d252cee;
+    --bg-tooltip: #28323b;
+    --bg-input: #171d22;
+    --bg-highlight: #2a3d4e;
+    --text-link: #70e1e8;
+    --text-code: #fc7fa0;
+    --text-inverse: #1d252c;
+    --button-text: #b7c5d3;
+    
+    /* Text Colors */
+    --text-primary: #b7c5d3;
+    --text-secondary: #718ca1;
+    --text-muted: #516170;
+    --text-heading: #70e1e8;
+    
+    /* Accent Colors */
+    --accent-primary: #70e1e8;
+    --accent-secondary: #fc7fa0;
+    --accent-warning: #fbbf24;
+    --accent-error: #f26674;
+    --accent-danger: #f26674;
+    --accent-info: #70e1e8;
+    --accent-success: #8bd49c;
+    
+    /* Border Colors */
+    --border-primary: #2f3f4f;
+    --border-secondary: #3e5266;
+    
+    /* Button Colors */
+    --button-bg: #28323b;
+    --button-hover: #2a3d4e;
+    --button-active: #70e1e8;
+    
+    /* Badge Colors */
+    --badge-bg: #fc7fa0;
+    --badge-text: #1d252c;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* Syntax Highlighting - City Lights Theme */
+:root[data-theme="city-lights"] .token.comment,
+:root[data-theme="city-lights"] .token.prolog,
+:root[data-theme="city-lights"] .token.doctype,
+:root[data-theme="city-lights"] .token.cdata {
+    color: #516170;
+    font-style: italic;
+}
+
+:root[data-theme="city-lights"] .token.punctuation {
+    color: #718ca1;
+}
+
+:root[data-theme="city-lights"] .token.property,
+:root[data-theme="city-lights"] .token.tag,
+:root[data-theme="city-lights"] .token.boolean,
+:root[data-theme="city-lights"] .token.number,
+:root[data-theme="city-lights"] .token.constant,
+:root[data-theme="city-lights"] .token.symbol,
+:root[data-theme="city-lights"] .token.deleted {
+    color: #e27e8d;
+}
+
+:root[data-theme="city-lights"] .token.selector,
+:root[data-theme="city-lights"] .token.attr-name,
+:root[data-theme="city-lights"] .token.string,
+:root[data-theme="city-lights"] .token.char,
+:root[data-theme="city-lights"] .token.builtin,
+:root[data-theme="city-lights"] .token.inserted {
+    color: #8bd49c;
+}
+
+:root[data-theme="city-lights"] .token.operator,
+:root[data-theme="city-lights"] .token.entity,
+:root[data-theme="city-lights"] .token.url,
+:root[data-theme="city-lights"] .language-css .token.string,
+:root[data-theme="city-lights"] .style .token.string {
+    color: #70e1e8;
+}
+
+:root[data-theme="city-lights"] .token.atrule,
+:root[data-theme="city-lights"] .token.attr-value,
+:root[data-theme="city-lights"] .token.keyword {
+    color: #fc7fa0;
+}
+
+:root[data-theme="city-lights"] .token.function,
+:root[data-theme="city-lights"] .token.class-name {
+    color: #fbbf24;
+}
+
+:root[data-theme="city-lights"] .token.regex,
+:root[data-theme="city-lights"] .token.important,
+:root[data-theme="city-lights"] .token.variable {
+    color: #d095e2;
+}
+
+/* Smooth transitions */
+:root[data-theme="city-lights"] * {
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Active states with vibrant colors */
+:root[data-theme="city-lights"] .active,
+:root[data-theme="city-lights"] .selected {
+    background: linear-gradient(90deg, rgba(112, 225, 232, 0.1), rgba(252, 127, 160, 0.05));
+}
+
+/* Scrollbar City Lights Theme */
+:root[data-theme="city-lights"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="city-lights"] ::-webkit-scrollbar-thumb {
+    background: #3e5266;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="city-lights"] ::-webkit-scrollbar-thumb:hover {
+    background: #516170;
+}
+
+/* Firefox Scrollbar City Lights Theme */
+:root[data-theme="city-lights"] * {
+    scrollbar-color: #3e5266 var(--bg-primary);
+}

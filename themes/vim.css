@@ -1,0 +1,153 @@
+/* Vim Theme - Classic Vim dark colorscheme */
+:root[data-theme="vim"] {
+    /* Background Colors */
+    --bg-primary: #000000;
+    --bg-secondary: #0a0a0a;
+    --bg-sidebar: #000000;
+    --bg-code: #0f0f0f;
+    --bg-selection: #3a3a3a;
+    --bg-dropdown: #0a0a0a;
+    --bg-hover: #1a1a1a;
+    --bg-tag: #1a1a1a;
+    
+    /* Additional Background Colors */
+    --bg-modal: #000000ee;
+    --bg-tooltip: #1a1a1a;
+    --bg-input: #0f0f0f;
+    --bg-highlight: #3a3a3a;
+    --text-link: #00afff;
+    --text-code: #ff5fff;
+    --text-inverse: #000000;
+    --button-text: #e4e4e4;
+    
+    /* Text Colors */
+    --text-primary: #e4e4e4;
+    --text-secondary: #bcbcbc;
+    --text-muted: #808080;
+    --text-heading: #00afff;
+    
+    /* Accent Colors */
+    --accent-primary: #00afff;
+    --accent-secondary: #ff5fff;
+    --accent-warning: #ffff00;
+    --accent-error: #ff5f5f;
+    --accent-danger: #ff5f5f;
+    --accent-info: #00afff;
+    --accent-success: #5fff5f;
+    
+    /* Border Colors */
+    --border-primary: #3a3a3a;
+    --border-secondary: #585858;
+    
+    /* Button Colors */
+    --button-bg: #1a1a1a;
+    --button-hover: #3a3a3a;
+    --button-active: #00afff;
+    
+    /* Badge Colors */
+    --badge-bg: #ff5f5f;
+    --badge-text: #000000;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(255, 255, 255, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(255, 255, 255, 0.08), 0 2px 4px -1px rgba(255, 255, 255, 0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(255, 255, 255, 0.1), 0 4px 6px -2px rgba(255, 255, 255, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(255, 255, 255, 0.12), 0 10px 10px -5px rgba(255, 255, 255, 0.06);
+}
+
+/* Syntax Highlighting - Vim Theme */
+:root[data-theme="vim"] .token.comment,
+:root[data-theme="vim"] .token.prolog,
+:root[data-theme="vim"] .token.doctype,
+:root[data-theme="vim"] .token.cdata {
+    color: #808080;
+    font-style: italic;
+}
+
+:root[data-theme="vim"] .token.punctuation {
+    color: #bcbcbc;
+}
+
+:root[data-theme="vim"] .token.property,
+:root[data-theme="vim"] .token.tag,
+:root[data-theme="vim"] .token.boolean,
+:root[data-theme="vim"] .token.number,
+:root[data-theme="vim"] .token.constant,
+:root[data-theme="vim"] .token.symbol,
+:root[data-theme="vim"] .token.deleted {
+    color: #ff87ff;
+}
+
+:root[data-theme="vim"] .token.selector,
+:root[data-theme="vim"] .token.attr-name,
+:root[data-theme="vim"] .token.string,
+:root[data-theme="vim"] .token.char,
+:root[data-theme="vim"] .token.builtin,
+:root[data-theme="vim"] .token.inserted {
+    color: #5fff5f;
+}
+
+:root[data-theme="vim"] .token.operator,
+:root[data-theme="vim"] .token.entity,
+:root[data-theme="vim"] .token.url,
+:root[data-theme="vim"] .language-css .token.string,
+:root[data-theme="vim"] .style .token.string {
+    color: #00afff;
+}
+
+:root[data-theme="vim"] .token.atrule,
+:root[data-theme="vim"] .token.attr-value,
+:root[data-theme="vim"] .token.keyword {
+    color: #ff5fff;
+}
+
+:root[data-theme="vim"] .token.function,
+:root[data-theme="vim"] .token.class-name {
+    color: #87ffff;
+}
+
+:root[data-theme="vim"] .token.regex,
+:root[data-theme="vim"] .token.important,
+:root[data-theme="vim"] .token.variable {
+    color: #ff5f5f;
+}
+
+/* Classic terminal feel */
+:root[data-theme="vim"] * {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+}
+
+:root[data-theme="vim"] .note-content {
+    font-family: inherit;
+}
+
+:root[data-theme="vim"] .active,
+:root[data-theme="vim"] .selected {
+    background-color: rgba(0, 175, 255, 0.2);
+    border-left: 2px solid var(--accent-primary);
+}
+
+/* Terminal-style cursor */
+:root[data-theme="vim"] input:focus,
+:root[data-theme="vim"] textarea:focus {
+    outline: 1px solid #00afff;
+}
+
+/* Scrollbar Vim Theme */
+:root[data-theme="vim"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="vim"] ::-webkit-scrollbar-thumb {
+    background: #585858;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="vim"] ::-webkit-scrollbar-thumb:hover {
+    background: #808080;
+}
+
+/* Firefox Scrollbar Vim Theme */
+:root[data-theme="vim"] * {
+    scrollbar-color: #585858 var(--bg-primary);
+}

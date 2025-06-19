@@ -1,0 +1,142 @@
+/* Base16 Ocean Theme - Classic Base16 ocean variant */
+:root[data-theme="base16-ocean"] {
+    /* Background Colors */
+    --bg-primary: #2b303b;
+    --bg-secondary: #232833;
+    --bg-sidebar: #1c2028;
+    --bg-code: #232833;
+    --bg-selection: #4f5b66;
+    --bg-dropdown: #232833;
+    --bg-hover: #343d46;
+    --bg-tag: #343d46;
+    
+    /* Additional Background Colors */
+    --bg-modal: #2b303bee;
+    --bg-tooltip: #343d46;
+    --bg-input: #232833;
+    --bg-highlight: #4f5b66;
+    --text-link: #8fa1b3;
+    --text-code: #d08770;
+    --text-inverse: #2b303b;
+    --button-text: #c0c5ce;
+    
+    /* Text Colors */
+    --text-primary: #c0c5ce;
+    --text-secondary: #a7adba;
+    --text-muted: #65737e;
+    --text-heading: #8fa1b3;
+    
+    /* Accent Colors */
+    --accent-primary: #8fa1b3;
+    --accent-secondary: #b48ead;
+    --accent-warning: #ebcb8b;
+    --accent-error: #bf616a;
+    --accent-danger: #bf616a;
+    --accent-info: #96b5b4;
+    --accent-success: #a3be8c;
+    
+    /* Border Colors */
+    --border-primary: #343d46;
+    --border-secondary: #4f5b66;
+    
+    /* Button Colors */
+    --button-bg: #343d46;
+    --button-hover: #4f5b66;
+    --button-active: #8fa1b3;
+    
+    /* Badge Colors */
+    --badge-bg: #bf616a;
+    --badge-text: #2b303b;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* Syntax Highlighting - Base16 Ocean Theme */
+:root[data-theme="base16-ocean"] .token.comment,
+:root[data-theme="base16-ocean"] .token.prolog,
+:root[data-theme="base16-ocean"] .token.doctype,
+:root[data-theme="base16-ocean"] .token.cdata {
+    color: #65737e;
+    font-style: italic;
+}
+
+:root[data-theme="base16-ocean"] .token.punctuation {
+    color: #a7adba;
+}
+
+:root[data-theme="base16-ocean"] .token.property,
+:root[data-theme="base16-ocean"] .token.tag,
+:root[data-theme="base16-ocean"] .token.boolean,
+:root[data-theme="base16-ocean"] .token.number,
+:root[data-theme="base16-ocean"] .token.constant,
+:root[data-theme="base16-ocean"] .token.symbol,
+:root[data-theme="base16-ocean"] .token.deleted {
+    color: #d08770;
+}
+
+:root[data-theme="base16-ocean"] .token.selector,
+:root[data-theme="base16-ocean"] .token.attr-name,
+:root[data-theme="base16-ocean"] .token.string,
+:root[data-theme="base16-ocean"] .token.char,
+:root[data-theme="base16-ocean"] .token.builtin,
+:root[data-theme="base16-ocean"] .token.inserted {
+    color: #a3be8c;
+}
+
+:root[data-theme="base16-ocean"] .token.operator,
+:root[data-theme="base16-ocean"] .token.entity,
+:root[data-theme="base16-ocean"] .token.url,
+:root[data-theme="base16-ocean"] .language-css .token.string,
+:root[data-theme="base16-ocean"] .style .token.string {
+    color: #96b5b4;
+}
+
+:root[data-theme="base16-ocean"] .token.atrule,
+:root[data-theme="base16-ocean"] .token.attr-value,
+:root[data-theme="base16-ocean"] .token.keyword {
+    color: #b48ead;
+}
+
+:root[data-theme="base16-ocean"] .token.function,
+:root[data-theme="base16-ocean"] .token.class-name {
+    color: #8fa1b3;
+}
+
+:root[data-theme="base16-ocean"] .token.regex,
+:root[data-theme="base16-ocean"] .token.important,
+:root[data-theme="base16-ocean"] .token.variable {
+    color: #bf616a;
+}
+
+/* Classic Base16 styling */
+:root[data-theme="base16-ocean"] code {
+    font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+}
+
+:root[data-theme="base16-ocean"] .active,
+:root[data-theme="base16-ocean"] .selected {
+    background-color: rgba(143, 161, 179, 0.1);
+}
+
+/* Scrollbar Base16 Ocean Theme */
+:root[data-theme="base16-ocean"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="base16-ocean"] ::-webkit-scrollbar-thumb {
+    background: #4f5b66;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="base16-ocean"] ::-webkit-scrollbar-thumb:hover {
+    background: #65737e;
+}
+
+/* Firefox Scrollbar Base16 Ocean Theme */
+:root[data-theme="base16-ocean"] * {
+    scrollbar-color: #4f5b66 var(--bg-primary);
+}

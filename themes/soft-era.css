@@ -1,0 +1,156 @@
+/* Soft Era Theme - Low contrast pastel theme */
+:root[data-theme="soft-era"] {
+    /* Background Colors */
+    --bg-primary: #f9f5f5;
+    --bg-secondary: #fef9f9;
+    --bg-sidebar: #fefbfb;
+    --bg-code: #fcf8f8;
+    --bg-selection: #e4d6d5;
+    --bg-dropdown: #fef9f9;
+    --bg-hover: #f0e4e4;
+    --bg-tag: #f0e4e4;
+    
+    /* Additional Background Colors */
+    --bg-modal: #f9f5f5ee;
+    --bg-tooltip: #f0e4e4;
+    --bg-input: #fcf8f8;
+    --bg-highlight: #e4d6d5;
+    --text-link: #b68fb5;
+    --text-code: #be9895;
+    --text-inverse: #f9f5f5;
+    --button-text: #6a6a6a;
+    
+    /* Text Colors */
+    --text-primary: #6a6a6a;
+    --text-secondary: #888888;
+    --text-muted: #999999;
+    --text-heading: #958ac5;
+    
+    /* Accent Colors */
+    --accent-primary: #b68fb5;
+    --accent-secondary: #958ac5;
+    --accent-warning: #e4b781;
+    --accent-error: #cf8a8b;
+    --accent-danger: #cf8a8b;
+    --accent-info: #89b7c2;
+    --accent-success: #a3b88c;
+    
+    /* Border Colors */
+    --border-primary: #e4d6d5;
+    --border-secondary: #d4c4c3;
+    
+    /* Button Colors */
+    --button-bg: #f0e4e4;
+    --button-hover: #e4d6d5;
+    --button-active: #b68fb5;
+    
+    /* Badge Colors */
+    --badge-bg: #b68fb5;
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.12), 0 10px 10px -5px rgba(0, 0, 0, 0.06);
+}
+
+/* Syntax Highlighting - Soft Era Theme */
+:root[data-theme="soft-era"] .token.comment,
+:root[data-theme="soft-era"] .token.prolog,
+:root[data-theme="soft-era"] .token.doctype,
+:root[data-theme="soft-era"] .token.cdata {
+    color: #999999;
+    font-style: italic;
+}
+
+:root[data-theme="soft-era"] .token.punctuation {
+    color: #888888;
+}
+
+:root[data-theme="soft-era"] .token.property,
+:root[data-theme="soft-era"] .token.tag,
+:root[data-theme="soft-era"] .token.boolean,
+:root[data-theme="soft-era"] .token.number,
+:root[data-theme="soft-era"] .token.constant,
+:root[data-theme="soft-era"] .token.symbol,
+:root[data-theme="soft-era"] .token.deleted {
+    color: #be9895;
+}
+
+:root[data-theme="soft-era"] .token.selector,
+:root[data-theme="soft-era"] .token.attr-name,
+:root[data-theme="soft-era"] .token.string,
+:root[data-theme="soft-era"] .token.char,
+:root[data-theme="soft-era"] .token.builtin,
+:root[data-theme="soft-era"] .token.inserted {
+    color: #a3b88c;
+}
+
+:root[data-theme="soft-era"] .token.operator,
+:root[data-theme="soft-era"] .token.entity,
+:root[data-theme="soft-era"] .token.url,
+:root[data-theme="soft-era"] .language-css .token.string,
+:root[data-theme="soft-era"] .style .token.string {
+    color: #89b7c2;
+}
+
+:root[data-theme="soft-era"] .token.atrule,
+:root[data-theme="soft-era"] .token.attr-value,
+:root[data-theme="soft-era"] .token.keyword {
+    color: #958ac5;
+}
+
+:root[data-theme="soft-era"] .token.function,
+:root[data-theme="soft-era"] .token.class-name {
+    color: #e4b781;
+}
+
+:root[data-theme="soft-era"] .token.regex,
+:root[data-theme="soft-era"] .token.important,
+:root[data-theme="soft-era"] .token.variable {
+    color: #cf8a8b;
+}
+
+/* Soft, gentle styling */
+:root[data-theme="soft-era"] * {
+    font-weight: 400;
+}
+
+:root[data-theme="soft-era"] h1,
+:root[data-theme="soft-era"] h2,
+:root[data-theme="soft-era"] h3 {
+    font-weight: 500;
+}
+
+:root[data-theme="soft-era"] .active,
+:root[data-theme="soft-era"] .selected {
+    background-color: rgba(182, 143, 181, 0.15);
+    border-left: 2px solid var(--accent-primary);
+}
+
+/* Soft rounded corners */
+:root[data-theme="soft-era"] .button,
+:root[data-theme="soft-era"] .tab,
+:root[data-theme="soft-era"] .tag {
+    border-radius: 8px;
+}
+
+/* Scrollbar Soft Era Theme */
+:root[data-theme="soft-era"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="soft-era"] ::-webkit-scrollbar-thumb {
+    background: #d4c4c3;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="soft-era"] ::-webkit-scrollbar-thumb:hover {
+    background: #c4b4b3;
+}
+
+/* Firefox Scrollbar Soft Era Theme */
+:root[data-theme="soft-era"] * {
+    scrollbar-color: #d4c4c3 var(--bg-primary);
+}

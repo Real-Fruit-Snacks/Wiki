@@ -1,0 +1,142 @@
+/* Oceanic Next Theme - Deep ocean blue theme */
+:root[data-theme="oceanic-next"] {
+    /* Background Colors */
+    --bg-primary: #1b2b34;
+    --bg-secondary: #16232a;
+    --bg-sidebar: #121b21;
+    --bg-code: #192831;
+    --bg-selection: #3e4f5e;
+    --bg-dropdown: #16232a;
+    --bg-hover: #2c3e4a;
+    --bg-tag: #2c3e4a;
+    
+    /* Additional Background Colors */
+    --bg-modal: #1b2b34ee;
+    --bg-tooltip: #2c3e4a;
+    --bg-input: #192831;
+    --bg-highlight: #3e4f5e;
+    --text-link: #6699cc;
+    --text-code: #ec5f67;
+    --text-inverse: #1b2b34;
+    --button-text: #cdd3de;
+    
+    /* Text Colors */
+    --text-primary: #cdd3de;
+    --text-secondary: #a7adba;
+    --text-muted: #65737e;
+    --text-heading: #6699cc;
+    
+    /* Accent Colors */
+    --accent-primary: #6699cc;
+    --accent-secondary: #c594c5;
+    --accent-warning: #fac863;
+    --accent-error: #ec5f67;
+    --accent-danger: #ec5f67;
+    --accent-info: #5fb3b3;
+    --accent-success: #99c794;
+    
+    /* Border Colors */
+    --border-primary: #2b3e4a;
+    --border-secondary: #4f5b66;
+    
+    /* Button Colors */
+    --button-bg: #2c3e4a;
+    --button-hover: #3e4f5e;
+    --button-active: #6699cc;
+    
+    /* Badge Colors */
+    --badge-bg: #ec5f67;
+    --badge-text: #1b2b34;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* Syntax Highlighting - Oceanic Next Theme */
+:root[data-theme="oceanic-next"] .token.comment,
+:root[data-theme="oceanic-next"] .token.prolog,
+:root[data-theme="oceanic-next"] .token.doctype,
+:root[data-theme="oceanic-next"] .token.cdata {
+    color: #65737e;
+    font-style: italic;
+}
+
+:root[data-theme="oceanic-next"] .token.punctuation {
+    color: #a7adba;
+}
+
+:root[data-theme="oceanic-next"] .token.property,
+:root[data-theme="oceanic-next"] .token.tag,
+:root[data-theme="oceanic-next"] .token.boolean,
+:root[data-theme="oceanic-next"] .token.number,
+:root[data-theme="oceanic-next"] .token.constant,
+:root[data-theme="oceanic-next"] .token.symbol,
+:root[data-theme="oceanic-next"] .token.deleted {
+    color: #f99157;
+}
+
+:root[data-theme="oceanic-next"] .token.selector,
+:root[data-theme="oceanic-next"] .token.attr-name,
+:root[data-theme="oceanic-next"] .token.string,
+:root[data-theme="oceanic-next"] .token.char,
+:root[data-theme="oceanic-next"] .token.builtin,
+:root[data-theme="oceanic-next"] .token.inserted {
+    color: #99c794;
+}
+
+:root[data-theme="oceanic-next"] .token.operator,
+:root[data-theme="oceanic-next"] .token.entity,
+:root[data-theme="oceanic-next"] .token.url,
+:root[data-theme="oceanic-next"] .language-css .token.string,
+:root[data-theme="oceanic-next"] .style .token.string {
+    color: #5fb3b3;
+}
+
+:root[data-theme="oceanic-next"] .token.atrule,
+:root[data-theme="oceanic-next"] .token.attr-value,
+:root[data-theme="oceanic-next"] .token.keyword {
+    color: #c594c5;
+}
+
+:root[data-theme="oceanic-next"] .token.function,
+:root[data-theme="oceanic-next"] .token.class-name {
+    color: #6699cc;
+}
+
+:root[data-theme="oceanic-next"] .token.regex,
+:root[data-theme="oceanic-next"] .token.important,
+:root[data-theme="oceanic-next"] .token.variable {
+    color: #ec5f67;
+}
+
+/* Ocean-inspired subtle gradients */
+:root[data-theme="oceanic-next"] .header {
+    background: linear-gradient(to bottom, var(--bg-secondary), var(--bg-primary));
+}
+
+:root[data-theme="oceanic-next"] .active,
+:root[data-theme="oceanic-next"] .selected {
+    background: linear-gradient(90deg, rgba(102, 153, 204, 0.1), rgba(95, 179, 179, 0.05));
+}
+
+/* Scrollbar Oceanic Next Theme */
+:root[data-theme="oceanic-next"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="oceanic-next"] ::-webkit-scrollbar-thumb {
+    background: #4f5b66;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="oceanic-next"] ::-webkit-scrollbar-thumb:hover {
+    background: #65737e;
+}
+
+/* Firefox Scrollbar Oceanic Next Theme */
+:root[data-theme="oceanic-next"] * {
+    scrollbar-color: #4f5b66 var(--bg-primary);
+}

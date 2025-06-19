@@ -1,0 +1,152 @@
+/* Material Theme - Original Material Design theme */
+:root[data-theme="material"] {
+    /* Background Colors */
+    --bg-primary: #263238;
+    --bg-secondary: #1e282d;
+    --bg-sidebar: #1a2327;
+    --bg-code: #2e3c43;
+    --bg-selection: #546e7a;
+    --bg-dropdown: #1e282d;
+    --bg-hover: #37474f;
+    --bg-tag: #37474f;
+    
+    /* Additional Background Colors */
+    --bg-modal: #263238ee;
+    --bg-tooltip: #37474f;
+    --bg-input: #2e3c43;
+    --bg-highlight: #546e7a;
+    --text-link: #80cbc4;
+    --text-code: #f77669;
+    --text-inverse: #263238;
+    --button-text: #eeffff;
+    
+    /* Text Colors */
+    --text-primary: #eeffff;
+    --text-secondary: #b2ccd6;
+    --text-muted: #546e7a;
+    --text-heading: #80cbc4;
+    
+    /* Accent Colors */
+    --accent-primary: #80cbc4;
+    --accent-secondary: #c792ea;
+    --accent-warning: #ffcb6b;
+    --accent-error: #f07178;
+    --accent-danger: #f07178;
+    --accent-info: #82aaff;
+    --accent-success: #c3e88d;
+    
+    /* Border Colors */
+    --border-primary: #37474f;
+    --border-secondary: #546e7a;
+    
+    /* Button Colors */
+    --button-bg: #37474f;
+    --button-hover: #546e7a;
+    --button-active: #80cbc4;
+    
+    /* Badge Colors */
+    --badge-bg: #f07178;
+    --badge-text: #263238;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+    --shadow-md: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    --shadow-xl: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+/* Syntax Highlighting - Material Theme */
+:root[data-theme="material"] .token.comment,
+:root[data-theme="material"] .token.prolog,
+:root[data-theme="material"] .token.doctype,
+:root[data-theme="material"] .token.cdata {
+    color: #546e7a;
+    font-style: italic;
+}
+
+:root[data-theme="material"] .token.punctuation {
+    color: #89ddff;
+}
+
+:root[data-theme="material"] .token.property,
+:root[data-theme="material"] .token.tag,
+:root[data-theme="material"] .token.boolean,
+:root[data-theme="material"] .token.number,
+:root[data-theme="material"] .token.constant,
+:root[data-theme="material"] .token.symbol,
+:root[data-theme="material"] .token.deleted {
+    color: #f07178;
+}
+
+:root[data-theme="material"] .token.selector,
+:root[data-theme="material"] .token.attr-name,
+:root[data-theme="material"] .token.string,
+:root[data-theme="material"] .token.char,
+:root[data-theme="material"] .token.builtin,
+:root[data-theme="material"] .token.inserted {
+    color: #c3e88d;
+}
+
+:root[data-theme="material"] .token.operator,
+:root[data-theme="material"] .token.entity,
+:root[data-theme="material"] .token.url,
+:root[data-theme="material"] .language-css .token.string,
+:root[data-theme="material"] .style .token.string {
+    color: #89ddff;
+}
+
+:root[data-theme="material"] .token.atrule,
+:root[data-theme="material"] .token.attr-value,
+:root[data-theme="material"] .token.keyword {
+    color: #c792ea;
+}
+
+:root[data-theme="material"] .token.function,
+:root[data-theme="material"] .token.class-name {
+    color: #82aaff;
+}
+
+:root[data-theme="material"] .token.regex,
+:root[data-theme="material"] .token.important,
+:root[data-theme="material"] .token.variable {
+    color: #f78c6c;
+}
+
+/* Material Design elevation */
+:root[data-theme="material"] .sidebar {
+    box-shadow: var(--shadow-md);
+}
+
+:root[data-theme="material"] .header {
+    box-shadow: var(--shadow-sm);
+}
+
+:root[data-theme="material"] .active,
+:root[data-theme="material"] .selected {
+    background-color: rgba(128, 203, 196, 0.12);
+}
+
+/* Material ripple effect hint */
+:root[data-theme="material"] button:active,
+:root[data-theme="material"] .tab:active {
+    transform: scale(0.98);
+}
+
+/* Scrollbar Material Theme */
+:root[data-theme="material"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="material"] ::-webkit-scrollbar-thumb {
+    background: #546e7a;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="material"] ::-webkit-scrollbar-thumb:hover {
+    background: #78909c;
+}
+
+/* Firefox Scrollbar Material Theme */
+:root[data-theme="material"] * {
+    scrollbar-color: #546e7a var(--bg-primary);
+}

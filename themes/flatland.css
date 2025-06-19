@@ -1,0 +1,156 @@
+/* Flatland Theme - Flat design dark theme */
+:root[data-theme="flatland"] {
+    /* Background Colors */
+    --bg-primary: #26292c;
+    --bg-secondary: #1e2124;
+    --bg-sidebar: #1a1d1f;
+    --bg-code: #2a2d30;
+    --bg-selection: #3e4044;
+    --bg-dropdown: #1e2124;
+    --bg-hover: #33363a;
+    --bg-tag: #33363a;
+    
+    /* Additional Background Colors */
+    --bg-modal: #26292cee;
+    --bg-tooltip: #33363a;
+    --bg-input: #2a2d30;
+    --bg-highlight: #3e4044;
+    --text-link: #52dab2;
+    --text-code: #f59e5f;
+    --text-inverse: #26292c;
+    --button-text: #bfc9ca;
+    
+    /* Text Colors */
+    --text-primary: #bfc9ca;
+    --text-secondary: #99a3a4;
+    --text-muted: #798188;
+    --text-heading: #52dab2;
+    
+    /* Accent Colors */
+    --accent-primary: #52dab2;
+    --accent-secondary: #d68c52;
+    --accent-warning: #e5c454;
+    --accent-error: #ee5a5f;
+    --accent-danger: #ee5a5f;
+    --accent-info: #5dd3dc;
+    --accent-success: #93d94e;
+    
+    /* Border Colors */
+    --border-primary: #3e4044;
+    --border-secondary: #505357;
+    
+    /* Button Colors */
+    --button-bg: #33363a;
+    --button-hover: #3e4044;
+    --button-active: #52dab2;
+    
+    /* Badge Colors */
+    --badge-bg: #ee5a5f;
+    --badge-text: #26292c;
+    
+    /* Shadows - Flat design, minimal shadows */
+    --shadow-sm: none;
+    --shadow-md: 0 0 0 1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 0 0 1px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Syntax Highlighting - Flatland Theme */
+:root[data-theme="flatland"] .token.comment,
+:root[data-theme="flatland"] .token.prolog,
+:root[data-theme="flatland"] .token.doctype,
+:root[data-theme="flatland"] .token.cdata {
+    color: #798188;
+    font-style: italic;
+}
+
+:root[data-theme="flatland"] .token.punctuation {
+    color: #99a3a4;
+}
+
+:root[data-theme="flatland"] .token.property,
+:root[data-theme="flatland"] .token.tag,
+:root[data-theme="flatland"] .token.boolean,
+:root[data-theme="flatland"] .token.number,
+:root[data-theme="flatland"] .token.constant,
+:root[data-theme="flatland"] .token.symbol,
+:root[data-theme="flatland"] .token.deleted {
+    color: #f59e5f;
+}
+
+:root[data-theme="flatland"] .token.selector,
+:root[data-theme="flatland"] .token.attr-name,
+:root[data-theme="flatland"] .token.string,
+:root[data-theme="flatland"] .token.char,
+:root[data-theme="flatland"] .token.builtin,
+:root[data-theme="flatland"] .token.inserted {
+    color: #93d94e;
+}
+
+:root[data-theme="flatland"] .token.operator,
+:root[data-theme="flatland"] .token.entity,
+:root[data-theme="flatland"] .token.url,
+:root[data-theme="flatland"] .language-css .token.string,
+:root[data-theme="flatland"] .style .token.string {
+    color: #5dd3dc;
+}
+
+:root[data-theme="flatland"] .token.atrule,
+:root[data-theme="flatland"] .token.attr-value,
+:root[data-theme="flatland"] .token.keyword {
+    color: #d68c52;
+}
+
+:root[data-theme="flatland"] .token.function,
+:root[data-theme="flatland"] .token.class-name {
+    color: #52dab2;
+}
+
+:root[data-theme="flatland"] .token.regex,
+:root[data-theme="flatland"] .token.important,
+:root[data-theme="flatland"] .token.variable {
+    color: #ee5a5f;
+}
+
+/* Flat design principles */
+:root[data-theme="flatland"] * {
+    box-shadow: none !important;
+}
+
+:root[data-theme="flatland"] .button,
+:root[data-theme="flatland"] .tab,
+:root[data-theme="flatland"] .input,
+:root[data-theme="flatland"] .tag {
+    border: 1px solid var(--border-primary);
+    border-radius: 0;
+}
+
+:root[data-theme="flatland"] .active,
+:root[data-theme="flatland"] .selected {
+    background-color: var(--bg-hover);
+    border-left: 3px solid var(--accent-primary);
+}
+
+/* No rounded corners for flat design */
+:root[data-theme="flatland"] * {
+    border-radius: 0 !important;
+}
+
+/* Scrollbar Flatland Theme */
+:root[data-theme="flatland"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="flatland"] ::-webkit-scrollbar-thumb {
+    background: #505357;
+    border: none;
+}
+
+:root[data-theme="flatland"] ::-webkit-scrollbar-thumb:hover {
+    background: #798188;
+}
+
+/* Firefox Scrollbar Flatland Theme */
+:root[data-theme="flatland"] * {
+    scrollbar-color: #505357 var(--bg-primary);
+}

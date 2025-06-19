@@ -94,11 +94,14 @@ class NotesWiki {
                 themes: [
                     { id: 'ayu-dark', name: 'Ayu Dark', description: 'Rich dark theme with warm accents' },
                     { id: 'ayu-mirage', name: 'Ayu Mirage', description: 'Balanced theme with warm undertones' },
+                    { id: 'base16-ocean', name: 'Base16 Ocean', description: 'Classic Base16 ocean variant with cool blues' },
                     { id: 'bluloco-dark', name: 'Bluloco Dark', description: 'Electric blue dark theme with vibrant accents' },
                     { id: 'bluloco-light', name: 'Bluloco Light', description: 'Sophisticated blue light theme' },
                     { id: 'cobalt2', name: 'Cobalt2', description: 'Wes Bos theme with electric neon effects' },
                     { id: 'firefly', name: 'Firefly', description: 'Dark blue theme with bright glowing accents' },
+                    { id: 'iceberg', name: 'Iceberg', description: 'Cool blue-gray theme with icy feel' },
                     { id: 'noctis', name: 'Noctis', description: 'Ocean-inspired theme with wave effects' },
+                    { id: 'oceanic-next', name: 'Oceanic Next', description: 'Deep ocean blue theme with vibrant accents' },
                     { id: 'spacegray', name: 'Spacegray', description: 'Minimal space theme with starfield' }
                 ]
             },
@@ -106,9 +109,11 @@ class NotesWiki {
                 name: 'Cyberpunk & Neon',
                 themes: [
                     { id: '2077', name: '2077 Theme', description: 'Cyberpunk 2077 with neon glow and scan lines' },
+                    { id: 'city-lights', name: 'City Lights', description: 'Dark theme with vibrant cyan and pink accents' },
                     { id: 'cyberpunk', name: 'Cyberpunk', description: 'Dystopian theme with glitch effects' },
                     { id: 'matrix', name: 'Matrix', description: 'Terminal green with falling code rain' },
                     { id: 'outrun', name: 'Outrun', description: 'Electric blues and hot pinks with intense neon glow' },
+                    { id: 'snazzy', name: 'Snazzy', description: 'Terminal-inspired colorful theme with bright accents' },
                     { id: 'synthwave-84', name: 'Synthwave \'84', description: 'Retro neon aesthetic with vibrant synthwave colors' },
                     { id: 'tokyo-night', name: 'Tokyo Night', description: 'Tokyo neon theme with cyberpunk effects' },
                     { id: 'vaporwave', name: 'Vaporwave', description: 'Retro 80s theme with VHS glitch effects' }
@@ -125,17 +130,22 @@ class NotesWiki {
                     { id: 'moonlight', name: 'Moonlight', description: 'Beautiful purple and blue dark theme' },
                     { id: 'palenight', name: 'Palenight', description: 'Elegant purple theme with aurora effects' },
                     { id: 'shades-of-purple', name: 'Shades of Purple', description: 'Magical purple theme with particle effects' },
+                    { id: 'soft-era', name: 'Soft Era', description: 'Low contrast pastel theme with gentle colors' },
                     { id: 'witch-hazel', name: 'Witch Hazel', description: 'Mystical theme with magical animations' }
                 ]
             },
             {
                 name: 'Professional',
                 themes: [
+                    { id: 'apprentice', name: 'Apprentice', description: 'Low-contrast dark theme for long coding sessions' },
+                    { id: 'flatland', name: 'Flatland', description: 'Flat design dark theme with minimal shadows' },
                     { id: 'github-dark', name: 'GitHub Dark', description: 'GitHub\'s modern developer theme' },
+                    { id: 'material', name: 'Material', description: 'Original Material Design theme' },
                     { id: 'oxocarbon', name: 'Oxocarbon', description: 'IBM Carbon theme with grid patterns' },
                     { id: 'protonmail', name: 'ProtonMail', description: 'Privacy-focused theme with security effects' },
                     { id: 'solarized-dark', name: 'Solarized Dark', description: 'Classic theme with modern animations' },
                     { id: 'thinkultra', name: 'ThinkUltra', description: 'ThinkPad-inspired with LED indicators' },
+                    { id: 'vim', name: 'Vim', description: 'Classic Vim dark colorscheme' },
                     { id: 'vscode-dark-plus', name: 'VSCode Dark+', description: 'Modern VSCode theme with IntelliSense glow' }
                 ]
             },
@@ -5254,6 +5264,76 @@ class NotesWiki {
                 accent: '#5ccfe6',
                 text: '#d7dce2',
                 textMuted: '#6679a4'
+            },
+            'city-lights': {
+                bg: '#1d252c',
+                border: '#2f3f4f',
+                accent: '#70e1e8',
+                text: '#b7c5d3',
+                textMuted: '#516170'
+            },
+            'snazzy': {
+                bg: '#282a36',
+                border: '#44475a',
+                accent: '#57c7ff',
+                text: '#eff0eb',
+                textMuted: '#6c6c70'
+            },
+            'oceanic-next': {
+                bg: '#1b2b34',
+                border: '#2b3e4a',
+                accent: '#6699cc',
+                text: '#cdd3de',
+                textMuted: '#65737e'
+            },
+            'soft-era': {
+                bg: '#f9f5f5',
+                border: '#e4d6d5',
+                accent: '#b68fb5',
+                text: '#6a6a6a',
+                textMuted: '#999999'
+            },
+            'base16-ocean': {
+                bg: '#2b303b',
+                border: '#343d46',
+                accent: '#8fa1b3',
+                text: '#c0c5ce',
+                textMuted: '#65737e'
+            },
+            'vim': {
+                bg: '#000000',
+                border: '#3a3a3a',
+                accent: '#00afff',
+                text: '#e4e4e4',
+                textMuted: '#808080'
+            },
+            'material': {
+                bg: '#263238',
+                border: '#37474f',
+                accent: '#80cbc4',
+                text: '#eeffff',
+                textMuted: '#546e7a'
+            },
+            'apprentice': {
+                bg: '#262626',
+                border: '#444444',
+                accent: '#87afd7',
+                text: '#bcbcbc',
+                textMuted: '#6c6c6c'
+            },
+            'iceberg': {
+                bg: '#161821',
+                border: '#2e313f',
+                accent: '#84a0c6',
+                text: '#c6c8d1',
+                textMuted: '#6b7089'
+            },
+            'flatland': {
+                bg: '#26292c',
+                border: '#3e4044',
+                accent: '#52dab2',
+                text: '#bfc9ca',
+                textMuted: '#798188'
             }
         };
         
@@ -5682,6 +5762,76 @@ class NotesWiki {
                 string: '#bae67e',
                 comment: '#6679a4',
                 number: '#ffae57'
+            },
+            'city-lights': {
+                keyword: '#fc7fa0',
+                function: '#fbbf24',
+                string: '#8bd49c',
+                comment: '#516170',
+                number: '#e27e8d'
+            },
+            'snazzy': {
+                keyword: '#ff6ac1',
+                function: '#f3f99d',
+                string: '#5af78e',
+                comment: '#6c6c70',
+                number: '#ff5c57'
+            },
+            'oceanic-next': {
+                keyword: '#c594c5',
+                function: '#6699cc',
+                string: '#99c794',
+                comment: '#65737e',
+                number: '#f99157'
+            },
+            'soft-era': {
+                keyword: '#958ac5',
+                function: '#e4b781',
+                string: '#a3b88c',
+                comment: '#999999',
+                number: '#be9895'
+            },
+            'base16-ocean': {
+                keyword: '#b48ead',
+                function: '#8fa1b3',
+                string: '#a3be8c',
+                comment: '#65737e',
+                number: '#d08770'
+            },
+            'vim': {
+                keyword: '#ff5fff',
+                function: '#87ffff',
+                string: '#5fff5f',
+                comment: '#808080',
+                number: '#ff87ff'
+            },
+            'material': {
+                keyword: '#c792ea',
+                function: '#82aaff',
+                string: '#c3e88d',
+                comment: '#546e7a',
+                number: '#f07178'
+            },
+            'apprentice': {
+                keyword: '#8787af',
+                function: '#ffffaf',
+                string: '#87af87',
+                comment: '#6c6c6c',
+                number: '#ff8700'
+            },
+            'iceberg': {
+                keyword: '#a093c7',
+                function: '#84a0c6',
+                string: '#b4be82',
+                comment: '#6b7089',
+                number: '#e2a478'
+            },
+            'flatland': {
+                keyword: '#d68c52',
+                function: '#52dab2',
+                string: '#93d94e',
+                comment: '#798188',
+                number: '#f59e5f'
             }
         };
         

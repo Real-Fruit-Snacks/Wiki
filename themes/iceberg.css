@@ -1,0 +1,148 @@
+/* Iceberg Theme - Cool blue-gray theme */
+:root[data-theme="iceberg"] {
+    /* Background Colors */
+    --bg-primary: #161821;
+    --bg-secondary: #12141c;
+    --bg-sidebar: #0f1117;
+    --bg-code: #1a1c27;
+    --bg-selection: #2e313f;
+    --bg-dropdown: #12141c;
+    --bg-hover: #242530;
+    --bg-tag: #242530;
+    
+    /* Additional Background Colors */
+    --bg-modal: #161821ee;
+    --bg-tooltip: #242530;
+    --bg-input: #1a1c27;
+    --bg-highlight: #2e313f;
+    --text-link: #84a0c6;
+    --text-code: #e27878;
+    --text-inverse: #161821;
+    --button-text: #c6c8d1;
+    
+    /* Text Colors */
+    --text-primary: #c6c8d1;
+    --text-secondary: #9b9eb3;
+    --text-muted: #6b7089;
+    --text-heading: #84a0c6;
+    
+    /* Accent Colors */
+    --accent-primary: #84a0c6;
+    --accent-secondary: #a093c7;
+    --accent-warning: #e9b189;
+    --accent-error: #e27878;
+    --accent-danger: #e27878;
+    --accent-info: #91acd1;
+    --accent-success: #b4be82;
+    
+    /* Border Colors */
+    --border-primary: #2e313f;
+    --border-secondary: #444b71;
+    
+    /* Button Colors */
+    --button-bg: #242530;
+    --button-hover: #2e313f;
+    --button-active: #84a0c6;
+    
+    /* Badge Colors */
+    --badge-bg: #e27878;
+    --badge-text: #161821;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* Syntax Highlighting - Iceberg Theme */
+:root[data-theme="iceberg"] .token.comment,
+:root[data-theme="iceberg"] .token.prolog,
+:root[data-theme="iceberg"] .token.doctype,
+:root[data-theme="iceberg"] .token.cdata {
+    color: #6b7089;
+    font-style: italic;
+}
+
+:root[data-theme="iceberg"] .token.punctuation {
+    color: #9b9eb3;
+}
+
+:root[data-theme="iceberg"] .token.property,
+:root[data-theme="iceberg"] .token.tag,
+:root[data-theme="iceberg"] .token.boolean,
+:root[data-theme="iceberg"] .token.number,
+:root[data-theme="iceberg"] .token.constant,
+:root[data-theme="iceberg"] .token.symbol,
+:root[data-theme="iceberg"] .token.deleted {
+    color: #e2a478;
+}
+
+:root[data-theme="iceberg"] .token.selector,
+:root[data-theme="iceberg"] .token.attr-name,
+:root[data-theme="iceberg"] .token.string,
+:root[data-theme="iceberg"] .token.char,
+:root[data-theme="iceberg"] .token.builtin,
+:root[data-theme="iceberg"] .token.inserted {
+    color: #b4be82;
+}
+
+:root[data-theme="iceberg"] .token.operator,
+:root[data-theme="iceberg"] .token.entity,
+:root[data-theme="iceberg"] .token.url,
+:root[data-theme="iceberg"] .language-css .token.string,
+:root[data-theme="iceberg"] .style .token.string {
+    color: #91acd1;
+}
+
+:root[data-theme="iceberg"] .token.atrule,
+:root[data-theme="iceberg"] .token.attr-value,
+:root[data-theme="iceberg"] .token.keyword {
+    color: #a093c7;
+}
+
+:root[data-theme="iceberg"] .token.function,
+:root[data-theme="iceberg"] .token.class-name {
+    color: #84a0c6;
+}
+
+:root[data-theme="iceberg"] .token.regex,
+:root[data-theme="iceberg"] .token.important,
+:root[data-theme="iceberg"] .token.variable {
+    color: #e27878;
+}
+
+/* Cool, icy feel */
+:root[data-theme="iceberg"] .header {
+    background: linear-gradient(to bottom, rgba(132, 160, 198, 0.05), transparent);
+}
+
+:root[data-theme="iceberg"] .active,
+:root[data-theme="iceberg"] .selected {
+    background-color: rgba(132, 160, 198, 0.1);
+    border-left: 2px solid var(--accent-primary);
+}
+
+/* Frosted glass effect */
+:root[data-theme="iceberg"] .modal {
+    backdrop-filter: blur(8px);
+}
+
+/* Scrollbar Iceberg Theme */
+:root[data-theme="iceberg"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="iceberg"] ::-webkit-scrollbar-thumb {
+    background: #444b71;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="iceberg"] ::-webkit-scrollbar-thumb:hover {
+    background: #6b7089;
+}
+
+/* Firefox Scrollbar Iceberg Theme */
+:root[data-theme="iceberg"] * {
+    scrollbar-color: #444b71 var(--bg-primary);
+}

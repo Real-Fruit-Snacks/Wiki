@@ -66,7 +66,7 @@ When making significant changes, consider the modular refactoring plan:
 2. **Main Application**: `script.js` - Contains the monolithic `NotesWiki` class that handles:
    - Tab management with drag-and-drop
    - Advanced search with operators (`tag:`, `author:`, `"phrase"`, `-exclude`, etc.)
-   - Theme switching (60 themes in `/themes/`)
+   - Theme switching (70 themes in `/themes/`)
    - Settings persistence via localStorage
    - Pomodoro timer, keyboard shortcuts, responsive context filtering with dropdown
 
@@ -131,7 +131,9 @@ When making significant changes, consider the modular refactoring plan:
 3. **Bug Fixes** - Fixed 800+ rgba syntax errors, header scrolling issues, theme card rendering
 4. **Application Cleanup** - Removed test files, screenshots, development artifacts
 5. **Repository Maintenance** - Cleaned up Git repository to match local directory
-6. **New Popular Themes** - Added 10 highly requested developer themes (Synthwave '84, Night Owl, Moonlight, Panda, Andromeda, Horizon, Bear, Firefly, Outrun, Halcyon)
+6. **New Popular Themes** - Added 20 highly requested developer themes:
+   - **Wave 1**: Synthwave '84, Night Owl, Moonlight, Panda, Andromeda, Horizon, Bear, Firefly, Outrun, Halcyon
+   - **Wave 2**: City Lights, Snazzy, Oceanic Next, Soft Era, Base16 Ocean, Vim, Material, Apprentice, Iceberg, Flatland
 
 ### Memory Management Critical Patterns
 

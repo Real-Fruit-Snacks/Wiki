@@ -1,0 +1,147 @@
+/* Apprentice Theme - Low-contrast dark theme */
+:root[data-theme="apprentice"] {
+    /* Background Colors */
+    --bg-primary: #262626;
+    --bg-secondary: #1c1c1c;
+    --bg-sidebar: #1a1a1a;
+    --bg-code: #303030;
+    --bg-selection: #444444;
+    --bg-dropdown: #1c1c1c;
+    --bg-hover: #3a3a3a;
+    --bg-tag: #3a3a3a;
+    
+    /* Additional Background Colors */
+    --bg-modal: #262626ee;
+    --bg-tooltip: #3a3a3a;
+    --bg-input: #303030;
+    --bg-highlight: #444444;
+    --text-link: #87afd7;
+    --text-code: #bcbcbc;
+    --text-inverse: #262626;
+    --button-text: #bcbcbc;
+    
+    /* Text Colors */
+    --text-primary: #bcbcbc;
+    --text-secondary: #949494;
+    --text-muted: #6c6c6c;
+    --text-heading: #87afd7;
+    
+    /* Accent Colors */
+    --accent-primary: #87afd7;
+    --accent-secondary: #8787af;
+    --accent-warning: #ffffaf;
+    --accent-error: #af5f5f;
+    --accent-danger: #af5f5f;
+    --accent-info: #5f8787;
+    --accent-success: #5f875f;
+    
+    /* Border Colors */
+    --border-primary: #444444;
+    --border-secondary: #585858;
+    
+    /* Button Colors */
+    --button-bg: #3a3a3a;
+    --button-hover: #444444;
+    --button-active: #87afd7;
+    
+    /* Badge Colors */
+    --badge-bg: #af5f5f;
+    --badge-text: #262626;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+}
+
+/* Syntax Highlighting - Apprentice Theme */
+:root[data-theme="apprentice"] .token.comment,
+:root[data-theme="apprentice"] .token.prolog,
+:root[data-theme="apprentice"] .token.doctype,
+:root[data-theme="apprentice"] .token.cdata {
+    color: #6c6c6c;
+    font-style: italic;
+}
+
+:root[data-theme="apprentice"] .token.punctuation {
+    color: #949494;
+}
+
+:root[data-theme="apprentice"] .token.property,
+:root[data-theme="apprentice"] .token.tag,
+:root[data-theme="apprentice"] .token.boolean,
+:root[data-theme="apprentice"] .token.number,
+:root[data-theme="apprentice"] .token.constant,
+:root[data-theme="apprentice"] .token.symbol,
+:root[data-theme="apprentice"] .token.deleted {
+    color: #ff8700;
+}
+
+:root[data-theme="apprentice"] .token.selector,
+:root[data-theme="apprentice"] .token.attr-name,
+:root[data-theme="apprentice"] .token.string,
+:root[data-theme="apprentice"] .token.char,
+:root[data-theme="apprentice"] .token.builtin,
+:root[data-theme="apprentice"] .token.inserted {
+    color: #87af87;
+}
+
+:root[data-theme="apprentice"] .token.operator,
+:root[data-theme="apprentice"] .token.entity,
+:root[data-theme="apprentice"] .token.url,
+:root[data-theme="apprentice"] .language-css .token.string,
+:root[data-theme="apprentice"] .style .token.string {
+    color: #87afd7;
+}
+
+:root[data-theme="apprentice"] .token.atrule,
+:root[data-theme="apprentice"] .token.attr-value,
+:root[data-theme="apprentice"] .token.keyword {
+    color: #8787af;
+}
+
+:root[data-theme="apprentice"] .token.function,
+:root[data-theme="apprentice"] .token.class-name {
+    color: #ffffaf;
+}
+
+:root[data-theme="apprentice"] .token.regex,
+:root[data-theme="apprentice"] .token.important,
+:root[data-theme="apprentice"] .token.variable {
+    color: #af5f5f;
+}
+
+/* Low contrast styling */
+:root[data-theme="apprentice"] * {
+    letter-spacing: 0.01em;
+}
+
+:root[data-theme="apprentice"] .active,
+:root[data-theme="apprentice"] .selected {
+    background-color: rgba(135, 175, 215, 0.08);
+}
+
+/* Subtle borders */
+:root[data-theme="apprentice"] .sidebar {
+    border-right: 1px solid var(--border-primary);
+}
+
+/* Scrollbar Apprentice Theme */
+:root[data-theme="apprentice"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="apprentice"] ::-webkit-scrollbar-thumb {
+    background: #585858;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="apprentice"] ::-webkit-scrollbar-thumb:hover {
+    background: #6c6c6c;
+}
+
+/* Firefox Scrollbar Apprentice Theme */
+:root[data-theme="apprentice"] * {
+    scrollbar-color: #585858 var(--bg-primary);
+}
