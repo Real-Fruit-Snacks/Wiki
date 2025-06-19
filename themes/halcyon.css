@@ -1,0 +1,142 @@
+/* Halcyon Theme - Soft, muted dark theme */
+:root[data-theme="halcyon"] {
+    /* Background Colors */
+    --bg-primary: #171c28;
+    --bg-secondary: #1d2433;
+    --bg-sidebar: #141820;
+    --bg-code: #1d2433;
+    --bg-selection: #2f3b54;
+    --bg-dropdown: #1d2433;
+    --bg-hover: #242d42;
+    --bg-tag: #242d42;
+    
+    /* Additional Background Colors */
+    --bg-modal: #171c28ee;
+    --bg-tooltip: #242d42;
+    --bg-input: #1d2433;
+    --bg-highlight: #2f3b54;
+    --text-link: #5ccfe6;
+    --text-code: #ffae57;
+    --text-inverse: #ffffff;
+    --button-text: #d7dce2;
+    
+    /* Text Colors */
+    --text-primary: #d7dce2;
+    --text-secondary: #acb6bf;
+    --text-muted: #6679a4;
+    --text-heading: #5ccfe6;
+    
+    /* Accent Colors */
+    --accent-primary: #5ccfe6;
+    --accent-secondary: #c3a6ff;
+    --accent-warning: #ffae57;
+    --accent-error: #ef6b73;
+    --accent-danger: #ef6b73;
+    --accent-info: #5ccfe6;
+    --accent-success: #bae67e;
+    
+    /* Border Colors */
+    --border-primary: #2f3b54;
+    --border-secondary: #414d6b;
+    
+    /* Button Colors */
+    --button-bg: #242d42;
+    --button-hover: #2f3b54;
+    --button-active: #5ccfe6;
+    
+    /* Badge Colors */
+    --badge-bg: #ef6b73;
+    --badge-text: #171c28;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* Syntax Highlighting - Halcyon Theme */
+:root[data-theme="halcyon"] .token.comment,
+:root[data-theme="halcyon"] .token.prolog,
+:root[data-theme="halcyon"] .token.doctype,
+:root[data-theme="halcyon"] .token.cdata {
+    color: #6679a4;
+    font-style: italic;
+}
+
+:root[data-theme="halcyon"] .token.punctuation {
+    color: #acb6bf;
+}
+
+:root[data-theme="halcyon"] .token.property,
+:root[data-theme="halcyon"] .token.tag,
+:root[data-theme="halcyon"] .token.boolean,
+:root[data-theme="halcyon"] .token.number,
+:root[data-theme="halcyon"] .token.constant,
+:root[data-theme="halcyon"] .token.symbol,
+:root[data-theme="halcyon"] .token.deleted {
+    color: #ffae57;
+}
+
+:root[data-theme="halcyon"] .token.selector,
+:root[data-theme="halcyon"] .token.attr-name,
+:root[data-theme="halcyon"] .token.string,
+:root[data-theme="halcyon"] .token.char,
+:root[data-theme="halcyon"] .token.builtin,
+:root[data-theme="halcyon"] .token.inserted {
+    color: #bae67e;
+}
+
+:root[data-theme="halcyon"] .token.operator,
+:root[data-theme="halcyon"] .token.entity,
+:root[data-theme="halcyon"] .token.url,
+:root[data-theme="halcyon"] .language-css .token.string,
+:root[data-theme="halcyon"] .style .token.string {
+    color: #5ccfe6;
+}
+
+:root[data-theme="halcyon"] .token.atrule,
+:root[data-theme="halcyon"] .token.attr-value,
+:root[data-theme="halcyon"] .token.keyword {
+    color: #c3a6ff;
+}
+
+:root[data-theme="halcyon"] .token.function,
+:root[data-theme="halcyon"] .token.class-name {
+    color: #ffd580;
+}
+
+:root[data-theme="halcyon"] .token.regex,
+:root[data-theme="halcyon"] .token.important,
+:root[data-theme="halcyon"] .token.variable {
+    color: #ef6b73;
+}
+
+/* Soft, muted feel */
+:root[data-theme="halcyon"] .note-content {
+    letter-spacing: 0.02em;
+}
+
+:root[data-theme="halcyon"] .active,
+:root[data-theme="halcyon"] .selected {
+    background-color: rgba(92, 207, 230, 0.08);
+}
+
+/* Scrollbar Halcyon Theme */
+:root[data-theme="halcyon"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="halcyon"] ::-webkit-scrollbar-thumb {
+    background: #414d6b;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="halcyon"] ::-webkit-scrollbar-thumb:hover {
+    background: #6679a4;
+}
+
+/* Firefox Scrollbar Halcyon Theme */
+:root[data-theme="halcyon"] * {
+    scrollbar-color: #414d6b var(--bg-primary);
+}

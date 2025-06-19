@@ -42,7 +42,9 @@ class NotesWiki {
                 themes: [
                     { id: 'dark', name: 'Dark', description: 'Modern dark theme with subtle blue accents' },
                     { id: 'dracula', name: 'Dracula', description: 'Vampire purple theme with pink accents and glow effects' },
+                    { id: 'halcyon', name: 'Halcyon', description: 'Soft, muted dark theme with gentle accents' },
                     { id: 'monokai', name: 'Monokai', description: 'Vibrant colors with animated rainbow effects' },
+                    { id: 'night-owl', name: 'Night Owl', description: 'Popular theme by Sarah Drasner with rich blues' },
                     { id: 'one-dark-pro', name: 'One Dark Pro', description: 'Atom-inspired theme with tech grid effects' },
                     { id: 'tomorrow-night', name: 'Tomorrow Night', description: 'Clean dark theme with smooth animations' },
                     { id: 'zenburn', name: 'Zenburn', description: 'Low contrast zen theme with calming effects' }
@@ -69,6 +71,7 @@ class NotesWiki {
                 name: 'Nature & Earth',
                 themes: [
                     { id: 'ayu-light', name: 'Ayu Light', description: 'Earthy light theme with warm nature tones' },
+                    { id: 'bear', name: 'Bear', description: 'Minimalist warm brown/beige theme for comfortable reading' },
                     { id: 'everforest-dark', name: 'Everforest Dark', description: 'Deep forest theme with organic animations' },
                     { id: 'gruvbox-dark', name: 'Gruvbox Dark', description: 'Retro warm theme with CRT effects' },
                     { id: 'gruvbox-light', name: 'Gruvbox Light', description: 'Vintage paper theme with warm accents' },
@@ -94,6 +97,7 @@ class NotesWiki {
                     { id: 'bluloco-dark', name: 'Bluloco Dark', description: 'Electric blue dark theme with vibrant accents' },
                     { id: 'bluloco-light', name: 'Bluloco Light', description: 'Sophisticated blue light theme' },
                     { id: 'cobalt2', name: 'Cobalt2', description: 'Wes Bos theme with electric neon effects' },
+                    { id: 'firefly', name: 'Firefly', description: 'Dark blue theme with bright glowing accents' },
                     { id: 'noctis', name: 'Noctis', description: 'Ocean-inspired theme with wave effects' },
                     { id: 'spacegray', name: 'Spacegray', description: 'Minimal space theme with starfield' }
                 ]
@@ -104,6 +108,8 @@ class NotesWiki {
                     { id: '2077', name: '2077 Theme', description: 'Cyberpunk 2077 with neon glow and scan lines' },
                     { id: 'cyberpunk', name: 'Cyberpunk', description: 'Dystopian theme with glitch effects' },
                     { id: 'matrix', name: 'Matrix', description: 'Terminal green with falling code rain' },
+                    { id: 'outrun', name: 'Outrun', description: 'Electric blues and hot pinks with intense neon glow' },
+                    { id: 'synthwave-84', name: 'Synthwave \'84', description: 'Retro neon aesthetic with vibrant synthwave colors' },
                     { id: 'tokyo-night', name: 'Tokyo Night', description: 'Tokyo neon theme with cyberpunk effects' },
                     { id: 'vaporwave', name: 'Vaporwave', description: 'Retro 80s theme with VHS glitch effects' }
                 ]
@@ -111,9 +117,12 @@ class NotesWiki {
             {
                 name: 'Elegant & Pastel',
                 themes: [
+                    { id: 'andromeda', name: 'Andromeda', description: 'Dark theme with distinctive purple accents' },
                     { id: 'catppuccin-latte', name: 'Catppuccin Latte', description: 'Warm pastel light theme with cozy effects' },
                     { id: 'catppuccin-mocha', name: 'Catppuccin Mocha', description: 'Dark pastel theme with glass effects' },
+                    { id: 'horizon', name: 'Horizon', description: 'Warm dark theme with orange and pink accents' },
                     { id: 'lucario', name: 'Lucario', description: 'Minimal pastel theme with soft glows' },
+                    { id: 'moonlight', name: 'Moonlight', description: 'Beautiful purple and blue dark theme' },
                     { id: 'palenight', name: 'Palenight', description: 'Elegant purple theme with aurora effects' },
                     { id: 'shades-of-purple', name: 'Shades of Purple', description: 'Magical purple theme with particle effects' },
                     { id: 'witch-hazel', name: 'Witch Hazel', description: 'Mystical theme with magical animations' }
@@ -134,7 +143,8 @@ class NotesWiki {
                 name: 'Special Effects',
                 themes: [
                     { id: 'hackthebox', name: 'HackTheBox', description: 'Hacker terminal theme with sweep effects' },
-                    { id: 'hotdog-stand', name: 'Hot Dog Stand', description: 'Windows 3.1 retro theme with pixel cursors' }
+                    { id: 'hotdog-stand', name: 'Hot Dog Stand', description: 'Windows 3.1 retro theme with pixel cursors' },
+                    { id: 'panda', name: 'Panda', description: 'High contrast theme with distinctive green accents' }
                 ]
             }
         ];
@@ -5174,6 +5184,76 @@ class NotesWiki {
                 accent: '#8c6fd5',
                 text: '#e5e3ea',
                 textMuted: '#8e8b97'
+            },
+            'synthwave-84': {
+                bg: '#262335',
+                border: '#495495',
+                accent: '#ff7edb',
+                text: '#ffffff',
+                textMuted: '#b893ce'
+            },
+            'night-owl': {
+                bg: '#011627',
+                border: '#1d3b53',
+                accent: '#82aaff',
+                text: '#d6deeb',
+                textMuted: '#5f7e97'
+            },
+            'moonlight': {
+                bg: '#212337',
+                border: '#2f334d',
+                accent: '#82aaff',
+                text: '#c8d3f5',
+                textMuted: '#7a88cf'
+            },
+            'panda': {
+                bg: '#292a2b',
+                border: '#3d4142',
+                accent: '#19f9d8',
+                text: '#e6e6e6',
+                textMuted: '#757575'
+            },
+            'andromeda': {
+                bg: '#23262e',
+                border: '#2e323c',
+                accent: '#00e8c6',
+                text: '#d5d8da',
+                textMuted: '#6c7887'
+            },
+            'horizon': {
+                bg: '#1c1e26',
+                border: '#2e303e',
+                accent: '#ee64ac',
+                text: '#d5d8da',
+                textMuted: '#6c6f93'
+            },
+            'bear': {
+                bg: '#1f1e1d',
+                border: '#3c3836',
+                accent: '#d08770',
+                text: '#e5ddcb',
+                textMuted: '#7c6f64'
+            },
+            'firefly': {
+                bg: '#0f1419',
+                border: '#253340',
+                accent: '#39bae6',
+                text: '#c9d1d9',
+                textMuted: '#626a73'
+            },
+            'outrun': {
+                bg: '#0c0a20',
+                border: '#2d2b55',
+                accent: '#00eeff',
+                text: '#e0e0ff',
+                textMuted: '#7c7ca0'
+            },
+            'halcyon': {
+                bg: '#171c28',
+                border: '#2f3b54',
+                accent: '#5ccfe6',
+                text: '#d7dce2',
+                textMuted: '#6679a4'
             }
         };
         
@@ -5532,6 +5612,76 @@ class NotesWiki {
                 string: '#44b662',
                 comment: '#8e8b97',
                 number: '#dc3545'
+            },
+            'synthwave-84': {
+                keyword: '#fede5d',
+                function: '#ff7edb',
+                string: '#72f1b8',
+                comment: '#848bbd',
+                number: '#f97e72'
+            },
+            'night-owl': {
+                keyword: '#c792ea',
+                function: '#82aaff',
+                string: '#ecc48d',
+                comment: '#637777',
+                number: '#f78c6c'
+            },
+            'moonlight': {
+                keyword: '#c099ff',
+                function: '#82aaff',
+                string: '#c3e88d',
+                comment: '#7a88cf',
+                number: '#ff757f'
+            },
+            'panda': {
+                keyword: '#ff75b5',
+                function: '#45a9f9',
+                string: '#19f9d8',
+                comment: '#676b79',
+                number: '#ffcc95'
+            },
+            'andromeda': {
+                keyword: '#c74ded',
+                function: '#ffe66d',
+                string: '#96e072',
+                comment: '#6c7887',
+                number: '#f39c12'
+            },
+            'horizon': {
+                keyword: '#b877db',
+                function: '#25b0bc',
+                string: '#fab28e',
+                comment: '#6c6f93',
+                number: '#fab795'
+            },
+            'bear': {
+                keyword: '#b48ead',
+                function: '#ebcb8b',
+                string: '#a3be8c',
+                comment: '#7c6f64',
+                number: '#d08770'
+            },
+            'firefly': {
+                keyword: '#ff8f40',
+                function: '#ffb454',
+                string: '#aad94c',
+                comment: '#626a73',
+                number: '#ff8f40'
+            },
+            'outrun': {
+                keyword: '#ff00ff',
+                function: '#ffff00',
+                string: '#00ff88',
+                comment: '#7c7ca0',
+                number: '#ff0080'
+            },
+            'halcyon': {
+                keyword: '#c3a6ff',
+                function: '#ffd580',
+                string: '#bae67e',
+                comment: '#6679a4',
+                number: '#ffae57'
             }
         };
         

@@ -1,0 +1,132 @@
+/* Night Owl Theme - Popular theme by Sarah Drasner */
+:root[data-theme="night-owl"] {
+    /* Background Colors */
+    --bg-primary: #011627;
+    --bg-secondary: #0b2942;
+    --bg-sidebar: #01111d;
+    --bg-code: #0b2942;
+    --bg-selection: #1d3b53;
+    --bg-dropdown: #0b2942;
+    --bg-hover: #1d3b53;
+    --bg-tag: #1d3b53;
+    
+    /* Additional Background Colors */
+    --bg-modal: #011627ee;
+    --bg-tooltip: #0b2942;
+    --bg-input: #0b2942;
+    --bg-highlight: #1d3b53;
+    --text-link: #82aaff;
+    --text-code: #f78c6c;
+    --text-inverse: #ffffff;
+    --button-text: #d6deeb;
+    
+    /* Text Colors */
+    --text-primary: #d6deeb;
+    --text-secondary: #7fdbca;
+    --text-muted: #5f7e97;
+    --text-heading: #82aaff;
+    
+    /* Accent Colors */
+    --accent-primary: #82aaff;
+    --accent-secondary: #7fdbca;
+    --accent-warning: #ffcb8b;
+    --accent-error: #ff5874;
+    --accent-danger: #ff5874;
+    --accent-info: #82aaff;
+    --accent-success: #addb67;
+    
+    /* Border Colors */
+    --border-primary: #1d3b53;
+    --border-secondary: #5f7e97;
+    
+    /* Button Colors */
+    --button-bg: #1d3b53;
+    --button-hover: #234e6d;
+    --button-active: #82aaff;
+    
+    /* Badge Colors */
+    --badge-bg: #ff5874;
+    --badge-text: #011627;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.6);
+}
+
+/* Syntax Highlighting - Night Owl Theme */
+:root[data-theme="night-owl"] .token.comment,
+:root[data-theme="night-owl"] .token.prolog,
+:root[data-theme="night-owl"] .token.doctype,
+:root[data-theme="night-owl"] .token.cdata {
+    color: #637777;
+    font-style: italic;
+}
+
+:root[data-theme="night-owl"] .token.punctuation {
+    color: #d6deeb;
+}
+
+:root[data-theme="night-owl"] .token.property,
+:root[data-theme="night-owl"] .token.tag,
+:root[data-theme="night-owl"] .token.boolean,
+:root[data-theme="night-owl"] .token.number,
+:root[data-theme="night-owl"] .token.constant,
+:root[data-theme="night-owl"] .token.symbol,
+:root[data-theme="night-owl"] .token.deleted {
+    color: #f78c6c;
+}
+
+:root[data-theme="night-owl"] .token.selector,
+:root[data-theme="night-owl"] .token.attr-name,
+:root[data-theme="night-owl"] .token.string,
+:root[data-theme="night-owl"] .token.char,
+:root[data-theme="night-owl"] .token.builtin,
+:root[data-theme="night-owl"] .token.inserted {
+    color: #ecc48d;
+}
+
+:root[data-theme="night-owl"] .token.operator,
+:root[data-theme="night-owl"] .token.entity,
+:root[data-theme="night-owl"] .token.url,
+:root[data-theme="night-owl"] .language-css .token.string,
+:root[data-theme="night-owl"] .style .token.string {
+    color: #7fdbca;
+}
+
+:root[data-theme="night-owl"] .token.atrule,
+:root[data-theme="night-owl"] .token.attr-value,
+:root[data-theme="night-owl"] .token.keyword {
+    color: #c792ea;
+}
+
+:root[data-theme="night-owl"] .token.function,
+:root[data-theme="night-owl"] .token.class-name {
+    color: #82aaff;
+}
+
+:root[data-theme="night-owl"] .token.regex,
+:root[data-theme="night-owl"] .token.important,
+:root[data-theme="night-owl"] .token.variable {
+    color: #addb67;
+}
+
+/* Scrollbar Night Owl Theme */
+:root[data-theme="night-owl"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="night-owl"] ::-webkit-scrollbar-thumb {
+    background: #5f7e97;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="night-owl"] ::-webkit-scrollbar-thumb:hover {
+    background: #7fdbca;
+}
+
+/* Firefox Scrollbar Night Owl Theme */
+:root[data-theme="night-owl"] * {
+    scrollbar-color: #5f7e97 var(--bg-primary);
+}

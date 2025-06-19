@@ -1,0 +1,132 @@
+/* Andromeda Theme - Dark theme with purple accents */
+:root[data-theme="andromeda"] {
+    /* Background Colors */
+    --bg-primary: #23262e;
+    --bg-secondary: #1e2025;
+    --bg-sidebar: #1a1c20;
+    --bg-code: #1e2025;
+    --bg-selection: #5a4a78;
+    --bg-dropdown: #1e2025;
+    --bg-hover: #2e323c;
+    --bg-tag: #2e323c;
+    
+    /* Additional Background Colors */
+    --bg-modal: #23262eee;
+    --bg-tooltip: #2e323c;
+    --bg-input: #1e2025;
+    --bg-highlight: #5a4a78;
+    --text-link: #00e8c6;
+    --text-code: #f39c12;
+    --text-inverse: #ffffff;
+    --button-text: #d5d8da;
+    
+    /* Text Colors */
+    --text-primary: #d5d8da;
+    --text-secondary: #abb2bf;
+    --text-muted: #6c7887;
+    --text-heading: #ee5d43;
+    
+    /* Accent Colors */
+    --accent-primary: #00e8c6;
+    --accent-secondary: #c74ded;
+    --accent-warning: #ffe66d;
+    --accent-error: #ee5d43;
+    --accent-danger: #ee5d43;
+    --accent-info: #00e8c6;
+    --accent-success: #96e072;
+    
+    /* Border Colors */
+    --border-primary: #2e323c;
+    --border-secondary: #464b5d;
+    
+    /* Button Colors */
+    --button-bg: #2e323c;
+    --button-hover: #464b5d;
+    --button-active: #00e8c6;
+    
+    /* Badge Colors */
+    --badge-bg: #c74ded;
+    --badge-text: #1a1c20;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.6);
+}
+
+/* Syntax Highlighting - Andromeda Theme */
+:root[data-theme="andromeda"] .token.comment,
+:root[data-theme="andromeda"] .token.prolog,
+:root[data-theme="andromeda"] .token.doctype,
+:root[data-theme="andromeda"] .token.cdata {
+    color: #6c7887;
+    font-style: italic;
+}
+
+:root[data-theme="andromeda"] .token.punctuation {
+    color: #d5d8da;
+}
+
+:root[data-theme="andromeda"] .token.property,
+:root[data-theme="andromeda"] .token.tag,
+:root[data-theme="andromeda"] .token.boolean,
+:root[data-theme="andromeda"] .token.number,
+:root[data-theme="andromeda"] .token.constant,
+:root[data-theme="andromeda"] .token.symbol,
+:root[data-theme="andromeda"] .token.deleted {
+    color: #f39c12;
+}
+
+:root[data-theme="andromeda"] .token.selector,
+:root[data-theme="andromeda"] .token.attr-name,
+:root[data-theme="andromeda"] .token.string,
+:root[data-theme="andromeda"] .token.char,
+:root[data-theme="andromeda"] .token.builtin,
+:root[data-theme="andromeda"] .token.inserted {
+    color: #96e072;
+}
+
+:root[data-theme="andromeda"] .token.operator,
+:root[data-theme="andromeda"] .token.entity,
+:root[data-theme="andromeda"] .token.url,
+:root[data-theme="andromeda"] .language-css .token.string,
+:root[data-theme="andromeda"] .style .token.string {
+    color: #00e8c6;
+}
+
+:root[data-theme="andromeda"] .token.atrule,
+:root[data-theme="andromeda"] .token.attr-value,
+:root[data-theme="andromeda"] .token.keyword {
+    color: #c74ded;
+}
+
+:root[data-theme="andromeda"] .token.function,
+:root[data-theme="andromeda"] .token.class-name {
+    color: #ffe66d;
+}
+
+:root[data-theme="andromeda"] .token.regex,
+:root[data-theme="andromeda"] .token.important,
+:root[data-theme="andromeda"] .token.variable {
+    color: #ee5d43;
+}
+
+/* Scrollbar Andromeda Theme */
+:root[data-theme="andromeda"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="andromeda"] ::-webkit-scrollbar-thumb {
+    background: #464b5d;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="andromeda"] ::-webkit-scrollbar-thumb:hover {
+    background: #c74ded;
+}
+
+/* Firefox Scrollbar Andromeda Theme */
+:root[data-theme="andromeda"] * {
+    scrollbar-color: #464b5d var(--bg-primary);
+}

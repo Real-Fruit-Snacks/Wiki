@@ -1,0 +1,137 @@
+/* Bear Theme - Minimalist warm brown/beige theme */
+:root[data-theme="bear"] {
+    /* Background Colors */
+    --bg-primary: #1f1e1d;
+    --bg-secondary: #1a1918;
+    --bg-sidebar: #161514;
+    --bg-code: #242321;
+    --bg-selection: #4a3f36;
+    --bg-dropdown: #1a1918;
+    --bg-hover: #2e2927;
+    --bg-tag: #2e2927;
+    
+    /* Additional Background Colors */
+    --bg-modal: #1f1e1dee;
+    --bg-tooltip: #2e2927;
+    --bg-input: #242321;
+    --bg-highlight: #4a3f36;
+    --text-link: #d08770;
+    --text-code: #d08770;
+    --text-inverse: #ffffff;
+    --button-text: #e5ddcb;
+    
+    /* Text Colors */
+    --text-primary: #e5ddcb;
+    --text-secondary: #a89984;
+    --text-muted: #7c6f64;
+    --text-heading: #ebcb8b;
+    
+    /* Accent Colors */
+    --accent-primary: #d08770;
+    --accent-secondary: #a3be8c;
+    --accent-warning: #ebcb8b;
+    --accent-error: #bf616a;
+    --accent-danger: #bf616a;
+    --accent-info: #88c0d0;
+    --accent-success: #a3be8c;
+    
+    /* Border Colors */
+    --border-primary: #3c3836;
+    --border-secondary: #504945;
+    
+    /* Button Colors */
+    --button-bg: #2e2927;
+    --button-hover: #3c3836;
+    --button-active: #d08770;
+    
+    /* Badge Colors */
+    --badge-bg: #bf616a;
+    --badge-text: #1f1e1d;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* Syntax Highlighting - Bear Theme */
+:root[data-theme="bear"] .token.comment,
+:root[data-theme="bear"] .token.prolog,
+:root[data-theme="bear"] .token.doctype,
+:root[data-theme="bear"] .token.cdata {
+    color: #7c6f64;
+    font-style: italic;
+}
+
+:root[data-theme="bear"] .token.punctuation {
+    color: #a89984;
+}
+
+:root[data-theme="bear"] .token.property,
+:root[data-theme="bear"] .token.tag,
+:root[data-theme="bear"] .token.boolean,
+:root[data-theme="bear"] .token.number,
+:root[data-theme="bear"] .token.constant,
+:root[data-theme="bear"] .token.symbol,
+:root[data-theme="bear"] .token.deleted {
+    color: #d08770;
+}
+
+:root[data-theme="bear"] .token.selector,
+:root[data-theme="bear"] .token.attr-name,
+:root[data-theme="bear"] .token.string,
+:root[data-theme="bear"] .token.char,
+:root[data-theme="bear"] .token.builtin,
+:root[data-theme="bear"] .token.inserted {
+    color: #a3be8c;
+}
+
+:root[data-theme="bear"] .token.operator,
+:root[data-theme="bear"] .token.entity,
+:root[data-theme="bear"] .token.url,
+:root[data-theme="bear"] .language-css .token.string,
+:root[data-theme="bear"] .style .token.string {
+    color: #88c0d0;
+}
+
+:root[data-theme="bear"] .token.atrule,
+:root[data-theme="bear"] .token.attr-value,
+:root[data-theme="bear"] .token.keyword {
+    color: #b48ead;
+}
+
+:root[data-theme="bear"] .token.function,
+:root[data-theme="bear"] .token.class-name {
+    color: #ebcb8b;
+}
+
+:root[data-theme="bear"] .token.regex,
+:root[data-theme="bear"] .token.important,
+:root[data-theme="bear"] .token.variable {
+    color: #bf616a;
+}
+
+/* Warm, cozy feel */
+:root[data-theme="bear"] .note-content {
+    line-height: 1.7;
+}
+
+/* Scrollbar Bear Theme */
+:root[data-theme="bear"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bear"] ::-webkit-scrollbar-thumb {
+    background: #504945;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bear"] ::-webkit-scrollbar-thumb:hover {
+    background: #7c6f64;
+}
+
+/* Firefox Scrollbar Bear Theme */
+:root[data-theme="bear"] * {
+    scrollbar-color: #504945 var(--bg-primary);
+}

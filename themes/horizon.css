@@ -1,0 +1,138 @@
+/* Horizon Theme - Warm dark theme with orange/pink accents */
+:root[data-theme="horizon"] {
+    /* Background Colors */
+    --bg-primary: #1c1e26;
+    --bg-secondary: #16161c;
+    --bg-sidebar: #12131a;
+    --bg-code: #16161c;
+    --bg-selection: #2e303e;
+    --bg-dropdown: #16161c;
+    --bg-hover: #232530;
+    --bg-tag: #232530;
+    
+    /* Additional Background Colors */
+    --bg-modal: #1c1e26ee;
+    --bg-tooltip: #232530;
+    --bg-input: #16161c;
+    --bg-highlight: #2e303e;
+    --text-link: #ee64ac;
+    --text-code: #fab795;
+    --text-inverse: #000000;
+    --button-text: #d5d8da;
+    
+    /* Text Colors */
+    --text-primary: #d5d8da;
+    --text-secondary: #adb1bb;
+    --text-muted: #6c6f93;
+    --text-heading: #e95678;
+    
+    /* Accent Colors */
+    --accent-primary: #ee64ac;
+    --accent-secondary: #59e1e3;
+    --accent-warning: #fab795;
+    --accent-error: #e95678;
+    --accent-danger: #e95678;
+    --accent-info: #59e1e3;
+    --accent-success: #29d398;
+    
+    /* Border Colors */
+    --border-primary: #2e303e;
+    --border-secondary: #474a59;
+    
+    /* Button Colors */
+    --button-bg: #232530;
+    --button-hover: #2e303e;
+    --button-active: #ee64ac;
+    
+    /* Badge Colors */
+    --badge-bg: #e95678;
+    --badge-text: #1c1e26;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.6);
+}
+
+/* Syntax Highlighting - Horizon Theme */
+:root[data-theme="horizon"] .token.comment,
+:root[data-theme="horizon"] .token.prolog,
+:root[data-theme="horizon"] .token.doctype,
+:root[data-theme="horizon"] .token.cdata {
+    color: #6c6f93;
+    font-style: italic;
+}
+
+:root[data-theme="horizon"] .token.punctuation {
+    color: #d5d8da;
+}
+
+:root[data-theme="horizon"] .token.property,
+:root[data-theme="horizon"] .token.tag,
+:root[data-theme="horizon"] .token.boolean,
+:root[data-theme="horizon"] .token.number,
+:root[data-theme="horizon"] .token.constant,
+:root[data-theme="horizon"] .token.symbol,
+:root[data-theme="horizon"] .token.deleted {
+    color: #fab795;
+}
+
+:root[data-theme="horizon"] .token.selector,
+:root[data-theme="horizon"] .token.attr-name,
+:root[data-theme="horizon"] .token.string,
+:root[data-theme="horizon"] .token.char,
+:root[data-theme="horizon"] .token.builtin,
+:root[data-theme="horizon"] .token.inserted {
+    color: #fab28e;
+}
+
+:root[data-theme="horizon"] .token.operator,
+:root[data-theme="horizon"] .token.entity,
+:root[data-theme="horizon"] .token.url,
+:root[data-theme="horizon"] .language-css .token.string,
+:root[data-theme="horizon"] .style .token.string {
+    color: #59e1e3;
+}
+
+:root[data-theme="horizon"] .token.atrule,
+:root[data-theme="horizon"] .token.attr-value,
+:root[data-theme="horizon"] .token.keyword {
+    color: #b877db;
+}
+
+:root[data-theme="horizon"] .token.function,
+:root[data-theme="horizon"] .token.class-name {
+    color: #25b0bc;
+}
+
+:root[data-theme="horizon"] .token.regex,
+:root[data-theme="horizon"] .token.important,
+:root[data-theme="horizon"] .token.variable {
+    color: #e95678;
+}
+
+/* Warm glow effects */
+:root[data-theme="horizon"] .active,
+:root[data-theme="horizon"] .selected {
+    box-shadow: inset 0 0 0 1px rgba(238, 100, 172, 0.3);
+}
+
+/* Scrollbar Horizon Theme */
+:root[data-theme="horizon"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="horizon"] ::-webkit-scrollbar-thumb {
+    background: #474a59;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="horizon"] ::-webkit-scrollbar-thumb:hover {
+    background: #ee64ac;
+}
+
+/* Firefox Scrollbar Horizon Theme */
+:root[data-theme="horizon"] * {
+    scrollbar-color: #474a59 var(--bg-primary);
+}

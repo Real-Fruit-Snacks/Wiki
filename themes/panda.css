@@ -1,0 +1,139 @@
+/* Panda Theme - High contrast with distinctive green accents */
+:root[data-theme="panda"] {
+    /* Background Colors */
+    --bg-primary: #292a2b;
+    --bg-secondary: #242526;
+    --bg-sidebar: #1f2021;
+    --bg-code: #242526;
+    --bg-selection: #3d4142;
+    --bg-dropdown: #242526;
+    --bg-hover: #3d4142;
+    --bg-tag: #3d4142;
+    
+    /* Additional Background Colors */
+    --bg-modal: #292a2bee;
+    --bg-tooltip: #3d4142;
+    --bg-input: #242526;
+    --bg-highlight: #3d4142;
+    --text-link: #19f9d8;
+    --text-code: #ff6ac1;
+    --text-inverse: #000000;
+    --button-text: #e6e6e6;
+    
+    /* Text Colors */
+    --text-primary: #e6e6e6;
+    --text-secondary: #b3b9c5;
+    --text-muted: #757575;
+    --text-heading: #19f9d8;
+    
+    /* Accent Colors */
+    --accent-primary: #19f9d8;
+    --accent-secondary: #ff75b5;
+    --accent-warning: #ffcc95;
+    --accent-error: #ff2c6d;
+    --accent-danger: #ff2c6d;
+    --accent-info: #45a9f9;
+    --accent-success: #19f9d8;
+    
+    /* Border Colors */
+    --border-primary: #3d4142;
+    --border-secondary: #535455;
+    
+    /* Button Colors */
+    --button-bg: #3d4142;
+    --button-hover: #535455;
+    --button-active: #19f9d8;
+    
+    /* Badge Colors */
+    --badge-bg: #ff75b5;
+    --badge-text: #1f2021;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -1px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7), 0 4px 6px -2px rgba(0, 0, 0, 0.6);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.8), 0 10px 10px -5px rgba(0, 0, 0, 0.7);
+}
+
+/* Syntax Highlighting - Panda Theme */
+:root[data-theme="panda"] .token.comment,
+:root[data-theme="panda"] .token.prolog,
+:root[data-theme="panda"] .token.doctype,
+:root[data-theme="panda"] .token.cdata {
+    color: #676b79;
+    font-style: italic;
+}
+
+:root[data-theme="panda"] .token.punctuation {
+    color: #e6e6e6;
+}
+
+:root[data-theme="panda"] .token.property,
+:root[data-theme="panda"] .token.tag,
+:root[data-theme="panda"] .token.boolean,
+:root[data-theme="panda"] .token.number,
+:root[data-theme="panda"] .token.constant,
+:root[data-theme="panda"] .token.symbol,
+:root[data-theme="panda"] .token.deleted {
+    color: #ffcc95;
+}
+
+:root[data-theme="panda"] .token.selector,
+:root[data-theme="panda"] .token.attr-name,
+:root[data-theme="panda"] .token.string,
+:root[data-theme="panda"] .token.char,
+:root[data-theme="panda"] .token.builtin,
+:root[data-theme="panda"] .token.inserted {
+    color: #19f9d8;
+}
+
+:root[data-theme="panda"] .token.operator,
+:root[data-theme="panda"] .token.entity,
+:root[data-theme="panda"] .token.url,
+:root[data-theme="panda"] .language-css .token.string,
+:root[data-theme="panda"] .style .token.string {
+    color: #ffb86c;
+}
+
+:root[data-theme="panda"] .token.atrule,
+:root[data-theme="panda"] .token.attr-value,
+:root[data-theme="panda"] .token.keyword {
+    color: #ff75b5;
+}
+
+:root[data-theme="panda"] .token.function,
+:root[data-theme="panda"] .token.class-name {
+    color: #45a9f9;
+}
+
+:root[data-theme="panda"] .token.regex,
+:root[data-theme="panda"] .token.important,
+:root[data-theme="panda"] .token.variable {
+    color: #ff9ac1;
+}
+
+/* High contrast borders */
+:root[data-theme="panda"] input,
+:root[data-theme="panda"] select,
+:root[data-theme="panda"] textarea {
+    border: 1px solid var(--border-secondary);
+}
+
+/* Scrollbar Panda Theme */
+:root[data-theme="panda"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="panda"] ::-webkit-scrollbar-thumb {
+    background: #535455;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="panda"] ::-webkit-scrollbar-thumb:hover {
+    background: #19f9d8;
+}
+
+/* Firefox Scrollbar Panda Theme */
+:root[data-theme="panda"] * {
+    scrollbar-color: #535455 var(--bg-primary);
+}

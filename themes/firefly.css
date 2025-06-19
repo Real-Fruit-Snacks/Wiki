@@ -1,0 +1,139 @@
+/* Firefly Theme - Dark blue theme with bright accents */
+:root[data-theme="firefly"] {
+    /* Background Colors */
+    --bg-primary: #0f1419;
+    --bg-secondary: #0d1117;
+    --bg-sidebar: #0a0e14;
+    --bg-code: #0d1117;
+    --bg-selection: #253340;
+    --bg-dropdown: #0d1117;
+    --bg-hover: #1c2633;
+    --bg-tag: #1c2633;
+    
+    /* Additional Background Colors */
+    --bg-modal: #0f1419ee;
+    --bg-tooltip: #1c2633;
+    --bg-input: #0d1117;
+    --bg-highlight: #253340;
+    --text-link: #39bae6;
+    --text-code: #ff8f40;
+    --text-inverse: #ffffff;
+    --button-text: #c9d1d9;
+    
+    /* Text Colors */
+    --text-primary: #c9d1d9;
+    --text-secondary: #8b949e;
+    --text-muted: #626a73;
+    --text-heading: #39bae6;
+    
+    /* Accent Colors */
+    --accent-primary: #39bae6;
+    --accent-secondary: #59c2ff;
+    --accent-warning: #ffb454;
+    --accent-error: #f07178;
+    --accent-danger: #f07178;
+    --accent-info: #39bae6;
+    --accent-success: #aad94c;
+    
+    /* Border Colors */
+    --border-primary: #253340;
+    --border-secondary: #3e4b59;
+    
+    /* Button Colors */
+    --button-bg: #1c2633;
+    --button-hover: #253340;
+    --button-active: #39bae6;
+    
+    /* Badge Colors */
+    --badge-bg: #f07178;
+    --badge-text: #0f1419;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -1px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7), 0 4px 6px -2px rgba(0, 0, 0, 0.6);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.8), 0 10px 10px -5px rgba(0, 0, 0, 0.7);
+}
+
+/* Syntax Highlighting - Firefly Theme */
+:root[data-theme="firefly"] .token.comment,
+:root[data-theme="firefly"] .token.prolog,
+:root[data-theme="firefly"] .token.doctype,
+:root[data-theme="firefly"] .token.cdata {
+    color: #626a73;
+    font-style: italic;
+}
+
+:root[data-theme="firefly"] .token.punctuation {
+    color: #8b949e;
+}
+
+:root[data-theme="firefly"] .token.property,
+:root[data-theme="firefly"] .token.tag,
+:root[data-theme="firefly"] .token.boolean,
+:root[data-theme="firefly"] .token.number,
+:root[data-theme="firefly"] .token.constant,
+:root[data-theme="firefly"] .token.symbol,
+:root[data-theme="firefly"] .token.deleted {
+    color: #ff8f40;
+}
+
+:root[data-theme="firefly"] .token.selector,
+:root[data-theme="firefly"] .token.attr-name,
+:root[data-theme="firefly"] .token.string,
+:root[data-theme="firefly"] .token.char,
+:root[data-theme="firefly"] .token.builtin,
+:root[data-theme="firefly"] .token.inserted {
+    color: #aad94c;
+}
+
+:root[data-theme="firefly"] .token.operator,
+:root[data-theme="firefly"] .token.entity,
+:root[data-theme="firefly"] .token.url,
+:root[data-theme="firefly"] .language-css .token.string,
+:root[data-theme="firefly"] .style .token.string {
+    color: #59c2ff;
+}
+
+:root[data-theme="firefly"] .token.atrule,
+:root[data-theme="firefly"] .token.attr-value,
+:root[data-theme="firefly"] .token.keyword {
+    color: #ff8f40;
+}
+
+:root[data-theme="firefly"] .token.function,
+:root[data-theme="firefly"] .token.class-name {
+    color: #ffb454;
+}
+
+:root[data-theme="firefly"] .token.regex,
+:root[data-theme="firefly"] .token.important,
+:root[data-theme="firefly"] .token.variable {
+    color: #e6b450;
+}
+
+/* Bright accent highlights */
+:root[data-theme="firefly"] .active,
+:root[data-theme="firefly"] .selected {
+    background-color: rgba(57, 186, 230, 0.1);
+    box-shadow: inset 0 0 0 1px rgba(57, 186, 230, 0.3);
+}
+
+/* Scrollbar Firefly Theme */
+:root[data-theme="firefly"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="firefly"] ::-webkit-scrollbar-thumb {
+    background: #3e4b59;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="firefly"] ::-webkit-scrollbar-thumb:hover {
+    background: #626a73;
+}
+
+/* Firefox Scrollbar Firefly Theme */
+:root[data-theme="firefly"] * {
+    scrollbar-color: #3e4b59 var(--bg-primary);
+}

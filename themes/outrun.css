@@ -1,0 +1,146 @@
+/* Outrun Theme - Cyberpunk/synthwave with electric blues and hot pinks */
+:root[data-theme="outrun"] {
+    /* Background Colors */
+    --bg-primary: #0c0a20;
+    --bg-secondary: #080716;
+    --bg-sidebar: #06051b;
+    --bg-code: #100e23;
+    --bg-selection: #2d2b55;
+    --bg-dropdown: #080716;
+    --bg-hover: #19172c;
+    --bg-tag: #19172c;
+    
+    /* Additional Background Colors */
+    --bg-modal: #0c0a20ee;
+    --bg-tooltip: #19172c;
+    --bg-input: #100e23;
+    --bg-highlight: #2d2b55;
+    --text-link: #00eeff;
+    --text-code: #ff0080;
+    --text-inverse: #000000;
+    --button-text: #e0e0ff;
+    
+    /* Text Colors */
+    --text-primary: #e0e0ff;
+    --text-secondary: #b4b4da;
+    --text-muted: #7c7ca0;
+    --text-heading: #00eeff;
+    
+    /* Accent Colors */
+    --accent-primary: #00eeff;
+    --accent-secondary: #ff0080;
+    --accent-warning: #ffff00;
+    --accent-error: #ff0040;
+    --accent-danger: #ff0040;
+    --accent-info: #00eeff;
+    --accent-success: #00ff88;
+    
+    /* Border Colors */
+    --border-primary: #2d2b55;
+    --border-secondary: #5d5b85;
+    
+    /* Button Colors */
+    --button-bg: #19172c;
+    --button-hover: #2d2b55;
+    --button-active: #00eeff;
+    
+    /* Badge Colors */
+    --badge-bg: #ff0080;
+    --badge-text: #0c0a20;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 238, 255, 0.2), 0 0 20px rgba(255, 0, 128, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 238, 255, 0.3), 0 2px 4px -1px rgba(255, 0, 128, 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 238, 255, 0.4), 0 4px 6px -2px rgba(255, 0, 128, 0.3);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 238, 255, 0.5), 0 10px 10px -5px rgba(255, 0, 128, 0.4);
+}
+
+/* Syntax Highlighting - Outrun Theme */
+:root[data-theme="outrun"] .token.comment,
+:root[data-theme="outrun"] .token.prolog,
+:root[data-theme="outrun"] .token.doctype,
+:root[data-theme="outrun"] .token.cdata {
+    color: #7c7ca0;
+    font-style: italic;
+}
+
+:root[data-theme="outrun"] .token.punctuation {
+    color: #e0e0ff;
+}
+
+:root[data-theme="outrun"] .token.property,
+:root[data-theme="outrun"] .token.tag,
+:root[data-theme="outrun"] .token.boolean,
+:root[data-theme="outrun"] .token.number,
+:root[data-theme="outrun"] .token.constant,
+:root[data-theme="outrun"] .token.symbol,
+:root[data-theme="outrun"] .token.deleted {
+    color: #ff0080;
+}
+
+:root[data-theme="outrun"] .token.selector,
+:root[data-theme="outrun"] .token.attr-name,
+:root[data-theme="outrun"] .token.string,
+:root[data-theme="outrun"] .token.char,
+:root[data-theme="outrun"] .token.builtin,
+:root[data-theme="outrun"] .token.inserted {
+    color: #00ff88;
+}
+
+:root[data-theme="outrun"] .token.operator,
+:root[data-theme="outrun"] .token.entity,
+:root[data-theme="outrun"] .token.url,
+:root[data-theme="outrun"] .language-css .token.string,
+:root[data-theme="outrun"] .style .token.string {
+    color: #00eeff;
+}
+
+:root[data-theme="outrun"] .token.atrule,
+:root[data-theme="outrun"] .token.attr-value,
+:root[data-theme="outrun"] .token.keyword {
+    color: #ff00ff;
+}
+
+:root[data-theme="outrun"] .token.function,
+:root[data-theme="outrun"] .token.class-name {
+    color: #ffff00;
+}
+
+:root[data-theme="outrun"] .token.regex,
+:root[data-theme="outrun"] .token.important,
+:root[data-theme="outrun"] .token.variable {
+    color: #ff8800;
+}
+
+/* Neon glow effects */
+:root[data-theme="outrun"] a {
+    text-shadow: 0 0 10px rgba(0, 238, 255, 0.5);
+}
+
+:root[data-theme="outrun"] .accent-primary {
+    text-shadow: 0 0 20px rgba(0, 238, 255, 0.8);
+}
+
+:root[data-theme="outrun"] .active,
+:root[data-theme="outrun"] .selected {
+    box-shadow: inset 0 0 30px rgba(255, 0, 128, 0.2), 0 0 40px rgba(0, 238, 255, 0.3);
+}
+
+/* Scrollbar Outrun Theme */
+:root[data-theme="outrun"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="outrun"] ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ff0080, #00eeff);
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="outrun"] ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ff00ff, #00ffff);
+}
+
+/* Firefox Scrollbar Outrun Theme */
+:root[data-theme="outrun"] * {
+    scrollbar-color: #5d5b85 var(--bg-primary);
+}

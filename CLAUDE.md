@@ -36,12 +36,7 @@ python3 build.py  # Should output "Build complete!" with stats
 ```bash
 npm run package
 ```
-This creates a versioned zip file (`notes-wiki-v3.1.0-complete.zip`) with all necessary assets for offline deployment including:
-- Complete application files (HTML, CSS, JS)
-- All 55+ theme files
-- Bundled JavaScript libraries
-- Documentation and tutorials
-- Build tools and configuration files
+This creates a versioned zip file (`notes-wiki-v3.2.0-complete.zip`) with all necessary assets for offline deployment.
 
 ## Architecture Overview
 
@@ -50,8 +45,8 @@ This is a **single-page application (SPA)** built with vanilla JavaScript - no f
 ### Critical Architecture Issues
 
 ⚠️ **MONOLITHIC DESIGN WARNING**: The application currently suffers from severe architectural debt:
-- **8,948 lines** in a single `script.js` file
-- **~870+ methods** in one `NotesWiki` class
+- **9,355 lines** in a single `script.js` file
+- **180+ methods** in one `NotesWiki` class
 - **Difficult to maintain, test, and extend**
 
 When making significant changes, consider the modular refactoring plan:
@@ -71,7 +66,7 @@ When making significant changes, consider the modular refactoring plan:
 2. **Main Application**: `script.js` - Contains the monolithic `NotesWiki` class that handles:
    - Tab management with drag-and-drop
    - Advanced search with operators (`tag:`, `author:`, `"phrase"`, `-exclude`, etc.)
-   - Theme switching (55+ themes in `/themes/`)
+   - Theme switching (60 themes in `/themes/`)
    - Settings persistence via localStorage
    - Pomodoro timer, keyboard shortcuts, responsive context filtering with dropdown
 
@@ -92,12 +87,12 @@ When making significant changes, consider the modular refactoring plan:
 ### Deployment Configuration
 
 - **GitHub Pages**: 
-  - Jekyll bypass configured in `_config.yml`
+  - Jekyll bypass configured in `_config.yml` and `.nojekyll`
   - Custom 404 page (`404.html`) with theme support
-  - Note: GitHub Actions workflow referenced but not implemented
+  - GitHub Actions workflow in `.github/workflows/static.yml`
 - **GitLab Pages**: 
+  - Automatic deployment via `.gitlab-ci.yml`
   - See `GITLAB-DEPLOYMENT.md` for detailed instructions
-  - Note: `.gitlab-ci.yml` not present in repository
 - **General Deployment**: 
   - See `DEPLOYMENT-GUIDE.md` for platform-agnostic instructions
 
@@ -129,18 +124,14 @@ When making significant changes, consider the modular refactoring plan:
 - Jekyll bypass prevents GitHub Pages from processing the site
 - Code blocks support line numbers via CSS counters (toggle in settings)
 
-### Recent Features (v3.1.0)
+### Recent Updates (v3.2.0)
 
-1. **Table of Contents** - Auto-generated from headings, collapsible, tracks reading position
-2. **Wiki-style Links** - `[[Note Title]]` syntax creates internal links between notes
-3. **Reading Progress** - Progress bar and time estimation based on word count
-4. **Focus Mode** - Press 'F' to hide sidebar and center content for distraction-free reading
-5. **In-Note Search** - Ctrl+F to search within current note with highlighting and navigation
-6. **Enhanced Navigation** - Improved UI/UX for file tree and responsive context switching
-7. **Responsive Context Filtering** - Dynamic dropdown for category selection that adapts to screen size and category count
-8. **GitHub Pages Path Fix** - Dynamic base path detection for proper resource loading
-9. **Combined Code Blocks** - Automatically combine all code blocks from a page into a single copyable block
-10. **Custom 404 Page** - Themed error page for missing routes
+1. **Theme System Overhaul** - Replaced modern themes with 50 classic themes from original collection
+2. **CSS Variable Fixes** - Added 8 required variables to all themes for compatibility
+3. **Bug Fixes** - Fixed 800+ rgba syntax errors, header scrolling issues, theme card rendering
+4. **Application Cleanup** - Removed test files, screenshots, development artifacts
+5. **Repository Maintenance** - Cleaned up Git repository to match local directory
+6. **New Popular Themes** - Added 10 highly requested developer themes (Synthwave '84, Night Owl, Moonlight, Panda, Andromeda, Horizon, Bear, Firefly, Outrun, Halcyon)
 
 ### Memory Management Critical Patterns
 
@@ -201,99 +192,7 @@ element.textContent = userInput;
 element.innerHTML = userInput; // Only for trusted SVG/static content
 ```
 
-### Scroll Handling Fixes (v3.1.2 - v3.1.3)
-
-Fixed unintended scrolling issues in header and tab sections:
-
-🔧 **Issues Fixed**:
-- **Header scrolling**: Dropdown menus (context, recent files, bookmarks) were causing scroll events
-- **Tab bar scrolling**: Horizontal tab container was capturing vertical scroll events
-- **Comprehensive header scroll prevention**: Added catch-all prevention for any remaining scroll capture
-
-📋 **Solutions Implemented**:
-1. **CSS**: Added `overscroll-behavior: contain` to prevent scroll chaining:
-   - `.header` - Entire header container
-   - `.dropdown-content` - All dropdown content containers
-   - `.context-dropdown-menu` - Context switcher dropdown
-2. **JavaScript**: Enhanced wheel event handlers:
-   - Extended to dropdown content containers (not just lists)
-   - Added comprehensive header-wide scroll prevention
-   - Prevent scroll at boundaries in dropdowns
-   - Convert vertical scroll to horizontal in tabs container
-   - Stop event propagation to prevent body scrolling
-
-🎯 **Affected Elements**:
-- `.header` - Entire header container
-- `.dropdown-content` - All dropdown containers
-- `.context-dropdown-menu` - Context switcher dropdown
-- `.recent-files-list` - Recent files dropdown list
-- `.bookmarks-list` - Bookmarks dropdown list
-- `.tabs-container` - Horizontal tab scrolling area
-- `#recent-dropdown-content` - Recent files dropdown container
-- `#bookmarks-dropdown-content` - Bookmarks dropdown container
-
-### Theme Card Enhancements (v3.1.1)
-
-Enhanced theme selection cards to fully embody each theme's personality:
-
-✨ **Visual Enhancements**:
-- Category icons (🌙 Dark, ☀️ Light, 🌊 Ocean, etc.)
-- Theme-specific decorations and animations
-- Interactive hover effects with custom shadows
-- Unique success messages per theme
-
-🎨 **Theme-Specific Effects**:
-- **Matrix**: Falling digital rain animation
-- **Cyberpunk**: Animated scanlines and glitch effects
-- **Dracula**: Flying bats animation
-- **Tokyo Night**: Neon kanji with glow
-- **Vaporwave**: Retro grid pattern
-- **Luxury Gold**: Shimmering gold effect with crown
-- **Winter themes**: Falling snowflakes
-- **Nord**: Aurora borealis animation
-- **Hot Dog Stand**: Pixelated retro style
-
-🔧 **Implementation**:
-- Added `getThemeDecoration()` method for visual overlays
-- Added `addThemeCardEffects()` for interactions
-- 14 new CSS animations in style.css
-- Theme cards use `.theme-card-${theme.id}` classes
-
-### UI Readability Testing and Fixes (v3.1.3)
-
-✅ **Comprehensive UI testing with Puppeteer**:
-- Created automated screenshot testing for all UI states
-- Tested hover, focus, selected, and active states across themes
-- Identified and fixed critical modal overlay issues
-
-🐛 **Issues Found and Fixed**:
-1. **Modal Overlay Transparency**: Fixed opaque gray backgrounds in light/dark/dracula themes
-   - Added `!important` to modal background-color to prevent theme overrides
-   - Applied fix to both `.modal` and `.search-overlay` classes
-2. **Theme Loading Issues**: Some themes showing incorrect colors
-   - Matrix theme was loading with cyan instead of green colors
-   - Issue traced to theme loading sequence and CSS specificity
-3. **Theme Card Rendering**: Settings modal theme cards not interactive
-   - Theme cards not visible or hoverable in settings modal
-   - Requires investigation of theme card rendering logic
-
-📋 **Testing Coverage**:
-- Button hover states across all UI elements
-- Link hover with proper color changes
-- Text selection highlighting
-- Search result highlighting
-- Focus states for inputs
-- Dropdown menu visibility
-- Modal dialog transparency
-- Keyboard navigation
-- Reduced motion support
-
-💡 **Recommendations**:
-- Implement visual regression testing for theme switching
-- Add CSS variable validation on theme load
-- Create error reporting for failed theme loads
-
-### Recently Applied Fixes (v3.1.0)
+### Recently Applied Fixes (v3.1.0 - v3.2.0)
 
 ✅ **Critical fixes and improvements implemented**:
 1. **Syntax Highlighting**: Fixed Prism.js integration with proper `Prism.highlightAll()` calls after DOM injection
@@ -514,40 +413,6 @@ The feature automatically detects the correct comment syntax for 30+ languages:
 - **Learning**: Aggregate related code snippets for easy reference
 - **Development**: Quickly combine modular code blocks into a full script
 
-## Split View Feature
-
-The application supports side-by-side note viewing for comparing or referencing multiple documents:
-
-### Usage
-- Click the split view button in the toolbar or use keyboard shortcut (if configured)
-- Drag the divider between panes to resize
-- Each pane maintains independent navigation and scroll position
-- Close split view to return to single note mode
-
-### Implementation Details
-- Uses CSS Grid for responsive pane layout
-- Draggable divider implemented with mouse event handlers
-- Each pane has its own note state and rendering context
-- Memory-efficient: shares the same search index and theme
-
-## Sticky Notes Feature
-
-Floating mini-notes for quick references and annotations:
-
-### Features
-- Create multiple sticky notes that float above content
-- Drag to reposition anywhere on screen
-- Resize by dragging corners
-- Choose from multiple colors
-- Persist across sessions via localStorage
-- Markdown support for formatting
-
-### Implementation Notes
-- Z-index management ensures notes stay on top
-- Event handlers properly cleaned up to prevent memory leaks
-- Position and size constraints prevent notes from going off-screen
-- Color options match theme accent colors
-
 ## Development Workflow
 
 When making changes to this codebase:
@@ -560,32 +425,6 @@ When making changes to this codebase:
 
 ### Release Process
 1. Update version in `package.json`
-2. Run `npm run validate-themes` to check all themes
-3. Run `npm run package` to create release bundle
-4. Tag release in git with version number
-5. Upload release zip to GitHub/GitLab releases
-
-## Theme Validation
-
-The codebase includes a theme validation system to ensure all themes have required CSS variables:
-
-### Running Theme Validation
-```bash
-npm run validate-themes     # Check all themes
-npm run validate-all        # Check JS syntax and themes
-```
-
-### Required CSS Variables
-Every theme must define these variables to function properly:
-- Background colors: `--bg-primary`, `--bg-modal`, `--bg-tooltip`, `--bg-input`, etc.
-- Text colors: `--text-primary`, `--text-link`, `--text-code`, `--text-inverse`, etc.
-- UI colors: `--button-text`, `--border-primary`, `--accent-primary`, etc.
-- Shadows: `--shadow-sm`, `--shadow-md`, `--shadow-lg`, `--shadow-xl`
-
-See `validate-themes.js` for the complete list of required and recommended variables.
-
-### Common Theme Issues
-1. **Missing variables**: Run validation to identify missing CSS variables
-2. **Contrast issues**: Ensure text colors have sufficient contrast against backgrounds
-3. **Transparent tooltips**: Tooltip backgrounds should be opaque for readability
-4. **Performance**: Animation-heavy themes should include `@media (prefers-reduced-motion)`
+2. Run `npm run package` to create release bundle
+3. Tag release in git with version number
+4. Upload release zip to GitHub/GitLab releases

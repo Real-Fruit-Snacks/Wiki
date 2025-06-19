@@ -15,7 +15,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Version-3.1.0-green?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License">
-  <img src="https://img.shields.io/badge/Themes-55+-purple?style=flat-square" alt="Themes">
+  <img src="https://img.shields.io/badge/Themes-60+-purple?style=flat-square" alt="Themes">
   <img src="https://img.shields.io/badge/Dependencies-Zero-orange?style=flat-square" alt="Zero Dependencies">
   <img src="https://img.shields.io/badge/Offline-Ready-red?style=flat-square" alt="Offline Ready">
 </p>
@@ -32,7 +32,7 @@
 
 - **⚡ Lightning Fast**: Pure JavaScript with zero server dependencies means instant page loads
 - **🔒 Privacy First**: Your data never leaves your device - perfect for sensitive documentation
-- **🎨 Beautiful by Default**: 55+ professional themes including VSCode, Dracula, and Catppuccin
+- **🎨 Beautiful by Default**: 60 professional themes including VSCode, Dracula, Night Owl, and Synthwave '84
 - **📱 Works Everywhere**: Desktop, tablet, mobile - even offline or in air-gapped environments
 - **🔍 Enterprise Search**: Advanced operators, full-text search, and code-aware indexing
 - **🛠️ Zero Configuration**: Deploy in minutes with GitHub/GitLab Pages or any static host
@@ -70,7 +70,7 @@
 <td width="50%">
 
 ### 🎨 Customization
-- **55+ Professional Themes** - From minimal to vibrant
+- **60 Professional Themes** - From minimal to vibrant
 - **Custom CSS Support** - Make it truly yours
 - **Flexible Layouts** - Narrow, wide, or custom widths
 - **Font Controls** - Size, family, and line spacing

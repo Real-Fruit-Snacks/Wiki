@@ -1,0 +1,132 @@
+/* Moonlight Theme - Beautiful purple/blue dark theme */
+:root[data-theme="moonlight"] {
+    /* Background Colors */
+    --bg-primary: #212337;
+    --bg-secondary: #1e2030;
+    --bg-sidebar: #191a2a;
+    --bg-code: #1e2030;
+    --bg-selection: #413f64;
+    --bg-dropdown: #1e2030;
+    --bg-hover: #2f334d;
+    --bg-tag: #2f334d;
+    
+    /* Additional Background Colors */
+    --bg-modal: #212337ee;
+    --bg-tooltip: #2f334d;
+    --bg-input: #1e2030;
+    --bg-highlight: #413f64;
+    --text-link: #82aaff;
+    --text-code: #ff757f;
+    --text-inverse: #000000;
+    --button-text: #c8d3f5;
+    
+    /* Text Colors */
+    --text-primary: #c8d3f5;
+    --text-secondary: #a9b8e8;
+    --text-muted: #7a88cf;
+    --text-heading: #82aaff;
+    
+    /* Accent Colors */
+    --accent-primary: #82aaff;
+    --accent-secondary: #86e1fc;
+    --accent-warning: #ffc777;
+    --accent-error: #ff757f;
+    --accent-danger: #ff757f;
+    --accent-info: #82aaff;
+    --accent-success: #c3e88d;
+    
+    /* Border Colors */
+    --border-primary: #2f334d;
+    --border-secondary: #444a73;
+    
+    /* Button Colors */
+    --button-bg: #2f334d;
+    --button-hover: #444a73;
+    --button-active: #82aaff;
+    
+    /* Badge Colors */
+    --badge-bg: #ff757f;
+    --badge-text: #1e2030;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* Syntax Highlighting - Moonlight Theme */
+:root[data-theme="moonlight"] .token.comment,
+:root[data-theme="moonlight"] .token.prolog,
+:root[data-theme="moonlight"] .token.doctype,
+:root[data-theme="moonlight"] .token.cdata {
+    color: #7a88cf;
+    font-style: italic;
+}
+
+:root[data-theme="moonlight"] .token.punctuation {
+    color: #c8d3f5;
+}
+
+:root[data-theme="moonlight"] .token.property,
+:root[data-theme="moonlight"] .token.tag,
+:root[data-theme="moonlight"] .token.boolean,
+:root[data-theme="moonlight"] .token.number,
+:root[data-theme="moonlight"] .token.constant,
+:root[data-theme="moonlight"] .token.symbol,
+:root[data-theme="moonlight"] .token.deleted {
+    color: #ff757f;
+}
+
+:root[data-theme="moonlight"] .token.selector,
+:root[data-theme="moonlight"] .token.attr-name,
+:root[data-theme="moonlight"] .token.string,
+:root[data-theme="moonlight"] .token.char,
+:root[data-theme="moonlight"] .token.builtin,
+:root[data-theme="moonlight"] .token.inserted {
+    color: #c3e88d;
+}
+
+:root[data-theme="moonlight"] .token.operator,
+:root[data-theme="moonlight"] .token.entity,
+:root[data-theme="moonlight"] .token.url,
+:root[data-theme="moonlight"] .language-css .token.string,
+:root[data-theme="moonlight"] .style .token.string {
+    color: #86e1fc;
+}
+
+:root[data-theme="moonlight"] .token.atrule,
+:root[data-theme="moonlight"] .token.attr-value,
+:root[data-theme="moonlight"] .token.keyword {
+    color: #c099ff;
+}
+
+:root[data-theme="moonlight"] .token.function,
+:root[data-theme="moonlight"] .token.class-name {
+    color: #82aaff;
+}
+
+:root[data-theme="moonlight"] .token.regex,
+:root[data-theme="moonlight"] .token.important,
+:root[data-theme="moonlight"] .token.variable {
+    color: #ffc777;
+}
+
+/* Scrollbar Moonlight Theme */
+:root[data-theme="moonlight"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="moonlight"] ::-webkit-scrollbar-thumb {
+    background: #444a73;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="moonlight"] ::-webkit-scrollbar-thumb:hover {
+    background: #7a88cf;
+}
+
+/* Firefox Scrollbar Moonlight Theme */
+:root[data-theme="moonlight"] * {
+    scrollbar-color: #444a73 var(--bg-primary);
+}

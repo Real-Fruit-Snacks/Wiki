@@ -1,0 +1,124 @@
+/* Synthwave '84 Theme - Retro neon aesthetic */
+:root[data-theme="synthwave-84"] {
+    /* Background Colors */
+    --bg-primary: #262335;
+    --bg-secondary: #1e1a29;
+    --bg-sidebar: #1a1626;
+    --bg-code: #2a2139;
+    --bg-selection: #ff7edb33;
+    --bg-dropdown: #1e1a29;
+    --bg-hover: #34294f;
+    --bg-tag: #34294f;
+    
+    /* Additional Background Colors */
+    --bg-modal: #262335ee;
+    --bg-tooltip: #34294f;
+    --bg-input: #2a2139;
+    --bg-highlight: #ff7edb33;
+    --text-link: #ff7edb;
+    --text-code: #f97e72;
+    --text-inverse: #000000;
+    --button-text: #ffffff;
+    
+    /* Text Colors */
+    --text-primary: #ffffff;
+    --text-secondary: #b893ce;
+    --text-muted: #848bbd;
+    --text-heading: #fede5d;
+    
+    /* Accent Colors */
+    --accent-primary: #ff7edb;
+    --accent-secondary: #72f1b8;
+    --accent-warning: #fede5d;
+    --accent-error: #f97e72;
+    --accent-danger: #f97e72;
+    --accent-info: #36f9f6;
+    --accent-success: #72f1b8;
+    
+    /* Border Colors */
+    --border-primary: #495495;
+    --border-secondary: #ff7edb;
+    
+    /* Button Colors */
+    --button-bg: #34294f;
+    --button-hover: #495495;
+    --button-active: #ff7edb;
+    
+    /* Badge Colors */
+    --badge-bg: #ff7edb;
+    --badge-text: #1a1626;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(255, 126, 219, 0.2), 0 0 10px rgba(255, 126, 219, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(255, 126, 219, 0.3), 0 2px 4px -1px rgba(255, 126, 219, 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(255, 126, 219, 0.4), 0 4px 6px -2px rgba(255, 126, 219, 0.3);
+    --shadow-xl: 0 20px 25px -5px rgba(255, 126, 219, 0.5), 0 10px 10px -5px rgba(255, 126, 219, 0.4);
+}
+
+/* Syntax Highlighting - Synthwave '84 Theme */
+:root[data-theme="synthwave-84"] .token.comment,
+:root[data-theme="synthwave-84"] .token.prolog,
+:root[data-theme="synthwave-84"] .token.doctype,
+:root[data-theme="synthwave-84"] .token.cdata {
+    color: #848bbd;
+    font-style: italic;
+}
+
+:root[data-theme="synthwave-84"] .token.punctuation {
+    color: #ff7edb;
+}
+
+:root[data-theme="synthwave-84"] .token.property,
+:root[data-theme="synthwave-84"] .token.tag,
+:root[data-theme="synthwave-84"] .token.boolean,
+:root[data-theme="synthwave-84"] .token.number,
+:root[data-theme="synthwave-84"] .token.constant,
+:root[data-theme="synthwave-84"] .token.symbol,
+:root[data-theme="synthwave-84"] .token.deleted {
+    color: #f97e72;
+}
+
+:root[data-theme="synthwave-84"] .token.selector,
+:root[data-theme="synthwave-84"] .token.attr-name,
+:root[data-theme="synthwave-84"] .token.string,
+:root[data-theme="synthwave-84"] .token.char,
+:root[data-theme="synthwave-84"] .token.builtin,
+:root[data-theme="synthwave-84"] .token.inserted {
+    color: #72f1b8;
+}
+
+:root[data-theme="synthwave-84"] .token.operator,
+:root[data-theme="synthwave-84"] .token.entity,
+:root[data-theme="synthwave-84"] .token.url,
+:root[data-theme="synthwave-84"] .language-css .token.string,
+:root[data-theme="synthwave-84"] .style .token.string {
+    color: #36f9f6;
+}
+
+:root[data-theme="synthwave-84"] .token.atrule,
+:root[data-theme="synthwave-84"] .token.attr-value,
+:root[data-theme="synthwave-84"] .token.keyword {
+    color: #fede5d;
+}
+
+:root[data-theme="synthwave-84"] .token.function,
+:root[data-theme="synthwave-84"] .token.class-name {
+    color: #ff7edb;
+}
+
+:root[data-theme="synthwave-84"] .token.regex,
+:root[data-theme="synthwave-84"] .token.important,
+:root[data-theme="synthwave-84"] .token.variable {
+    color: #f97e72;
+}
+
+/* Glow effect for accent elements */
+:root[data-theme="synthwave-84"] a,
+:root[data-theme="synthwave-84"] .accent-primary {
+    text-shadow: 0 0 10px rgba(255, 126, 219, 0.5);
+}
+
+:root[data-theme="synthwave-84"] .active,
+:root[data-theme="synthwave-84"] .selected {
+    box-shadow: inset 0 0 20px rgba(255, 126, 219, 0.2);
+}
