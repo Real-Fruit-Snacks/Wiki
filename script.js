@@ -8217,10 +8217,10 @@ class NotesWiki {
         const markedHtml = tempMarked.parse(content);
         
         // Get note path from the split view state
-        const noteData = this.notesIndex.notes.find(n => 
+        const noteInfo = this.notesIndex.notes.find(n => 
             n.metadata && n.metadata.title === metadata.title
         );
-        const notePath = noteData ? noteData.path : '';
+        const notePath = noteInfo ? noteInfo.path : '';
         
         // Calculate word count and reading time
         const text = content || '';
