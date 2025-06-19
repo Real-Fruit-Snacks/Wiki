@@ -741,6 +741,40 @@ class NotesWiki {
             bookmarksDropdown.classList.toggle('active');
         });
         
+        // Prevent scroll propagation in dropdown lists
+        const preventScrollPropagation = (element) => {
+            element.addEventListener('wheel', (e) => {
+                const scrollTop = element.scrollTop;
+                const scrollHeight = element.scrollHeight;
+                const height = element.offsetHeight;
+                const delta = e.deltaY;
+                const up = delta < 0;
+                
+                // Prevent scroll if we're at the top and scrolling up
+                // or at the bottom and scrolling down
+                if (!up && scrollHeight - height - scrollTop <= 1) {
+                    e.preventDefault();
+                } else if (up && scrollTop === 0) {
+                    e.preventDefault();
+                }
+                
+                // Always stop propagation to prevent body scroll
+                e.stopPropagation();
+            }, { passive: false });
+        };
+        
+        // Apply to recent files list
+        const recentFilesList = document.getElementById('recent-files-list');
+        if (recentFilesList) {
+            preventScrollPropagation(recentFilesList);
+        }
+        
+        // Apply to bookmarks list
+        const bookmarksList = document.querySelector('.bookmarks-list');
+        if (bookmarksList) {
+            preventScrollPropagation(bookmarksList);
+        }
+        
         // Theme dropdown is now in settings modal, no header event listener needed
         
         // Settings
@@ -6541,6 +6575,27 @@ class NotesWiki {
             
             // Close dropdown when clicking outside
             document.addEventListener('click', this.dropdownCloseHandler);
+            
+            // Prevent scroll propagation when dropdown is open
+            dropdownMenu.addEventListener('wheel', (e) => {
+                const menu = e.currentTarget;
+                const scrollTop = menu.scrollTop;
+                const scrollHeight = menu.scrollHeight;
+                const height = menu.offsetHeight;
+                const delta = e.deltaY;
+                const up = delta < 0;
+                
+                // Prevent scroll if we're at the top and scrolling up
+                // or at the bottom and scrolling down
+                if (!up && scrollHeight - height - scrollTop <= 1) {
+                    e.preventDefault();
+                } else if (up && scrollTop === 0) {
+                    e.preventDefault();
+                }
+                
+                // Always stop propagation to prevent body scroll
+                e.stopPropagation();
+            });
             
             dropdown.appendChild(dropdownToggle);
             dropdown.appendChild(dropdownMenu);

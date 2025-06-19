@@ -231,6 +231,8 @@ body {
     max-width: min(400px, 90vw);
     max-height: 400px;
     overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain; /* Prevent scroll chaining */
     z-index: 1000;
     display: none;
     padding: var(--spacing-xs);
@@ -3722,6 +3724,8 @@ select.dropdown:focus {
     list-style: none;
     max-height: 400px;
     overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain; /* Prevent scroll chaining */
 }
 
 /* Recent files sections */
