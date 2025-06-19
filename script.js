@@ -5681,7 +5681,7 @@ class NotesWiki {
                         left: -50%;
                         width: 200%;
                         height: 100%;
-                        background: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 20\"><path d=\"M0,10 Q25,0 50,10 T100,10 L100,20 L0,20 Z\" fill=\"%23${colors.accent.replace('#', '')}\" opacity=\"0.1\"/></svg>');
+                        background: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 20%22%3E%3Cpath d=%22M0,10 Q25,0 50,10 T100,10 L100,20 L0,20 Z%22 fill=%22%23${colors.accent.replace('#', '')}%22 opacity=%220.1%22/%3E%3C/svg%3E');
                         background-size: 100px 20px;
                         animation: waveMove 8s linear infinite;
                     "></div>
