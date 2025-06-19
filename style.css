@@ -1140,12 +1140,7 @@ body.content-width-full .content-wrapper {
     max-width: 90%;
 }
 
-/* Focus mode wide - maximize screen utilization */
-body.focus-mode-wide .content-wrapper {
-    max-width: 95%;
-    padding-left: var(--spacing-lg);
-    padding-right: var(--spacing-lg);
-}
+/* Focus mode wide rules moved to proper cascade position after base focus-mode rules */
 
 /* Note header */
 .note-header {
@@ -5737,9 +5732,22 @@ body.focus-mode .main-content {
     margin: 0 auto;
 }
 
+/* Override for focus mode wide to utilize maximum screen space */
+body.focus-mode.focus-mode-wide .main-content {
+    max-width: 95% !important;
+    margin: 0 auto;
+}
+
 body.focus-mode .content-wrapper {
     padding: var(--spacing-xl) var(--spacing-lg);
     margin-right: 0 !important;
+}
+
+/* Override for focus mode wide content wrapper */
+body.focus-mode.focus-mode-wide .content-wrapper {
+    max-width: 98% !important;
+    padding: var(--spacing-sm) var(--spacing-md);
+    margin: 0 auto;
 }
 
 body.focus-mode .note-content {
@@ -6157,6 +6165,12 @@ body.focus-mode .floating-share {
 body.focus-mode .pane-content .content-wrapper {
     padding: var(--spacing-sm);
     max-width: 99%;
+}
+
+/* Focus mode wide in split view - maximum utilization */
+body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    max-width: 99.5% !important;
 }
 
 /* Split View Drag and Drop */
