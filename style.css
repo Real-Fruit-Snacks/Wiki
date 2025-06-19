@@ -599,10 +599,16 @@ body {
     background-color: var(--bg-sidebar);
     border-right: 1px solid var(--border-primary);
     overflow: hidden;
-    transition: transform var(--transition-normal);
+    transition: transform var(--transition-normal), margin-left var(--transition-normal);
     display: flex;
     flex-direction: column;
     position: relative;
+    margin-left: calc(var(--sidebar-width) * -1);
+}
+
+/* Sidebar open state on desktop */
+.sidebar.open {
+    margin-left: 0;
 }
 
 .sidebar-nav {

@@ -100,15 +100,15 @@ class NotesWiki {
             stickySearch: false,  // Keep search query when reopening search
             contentWidth: 'narrow',  // Default to narrow width
             focusMode: false, // Focus mode state
-            showTableOfContents: true, // Show/hide table of contents for notes with multiple headings
+            showTableOfContents: false, // Show/hide table of contents for notes with multiple headings
             splitViewEnabled: false, // Split view state
             // New settings
             defaultHomePage: 'home', // 'home', 'last-viewed', 'specific'
             specificHomeNote: '', // Path to specific note
             externalLinksNewTab: true,
             fontSize: 'normal', // 'small', 'normal', 'large', 'extra-large'
-            fontFamily: 'system', // 'system', 'sans-serif', 'serif', 'monospace'
-            defaultCodeLanguage: 'plaintext',
+            fontFamily: 'monospace', // 'system', 'sans-serif', 'serif', 'monospace'
+            defaultCodeLanguage: 'bash',
             customCSS: '',
             keyboardShortcuts: {
                 'new-tab': 'Ctrl+T',
