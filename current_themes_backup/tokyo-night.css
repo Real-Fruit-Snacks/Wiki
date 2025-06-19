@@ -1,0 +1,427 @@
+/* Tokyo Night Theme Variables */
+:root[data-theme="tokyo-night"] {
+    /* Background Colors */
+    --bg-primary: #1a1b26;
+    --bg-secondary: #24283b;
+    --bg-sidebar: #292e42;
+    --bg-code: #24283b;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: var(--bg-secondary);
+    --bg-modal: #16161e;
+    --bg-tooltip: #292e42;
+    --bg-input: #1f2335;
+    --bg-highlight: #7aa2f733;
+    
+    /* Text Colors */
+    --text-primary: #a9b1d6;
+    --text-secondary: #9aa5ce;
+    --text-muted: #787c99;
+    --text-heading: var(--text-primary);
+    --text-link: #7dcfff;
+    --text-code: #ff9e64;
+    --text-inverse: #1a1b26;
+    
+    /* Accent Colors */
+    --accent-primary: #7aa2f7;
+    --accent-secondary: #7dcfff;
+    --accent-warning: #fbbf24;
+    --accent-error: #ef4444;
+    --accent-info: var(--accent-primary);
+    --accent-success: #10b981;
+    
+    /* Border Colors */
+    --border-primary: #414868;
+    --border-secondary: #3b4261;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    --button-text: #c0caf5;
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-error);
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(122, 162, 247, 0.1);
+    --bg-code-block: #24283b;
+}
+
+/* Syntax Highlighting - Tokyo Night Theme */
+:root[data-theme="tokyo-night"] .token.comment,
+:root[data-theme="tokyo-night"] .token.prolog,
+:root[data-theme="tokyo-night"] .token.doctype,
+:root[data-theme="tokyo-night"] .token.cdata {
+    color: #565f89;
+    font-style: italic;
+}
+
+:root[data-theme="tokyo-night"] .token.punctuation {
+    color: #a9b1d6;
+}
+
+:root[data-theme="tokyo-night"] .token.property,
+:root[data-theme="tokyo-night"] .token.tag,
+:root[data-theme="tokyo-night"] .token.boolean,
+:root[data-theme="tokyo-night"] .token.number,
+:root[data-theme="tokyo-night"] .token.constant,
+:root[data-theme="tokyo-night"] .token.symbol,
+:root[data-theme="tokyo-night"] .token.deleted {
+    color: #ff9e64;
+}
+
+:root[data-theme="tokyo-night"] .token.selector,
+:root[data-theme="tokyo-night"] .token.attr-name,
+:root[data-theme="tokyo-night"] .token.string,
+:root[data-theme="tokyo-night"] .token.char,
+:root[data-theme="tokyo-night"] .token.builtin,
+:root[data-theme="tokyo-night"] .token.inserted {
+    color: #9ece6a;
+}
+
+:root[data-theme="tokyo-night"] .token.operator,
+:root[data-theme="tokyo-night"] .token.entity,
+:root[data-theme="tokyo-night"] .token.url,
+:root[data-theme="tokyo-night"] .language-css .token.string,
+:root[data-theme="tokyo-night"] .style .token.string {
+    color: #7dcfff;
+    background: transparent;
+}
+
+:root[data-theme="tokyo-night"] .token.atrule,
+:root[data-theme="tokyo-night"] .token.attr-value,
+:root[data-theme="tokyo-night"] .token.keyword {
+    color: #bb9af7;
+}
+
+:root[data-theme="tokyo-night"] .token.function,
+:root[data-theme="tokyo-night"] .token.class-name {
+    color: #7aa2f7;
+}
+
+:root[data-theme="tokyo-night"] .token.regex,
+:root[data-theme="tokyo-night"] .token.important,
+:root[data-theme="tokyo-night"] .token.variable {
+    color: #e0af68;
+}
+
+/* Scrollbar Tokyo Night Theme */
+:root[data-theme="tokyo-night"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="tokyo-night"] ::-webkit-scrollbar-thumb {
+    background: #565f89;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="tokyo-night"] ::-webkit-scrollbar-thumb:hover {
+    background: #737aa2;
+}
+
+/* Firefox Scrollbar Tokyo Night Theme */
+:root[data-theme="tokyo-night"] * {
+    scrollbar-color: #565f89 var(--bg-primary);
+}
+
+/* Tokyo Neon Effects and Cyberpunk Atmosphere */
+:root[data-theme="tokyo-night"] {
+    --neon-blue: #7aa2f7;
+    --neon-cyan: #7dcfff;
+    --neon-purple: #bb9af7;
+    --neon-pink: #f7768e;
+    --neon-glow: 0 0 20px currentColor;
+    --city-gradient: linear-gradient(180deg, #1a1b26 0%, #24283b 50%, #292e42 100%);
+}
+
+/* Animated neon city background */
+:root[data-theme="tokyo-night"] body::before,
+:root[data-theme="tokyo-night"] body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+:root[data-theme="tokyo-night"] body::before {
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(122, 162, 247, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(125, 207, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(187, 154, 247, 0.05) 0%, transparent 50%);
+    animation: neonPulse 8s ease-in-out infinite;
+}
+
+:root[data-theme="tokyo-night"] body::after {
+    background-image: 
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(122, 162, 247, 0.03) 2px,
+            rgba(122, 162, 247, 0.03) 4px
+        );
+    animation: scanlines 10s linear infinite;
+}
+
+@keyframes neonPulse {
+    0%, 100% { opacity: 0.5; filter: blur(1px); }
+    50% { opacity: 0.8; filter: blur(2px); }
+}
+
+@keyframes scanlines {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(10px); }
+}
+
+/* Neon-lit headers */
+:root[data-theme="tokyo-night"] h1,
+:root[data-theme="tokyo-night"] h2 {
+    position: relative;
+    color: var(--neon-cyan);
+    text-shadow: 
+        0 0 10px var(--neon-cyan),
+        0 0 20px var(--neon-cyan),
+        0 0 30px var(--neon-cyan);
+    animation: neonFlicker 4s ease-in-out infinite;
+}
+
+@keyframes neonFlicker {
+    0%, 100% { opacity: 1; }
+    88% { opacity: 1; }
+    90% { opacity: 0.8; }
+    92% { opacity: 1; }
+}
+
+:root[data-theme="tokyo-night"] h1::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent,
+        var(--neon-blue) 20%,
+        var(--neon-cyan) 50%,
+        var(--neon-purple) 80%,
+        transparent);
+    animation: neonSlide 3s linear infinite;
+}
+
+@keyframes neonSlide {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Cyberpunk code blocks */
+:root[data-theme="tokyo-night"] pre {
+    background: rgba(36, 40, 59, 0.8);
+    border: 1px solid var(--neon-blue);
+    box-shadow: 
+        inset 0 0 20px rgba(122, 162, 247, 0.1),
+        0 0 30px rgba(122, 162, 247, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="tokyo-night"] pre::before {
+    content: '東京';
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 40px;
+    color: var(--neon-purple);
+    opacity: 0.1;
+    font-weight: bold;
+}
+
+:root[data-theme="tokyo-night"] pre::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent,
+        rgba(125, 207, 255, 0.1),
+        transparent);
+    animation: codeScanner 6s linear infinite;
+}
+
+@keyframes codeScanner {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Neon links */
+:root[data-theme="tokyo-night"] a {
+    color: var(--neon-blue);
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="tokyo-night"] a:hover {
+    color: var(--neon-cyan);
+    text-shadow: var(--neon-glow);
+}
+
+:root[data-theme="tokyo-night"] a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--neon-cyan);
+    box-shadow: 0 0 5px var(--neon-cyan);
+    transition: width 0.3s ease;
+}
+
+:root[data-theme="tokyo-night"] a:hover::after {
+    width: 100%;
+}
+
+/* Glowing buttons */
+:root[data-theme="tokyo-night"] button {
+    background: rgba(36, 40, 59, 0.8);
+    border: 1px solid var(--neon-purple);
+    color: var(--text-primary);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="tokyo-night"] button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, var(--neon-purple) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    transition: all 0.5s ease;
+}
+
+:root[data-theme="tokyo-night"] button:hover {
+    color: var(--neon-purple);
+    text-shadow: 0 0 10px var(--neon-purple);
+    box-shadow: 
+        inset 0 0 20px rgba(187, 154, 247, 0.2),
+        0 0 20px rgba(187, 154, 247, 0.4);
+}
+
+:root[data-theme="tokyo-night"] button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Neon sidebar */
+:root[data-theme="tokyo-night"] .sidebar {
+    background: var(--city-gradient);
+    border-right: 1px solid rgba(122, 162, 247, 0.3);
+    position: relative;
+}
+
+:root[data-theme="tokyo-night"] .sidebar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(180deg,
+        var(--neon-blue),
+        var(--neon-cyan),
+        var(--neon-purple),
+        var(--neon-pink));
+    animation: neonBorder 10s linear infinite;
+}
+
+@keyframes neonBorder {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Holographic input fields */
+:root[data-theme="tokyo-night"] input:focus,
+:root[data-theme="tokyo-night"] textarea:focus {
+    border-color: var(--neon-cyan);
+    box-shadow: 
+        0 0 0 2px rgba(125, 207, 255, 0.3),
+        0 0 20px rgba(125, 207, 255, 0.2);
+    background: rgba(36, 40, 59, 0.9);
+}
+
+/* Neon tags */
+:root[data-theme="tokyo-night"] .tag {
+    background: rgba(122, 162, 247, 0.2);
+    border: 1px solid var(--neon-blue);
+    color: var(--neon-cyan);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="tokyo-night"] .tag::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+:root[data-theme="tokyo-night"] .tag:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px var(--neon-blue);
+}
+
+:root[data-theme="tokyo-night"] .tag:hover::before {
+    left: 100%;
+}
+
+/* Tokyo selection */
+:root[data-theme="tokyo-night"] ::selection {
+    background: rgba(187, 154, 247, 0.3);
+    color: #ffffff;
+}
+
+/* Animated tab indicators */
+:root[data-theme="tokyo-night"] .tab.active {
+    border-bottom: 2px solid var(--neon-pink);
+    box-shadow: 0 2px 10px rgba(247, 118, 142, 0.3);
+}
+
+/* Performance optimization for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

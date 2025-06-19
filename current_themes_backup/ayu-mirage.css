@@ -1,0 +1,368 @@
+/* Ayu Mirage Theme for Notes Wiki */
+:root[data-theme="ayu-mirage"] {
+    /* Background Colors */
+    --bg-primary: #1f2430;
+    --bg-secondary: #232834;
+    --bg-sidebar: #1a1f29;
+    --bg-code: #232834;
+    --bg-selection: #ffaa0033;
+    --bg-dropdown: #232834;
+    --bg-hover: #2a2f3a;
+    --bg-tag: #2a2f3a;
+    
+    /* Text Colors */
+    --text-primary: #cbccc6;
+    --text-secondary: #8a8983;
+    --text-muted: #707a8c;
+    --text-heading: #ffc68d;
+    --text-code: #5ccfe6;
+    --text-inverse: #1f2430;
+    
+    /* Accent Colors */
+    --accent-primary: #5ccfe6;
+    --accent-secondary: #d5ff80;
+    --accent-warning: #ffcc66;
+    --accent-error: #f28779;
+    --accent-danger: #f28779;
+    --accent-info: #5ccfe6;
+    --accent-success: #d5ff80;
+    
+    /* Border Colors */
+    --border-primary: #2a2f3a;
+    --border-secondary: #343a46;
+    --border-accent: #5ccfe6;
+    
+    /* Link Colors */
+    --link-color: #5ccfe6;
+    --link-hover: #73d0ff;
+    --link-visited: #dfbfff;
+    --text-link: #5ccfe6;
+    
+    /* Button Colors */
+    --btn-primary-bg: #5ccfe6;
+    --btn-primary-color: #1f2430;
+    --btn-primary-hover: #73d0ff;
+    --btn-secondary-bg: #2a2f3a;
+    --btn-secondary-color: #cbccc6;
+    --btn-secondary-hover: #343a46;
+    --button-bg: #2a2f3a;
+    --button-hover: #343a46;
+    --button-active: #3d4350;
+    --button-text: #cbccc6;
+    
+    /* Form Colors */
+    --input-bg: #232834;
+    --input-border: #2a2f3a;
+    --input-focus: #5ccfe6;
+    --input-color: #cbccc6;
+    --input-placeholder: #707a8c;
+    
+    /* Tag Colors */
+    --tag-bg: rgba(92, 207, 230, 0.15);
+    --tag-color: #5ccfe6;
+    --tag-border: rgba(92, 207, 230, 0.3);
+    
+    /* Code Block Colors */
+    --code-bg: #232834;
+    --code-border: #2a2f3a;
+    --code-color: #cbccc6;
+    --line-number-bg: #1a1f29;
+    --line-number-color: #707a8c;
+    --line-number-border: #2a2f3a;
+    
+    /* Syntax Highlighting Colors */
+    --syntax-comment: #5c6773;
+    --syntax-keyword: #ffc68d;
+    --syntax-string: #d5ff80;
+    --syntax-number: #ffcc66;
+    --syntax-function: #5ccfe6;
+    --syntax-variable: #cbccc6;
+    --syntax-type: #73d0ff;
+    --syntax-constant: #f29e74;
+    --syntax-operator: #f29668;
+    --syntax-punctuation: #cbccc6;
+    --syntax-tag: #f28779;
+    --syntax-attribute: #ffc68d;
+    --syntax-value: #d5ff80;
+    --syntax-regex: #95e6cb;
+    --syntax-important: #f28779;
+    --syntax-bold: #ffc68d;
+    --syntax-italic: #5ccfe6;
+    
+    /* Callout Colors */
+    --callout-note: #5ccfe6;
+    --callout-tip: #d5ff80;
+    --callout-warning: #ffcc66;
+    --callout-danger: #f28779;
+    --callout-info: #73d0ff;
+    
+    /* Tab Colors */
+    --tab-bg: #232834;
+    --tab-active-bg: #1f2430;
+    --tab-hover-bg: #2a2f3a;
+    --tab-border: #2a2f3a;
+    --tab-active-border: #5ccfe6;
+    
+    /* Sidebar Colors */
+    --sidebar-bg: #1a1f29;
+    --sidebar-border: #2a2f3a;
+    --sidebar-item-hover: #232834;
+    --sidebar-item-active: #2a2f3a;
+    
+    /* Search Colors */
+    --search-bg: #232834;
+    --search-border: #2a2f3a;
+    --search-focus: #5ccfe6;
+    --search-result-hover: #2a2f3a;
+    --search-highlight: #ffcc66;
+    
+    /* Scrollbar Colors */
+    --scrollbar-track: #1a1f29;
+    --scrollbar-thumb: #2a2f3a;
+    --scrollbar-thumb-hover: #343a46;
+    
+    /* Modal Colors */
+    --modal-bg: #1f2430;
+    --modal-border: #2a2f3a;
+    --modal-overlay: rgba(0, 0, 0, 0.7);
+    --bg-modal: #1f2430;
+    --bg-tooltip: #232834;
+    --bg-input: #232834;
+    --bg-highlight: rgba(255, 204, 102, 0.15);
+    
+    /* Table Colors */
+    --table-border: #2a2f3a;
+    --table-stripe: #232834;
+    --table-hover: #2a2f3a;
+    --table-header-bg: #232834;
+    
+    /* Progress Colors */
+    --progress-bg: #232834;
+    --progress-fill: #5ccfe6;
+    
+    /* Status Colors */
+    --status-online: #d5ff80;
+    --status-away: #ffcc66;
+    --status-busy: #f28779;
+    --status-offline: #707a8c;
+    
+    /* Badge Colors */
+    --badge-bg: rgba(92, 207, 230, 0.2);
+    --badge-text: #5ccfe6;
+    
+    /* Shadow Colors */
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(0, 0, 0, 0.2);
+    --shadow-heavy: rgba(0, 0, 0, 0.4);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    
+    /* Spacing (inherited from base) */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    
+    /* Typography (inherited from base) */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --font-size-4xl: 2.25rem;
+    
+    /* Line Heights */
+    --line-height-tight: 1.25;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+    
+    /* Border Radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --transition-slow: 350ms ease;
+    
+    /* Z-Index Scale */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+}
+
+/* Theme-specific component styles */
+[data-theme="ayu-mirage"] {
+    color-scheme: dark;
+}
+
+/* Custom scrollbar for Ayu Mirage */
+[data-theme="ayu-mirage"] ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+[data-theme="ayu-mirage"] ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+    border-radius: var(--radius-sm);
+}
+
+[data-theme="ayu-mirage"] ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition-fast);
+}
+
+[data-theme="ayu-mirage"] ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+}
+
+/* Selection color */
+[data-theme="ayu-mirage"] ::selection {
+    background: var(--bg-selection);
+    color: var(--text-primary);
+}
+
+/* Focus styles */
+[data-theme="ayu-mirage"] :focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+}
+
+/* Enhanced syntax highlighting for Ayu Mirage */
+[data-theme="ayu-mirage"] .token.comment,
+[data-theme="ayu-mirage"] .token.prolog,
+[data-theme="ayu-mirage"] .token.doctype,
+[data-theme="ayu-mirage"] .token.cdata {
+    color: var(--syntax-comment);
+    font-style: italic;
+}
+
+[data-theme="ayu-mirage"] .token.punctuation {
+    color: var(--syntax-punctuation);
+}
+
+[data-theme="ayu-mirage"] .token.property,
+[data-theme="ayu-mirage"] .token.tag,
+[data-theme="ayu-mirage"] .token.boolean,
+[data-theme="ayu-mirage"] .token.number,
+[data-theme="ayu-mirage"] .token.constant,
+[data-theme="ayu-mirage"] .token.symbol,
+[data-theme="ayu-mirage"] .token.deleted {
+    color: var(--syntax-number);
+}
+
+[data-theme="ayu-mirage"] .token.selector,
+[data-theme="ayu-mirage"] .token.attr-name,
+[data-theme="ayu-mirage"] .token.string,
+[data-theme="ayu-mirage"] .token.char,
+[data-theme="ayu-mirage"] .token.builtin,
+[data-theme="ayu-mirage"] .token.inserted {
+    color: var(--syntax-string);
+}
+
+[data-theme="ayu-mirage"] .token.operator,
+[data-theme="ayu-mirage"] .token.entity,
+[data-theme="ayu-mirage"] .token.url,
+[data-theme="ayu-mirage"] .language-css .token.string,
+[data-theme="ayu-mirage"] .style .token.string {
+    color: var(--syntax-operator);
+}
+
+[data-theme="ayu-mirage"] .token.atrule,
+[data-theme="ayu-mirage"] .token.attr-value,
+[data-theme="ayu-mirage"] .token.keyword {
+    color: var(--syntax-keyword);
+}
+
+[data-theme="ayu-mirage"] .token.function,
+[data-theme="ayu-mirage"] .token.class-name {
+    color: var(--syntax-function);
+}
+
+[data-theme="ayu-mirage"] .token.regex,
+[data-theme="ayu-mirage"] .token.important,
+[data-theme="ayu-mirage"] .token.variable {
+    color: var(--syntax-regex);
+}
+
+[data-theme="ayu-mirage"] .token.important,
+[data-theme="ayu-mirage"] .token.bold {
+    font-weight: bold;
+    color: var(--syntax-important);
+}
+
+[data-theme="ayu-mirage"] .token.italic {
+    font-style: italic;
+    color: var(--syntax-italic);
+}
+
+[data-theme="ayu-mirage"] .token.entity {
+    cursor: help;
+}
+
+/* Enhanced callout styles for Ayu Mirage */
+[data-theme="ayu-mirage"] .callout {
+    border-left-width: 4px;
+    border-left-style: solid;
+    margin: var(--spacing-md) 0;
+    padding: var(--spacing-md);
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: var(--radius-md);
+}
+
+[data-theme="ayu-mirage"] .callout.note {
+    border-left-color: var(--callout-note);
+    background: rgba(92, 207, 230, 0.05);
+}
+
+[data-theme="ayu-mirage"] .callout.tip {
+    border-left-color: var(--callout-tip);
+    background: rgba(213, 255, 128, 0.05);
+}
+
+[data-theme="ayu-mirage"] .callout.warning {
+    border-left-color: var(--callout-warning);
+    background: rgba(255, 204, 102, 0.05);
+}
+
+[data-theme="ayu-mirage"] .callout.danger {
+    border-left-color: var(--callout-danger);
+    background: rgba(242, 135, 121, 0.05);
+}
+
+[data-theme="ayu-mirage"] .callout.info {
+    border-left-color: var(--callout-info);
+    background: rgba(115, 208, 255, 0.05);
+}
+
+/* Performance optimization for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

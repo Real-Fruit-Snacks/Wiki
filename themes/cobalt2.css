@@ -1,82 +1,64 @@
-/* 
- * Cobalt2 Theme for Notes Wiki - By Wes Bos
- * An electrifying dark theme with vibrant neon accents
- * Features bold colors, dynamic animations, and high-energy aesthetics
- */
-
+/* Cobalt2 Theme Variables - By Wes Bos */
 :root[data-theme="cobalt2"] {
-    /* Deep Ocean Backgrounds */
+    /* Background Colors */
     --bg-primary: #193549;
     --bg-secondary: #122738;
     --bg-sidebar: #1F4662;
     --bg-code: #122738;
-    --bg-selection: rgba(158, 255, 255, 0.2);
-    --bg-dropdown: #122738;
-    --bg-hover: rgba(255, 198, 0, 0.08);
+    --bg-selection: #234E6D;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.1);
     --bg-tag: #234E6D;
-    --bg-modal: #193549;
-    --bg-tooltip: #0e1d2b;
-    --bg-input: #0e1d2b;
-    --bg-highlight: rgba(255, 198, 0, 0.3);
     
-    /* Enhanced Text Colors */
+        /* Additional Background Colors */
+    --bg-modal: rgba(25, 53, 73, 0.93);
+    --bg-tooltip: #1F4662;
+    --bg-input: #122738;
+    --bg-highlight: #234E6D;
+    --text-link: #9EFFFF;
+    --text-code: #ff628c;
+    --text-inverse: #000000;
+    --button-text: #ffffff;
+    
+/* Text Colors */
     --text-primary: #ffffff;
     --text-secondary: #e1efff;
     --text-muted: #7fdbca;
     --text-heading: #ffc600;
-    --text-link: #9EFFFF;
-    --text-code: #ffc600;
-    --text-inverse: #193549;
     
-    /* Electric Accent Palette */
+    /* Accent Colors */
     --accent-primary: #9EFFFF;
-    --accent-primary-light: #b8ffff;
     --accent-secondary: #ffc600;
-    --accent-tertiary: #ff628c;
     --accent-warning: #ffc600;
     --accent-error: #ff628c;
     --accent-info: #0088ff;
     --accent-success: #80ffbb;
     
-    /* Neon Border Colors */
+    /* Border Colors */
     --border-primary: #234E6D;
-    --border-secondary: #2a5f85;
-    --border-focus: var(--accent-primary);
+    --border-secondary: #1F4662;
     
-    /* Button Styling */
-    --button-bg: #122738;
-    --button-hover: #234E6D;
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
     --button-active: var(--accent-primary);
-    --button-text: var(--text-primary);
     
     /* Badge Colors */
     --badge-bg: var(--accent-secondary);
     --badge-text: #193549;
-    --badge-border: transparent;
     
-    /* Deep Shadows */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
-    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.6);
-    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.7);
-    --shadow-glow: 0 0 30px rgba(158, 255, 255, 0.4);
-    --shadow-neon: 0 0 40px rgba(255, 198, 0, 0.3);
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: var(--shadow-lg);
     
-    /* Vibrant Gradients */
-    --gradient-primary: linear-gradient(135deg, #9EFFFF 0%, #00ffcc 100%);
-    --gradient-secondary: linear-gradient(135deg, #ffc600 0%, #ff9d00 100%);
-    --gradient-accent: linear-gradient(135deg, #ff628c 0%, #ff9adb 100%);
-    --gradient-electric: linear-gradient(135deg, #0088ff 0%, #9EFFFF 50%, #ffc600 100%);
-    
-    /* Additional Variables */
-    --accent-color-alpha: rgba(158, 255, 255, 0.15);
+    /* Other */
+    --accent-color-alpha: rgba(158, 255, 255, 0.1);
     --bg-code-block: #122738;
-    --border-radius: 8px;
-    --transition-speed: 0.3s;
-    --blur-strength: 12px;
 }
 
-/* Enhanced Syntax Highlighting */
+/* Syntax Highlighting - Cobalt2 Theme */
 :root[data-theme="cobalt2"] .token.comment,
 :root[data-theme="cobalt2"] .token.prolog,
 :root[data-theme="cobalt2"] .token.doctype,
@@ -91,14 +73,11 @@
 
 :root[data-theme="cobalt2"] .token.property,
 :root[data-theme="cobalt2"] .token.tag,
+:root[data-theme="cobalt2"] .token.boolean,
+:root[data-theme="cobalt2"] .token.number,
 :root[data-theme="cobalt2"] .token.constant,
 :root[data-theme="cobalt2"] .token.symbol,
 :root[data-theme="cobalt2"] .token.deleted {
-    color: #ff628c;
-}
-
-:root[data-theme="cobalt2"] .token.boolean,
-:root[data-theme="cobalt2"] .token.number {
     color: #ff628c;
 }
 
@@ -124,7 +103,6 @@
 :root[data-theme="cobalt2"] .token.attr-value,
 :root[data-theme="cobalt2"] .token.keyword {
     color: #ffc600;
-    font-weight: 600;
 }
 
 :root[data-theme="cobalt2"] .token.function,
@@ -135,299 +113,24 @@
 :root[data-theme="cobalt2"] .token.regex,
 :root[data-theme="cobalt2"] .token.important,
 :root[data-theme="cobalt2"] .token.variable {
-    color: #80ffbb;
+    color: #e1efff;
 }
 
-:root[data-theme="cobalt2"] .token.namespace {
-    color: #ff9adb;
-    opacity: 0.9;
-}
-
-/* Electric Visual Elements */
-:root[data-theme="cobalt2"] .sidebar {
-    background: var(--bg-sidebar);
-    border-right: 2px solid var(--border-primary);
-    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.5),
-                inset -1px 0 0 rgba(158, 255, 255, 0.2);
-}
-
-:root[data-theme="cobalt2"] .tab.active {
-    background: var(--bg-secondary);
-    border-bottom: 3px solid var(--accent-secondary);
-    box-shadow: 0 3px 15px rgba(255, 198, 0, 0.3);
-    position: relative;
-}
-
-:root[data-theme="cobalt2"] .tab.active::after {
-    content: '';
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--gradient-secondary);
-    animation: cobalt-pulse 2s ease-in-out infinite;
-}
-
-@keyframes cobalt-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-}
-
-:root[data-theme="cobalt2"] .tab:hover:not(.active) {
-    background: rgba(255, 198, 0, 0.1);
-    border-bottom: 3px solid rgba(255, 198, 0, 0.5);
-}
-
-/* Neon Card Styles */
-:root[data-theme="cobalt2"] .card {
-    background: rgba(18, 39, 56, 0.8);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--border-primary);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow-md);
-    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-:root[data-theme="cobalt2"] .card:hover {
-    border-color: var(--accent-primary);
-    box-shadow: var(--shadow-lg), 0 0 30px rgba(158, 255, 255, 0.2);
-    transform: translateY(-4px);
-}
-
-/* Neon Button Styles */
-:root[data-theme="cobalt2"] .button {
-    background: var(--button-bg);
-    border: 2px solid var(--border-primary);
-    color: var(--button-text);
-    border-radius: 6px;
-    transition: all var(--transition-speed) ease;
-    position: relative;
-    overflow: hidden;
-    text-transform: uppercase;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
-
-:root[data-theme="cobalt2"] .button::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: radial-gradient(circle, rgba(255, 198, 0, 0.4) 0%, transparent 70%);
-    transform: translate(-50%, -50%);
-    transition: width 0.5s, height 0.5s;
-}
-
-:root[data-theme="cobalt2"] .button:hover::before {
-    width: 200%;
-    height: 200%;
-}
-
-:root[data-theme="cobalt2"] .button:hover {
-    background: var(--button-hover);
-    border-color: var(--accent-secondary);
-    color: var(--accent-secondary);
-    box-shadow: 0 0 30px rgba(255, 198, 0, 0.4),
-                inset 0 0 20px rgba(255, 198, 0, 0.1);
-    transform: translateY(-2px);
-}
-
-/* Vibrant Code Blocks */
-:root[data-theme="cobalt2"] pre[class*="language-"] {
-    background: var(--bg-code-block);
-    border: 1px solid var(--border-primary);
-    border-radius: 6px;
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
-    position: relative;
-    overflow: hidden;
-}
-
-:root[data-theme="cobalt2"] pre[class*="language-"]::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--gradient-electric);
-    opacity: 0.9;
-}
-
-/* Glowing Search Input */
-:root[data-theme="cobalt2"] input[type="search"],
-:root[data-theme="cobalt2"] input[type="text"] {
-    background: var(--bg-secondary);
-    border: 2px solid var(--border-primary);
-    color: var(--text-primary);
-    border-radius: 6px;
-    transition: all var(--transition-speed) ease;
-}
-
-:root[data-theme="cobalt2"] input[type="search"]:focus,
-:root[data-theme="cobalt2"] input[type="text"]:focus {
-    border-color: var(--accent-primary);
-    box-shadow: 0 0 0 3px rgba(158, 255, 255, 0.2),
-                0 0 30px rgba(158, 255, 255, 0.15);
-    outline: none;
-    background: rgba(18, 39, 56, 0.9);
-}
-
-/* Neon Tag Pills */
-:root[data-theme="cobalt2"] .tag {
-    background: linear-gradient(135deg, rgba(255, 198, 0, 0.2) 0%, rgba(255, 157, 0, 0.2) 100%);
-    border: 1px solid rgba(255, 198, 0, 0.5);
-    color: #ffc600;
-    border-radius: 20px;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.75em;
-    letter-spacing: 0.5px;
-    backdrop-filter: blur(4px);
-    transition: all var(--transition-speed) ease;
-}
-
-:root[data-theme="cobalt2"] .tag:hover {
-    background: linear-gradient(135deg, rgba(255, 198, 0, 0.3) 0%, rgba(255, 157, 0, 0.3) 100%);
-    border-color: #ffc600;
-    box-shadow: 0 0 20px rgba(255, 198, 0, 0.4);
-    transform: scale(1.05);
-}
-
-/* Electric Scrollbar */
-:root[data-theme="cobalt2"] ::-webkit-scrollbar {
-    width: 14px;
-    height: 14px;
-}
-
+/* Scrollbar Cobalt2 Theme */
 :root[data-theme="cobalt2"] ::-webkit-scrollbar-track {
     background: var(--bg-primary);
-    border: 1px solid var(--border-primary);
 }
 
 :root[data-theme="cobalt2"] ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #2a5f85 0%, #234E6D 100%);
-    border: 2px solid var(--bg-primary);
-    border-radius: 7px;
+    background: #234E6D;
+    border: 3px solid var(--bg-primary);
 }
 
 :root[data-theme="cobalt2"] ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #3a6f95 0%, #2a5f85 100%);
-    box-shadow: 0 0 10px rgba(158, 255, 255, 0.4);
+    background: #2a5d7f;
 }
 
-/* Firefox Scrollbar */
+/* Firefox Scrollbar Cobalt2 Theme */
 :root[data-theme="cobalt2"] * {
     scrollbar-color: #234E6D var(--bg-primary);
-    scrollbar-width: thin;
-}
-
-/* Neon Selection */
-:root[data-theme="cobalt2"] ::selection {
-    background: rgba(255, 198, 0, 0.3);
-    color: var(--text-heading);
-}
-
-/* Electric Modal */
-:root[data-theme="cobalt2"] .modal-backdrop {
-    background: rgba(25, 53, 73, 0.9);
-    backdrop-filter: blur(12px);
-}
-
-/* Glowing Tooltip */
-:root[data-theme="cobalt2"] .tooltip {
-    background: var(--bg-tooltip);
-    color: var(--text-primary);
-    border: 1px solid var(--accent-primary);
-    border-radius: 6px;
-    box-shadow: 0 0 30px rgba(158, 255, 255, 0.5);
-}
-
-/* Animated Link Styles */
-:root[data-theme="cobalt2"] .note-content a {
-    color: var(--accent-primary);
-    text-decoration: none;
-    position: relative;
-    font-weight: 600;
-    transition: all var(--transition-speed) ease;
-}
-
-:root[data-theme="cobalt2"] .note-content a::after {
-    content: '';
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--gradient-secondary);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform var(--transition-speed) ease;
-}
-
-:root[data-theme="cobalt2"] .note-content a:hover {
-    color: #ffc600;
-    text-shadow: 0 0 10px rgba(255, 198, 0, 0.5);
-}
-
-:root[data-theme="cobalt2"] .note-content a:hover::after {
-    transform: scaleX(1);
-}
-
-/* Electric Loading Animation */
-:root[data-theme="cobalt2"] .loading {
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(158, 255, 255, 0.2) 25%,
-        rgba(255, 198, 0, 0.2) 50%,
-        rgba(158, 255, 255, 0.2) 75%,
-        transparent 100%
-    );
-    background-size: 200% 100%;
-    animation: cobalt-loading 1.5s ease-in-out infinite;
-}
-
-@keyframes cobalt-loading {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-}
-
-/* Neon Active Elements */
-:root[data-theme="cobalt2"] .active-element {
-    border-left: 4px solid var(--accent-secondary);
-    background: linear-gradient(90deg, rgba(255, 198, 0, 0.1) 0%, transparent 100%);
-    box-shadow: inset 0 0 30px rgba(255, 198, 0, 0.05);
-}
-
-/* Special Neon Effects */
-:root[data-theme="cobalt2"] .neon-text {
-    color: var(--accent-primary);
-    text-shadow: 0 0 10px currentColor,
-                 0 0 20px currentColor,
-                 0 0 30px currentColor;
-}
-
-:root[data-theme="cobalt2"] .electric-border {
-    border: 2px solid var(--accent-primary);
-    box-shadow: 0 0 20px rgba(158, 255, 255, 0.5),
-                inset 0 0 20px rgba(158, 255, 255, 0.1);
-}
-
-/* Performance optimization for users who prefer reduced motion */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
-    
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
 }

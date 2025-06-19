@@ -1,90 +1,58 @@
-/* Dark Theme for Notes Wiki - Modern Dark with Subtle Accents */
+/* Dark Theme for Notes Wiki */
 :root[data-theme="dark"] {
-    /* Background Colors - Rich dark grays */
-    --bg-primary: #0d0d0d;
-    --bg-secondary: #1a1a1a;
-    --bg-sidebar: #111111;
-    --bg-code: #161616;
-    --bg-selection: #4a9eff33;
-    --bg-dropdown: #1a1a1a;
-    --bg-hover: #262626;
-    --bg-tag: #2a2a2a;
-    --bg-modal: #0d0d0dee;
-    --bg-tooltip: #2a2a2aee;
-    --bg-input: #1a1a1a;
-    --bg-highlight: #fbbf2422;
+    /* Background Colors */
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #242424;
+    --bg-sidebar: #1f1f1f;
+    --bg-code: #2d2d2d;
+    --bg-selection: #3b82f633;
+    --bg-dropdown: #242424;
+    --bg-hover: #2d2d2d;
+    --bg-tag: #333333;
     
-    /* Text Colors - High contrast without harshness */
-    --text-primary: #f0f0f0;
-    --text-secondary: #a8a8a8;
-    --text-muted: #6e6e6e;
+        /* Additional Background Colors */
+    --bg-modal: rgba(26, 26, 26, 0.93);
+    --bg-tooltip: #1f1f1f;
+    --bg-input: #2d2d2d;
+    --bg-highlight: #3b82f633;
+    --text-link: #3b82f6;
+    --text-code: #ef4444;
+    --text-inverse: #000000;
+    --button-text: #e5e5e5;
+    
+/* Text Colors */
+    --text-primary: #e5e5e5;
+    --text-secondary: #999999;
+    --text-muted: #666666;
     --text-heading: #ffffff;
-    --text-link: #4a9eff;
-    --text-code: #fbbf24;
-    --text-inverse: #0d0d0d;
     
-    /* Accent Colors - Modern palette */
-    --accent-primary: #4a9eff;
+    /* Accent Colors */
+    --accent-primary: #3b82f6;
     --accent-secondary: #10b981;
     --accent-warning: #fbbf24;
-    --accent-error: #ff5757;
-    --accent-danger: #ff5757;
-    --accent-info: #06b6d4;
+    --accent-error: #ef4444;
+    --accent-danger: #ef4444;
+    --accent-info: #3b82f6;
     --accent-success: #10b981;
-    --accent-primary-light: #4a9eff22;
-    --accent-primary-dark: #2563eb;
     
-    /* Border Colors - Subtle definition */
-    --border-primary: #2a2a2a;
-    --border-secondary: #3a3a3a;
-    --border-default: #1f1f1f;
-    --border-hover: #4a4a4a;
+    /* Border Colors */
+    --border-primary: #333333;
+    --border-secondary: #444444;
     
-    /* Button Colors - Modern flat design */
-    --button-bg: #2a2a2a;
-    --button-hover: #3a3a3a;
-    --button-active: #4a9eff;
-    --button-text: #f0f0f0;
-    --button-border: #3a3a3a;
+    /* Button Colors */
+    --button-bg: #2d2d2d;
+    --button-hover: #3d3d3d;
+    --button-active: #3b82f6;
     
     /* Badge Colors */
-    --badge-bg: #ff5757;
+    --badge-bg: #ef4444;
     --badge-text: #ffffff;
-    --badge-border: #ff575733;
     
-    /* Component Colors */
-    --card-bg: #1a1a1a;
-    --card-border: #2a2a2a;
-    --table-header: #1a1a1a;
-    --table-row-hover: #2a2a2a22;
-    
-    /* Interactive States */
-    --focus-ring: #4a9eff;
-    --focus-ring-offset: #0d0d0d;
-    --disabled-bg: #1a1a1a;
-    --disabled-text: #4a4a4a;
-    
-    /* Shadows - Subtle depth */
-    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
-    --shadow-md: 0 4px 8px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -1px rgba(0, 0, 0, 0.5);
-    --shadow-lg: 0 10px 20px -3px rgba(0, 0, 0, 0.7), 0 4px 8px -2px rgba(0, 0, 0, 0.6);
-    --shadow-xl: 0 20px 30px -5px rgba(0, 0, 0, 0.8), 0 10px 15px -5px rgba(0, 0, 0, 0.7);
-    --shadow-glow: 0 0 20px rgba(74, 158, 255, 0.15);
-    --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.5);
-    
-    /* Typography */
-    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-    --font-display: 'Inter', system-ui, sans-serif;
-    --line-height-base: 1.6;
-    --line-height-heading: 1.3;
-    
-    /* Spacing */
-    --border-radius: 6px;
-    --border-radius-lg: 8px;
-    --border-width: 1px;
-    
-    /* Theme description */
-    --theme-description: "Classic dark theme with modern aesthetics and excellent readability";
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
 }
 
 /* Syntax Highlighting - Prism Dark Theme */
@@ -144,155 +112,21 @@
     color: #fb923c;
 }
 
-/* Scrollbar Dark Theme - Modern minimal */
+/* Scrollbar Dark Theme */
 :root[data-theme="dark"] ::-webkit-scrollbar-track {
     background: var(--bg-primary);
-    border-radius: 4px;
 }
 
 :root[data-theme="dark"] ::-webkit-scrollbar-thumb {
-    background: #3a3a3a;
-    border: 2px solid var(--bg-primary);
-    border-radius: 4px;
+    background: #4b5563;
+    border: 3px solid var(--bg-primary);
 }
 
 :root[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
-    background: #4a4a4a;
+    background: #6b7280;
 }
 
 /* Firefox Scrollbar Dark Theme */
 :root[data-theme="dark"] * {
-    scrollbar-color: #3a3a3a var(--bg-primary);
-}
-
-/* Dark theme enhancements */
-:root[data-theme="dark"] {
-    /* Subtle text shadows for depth */
-    --text-shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-/* Enhanced code blocks */
-:root[data-theme="dark"] pre {
-    background: var(--bg-code);
-    border: 1px solid var(--border-primary);
-    box-shadow: var(--shadow-inset);
-}
-
-/* Modern button styling */
-:root[data-theme="dark"] button,
-:root[data-theme="dark"] .button {
-    background: var(--button-bg);
-    border: 1px solid var(--button-border);
-    transition: all 0.2s ease;
-    font-weight: 500;
-}
-
-:root[data-theme="dark"] button:hover,
-:root[data-theme="dark"] .button:hover {
-    background: var(--button-hover);
-    border-color: var(--border-hover);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
-}
-
-:root[data-theme="dark"] button:active,
-:root[data-theme="dark"] .button:active {
-    transform: translateY(0);
-    box-shadow: var(--shadow-sm);
-}
-
-/* Links with subtle transitions */
-:root[data-theme="dark"] a {
-    color: var(--text-link);
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-:root[data-theme="dark"] a:hover {
-    color: var(--accent-primary-dark);
-    text-decoration: underline;
-}
-
-/* Selection styling */
-:root[data-theme="dark"] ::selection {
-    background: var(--accent-primary);
-    color: var(--text-inverse);
-}
-
-/* Input fields with modern styling */
-:root[data-theme="dark"] input,
-:root[data-theme="dark"] textarea,
-:root[data-theme="dark"] select {
-    background: var(--bg-input);
-    border: 1px solid var(--border-primary);
-    color: var(--text-primary);
-    transition: all 0.2s ease;
-}
-
-:root[data-theme="dark"] input:focus,
-:root[data-theme="dark"] textarea:focus,
-:root[data-theme="dark"] select:focus {
-    border-color: var(--accent-primary);
-    box-shadow: 0 0 0 3px var(--accent-primary-light);
-    outline: none;
-}
-
-/* Card components */
-:root[data-theme="dark"] .card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    box-shadow: var(--shadow-sm);
-}
-
-/* Table styling */
-:root[data-theme="dark"] table {
-    border: 1px solid var(--border-primary);
-}
-
-:root[data-theme="dark"] th {
-    background: var(--table-header);
-    border-bottom: 2px solid var(--border-primary);
-    font-weight: 600;
-}
-
-:root[data-theme="dark"] tr:hover {
-    background: var(--table-row-hover);
-}
-
-/* Tag styling */
-:root[data-theme="dark"] .tag {
-    background: var(--bg-tag);
-    border: 1px solid var(--border-primary);
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    padding: 0.25rem 0.5rem;
-    border-radius: var(--border-radius);
-}
-
-/* Blockquotes */
-:root[data-theme="dark"] blockquote {
-    border-left: 4px solid var(--accent-primary);
-    background: var(--bg-secondary);
-    padding: 1rem;
-    margin: 1rem 0;
-}
-
-/* Sidebar enhancements */
-:root[data-theme="dark"] .sidebar {
-    background: var(--bg-sidebar);
-    border-right: 1px solid var(--border-primary);
-}
-
-/* Tooltips */
-:root[data-theme="dark"] .tooltip {
-    background: var(--bg-tooltip);
-    color: var(--text-primary);
-    border: 1px solid var(--border-primary);
-    box-shadow: var(--shadow-lg);
-}
-
-/* Focus visible for accessibility */
-:root[data-theme="dark"] *:focus-visible {
-    outline: 2px solid var(--focus-ring);
-    outline-offset: 2px;
+    scrollbar-color: #4b5563 var(--bg-primary);
 }

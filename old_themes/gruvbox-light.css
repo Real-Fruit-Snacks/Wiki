@@ -1,0 +1,126 @@
+/* Gruvbox Light Theme Variables */
+:root[data-theme="gruvbox-light"] {
+    /* Background Colors */
+    --bg-primary: #fbf1c7;
+    --bg-secondary: #ebdbb2;
+    --bg-sidebar: #ebdbb2;
+    --bg-code: #ebdbb2;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(0, 0, 0, 0.05);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Text Colors */
+    --text-primary: #3c3836;
+    --text-secondary: #504945;
+    --text-muted: #665c54;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors */
+    --accent-primary: #076678;
+    --accent-secondary: #458588;
+    --accent-warning: #fbbf24;
+    --accent-error: #ef4444;
+    --accent-info: var(--accent-primary);
+    --accent-success: #10b981;
+    
+    /* Border Colors */
+    --border-primary: #d5c4a1;
+    --border-secondary: #ebdbb2;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-error);
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(7, 102, 120, 0.1);
+    --bg-code-block: #f2e5bc;
+}
+
+/* Syntax Highlighting - Gruvbox Light Theme */
+:root[data-theme="gruvbox-light"] .token.comment,
+:root[data-theme="gruvbox-light"] .token.prolog,
+:root[data-theme="gruvbox-light"] .token.doctype,
+:root[data-theme="gruvbox-light"] .token.cdata {
+    color: #928374;
+    font-style: italic;
+}
+
+:root[data-theme="gruvbox-light"] .token.punctuation {
+    color: #3c3836;
+}
+
+:root[data-theme="gruvbox-light"] .token.property,
+:root[data-theme="gruvbox-light"] .token.tag,
+:root[data-theme="gruvbox-light"] .token.boolean,
+:root[data-theme="gruvbox-light"] .token.number,
+:root[data-theme="gruvbox-light"] .token.constant,
+:root[data-theme="gruvbox-light"] .token.symbol,
+:root[data-theme="gruvbox-light"] .token.deleted {
+    color: #8f3f71;
+}
+
+:root[data-theme="gruvbox-light"] .token.selector,
+:root[data-theme="gruvbox-light"] .token.attr-name,
+:root[data-theme="gruvbox-light"] .token.string,
+:root[data-theme="gruvbox-light"] .token.char,
+:root[data-theme="gruvbox-light"] .token.builtin,
+:root[data-theme="gruvbox-light"] .token.inserted {
+    color: #79740e;
+}
+
+:root[data-theme="gruvbox-light"] .token.operator,
+:root[data-theme="gruvbox-light"] .token.entity,
+:root[data-theme="gruvbox-light"] .token.url,
+:root[data-theme="gruvbox-light"] .language-css .token.string,
+:root[data-theme="gruvbox-light"] .style .token.string {
+    color: #427b58;
+    background: transparent;
+}
+
+:root[data-theme="gruvbox-light"] .token.atrule,
+:root[data-theme="gruvbox-light"] .token.attr-value,
+:root[data-theme="gruvbox-light"] .token.keyword {
+    color: #9d0006;
+}
+
+:root[data-theme="gruvbox-light"] .token.function,
+:root[data-theme="gruvbox-light"] .token.class-name {
+    color: #b57614;
+}
+
+:root[data-theme="gruvbox-light"] .token.regex,
+:root[data-theme="gruvbox-light"] .token.important,
+:root[data-theme="gruvbox-light"] .token.variable {
+    color: #af3a03;
+}
+
+/* Scrollbar Gruvbox Light Theme */
+:root[data-theme="gruvbox-light"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="gruvbox-light"] ::-webkit-scrollbar-thumb {
+    background: #a89984;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="gruvbox-light"] ::-webkit-scrollbar-thumb:hover {
+    background: #928374;
+}
+
+/* Firefox Scrollbar Gruvbox Light Theme */
+:root[data-theme="gruvbox-light"] * {
+    scrollbar-color: #a89984 var(--bg-primary);
+}

@@ -1,0 +1,122 @@
+/* Vaporwave Theme for Notes Wiki */
+:root[data-theme="vaporwave"] {
+    /* Background Colors */
+    --bg-primary: #300350;
+    --bg-secondary: #153CB4;
+    --bg-sidebar: #250441;
+    --bg-code: #1a0230;
+    --bg-selection: #FF71CE33;
+    --bg-dropdown: #153CB4;
+    --bg-hover: #4b2d7f;
+    --bg-tag: #B967FF;
+    
+    /* Text Colors */
+    --text-primary: #FFFB96;
+    --text-secondary: #01CDFE;
+    --text-muted: #B967FF;
+    --text-heading: #FF71CE;
+    
+    /* Accent Colors */
+    --accent-primary: #FF71CE;
+    --accent-secondary: #01CDFE;
+    --accent-warning: #FFFB96;
+    --accent-error: #FF00C1;
+    --accent-danger: #FF00C1;
+    --accent-info: #01CDFE;
+    --accent-success: #05FFA1;
+    
+    /* Border Colors */
+    --border-primary: #B967FF;
+    --border-secondary: #FF71CE;
+    
+    /* Button Colors */
+    --button-bg: #153CB4;
+    --button-hover: #B967FF;
+    --button-active: #FF71CE;
+    
+    /* Badge Colors */
+    --badge-bg: #FF71CE;
+    --badge-text: #300350;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(255, 113, 206, 0.2);
+    --shadow-md: 0 4px 6px -1px rgba(255, 113, 206, 0.3), 0 2px 4px -1px rgba(1, 205, 254, 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(255, 113, 206, 0.3), 0 4px 6px -2px rgba(1, 205, 254, 0.2);
+    --shadow-xl: 0 20px 25px -5px rgba(255, 113, 206, 0.3), 0 10px 10px -5px rgba(1, 205, 254, 0.2);
+}
+
+/* Syntax Highlighting - Vaporwave Theme */
+:root[data-theme="vaporwave"] .token.comment,
+:root[data-theme="vaporwave"] .token.prolog,
+:root[data-theme="vaporwave"] .token.doctype,
+:root[data-theme="vaporwave"] .token.cdata {
+    color: #8b6bb9;
+}
+
+:root[data-theme="vaporwave"] .token.punctuation {
+    color: #B967FF;
+}
+
+:root[data-theme="vaporwave"] .token.property,
+:root[data-theme="vaporwave"] .token.tag,
+:root[data-theme="vaporwave"] .token.boolean,
+:root[data-theme="vaporwave"] .token.number,
+:root[data-theme="vaporwave"] .token.constant,
+:root[data-theme="vaporwave"] .token.symbol,
+:root[data-theme="vaporwave"] .token.deleted {
+    color: #FF00C1;
+}
+
+:root[data-theme="vaporwave"] .token.selector,
+:root[data-theme="vaporwave"] .token.attr-name,
+:root[data-theme="vaporwave"] .token.string,
+:root[data-theme="vaporwave"] .token.char,
+:root[data-theme="vaporwave"] .token.builtin,
+:root[data-theme="vaporwave"] .token.inserted {
+    color: #05FFA1;
+}
+
+:root[data-theme="vaporwave"] .token.operator,
+:root[data-theme="vaporwave"] .token.entity,
+:root[data-theme="vaporwave"] .token.url,
+:root[data-theme="vaporwave"] .language-css .token.string,
+:root[data-theme="vaporwave"] .style .token.string {
+    color: #FFFB96;
+    background: transparent;
+}
+
+:root[data-theme="vaporwave"] .token.atrule,
+:root[data-theme="vaporwave"] .token.attr-value,
+:root[data-theme="vaporwave"] .token.keyword {
+    color: #01CDFE;
+}
+
+:root[data-theme="vaporwave"] .token.function,
+:root[data-theme="vaporwave"] .token.class-name {
+    color: #FF71CE;
+}
+
+:root[data-theme="vaporwave"] .token.regex,
+:root[data-theme="vaporwave"] .token.important,
+:root[data-theme="vaporwave"] .token.variable {
+    color: #B967FF;
+}
+
+/* Scrollbar Vaporwave Theme */
+:root[data-theme="vaporwave"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="vaporwave"] ::-webkit-scrollbar-thumb {
+    background: #B967FF;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="vaporwave"] ::-webkit-scrollbar-thumb:hover {
+    background: #FF71CE;
+}
+
+/* Firefox Scrollbar Vaporwave Theme */
+:root[data-theme="vaporwave"] * {
+    scrollbar-color: #B967FF var(--bg-primary);
+}

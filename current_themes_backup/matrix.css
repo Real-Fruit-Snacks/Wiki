@@ -1,0 +1,384 @@
+/* Matrix Theme for Notes Wiki */
+:root[data-theme="matrix"] {
+    /* Background Colors */
+    --bg-primary: #0D0208;
+    --bg-secondary: #003B00;
+    --bg-sidebar: #0a0a0a;
+    --bg-code: #001a00;
+    --bg-selection: #00ff4133;
+    --bg-dropdown: #003B00;
+    --bg-hover: #004400;
+    --bg-tag: #003300;
+    --bg-modal: #001100;
+    --bg-tooltip: #003300;
+    --bg-input: #001a00;
+    --bg-highlight: #00ff4133;
+    
+    /* Text Colors */
+    --text-primary: #00FF41;
+    --text-secondary: #008F11;
+    --text-muted: #00AA00;
+    --text-heading: #41FF00;
+    --text-link: #00FF41;
+    --text-code: #41FF00;
+    --text-inverse: #000000;
+    
+    /* Accent Colors */
+    --accent-primary: #00FF41;
+    --accent-secondary: #80ce87;
+    --accent-warning: #41FF00;
+    --accent-error: #FF0000;
+    --accent-danger: #FF0000;
+    --accent-info: #00FF41;
+    --accent-success: #00FF41;
+    
+    /* Border Colors */
+    --border-primary: #008F11;
+    --border-secondary: #00FF41;
+    
+    /* Button Colors */
+    --button-bg: #003B00;
+    --button-hover: #005500;
+    --button-active: #00FF41;
+    --button-text: #00FF41;
+    
+    /* Badge Colors */
+    --badge-bg: #00FF41;
+    --badge-text: #0D0208;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 255, 65, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 255, 65, 0.1), 0 2px 4px -1px rgba(0, 255, 65, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 255, 65, 0.1), 0 4px 6px -2px rgba(0, 255, 65, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 255, 65, 0.1), 0 10px 10px -5px rgba(0, 255, 65, 0.04);
+    --shadow-glow: 0 0 20px rgba(0, 255, 65, 0.5);
+    --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Matrix Rain Effect Container */
+@keyframes matrix-rain {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
+/* Add matrix rain effect to main layout */
+:root[data-theme="matrix"] .main-layout::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image: 
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 255, 65, 0.03) 2px,
+            rgba(0, 255, 65, 0.03) 4px
+        );
+    animation: matrix-rain 20s linear infinite;
+}
+
+/* Terminal-style cursor blink */
+@keyframes terminal-blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+/* Terminal cursor for active elements */
+:root[data-theme="matrix"] input:focus::after,
+:root[data-theme="matrix"] textarea:focus::after {
+    content: '_';
+    display: inline-block;
+    color: var(--accent-primary);
+    animation: terminal-blink 1s infinite;
+}
+
+/* Glowing text effect */
+:root[data-theme="matrix"] .note-title,
+:root[data-theme="matrix"] h1,
+:root[data-theme="matrix"] h2,
+:root[data-theme="matrix"] h3 {
+    text-shadow: 
+        0 0 10px rgba(0, 255, 65, 0.8),
+        0 0 20px rgba(0, 255, 65, 0.6),
+        0 0 30px rgba(0, 255, 65, 0.4);
+    animation: matrix-pulse 2s ease-in-out infinite;
+}
+
+@keyframes matrix-pulse {
+    0%, 100% { 
+        text-shadow: 
+            0 0 10px rgba(0, 255, 65, 0.8),
+            0 0 20px rgba(0, 255, 65, 0.6),
+            0 0 30px rgba(0, 255, 65, 0.4);
+    }
+    50% { 
+        text-shadow: 
+            0 0 15px rgba(0, 255, 65, 1),
+            0 0 30px rgba(0, 255, 65, 0.8),
+            0 0 45px rgba(0, 255, 65, 0.6);
+    }
+}
+
+/* Terminal scanlines effect */
+:root[data-theme="matrix"] .note-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 65, 0.03) 2px,
+        rgba(0, 255, 65, 0.03) 4px
+    );
+    z-index: 1;
+}
+
+/* Matrix-style button effects */
+:root[data-theme="matrix"] button,
+:root[data-theme="matrix"] .button {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--accent-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+}
+
+:root[data-theme="matrix"] button::before,
+:root[data-theme="matrix"] .button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(0, 255, 65, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+:root[data-theme="matrix"] button:hover::before,
+:root[data-theme="matrix"] .button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+:root[data-theme="matrix"] button:hover,
+:root[data-theme="matrix"] .button:hover {
+    box-shadow: 
+        0 0 20px rgba(0, 255, 65, 0.6),
+        inset 0 0 20px rgba(0, 255, 65, 0.1);
+}
+
+/* Matrix code blocks with terminal effect */
+:root[data-theme="matrix"] pre[class*="language-"] {
+    border: 1px solid var(--accent-primary);
+    box-shadow: 
+        0 0 20px rgba(0, 255, 65, 0.2),
+        inset 0 0 20px rgba(0, 255, 65, 0.05);
+    position: relative;
+}
+
+:root[data-theme="matrix"] pre[class*="language-"]::before {
+    content: '> SYSTEM.TERMINAL';
+    position: absolute;
+    top: -25px;
+    left: 0;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+}
+
+/* Matrix-style links */
+:root[data-theme="matrix"] a {
+    position: relative;
+    text-decoration: none;
+}
+
+:root[data-theme="matrix"] a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--accent-primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+}
+
+:root[data-theme="matrix"] a:hover::after {
+    transform: scaleX(1);
+}
+
+/* Glitch effect on hover */
+@keyframes matrix-glitch {
+    0% {
+        text-shadow: 
+            0.05em 0 0 rgba(255, 0, 0, 0.75),
+            -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+            0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+    14% {
+        text-shadow: 
+            0.05em 0 0 rgba(255, 0, 0, 0.75),
+            -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+            0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+    15% {
+        text-shadow: 
+            -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+            0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+            -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+    49% {
+        text-shadow: 
+            -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+            0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+            -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+    50% {
+        text-shadow: 
+            0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+            0.05em 0 0 rgba(0, 255, 0, 0.75),
+            0 -0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+    99% {
+        text-shadow: 
+            0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+            0.05em 0 0 rgba(0, 255, 0, 0.75),
+            0 -0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+    100% {
+        text-shadow: 
+            -0.025em 0 0 rgba(255, 0, 0, 0.75),
+            -0.025em -0.025em 0 rgba(0, 255, 0, 0.75),
+            -0.025em -0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+}
+
+:root[data-theme="matrix"] .tab-item:hover .tab-title,
+:root[data-theme="matrix"] .file-item:hover {
+    animation: matrix-glitch 0.5s infinite;
+}
+
+/* Matrix-style scrollbar with glow */
+:root[data-theme="matrix"] ::-webkit-scrollbar-thumb {
+    box-shadow: 
+        0 0 10px rgba(0, 255, 65, 0.6),
+        inset 0 0 6px rgba(0, 255, 65, 0.3);
+}
+
+/* Terminal font for specific elements */
+:root[data-theme="matrix"] {
+    font-family: 'Courier New', monospace;
+}
+
+:root[data-theme="matrix"] code,
+:root[data-theme="matrix"] pre,
+:root[data-theme="matrix"] .file-path,
+:root[data-theme="matrix"] .breadcrumb {
+    font-family: var(--font-mono);
+    letter-spacing: 0.05em;
+}
+
+/* Syntax Highlighting - Matrix Theme */
+:root[data-theme="matrix"] .token.comment,
+:root[data-theme="matrix"] .token.prolog,
+:root[data-theme="matrix"] .token.doctype,
+:root[data-theme="matrix"] .token.cdata {
+    color: #006600;
+}
+
+:root[data-theme="matrix"] .token.punctuation {
+    color: #008F11;
+}
+
+:root[data-theme="matrix"] .token.property,
+:root[data-theme="matrix"] .token.tag,
+:root[data-theme="matrix"] .token.boolean,
+:root[data-theme="matrix"] .token.number,
+:root[data-theme="matrix"] .token.constant,
+:root[data-theme="matrix"] .token.symbol,
+:root[data-theme="matrix"] .token.deleted {
+    color: #41FF00;
+}
+
+:root[data-theme="matrix"] .token.selector,
+:root[data-theme="matrix"] .token.attr-name,
+:root[data-theme="matrix"] .token.string,
+:root[data-theme="matrix"] .token.char,
+:root[data-theme="matrix"] .token.builtin,
+:root[data-theme="matrix"] .token.inserted {
+    color: #00FF41;
+}
+
+:root[data-theme="matrix"] .token.operator,
+:root[data-theme="matrix"] .token.entity,
+:root[data-theme="matrix"] .token.url,
+:root[data-theme="matrix"] .language-css .token.string,
+:root[data-theme="matrix"] .style .token.string {
+    color: #20C20E;
+    background: transparent;
+}
+
+:root[data-theme="matrix"] .token.atrule,
+:root[data-theme="matrix"] .token.attr-value,
+:root[data-theme="matrix"] .token.keyword {
+    color: #80ce87;
+}
+
+:root[data-theme="matrix"] .token.function,
+:root[data-theme="matrix"] .token.class-name {
+    color: #41FF00;
+}
+
+:root[data-theme="matrix"] .token.regex,
+:root[data-theme="matrix"] .token.important,
+:root[data-theme="matrix"] .token.variable {
+    color: #00FF41;
+}
+
+/* Scrollbar Matrix Theme */
+:root[data-theme="matrix"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="matrix"] ::-webkit-scrollbar-thumb {
+    background: #008F11;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="matrix"] ::-webkit-scrollbar-thumb:hover {
+    background: #00FF41;
+}
+
+/* Firefox Scrollbar Matrix Theme */
+:root[data-theme="matrix"] * {
+    scrollbar-color: #008F11 var(--bg-primary);
+}

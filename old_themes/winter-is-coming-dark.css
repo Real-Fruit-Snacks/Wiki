@@ -1,0 +1,126 @@
+/* Winter is Coming Dark Theme Variables */
+:root[data-theme="winter-is-coming-dark"] {
+    /* Background Colors */
+    --bg-primary: #011627;
+    --bg-secondary: #0e293f;
+    --bg-sidebar: #011521;
+    --bg-code: #0e293f;
+    --bg-selection: rgba(0, 191, 249, 0.15);
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: #0e293f;
+    
+    /* Text Colors */
+    --text-primary: #a7dbf7;
+    --text-secondary: #87aff4;
+    --text-muted: #5f7e97;
+    --text-heading: #ffffff;
+    
+    /* Accent Colors */
+    --accent-primary: #00bff9;
+    --accent-secondary: #87aff4;
+    --accent-warning: #ffc600;
+    --accent-error: #ff5874;
+    --accent-info: #00bff9;
+    --accent-success: #8dec95;
+    
+    /* Border Colors */
+    --border-primary: #1e3a52;
+    --border-secondary: #234862;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #011627;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(0, 191, 249, 0.1);
+    --bg-code-block: #0e293f;
+}
+
+/* Syntax Highlighting - Winter is Coming Dark Theme */
+:root[data-theme="winter-is-coming-dark"] .token.comment,
+:root[data-theme="winter-is-coming-dark"] .token.prolog,
+:root[data-theme="winter-is-coming-dark"] .token.doctype,
+:root[data-theme="winter-is-coming-dark"] .token.cdata {
+    color: #999999;
+    font-style: italic;
+}
+
+:root[data-theme="winter-is-coming-dark"] .token.punctuation {
+    color: #a7dbf7;
+}
+
+:root[data-theme="winter-is-coming-dark"] .token.property,
+:root[data-theme="winter-is-coming-dark"] .token.tag,
+:root[data-theme="winter-is-coming-dark"] .token.boolean,
+:root[data-theme="winter-is-coming-dark"] .token.number,
+:root[data-theme="winter-is-coming-dark"] .token.constant,
+:root[data-theme="winter-is-coming-dark"] .token.symbol,
+:root[data-theme="winter-is-coming-dark"] .token.deleted {
+    color: #8dec95;
+}
+
+:root[data-theme="winter-is-coming-dark"] .token.selector,
+:root[data-theme="winter-is-coming-dark"] .token.attr-name,
+:root[data-theme="winter-is-coming-dark"] .token.string,
+:root[data-theme="winter-is-coming-dark"] .token.char,
+:root[data-theme="winter-is-coming-dark"] .token.builtin,
+:root[data-theme="winter-is-coming-dark"] .token.inserted {
+    color: #bcf0c0;
+}
+
+:root[data-theme="winter-is-coming-dark"] .token.operator,
+:root[data-theme="winter-is-coming-dark"] .token.entity,
+:root[data-theme="winter-is-coming-dark"] .token.url,
+:root[data-theme="winter-is-coming-dark"] .language-css .token.string,
+:root[data-theme="winter-is-coming-dark"] .style .token.string {
+    color: #87aff4;
+    background: transparent;
+}
+
+:root[data-theme="winter-is-coming-dark"] .token.atrule,
+:root[data-theme="winter-is-coming-dark"] .token.attr-value,
+:root[data-theme="winter-is-coming-dark"] .token.keyword {
+    color: #00bff9;
+}
+
+:root[data-theme="winter-is-coming-dark"] .token.function,
+:root[data-theme="winter-is-coming-dark"] .token.class-name {
+    color: #87aff4;
+}
+
+:root[data-theme="winter-is-coming-dark"] .token.regex,
+:root[data-theme="winter-is-coming-dark"] .token.important,
+:root[data-theme="winter-is-coming-dark"] .token.variable {
+    color: #a4ceee;
+}
+
+/* Scrollbar Winter is Coming Dark Theme */
+:root[data-theme="winter-is-coming-dark"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="winter-is-coming-dark"] ::-webkit-scrollbar-thumb {
+    background: #1e3a52;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="winter-is-coming-dark"] ::-webkit-scrollbar-thumb:hover {
+    background: #2a4a66;
+}
+
+/* Firefox Scrollbar Winter is Coming Dark Theme */
+:root[data-theme="winter-is-coming-dark"] * {
+    scrollbar-color: #1e3a52 var(--bg-primary);
+}

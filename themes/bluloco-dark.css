@@ -1,85 +1,69 @@
-/* 
- * Bluloco Dark Theme for Notes Wiki
- * A vibrant, modern dark theme with distinctive blue accents and electric highlights
- * Inspired by the popular Bluloco VSCode theme with enhanced visual effects
- */
-
+/* Bluloco Dark Theme Variables */
 :root[data-theme="bluloco-dark"] {
-    /* Modern Dark Backgrounds with Blue Undertones */
+    /* Background Colors */
     --bg-primary: #282c34;
     --bg-secondary: #2f333d;
     --bg-sidebar: #21252b;
     --bg-code: #2f333d;
-    --bg-selection: rgba(16, 177, 254, 0.25);
-    --bg-dropdown: #2f333d;
-    --bg-hover: rgba(16, 177, 254, 0.08);
+    --bg-selection: rgba(16, 177, 254, 0.15);
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
     --bg-tag: #2f333d;
-    --bg-modal: #282c34;
-    --bg-tooltip: #1a1d23;
-    --bg-input: #21252b;
-    --bg-highlight: rgba(16, 177, 254, 0.3);
     
-    /* Enhanced Text Colors */
+        /* Additional Background Colors */
+    --bg-modal: rgba(40, 44, 52, 0.93);
+    --bg-tooltip: #21252b;
+    --bg-input: #2f333d;
+    --bg-highlight: rgba(16, 177, 254, 0.15);
+    --text-link: #10b1fe;
+    --text-code: #ff6480;
+    --text-inverse: #ffffff;
+    --button-text: #abb2bf;
+    
+/* Text Colors */
     --text-primary: #abb2bf;
     --text-secondary: #9da5b4;
     --text-muted: #545862;
-    --text-heading: #e6ecff;
-    --text-link: #10b1fe;
-    --text-code: #e6ecff;
-    --text-inverse: #282c34;
+    --text-heading: #ffffff;
     
-    /* Vibrant Accent Palette */
+    /* Accent Colors */
     --accent-primary: #10b1fe;
-    --accent-primary-light: #3fc5ff;
     --accent-secondary: #3fc56b;
-    --accent-tertiary: #ff78f8;
     --accent-warning: #f9c859;
     --accent-error: #ff6480;
     --accent-info: #10b1fe;
     --accent-success: #3fc56b;
     
-    /* Modern Border Colors */
+    /* Border Colors */
     --border-primary: #3e4451;
     --border-secondary: #4b5263;
-    --border-focus: var(--accent-primary);
     
-    /* Interactive Elements */
-    --button-bg: #3e4451;
-    --button-hover: #4b5263;
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
     --button-active: var(--accent-primary);
-    --button-text: var(--text-primary);
     
-    /* Badge Enhancement */
+    /* Badge Colors */
     --badge-bg: var(--accent-primary);
     --badge-text: #282c34;
-    --badge-border: transparent;
     
-    /* Modern Shadows */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
-    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
-    --shadow-glow: 0 0 20px rgba(16, 177, 254, 0.3);
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: var(--shadow-lg);
     
-    /* Special Effects */
-    --gradient-primary: linear-gradient(135deg, #10b1fe 0%, #3fc5ff 100%);
-    --gradient-secondary: linear-gradient(135deg, #3fc56b 0%, #5dd97f 100%);
-    --gradient-accent: linear-gradient(135deg, #ff78f8 0%, #ff9eff 100%);
-    
-    /* Additional Variables */
-    --accent-color-alpha: rgba(16, 177, 254, 0.15);
+    /* Other */
+    --accent-color-alpha: rgba(16, 177, 254, 0.1);
     --bg-code-block: #2f333d;
-    --border-radius: 8px;
-    --transition-speed: 0.3s;
-    --blur-strength: 10px;
 }
 
-/* Enhanced Syntax Highlighting */
+/* Syntax Highlighting - Bluloco Dark Theme */
 :root[data-theme="bluloco-dark"] .token.comment,
 :root[data-theme="bluloco-dark"] .token.prolog,
 :root[data-theme="bluloco-dark"] .token.doctype,
 :root[data-theme="bluloco-dark"] .token.cdata {
-    color: #636d83;
+    color: #545862;
     font-style: italic;
 }
 
@@ -89,15 +73,12 @@
 
 :root[data-theme="bluloco-dark"] .token.property,
 :root[data-theme="bluloco-dark"] .token.tag,
+:root[data-theme="bluloco-dark"] .token.boolean,
+:root[data-theme="bluloco-dark"] .token.number,
 :root[data-theme="bluloco-dark"] .token.constant,
 :root[data-theme="bluloco-dark"] .token.symbol,
 :root[data-theme="bluloco-dark"] .token.deleted {
     color: #ff78f8;
-}
-
-:root[data-theme="bluloco-dark"] .token.boolean,
-:root[data-theme="bluloco-dark"] .token.number {
-    color: #ff6480;
 }
 
 :root[data-theme="bluloco-dark"] .token.selector,
@@ -122,7 +103,6 @@
 :root[data-theme="bluloco-dark"] .token.attr-value,
 :root[data-theme="bluloco-dark"] .token.keyword {
     color: #10b1fe;
-    font-weight: 500;
 }
 
 :root[data-theme="bluloco-dark"] .token.function,
@@ -136,226 +116,21 @@
     color: #9f7efe;
 }
 
-:root[data-theme="bluloco-dark"] .token.namespace {
-    color: #ff78f8;
-    opacity: 0.8;
-}
-
-/* Special Visual Effects */
-:root[data-theme="bluloco-dark"] .sidebar {
-    background: var(--bg-sidebar);
-    border-right: 1px solid var(--border-primary);
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
-}
-
-:root[data-theme="bluloco-dark"] .tab.active {
-    background: var(--bg-secondary);
-    border-bottom: 2px solid var(--accent-primary);
-    box-shadow: 0 2px 8px rgba(16, 177, 254, 0.2);
-}
-
-:root[data-theme="bluloco-dark"] .tab:hover:not(.active) {
-    background: rgba(16, 177, 254, 0.05);
-    border-bottom: 2px solid rgba(16, 177, 254, 0.3);
-}
-
-/* Animated Gradient Links */
-:root[data-theme="bluloco-dark"] a {
-    background: linear-gradient(135deg, #10b1fe 0%, #3fc5ff 50%, #10b1fe 100%);
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: bluloco-gradient 3s ease infinite;
-}
-
-@keyframes bluloco-gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* Enhanced Button Styles */
-:root[data-theme="bluloco-dark"] .button {
-    background: var(--button-bg);
-    border: 1px solid var(--border-primary);
-    color: var(--button-text);
-    transition: all var(--transition-speed) ease;
-    position: relative;
-    overflow: hidden;
-}
-
-:root[data-theme="bluloco-dark"] .button::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: radial-gradient(circle, rgba(16, 177, 254, 0.3) 0%, transparent 70%);
-    transform: translate(-50%, -50%);
-    transition: width var(--transition-speed), height var(--transition-speed);
-}
-
-:root[data-theme="bluloco-dark"] .button:hover::before {
-    width: 120%;
-    height: 120%;
-}
-
-:root[data-theme="bluloco-dark"] .button:hover {
-    background: var(--button-hover);
-    border-color: var(--accent-primary);
-    box-shadow: 0 0 15px rgba(16, 177, 254, 0.3);
-    transform: translateY(-1px);
-}
-
-/* Code Block Enhancement */
-:root[data-theme="bluloco-dark"] pre[class*="language-"] {
-    background: var(--bg-code-block);
-    border: 1px solid var(--border-primary);
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
-    position: relative;
-}
-
-:root[data-theme="bluloco-dark"] pre[class*="language-"]::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--gradient-primary);
-    opacity: 0.8;
-}
-
-/* Search Input Glow */
-:root[data-theme="bluloco-dark"] input[type="search"],
-:root[data-theme="bluloco-dark"] input[type="text"] {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-primary);
-    color: var(--text-primary);
-    transition: all var(--transition-speed) ease;
-}
-
-:root[data-theme="bluloco-dark"] input[type="search"]:focus,
-:root[data-theme="bluloco-dark"] input[type="text"]:focus {
-    border-color: var(--accent-primary);
-    box-shadow: 0 0 0 3px rgba(16, 177, 254, 0.2),
-                0 0 20px rgba(16, 177, 254, 0.1);
-    outline: none;
-}
-
-/* Tag Pills with Gradient */
-:root[data-theme="bluloco-dark"] .tag {
-    background: linear-gradient(135deg, rgba(16, 177, 254, 0.2) 0%, rgba(63, 197, 255, 0.2) 100%);
-    border: 1px solid rgba(16, 177, 254, 0.3);
-    color: var(--accent-primary-light);
-    backdrop-filter: blur(4px);
-}
-
-/* Enhanced Scrollbar */
-:root[data-theme="bluloco-dark"] ::-webkit-scrollbar {
-    width: 12px;
-    height: 12px;
-}
-
+/* Scrollbar Bluloco Dark Theme */
 :root[data-theme="bluloco-dark"] ::-webkit-scrollbar-track {
     background: var(--bg-primary);
-    border: 1px solid var(--border-primary);
 }
 
 :root[data-theme="bluloco-dark"] ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #4e5461 0%, #3e4451 100%);
-    border: 2px solid var(--bg-primary);
-    border-radius: 6px;
+    background: #3e4451;
+    border: 3px solid var(--bg-primary);
 }
 
 :root[data-theme="bluloco-dark"] ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #5e6471 0%, #4e5461 100%);
-    box-shadow: 0 0 5px rgba(16, 177, 254, 0.3);
+    background: #4e5461;
 }
 
-/* Firefox Scrollbar */
+/* Firefox Scrollbar Bluloco Dark Theme */
 :root[data-theme="bluloco-dark"] * {
-    scrollbar-color: #4e5461 var(--bg-primary);
-    scrollbar-width: thin;
-}
-
-/* Selection Color */
-:root[data-theme="bluloco-dark"] ::selection {
-    background: rgba(16, 177, 254, 0.3);
-    color: var(--text-heading);
-}
-
-/* Modal Backdrop Blur */
-:root[data-theme="bluloco-dark"] .modal-backdrop {
-    background: rgba(40, 44, 52, 0.8);
-    backdrop-filter: blur(8px);
-}
-
-/* Tooltip Glow */
-:root[data-theme="bluloco-dark"] .tooltip {
-    background: var(--bg-tooltip);
-    border: 1px solid var(--accent-primary);
-    box-shadow: 0 0 20px rgba(16, 177, 254, 0.4);
-}
-
-/* Note Content Links */
-:root[data-theme="bluloco-dark"] .note-content a {
-    color: var(--accent-primary);
-    text-decoration: none;
-    position: relative;
-    -webkit-text-fill-color: unset;
-    background: none;
-    animation: none;
-}
-
-:root[data-theme="bluloco-dark"] .note-content a::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--gradient-primary);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform var(--transition-speed) ease;
-}
-
-:root[data-theme="bluloco-dark"] .note-content a:hover::after {
-    transform: scaleX(1);
-}
-
-/* Loading Animation */
-:root[data-theme="bluloco-dark"] .loading {
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(16, 177, 254, 0.1) 50%, 
-        transparent 100%
-    );
-    background-size: 200% 100%;
-    animation: bluloco-loading 1.5s ease-in-out infinite;
-}
-
-@keyframes bluloco-loading {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-}
-
-/* Performance optimization for users who prefer reduced motion */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
-    
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
+    scrollbar-color: #3e4451 var(--bg-primary);
 }

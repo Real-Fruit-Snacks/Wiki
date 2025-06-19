@@ -1,0 +1,389 @@
+/* Spacegray Theme Variables */
+:root[data-theme="spacegray"] {
+    /* Background Colors */
+    --bg-primary: #2b303b;
+    --bg-secondary: #343d46;
+    --bg-sidebar: #232830;
+    --bg-code: #343d46;
+    --bg-selection: rgba(143, 161, 179, 0.15);
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: #3e4551;
+    
+    /* Text Colors */
+    --text-primary: #eff1f5;
+    --text-secondary: #c0c5ce;
+    --text-muted: #65737e;
+    --text-heading: #eff1f5;
+    
+    /* Accent Colors */
+    --accent-primary: #8fa1b3;
+    --accent-secondary: #b48ead;
+    --accent-warning: #d08770;
+    --accent-error: #bf616a;
+    --accent-info: #8fa1b3;
+    --accent-success: #a3be8c;
+    
+    /* Border Colors */
+    --border-primary: #4f5b66;
+    --border-secondary: #545d67;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #2b303b;
+    
+    /* Additional UI Colors */
+    --bg-modal: #343d46;
+    --bg-tooltip: #3e4551;
+    --bg-input: #343d46;
+    --bg-highlight: rgba(143, 161, 179, 0.2);
+    --text-link: #8fa1b3;
+    --text-code: #96b5b4;
+    --text-inverse: #2b303b;
+    --button-text: #eff1f5;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(143, 161, 179, 0.1);
+    --bg-code-block: #343d46;
+}
+
+/* Syntax Highlighting - Spacegray Theme */
+:root[data-theme="spacegray"] .token.comment,
+:root[data-theme="spacegray"] .token.prolog,
+:root[data-theme="spacegray"] .token.doctype,
+:root[data-theme="spacegray"] .token.cdata {
+    color: #65737e;
+    font-style: italic;
+}
+
+:root[data-theme="spacegray"] .token.punctuation {
+    color: #c0c5ce;
+}
+
+:root[data-theme="spacegray"] .token.property,
+:root[data-theme="spacegray"] .token.tag,
+:root[data-theme="spacegray"] .token.boolean,
+:root[data-theme="spacegray"] .token.number,
+:root[data-theme="spacegray"] .token.constant,
+:root[data-theme="spacegray"] .token.symbol,
+:root[data-theme="spacegray"] .token.deleted {
+    color: #d08770;
+}
+
+:root[data-theme="spacegray"] .token.selector,
+:root[data-theme="spacegray"] .token.attr-name,
+:root[data-theme="spacegray"] .token.string,
+:root[data-theme="spacegray"] .token.char,
+:root[data-theme="spacegray"] .token.builtin,
+:root[data-theme="spacegray"] .token.inserted {
+    color: #a3be8c;
+}
+
+:root[data-theme="spacegray"] .token.operator,
+:root[data-theme="spacegray"] .token.entity,
+:root[data-theme="spacegray"] .token.url,
+:root[data-theme="spacegray"] .language-css .token.string,
+:root[data-theme="spacegray"] .style .token.string {
+    color: #96b5b4;
+    background: transparent;
+}
+
+:root[data-theme="spacegray"] .token.atrule,
+:root[data-theme="spacegray"] .token.attr-value,
+:root[data-theme="spacegray"] .token.keyword {
+    color: #b48ead;
+}
+
+:root[data-theme="spacegray"] .token.function,
+:root[data-theme="spacegray"] .token.class-name {
+    color: #8fa1b3;
+}
+
+:root[data-theme="spacegray"] .token.regex,
+:root[data-theme="spacegray"] .token.important,
+:root[data-theme="spacegray"] .token.variable {
+    color: #bf616a;
+}
+
+/* Scrollbar Spacegray Theme */
+:root[data-theme="spacegray"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="spacegray"] ::-webkit-scrollbar-thumb {
+    background: #4f5b66;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="spacegray"] ::-webkit-scrollbar-thumb:hover {
+    background: #5f6b76;
+}
+
+/* Firefox Scrollbar Spacegray Theme */
+:root[data-theme="spacegray"] * {
+    scrollbar-color: #4f5b66 var(--bg-primary);
+}
+
+/* Space-Inspired Effects with Cosmic Elements */
+:root[data-theme="spacegray"] {
+    --space-gradient: linear-gradient(135deg, #2b303b, #343d46, #232830);
+    --nebula-glow: 0 0 40px rgba(143, 161, 179, 0.3);
+    --star-glow: 0 0 20px rgba(239, 241, 245, 0.5);
+}
+
+/* Animated starfield background */
+:root[data-theme="spacegray"] body::before,
+:root[data-theme="spacegray"] body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+:root[data-theme="spacegray"] body::before {
+    background-image: 
+        radial-gradient(2px 2px at 20% 30%, white, transparent),
+        radial-gradient(2px 2px at 60% 70%, white, transparent),
+        radial-gradient(1px 1px at 50% 50%, white, transparent),
+        radial-gradient(1px 1px at 80% 10%, white, transparent),
+        radial-gradient(2px 2px at 90% 60%, white, transparent);
+    background-size: 200px 200px;
+    animation: stars 100s linear infinite;
+    opacity: 0.3;
+}
+
+:root[data-theme="spacegray"] body::after {
+    background: 
+        radial-gradient(circle at 30% 40%, rgba(143, 161, 179, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 70% 80%, rgba(180, 142, 173, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 50% 20%, rgba(163, 190, 140, 0.05) 0%, transparent 40%);
+    animation: nebula 30s ease-in-out infinite;
+}
+
+@keyframes stars {
+    from { transform: translateY(0); }
+    to { transform: translateY(-200px); }
+}
+
+@keyframes nebula {
+    0%, 100% { opacity: 0.3; transform: scale(1) rotate(0deg); }
+    50% { opacity: 0.6; transform: scale(1.1) rotate(180deg); }
+}
+
+/* Cosmic headers with glow effect */
+:root[data-theme="spacegray"] h1,
+:root[data-theme="spacegray"] h2 {
+    text-shadow: 0 0 20px rgba(143, 161, 179, 0.5);
+    position: relative;
+}
+
+:root[data-theme="spacegray"] h1::before,
+:root[data-theme="spacegray"] h2::before {
+    content: '◆';
+    position: absolute;
+    left: -30px;
+    color: #8fa1b3;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Space station-style code blocks */
+:root[data-theme="spacegray"] pre {
+    background: linear-gradient(135deg, #343d46 0%, #2b303b 100%);
+    border: 1px solid #4f5b66;
+    box-shadow: 
+        inset 0 0 20px rgba(0, 0, 0, 0.3),
+        0 0 30px rgba(143, 161, 179, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="spacegray"] pre::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #8fa1b3, #b48ead, #a3be8c, #8fa1b3);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+    animation: spaceGradient 4s linear infinite;
+}
+
+@keyframes spaceGradient {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+:root[data-theme="spacegray"] pre:hover::before {
+    opacity: 0.3;
+}
+
+/* Hyperspace links */
+:root[data-theme="spacegray"] a {
+    color: #8fa1b3;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="spacegray"] a:hover {
+    color: #b48ead;
+    text-shadow: var(--star-glow);
+}
+
+:root[data-theme="spacegray"] a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #8fa1b3, transparent);
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+:root[data-theme="spacegray"] a:hover::after {
+    width: 100%;
+}
+
+/* Cosmic buttons with energy field */
+:root[data-theme="spacegray"] button {
+    background: var(--bg-secondary);
+    border: 1px solid #4f5b66;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="spacegray"] button::before,
+:root[data-theme="spacegray"] button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s ease;
+}
+
+:root[data-theme="spacegray"] button::before {
+    background: radial-gradient(circle, rgba(143, 161, 179, 0.4) 0%, transparent 70%);
+}
+
+:root[data-theme="spacegray"] button::after {
+    background: radial-gradient(circle, rgba(180, 142, 173, 0.4) 0%, transparent 70%);
+}
+
+:root[data-theme="spacegray"] button:hover::before {
+    width: 150%;
+    height: 150%;
+}
+
+:root[data-theme="spacegray"] button:hover::after {
+    width: 120%;
+    height: 120%;
+    transition-delay: 0.1s;
+}
+
+:root[data-theme="spacegray"] button:hover {
+    border-color: #8fa1b3;
+    box-shadow: var(--nebula-glow);
+    transform: translateY(-2px);
+}
+
+/* Space dock sidebar */
+:root[data-theme="spacegray"] .sidebar {
+    background: linear-gradient(180deg, #232830 0%, #2b303b 100%);
+    border-right: 1px solid rgba(143, 161, 179, 0.2);
+    position: relative;
+}
+
+:root[data-theme="spacegray"] .sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(180deg, 
+        transparent 0%, 
+        #8fa1b3 50%, 
+        transparent 100%);
+    animation: scanline 5s linear infinite;
+}
+
+@keyframes scanline {
+    0%, 100% { transform: translateY(-100%); }
+    50% { transform: translateY(100%); }
+}
+
+/* Holographic input fields */
+:root[data-theme="spacegray"] input:focus,
+:root[data-theme="spacegray"] textarea:focus {
+    border-color: #8fa1b3;
+    box-shadow: 
+        0 0 0 2px rgba(143, 161, 179, 0.3),
+        var(--nebula-glow);
+    background: rgba(52, 61, 70, 0.8);
+}
+
+/* Space debris particles */
+:root[data-theme="spacegray"] .tag {
+    background: rgba(143, 161, 179, 0.2);
+    border: 1px solid rgba(143, 161, 179, 0.4);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="spacegray"] .tag:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(143, 161, 179, 0.4);
+}
+
+/* Cosmic selection */
+:root[data-theme="spacegray"] ::selection {
+    background: rgba(180, 142, 173, 0.3);
+    color: #eff1f5;
+}
+
+/* Performance optimization for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

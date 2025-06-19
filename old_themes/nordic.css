@@ -1,0 +1,126 @@
+/* Nordic Theme Variables - Based on Nord palette */
+:root[data-theme="nordic"] {
+    /* Background Colors */
+    --bg-primary: #2e3440;
+    --bg-secondary: #3b4252;
+    --bg-sidebar: #2e3440;
+    --bg-code: #3b4252;
+    --bg-selection: rgba(136, 192, 208, 0.15);
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: #434c5e;
+    
+    /* Text Colors */
+    --text-primary: #d8dee9;
+    --text-secondary: #e5e9f0;
+    --text-muted: #4c566a;
+    --text-heading: #eceff4;
+    
+    /* Accent Colors */
+    --accent-primary: #88c0d0;
+    --accent-secondary: #81a1c1;
+    --accent-warning: #ebcb8b;
+    --accent-error: #bf616a;
+    --accent-info: #5e81ac;
+    --accent-success: #a3be8c;
+    
+    /* Border Colors */
+    --border-primary: #4c566a;
+    --border-secondary: #434c5e;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #2e3440;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(136, 192, 208, 0.1);
+    --bg-code-block: #3b4252;
+}
+
+/* Syntax Highlighting - Nordic Theme */
+:root[data-theme="nordic"] .token.comment,
+:root[data-theme="nordic"] .token.prolog,
+:root[data-theme="nordic"] .token.doctype,
+:root[data-theme="nordic"] .token.cdata {
+    color: #4c566a;
+    font-style: italic;
+}
+
+:root[data-theme="nordic"] .token.punctuation {
+    color: #d8dee9;
+}
+
+:root[data-theme="nordic"] .token.property,
+:root[data-theme="nordic"] .token.tag,
+:root[data-theme="nordic"] .token.boolean,
+:root[data-theme="nordic"] .token.number,
+:root[data-theme="nordic"] .token.constant,
+:root[data-theme="nordic"] .token.symbol,
+:root[data-theme="nordic"] .token.deleted {
+    color: #b48ead;
+}
+
+:root[data-theme="nordic"] .token.selector,
+:root[data-theme="nordic"] .token.attr-name,
+:root[data-theme="nordic"] .token.string,
+:root[data-theme="nordic"] .token.char,
+:root[data-theme="nordic"] .token.builtin,
+:root[data-theme="nordic"] .token.inserted {
+    color: #a3be8c;
+}
+
+:root[data-theme="nordic"] .token.operator,
+:root[data-theme="nordic"] .token.entity,
+:root[data-theme="nordic"] .token.url,
+:root[data-theme="nordic"] .language-css .token.string,
+:root[data-theme="nordic"] .style .token.string {
+    color: #88c0d0;
+    background: transparent;
+}
+
+:root[data-theme="nordic"] .token.atrule,
+:root[data-theme="nordic"] .token.attr-value,
+:root[data-theme="nordic"] .token.keyword {
+    color: #81a1c1;
+}
+
+:root[data-theme="nordic"] .token.function,
+:root[data-theme="nordic"] .token.class-name {
+    color: #88c0d0;
+}
+
+:root[data-theme="nordic"] .token.regex,
+:root[data-theme="nordic"] .token.important,
+:root[data-theme="nordic"] .token.variable {
+    color: #d08770;
+}
+
+/* Scrollbar Nordic Theme */
+:root[data-theme="nordic"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="nordic"] ::-webkit-scrollbar-thumb {
+    background: #4c566a;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="nordic"] ::-webkit-scrollbar-thumb:hover {
+    background: #5c667a;
+}
+
+/* Firefox Scrollbar Nordic Theme */
+:root[data-theme="nordic"] * {
+    scrollbar-color: #4c566a var(--bg-primary);
+}

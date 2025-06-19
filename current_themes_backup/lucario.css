@@ -1,0 +1,405 @@
+/* Lucario Theme Variables */
+:root[data-theme="lucario"] {
+    /* Background Colors */
+    --bg-primary: #2b3e50;
+    --bg-secondary: #243443;
+    --bg-sidebar: #1c2a39;
+    --bg-code: #243443;
+    --bg-selection: #19242f;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: #3a526b;
+    
+    /* Text Colors */
+    --text-primary: #f8f8f2;
+    --text-secondary: #ccd7e6;
+    --text-muted: #5c98cd;
+    --text-heading: #ffffff;
+    
+    /* Accent Colors */
+    --accent-primary: #72c05d;
+    --accent-secondary: #ff6541;
+    --accent-warning: #ffab28;
+    --accent-error: #ff6541;
+    --accent-info: #5c98cd;
+    --accent-success: #72c05d;
+    
+    /* Border Colors */
+    --border-primary: #3a526b;
+    --border-secondary: #445a73;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #2b3e50;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(114, 192, 93, 0.1);
+    --bg-code-block: #243443;
+    
+    /* Additional Colors */
+    --bg-modal: rgba(43, 62, 80, 0.95);
+    --bg-tooltip: #19242f;
+    --bg-input: #243443;
+    --bg-highlight: rgba(114, 192, 93, 0.3);
+    --text-link: #72c05d;
+    --text-code: #e6db74;
+    --text-inverse: #2b3e50;
+    --button-text: #f8f8f2;
+}
+
+/* Syntax Highlighting - Lucario Theme */
+:root[data-theme="lucario"] .token.comment,
+:root[data-theme="lucario"] .token.prolog,
+:root[data-theme="lucario"] .token.doctype,
+:root[data-theme="lucario"] .token.cdata {
+    color: #5c98cd;
+    font-style: italic;
+}
+
+:root[data-theme="lucario"] .token.punctuation {
+    color: #f8f8f2;
+}
+
+:root[data-theme="lucario"] .token.property,
+:root[data-theme="lucario"] .token.tag,
+:root[data-theme="lucario"] .token.boolean,
+:root[data-theme="lucario"] .token.number,
+:root[data-theme="lucario"] .token.constant,
+:root[data-theme="lucario"] .token.symbol,
+:root[data-theme="lucario"] .token.deleted {
+    color: #ca94ff;
+}
+
+:root[data-theme="lucario"] .token.selector,
+:root[data-theme="lucario"] .token.attr-name,
+:root[data-theme="lucario"] .token.string,
+:root[data-theme="lucario"] .token.char,
+:root[data-theme="lucario"] .token.builtin,
+:root[data-theme="lucario"] .token.inserted {
+    color: #e6db74;
+}
+
+:root[data-theme="lucario"] .token.operator,
+:root[data-theme="lucario"] .token.entity,
+:root[data-theme="lucario"] .token.url,
+:root[data-theme="lucario"] .language-css .token.string,
+:root[data-theme="lucario"] .style .token.string {
+    color: #ffab28;
+    background: transparent;
+}
+
+:root[data-theme="lucario"] .token.atrule,
+:root[data-theme="lucario"] .token.attr-value,
+:root[data-theme="lucario"] .token.keyword {
+    color: #ff6541;
+}
+
+:root[data-theme="lucario"] .token.function,
+:root[data-theme="lucario"] .token.class-name {
+    color: #72c05d;
+}
+
+:root[data-theme="lucario"] .token.regex,
+:root[data-theme="lucario"] .token.important,
+:root[data-theme="lucario"] .token.variable {
+    color: #ffab28;
+}
+
+/* Scrollbar Lucario Theme */
+:root[data-theme="lucario"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="lucario"] ::-webkit-scrollbar-thumb {
+    background: #3a526b;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="lucario"] ::-webkit-scrollbar-thumb:hover {
+    background: #4a627b;
+}
+
+/* Firefox Scrollbar Lucario Theme */
+:root[data-theme="lucario"] * {
+    scrollbar-color: #3a526b var(--bg-primary);
+}
+
+/* Lucario Minimalist Pastel Enhancements */
+
+/* Soft glow animations */
+@keyframes lucario-glow {
+    0%, 100% { 
+        box-shadow: 0 0 10px rgba(114, 192, 93, 0.3);
+        border-color: rgba(114, 192, 93, 0.5);
+    }
+    50% { 
+        box-shadow: 0 0 20px rgba(114, 192, 93, 0.5);
+        border-color: rgba(114, 192, 93, 0.8);
+    }
+}
+
+@keyframes lucario-float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+}
+
+@keyframes lucario-fade {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Soft pastel backgrounds */
+:root[data-theme="lucario"] .header {
+    background: linear-gradient(135deg, #2b3e50 0%, #243443 50%, #2b3e50 100%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Glowing active elements */
+:root[data-theme="lucario"] .tab.active {
+    background: linear-gradient(135deg, #3a526b 0%, #445a73 100%);
+    box-shadow: 
+        inset 0 0 10px rgba(114, 192, 93, 0.2),
+        0 2px 8px rgba(114, 192, 93, 0.3);
+    border: 1px solid rgba(114, 192, 93, 0.3);
+    animation: lucario-glow 3s ease-in-out infinite;
+}
+
+/* Soft button styles */
+:root[data-theme="lucario"] .button {
+    background: linear-gradient(135deg, rgba(114, 192, 93, 0.1) 0%, rgba(114, 192, 93, 0.2) 100%);
+    border: 1px solid rgba(114, 192, 93, 0.3);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="lucario"] .button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(114, 192, 93, 0.4) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+:root[data-theme="lucario"] .button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+:root[data-theme="lucario"] .button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(114, 192, 93, 0.4);
+}
+
+/* Pastel tags */
+:root[data-theme="lucario"] .note-tag {
+    background: linear-gradient(135deg, rgba(92, 152, 205, 0.2) 0%, rgba(92, 152, 205, 0.3) 100%);
+    color: #5c98cd;
+    border: 1px solid rgba(92, 152, 205, 0.4);
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="lucario"] .note-tag:hover {
+    background: linear-gradient(135deg, rgba(92, 152, 205, 0.3) 0%, rgba(92, 152, 205, 0.4) 100%);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 10px rgba(92, 152, 205, 0.3);
+}
+
+/* Soft focus states */
+:root[data-theme="lucario"] :focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(114, 192, 93, 0.3);
+    border-color: rgba(114, 192, 93, 0.5);
+}
+
+/* Dreamy sidebar */
+:root[data-theme="lucario"] .sidebar {
+    background: 
+        linear-gradient(180deg, rgba(114, 192, 93, 0.05) 0%, transparent 50%),
+        linear-gradient(180deg, #1c2a39 0%, #243443 100%);
+}
+
+/* Floating file links */
+:root[data-theme="lucario"] .file-tree-link {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 6px;
+    margin: 2px 4px;
+}
+
+:root[data-theme="lucario"] .file-tree-link:hover {
+    background: linear-gradient(90deg, transparent 0%, rgba(114, 192, 93, 0.1) 50%, transparent 100%);
+    padding-left: calc(var(--spacing-md) + 4px);
+    color: var(--accent-primary);
+}
+
+:root[data-theme="lucario"] .file-tree-link.active {
+    background: linear-gradient(135deg, rgba(114, 192, 93, 0.2) 0%, rgba(114, 192, 93, 0.1) 100%);
+    border: 1px solid rgba(114, 192, 93, 0.3);
+    animation: lucario-fade 0.3s ease;
+}
+
+/* Soft search input */
+:root[data-theme="lucario"] input[type="search"] {
+    background: rgba(36, 52, 67, 0.5);
+    border: 1px solid rgba(114, 192, 93, 0.2);
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="lucario"] input[type="search"]:focus {
+    background: rgba(36, 52, 67, 0.8);
+    border-color: rgba(114, 192, 93, 0.5);
+    box-shadow: 
+        inset 0 0 10px rgba(114, 192, 93, 0.1),
+        0 0 0 3px rgba(114, 192, 93, 0.2);
+}
+
+/* Pastel code blocks */
+:root[data-theme="lucario"] .code-block {
+    background: linear-gradient(135deg, #243443 0%, #1c2a39 100%);
+    border: 1px solid rgba(114, 192, 93, 0.2);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+:root[data-theme="lucario"] .code-block-header {
+    background: rgba(114, 192, 93, 0.1);
+    border-bottom: 1px solid rgba(114, 192, 93, 0.2);
+}
+
+/* Smooth loading spinner */
+:root[data-theme="lucario"] .spinner {
+    border: 3px solid rgba(114, 192, 93, 0.2);
+    border-top-color: var(--accent-primary);
+    animation: spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+
+/* Dreamy modal */
+:root[data-theme="lucario"] .modal-content {
+    background: linear-gradient(135deg, #2b3e50 0%, #243443 100%);
+    border: 1px solid rgba(114, 192, 93, 0.3);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(114, 192, 93, 0.2);
+    animation: lucario-fade 0.3s ease;
+}
+
+/* Soft icon buttons */
+:root[data-theme="lucario"] .icon-button {
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="lucario"] .icon-button:hover {
+    background: rgba(114, 192, 93, 0.1);
+    color: var(--accent-primary);
+    transform: translateY(-2px);
+    animation: lucario-float 2s ease-in-out infinite;
+}
+
+/* Pastel scrollbar */
+:root[data-theme="lucario"] ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+:root[data-theme="lucario"] ::-webkit-scrollbar-track {
+    background: linear-gradient(180deg, #1c2a39 0%, #243443 100%);
+    border-radius: 6px;
+}
+
+:root[data-theme="lucario"] ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(114, 192, 93, 0.3) 0%, rgba(114, 192, 93, 0.5) 100%);
+    border-radius: 6px;
+    border: 2px solid var(--bg-primary);
+}
+
+:root[data-theme="lucario"] ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(114, 192, 93, 0.5) 0%, rgba(114, 192, 93, 0.7) 100%);
+}
+
+/* Soft note content animations */
+:root[data-theme="lucario"] .note-content {
+    animation: lucario-fade 0.5s ease;
+}
+
+:root[data-theme="lucario"] .note-content h1,
+:root[data-theme="lucario"] .note-content h2,
+:root[data-theme="lucario"] .note-content h3 {
+    color: var(--accent-primary);
+    text-shadow: 0 0 20px rgba(114, 192, 93, 0.3);
+}
+
+/* Pastel links */
+:root[data-theme="lucario"] .note-content a {
+    color: #5c98cd;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="lucario"] .note-content a:hover {
+    color: #72c05d;
+    border-bottom-color: #72c05d;
+    text-shadow: 0 0 10px rgba(114, 192, 93, 0.5);
+}
+
+/* Soft blockquotes */
+:root[data-theme="lucario"] .note-content blockquote {
+    background: linear-gradient(135deg, rgba(92, 152, 205, 0.1) 0%, rgba(92, 152, 205, 0.05) 100%);
+    border-left: 4px solid rgba(92, 152, 205, 0.5);
+    box-shadow: inset 0 0 20px rgba(92, 152, 205, 0.1);
+}
+
+/* Floating toast notifications */
+:root[data-theme="lucario"] .toast {
+    background: linear-gradient(135deg, #2b3e50 0%, #243443 100%);
+    border: 1px solid rgba(114, 192, 93, 0.3);
+    box-shadow: 
+        0 10px 20px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(114, 192, 93, 0.2);
+    animation: lucario-fade 0.3s ease;
+}
+
+/* Reading progress with glow */
+:root[data-theme="lucario"] .reading-progress-bar {
+    background: linear-gradient(90deg, #72c05d 0%, #5c98cd 50%, #ca94ff 100%);
+    height: 3px;
+    box-shadow: 0 0 10px rgba(114, 192, 93, 0.5);
+}
+
+/* Soft transitions for all elements */
+:root[data-theme="lucario"] * {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Performance optimization for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

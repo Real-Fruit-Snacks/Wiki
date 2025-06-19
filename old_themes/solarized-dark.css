@@ -1,0 +1,126 @@
+/* Solarized Dark Theme Variables */
+:root[data-theme="solarized-dark"] {
+    /* Background Colors */
+    --bg-primary: #002b36;
+    --bg-secondary: #073642;
+    --bg-sidebar: #094552;
+    --bg-code: #073642;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Text Colors */
+    --text-primary: #839496;
+    --text-secondary: #657b83;
+    --text-muted: #586e75;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors */
+    --accent-primary: #268bd2;
+    --accent-secondary: #2176ff;
+    --accent-warning: #fbbf24;
+    --accent-error: #ef4444;
+    --accent-info: var(--accent-primary);
+    --accent-success: #10b981;
+    
+    /* Border Colors */
+    --border-primary: #073642;
+    --border-secondary: #094552;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-error);
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(38, 139, 210, 0.1);
+    --bg-code-block: #003847;
+}
+
+/* Syntax Highlighting - Solarized Dark Theme */
+:root[data-theme="solarized-dark"] .token.comment,
+:root[data-theme="solarized-dark"] .token.prolog,
+:root[data-theme="solarized-dark"] .token.doctype,
+:root[data-theme="solarized-dark"] .token.cdata {
+    color: #586e75;
+    font-style: italic;
+}
+
+:root[data-theme="solarized-dark"] .token.punctuation {
+    color: #839496;
+}
+
+:root[data-theme="solarized-dark"] .token.property,
+:root[data-theme="solarized-dark"] .token.tag,
+:root[data-theme="solarized-dark"] .token.boolean,
+:root[data-theme="solarized-dark"] .token.number,
+:root[data-theme="solarized-dark"] .token.constant,
+:root[data-theme="solarized-dark"] .token.symbol,
+:root[data-theme="solarized-dark"] .token.deleted {
+    color: #dc322f;
+}
+
+:root[data-theme="solarized-dark"] .token.selector,
+:root[data-theme="solarized-dark"] .token.attr-name,
+:root[data-theme="solarized-dark"] .token.string,
+:root[data-theme="solarized-dark"] .token.char,
+:root[data-theme="solarized-dark"] .token.builtin,
+:root[data-theme="solarized-dark"] .token.inserted {
+    color: #859900;
+}
+
+:root[data-theme="solarized-dark"] .token.operator,
+:root[data-theme="solarized-dark"] .token.entity,
+:root[data-theme="solarized-dark"] .token.url,
+:root[data-theme="solarized-dark"] .language-css .token.string,
+:root[data-theme="solarized-dark"] .style .token.string {
+    color: #2aa198;
+    background: transparent;
+}
+
+:root[data-theme="solarized-dark"] .token.atrule,
+:root[data-theme="solarized-dark"] .token.attr-value,
+:root[data-theme="solarized-dark"] .token.keyword {
+    color: #268bd2;
+}
+
+:root[data-theme="solarized-dark"] .token.function,
+:root[data-theme="solarized-dark"] .token.class-name {
+    color: #b58900;
+}
+
+:root[data-theme="solarized-dark"] .token.regex,
+:root[data-theme="solarized-dark"] .token.important,
+:root[data-theme="solarized-dark"] .token.variable {
+    color: #cb4b16;
+}
+
+/* Scrollbar Solarized Dark Theme */
+:root[data-theme="solarized-dark"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="solarized-dark"] ::-webkit-scrollbar-thumb {
+    background: #586e75;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="solarized-dark"] ::-webkit-scrollbar-thumb:hover {
+    background: #657b83;
+}
+
+/* Firefox Scrollbar Solarized Dark Theme */
+:root[data-theme="solarized-dark"] * {
+    scrollbar-color: #586e75 var(--bg-primary);
+}

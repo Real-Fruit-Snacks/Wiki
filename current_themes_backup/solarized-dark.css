@@ -1,0 +1,350 @@
+/* Solarized Dark Theme Variables */
+:root[data-theme="solarized-dark"] {
+    /* Background Colors */
+    --bg-primary: #002b36;
+    --bg-secondary: #073642;
+    --bg-sidebar: #094552;
+    --bg-code: #073642;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Text Colors */
+    --text-primary: #839496;
+    --text-secondary: #657b83;
+    --text-muted: #586e75;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors */
+    --accent-primary: #268bd2;
+    --accent-secondary: #2176ff;
+    --accent-warning: #fbbf24;
+    --accent-error: #ef4444;
+    --accent-info: var(--accent-primary);
+    --accent-success: #10b981;
+    
+    /* Border Colors */
+    --border-primary: #073642;
+    --border-secondary: #094552;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-error);
+    --badge-text: #ffffff;
+    
+    /* Additional UI Colors */
+    --bg-modal: #073642;
+    --bg-tooltip: #094552;
+    --bg-input: #073642;
+    --bg-highlight: rgba(38, 139, 210, 0.2);
+    --text-link: #268bd2;
+    --text-code: #2aa198;
+    --text-inverse: #fdf6e3;
+    --button-text: #839496;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(38, 139, 210, 0.1);
+    --bg-code-block: #003847;
+}
+
+/* Syntax Highlighting - Solarized Dark Theme */
+:root[data-theme="solarized-dark"] .token.comment,
+:root[data-theme="solarized-dark"] .token.prolog,
+:root[data-theme="solarized-dark"] .token.doctype,
+:root[data-theme="solarized-dark"] .token.cdata {
+    color: #586e75;
+    font-style: italic;
+}
+
+:root[data-theme="solarized-dark"] .token.punctuation {
+    color: #839496;
+}
+
+:root[data-theme="solarized-dark"] .token.property,
+:root[data-theme="solarized-dark"] .token.tag,
+:root[data-theme="solarized-dark"] .token.boolean,
+:root[data-theme="solarized-dark"] .token.number,
+:root[data-theme="solarized-dark"] .token.constant,
+:root[data-theme="solarized-dark"] .token.symbol,
+:root[data-theme="solarized-dark"] .token.deleted {
+    color: #dc322f;
+}
+
+:root[data-theme="solarized-dark"] .token.selector,
+:root[data-theme="solarized-dark"] .token.attr-name,
+:root[data-theme="solarized-dark"] .token.string,
+:root[data-theme="solarized-dark"] .token.char,
+:root[data-theme="solarized-dark"] .token.builtin,
+:root[data-theme="solarized-dark"] .token.inserted {
+    color: #859900;
+}
+
+:root[data-theme="solarized-dark"] .token.operator,
+:root[data-theme="solarized-dark"] .token.entity,
+:root[data-theme="solarized-dark"] .token.url,
+:root[data-theme="solarized-dark"] .language-css .token.string,
+:root[data-theme="solarized-dark"] .style .token.string {
+    color: #2aa198;
+    background: transparent;
+}
+
+:root[data-theme="solarized-dark"] .token.atrule,
+:root[data-theme="solarized-dark"] .token.attr-value,
+:root[data-theme="solarized-dark"] .token.keyword {
+    color: #268bd2;
+}
+
+:root[data-theme="solarized-dark"] .token.function,
+:root[data-theme="solarized-dark"] .token.class-name {
+    color: #b58900;
+}
+
+:root[data-theme="solarized-dark"] .token.regex,
+:root[data-theme="solarized-dark"] .token.important,
+:root[data-theme="solarized-dark"] .token.variable {
+    color: #cb4b16;
+}
+
+/* Scrollbar Solarized Dark Theme */
+:root[data-theme="solarized-dark"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="solarized-dark"] ::-webkit-scrollbar-thumb {
+    background: #586e75;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="solarized-dark"] ::-webkit-scrollbar-thumb:hover {
+    background: #657b83;
+}
+
+/* Firefox Scrollbar Solarized Dark Theme */
+:root[data-theme="solarized-dark"] * {
+    scrollbar-color: #586e75 var(--bg-primary);
+}
+
+/* Modernized Solarized Dark with Smooth Transitions */
+:root[data-theme="solarized-dark"] {
+    --solarized-gradient: linear-gradient(135deg, #002b36, #073642, #094552);
+    --blue-glow: 0 0 20px rgba(38, 139, 210, 0.3);
+    --cyan-glow: 0 0 20px rgba(42, 161, 152, 0.3);
+}
+
+/* Subtle animated background gradient */
+:root[data-theme="solarized-dark"] body {
+    background: var(--bg-primary);
+    position: relative;
+}
+
+:root[data-theme="solarized-dark"] body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(38, 139, 210, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(42, 161, 152, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(181, 137, 0, 0.02) 0%, transparent 40%);
+    pointer-events: none;
+    animation: solarizedBreath 15s ease-in-out infinite;
+}
+
+@keyframes solarizedBreath {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
+
+/* Modern headers with subtle underline */
+:root[data-theme="solarized-dark"] h1,
+:root[data-theme="solarized-dark"] h2,
+:root[data-theme="solarized-dark"] h3 {
+    position: relative;
+    color: #93a1a1;
+    transition: color 0.3s ease;
+}
+
+:root[data-theme="solarized-dark"] h1:hover,
+:root[data-theme="solarized-dark"] h2:hover {
+    color: #268bd2;
+}
+
+:root[data-theme="solarized-dark"] h1::after,
+:root[data-theme="solarized-dark"] h2::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #268bd2, #2aa198);
+    transition: width 0.3s ease;
+}
+
+:root[data-theme="solarized-dark"] h1:hover::after,
+:root[data-theme="solarized-dark"] h2:hover::after {
+    width: 100%;
+}
+
+/* Enhanced code blocks with modern border */
+:root[data-theme="solarized-dark"] pre {
+    background: linear-gradient(135deg, #073642 0%, #003847 100%);
+    border: 1px solid rgba(38, 139, 210, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="solarized-dark"] pre::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #268bd2, transparent);
+    animation: solarizedScan 8s linear infinite;
+}
+
+@keyframes solarizedScan {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Modern link effects */
+:root[data-theme="solarized-dark"] a {
+    position: relative;
+    text-decoration: none;
+    background-image: linear-gradient(90deg, #268bd2, #268bd2);
+    background-size: 0% 2px;
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    transition: background-size 0.3s ease;
+}
+
+:root[data-theme="solarized-dark"] a:hover {
+    background-size: 100% 2px;
+    color: #268bd2;
+}
+
+/* Modernized buttons with gradient borders */
+:root[data-theme="solarized-dark"] button {
+    background: var(--bg-secondary);
+    border: 1px solid transparent;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="solarized-dark"] button::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background: linear-gradient(45deg, #268bd2, #2aa198, #859900, #b58900);
+    border-radius: 4px;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+}
+
+:root[data-theme="solarized-dark"] button:hover::before {
+    opacity: 1;
+}
+
+:root[data-theme="solarized-dark"] button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(38, 139, 210, 0.2);
+}
+
+/* Enhanced sidebar with gradient */
+:root[data-theme="solarized-dark"] .sidebar {
+    background: linear-gradient(180deg, #094552 0%, #073642 50%, #002b36 100%);
+    border-right: 1px solid rgba(38, 139, 210, 0.1);
+}
+
+/* Modern file tree items */
+:root[data-theme="solarized-dark"] .file-item {
+    transition: all 0.2s ease;
+    border-radius: 4px;
+}
+
+:root[data-theme="solarized-dark"] .file-item:hover {
+    background: rgba(38, 139, 210, 0.1);
+    transform: translateX(2px);
+}
+
+/* Glowing input fields */
+:root[data-theme="solarized-dark"] input:focus,
+:root[data-theme="solarized-dark"] textarea:focus {
+    border-color: #268bd2;
+    box-shadow: 0 0 0 2px rgba(38, 139, 210, 0.2),
+                var(--blue-glow);
+}
+
+/* Modern selection */
+:root[data-theme="solarized-dark"] ::selection {
+    background: rgba(38, 139, 210, 0.3);
+    color: #fdf6e3;
+}
+
+/* Animated tags */
+:root[data-theme="solarized-dark"] .tag {
+    background: rgba(38, 139, 210, 0.2);
+    border: 1px solid rgba(38, 139, 210, 0.3);
+    transition: all 0.2s ease;
+}
+
+:root[data-theme="solarized-dark"] .tag:hover {
+    background: rgba(38, 139, 210, 0.3);
+    border-color: #268bd2;
+    transform: scale(1.05);
+}
+
+/* Modern tab indicators */
+:root[data-theme="solarized-dark"] .tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #268bd2, #2aa198);
+    animation: tabGlow 2s ease-in-out infinite;
+}
+
+@keyframes tabGlow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* Performance optimization for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

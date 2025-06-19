@@ -74,8 +74,7 @@ class NotesWiki {
                     { id: 'gruvbox-light', name: 'Gruvbox Light', description: 'Vintage paper theme with warm accents' },
                     { id: 'kanagawa', name: 'Kanagawa', description: 'Japanese zen theme with wave animations' },
                     { id: 'rose-pine', name: 'Rosé Pine', description: 'Rose-inspired theme with petal animations' },
-                    { id: 'rose-pine-dawn', name: 'Rosé Pine Dawn', description: 'Dawn light theme with sunrise effects' },
-                    { id: 'sunset-dreams', name: 'Sunset Dreams', description: 'Animated sunset theme with warm gradients' }
+                    { id: 'rose-pine-dawn', name: 'Rosé Pine Dawn', description: 'Dawn light theme with sunrise effects' }
                 ]
             },
             {
@@ -104,9 +103,7 @@ class NotesWiki {
                 themes: [
                     { id: '2077', name: '2077 Theme', description: 'Cyberpunk 2077 with neon glow and scan lines' },
                     { id: 'cyberpunk', name: 'Cyberpunk', description: 'Dystopian theme with glitch effects' },
-                    { id: 'holographic-blue', name: 'Holographic Blue', description: 'Futuristic theme with holographic effects' },
                     { id: 'matrix', name: 'Matrix', description: 'Terminal green with falling code rain' },
-                    { id: 'neon-galaxy', name: 'Neon Galaxy', description: 'Spectacular neon theme with starfield' },
                     { id: 'tokyo-night', name: 'Tokyo Night', description: 'Tokyo neon theme with cyberpunk effects' },
                     { id: 'vaporwave', name: 'Vaporwave', description: 'Retro 80s theme with VHS glitch effects' }
                 ]
@@ -136,10 +133,8 @@ class NotesWiki {
             {
                 name: 'Special Effects',
                 themes: [
-                    { id: 'aero-glass', name: 'Aero Glass', description: 'Windows glass effects with blur and shine' },
                     { id: 'hackthebox', name: 'HackTheBox', description: 'Hacker terminal theme with sweep effects' },
-                    { id: 'hotdog-stand', name: 'Hot Dog Stand', description: 'Windows 3.1 retro theme with pixel cursors' },
-                    { id: 'luxury-gold', name: 'Luxury Gold', description: 'Premium gold theme with shimmer effects' }
+                    { id: 'hotdog-stand', name: 'Hot Dog Stand', description: 'Windows 3.1 retro theme with pixel cursors' }
                 ]
             }
         ];
@@ -4645,7 +4640,6 @@ class NotesWiki {
                             height: 3px;
                             border-radius: 2px;
                             margin-bottom: 8px;
-                            ${theme.id === 'neon-galaxy' ? 'box-shadow: 0 0 10px ' + previewColors.accent + ';' : ''}
                         "></div>
                         <pre style="
                             margin: 0;
@@ -4664,7 +4658,6 @@ class NotesWiki {
                         color: ${previewColors.text};
                         font-weight: 600;
                         margin-bottom: 4px;
-                        ${theme.id === 'luxury-gold' ? 'text-shadow: 0 1px 2px rgba(255, 215, 0, 0.3);' : ''}
                     ">${theme.name}</div>
                     <div class="theme-card-description" style="
                         color: ${previewColors.textMuted};
@@ -4719,11 +4712,9 @@ class NotesWiki {
                     'dracula': '🦇 Welcome to the castle...',
                     'tokyo-night': '🌃 Welcome to Tokyo!',
                     'vaporwave': '🌴 A E S T H E T I C',
-                    'luxury-gold': '👑 Living in luxury!',
                     'nord': '🎿 Welcome to the Arctic!',
                     'hotdog-stand': '🌭 Classic taste!',
                     'hackthebox': '💻 Access granted...',
-                    'neon-galaxy': '🌌 Blast off to space!'
                 };
                 
                 const message = successMessages[theme.id] || `${theme.name} theme applied!`;
@@ -5625,27 +5616,6 @@ class NotesWiki {
                     pointer-events: none;
                 "></div>
             `,
-            'luxury-gold': `
-                <div class="gold-sparkle" style="
-                    position: absolute;
-                    inset: 0;
-                    background: linear-gradient(45deg, 
-                        transparent 30%, 
-                        rgba(255, 215, 0, 0.2) 50%, 
-                        transparent 70%);
-                    animation: goldShimmer 4s ease-in-out infinite;
-                    pointer-events: none;
-                "></div>
-                <span style="
-                    position: absolute;
-                    bottom: 10px;
-                    right: 10px;
-                    font-size: 24px;
-                    color: #ffd700;
-                    opacity: 0.3;
-                    pointer-events: none;
-                ">♛</span>
-            `,
             'hotdog-stand': `
                 <div class="hotdog-pixel" style="
                     position: absolute;
@@ -5666,37 +5636,6 @@ class NotesWiki {
                 ">
                     <span style="position: absolute; top: -10px; left: 20%; font-size: 16px; opacity: 0.3; animation: snowfall 6s linear infinite;">❄️</span>
                     <span style="position: absolute; top: -10px; right: 30%; font-size: 12px; opacity: 0.2; animation: snowfall 6s linear infinite; animation-delay: -3s;">❄️</span>
-                </div>
-            `,
-            'neon-galaxy': `
-                <div class="galaxy-stars" style="
-                    position: absolute;
-                    inset: 0;
-                    pointer-events: none;
-                ">
-                    <div style="
-                        position: absolute;
-                        top: 20%;
-                        left: 30%;
-                        width: 4px;
-                        height: 4px;
-                        background: #ff00ff;
-                        border-radius: 50%;
-                        box-shadow: 0 0 10px #ff00ff;
-                        animation: twinkle 3s ease-in-out infinite;
-                    "></div>
-                    <div style="
-                        position: absolute;
-                        bottom: 30%;
-                        right: 20%;
-                        width: 4px;
-                        height: 4px;
-                        background: #00ffff;
-                        border-radius: 50%;
-                        box-shadow: 0 0 10px #00ffff;
-                        animation: twinkle 3s ease-in-out infinite;
-                        animation-delay: -1.5s;
-                    "></div>
                 </div>
             `,
             'hackthebox': `
@@ -5834,17 +5773,6 @@ class NotesWiki {
             });
         }
         
-        // Luxury Gold theme: Add extra shimmer on hover
-        if (themeId === 'luxury-gold') {
-            card.addEventListener('mouseenter', () => {
-                const sparkle = card.querySelector('.gold-sparkle');
-                if (sparkle) sparkle.style.animationDuration = '2s';
-            });
-            card.addEventListener('mouseleave', () => {
-                const sparkle = card.querySelector('.gold-sparkle');
-                if (sparkle) sparkle.style.animationDuration = '4s';
-            });
-        }
         
         // Add general hover effects
         card.addEventListener('mouseenter', () => {
@@ -5856,8 +5784,6 @@ class NotesWiki {
                 const hoverShadows = {
                     'matrix': `0 0 30px rgba(0, 255, 65, 0.5)`,
                     'cyberpunk': `0 0 30px rgba(234, 0, 217, 0.5), 0 0 60px rgba(10, 189, 198, 0.3)`,
-                    'neon-galaxy': `0 0 40px rgba(255, 0, 255, 0.4), 0 0 80px rgba(0, 255, 255, 0.2)`,
-                    'luxury-gold': `0 0 30px rgba(255, 215, 0, 0.4)`,
                     'dracula': `0 0 30px rgba(189, 147, 249, 0.4), 0 0 60px rgba(255, 121, 198, 0.2)`,
                     'tokyo-night': `0 0 20px ${colors.accent}40`,
                     'vaporwave': `0 0 30px rgba(255, 113, 206, 0.4), 0 0 60px rgba(1, 205, 254, 0.2)`,

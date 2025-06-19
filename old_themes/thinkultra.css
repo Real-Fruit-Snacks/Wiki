@@ -1,0 +1,122 @@
+/* ThinkUltra Theme for Notes Wiki - Inspired by ThinkPad aesthetics */
+:root[data-theme="thinkultra"] {
+    /* Background Colors */
+    --bg-primary: #000000;
+    --bg-secondary: #1a1a1a;
+    --bg-sidebar: #0a0a0a;
+    --bg-code: #1a1a1a;
+    --bg-selection: #E6001233;
+    --bg-dropdown: #1a1a1a;
+    --bg-hover: #333333;
+    --bg-tag: #333333;
+    
+    /* Text Colors */
+    --text-primary: #E8E8E8;
+    --text-secondary: #B0B0B0;
+    --text-muted: #808080;
+    --text-heading: #FFFFFF;
+    
+    /* Accent Colors */
+    --accent-primary: #E60012;
+    --accent-secondary: #064A89;
+    --accent-warning: #FF9500;
+    --accent-error: #E60012;
+    --accent-danger: #E60012;
+    --accent-info: #064A89;
+    --accent-success: #00A651;
+    
+    /* Border Colors */
+    --border-primary: #4D4D4D;
+    --border-secondary: #666666;
+    
+    /* Button Colors */
+    --button-bg: #1a1a1a;
+    --button-hover: #333333;
+    --button-active: #E60012;
+    
+    /* Badge Colors */
+    --badge-bg: #E60012;
+    --badge-text: #FFFFFF;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -1px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.6);
+}
+
+/* Syntax Highlighting - ThinkUltra Theme */
+:root[data-theme="thinkultra"] .token.comment,
+:root[data-theme="thinkultra"] .token.prolog,
+:root[data-theme="thinkultra"] .token.doctype,
+:root[data-theme="thinkultra"] .token.cdata {
+    color: #808080;
+}
+
+:root[data-theme="thinkultra"] .token.punctuation {
+    color: #B0B0B0;
+}
+
+:root[data-theme="thinkultra"] .token.property,
+:root[data-theme="thinkultra"] .token.tag,
+:root[data-theme="thinkultra"] .token.boolean,
+:root[data-theme="thinkultra"] .token.number,
+:root[data-theme="thinkultra"] .token.constant,
+:root[data-theme="thinkultra"] .token.symbol,
+:root[data-theme="thinkultra"] .token.deleted {
+    color: #E60012;
+}
+
+:root[data-theme="thinkultra"] .token.selector,
+:root[data-theme="thinkultra"] .token.attr-name,
+:root[data-theme="thinkultra"] .token.string,
+:root[data-theme="thinkultra"] .token.char,
+:root[data-theme="thinkultra"] .token.builtin,
+:root[data-theme="thinkultra"] .token.inserted {
+    color: #00A651;
+}
+
+:root[data-theme="thinkultra"] .token.operator,
+:root[data-theme="thinkultra"] .token.entity,
+:root[data-theme="thinkultra"] .token.url,
+:root[data-theme="thinkultra"] .language-css .token.string,
+:root[data-theme="thinkultra"] .style .token.string {
+    color: #E8E8E8;
+    background: transparent;
+}
+
+:root[data-theme="thinkultra"] .token.atrule,
+:root[data-theme="thinkultra"] .token.attr-value,
+:root[data-theme="thinkultra"] .token.keyword {
+    color: #064A89;
+}
+
+:root[data-theme="thinkultra"] .token.function,
+:root[data-theme="thinkultra"] .token.class-name {
+    color: #E60012;
+}
+
+:root[data-theme="thinkultra"] .token.regex,
+:root[data-theme="thinkultra"] .token.important,
+:root[data-theme="thinkultra"] .token.variable {
+    color: #FF9500;
+}
+
+/* Scrollbar ThinkUltra Theme */
+:root[data-theme="thinkultra"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="thinkultra"] ::-webkit-scrollbar-thumb {
+    background: #4D4D4D;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="thinkultra"] ::-webkit-scrollbar-thumb:hover {
+    background: #666666;
+}
+
+/* Firefox Scrollbar ThinkUltra Theme */
+:root[data-theme="thinkultra"] * {
+    scrollbar-color: #4D4D4D var(--bg-primary);
+}

@@ -1,0 +1,122 @@
+/* Witch Hazel Theme for Notes Wiki */
+:root[data-theme="witch-hazel"] {
+    /* Background Colors */
+    --bg-primary: #433e56;
+    --bg-secondary: #534d66;
+    --bg-sidebar: #3d3849;
+    --bg-code: #363244;
+    --bg-selection: #716799;
+    --bg-dropdown: #534d66;
+    --bg-hover: #5c5777;
+    --bg-tag: #716799;
+    
+    /* Text Colors */
+    --text-primary: #F8F8F0;
+    --text-secondary: #ceb1ff;
+    --text-muted: #a599c7;
+    --text-heading: #FFFFFF;
+    
+    /* Accent Colors */
+    --accent-primary: #1bc5e0;
+    --accent-secondary: #ceb1ff;
+    --accent-warning: #f4c874;
+    --accent-error: #f06178;
+    --accent-danger: #f06178;
+    --accent-info: #1bc5e0;
+    --accent-success: #b1e2c8;
+    
+    /* Border Colors */
+    --border-primary: #716799;
+    --border-secondary: #8b85a1;
+    
+    /* Button Colors */
+    --button-bg: #534d66;
+    --button-hover: #716799;
+    --button-active: #1bc5e0;
+    
+    /* Badge Colors */
+    --badge-bg: #ceb1ff;
+    --badge-text: #433e56;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+/* Syntax Highlighting - Witch Hazel Theme */
+:root[data-theme="witch-hazel"] .token.comment,
+:root[data-theme="witch-hazel"] .token.prolog,
+:root[data-theme="witch-hazel"] .token.doctype,
+:root[data-theme="witch-hazel"] .token.cdata {
+    color: #8b85a1;
+}
+
+:root[data-theme="witch-hazel"] .token.punctuation {
+    color: #a599c7;
+}
+
+:root[data-theme="witch-hazel"] .token.property,
+:root[data-theme="witch-hazel"] .token.tag,
+:root[data-theme="witch-hazel"] .token.boolean,
+:root[data-theme="witch-hazel"] .token.number,
+:root[data-theme="witch-hazel"] .token.constant,
+:root[data-theme="witch-hazel"] .token.symbol,
+:root[data-theme="witch-hazel"] .token.deleted {
+    color: #f06178;
+}
+
+:root[data-theme="witch-hazel"] .token.selector,
+:root[data-theme="witch-hazel"] .token.attr-name,
+:root[data-theme="witch-hazel"] .token.string,
+:root[data-theme="witch-hazel"] .token.char,
+:root[data-theme="witch-hazel"] .token.builtin,
+:root[data-theme="witch-hazel"] .token.inserted {
+    color: #b1e2c8;
+}
+
+:root[data-theme="witch-hazel"] .token.operator,
+:root[data-theme="witch-hazel"] .token.entity,
+:root[data-theme="witch-hazel"] .token.url,
+:root[data-theme="witch-hazel"] .language-css .token.string,
+:root[data-theme="witch-hazel"] .style .token.string {
+    color: #F8F8F0;
+    background: transparent;
+}
+
+:root[data-theme="witch-hazel"] .token.atrule,
+:root[data-theme="witch-hazel"] .token.attr-value,
+:root[data-theme="witch-hazel"] .token.keyword {
+    color: #ceb1ff;
+}
+
+:root[data-theme="witch-hazel"] .token.function,
+:root[data-theme="witch-hazel"] .token.class-name {
+    color: #1bc5e0;
+}
+
+:root[data-theme="witch-hazel"] .token.regex,
+:root[data-theme="witch-hazel"] .token.important,
+:root[data-theme="witch-hazel"] .token.variable {
+    color: #f4c874;
+}
+
+/* Scrollbar Witch Hazel Theme */
+:root[data-theme="witch-hazel"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="witch-hazel"] ::-webkit-scrollbar-thumb {
+    background: #716799;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="witch-hazel"] ::-webkit-scrollbar-thumb:hover {
+    background: #8b85a1;
+}
+
+/* Firefox Scrollbar Witch Hazel Theme */
+:root[data-theme="witch-hazel"] * {
+    scrollbar-color: #716799 var(--bg-primary);
+}

@@ -1,0 +1,177 @@
+/* Tomorrow Night - Popular dark theme from the Tomorrow theme family */
+:root[data-theme="tomorrow-night"] {
+    /* Primary colors */
+    --primary-color: #81A2BE;
+    --secondary-color: #B294BB;
+    --accent-color: #b5bd68;
+    
+    /* Background colors */
+    --bg-color: #1D1F21;
+    --bg-secondary: #282A2E;
+    --bg-tertiary: #373B41;
+    
+    /* Text colors */
+    --text-color: #C5C8C6;
+    --text-muted: #969896;
+    --text-dim: #707880;
+    
+    /* Border and surface colors */
+    --border-color: #373B41;
+    --surface-color: #282A2E;
+    --hover-bg: #373B41;
+    
+    /* Header and navigation */
+    --header-bg: #1D1F21;
+    --nav-bg: #282A2E;
+    --nav-hover-bg: #373B41;
+    --nav-border: #373B41;
+    --nav-active-bg: #373B41;
+    
+    /* Links */
+    --link-color: #81A2BE;
+    --link-hover-color: #8ABEB7;
+    
+    /* Code blocks */
+    --code-bg: #282A2E;
+    --code-border: #373B41;
+    --inline-code-bg: #282A2E;
+    --inline-code-color: #F0C674;
+    
+    /* Buttons */
+    --button-bg: #373B41;
+    --button-hover-bg: #4B5056;
+    --button-active-bg: #5A5F66;
+    --button-text: #C5C8C6;
+    
+    /* Search */
+    --search-bg: #282A2E;
+    --search-border: #373B41;
+    --search-focus-border: #81A2BE;
+    --search-placeholder: #707880;
+    
+    /* Tags */
+    --tag-bg: #373B41;
+    --tag-hover-bg: #4B5056;
+    --tag-text: #C5C8C6;
+    
+    /* Scrollbar */
+    --scrollbar-bg: #1D1F21;
+    --scrollbar-thumb: #373B41;
+    --scrollbar-thumb-hover: #4B5056;
+    
+    /* Callouts */
+    --callout-info-bg: #2A3A47;
+    --callout-info-border: #81A2BE;
+    --callout-warning-bg: #473F2A;
+    --callout-warning-border: #F0C674;
+    --callout-danger-bg: #472A2A;
+    --callout-danger-border: #CC6666;
+    --callout-success-bg: #2A472A;
+    --callout-success-border: #B5BD68;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
+    
+
+    
+    /* Standard variable mappings for UI consistency */
+    --bg-primary: var(--bg-color);
+    --bg-secondary: #282A2E;
+    --bg-dropdown: #282A2E;
+    --bg-sidebar: #282A2E;
+    --bg-hover: var(--hover-bg);
+    --bg-code: var(--code-bg);
+    --bg-tag: #373B41;
+    
+    --text-primary: var(--text-color);
+    --text-secondary: #C5C8C6;
+    --text-muted: #969896;
+    --text-heading: var(--text-color);
+    
+    --accent-primary: var(--link-color);
+    --accent-secondary: var(--accent-color);
+    --accent-warning: #F0C674;
+    --accent-error: #CC6666;
+    --accent-info: var(--link-color);
+    --accent-success: var(--accent-color);
+    
+    --border-primary: var(--border-color);
+    --border-secondary: #373B41;
+    
+    --button-bg: var(--button-bg);
+    --button-hover: var(--button-hover-bg);
+    --button-active: var(--button-active-bg);
+    
+    --badge-bg: #CC6666;
+    --badge-text: #C5C8C6;
+    /* Syntax highlighting - Tomorrow Night colors */
+    --syntax-comment: #969896;
+    --syntax-keyword: #B294BB;
+    --syntax-string: #B5BD68;
+    --syntax-number: #DE935F;
+    --syntax-function: #81A2BE;
+    --syntax-variable: #CC6666;
+    --syntax-class: #F0C674;
+    --syntax-constant: #DE935F;
+    --syntax-operator: #8ABEB7;
+    --syntax-punctuation: #C5C8C6;
+    --syntax-property: #81A2BE;
+    --syntax-tag: #CC6666;
+    --syntax-attribute: #81A2BE;
+    --syntax-value: #B5BD68;
+    --syntax-unit: #DE935F;
+    --syntax-regex: #CC6666;
+    --syntax-important: #CC6666;
+    --syntax-builtin: #81A2BE;
+    --syntax-type: #F0C674;
+}
+
+/* Syntax highlighting classes for Tomorrow Night theme */
+:root[data-theme="tomorrow-night"] .token.comment,
+:root[data-theme="tomorrow-night"] .token.prolog,
+:root[data-theme="tomorrow-night"] .token.doctype,
+:root[data-theme="tomorrow-night"] .token.cdata { color: var(--syntax-comment); }
+
+:root[data-theme="tomorrow-night"] .token.keyword,
+:root[data-theme="tomorrow-night"] .token.control,
+:root[data-theme="tomorrow-night"] .token.directive { color: var(--syntax-keyword); }
+
+:root[data-theme="tomorrow-night"] .token.string,
+:root[data-theme="tomorrow-night"] .token.char { color: var(--syntax-string); }
+
+:root[data-theme="tomorrow-night"] .token.number,
+:root[data-theme="tomorrow-night"] .token.hexcode { color: var(--syntax-number); }
+
+:root[data-theme="tomorrow-night"] .token.function { color: var(--syntax-function); }
+
+:root[data-theme="tomorrow-night"] .token.variable { color: var(--syntax-variable); }
+
+:root[data-theme="tomorrow-night"] .token.class-name,
+:root[data-theme="tomorrow-night"] .token.maybe-class-name { color: var(--syntax-class); }
+
+:root[data-theme="tomorrow-night"] .token.constant { color: var(--syntax-constant); }
+
+:root[data-theme="tomorrow-night"] .token.operator { color: var(--syntax-operator); }
+
+:root[data-theme="tomorrow-night"] .token.punctuation { color: var(--syntax-punctuation); }
+
+:root[data-theme="tomorrow-night"] .token.property { color: var(--syntax-property); }
+
+:root[data-theme="tomorrow-night"] .token.tag { color: var(--syntax-tag); }
+
+:root[data-theme="tomorrow-night"] .token.attr-name,
+:root[data-theme="tomorrow-night"] .token.attribute { color: var(--syntax-attribute); }
+
+:root[data-theme="tomorrow-night"] .token.attr-value,
+:root[data-theme="tomorrow-night"] .token.value { color: var(--syntax-value); }
+
+:root[data-theme="tomorrow-night"] .token.regex { color: var(--syntax-regex); }
+
+:root[data-theme="tomorrow-night"] .token.important { color: var(--syntax-important); }
+
+:root[data-theme="tomorrow-night"] .token.builtin { color: var(--syntax-builtin); }
+
+:root[data-theme="tomorrow-night"] .token.type,
+:root[data-theme="tomorrow-night"] .token.annotation { color: var(--syntax-type); }

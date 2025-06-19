@@ -1,0 +1,330 @@
+/* GitHub Light Theme - Modern 2024 Edition */
+:root[data-theme="github-light"] {
+    /* Background Colors */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f6f8fa;
+    --bg-sidebar: #f0f3f6;
+    --bg-code: #f6f8fa;
+    --bg-selection: rgba(9, 105, 218, 0.15);
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(208, 215, 222, 0.32);
+    --bg-tag: #ddf4ff;
+    --bg-modal: var(--bg-primary);
+    --bg-input: var(--bg-primary);
+    --bg-tooltip: #24292f;
+    --bg-highlight: #fff8b5;
+    
+    /* Text Colors */
+    --text-primary: #1f2328;
+    --text-secondary: #656d76;
+    --text-muted: #6e7781;
+    --text-heading: #1f2328;
+    --text-inverse: #ffffff;
+    --text-link: #0969da;
+    --text-code: #0550ae;
+    --text-selection: var(--text-primary);
+    
+    /* Accent Colors */
+    --accent-primary: #0969da;
+    --accent-secondary: #0860ca;
+    --accent-warning: #9a6700;
+    --accent-error: #cf222e;
+    --accent-info: #0969da;
+    --accent-success: #1a7f37;
+    --accent-primary-light: #54aeff;
+    --accent-secondary-light: #388bfd;
+    
+    /* Border Colors */
+    --border-primary: #d1d9e0;
+    --border-secondary: #e2e8f0;
+    --border-active: var(--accent-primary);
+    --border-hover: #8c959f;
+    
+    /* Button Colors */
+    --button-bg: #f6f8fa;
+    --button-hover: #f3f4f6;
+    --button-active: #ebecf0;
+    --button-text: var(--text-primary);
+    --button-border: rgba(31, 35, 40, 0.15);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-error);
+    --badge-text: #ffffff;
+    --badge-info-bg: var(--bg-tag);
+    --badge-info-text: var(--accent-info);
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 0 rgba(31, 35, 40, 0.04), 0 1px 3px rgba(66, 74, 83, 0.12);
+    --shadow-md: 0 3px 6px rgba(140, 149, 159, 0.15);
+    --shadow-lg: 0 8px 24px rgba(140, 149, 159, 0.2);
+    --shadow-xl: 0 12px 28px rgba(140, 149, 159, 0.3);
+    --shadow-focus: 0 0 0 3px rgba(9, 105, 218, 0.3);
+    --shadow-inset: inset 0 1px 0 rgba(208, 215, 222, 0.2);
+    
+    /* Interactive States */
+    --state-hover-bg: rgba(208, 215, 222, 0.32);
+    --state-active-bg: rgba(208, 215, 222, 0.48);
+    --state-selected-bg: var(--bg-selection);
+    --state-focus-border: var(--accent-primary);
+    --state-disabled-opacity: 0.6;
+    
+    /* Typography */
+    --font-mono: 'SF Mono', Monaco, 'Cascadia Mono', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+    --line-height-normal: 1.5;
+    --line-height-condensed: 1.25;
+    
+    /* Transitions */
+    --transition-fast: 100ms cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-base: 200ms cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-slow: 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    
+    /* Other */
+    --accent-color-alpha: rgba(9, 105, 218, 0.1);
+    --bg-code-block: #f6f8fa;
+    --overlay-bg: rgba(31, 35, 40, 0.5);
+    --spinner-color: var(--accent-primary);
+}
+
+/* Syntax Highlighting - Modern GitHub Light Theme */
+:root[data-theme="github-light"] .token.comment,
+:root[data-theme="github-light"] .token.prolog,
+:root[data-theme="github-light"] .token.doctype,
+:root[data-theme="github-light"] .token.cdata {
+    color: #6e7781;
+    font-style: italic;
+}
+
+:root[data-theme="github-light"] .token.punctuation {
+    color: #24292f;
+}
+
+:root[data-theme="github-light"] .token.property,
+:root[data-theme="github-light"] .token.tag,
+:root[data-theme="github-light"] .token.boolean,
+:root[data-theme="github-light"] .token.number,
+:root[data-theme="github-light"] .token.constant,
+:root[data-theme="github-light"] .token.symbol,
+:root[data-theme="github-light"] .token.deleted {
+    color: #0550ae;
+    font-weight: 500;
+}
+
+:root[data-theme="github-light"] .token.selector,
+:root[data-theme="github-light"] .token.attr-name,
+:root[data-theme="github-light"] .token.string,
+:root[data-theme="github-light"] .token.char,
+:root[data-theme="github-light"] .token.builtin,
+:root[data-theme="github-light"] .token.inserted {
+    color: #0a3069;
+}
+
+:root[data-theme="github-light"] .token.operator,
+:root[data-theme="github-light"] .token.entity,
+:root[data-theme="github-light"] .token.url,
+:root[data-theme="github-light"] .language-css .token.string,
+:root[data-theme="github-light"] .style .token.string {
+    color: #cf222e;
+    background: transparent;
+}
+
+:root[data-theme="github-light"] .token.atrule,
+:root[data-theme="github-light"] .token.attr-value,
+:root[data-theme="github-light"] .token.keyword {
+    color: #cf222e;
+    font-weight: 500;
+}
+
+:root[data-theme="github-light"] .token.function,
+:root[data-theme="github-light"] .token.class-name {
+    color: #8250df;
+    font-weight: 500;
+}
+
+:root[data-theme="github-light"] .token.regex,
+:root[data-theme="github-light"] .token.important,
+:root[data-theme="github-light"] .token.variable {
+    color: #953800;
+}
+
+/* Scrollbar GitHub Light Theme */
+:root[data-theme="github-light"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="github-light"] ::-webkit-scrollbar-thumb {
+    background: #afb8c1;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="github-light"] ::-webkit-scrollbar-thumb:hover {
+    background: #8c959f;
+}
+
+/* Firefox Scrollbar GitHub Light Theme */
+:root[data-theme="github-light"] * {
+    scrollbar-color: #afb8c1 var(--bg-primary);
+}
+
+/* Modern GitHub Light Theme Effects */
+:root[data-theme="github-light"] .sidebar {
+    background: linear-gradient(180deg, var(--bg-sidebar) 0%, rgba(240, 243, 246, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    border-right: 1px solid var(--border-primary);
+}
+
+:root[data-theme="github-light"] .note-content a {
+    color: var(--text-link);
+    text-decoration: none;
+    background-image: linear-gradient(var(--text-link), var(--text-link));
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    transition: background-size var(--transition-base);
+}
+
+:root[data-theme="github-light"] .note-content a:hover {
+    background-size: 100% 1px;
+}
+
+:root[data-theme="github-light"] .button,
+:root[data-theme="github-light"] button {
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-base);
+}
+
+:root[data-theme="github-light"] .button::before,
+:root[data-theme="github-light"] button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: var(--accent-primary);
+    opacity: 0.1;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width var(--transition-slow), height var(--transition-slow);
+}
+
+:root[data-theme="github-light"] .button:active::before,
+:root[data-theme="github-light"] button:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+:root[data-theme="github-light"] .tab-bar {
+    background: rgba(246, 248, 250, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border-primary);
+}
+
+:root[data-theme="github-light"] .tab.active {
+    background: var(--bg-primary);
+    border-color: var(--border-primary);
+    border-bottom-color: var(--bg-primary);
+    box-shadow: 0 -1px 0 var(--border-primary);
+}
+
+:root[data-theme="github-light"] pre {
+    background: var(--bg-code-block);
+    border: 1px solid var(--border-secondary);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--transition-base);
+}
+
+:root[data-theme="github-light"] pre:hover {
+    box-shadow: var(--shadow-md);
+}
+
+:root[data-theme="github-light"] .search-input:focus {
+    box-shadow: var(--shadow-focus);
+    border-color: var(--accent-primary);
+}
+
+:root[data-theme="github-light"] .badge {
+    background: var(--badge-info-bg);
+    color: var(--badge-info-text);
+    border: 1px solid rgba(9, 105, 218, 0.2);
+    font-weight: 500;
+}
+
+:root[data-theme="github-light"] .settings-section {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-secondary);
+    border-radius: 6px;
+    transition: all var(--transition-base);
+}
+
+:root[data-theme="github-light"] .settings-section:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+/* Selection styling */
+:root[data-theme="github-light"] ::selection {
+    background: var(--bg-selection);
+    color: var(--text-selection);
+}
+
+/* Focus visible styling */
+:root[data-theme="github-light"] *:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+    border-radius: 3px;
+}
+
+/* Code block enhancements */
+:root[data-theme="github-light"] .code-block-wrapper {
+    position: relative;
+    margin: 16px 0;
+}
+
+:root[data-theme="github-light"] .code-block-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+    background: linear-gradient(180deg, var(--bg-code-block) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Smooth hover states */
+:root[data-theme="github-light"] .tree-item:hover,
+:root[data-theme="github-light"] .search-result:hover,
+:root[data-theme="github-light"] .recent-file:hover {
+    background: var(--state-hover-bg);
+    transition: background var(--transition-fast);
+}
+
+/* Modern tooltip styling */
+:root[data-theme="github-light"] [data-tooltip]::after {
+    background: var(--bg-tooltip);
+    color: var(--text-inverse);
+    box-shadow: var(--shadow-lg);
+    border-radius: 6px;
+    font-size: 12px;
+    padding: 4px 8px;
+}
+
+/* Performance optimization for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

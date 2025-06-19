@@ -1,0 +1,122 @@
+/* Catppuccin Latte Theme for Notes Wiki */
+:root[data-theme="catppuccin-latte"] {
+    /* Background Colors */
+    --bg-primary: #eff1f5;
+    --bg-secondary: #e6e9ef;
+    --bg-sidebar: #dce0e8;
+    --bg-code: #e6e9ef;
+    --bg-selection: #1e66f533;
+    --bg-dropdown: #e6e9ef;
+    --bg-hover: #ccd0da;
+    --bg-tag: #ccd0da;
+    
+    /* Text Colors */
+    --text-primary: #4c4f69;
+    --text-secondary: #5c5f77;
+    --text-muted: #7c7f93;
+    --text-heading: #dc8a78;
+    
+    /* Accent Colors */
+    --accent-primary: #1e66f5;
+    --accent-secondary: #40a02b;
+    --accent-warning: #df8e1d;
+    --accent-error: #d20f39;
+    --accent-danger: #d20f39;
+    --accent-info: #1e66f5;
+    --accent-success: #40a02b;
+    
+    /* Border Colors */
+    --border-primary: #ccd0da;
+    --border-secondary: #acb0be;
+    
+    /* Button Colors */
+    --button-bg: #e6e9ef;
+    --button-hover: #ccd0da;
+    --button-active: #1e66f5;
+    
+    /* Badge Colors */
+    --badge-bg: #d20f39;
+    --badge-text: #eff1f5;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(76, 79, 105, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(76, 79, 105, 0.15), 0 2px 4px -1px rgba(76, 79, 105, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(76, 79, 105, 0.2), 0 4px 6px -2px rgba(76, 79, 105, 0.15);
+    --shadow-xl: 0 20px 25px -5px rgba(76, 79, 105, 0.25), 0 10px 10px -5px rgba(76, 79, 105, 0.2);
+}
+
+/* Syntax Highlighting - Catppuccin Latte */
+:root[data-theme="catppuccin-latte"] .token.comment,
+:root[data-theme="catppuccin-latte"] .token.prolog,
+:root[data-theme="catppuccin-latte"] .token.doctype,
+:root[data-theme="catppuccin-latte"] .token.cdata {
+    color: #7c7f93;
+}
+
+:root[data-theme="catppuccin-latte"] .token.punctuation {
+    color: #5c5f77;
+}
+
+:root[data-theme="catppuccin-latte"] .token.property,
+:root[data-theme="catppuccin-latte"] .token.tag,
+:root[data-theme="catppuccin-latte"] .token.boolean,
+:root[data-theme="catppuccin-latte"] .token.number,
+:root[data-theme="catppuccin-latte"] .token.constant,
+:root[data-theme="catppuccin-latte"] .token.symbol,
+:root[data-theme="catppuccin-latte"] .token.deleted {
+    color: #d20f39;
+}
+
+:root[data-theme="catppuccin-latte"] .token.selector,
+:root[data-theme="catppuccin-latte"] .token.attr-name,
+:root[data-theme="catppuccin-latte"] .token.string,
+:root[data-theme="catppuccin-latte"] .token.char,
+:root[data-theme="catppuccin-latte"] .token.builtin,
+:root[data-theme="catppuccin-latte"] .token.inserted {
+    color: #40a02b;
+}
+
+:root[data-theme="catppuccin-latte"] .token.operator,
+:root[data-theme="catppuccin-latte"] .token.entity,
+:root[data-theme="catppuccin-latte"] .token.url,
+:root[data-theme="catppuccin-latte"] .language-css .token.string,
+:root[data-theme="catppuccin-latte"] .style .token.string {
+    color: #179299;
+    background: transparent;
+}
+
+:root[data-theme="catppuccin-latte"] .token.atrule,
+:root[data-theme="catppuccin-latte"] .token.attr-value,
+:root[data-theme="catppuccin-latte"] .token.keyword {
+    color: #8839ef;
+}
+
+:root[data-theme="catppuccin-latte"] .token.function,
+:root[data-theme="catppuccin-latte"] .token.class-name {
+    color: #1e66f5;
+}
+
+:root[data-theme="catppuccin-latte"] .token.regex,
+:root[data-theme="catppuccin-latte"] .token.important,
+:root[data-theme="catppuccin-latte"] .token.variable {
+    color: #df8e1d;
+}
+
+/* Scrollbar Catppuccin Latte Theme */
+:root[data-theme="catppuccin-latte"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="catppuccin-latte"] ::-webkit-scrollbar-thumb {
+    background: #acb0be;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="catppuccin-latte"] ::-webkit-scrollbar-thumb:hover {
+    background: #9ca0b0;
+}
+
+/* Firefox Scrollbar Catppuccin Latte Theme */
+:root[data-theme="catppuccin-latte"] * {
+    scrollbar-color: #acb0be var(--bg-primary);
+}
