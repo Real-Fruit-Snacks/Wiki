@@ -3329,6 +3329,12 @@ class NotesWiki {
                     codeElement.classList.add('code-with-counters');
                     codeElement.innerHTML = wrappedLines;
                 }
+                
+                // Ensure the parent pre element has the with-line-numbers class
+                const preElement = codeElement.closest('pre');
+                if (preElement && this.settings.showLineNumbers) {
+                    preElement.classList.add('with-line-numbers');
+                }
             }
         }
     }

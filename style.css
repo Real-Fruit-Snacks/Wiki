@@ -2249,6 +2249,17 @@ body.enable-word-wrap .code-block-content {
     overflow-x: visible;
 }
 
+/* Ensure combined code blocks also respect word wrap */
+body.enable-word-wrap .combined-code-section .code-block pre code {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-x: visible !important;
+}
+
+body.enable-word-wrap .combined-code-section .code-block-content {
+    overflow-x: visible;
+}
+
 /* Legacy: Hide old flex-based line numbers when word wrap is enabled */
 body.enable-word-wrap .line-numbers {
     display: none;
