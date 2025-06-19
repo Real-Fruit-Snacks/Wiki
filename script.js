@@ -6707,6 +6707,14 @@ class NotesWiki {
                         this.tabContents.delete(firstKey);
                     }
                 }
+            } else if (currentTab?.isSplitView) {
+                // Save split view pane scroll positions
+                const leftPane = document.getElementById('pane-content-left');
+                const rightPane = document.getElementById('pane-content-right');
+                if (leftPane && rightPane && this.splitViewState) {
+                    this.splitViewState.leftScrollPosition = leftPane.scrollTop || 0;
+                    this.splitViewState.rightScrollPosition = rightPane.scrollTop || 0;
+                }
             }
         }
         
@@ -6746,6 +6754,20 @@ class NotesWiki {
                     }
                     if (this.splitViewState.rightPath) {
                         this.loadNoteInSplitPane(this.splitViewState.rightPath, 'pane-right');
+                    }
+                    
+                    // If no notes to load, just restore scroll positions for empty panes
+                    if (!this.splitViewState.leftPath && !this.splitViewState.rightPath) {
+                        setTimeout(() => {
+                            const leftPane = document.getElementById('pane-content-left');
+                            const rightPane = document.getElementById('pane-content-right');
+                            if (leftPane && this.splitViewState.leftScrollPosition) {
+                                leftPane.scrollTop = this.splitViewState.leftScrollPosition;
+                            }
+                            if (rightPane && this.splitViewState.rightScrollPosition) {
+                                rightPane.scrollTop = this.splitViewState.rightScrollPosition;
+                            }
+                        }, 0);
                     }
                 }
             } else {
@@ -7736,7 +7758,9 @@ class NotesWiki {
         if (!this.splitViewState) {
             this.splitViewState = {
                 leftPath: null,
-                rightPath: null
+                rightPath: null,
+                leftScrollPosition: 0,
+                rightScrollPosition: 0
             };
         }
         
@@ -7854,6 +7878,26 @@ class NotesWiki {
         this.setupPaneResizing(divider);
         this.setupPaneNavigation();
         this.setupPaneDragDrop();
+        
+        // Setup scroll event listeners to save positions
+        const leftPane = document.getElementById('pane-content-left');
+        const rightPane = document.getElementById('pane-content-right');
+        
+        if (leftPane) {
+            leftPane.addEventListener('scroll', () => {
+                if (this.splitViewState) {
+                    this.splitViewState.leftScrollPosition = leftPane.scrollTop;
+                }
+            });
+        }
+        
+        if (rightPane) {
+            rightPane.addEventListener('scroll', () => {
+                if (this.splitViewState) {
+                    this.splitViewState.rightScrollPosition = rightPane.scrollTop;
+                }
+            });
+        }
         
         // Set initial active pane
         this.activePaneId = 'pane-left';
@@ -8069,6 +8113,15 @@ class NotesWiki {
                         paneTitle.textContent = metadata.title || 'Right Pane';
                     }
                 }
+                
+                // Restore scroll position after content is rendered
+                setTimeout(() => {
+                    if (paneId === 'pane-left' && this.splitViewState.leftScrollPosition) {
+                        paneContent.scrollTop = this.splitViewState.leftScrollPosition;
+                    } else if (paneId === 'pane-right' && this.splitViewState.rightScrollPosition) {
+                        paneContent.scrollTop = this.splitViewState.rightScrollPosition;
+                    }
+                }, 0);
             }
             
         } catch (error) {
