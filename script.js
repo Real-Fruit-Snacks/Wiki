@@ -6686,17 +6686,20 @@ class NotesWiki {
                 currentTab.scrollPosition = document.getElementById('main-content').scrollTop;
             }
             
-            // Save current tab's content with memory management
-            const content = document.getElementById('main-content').innerHTML;
-            this.tabContents.set(this.activeTabId, content);
-            
-            // Limit cache size to prevent memory issues
-            const MAX_CACHED_TABS = 10;
-            if (this.tabContents.size > MAX_CACHED_TABS) {
-                // Remove oldest cached content (first in map)
-                const firstKey = this.tabContents.keys().next().value;
-                if (firstKey !== this.activeTabId) {
-                    this.tabContents.delete(firstKey);
+            // Don't save split view content to tabContents - it's handled separately
+            if (!currentTab?.isSplitView) {
+                // Save current tab's content with memory management
+                const content = document.getElementById('main-content').innerHTML;
+                this.tabContents.set(this.activeTabId, content);
+                
+                // Limit cache size to prevent memory issues
+                const MAX_CACHED_TABS = 10;
+                if (this.tabContents.size > MAX_CACHED_TABS) {
+                    // Remove oldest cached content (first in map)
+                    const firstKey = this.tabContents.keys().next().value;
+                    if (firstKey !== this.activeTabId) {
+                        this.tabContents.delete(firstKey);
+                    }
                 }
             }
         }
@@ -6729,6 +6732,16 @@ class NotesWiki {
             if (tab.isSplitView) {
                 // Render split view content
                 this.renderSplitViewContent();
+                
+                // Restore any previously loaded notes
+                if (this.splitViewState) {
+                    if (this.splitViewState.leftPath) {
+                        this.loadNoteInSplitPane(this.splitViewState.leftPath, 'pane-left');
+                    }
+                    if (this.splitViewState.rightPath) {
+                        this.loadNoteInSplitPane(this.splitViewState.rightPath, 'pane-right');
+                    }
+                }
             } else {
                 // Restore tab content and scroll position
                 const savedContent = this.tabContents.get(tabId);
@@ -6779,10 +6792,44 @@ class NotesWiki {
         const tab = this.tabs.get(tabId);
         if (!tab) return;
         
-        // If closing split view tab, disable split view
+        // If closing split view tab, disable split view without recursion
         if (tab.isSplitView) {
             this.settings.splitViewEnabled = false;
-            this.disableSplitView();
+            this.saveSettings();
+            
+            // Remove from DOM
+            document.getElementById(tabId)?.remove();
+            
+            // Remove from memory
+            this.tabs.delete(tabId);
+            this.tabContents.delete(tabId);
+            
+            // Return to previous tab
+            if (this.tabBeforeSplitView && this.tabs.has(this.tabBeforeSplitView)) {
+                this.switchToTab(this.tabBeforeSplitView);
+            } else {
+                const remainingTabs = Array.from(this.tabs.keys());
+                if (remainingTabs.length > 0) {
+                    this.switchToTab(remainingTabs[0]);
+                } else {
+                    this.createNewTab();
+                }
+            }
+            
+            // Don't reset splitViewState - keep it for next time
+            // Only reset the active pane
+            this.activePaneId = null;
+            
+            // Restore original loadNote method
+            if (this.originalLoadNote) {
+                this.loadNote = this.originalLoadNote;
+                this.originalLoadNote = null;
+            }
+            
+            // Update file tree and save state
+            this.updateFileTreeDragState();
+            this.saveTabState();
+            this.showToast('Split view disabled');
             return;
         }
         
@@ -6879,7 +6926,8 @@ class NotesWiki {
         const tabState = {
             tabs: tabsToSave,
             activeTabId: this.activeTabId === 'split-view-tab' ? null : this.activeTabId,
-            tabIdCounter: this.tabIdCounter
+            tabIdCounter: this.tabIdCounter,
+            splitViewState: this.splitViewState // Save split view state
         };
         localStorage.setItem('tabState', JSON.stringify(tabState));
     }
@@ -6901,6 +6949,11 @@ class NotesWiki {
             
             // Restore tab counter
             this.tabIdCounter = tabState.tabIdCounter || 0;
+            
+            // Restore split view state if present
+            if (tabState.splitViewState) {
+                this.splitViewState = tabState.splitViewState;
+            }
             
             // Restore tabs
             let activeTabFound = false;
@@ -7673,6 +7726,14 @@ class NotesWiki {
             return;
         }
         
+        // Initialize split view state if not exists
+        if (!this.splitViewState) {
+            this.splitViewState = {
+                leftPath: null,
+                rightPath: null
+            };
+        }
+        
         // Create the split view tab
         const splitViewTab = {
             id: splitViewTabId,
@@ -7686,11 +7747,7 @@ class NotesWiki {
         this.renderTab(splitViewTabId);
         this.switchToTab(splitViewTabId);
         
-        // Store current note paths from left and right panes
-        this.splitViewState = {
-            leftPath: null,
-            rightPath: null
-        };
+        // Don't reset split view state here - keep any existing paths
         
         // Create split view content
         this.renderSplitViewContent();
@@ -7702,23 +7759,31 @@ class NotesWiki {
     disableSplitView() {
         const splitViewTabId = 'split-view-tab';
         
-        // Close the split view tab
+        // Remove the split view tab without triggering recursion
         if (this.tabs.has(splitViewTabId)) {
-            this.closeTab(splitViewTabId);
-        }
-        
-        // Return to previous tab if available
-        if (this.tabBeforeSplitView && this.tabs.has(this.tabBeforeSplitView)) {
-            this.switchToTab(this.tabBeforeSplitView);
-        } else {
-            // If no previous tab, ensure we have at least one tab open
-            if (this.tabs.size === 0) {
-                this.createNewTab();
+            // Remove from DOM
+            document.getElementById(splitViewTabId)?.remove();
+            
+            // Remove from memory
+            this.tabs.delete(splitViewTabId);
+            this.tabContents.delete(splitViewTabId);
+            
+            // Return to previous tab if available
+            if (this.tabBeforeSplitView && this.tabs.has(this.tabBeforeSplitView)) {
+                this.switchToTab(this.tabBeforeSplitView);
+            } else {
+                // If no previous tab, ensure we have at least one tab open
+                const remainingTabs = Array.from(this.tabs.keys());
+                if (remainingTabs.length > 0) {
+                    this.switchToTab(remainingTabs[0]);
+                } else {
+                    this.createNewTab();
+                }
             }
         }
         
-        // Reset split view state
-        this.splitViewState = null;
+        // Don't reset splitViewState - keep it for next time
+        // Only reset the active pane
         this.activePaneId = null;
         
         // Restore original loadNote method
@@ -7729,6 +7794,9 @@ class NotesWiki {
         
         // Update file tree to disable drag and drop
         this.updateFileTreeDragState();
+        
+        // Save tab state
+        this.saveTabState();
     }
     
     renderSplitViewContent() {
@@ -7983,6 +8051,10 @@ class NotesWiki {
                     const paneTitle = document.querySelector('#pane-left .pane-title');
                     if (paneTitle) {
                         paneTitle.textContent = metadata.title || 'Left Pane';
+                    }
+                    // Update active pane indicator if needed
+                    if (!this.activePaneId) {
+                        this.setActivePane('pane-left');
                     }
                 } else if (paneId === 'pane-right') {
                     this.splitViewState.rightPath = path;
