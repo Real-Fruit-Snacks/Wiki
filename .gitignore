@@ -1,42 +1,69 @@
-# Development files
+# Development and Build files
 *.log
 server.log
+*.lock
+*.pid
+nohup.out
 
-# Release files
+# Release and Distribution files
 RELEASE-*.md
 notes-wiki-*.tar.gz
+notes-wiki-*.zip
 notes-wiki-*/
+releases/
+dist/
+build/
 
-# System files
+# System and OS files
 .DS_Store
 Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.Spotlight-V100
+.Trashes
+.fseventsd
+.AppleDouble
+.LSOverride
+._*
 *.tmp
 *.temp
 
-# Editor files
+# Editor and IDE files
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 *.sublime-*
+.history/
+*.code-workspace
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.atom/
+*.kate-swp
 
-# Node.js
+# Node.js and Package Management
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-lock.yaml
 yarn.lock
+package-lock.json
+.npm
+.yarn
+.pnp.*
 
-# Python
+# Python Development
 __pycache__/
 *.py[cod]
 *$py.class
 .Python
-build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -56,77 +83,116 @@ venv/
 ENV/
 env/
 .venv
+.python-version
+*.pyc
 
-# Local development
+# Environment and Configuration
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+.envrc
 
-# Claude Code configuration
+# Development Tools
 .claude/
+.github/
+.gitlab/
+.git-hooks/
+.husky/
 
-# GitLab Pages build directory (if using manual build)
+# GitLab Pages and CI/CD
 public/
+.gitlab-ci-local/
 
-# Release packaging
-*.zip
-*.tar.gz
-*.7z
-releases/
-dist/
-
-# But keep essential offline files
-!libs/*.js
-!libs/*.css
-!themes/*.css
-!notes-index.json
-
-# Backup files
-*.bak
-*.backup
-*.orig
-
-# OS generated files
-Desktop.ini
-$RECYCLE.BIN/
-.Spotlight-V100
-.Trashes
-.fseventsd
-.AppleDouble
-.LSOverride
-._*
-
-# Local server files
-*.pid
-nohup.out
-
-# IDE specific
-.history/
-*.code-workspace
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# Testing files
+# Testing and QA
 test-*.html
 test-*.css
 test-*.js
 *-test.*
 *-demo.*
+*.spec.*
+*.test.*
+coverage/
+.nyc_output
+.coverage
+.pytest_cache/
+.tox/
 screenshots/
 audit-results/
 test-outputs/
+.jest/
+cypress/
+playwright-report/
 
-# Exceptions - demo files we want to keep
-!notes/*-demo.md
+# Documentation Build
+docs/_build/
+docs/.doctrees/
+site/
 
-# Temporary files
+# Security and Secrets
+*.pem
+*.key
+*.crt
+*.p12
+secrets/
+.secrets
+
+# Backup and Archive files
+*.bak
+*.backup
+*.orig
+*.rej
+*.swn
+*.swo
+
+# Cache and Temporary directories
+.cache/
 .tmp/
 .temp/
 tmp/
 temp/
+.sass-cache/
+.parcel-cache/
+.next/
+.nuxt/
+
+# Local development overrides
+local/
+.local/
+override/
+
+# Performance and Profiling
+*.prof
+*.trace
+*.cpuprofile
+*.heapsnapshot
+
+# Database files (if any local DBs are used)
+*.db
+*.sqlite
+*.sqlite3
+
+# Webpack and Build Tools
+.webpack/
+webpack-stats.json
+stats.json
+
+# Keep Essential Offline Files - Override above exclusions
+!libs/*.js
+!libs/*.css
+!libs/*.min.js
+!libs/*.min.css
+!themes/*.css
+!notes-index.json
+!.gitlab-ci.yml
+!.github/workflows/*.yml
+
+# Keep Demo and Example Files
+!notes/*-demo.md
+!notes/examples/
+!images/examples/
+
+# Keep Documentation Assets
+!docs/assets/
+!docs/images/

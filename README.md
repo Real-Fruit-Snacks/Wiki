@@ -48,8 +48,10 @@
 ### 🎯 Smart Organization
 - **Multi-tab Interface** - Work on multiple documents simultaneously
 - **Drag & Drop Tabs** - Organize your workspace effortlessly  
+- **Split View Mode** - Compare documents side-by-side
 - **Responsive Context Filtering** - Smart dropdown adapts to screen size
 - **Smart Folders** - Expand/collapse with one click
+- **Focus Mode** - Distraction-free reading with wide content display
 
 </td>
 <td width="50%">
@@ -58,7 +60,9 @@
 - **Full-Text Indexing** - Search content, not just titles
 - **Code-Aware Search** - Find snippets across all languages
 - **Advanced Operators** - `tag:`, `author:`, exact phrases, exclusions
+- **In-Note Search** - Ctrl+F to search within current document
 - **Real-Time Results** - Instant search as you type
+- **Tag-Based Filtering** - Organize and filter by tags
 
 </td>
 </tr>
@@ -77,7 +81,11 @@
 ### 💡 Productivity Tools
 - **Pomodoro Timer** - Built-in focus sessions
 - **Keyboard Shortcuts** - Fully customizable
-- **Recent Files** - Pin and access favorites quickly
+- **Recent Files & Bookmarks** - Pin and access favorites quickly
+- **Reading Progress** - Track your position and estimated time
+- **Table of Contents** - Auto-generated navigation
+- **Sticky Notes** - Quick notes overlay
+- **Wiki Links** - `[[Link]]` style internal navigation
 - **Persistent State** - Pick up where you left off
 
 </td>
@@ -315,12 +323,20 @@ title: API Documentation
 tags: [api, reference, backend]
 author: John Doe
 created: 2024-01-15
+updated: 2024-01-20
+description: Complete API reference guide
+combineCodeBlocks: true
 ---
 
 # API Documentation
 
 Your content here with **full markdown support**...
 ```
+
+**Frontmatter Options:**
+- `combineCodeBlocks: true` - Automatically combine all code blocks at the end
+- `combinedBlockLanguage: javascript` - Set language for combined block
+- `combinedBlockTitle: "Complete Code"` - Custom title for combined block
 
 ### Advanced Features
 
@@ -467,10 +483,13 @@ See our [Contributing Guide](CONTRIBUTING.md) for details.
 ## 📊 Project Stats
 
 - **🚀 Zero Runtime Dependencies** - Everything is bundled
-- **📦 < 5MB Total Size** - Including all themes and libraries
+- **📦 ~44MB Total Package** - Including all themes, libraries, and documentation
+- **🎨 50+ Professional Themes** - Carefully curated collection
+- **📝 8,800+ Lines of Code** - Comprehensive single-page application
 - **⚡ < 100ms Load Time** - Measured on average hardware
-- **🌍 100% Offline Capable** - No internet required
+- **🌍 100% Offline Capable** - No internet required after initial load
 - **📱 Mobile Responsive** - Touch-optimized interface
+- **🛡️ Privacy-First** - No tracking, no external requests
 
 ---
 
