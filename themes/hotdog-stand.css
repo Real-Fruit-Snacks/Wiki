@@ -42,6 +42,16 @@
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 8px 12px rgba(0, 0, 0, 0.3);
     --shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.3);
+    
+    /* Additional Colors */
+    --bg-modal: rgba(196, 18, 48, 0.95);
+    --bg-tooltip: #0000ff;
+    --bg-input: #ffff00;
+    --bg-highlight: #0000ff;
+    --text-link: #00ff00;
+    --text-code: #ffeb3b;
+    --text-inverse: #000000;
+    --button-text: #000000;
 }
 
 /* Syntax Highlighting - Hot Dog Stand Style (optimized for dark code bg) */

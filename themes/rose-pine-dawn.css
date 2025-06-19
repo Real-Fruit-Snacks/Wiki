@@ -38,6 +38,16 @@
     --badge-bg: #b4637a;
     --badge-text: #faf4ed;
     
+    /* Additional UI Colors */
+    --bg-modal: #fffaf3;
+    --bg-tooltip: #f2e9e1;
+    --bg-input: #fffaf3;
+    --bg-highlight: rgba(215, 130, 126, 0.15);
+    --text-link: #907aa9;
+    --text-code: #b4637a;
+    --text-inverse: #faf4ed;
+    --button-text: #575279;
+    
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 rgba(87, 82, 121, 0.1);
     --shadow-md: 0 4px 6px -1px rgba(87, 82, 121, 0.15), 0 2px 4px -1px rgba(87, 82, 121, 0.1);

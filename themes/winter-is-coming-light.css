@@ -46,6 +46,16 @@
     /* Other */
     --accent-color-alpha: rgba(2, 132, 199, 0.1);
     --bg-code-block: #f9fafb;
+    
+    /* Additional UI Variables */
+    --bg-modal: #ffffff;
+    --bg-tooltip: #111827;
+    --bg-input: #ffffff;
+    --bg-highlight: rgba(2, 132, 199, 0.2);
+    --text-link: #0284c7;
+    --text-code: #059669;
+    --text-inverse: #ffffff;
+    --button-text: #1f2937;
 }
 
 /* Syntax Highlighting - Winter is Coming Light Theme */

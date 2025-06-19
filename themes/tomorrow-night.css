@@ -106,6 +106,16 @@
     
     --badge-bg: #CC6666;
     --badge-text: #C5C8C6;
+    
+    /* Modal and UI Elements */
+    --bg-modal: rgba(29, 31, 33, 0.95);
+    --bg-tooltip: #373B41;
+    --bg-input: #282A2E;
+    --bg-highlight: rgba(129, 162, 190, 0.4);
+    --text-link: #81A2BE;
+    --text-code: #F0C674;
+    --text-inverse: #1D1F21;
+    --button-text: #C5C8C6;
     /* Syntax highlighting - Tomorrow Night colors */
     --syntax-comment: #969896;
     --syntax-keyword: #B294BB;

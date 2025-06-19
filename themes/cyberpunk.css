@@ -10,7 +10,7 @@
     --bg-hover: #FF00FF11;
     --bg-tag: #FF006611;
     --bg-modal: #030012ee;
-    --bg-tooltip: #FF00FFee;
+    --bg-tooltip: #1a0033;
     --bg-input: #0a0420;
     --bg-highlight: #FFFF0033;
     
@@ -331,4 +331,18 @@
     font-size: 3em;
     color: #00FFFF44;
     font-family: var(--font-display);
+}
+
+/* Performance optimization for reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    :root[data-theme="cyberpunk"] * {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    :root[data-theme="cyberpunk"] *::before,
+    :root[data-theme="cyberpunk"] *::after {
+        animation: none !important;
+        transition: none !important;
+    }
 }

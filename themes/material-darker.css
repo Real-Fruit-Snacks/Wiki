@@ -104,6 +104,16 @@
     --material-elevation-3: #0f3029;
     --material-elevation-4: #143a33;
     --material-elevation-5: #19453c;
+    
+    /* Additional Colors */
+    --bg-modal: rgba(31, 48, 41, 0.95);
+    --bg-tooltip: var(--material-elevation-5);
+    --bg-input: var(--material-elevation-1);
+    --bg-highlight: rgba(76, 203, 183, 0.3);
+    --text-link: var(--md3-primary-70);
+    --text-code: #c3e88d;
+    --text-inverse: var(--md3-primary-10);
+    --button-text: var(--text-primary);
 }
 
 /* Syntax Highlighting - Material Darker Theme */

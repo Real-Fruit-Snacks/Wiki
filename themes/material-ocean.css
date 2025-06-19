@@ -90,6 +90,16 @@
     --state-focus-opacity: 0.12;
     --state-pressed-opacity: 0.12;
     --state-dragged-opacity: 0.16;
+    
+    /* Additional Colors */
+    --bg-modal: rgba(0, 31, 61, 0.95);
+    --bg-tooltip: var(--md3-ocean-30);
+    --bg-input: var(--md3-ocean-20);
+    --bg-highlight: rgba(133, 177, 255, 0.3);
+    --text-link: var(--md3-ocean-80);
+    --text-code: #c3e88d;
+    --text-inverse: var(--md3-ocean-10);
+    --button-text: var(--text-primary);
 }
 
 /* Syntax Highlighting - Material Ocean */

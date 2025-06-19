@@ -46,6 +46,16 @@
     /* Other */
     --accent-color-alpha: rgba(0, 191, 249, 0.1);
     --bg-code-block: #0e293f;
+    
+    /* Additional UI Variables */
+    --bg-modal: #011521;
+    --bg-tooltip: #0e293f;
+    --bg-input: #0e293f;
+    --bg-highlight: rgba(0, 191, 249, 0.25);
+    --text-link: #00bff9;
+    --text-code: #8dec95;
+    --text-inverse: #011627;
+    --button-text: #a7dbf7;
 }
 
 /* Syntax Highlighting - Winter is Coming Dark Theme */

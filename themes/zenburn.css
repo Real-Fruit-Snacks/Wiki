@@ -106,6 +106,16 @@
     
     --badge-bg: #CC9393;
     --badge-text: #DCDCCC;
+    
+    /* Additional UI Variables */
+    --bg-modal: #3F3F3F;
+    --bg-tooltip: #2F2F2F;
+    --bg-input: #4F4F4F;
+    --bg-highlight: rgba(140, 208, 211, 0.3);
+    --text-link: #8CD0D3;
+    --text-code: #EFEF8F;
+    --text-inverse: #3F3F3F;
+    --button-text: #DCDCCC;
     /* Syntax highlighting - Zenburn colors */
     --syntax-comment: #7F9F7F;
     --syntax-keyword: #F0DFAF;

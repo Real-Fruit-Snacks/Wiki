@@ -50,8 +50,8 @@ This is a **single-page application (SPA)** built with vanilla JavaScript - no f
 ### Critical Architecture Issues
 
 ⚠️ **MONOLITHIC DESIGN WARNING**: The application currently suffers from severe architectural debt:
-- **7,000+ lines** in a single `script.js` file
-- **~180+ methods** in one `NotesWiki` class
+- **8,948 lines** in a single `script.js` file
+- **~870+ methods** in one `NotesWiki` class
 - **Difficult to maintain, test, and extend**
 
 When making significant changes, consider the modular refactoring plan:
@@ -71,7 +71,7 @@ When making significant changes, consider the modular refactoring plan:
 2. **Main Application**: `script.js` - Contains the monolithic `NotesWiki` class that handles:
    - Tab management with drag-and-drop
    - Advanced search with operators (`tag:`, `author:`, `"phrase"`, `-exclude`, etc.)
-   - Theme switching (50 themes in `/themes/`)
+   - Theme switching (55+ themes in `/themes/`)
    - Settings persistence via localStorage
    - Pomodoro timer, keyboard shortcuts, responsive context filtering with dropdown
 
@@ -96,8 +96,8 @@ When making significant changes, consider the modular refactoring plan:
   - Custom 404 page (`404.html`) with theme support
   - Note: GitHub Actions workflow referenced but not implemented
 - **GitLab Pages**: 
-  - Automatic deployment via `.gitlab-ci.yml`
   - See `GITLAB-DEPLOYMENT.md` for detailed instructions
+  - Note: `.gitlab-ci.yml` not present in repository
 - **General Deployment**: 
   - See `DEPLOYMENT-GUIDE.md` for platform-agnostic instructions
 
@@ -422,6 +422,40 @@ The feature automatically detects the correct comment syntax for 30+ languages:
 - **Learning**: Aggregate related code snippets for easy reference
 - **Development**: Quickly combine modular code blocks into a full script
 
+## Split View Feature
+
+The application supports side-by-side note viewing for comparing or referencing multiple documents:
+
+### Usage
+- Click the split view button in the toolbar or use keyboard shortcut (if configured)
+- Drag the divider between panes to resize
+- Each pane maintains independent navigation and scroll position
+- Close split view to return to single note mode
+
+### Implementation Details
+- Uses CSS Grid for responsive pane layout
+- Draggable divider implemented with mouse event handlers
+- Each pane has its own note state and rendering context
+- Memory-efficient: shares the same search index and theme
+
+## Sticky Notes Feature
+
+Floating mini-notes for quick references and annotations:
+
+### Features
+- Create multiple sticky notes that float above content
+- Drag to reposition anywhere on screen
+- Resize by dragging corners
+- Choose from multiple colors
+- Persist across sessions via localStorage
+- Markdown support for formatting
+
+### Implementation Notes
+- Z-index management ensures notes stay on top
+- Event handlers properly cleaned up to prevent memory leaks
+- Position and size constraints prevent notes from going off-screen
+- Color options match theme accent colors
+
 ## Development Workflow
 
 When making changes to this codebase:
@@ -434,6 +468,32 @@ When making changes to this codebase:
 
 ### Release Process
 1. Update version in `package.json`
-2. Run `npm run package` to create release bundle
-3. Tag release in git with version number
-4. Upload release zip to GitHub/GitLab releases
+2. Run `npm run validate-themes` to check all themes
+3. Run `npm run package` to create release bundle
+4. Tag release in git with version number
+5. Upload release zip to GitHub/GitLab releases
+
+## Theme Validation
+
+The codebase includes a theme validation system to ensure all themes have required CSS variables:
+
+### Running Theme Validation
+```bash
+npm run validate-themes     # Check all themes
+npm run validate-all        # Check JS syntax and themes
+```
+
+### Required CSS Variables
+Every theme must define these variables to function properly:
+- Background colors: `--bg-primary`, `--bg-modal`, `--bg-tooltip`, `--bg-input`, etc.
+- Text colors: `--text-primary`, `--text-link`, `--text-code`, `--text-inverse`, etc.
+- UI colors: `--button-text`, `--border-primary`, `--accent-primary`, etc.
+- Shadows: `--shadow-sm`, `--shadow-md`, `--shadow-lg`, `--shadow-xl`
+
+See `validate-themes.js` for the complete list of required and recommended variables.
+
+### Common Theme Issues
+1. **Missing variables**: Run validation to identify missing CSS variables
+2. **Contrast issues**: Ensure text colors have sufficient contrast against backgrounds
+3. **Transparent tooltips**: Tooltip backgrounds should be opaque for readability
+4. **Performance**: Animation-heavy themes should include `@media (prefers-reduced-motion)`

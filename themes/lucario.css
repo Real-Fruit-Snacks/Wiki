@@ -46,6 +46,16 @@
     /* Other */
     --accent-color-alpha: rgba(114, 192, 93, 0.1);
     --bg-code-block: #243443;
+    
+    /* Additional Colors */
+    --bg-modal: rgba(43, 62, 80, 0.95);
+    --bg-tooltip: #19242f;
+    --bg-input: #243443;
+    --bg-highlight: rgba(114, 192, 93, 0.3);
+    --text-link: #72c05d;
+    --text-code: #e6db74;
+    --text-inverse: #2b3e50;
+    --button-text: #f8f8f2;
 }
 
 /* Syntax Highlighting - Lucario Theme */

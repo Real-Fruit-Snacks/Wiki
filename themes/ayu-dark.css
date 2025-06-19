@@ -12,6 +12,8 @@
     --bg-accent-subtle: rgba(57, 186, 230, 0.05);
     --bg-modal: rgba(11, 14, 20, 0.95);
     --bg-tooltip: #1f2430;
+    --bg-input: #0d1117;
+    --bg-highlight: rgba(255, 180, 84, 0.3);
     
     /* Text Colors */
     --text-primary: #bfbdb6;

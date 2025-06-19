@@ -9,12 +9,19 @@
     --bg-dropdown: #3e3d32;
     --bg-hover: #3e3d32;
     --bg-tag: #49483e;
+    --bg-modal: #1e1f1a;
+    --bg-tooltip: #3e3d32;
+    --bg-input: #1e1f1c;
+    --bg-highlight: #e6db7433;
     
     /* Text Colors */
     --text-primary: #f8f8f2;
     --text-secondary: #75715e;
     --text-muted: #75715e;
     --text-heading: #a6e22e;
+    --text-link: #66d9ef;
+    --text-code: #e6db74;
+    --text-inverse: #272822;
     
     /* Accent Colors */
     --accent-primary: #66d9ef;
@@ -32,6 +39,7 @@
     --button-bg: #49483e;
     --button-hover: #75715e;
     --button-active: #66d9ef;
+    --button-text: #f8f8f2;
     
     /* Badge Colors */
     --badge-bg: #f92672;
@@ -42,6 +50,8 @@
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -1px rgba(0, 0, 0, 0.5);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.6);
+    --shadow-glow: 0 0 20px rgba(102, 217, 239, 0.3);
+    --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* Vibrant gradient backgrounds */

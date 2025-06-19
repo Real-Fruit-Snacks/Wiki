@@ -16,6 +16,8 @@
     --bg-tag: #e8f4fd;
     --bg-modal: #ffffff;
     --bg-tooltip: #1a3754;
+    --bg-input: #ffffff;
+    --bg-highlight: rgba(0, 152, 221, 0.2);
     
     /* Enhanced Text Colors */
     --text-primary: #2e3440;
@@ -24,6 +26,7 @@
     --text-heading: #1a3754;
     --text-link: #0098dd;
     --text-code: #2e3440;
+    --text-inverse: #ffffff;
     
     /* Vibrant Blue Accent Palette */
     --accent-primary: #0098dd;

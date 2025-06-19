@@ -9,12 +9,19 @@
     --bg-dropdown: var(--bg-secondary);
     --bg-hover: rgba(255, 255, 255, 0.05);
     --bg-tag: var(--bg-secondary);
+    --bg-modal: #16161e;
+    --bg-tooltip: #292e42;
+    --bg-input: #1f2335;
+    --bg-highlight: #7aa2f733;
     
     /* Text Colors */
     --text-primary: #a9b1d6;
     --text-secondary: #9aa5ce;
     --text-muted: #787c99;
     --text-heading: var(--text-primary);
+    --text-link: #7dcfff;
+    --text-code: #ff9e64;
+    --text-inverse: #1a1b26;
     
     /* Accent Colors */
     --accent-primary: #7aa2f7;
@@ -32,6 +39,7 @@
     --button-bg: var(--bg-secondary);
     --button-hover: var(--bg-hover);
     --button-active: var(--accent-primary);
+    --button-text: #c0caf5;
     
     /* Badge Colors */
     --badge-bg: var(--accent-error);

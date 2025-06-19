@@ -84,6 +84,16 @@
     --badge-bg: var(--md3-blue-70);
     --badge-text: var(--md3-pale-10);
     
+    /* Additional UI Colors */
+    --bg-modal: var(--md3-pale-25);
+    --bg-tooltip: var(--md3-pale-50);
+    --bg-input: var(--md3-pale-30);
+    --bg-highlight: rgba(182, 157, 248, 0.2);
+    --text-link: var(--md3-blue-70);
+    --text-code: #89DDFF;
+    --text-inverse: var(--md3-pale-10);
+    --button-text: var(--md3-pale-90);
+    
     /* Material Design 3 Elevation System */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 2px 6px 2px rgba(0, 0, 0, 0.15);
     --shadow-md: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 4px 8px 3px rgba(0, 0, 0, 0.15);

@@ -16,6 +16,8 @@
     --bg-tag: #234E6D;
     --bg-modal: #193549;
     --bg-tooltip: #0e1d2b;
+    --bg-input: #0e1d2b;
+    --bg-highlight: rgba(255, 198, 0, 0.3);
     
     /* Enhanced Text Colors */
     --text-primary: #ffffff;
@@ -24,6 +26,7 @@
     --text-heading: #ffc600;
     --text-link: #9EFFFF;
     --text-code: #ffc600;
+    --text-inverse: #193549;
     
     /* Electric Accent Palette */
     --accent-primary: #9EFFFF;

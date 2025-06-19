@@ -48,6 +48,16 @@
     /* Other */
     --accent-color-alpha: rgba(255, 107, 107, 0.1);
     --bg-code-block: #2d1b14;
+    
+    /* Modal and UI Elements */
+    --bg-modal: rgba(26, 15, 10, 0.95);
+    --bg-tooltip: #3d2820;
+    --bg-input: rgba(45, 27, 20, 0.8);
+    --bg-highlight: rgba(255, 154, 0, 0.4);
+    --text-link: #ff9a00;
+    --text-code: #feca57;
+    --text-inverse: #1a0f0a;
+    --button-text: #fff4e6;
 }
 
 /* Special sunset gradient effects */

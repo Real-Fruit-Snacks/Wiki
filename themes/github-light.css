@@ -12,6 +12,7 @@
     --bg-modal: var(--bg-primary);
     --bg-input: var(--bg-primary);
     --bg-tooltip: #24292f;
+    --bg-highlight: #fff8b5;
     
     /* Text Colors */
     --text-primary: #1f2328;

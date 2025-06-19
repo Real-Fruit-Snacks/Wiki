@@ -9,12 +9,19 @@
     --bg-dropdown: #ffffff;
     --bg-hover: #f3f4f6;
     --bg-tag: #e5e7eb;
+    --bg-modal: #ffffffee;
+    --bg-tooltip: #1f2937;
+    --bg-input: #ffffff;
+    --bg-highlight: #fef3c7;
     
     /* Text Colors */
     --text-primary: #111827;
     --text-secondary: #6b7280;
     --text-muted: #9ca3af;
     --text-heading: #111827;
+    --text-link: #2563eb;
+    --text-code: #dc2626;
+    --text-inverse: #ffffff;
     
     /* Accent Colors */
     --accent-primary: #3b82f6;
@@ -33,6 +40,7 @@
     --button-bg: #f3f4f6;
     --button-hover: #e5e7eb;
     --button-active: #3b82f6;
+    --button-text: #111827;
     
     /* Badge Colors */
     --badge-bg: #ef4444;

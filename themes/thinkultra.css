@@ -43,6 +43,16 @@
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -1px rgba(0, 0, 0, 0.5);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.6);
+    
+    /* Modal and UI Elements */
+    --bg-modal: rgba(0, 0, 0, 0.95);
+    --bg-tooltip: #333333;
+    --bg-input: #0a0a0a;
+    --bg-highlight: rgba(230, 0, 18, 0.3);
+    --text-link: #064A89;
+    --text-code: #00A651;
+    --text-inverse: #000000;
+    --button-text: #E8E8E8;
 }
 
 /* Syntax Highlighting - ThinkUltra Theme */

@@ -48,6 +48,16 @@
     /* Other */
     --accent-color-alpha: rgba(212, 175, 55, 0.1);
     --bg-code-block: #1a1611;
+    
+    /* Additional Colors */
+    --bg-modal: rgba(13, 12, 10, 0.95);
+    --bg-tooltip: #2a241d;
+    --bg-input: #1a1611;
+    --bg-highlight: rgba(255, 215, 0, 0.3);
+    --text-link: #ffd700;
+    --text-code: #d4af37;
+    --text-inverse: #0d0c0a;
+    --button-text: #f7e7ce;
 }
 
 /* Special luxury effects */
