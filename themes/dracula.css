@@ -633,3 +633,20 @@ input[type="radio"] {
     border: 1px solid #bd93f933;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8), 0 0 20px rgba(189, 147, 249, 0.2);
 }
+
+/* Performance optimization for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

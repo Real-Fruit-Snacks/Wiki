@@ -73,8 +73,10 @@
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.4);
     
-
+    /* Selection */
+    --bg-selection: rgba(140, 208, 211, 0.3);
     
     /* Standard variable mappings for UI consistency */
     --bg-primary: var(--bg-color);
@@ -451,4 +453,21 @@
 :root[data-theme="zenburn"] * {
     transition-duration: 0.3s;
     transition-timing-function: ease;
+}
+
+/* Performance optimization for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }

@@ -407,3 +407,20 @@
     --shadow-lg: 0 10px 20px -3px rgba(87, 82, 121, 0.15), 0 4px 8px -2px rgba(87, 82, 121, 0.1);
     --shadow-xl: 0 20px 30px -5px rgba(87, 82, 121, 0.2), 0 10px 15px -5px rgba(87, 82, 121, 0.15);
 }
+
+/* Performance optimization for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

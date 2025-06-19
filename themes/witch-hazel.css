@@ -425,3 +425,20 @@
 :root[data-theme="witch-hazel"] ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, #8b85a1, #ceb1ff, #8b85a1);
 }
+
+/* Performance optimization for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
