@@ -104,6 +104,19 @@
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.4), 0 10px 10px rgba(0, 0, 0, 0.22);
+    
+    /* Missing UI colors */
+    --bg-selection: rgba(126, 156, 216, 0.25);  /* Soft blue selection */
+    --bg-modal: #16161D;                        /* Darker than primary for modals */
+    --bg-tooltip: #2D2D3F;                      /* Between secondary and tertiary */
+    --bg-input: #2A2A37;                        /* Same as secondary for consistency */
+    --bg-highlight: rgba(230, 195, 132, 0.15); /* Soft yellow highlight */
+    
+    /* Missing text colors */
+    --text-link: #7E9CD8;                       /* Same as link-color */
+    --text-code: #E6C384;                       /* Golden color for code */
+    --text-inverse: #1F1F28;                   /* Dark text on light backgrounds */
     
     /* Syntax highlighting - Kanagawa colors */
     --syntax-comment: #727169;

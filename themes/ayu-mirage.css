@@ -15,6 +15,8 @@
     --text-secondary: #8a8983;
     --text-muted: #707a8c;
     --text-heading: #ffc68d;
+    --text-code: #5ccfe6;
+    --text-inverse: #1f2430;
     
     /* Accent Colors */
     --accent-primary: #5ccfe6;
@@ -34,6 +36,7 @@
     --link-color: #5ccfe6;
     --link-hover: #73d0ff;
     --link-visited: #dfbfff;
+    --text-link: #5ccfe6;
     
     /* Button Colors */
     --btn-primary-bg: #5ccfe6;
@@ -42,6 +45,10 @@
     --btn-secondary-bg: #2a2f3a;
     --btn-secondary-color: #cbccc6;
     --btn-secondary-hover: #343a46;
+    --button-bg: #2a2f3a;
+    --button-hover: #343a46;
+    --button-active: #3d4350;
+    --button-text: #cbccc6;
     
     /* Form Colors */
     --input-bg: #232834;
@@ -118,6 +125,10 @@
     --modal-bg: #1f2430;
     --modal-border: #2a2f3a;
     --modal-overlay: rgba(0, 0, 0, 0.7);
+    --bg-modal: #1f2430;
+    --bg-tooltip: #232834;
+    --bg-input: #232834;
+    --bg-highlight: rgba(255, 204, 102, 0.15);
     
     /* Table Colors */
     --table-border: #2a2f3a;
@@ -135,10 +146,18 @@
     --status-busy: #f28779;
     --status-offline: #707a8c;
     
+    /* Badge Colors */
+    --badge-bg: rgba(92, 207, 230, 0.2);
+    --badge-text: #5ccfe6;
+    
     /* Shadow Colors */
     --shadow-light: rgba(0, 0, 0, 0.1);
     --shadow-medium: rgba(0, 0, 0, 0.2);
     --shadow-heavy: rgba(0, 0, 0, 0.4);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     
     /* Spacing (inherited from base) */
     --spacing-xs: 0.25rem;
