@@ -36,7 +36,7 @@ python3 build.py  # Should output "Build complete!" with stats
 ```bash
 npm run package
 ```
-This creates a versioned zip file (`notes-wiki-v3.0.0-complete.zip`) with all necessary assets for offline deployment including:
+This creates a versioned zip file (`notes-wiki-v3.1.0-complete.zip`) with all necessary assets for offline deployment including:
 - Complete application files (HTML, CSS, JS)
 - All 50+ theme files
 - Bundled JavaScript libraries
@@ -129,7 +129,7 @@ When making significant changes, consider the modular refactoring plan:
 - Jekyll bypass prevents GitHub Pages from processing the site
 - Code blocks support line numbers via CSS counters (toggle in settings)
 
-### Recent Features (v3.0.0)
+### Recent Features (v3.1.0)
 
 1. **Table of Contents** - Auto-generated from headings, collapsible, tracks reading position
 2. **Wiki-style Links** - `[[Note Title]]` syntax creates internal links between notes
@@ -201,7 +201,7 @@ element.textContent = userInput;
 element.innerHTML = userInput; // Only for trusted SVG/static content
 ```
 
-### Recently Applied Fixes (v3.0.0)
+### Recently Applied Fixes (v3.1.0)
 
 ✅ **Critical fixes and improvements implemented**:
 1. **Syntax Highlighting**: Fixed Prism.js integration with proper `Prism.highlightAll()` calls after DOM injection
@@ -291,7 +291,7 @@ The build system (`build.py`) processes these files to create a searchable index
 └── [other]/       # Additional image categories as needed
 ```
 
-## Context Switching Implementation (v3.0.0)
+## Context Switching Implementation (v3.1.0)
 
 ### Overview
 The context switcher provides responsive category filtering that adapts to screen size and available space:
