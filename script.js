@@ -4450,10 +4450,27 @@ class NotesWiki {
                 width: 100%;
             `;
             
-            // Create category header
+            // Get category icon
+            const categoryIcons = {
+                'Classic Dark': '🌙',
+                'Classic Light': '☀️',
+                'Material Design': '🎨',
+                'Nature & Earth': '🌿',
+                'Arctic & Winter': '❄️',
+                'Ocean & Sky': '🌊',
+                'Cyberpunk & Neon': '💫',
+                'Elegant & Pastel': '🌸',
+                'Professional': '💼',
+                'Special Effects': '✨'
+            };
+            
+            // Create category header with icon
             const categoryHeader = document.createElement('h4');
             categoryHeader.className = 'theme-category-header';
-            categoryHeader.textContent = category.name;
+            categoryHeader.innerHTML = `
+                <span class="category-icon" style="font-size: 1.2rem;">${categoryIcons[category.name] || '🎨'}</span>
+                <span>${category.name}</span>
+            `;
             categoryHeader.style.cssText = `
                 color: var(--text-primary);
                 font-size: 1.1rem;
@@ -4475,6 +4492,7 @@ class NotesWiki {
                 padding: 0.125rem 0.5rem;
                 border-radius: 9999px;
                 font-weight: 500;
+                margin-left: auto;
             `;
             countBadge.textContent = category.themes.length;
             categoryHeader.appendChild(countBadge);
@@ -4486,8 +4504,8 @@ class NotesWiki {
             categoryGrid.className = 'theme-category-grid';
             categoryGrid.style.cssText = `
                 display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-                gap: 1rem;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 1.2rem;
                 margin-bottom: 1rem;
             `;
             
@@ -4497,7 +4515,7 @@ class NotesWiki {
             // Create cards for themes in this category
             sortedThemes.forEach(theme => {
             const card = document.createElement('div');
-            card.className = 'theme-card';
+            card.className = `theme-card theme-card-${theme.id}`;
             card.dataset.themeId = theme.id;
             
             // Get theme colors for preview
@@ -4507,6 +4525,9 @@ class NotesWiki {
             // Apply theme-specific inline styles to the card
             card.style.backgroundColor = previewColors.bg;
             card.style.borderColor = previewColors.border;
+            card.style.position = 'relative';
+            card.style.overflow = 'hidden';
+            card.style.minHeight = '160px';
             card.style.setProperty('--theme-text-primary', previewColors.text);
             card.style.setProperty('--theme-text-secondary', previewColors.textMuted);
             card.style.setProperty('--theme-accent', previewColors.accent);
@@ -4519,53 +4540,58 @@ class NotesWiki {
                 card.style.boxShadow = `0 0 0 2px ${previewColors.accent}`;
             }
             
+            // Get theme-specific decorative content
+            const themeDecorations = this.getThemeDecoration(theme.id, previewColors);
+            
             card.innerHTML = `
-                <div class="theme-card-preview-full" style="
-                    background: ${previewColors.bg};
-                    border: 1px solid ${previewColors.border};
-                    border-radius: 6px;
-                    padding: 8px;
-                    margin-bottom: 8px;
-                    width: 100%;
-                    box-sizing: border-box;
-                ">
-                    <div style="
-                        background: ${previewColors.accent};
-                        height: 3px;
-                        border-radius: 2px;
-                        margin-bottom: 6px;
-                    "></div>
-                    <pre style="
-                        margin: 0;
-                        font-size: 10px;
-                        line-height: 1.3;
-                        font-family: 'Consolas', 'Monaco', monospace;
-                        background: transparent;
-                        padding: 0;
-                        white-space: pre;
-                        overflow: hidden;
-                    "><code style="background: transparent; padding: 0;"><span style="color: ${syntaxColors.keyword}">function</span> <span style="color: ${syntaxColors.function}">hello</span>() {
+                ${themeDecorations}
+                <div class="theme-card-main-content" style="position: relative; z-index: 10;">
+                    <div class="theme-card-preview-full" style="
+                        background: ${previewColors.bg};
+                        border: 1px solid ${previewColors.border};
+                        border-radius: 6px;
+                        padding: 10px;
+                        margin-bottom: 10px;
+                        width: 100%;
+                        box-sizing: border-box;
+                        ${theme.id.includes('glass') ? 'backdrop-filter: blur(10px);' : ''}
+                    ">
+                        <div style="
+                            background: ${previewColors.accent};
+                            height: 3px;
+                            border-radius: 2px;
+                            margin-bottom: 8px;
+                            ${theme.id === 'neon-galaxy' ? 'box-shadow: 0 0 10px ' + previewColors.accent + ';' : ''}
+                        "></div>
+                        <pre style="
+                            margin: 0;
+                            font-size: 11px;
+                            line-height: 1.4;
+                            font-family: 'Consolas', 'Monaco', monospace;
+                            background: transparent;
+                            padding: 0;
+                            white-space: pre;
+                            overflow: hidden;
+                        "><code style="background: transparent; padding: 0;"><span style="color: ${syntaxColors.keyword}">function</span> <span style="color: ${syntaxColors.function}">hello</span>() {
   <span style="color: ${syntaxColors.keyword}">return</span> <span style="color: ${syntaxColors.string}">"world"</span>;
 }</code></pre>
+                    </div>
+                    <div class="theme-card-title" style="
+                        color: ${previewColors.text};
+                        font-weight: 600;
+                        margin-bottom: 4px;
+                        ${theme.id === 'luxury-gold' ? 'text-shadow: 0 1px 2px rgba(255, 215, 0, 0.3);' : ''}
+                    ">${theme.name}</div>
+                    <div class="theme-card-description" style="
+                        color: ${previewColors.textMuted};
+                        font-size: 0.875rem;
+                        line-height: 1.3;
+                    ">${theme.description}</div>
                 </div>
-                <div class="theme-card-title" style="color: ${previewColors.text};">${theme.name}</div>
-                <div class="theme-card-description" style="color: ${previewColors.textMuted};">${theme.description}</div>
             `;
             
-            // Add hover effect with theme colors
-            card.addEventListener('mouseenter', () => {
-                if (!card.classList.contains('active')) {
-                    card.style.borderColor = previewColors.accent;
-                    card.style.boxShadow = `0 4px 12px ${previewColors.accent}20`;
-                }
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                if (!card.classList.contains('active')) {
-                    card.style.borderColor = previewColors.border;
-                    card.style.boxShadow = '';
-                }
-            });
+            // Add theme-specific interactive effects
+            this.addThemeCardEffects(card, theme.id, previewColors);
             
             // Handle theme selection
             card.addEventListener('click', () => {
@@ -4602,8 +4628,22 @@ class NotesWiki {
                 card.style.borderColor = previewColors.accent;
                 card.style.boxShadow = `0 0 0 2px ${previewColors.accent}`;
                 
-                // Show success feedback
-                this.showToast(`${theme.name} theme applied!`);
+                // Show success feedback with theme-specific message
+                const successMessages = {
+                    'matrix': '🟢 Entering the Matrix...',
+                    'cyberpunk': '⚡ Welcome to Night City!',
+                    'dracula': '🦇 Welcome to the castle...',
+                    'tokyo-night': '🌃 Welcome to Tokyo!',
+                    'vaporwave': '🌴 A E S T H E T I C',
+                    'luxury-gold': '👑 Living in luxury!',
+                    'nord': '🎿 Welcome to the Arctic!',
+                    'hotdog-stand': '🌭 Classic taste!',
+                    'hackthebox': '💻 Access granted...',
+                    'neon-galaxy': '🌌 Blast off to space!'
+                };
+                
+                const message = successMessages[theme.id] || `${theme.name} theme applied!`;
+                this.showToast(message);
             });
                 
                 categoryGrid.appendChild(card);
@@ -5421,6 +5461,342 @@ class NotesWiki {
         };
         
         return syntaxColors[themeId] || syntaxColors['light'];
+    }
+    
+    getThemeDecoration(themeId, colors) {
+        // Return theme-specific decorative content
+        const decorations = {
+            'matrix': `
+                <div class="matrix-rain" style="
+                    position: absolute;
+                    inset: 0;
+                    overflow: hidden;
+                    opacity: 0.1;
+                    font-family: monospace;
+                    font-size: 10px;
+                    color: #00ff41;
+                    pointer-events: none;
+                ">
+                    <div style="animation: matrixFall 5s linear infinite;">10101010</div>
+                    <div style="animation: matrixFall 5s linear infinite; animation-delay: -2s; margin-left: 50px;">01001101</div>
+                    <div style="animation: matrixFall 5s linear infinite; animation-delay: -4s; margin-left: 100px;">11010011</div>
+                </div>
+            `,
+            'cyberpunk': `
+                <div class="cyberpunk-scanline" style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 2px;
+                    background: linear-gradient(90deg, transparent, #ea00d9, transparent);
+                    animation: scanline 3s linear infinite;
+                    pointer-events: none;
+                "></div>
+            `,
+            'vaporwave': `
+                <div class="vaporwave-grid" style="
+                    position: absolute;
+                    inset: 0;
+                    background-image: 
+                        linear-gradient(rgba(255, 113, 206, 0.1) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255, 113, 206, 0.1) 1px, transparent 1px);
+                    background-size: 20px 20px;
+                    pointer-events: none;
+                "></div>
+            `,
+            'tokyo-night': `
+                <div class="tokyo-kanji" style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    font-size: 30px;
+                    color: ${colors.accent};
+                    opacity: 0.1;
+                    font-weight: bold;
+                    pointer-events: none;
+                ">東京</div>
+            `,
+            'dracula': `
+                <div class="dracula-bats" style="
+                    position: absolute;
+                    inset: 0;
+                    pointer-events: none;
+                ">
+                    <span style="position: absolute; top: 10px; left: 10px; font-size: 20px; opacity: 0.1; animation: batFly 8s ease-in-out infinite;">🦇</span>
+                    <span style="position: absolute; bottom: 10px; right: 10px; font-size: 16px; opacity: 0.08; animation: batFly 8s ease-in-out infinite; animation-delay: -4s;">🦇</span>
+                </div>
+            `,
+            'nord': `
+                <div class="nord-aurora" style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 40%;
+                    background: linear-gradient(180deg, 
+                        rgba(136, 192, 208, 0.2) 0%, 
+                        transparent 100%);
+                    animation: auroraShimmer 6s ease-in-out infinite;
+                    pointer-events: none;
+                "></div>
+            `,
+            'luxury-gold': `
+                <div class="gold-sparkle" style="
+                    position: absolute;
+                    inset: 0;
+                    background: linear-gradient(45deg, 
+                        transparent 30%, 
+                        rgba(255, 215, 0, 0.2) 50%, 
+                        transparent 70%);
+                    animation: goldShimmer 4s ease-in-out infinite;
+                    pointer-events: none;
+                "></div>
+                <span style="
+                    position: absolute;
+                    bottom: 10px;
+                    right: 10px;
+                    font-size: 24px;
+                    color: #ffd700;
+                    opacity: 0.3;
+                    pointer-events: none;
+                ">♛</span>
+            `,
+            'hotdog-stand': `
+                <div class="hotdog-pixel" style="
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    font-size: 48px;
+                    opacity: 0.1;
+                    image-rendering: pixelated;
+                    pointer-events: none;
+                ">🌭</div>
+            `,
+            'winter-is-coming-dark': `
+                <div class="winter-snow" style="
+                    position: absolute;
+                    inset: 0;
+                    pointer-events: none;
+                ">
+                    <span style="position: absolute; top: -10px; left: 20%; font-size: 16px; opacity: 0.3; animation: snowfall 6s linear infinite;">❄️</span>
+                    <span style="position: absolute; top: -10px; right: 30%; font-size: 12px; opacity: 0.2; animation: snowfall 6s linear infinite; animation-delay: -3s;">❄️</span>
+                </div>
+            `,
+            'neon-galaxy': `
+                <div class="galaxy-stars" style="
+                    position: absolute;
+                    inset: 0;
+                    pointer-events: none;
+                ">
+                    <div style="
+                        position: absolute;
+                        top: 20%;
+                        left: 30%;
+                        width: 4px;
+                        height: 4px;
+                        background: #ff00ff;
+                        border-radius: 50%;
+                        box-shadow: 0 0 10px #ff00ff;
+                        animation: twinkle 3s ease-in-out infinite;
+                    "></div>
+                    <div style="
+                        position: absolute;
+                        bottom: 30%;
+                        right: 20%;
+                        width: 4px;
+                        height: 4px;
+                        background: #00ffff;
+                        border-radius: 50%;
+                        box-shadow: 0 0 10px #00ffff;
+                        animation: twinkle 3s ease-in-out infinite;
+                        animation-delay: -1.5s;
+                    "></div>
+                </div>
+            `,
+            'hackthebox': `
+                <div class="htb-terminal" style="
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    color: #9fef00;
+                    font-family: monospace;
+                    font-size: 16px;
+                    opacity: 0.3;
+                    pointer-events: none;
+                ">
+                    <span style="animation: cursorBlink 1s steps(1) infinite;">> _</span>
+                </div>
+            `,
+            'everforest-dark': `
+                <div class="forest-trees" style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 40px;
+                    pointer-events: none;
+                ">
+                    <span style="position: absolute; bottom: 5px; left: 10px; font-size: 24px; opacity: 0.2; animation: treesSway 4s ease-in-out infinite;">🌲</span>
+                    <span style="position: absolute; bottom: 5px; right: 15px; font-size: 20px; opacity: 0.15; animation: treesSway 4s ease-in-out infinite; animation-delay: -2s;">🌲</span>
+                </div>
+            `,
+            'kanagawa': `
+                <div class="kanagawa-wave" style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 30px;
+                    overflow: hidden;
+                    pointer-events: none;
+                ">
+                    <div style="
+                        position: absolute;
+                        bottom: 0;
+                        left: -50%;
+                        width: 200%;
+                        height: 100%;
+                        background: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 20\"><path d=\"M0,10 Q25,0 50,10 T100,10 L100,20 L0,20 Z\" fill=\"%23${colors.accent.replace('#', '')}\" opacity=\"0.1\"/></svg>');
+                        background-size: 100px 20px;
+                        animation: waveMove 8s linear infinite;
+                    "></div>
+                </div>
+            `,
+            'rose-pine': `
+                <div class="rose-decoration" style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    font-size: 24px;
+                    opacity: 0.2;
+                    animation: rosePetals 6s ease-in-out infinite;
+                    pointer-events: none;
+                ">🌹</div>
+            `,
+            'aero-glass': `
+                <div class="glass-shine" style="
+                    position: absolute;
+                    top: -50%;
+                    left: -50%;
+                    width: 200%;
+                    height: 200%;
+                    background: linear-gradient(45deg, 
+                        transparent 30%, 
+                        rgba(255, 255, 255, 0.3) 50%, 
+                        transparent 70%);
+                    animation: glassShine 6s ease-in-out infinite;
+                    pointer-events: none;
+                "></div>
+            `,
+            '2077': `
+                <div class="cyberpunk-2077" style="
+                    position: absolute;
+                    inset: 0;
+                    pointer-events: none;
+                ">
+                    <div style="
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        font-size: 10px;
+                        font-weight: bold;
+                        color: #f0e500;
+                        opacity: 0;
+                        animation: glitchText 4s steps(1) infinite;
+                    ">WAKE UP SAMURAI</div>
+                    <div style="
+                        position: absolute;
+                        inset: 0;
+                        background: repeating-linear-gradient(
+                            0deg,
+                            transparent,
+                            transparent 2px,
+                            rgba(240, 229, 0, 0.03) 2px,
+                            rgba(240, 229, 0, 0.03) 4px
+                        );
+                    "></div>
+                </div>
+            `
+        };
+        
+        return decorations[themeId] || '';
+    }
+    
+    addThemeCardEffects(card, themeId, colors) {
+        // Add theme-specific interactive effects
+        
+        // Matrix theme: Add digital rain effect on hover
+        if (themeId === 'matrix') {
+            card.addEventListener('mouseenter', () => {
+                const rain = card.querySelector('.matrix-rain');
+                if (rain) rain.style.opacity = '0.3';
+            });
+            card.addEventListener('mouseleave', () => {
+                const rain = card.querySelector('.matrix-rain');
+                if (rain) rain.style.opacity = '0.1';
+            });
+        }
+        
+        // Cyberpunk theme: Add glitch effect on hover
+        if (themeId === 'cyberpunk') {
+            card.addEventListener('mouseenter', () => {
+                card.style.animation = 'glitchEffect 0.3s steps(1) 1';
+                setTimeout(() => {
+                    card.style.animation = '';
+                }, 300);
+            });
+        }
+        
+        // Luxury Gold theme: Add extra shimmer on hover
+        if (themeId === 'luxury-gold') {
+            card.addEventListener('mouseenter', () => {
+                const sparkle = card.querySelector('.gold-sparkle');
+                if (sparkle) sparkle.style.animationDuration = '2s';
+            });
+            card.addEventListener('mouseleave', () => {
+                const sparkle = card.querySelector('.gold-sparkle');
+                if (sparkle) sparkle.style.animationDuration = '4s';
+            });
+        }
+        
+        // Add general hover effects
+        card.addEventListener('mouseenter', () => {
+            if (!card.classList.contains('active')) {
+                card.style.borderColor = colors.accent;
+                card.style.transform = 'translateY(-4px)';
+                
+                // Theme-specific hover shadows
+                const hoverShadows = {
+                    'matrix': `0 0 30px rgba(0, 255, 65, 0.5)`,
+                    'cyberpunk': `0 0 30px rgba(234, 0, 217, 0.5), 0 0 60px rgba(10, 189, 198, 0.3)`,
+                    'neon-galaxy': `0 0 40px rgba(255, 0, 255, 0.4), 0 0 80px rgba(0, 255, 255, 0.2)`,
+                    'luxury-gold': `0 0 30px rgba(255, 215, 0, 0.4)`,
+                    'dracula': `0 0 30px rgba(189, 147, 249, 0.4), 0 0 60px rgba(255, 121, 198, 0.2)`,
+                    'tokyo-night': `0 0 20px ${colors.accent}40`,
+                    'vaporwave': `0 0 30px rgba(255, 113, 206, 0.4), 0 0 60px rgba(1, 205, 254, 0.2)`,
+                    'nord': `0 0 20px rgba(136, 192, 208, 0.4)`,
+                    'winter-is-coming-dark': `0 0 30px rgba(255, 255, 255, 0.2)`,
+                    'hotdog-stand': `0 0 20px rgba(255, 235, 59, 0.6)`,
+                    'everforest-dark': `0 0 20px rgba(127, 187, 179, 0.3)`,
+                    'rose-pine': `0 0 20px rgba(196, 167, 231, 0.4)`,
+                    'hackthebox': `0 0 20px rgba(159, 239, 0, 0.4)`,
+                    '2077': `0 0 30px rgba(240, 229, 0, 0.4), 0 0 60px rgba(234, 0, 217, 0.2)`
+                };
+                
+                card.style.boxShadow = hoverShadows[themeId] || `0 4px 12px ${colors.accent}30`;
+            }
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            if (!card.classList.contains('active')) {
+                card.style.borderColor = colors.border;
+                card.style.transform = '';
+                card.style.boxShadow = '';
+            }
+        });
     }
     
     initializeTheme() {

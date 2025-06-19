@@ -201,6 +201,33 @@ element.textContent = userInput;
 element.innerHTML = userInput; // Only for trusted SVG/static content
 ```
 
+### Theme Card Enhancements (v3.1.1)
+
+Enhanced theme selection cards to fully embody each theme's personality:
+
+✨ **Visual Enhancements**:
+- Category icons (🌙 Dark, ☀️ Light, 🌊 Ocean, etc.)
+- Theme-specific decorations and animations
+- Interactive hover effects with custom shadows
+- Unique success messages per theme
+
+🎨 **Theme-Specific Effects**:
+- **Matrix**: Falling digital rain animation
+- **Cyberpunk**: Animated scanlines and glitch effects
+- **Dracula**: Flying bats animation
+- **Tokyo Night**: Neon kanji with glow
+- **Vaporwave**: Retro grid pattern
+- **Luxury Gold**: Shimmering gold effect with crown
+- **Winter themes**: Falling snowflakes
+- **Nord**: Aurora borealis animation
+- **Hot Dog Stand**: Pixelated retro style
+
+🔧 **Implementation**:
+- Added `getThemeDecoration()` method for visual overlays
+- Added `addThemeCardEffects()` for interactions
+- 14 new CSS animations in style.css
+- Theme cards use `.theme-card-${theme.id}` classes
+
 ### Recently Applied Fixes (v3.1.0)
 
 ✅ **Critical fixes and improvements implemented**:

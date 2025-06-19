@@ -6574,3 +6574,155 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
         display: none;
     }
 }
+
+/* ======================================
+   THEME CARD ANIMATIONS
+   ====================================== */
+
+/* Matrix digital rain effect */
+@keyframes matrixFall {
+    0% { transform: translateY(-100%); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(200%); opacity: 0; }
+}
+
+/* Cyberpunk scanline */
+@keyframes scanline {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(160px); }
+}
+
+/* Dracula bat flight */
+@keyframes batFly {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(20px, -10px) rotate(10deg); }
+    50% { transform: translate(-10px, 10px) rotate(-10deg); }
+    75% { transform: translate(10px, 5px) rotate(5deg); }
+}
+
+/* Aurora shimmer effect */
+@keyframes auroraShimmer {
+    0%, 100% { opacity: 0.2; transform: translateY(0); }
+    50% { opacity: 0.4; transform: translateY(-10px); }
+}
+
+/* Gold shimmer effect */
+@keyframes goldShimmer {
+    0% { transform: translateX(-100%) translateY(-100%); }
+    100% { transform: translateX(100%) translateY(100%); }
+}
+
+/* Snowfall animation */
+@keyframes snowfall {
+    to { transform: translateY(170px) rotate(360deg); }
+}
+
+/* Star twinkle effect */
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Glitch effect */
+@keyframes glitchEffect {
+    0%, 100% { transform: translate(0); filter: hue-rotate(0deg); }
+    20% { transform: translate(-2px, 2px); filter: hue-rotate(90deg); }
+    40% { transform: translate(-2px, -2px); filter: hue-rotate(180deg); }
+    60% { transform: translate(2px, 2px); filter: hue-rotate(270deg); }
+    80% { transform: translate(2px, -2px); filter: hue-rotate(360deg); }
+}
+
+/* Terminal cursor blink */
+@keyframes cursorBlink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* Trees swaying */
+@keyframes treesSway {
+    0%, 100% { transform: rotate(-2deg); }
+    50% { transform: rotate(2deg); }
+}
+
+/* Wave movement */
+@keyframes waveMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(50%); }
+}
+
+/* Rose petals animation */
+@keyframes rosePetals {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(10deg) scale(1.1); }
+}
+
+/* Glass shine effect */
+@keyframes glassShine {
+    0% { transform: rotate(0deg) translateX(-100%); }
+    100% { transform: rotate(0deg) translateX(100%); }
+}
+
+/* Glitch text for 2077 */
+@keyframes glitchText {
+    0%, 90%, 100% { opacity: 0; }
+    92%, 98% { opacity: 0.8; }
+}
+
+/* Theme card specific classes */
+.theme-card-matrix {
+    font-family: 'Courier New', monospace;
+}
+
+.theme-card-cyberpunk,
+.theme-card-2077,
+.theme-card-neon-galaxy {
+    position: relative;
+}
+
+.theme-card-cyberpunk::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 30%, rgba(234, 0, 217, 0.05) 50%, transparent 70%);
+    pointer-events: none;
+}
+
+.theme-card-vaporwave {
+    position: relative;
+}
+
+.theme-card-vaporwave::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 113, 206, 0.03) 2px,
+        rgba(255, 113, 206, 0.03) 4px
+    );
+    pointer-events: none;
+    mix-blend-mode: overlay;
+}
+
+.theme-card-hotdog-stand {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+.theme-card-luxury-gold .theme-card-title {
+    font-family: 'Georgia', serif;
+}
+
+/* Ensure animations respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .theme-card::before,
+    .theme-card::after,
+    .theme-card * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
