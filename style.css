@@ -1140,6 +1140,11 @@ body.content-width-full .content-wrapper {
     max-width: 90%;
 }
 
+/* Focus mode wide - separate from settings to avoid conflicts */
+body.focus-mode-wide .content-wrapper {
+    max-width: 1400px;
+}
+
 /* Note header */
 .note-header {
     margin-bottom: var(--spacing-xl);

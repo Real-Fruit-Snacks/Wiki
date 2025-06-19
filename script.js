@@ -182,8 +182,10 @@ class NotesWiki {
         // Apply word wrap setting
         this.applyWordWrapSetting();
         
-        // Apply content width setting
-        this.applyContentWidthSetting();
+        // Apply content width setting (skip if focus mode is active, as it handles its own width)
+        if (!this.settings.focusMode) {
+            this.applyContentWidthSetting();
+        }
         
         // Apply font settings
         this.applyFontSettings();
@@ -2553,20 +2555,10 @@ class NotesWiki {
                     sidebar.setAttribute('data-focus-mode-hidden', 'true');
                 }
                 
-                // Store original content width and set to wide
-                if (!this.originalContentWidth) {
-                    this.originalContentWidth = this.settings.contentWidth;
-                }
-                this.settings.contentWidth = 'wide';
-                this.applyContentWidthSetting();
-                
-                // Update content width UI if settings modal is open
-                const contentWidthOptions = document.getElementById('content-width-options');
-                if (contentWidthOptions) {
-                    contentWidthOptions.querySelectorAll('.option-pill').forEach(pill => {
-                        pill.classList.toggle('active', pill.dataset.value === 'wide');
-                    });
-                }
+                // Apply wide width for focus mode without changing settings
+                // Remove current width class and add focus-mode-wide
+                document.body.classList.remove('content-width-narrow', 'content-width-normal', 'content-width-wide', 'content-width-full');
+                document.body.classList.add('focus-mode-wide');
                 
                 // Validate that focus mode was applied
                 if (!body.classList.contains('focus-mode')) {
@@ -2586,21 +2578,9 @@ class NotesWiki {
                     sidebar.removeAttribute('data-focus-mode-hidden');
                 }
                 
-                // Restore original content width
-                if (this.originalContentWidth) {
-                    this.settings.contentWidth = this.originalContentWidth;
-                    this.applyContentWidthSetting();
-                    
-                    // Update content width UI if settings modal is open
-                    const contentWidthOptions = document.getElementById('content-width-options');
-                    if (contentWidthOptions) {
-                        contentWidthOptions.querySelectorAll('.option-pill').forEach(pill => {
-                            pill.classList.toggle('active', pill.dataset.value === this.settings.contentWidth);
-                        });
-                    }
-                    
-                    this.originalContentWidth = null;
-                }
+                // Remove focus mode width class and restore user's actual width setting
+                document.body.classList.remove('focus-mode-wide');
+                this.applyContentWidthSetting();
                 
                 this.showToast('Focus mode disabled', 'success');
             }
