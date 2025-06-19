@@ -6469,8 +6469,8 @@ class NotesWiki {
     }
     
     applyContentWidthSetting() {
-        // Remove all content width classes
-        document.body.classList.remove('content-width-narrow', 'content-width-normal', 'content-width-wide', 'content-width-full');
+        // Remove all content width classes including focus mode width
+        document.body.classList.remove('content-width-narrow', 'content-width-normal', 'content-width-wide', 'content-width-full', 'focus-mode-wide');
         
         // Apply the selected content width class
         document.body.classList.add(`content-width-${this.settings.contentWidth}`);
