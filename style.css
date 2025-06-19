@@ -461,6 +461,7 @@ body {
     height: 100%;
     overflow-x: auto;
     overflow-y: hidden;
+    overscroll-behavior-x: contain; /* Prevent scroll chaining */
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
@@ -2430,7 +2431,7 @@ body:not(.show-line-numbers) .code-with-counters .code-line::before {
     right: 0;
     bottom: 0;
     z-index: 300;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5) !important;
     backdrop-filter: blur(4px);
 }
 
@@ -2616,7 +2617,7 @@ body:not(.show-line-numbers) .code-with-counters .code-line::before {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5) !important;
     backdrop-filter: blur(4px);
     overflow-y: auto;
     padding: var(--spacing-md);

@@ -775,6 +775,22 @@ class NotesWiki {
             preventScrollPropagation(bookmarksList);
         }
         
+        // Fix scrolling in tabs container - convert vertical scroll to horizontal
+        const tabsContainer = document.getElementById('tabs-container');
+        if (tabsContainer) {
+            tabsContainer.addEventListener('wheel', (e) => {
+                // Prevent default vertical scrolling
+                e.preventDefault();
+                
+                // Convert vertical scroll to horizontal scroll
+                const scrollAmount = e.deltaY;
+                tabsContainer.scrollLeft += scrollAmount;
+                
+                // Stop propagation to prevent body scroll
+                e.stopPropagation();
+            }, { passive: false });
+        }
+        
         // Theme dropdown is now in settings modal, no header event listener needed
         
         // Settings

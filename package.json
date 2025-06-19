@@ -14,7 +14,7 @@
     "package": "npm run validate && npm run build && node create-release.js"
   },
   "devDependencies": {
-    "puppeteer": "^24.10.1"
+    "puppeteer": "^24.10.2"
   },
   "keywords": [
     "wiki",

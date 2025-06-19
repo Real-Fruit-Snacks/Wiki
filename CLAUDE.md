@@ -201,6 +201,27 @@ element.textContent = userInput;
 element.innerHTML = userInput; // Only for trusted SVG/static content
 ```
 
+### Scroll Handling Fixes (v3.1.2)
+
+Fixed unintended scrolling issues in header and tab sections:
+
+🔧 **Issues Fixed**:
+- **Header scrolling**: Dropdown menus (context, recent files, bookmarks) were causing scroll events
+- **Tab bar scrolling**: Horizontal tab container was capturing vertical scroll events
+
+📋 **Solutions Implemented**:
+1. **CSS**: Added `overscroll-behavior: contain` to prevent scroll chaining
+2. **JavaScript**: Added wheel event handlers to:
+   - Prevent scroll at boundaries in dropdowns
+   - Convert vertical scroll to horizontal in tabs container
+   - Stop event propagation to prevent body scrolling
+
+🎯 **Affected Elements**:
+- `.context-dropdown-menu` - Context switcher dropdown
+- `.recent-files-list` - Recent files dropdown list
+- `.bookmarks-list` - Bookmarks dropdown list
+- `.tabs-container` - Horizontal tab scrolling area
+
 ### Theme Card Enhancements (v3.1.1)
 
 Enhanced theme selection cards to fully embody each theme's personality:
@@ -227,6 +248,40 @@ Enhanced theme selection cards to fully embody each theme's personality:
 - Added `addThemeCardEffects()` for interactions
 - 14 new CSS animations in style.css
 - Theme cards use `.theme-card-${theme.id}` classes
+
+### UI Readability Testing and Fixes (v3.1.3)
+
+✅ **Comprehensive UI testing with Puppeteer**:
+- Created automated screenshot testing for all UI states
+- Tested hover, focus, selected, and active states across themes
+- Identified and fixed critical modal overlay issues
+
+🐛 **Issues Found and Fixed**:
+1. **Modal Overlay Transparency**: Fixed opaque gray backgrounds in light/dark/dracula themes
+   - Added `!important` to modal background-color to prevent theme overrides
+   - Applied fix to both `.modal` and `.search-overlay` classes
+2. **Theme Loading Issues**: Some themes showing incorrect colors
+   - Matrix theme was loading with cyan instead of green colors
+   - Issue traced to theme loading sequence and CSS specificity
+3. **Theme Card Rendering**: Settings modal theme cards not interactive
+   - Theme cards not visible or hoverable in settings modal
+   - Requires investigation of theme card rendering logic
+
+📋 **Testing Coverage**:
+- Button hover states across all UI elements
+- Link hover with proper color changes
+- Text selection highlighting
+- Search result highlighting
+- Focus states for inputs
+- Dropdown menu visibility
+- Modal dialog transparency
+- Keyboard navigation
+- Reduced motion support
+
+💡 **Recommendations**:
+- Implement visual regression testing for theme switching
+- Add CSS variable validation on theme load
+- Create error reporting for failed theme loads
 
 ### Recently Applied Fixes (v3.1.0)
 
