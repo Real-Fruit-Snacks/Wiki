@@ -1,48 +1,90 @@
-/* Cyberpunk Theme for Notes Wiki */
+/* Cyberpunk Theme for Notes Wiki - Dystopian Neon City */
 :root[data-theme="cyberpunk"] {
-    /* Background Colors */
-    --bg-primary: #091833;
-    --bg-secondary: #133E7C;
-    --bg-sidebar: #0a1628;
-    --bg-code: #0d1f3c;
-    --bg-selection: #0ABDC633;
-    --bg-dropdown: #133E7C;
-    --bg-hover: #1a4d95;
-    --bg-tag: #133E7C;
+    /* Background Colors - Deep noir with electric accents */
+    --bg-primary: #030012;
+    --bg-secondary: #0a0420;
+    --bg-sidebar: #050018;
+    --bg-code: #080328;
+    --bg-selection: #FF00FF22;
+    --bg-dropdown: #0a0420;
+    --bg-hover: #FF00FF11;
+    --bg-tag: #FF006611;
+    --bg-modal: #030012ee;
+    --bg-tooltip: #FF00FFee;
+    --bg-input: #0a0420;
+    --bg-highlight: #FFFF0033;
     
-    /* Text Colors */
-    --text-primary: #0ABDC6;
-    --text-secondary: #EA00D9;
-    --text-muted: #7a8bb5;
-    --text-heading: #02D7F2;
+    /* Text Colors - High contrast neon */
+    --text-primary: #00FFFF;
+    --text-secondary: #FF00FF;
+    --text-muted: #9966FF;
+    --text-heading: #00FF88;
+    --text-link: #FF0099;
+    --text-code: #FFFF00;
+    --text-inverse: #030012;
     
-    /* Accent Colors */
-    --accent-primary: #0ABDC6;
-    --accent-secondary: #EA00D9;
-    --accent-warning: #FFC857;
-    --accent-error: #FF4A57;
-    --accent-danger: #FF4A57;
-    --accent-info: #02D7F2;
-    --accent-success: #00FFC8;
+    /* Accent Colors - Electric neon palette */
+    --accent-primary: #00FFFF;
+    --accent-secondary: #FF00FF;
+    --accent-warning: #FFFF00;
+    --accent-error: #FF0044;
+    --accent-danger: #FF0044;
+    --accent-info: #00CCFF;
+    --accent-success: #00FF88;
+    --accent-primary-light: #00FFFF44;
+    --accent-primary-dark: #00CCCC;
     
-    /* Border Colors */
-    --border-primary: #0ABDC6;
-    --border-secondary: #EA00D9;
+    /* Border Colors - Glowing edges */
+    --border-primary: #00FFFF;
+    --border-secondary: #FF00FF;
+    --border-default: #FF00FF33;
+    --border-hover: #00FFFF66;
     
-    /* Button Colors */
-    --button-bg: #133E7C;
-    --button-hover: #1a4d95;
-    --button-active: #0ABDC6;
+    /* Button Colors - Interactive neon */
+    --button-bg: #FF00FF22;
+    --button-hover: #00FFFF33;
+    --button-active: #00FF8844;
+    --button-text: #00FFFF;
+    --button-border: #00FFFF66;
     
-    /* Badge Colors */
-    --badge-bg: #EA00D9;
-    --badge-text: #091833;
+    /* Badge Colors - Status indicators */
+    --badge-bg: #FF00FF;
+    --badge-text: #030012;
+    --badge-border: #FF00FF66;
     
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgba(10, 189, 198, 0.2);
-    --shadow-md: 0 4px 6px -1px rgba(10, 189, 198, 0.3), 0 2px 4px -1px rgba(234, 0, 217, 0.2);
-    --shadow-lg: 0 10px 15px -3px rgba(10, 189, 198, 0.3), 0 4px 6px -2px rgba(234, 0, 217, 0.2);
-    --shadow-xl: 0 20px 25px -5px rgba(10, 189, 198, 0.3), 0 10px 10px -5px rgba(234, 0, 217, 0.2);
+    /* Component Colors */
+    --card-bg: #0a042099;
+    --card-border: #00FFFF33;
+    --table-header: #FF00FF11;
+    --table-row-hover: #00FFFF11;
+    
+    /* Interactive States */
+    --focus-ring: #00FFFF;
+    --focus-ring-offset: #030012;
+    --disabled-bg: #33336622;
+    --disabled-text: #66669966;
+    
+    /* Shadows - Neon glow effects */
+    --shadow-sm: 0 0 8px rgba(0, 255, 255, 0.5);
+    --shadow-md: 0 0 16px rgba(0, 255, 255, 0.6), 0 0 32px rgba(255, 0, 255, 0.3);
+    --shadow-lg: 0 0 24px rgba(0, 255, 255, 0.7), 0 0 48px rgba(255, 0, 255, 0.4);
+    --shadow-xl: 0 0 32px rgba(0, 255, 255, 0.8), 0 0 64px rgba(255, 0, 255, 0.5);
+    --shadow-glow: 0 0 20px currentColor;
+    --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.8);
+    
+    /* Typography */
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --font-display: 'Orbitron', 'Rajdhani', sans-serif;
+    --line-height-base: 1.6;
+    --line-height-heading: 1.2;
+    
+    /* Spacing */
+    --border-radius: 2px;
+    --border-radius-lg: 4px;
+    --border-width: 2px;
+    
+    /* Theme description */
+    --theme-description: "Dystopian neon city with electric cyan and magenta glows";
 }
 
 /* Syntax Highlighting - Cyberpunk Theme */
@@ -102,21 +144,191 @@
     color: #CC11F0;
 }
 
-/* Scrollbar Cyberpunk Theme */
+/* Scrollbar Cyberpunk Theme - Neon tracks */
 :root[data-theme="cyberpunk"] ::-webkit-scrollbar-track {
     background: var(--bg-primary);
+    border: 1px solid #FF00FF22;
 }
 
 :root[data-theme="cyberpunk"] ::-webkit-scrollbar-thumb {
-    background: #0ABDC6;
-    border: 3px solid var(--bg-primary);
+    background: linear-gradient(180deg, #00FFFF, #FF00FF);
+    border: 2px solid var(--bg-primary);
+    box-shadow: 0 0 10px #00FFFF66;
 }
 
 :root[data-theme="cyberpunk"] ::-webkit-scrollbar-thumb:hover {
-    background: #EA00D9;
+    background: linear-gradient(180deg, #FF00FF, #00FFFF);
+    box-shadow: 0 0 20px #FF00FF88;
 }
 
 /* Firefox Scrollbar Cyberpunk Theme */
 :root[data-theme="cyberpunk"] * {
-    scrollbar-color: #0ABDC6 var(--bg-primary);
+    scrollbar-color: #00FFFF var(--bg-primary);
+}
+
+/* Cyberpunk-specific effects */
+:root[data-theme="cyberpunk"] {
+    /* Neon text shadows */
+    --text-shadow-neon: 0 0 10px currentColor, 0 0 20px currentColor;
+    --text-shadow-subtle: 0 0 5px currentColor;
+    
+    /* Glitch animation */
+    --glitch-1: #00FFFF;
+    --glitch-2: #FF00FF;
+}
+
+/* Enhanced headings with neon glow */
+:root[data-theme="cyberpunk"] h1,
+:root[data-theme="cyberpunk"] h2,
+:root[data-theme="cyberpunk"] h3 {
+    text-shadow: var(--text-shadow-subtle);
+    letter-spacing: 0.05em;
+}
+
+/* Neon link effects */
+:root[data-theme="cyberpunk"] a {
+    position: relative;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="cyberpunk"] a:hover {
+    text-shadow: var(--text-shadow-neon);
+}
+
+/* Code blocks with scan lines */
+:root[data-theme="cyberpunk"] pre {
+    position: relative;
+    border: 1px solid var(--border-primary);
+    box-shadow: var(--shadow-md), inset 0 0 20px #00FFFF11;
+}
+
+:root[data-theme="cyberpunk"] pre::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        #00FFFF06 2px,
+        #00FFFF06 4px
+    );
+    pointer-events: none;
+    animation: cyberpunk-scan 8s linear infinite;
+}
+
+@keyframes cyberpunk-scan {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(10px); }
+}
+
+/* Glowing buttons */
+:root[data-theme="cyberpunk"] button,
+:root[data-theme="cyberpunk"] .button {
+    border: 2px solid var(--button-border);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="cyberpunk"] button::before,
+:root[data-theme="cyberpunk"] .button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, #00FFFF44 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+:root[data-theme="cyberpunk"] button:hover::before,
+:root[data-theme="cyberpunk"] .button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+:root[data-theme="cyberpunk"] button:hover,
+:root[data-theme="cyberpunk"] .button:hover {
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-md), inset 0 0 20px #00FFFF22;
+    text-shadow: 0 0 8px currentColor;
+}
+
+/* Selection with neon highlight */
+:root[data-theme="cyberpunk"] ::selection {
+    background: var(--accent-secondary);
+    color: var(--bg-primary);
+    text-shadow: none;
+}
+
+/* Input fields with cyber styling */
+:root[data-theme="cyberpunk"] input,
+:root[data-theme="cyberpunk"] textarea,
+:root[data-theme="cyberpunk"] select {
+    border: 2px solid #FF00FF33;
+    background: var(--bg-input);
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="cyberpunk"] input:focus,
+:root[data-theme="cyberpunk"] textarea:focus,
+:root[data-theme="cyberpunk"] select:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px #00FFFF22, var(--shadow-md);
+    outline: none;
+}
+
+/* Tags with holographic effect */
+:root[data-theme="cyberpunk"] .tag {
+    background: linear-gradient(45deg, #FF00FF22, #00FFFF22);
+    border: 1px solid #00FFFF66;
+    backdrop-filter: blur(4px);
+}
+
+/* Sidebar with subtle glow */
+:root[data-theme="cyberpunk"] .sidebar {
+    border-right: 1px solid #00FFFF33;
+    box-shadow: 2px 0 20px #00FFFF11;
+}
+
+/* Enhanced table styling */
+:root[data-theme="cyberpunk"] table {
+    border: 1px solid var(--border-default);
+}
+
+:root[data-theme="cyberpunk"] th {
+    background: var(--table-header);
+    border-bottom: 2px solid var(--border-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+:root[data-theme="cyberpunk"] tr:hover {
+    background: var(--table-row-hover);
+}
+
+/* Blockquotes with cyber border */
+:root[data-theme="cyberpunk"] blockquote {
+    border-left: 4px solid var(--accent-primary);
+    background: linear-gradient(90deg, #00FFFF11 0%, transparent 50%);
+    position: relative;
+}
+
+:root[data-theme="cyberpunk"] blockquote::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    font-size: 3em;
+    color: #00FFFF44;
+    font-family: var(--font-display);
 }

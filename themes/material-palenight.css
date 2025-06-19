@@ -1,51 +1,115 @@
-/* Material Palenight Theme Variables */
+/* Material Palenight Theme - Enhanced with Material You (MD3) */
 :root[data-theme="material-palenight"] {
-    /* Background Colors */
-    --bg-primary: #292D3E;
-    --bg-secondary: #32374D;
-    --bg-sidebar: #252837;
-    --bg-code: #32374D;
+    /* Material You Palenight Tonal Palette */
+    --md3-pale-0: #000000;
+    --md3-pale-10: #1a1625;
+    --md3-pale-20: #292D3E;
+    --md3-pale-25: #2e3245;
+    --md3-pale-30: #34384d;
+    --md3-pale-35: #3a3f54;
+    --md3-pale-40: #40455c;
+    --md3-pale-50: #4d5273;
+    --md3-pale-60: #5b608a;
+    --md3-pale-70: #6970a2;
+    --md3-pale-80: #8289ba;
+    --md3-pale-90: #a6accd;
+    --md3-pale-95: #c4c9e1;
+    --md3-pale-99: #f1f2f8;
+    --md3-pale-100: #ffffff;
+    
+    /* Material You Purple Tonal Palette */
+    --md3-purple-0: #000000;
+    --md3-purple-10: #21005d;
+    --md3-purple-20: #381e72;
+    --md3-purple-30: #4f378b;
+    --md3-purple-40: #6750a4;
+    --md3-purple-50: #7f67be;
+    --md3-purple-60: #9a82db;
+    --md3-purple-70: #b69df8;
+    --md3-purple-80: #cfbcff;
+    --md3-purple-90: #e8ddff;
+    --md3-purple-95: #f3eeff;
+    --md3-purple-99: #fffbfe;
+    --md3-purple-100: #ffffff;
+    
+    /* Material You Blue Tonal Palette */
+    --md3-blue-0: #000000;
+    --md3-blue-10: #001944;
+    --md3-blue-20: #002d6e;
+    --md3-blue-30: #004299;
+    --md3-blue-40: #0058ca;
+    --md3-blue-50: #2971e7;
+    --md3-blue-60: #5690ff;
+    --md3-blue-70: #82aaff;
+    --md3-blue-80: #adc6ff;
+    --md3-blue-90: #d6e2ff;
+    --md3-blue-95: #eaf0ff;
+    --md3-blue-99: #fdfbff;
+    --md3-blue-100: #ffffff;
+    
+    /* Background Colors - Palenight Surface */
+    --bg-primary: var(--md3-pale-20);
+    --bg-secondary: var(--md3-pale-30);
+    --bg-sidebar: var(--md3-pale-10);
+    --bg-code: var(--md3-pale-30);
     --bg-selection: rgba(130, 170, 255, 0.15);
     --bg-dropdown: var(--bg-secondary);
-    --bg-hover: rgba(255, 255, 255, 0.05);
-    --bg-tag: #32374D;
+    --bg-hover: rgba(130, 170, 255, 0.08);
+    --bg-tag: var(--md3-pale-35);
     
-    /* Text Colors */
-    --text-primary: #A6ACCD;
-    --text-secondary: #8B92B3;
-    --text-muted: #676E95;
-    --text-heading: #EEFFFF;
+    /* Text Colors - Enhanced Contrast */
+    --text-primary: var(--md3-pale-90);
+    --text-secondary: var(--md3-pale-80);
+    --text-muted: var(--md3-pale-70);
+    --text-heading: var(--md3-pale-95);
     
-    /* Accent Colors */
-    --accent-primary: #82AAFF;
-    --accent-secondary: #C792EA;
+    /* Accent Colors - Material You Key Colors */
+    --accent-primary: var(--md3-blue-70);
+    --accent-secondary: var(--md3-purple-70);
     --accent-warning: #FFCB6B;
     --accent-error: #FF5370;
-    --accent-info: #82AAFF;
+    --accent-info: var(--md3-blue-60);
     --accent-success: #C3E88D;
     
-    /* Border Colors */
-    --border-primary: #444760;
-    --border-secondary: #3A3F58;
+    /* Border Colors - Subtle Boundaries */
+    --border-primary: rgba(130, 170, 255, 0.2);
+    --border-secondary: rgba(130, 170, 255, 0.1);
     
-    /* Button Colors */
-    --button-bg: var(--bg-secondary);
-    --button-hover: var(--bg-hover);
-    --button-active: var(--accent-primary);
+    /* Button Colors - Interactive Elements */
+    --button-bg: var(--md3-pale-30);
+    --button-hover: var(--md3-pale-35);
+    --button-active: var(--md3-pale-40);
     
     /* Badge Colors */
-    --badge-bg: var(--accent-primary);
-    --badge-text: #292D3E;
+    --badge-bg: var(--md3-blue-70);
+    --badge-text: var(--md3-pale-10);
     
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
-    --shadow-xl: var(--shadow-lg);
+    /* Material Design 3 Elevation System */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 2px 6px 2px rgba(0, 0, 0, 0.15);
+    --shadow-md: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 2px 3px 0 rgba(0, 0, 0, 0.5), 0 6px 10px 4px rgba(0, 0, 0, 0.15);
+    --shadow-xl: 0 4px 4px 0 rgba(0, 0, 0, 0.6), 0 8px 12px 6px rgba(0, 0, 0, 0.15);
     
-    /* Other */
+    /* MD3 State Layers */
+    --state-hover-opacity: 0.08;
+    --state-focus-opacity: 0.12;
+    --state-pressed-opacity: 0.12;
+    --state-dragged-opacity: 0.16;
+    
+    /* Material You Special Effects */
     --accent-color-alpha: rgba(130, 170, 255, 0.1);
-    --bg-code-block: #32374D;
+    --bg-code-block: var(--md3-pale-30);
+    --material-ripple: rgba(130, 170, 255, 0.3);
+    --material-surface-tint: rgba(182, 157, 248, 0.05);
+    --material-elevation-1: var(--md3-pale-25);
+    --material-elevation-2: var(--md3-pale-30);
+    --material-elevation-3: var(--md3-pale-35);
+    --material-elevation-4: var(--md3-pale-40);
+    --material-elevation-5: var(--md3-pale-50);
+    
+    /* Palenight Specific Effects */
+    --palenight-glow: radial-gradient(circle, rgba(199, 146, 234, 0.1) 0%, transparent 70%);
+    --palenight-aurora: linear-gradient(135deg, rgba(130, 170, 255, 0.1) 0%, rgba(199, 146, 234, 0.1) 100%);
 }
 
 /* Syntax Highlighting - Material Palenight Theme */
@@ -123,4 +187,496 @@
 /* Firefox Scrollbar Material Palenight Theme */
 :root[data-theme="material-palenight"] * {
     scrollbar-color: #444760 var(--bg-primary);
+}
+
+/* Material You Animations */
+@keyframes palenight-aurora {
+    0% { 
+        transform: translateX(-50%) translateY(-50%) rotate(0deg);
+        opacity: 0.3;
+    }
+    50% { 
+        transform: translateX(-50%) translateY(-50%) rotate(180deg);
+        opacity: 0.6;
+    }
+    100% { 
+        transform: translateX(-50%) translateY(-50%) rotate(360deg);
+        opacity: 0.3;
+    }
+}
+
+@keyframes palenight-glow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
+
+@keyframes md3-ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Material You Background Effects */
+:root[data-theme="material-palenight"] body {
+    background: var(--bg-primary);
+    position: relative;
+}
+
+/* Aurora Effect Background */
+:root[data-theme="material-palenight"] body::before {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: var(--palenight-aurora);
+    transform: translateX(-50%) translateY(-50%);
+    animation: palenight-aurora 30s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.5;
+}
+
+/* Material You Sidebar */
+:root[data-theme="material-palenight"] .sidebar {
+    background: var(--bg-sidebar);
+    box-shadow: 2px 0 16px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Sidebar Gradient Overlay */
+:root[data-theme="material-palenight"] .sidebar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, 
+        rgba(182, 157, 248, 0.05) 0%, 
+        rgba(130, 170, 255, 0.05) 50%, 
+        transparent 100%);
+    pointer-events: none;
+}
+
+/* Material You Ripple Effects */
+:root[data-theme="material-palenight"] button,
+:root[data-theme="material-palenight"] .tab,
+:root[data-theme="material-palenight"] .file-item {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+    isolation: isolate;
+}
+
+/* MD3 State Layer */
+:root[data-theme="material-palenight"] button::before,
+:root[data-theme="material-palenight"] .tab::before,
+:root[data-theme="material-palenight"] .file-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--accent-primary);
+    opacity: 0;
+    transition: opacity 0.2s cubic-bezier(0.2, 0, 0, 1);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* MD3 Ripple */
+:root[data-theme="material-palenight"] button::after,
+:root[data-theme="material-palenight"] .tab::after,
+:root[data-theme="material-palenight"] .file-item::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    opacity: 0;
+    transform: scale(0);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* State Layers */
+:root[data-theme="material-palenight"] button:hover::before,
+:root[data-theme="material-palenight"] .tab:hover::before,
+:root[data-theme="material-palenight"] .file-item:hover::before {
+    opacity: var(--state-hover-opacity);
+}
+
+:root[data-theme="material-palenight"] button:active::after,
+:root[data-theme="material-palenight"] .tab:active::after,
+:root[data-theme="material-palenight"] .file-item:active::after {
+    animation: md3-ripple 0.6s ease-out;
+    opacity: var(--state-pressed-opacity);
+}
+
+/* Material You Surface Containers */
+:root[data-theme="material-palenight"] .note-content {
+    background: var(--material-elevation-1);
+    box-shadow: var(--shadow-sm);
+    border-radius: 12px;
+    position: relative;
+}
+
+:root[data-theme="material-palenight"] .modal-content {
+    background: var(--material-elevation-3);
+    box-shadow: var(--shadow-lg);
+    border-radius: 28px;
+    border: 1px solid var(--border-primary);
+}
+
+/* Material You Code Blocks */
+:root[data-theme="material-palenight"] pre[class*="language-"] {
+    background: var(--material-elevation-2);
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-secondary);
+}
+
+/* Palenight Gradient Bar */
+:root[data-theme="material-palenight"] pre[class*="language-"]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, 
+        var(--md3-blue-60) 0%, 
+        var(--md3-purple-60) 50%, 
+        var(--md3-blue-60) 100%);
+    opacity: 0.8;
+}
+
+/* Material You Buttons */
+:root[data-theme="material-palenight"] button {
+    background: var(--button-bg);
+    border: 1px solid var(--border-secondary);
+    border-radius: 20px;
+    font-family: 'Google Sans', system-ui, sans-serif;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="material-palenight"] button:hover {
+    background: var(--button-hover);
+    border-color: var(--accent-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(130, 170, 255, 0.2);
+}
+
+/* Material You FAB */
+:root[data-theme="material-palenight"] .fab-button {
+    background: var(--md3-purple-60);
+    color: var(--md3-pale-10);
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+:root[data-theme="material-palenight"] .fab-button:hover {
+    background: var(--md3-purple-70);
+    box-shadow: var(--shadow-xl);
+}
+
+/* Material You Chips */
+:root[data-theme="material-palenight"] .note-tag {
+    background: var(--material-elevation-1);
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+    position: relative;
+    overflow: hidden;
+    font-family: 'Google Sans', system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+:root[data-theme="material-palenight"] .note-tag::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--palenight-glow);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+:root[data-theme="material-palenight"] .note-tag:hover {
+    background: var(--material-elevation-2);
+    border-color: var(--accent-secondary);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(199, 146, 234, 0.3);
+}
+
+:root[data-theme="material-palenight"] .note-tag:hover::before {
+    animation: palenight-glow 2s ease-in-out infinite;
+}
+
+/* Material You Text Fields */
+:root[data-theme="material-palenight"] input[type="text"],
+:root[data-theme="material-palenight"] input[type="search"],
+:root[data-theme="material-palenight"] textarea,
+:root[data-theme="material-palenight"] select {
+    background: var(--material-elevation-1);
+    border: 1px solid var(--border-primary);
+    border-radius: 4px;
+    padding: 16px;
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+    font-family: 'Google Sans', system-ui, sans-serif;
+    color: var(--text-primary);
+}
+
+:root[data-theme="material-palenight"] input[type="text"]:focus,
+:root[data-theme="material-palenight"] input[type="search"]:focus,
+:root[data-theme="material-palenight"] textarea:focus,
+:root[data-theme="material-palenight"] select:focus {
+    outline: none;
+    background: var(--material-elevation-2);
+    border-color: var(--accent-primary);
+    border-width: 2px;
+    padding: 15px;
+    box-shadow: 0 0 0 4px rgba(130, 170, 255, 0.1);
+}
+
+/* Material You Switch */
+:root[data-theme="material-palenight"] input[type="checkbox"] {
+    appearance: none;
+    width: 52px;
+    height: 32px;
+    background: var(--material-elevation-1);
+    border: 2px solid var(--border-primary);
+    border-radius: 16px;
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+    cursor: pointer;
+}
+
+:root[data-theme="material-palenight"] input[type="checkbox"]::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: var(--material-elevation-3);
+    border-radius: 50%;
+    top: 50%;
+    left: 4px;
+    transform: translateY(-50%);
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+    box-shadow: var(--shadow-sm);
+}
+
+:root[data-theme="material-palenight"] input[type="checkbox"]:checked {
+    background: var(--md3-purple-40);
+    border-color: transparent;
+}
+
+:root[data-theme="material-palenight"] input[type="checkbox"]:checked::after {
+    background: var(--md3-purple-80);
+    left: calc(100% - 28px);
+}
+
+/* Material You Cards */
+:root[data-theme="material-palenight"] .md3-card {
+    background: var(--material-elevation-1);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="material-palenight"] .md3-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--palenight-aurora);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+:root[data-theme="material-palenight"] .md3-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+:root[data-theme="material-palenight"] .md3-card:hover::before {
+    opacity: 0.1;
+}
+
+/* Material You Navigation Rail */
+:root[data-theme="material-palenight"] .nav-rail {
+    background: var(--material-elevation-1);
+    width: 80px;
+    padding: 12px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+}
+
+:root[data-theme="material-palenight"] .nav-rail-item {
+    width: 56px;
+    height: 32px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+:root[data-theme="material-palenight"] .nav-rail-item:hover {
+    background: rgba(130, 170, 255, 0.08);
+}
+
+:root[data-theme="material-palenight"] .nav-rail-item.active {
+    background: var(--md3-purple-40);
+    color: var(--md3-purple-90);
+}
+
+/* Material You Tooltips */
+:root[data-theme="material-palenight"] [data-tooltip] {
+    position: relative;
+}
+
+:root[data-theme="material-palenight"] [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    background: var(--material-elevation-5);
+    color: var(--text-primary);
+    border-radius: 4px;
+    box-shadow: var(--shadow-md);
+    font-size: 12px;
+    font-family: 'Google Sans', system-ui, sans-serif;
+    font-weight: 500;
+    padding: 4px 8px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+:root[data-theme="material-palenight"] [data-tooltip]:hover::after {
+    opacity: 0.9;
+}
+
+/* Material You Snackbar */
+:root[data-theme="material-palenight"] .toast {
+    background: var(--material-elevation-5);
+    color: var(--text-primary);
+    border-radius: 4px;
+    box-shadow: var(--shadow-lg);
+    font-family: 'Google Sans', system-ui, sans-serif;
+    font-size: 14px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-height: 48px;
+    border: 1px solid var(--border-secondary);
+}
+
+/* Enhanced Focus States */
+:root[data-theme="material-palenight"] *:focus-visible {
+    outline: 3px solid var(--md3-purple-60);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Palenight Heading Styles */
+:root[data-theme="material-palenight"] h1,
+:root[data-theme="material-palenight"] h2,
+:root[data-theme="material-palenight"] h3 {
+    position: relative;
+    background: linear-gradient(135deg, var(--text-heading) 0%, var(--md3-purple-80) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+:root[data-theme="material-palenight"] h1::after,
+:root[data-theme="material-palenight"] h2::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        var(--md3-blue-60) 0%, 
+        var(--md3-purple-60) 50%, 
+        var(--md3-blue-60) 100%);
+    opacity: 0.5;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+:root[data-theme="material-palenight"] h1:hover::after,
+:root[data-theme="material-palenight"] h2:hover::after {
+    transform: scaleX(1);
+}
+
+/* Material You Progress Indicators */
+:root[data-theme="material-palenight"] .md3-progress-linear {
+    height: 4px;
+    background: var(--material-elevation-1);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+:root[data-theme="material-palenight"] .md3-progress-linear-bar {
+    height: 100%;
+    background: linear-gradient(90deg, 
+        var(--md3-purple-60) 0%, 
+        var(--md3-blue-60) 100%);
+    transition: width 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Link Styles with Glow Effect */
+:root[data-theme="material-palenight"] a {
+    color: var(--md3-blue-70);
+    text-decoration: none;
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+:root[data-theme="material-palenight"] a:hover {
+    color: var(--md3-purple-70);
+    text-shadow: 0 0 8px rgba(199, 146, 234, 0.5);
+}
+
+/* Aurora Effect for Special Elements */
+:root[data-theme="material-palenight"] .aurora-effect {
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="material-palenight"] .aurora-effect::before {
+    content: '';
+    position: absolute;
+    inset: -50%;
+    background: conic-gradient(
+        from 0deg at 50% 50%,
+        var(--md3-blue-60) 0deg,
+        var(--md3-purple-60) 90deg,
+        var(--md3-blue-60) 180deg,
+        var(--md3-purple-60) 270deg,
+        var(--md3-blue-60) 360deg
+    );
+    animation: palenight-aurora 10s linear infinite;
+    opacity: 0.1;
+    pointer-events: none;
 }

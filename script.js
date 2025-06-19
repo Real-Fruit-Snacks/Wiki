@@ -35,63 +35,117 @@ class NotesWiki {
         this.stickyNotes = new Map();
         this.stickyColors = ['yellow', 'blue', 'green', 'pink'];
         this.stickyZIndex = 1001;
-        this.themes = [
-            { id: '2077', name: '2077 Theme', description: 'Cyberpunk 2077 inspired neon colors' },
-            { id: 'aero-glass', name: 'Aero Glass', description: 'Windows Vista/7 inspired translucent glass effects' },
-            { id: 'atom-one-light', name: 'Atom One Light', description: 'Clean, bright theme from Atom editor' },
-            { id: 'ayu-dark', name: 'Ayu Dark', description: 'Modern dark theme' },
-            { id: 'ayu-light', name: 'Ayu Light', description: 'Modern light theme' },
-            { id: 'ayu-mirage', name: 'Ayu Mirage', description: 'Perfect balance between light and dark with muted colors' },
-            { id: 'bluloco-dark', name: 'Bluloco Dark', description: 'High contrast dark theme with vibrant colors' },
-            { id: 'bluloco-light', name: 'Bluloco Light', description: 'High contrast light theme with blue accents' },
-            { id: 'catppuccin-latte', name: 'Catppuccin Latte', description: 'Light theme with warm colors' },
-            { id: 'catppuccin-mocha', name: 'Catppuccin Mocha', description: 'Dark theme with soft pastel colors' },
-            { id: 'cobalt2', name: 'Cobalt2', description: 'Wes Bos\'s iconic navy blue theme with vibrant accents' },
-            { id: 'cyberpunk', name: 'Cyberpunk', description: 'Neon-lit dystopian future theme' },
-            { id: 'dark', name: 'Dark', description: 'Easy on the eyes dark theme' },
-            { id: 'dracula', name: 'Dracula', description: 'Dark theme with vibrant colors' },
-            { id: 'everforest-dark', name: 'Everforest Dark', description: 'Forest-inspired dark theme' },
-            { id: 'github-dark', name: 'GitHub Dark', description: 'GitHub\'s dark theme' },
-            { id: 'github-light', name: 'GitHub Light', description: 'GitHub\'s clean light theme' },
-            { id: 'gruvbox-dark', name: 'Gruvbox Dark', description: 'Retro groove dark theme' },
-            { id: 'gruvbox-light', name: 'Gruvbox Light', description: 'Retro groove light theme' },
-            { id: 'hackthebox', name: 'HackTheBox', description: 'Inspired by the HTB platform colors' },
-            { id: 'holographic-blue', name: 'Holographic Blue', description: 'Futuristic sci-fi theme with holographic scanning effects' },
-            { id: 'hotdog-stand', name: 'Hot Dog Stand', description: 'Windows 3.1 classic - Bold red & yellow!' },
-            { id: 'kanagawa', name: 'Kanagawa', description: 'Japanese aesthetic inspired dark theme' },
-            { id: 'light', name: 'Light', description: 'Clean light theme' },
-            { id: 'lucario', name: 'Lucario', description: 'Minimalist dark theme with pastel colors' },
-            { id: 'luxury-gold', name: 'Luxury Gold', description: 'Elegant theme with gold accents and rich dark backgrounds' },
-            { id: 'material-darker', name: 'Material Darker', description: 'Darker variant of Material theme' },
-            { id: 'material-ocean', name: 'Material Ocean', description: 'Material design dark theme' },
-            { id: 'material-palenight', name: 'Material Palenight', description: 'Material design with palenight colors' },
-            { id: 'matrix', name: 'Matrix', description: 'Classic terminal green on black - Enter the Matrix' },
-            { id: 'monokai', name: 'Monokai', description: 'Vibrant colors on dark background' },
-            { id: 'neon-galaxy', name: 'Neon Galaxy', description: 'Amazing vibrant theme with rainbow gradients and neon effects' },
-            { id: 'noctis', name: 'Noctis', description: 'Nature-inspired theme with blue tones' },
-            { id: 'nord', name: 'Nord', description: 'Arctic, north-bluish color palette' },
-            { id: 'nordic', name: 'Nordic', description: 'Warmer and darker variant of Nord' },
-            { id: 'one-dark-pro', name: 'One Dark Pro', description: 'Atom-inspired dark theme' },
-            { id: 'oxocarbon', name: 'Oxocarbon', description: 'IBM Carbon-inspired professional theme' },
-            { id: 'palenight', name: 'Palenight', description: 'An elegant and juicy material-like theme' },
-            { id: 'protonmail', name: 'ProtonMail', description: 'Privacy-focused with signature purple' },
-            { id: 'rose-pine', name: 'Rosé Pine', description: 'Dark theme with muted colors' },
-            { id: 'rose-pine-dawn', name: 'Rosé Pine Dawn', description: 'Light variant of Rosé Pine' },
-            { id: 'shades-of-purple', name: 'Shades of Purple', description: 'Unique purple-focused aesthetic' },
-            { id: 'solarized-dark', name: 'Solarized Dark', description: 'Dark variant of Solarized' },
-            { id: 'solarized-light', name: 'Solarized Light', description: 'Precision colors for machines and people' },
-            { id: 'spacegray', name: 'Spacegray', description: 'Minimalist gray theme from Sublime Text' },
-            { id: 'sunset-dreams', name: 'Sunset Dreams', description: 'Unique warm theme with animated sunset gradients' },
-            { id: 'thinkultra', name: 'ThinkUltra', description: 'ThinkPad-inspired minimalist black theme' },
-            { id: 'tokyo-night', name: 'Tokyo Night', description: 'A clean dark theme that celebrates Tokyo at night' },
-            { id: 'tomorrow-night', name: 'Tomorrow Night', description: 'Popular dark theme from the Tomorrow theme family' },
-            { id: 'vaporwave', name: 'Vaporwave', description: 'Retro aesthetic with neon pink and cyan' },
-            { id: 'vscode-dark-plus', name: 'VSCode Dark+', description: 'Popular VSCode dark theme' },
-            { id: 'winter-is-coming-dark', name: 'Winter is Coming Dark', description: 'Cool blue color scheme with frosty appearance' },
-            { id: 'winter-is-coming-light', name: 'Winter is Coming Light', description: 'Light variant with cool blue accents' },
-            { id: 'witch-hazel', name: 'Witch Hazel', description: 'Purple-based theme with magical vibes' },
-            { id: 'zenburn', name: 'Zenburn', description: 'Low contrast theme for reduced eye strain' }
+        // Organized themes by category
+        this.themeCategories = [
+            {
+                name: 'Classic Dark',
+                themes: [
+                    { id: 'dark', name: 'Dark', description: 'Modern dark theme with subtle blue accents' },
+                    { id: 'dracula', name: 'Dracula', description: 'Vampire purple theme with pink accents and glow effects' },
+                    { id: 'monokai', name: 'Monokai', description: 'Vibrant colors with animated rainbow effects' },
+                    { id: 'one-dark-pro', name: 'One Dark Pro', description: 'Atom-inspired theme with tech grid effects' },
+                    { id: 'tomorrow-night', name: 'Tomorrow Night', description: 'Clean dark theme with smooth animations' },
+                    { id: 'zenburn', name: 'Zenburn', description: 'Low contrast zen theme with calming effects' }
+                ]
+            },
+            {
+                name: 'Classic Light',
+                themes: [
+                    { id: 'atom-one-light', name: 'Atom One Light', description: 'Clean bright theme with gradient accents' },
+                    { id: 'github-light', name: 'GitHub Light', description: 'Modern GitHub theme with clean shadows' },
+                    { id: 'light', name: 'Light', description: 'Modern light theme with glassmorphism effects' },
+                    { id: 'solarized-light', name: 'Solarized Light', description: 'Precision colors with warm paper effects' }
+                ]
+            },
+            {
+                name: 'Material Design',
+                themes: [
+                    { id: 'material-darker', name: 'Material Darker', description: 'Material You design with ripple effects' },
+                    { id: 'material-ocean', name: 'Material Ocean', description: 'Ocean-themed Material with wave animations' },
+                    { id: 'material-palenight', name: 'Material Palenight', description: 'Purple Material theme with aurora effects' }
+                ]
+            },
+            {
+                name: 'Nature & Earth',
+                themes: [
+                    { id: 'ayu-light', name: 'Ayu Light', description: 'Earthy light theme with warm nature tones' },
+                    { id: 'everforest-dark', name: 'Everforest Dark', description: 'Deep forest theme with organic animations' },
+                    { id: 'gruvbox-dark', name: 'Gruvbox Dark', description: 'Retro warm theme with CRT effects' },
+                    { id: 'gruvbox-light', name: 'Gruvbox Light', description: 'Vintage paper theme with warm accents' },
+                    { id: 'kanagawa', name: 'Kanagawa', description: 'Japanese zen theme with wave animations' },
+                    { id: 'rose-pine', name: 'Rosé Pine', description: 'Rose-inspired theme with petal animations' },
+                    { id: 'rose-pine-dawn', name: 'Rosé Pine Dawn', description: 'Dawn light theme with sunrise effects' },
+                    { id: 'sunset-dreams', name: 'Sunset Dreams', description: 'Animated sunset theme with warm gradients' }
+                ]
+            },
+            {
+                name: 'Arctic & Winter',
+                themes: [
+                    { id: 'nord', name: 'Nord', description: 'Arctic theme with aurora and ice effects' },
+                    { id: 'nordic', name: 'Nordic', description: 'Cozy cabin theme with fireplace glow' },
+                    { id: 'winter-is-coming-dark', name: 'Winter is Coming Dark', description: 'Frosty dark theme with snowfall' },
+                    { id: 'winter-is-coming-light', name: 'Winter is Coming Light', description: 'Light winter theme with ice crystals' }
+                ]
+            },
+            {
+                name: 'Ocean & Sky',
+                themes: [
+                    { id: 'ayu-dark', name: 'Ayu Dark', description: 'Rich dark theme with warm accents' },
+                    { id: 'ayu-mirage', name: 'Ayu Mirage', description: 'Balanced theme with warm undertones' },
+                    { id: 'bluloco-dark', name: 'Bluloco Dark', description: 'Electric blue dark theme with vibrant accents' },
+                    { id: 'bluloco-light', name: 'Bluloco Light', description: 'Sophisticated blue light theme' },
+                    { id: 'cobalt2', name: 'Cobalt2', description: 'Wes Bos theme with electric neon effects' },
+                    { id: 'noctis', name: 'Noctis', description: 'Ocean-inspired theme with wave effects' },
+                    { id: 'spacegray', name: 'Spacegray', description: 'Minimal space theme with starfield' }
+                ]
+            },
+            {
+                name: 'Cyberpunk & Neon',
+                themes: [
+                    { id: '2077', name: '2077 Theme', description: 'Cyberpunk 2077 with neon glow and scan lines' },
+                    { id: 'cyberpunk', name: 'Cyberpunk', description: 'Dystopian theme with glitch effects' },
+                    { id: 'holographic-blue', name: 'Holographic Blue', description: 'Futuristic theme with holographic effects' },
+                    { id: 'matrix', name: 'Matrix', description: 'Terminal green with falling code rain' },
+                    { id: 'neon-galaxy', name: 'Neon Galaxy', description: 'Spectacular neon theme with starfield' },
+                    { id: 'tokyo-night', name: 'Tokyo Night', description: 'Tokyo neon theme with cyberpunk effects' },
+                    { id: 'vaporwave', name: 'Vaporwave', description: 'Retro 80s theme with VHS glitch effects' }
+                ]
+            },
+            {
+                name: 'Elegant & Pastel',
+                themes: [
+                    { id: 'catppuccin-latte', name: 'Catppuccin Latte', description: 'Warm pastel light theme with cozy effects' },
+                    { id: 'catppuccin-mocha', name: 'Catppuccin Mocha', description: 'Dark pastel theme with glass effects' },
+                    { id: 'lucario', name: 'Lucario', description: 'Minimal pastel theme with soft glows' },
+                    { id: 'palenight', name: 'Palenight', description: 'Elegant purple theme with aurora effects' },
+                    { id: 'shades-of-purple', name: 'Shades of Purple', description: 'Magical purple theme with particle effects' },
+                    { id: 'witch-hazel', name: 'Witch Hazel', description: 'Mystical theme with magical animations' }
+                ]
+            },
+            {
+                name: 'Professional',
+                themes: [
+                    { id: 'github-dark', name: 'GitHub Dark', description: 'GitHub\'s modern developer theme' },
+                    { id: 'oxocarbon', name: 'Oxocarbon', description: 'IBM Carbon theme with grid patterns' },
+                    { id: 'protonmail', name: 'ProtonMail', description: 'Privacy-focused theme with security effects' },
+                    { id: 'solarized-dark', name: 'Solarized Dark', description: 'Classic theme with modern animations' },
+                    { id: 'thinkultra', name: 'ThinkUltra', description: 'ThinkPad-inspired with LED indicators' },
+                    { id: 'vscode-dark-plus', name: 'VSCode Dark+', description: 'Modern VSCode theme with IntelliSense glow' }
+                ]
+            },
+            {
+                name: 'Special Effects',
+                themes: [
+                    { id: 'aero-glass', name: 'Aero Glass', description: 'Windows glass effects with blur and shine' },
+                    { id: 'hackthebox', name: 'HackTheBox', description: 'Hacker terminal theme with sweep effects' },
+                    { id: 'hotdog-stand', name: 'Hot Dog Stand', description: 'Windows 3.1 retro theme with pixel cursors' },
+                    { id: 'luxury-gold', name: 'Luxury Gold', description: 'Premium gold theme with shimmer effects' }
+                ]
+            }
         ];
+        
+        // Flatten themes for compatibility
+        this.themes = this.themeCategories.flatMap(category => category.themes);
         
         // Settings
         this.settings = {
@@ -4386,8 +4440,62 @@ class NotesWiki {
         // Clear existing cards
         themeCardsGrid.innerHTML = '';
         
-        // Create theme cards
-        this.themes.forEach(theme => {
+        // Create theme cards grouped by category
+        this.themeCategories.forEach(category => {
+            // Create category section
+            const categorySection = document.createElement('div');
+            categorySection.className = 'theme-category-section';
+            categorySection.style.cssText = `
+                margin-bottom: 2rem;
+                width: 100%;
+            `;
+            
+            // Create category header
+            const categoryHeader = document.createElement('h4');
+            categoryHeader.className = 'theme-category-header';
+            categoryHeader.textContent = category.name;
+            categoryHeader.style.cssText = `
+                color: var(--text-primary);
+                font-size: 1.1rem;
+                font-weight: 600;
+                margin: 0 0 1rem 0;
+                padding-bottom: 0.5rem;
+                border-bottom: 2px solid var(--border-primary);
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            `;
+            
+            // Add theme count badge
+            const countBadge = document.createElement('span');
+            countBadge.style.cssText = `
+                background: var(--accent-primary);
+                color: var(--bg-primary);
+                font-size: 0.75rem;
+                padding: 0.125rem 0.5rem;
+                border-radius: 9999px;
+                font-weight: 500;
+            `;
+            countBadge.textContent = category.themes.length;
+            categoryHeader.appendChild(countBadge);
+            
+            categorySection.appendChild(categoryHeader);
+            
+            // Create grid for category themes
+            const categoryGrid = document.createElement('div');
+            categoryGrid.className = 'theme-category-grid';
+            categoryGrid.style.cssText = `
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 1rem;
+                margin-bottom: 1rem;
+            `;
+            
+            // Sort themes alphabetically within each category
+            const sortedThemes = [...category.themes].sort((a, b) => a.name.localeCompare(b.name));
+            
+            // Create cards for themes in this category
+            sortedThemes.forEach(theme => {
             const card = document.createElement('div');
             card.className = 'theme-card';
             card.dataset.themeId = theme.id;
@@ -4497,8 +4605,12 @@ class NotesWiki {
                 // Show success feedback
                 this.showToast(`${theme.name} theme applied!`);
             });
+                
+                categoryGrid.appendChild(card);
+            });
             
-            themeCardsGrid.appendChild(card);
+            categorySection.appendChild(categoryGrid);
+            themeCardsGrid.appendChild(categorySection);
         });
         
         // Update auto-theme state

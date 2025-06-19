@@ -124,3 +124,173 @@
 :root[data-theme="shades-of-purple"] * {
     scrollbar-color: #4D4A89 var(--bg-primary);
 }
+
+/* Enhanced Purple Magic Effects */
+:root[data-theme="shades-of-purple"] {
+    --purple-glow: 0 0 20px rgba(179, 98, 255, 0.5);
+    --neon-glow: 0 0 30px rgba(179, 98, 255, 0.8);
+    --magic-gradient: linear-gradient(135deg, #B362FF, #FF628C, #FAD000, #9EFFFF);
+}
+
+/* Animated purple gradient background */
+:root[data-theme="shades-of-purple"] body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 80%, rgba(179, 98, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(250, 208, 0, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(158, 255, 255, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+    animation: purpleMagic 20s ease-in-out infinite;
+}
+
+@keyframes purpleMagic {
+    0%, 100% { opacity: 0.5; transform: scale(1) rotate(0deg); }
+    50% { opacity: 0.8; transform: scale(1.1) rotate(180deg); }
+}
+
+/* Glowing headers with purple neon effect */
+:root[data-theme="shades-of-purple"] h1,
+:root[data-theme="shades-of-purple"] h2 {
+    text-shadow: 0 0 20px rgba(250, 208, 0, 0.5),
+                 0 0 40px rgba(250, 208, 0, 0.3),
+                 0 0 60px rgba(250, 208, 0, 0.1);
+    position: relative;
+}
+
+:root[data-theme="shades-of-purple"] h1::after,
+:root[data-theme="shades-of-purple"] h2::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #B362FF, #FAD000, #B362FF, transparent);
+    animation: purpleSlide 3s ease-in-out infinite;
+}
+
+@keyframes purpleSlide {
+    0%, 100% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+}
+
+/* Purple magic on links */
+:root[data-theme="shades-of-purple"] a {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="shades-of-purple"] a:hover {
+    color: #B362FF;
+    text-shadow: var(--purple-glow);
+}
+
+/* Magical code blocks */
+:root[data-theme="shades-of-purple"] pre {
+    position: relative;
+    box-shadow: 0 0 30px rgba(179, 98, 255, 0.1);
+    border: 1px solid rgba(179, 98, 255, 0.3);
+}
+
+:root[data-theme="shades-of-purple"] pre::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: var(--magic-gradient);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 8px;
+    z-index: -1;
+    filter: blur(10px);
+}
+
+:root[data-theme="shades-of-purple"] pre:hover::before {
+    opacity: 0.3;
+    animation: magicPulse 2s ease-in-out infinite;
+}
+
+@keyframes magicPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+/* Purple particles effect on buttons */
+:root[data-theme="shades-of-purple"] button {
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="shades-of-purple"] button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(179, 98, 255, 0.4) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+:root[data-theme="shades-of-purple"] button:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* Magical selection */
+:root[data-theme="shades-of-purple"] ::selection {
+    background: rgba(179, 98, 255, 0.4);
+    text-shadow: 0 0 5px rgba(179, 98, 255, 0.5);
+}
+
+/* Purple glow on focused elements */
+:root[data-theme="shades-of-purple"] input:focus,
+:root[data-theme="shades-of-purple"] textarea:focus {
+    box-shadow: 0 0 0 2px rgba(179, 98, 255, 0.5),
+                var(--purple-glow);
+}
+
+/* Animated sidebar gradient */
+:root[data-theme="shades-of-purple"] .sidebar {
+    background: linear-gradient(180deg, #28284E 0%, #222244 50%, #2D2B55 100%);
+    position: relative;
+}
+
+:root[data-theme="shades-of-purple"] .sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(180deg, 
+        transparent 0%, 
+        rgba(179, 98, 255, 0.05) 50%, 
+        transparent 100%);
+    animation: purpleWave 10s ease-in-out infinite;
+}
+
+@keyframes purpleWave {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+/* Neon purple badges */
+:root[data-theme="shades-of-purple"] .badge {
+    box-shadow: 0 0 10px rgba(179, 98, 255, 0.5),
+                inset 0 0 10px rgba(179, 98, 255, 0.2);
+    animation: badgeGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes badgeGlow {
+    from { box-shadow: 0 0 10px rgba(179, 98, 255, 0.5), inset 0 0 10px rgba(179, 98, 255, 0.2); }
+    to { box-shadow: 0 0 20px rgba(179, 98, 255, 0.8), inset 0 0 15px rgba(179, 98, 255, 0.3); }
+}

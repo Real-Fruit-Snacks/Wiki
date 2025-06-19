@@ -123,3 +123,222 @@
 :root[data-theme="nord"] * {
     scrollbar-color: #4c566a var(--bg-primary);
 }
+
+/* Arctic Ice Effects */
+:root[data-theme="nord"] {
+    --ice-crystal: linear-gradient(135deg, rgba(136, 192, 208, 0.1) 0%, rgba(143, 188, 187, 0.1) 50%, rgba(129, 161, 193, 0.1) 100%);
+    --frost-shadow: 0 2px 10px rgba(236, 239, 244, 0.2), 0 4px 20px rgba(136, 192, 208, 0.15);
+    --aurora-colors: linear-gradient(90deg, #88c0d0, #81a1c1, #b48ead, #a3be8c);
+}
+
+/* Frosted glass effect */
+:root[data-theme="nord"] .header,
+:root[data-theme="nord"] .sidebar,
+:root[data-theme="nord"] .modal-content {
+    backdrop-filter: blur(10px);
+    background: rgba(46, 52, 64, 0.95);
+    position: relative;
+}
+
+/* Ice crystal pattern overlay */
+:root[data-theme="nord"] .main-content::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        repeating-linear-gradient(60deg, transparent, transparent 10px, rgba(236, 239, 244, 0.03) 10px, rgba(236, 239, 244, 0.03) 20px),
+        repeating-linear-gradient(-60deg, transparent, transparent 10px, rgba(136, 192, 208, 0.03) 10px, rgba(136, 192, 208, 0.03) 20px);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Aurora borealis animation in header */
+:root[data-theme="nord"] .header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: var(--aurora-colors);
+    background-size: 300% 100%;
+    opacity: 0.1;
+    animation: aurora-dance 20s ease infinite;
+    filter: blur(20px);
+}
+
+@keyframes aurora-dance {
+    0% { background-position: 0% 50%; opacity: 0.1; }
+    25% { opacity: 0.15; }
+    50% { background-position: 100% 50%; opacity: 0.2; }
+    75% { opacity: 0.15; }
+    100% { background-position: 0% 50%; opacity: 0.1; }
+}
+
+/* Snowfall effect */
+@keyframes snowfall {
+    0% { transform: translateY(-100vh) translateX(0); }
+    50% { transform: translateY(50vh) translateX(30px); }
+    100% { transform: translateY(100vh) translateX(-30px); }
+}
+
+:root[data-theme="nord"] .main-content::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(236, 239, 244, 0.4) 1px, transparent 1px),
+        radial-gradient(circle at 80% 60%, rgba(236, 239, 244, 0.3) 1px, transparent 1px),
+        radial-gradient(circle at 40% 80%, rgba(236, 239, 244, 0.5) 1px, transparent 1px);
+    background-size: 100% 100%;
+    animation: snowfall 15s linear infinite;
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+/* Icy hover effects */
+:root[data-theme="nord"] button,
+:root[data-theme="nord"] .tab,
+:root[data-theme="nord"] .tree-item {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:root[data-theme="nord"] button:hover,
+:root[data-theme="nord"] .tab:hover,
+:root[data-theme="nord"] .tree-item:hover {
+    background: rgba(136, 192, 208, 0.1);
+    box-shadow: var(--frost-shadow);
+    transform: translateY(-1px);
+}
+
+/* Frozen text effect on headings */
+:root[data-theme="nord"] .note-content h1,
+:root[data-theme="nord"] .note-content h2,
+:root[data-theme="nord"] .note-content h3 {
+    position: relative;
+    text-shadow: 2px 2px 4px rgba(46, 52, 64, 0.3);
+}
+
+:root[data-theme="nord"] .note-content h1::after,
+:root[data-theme="nord"] .note-content h2::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #88c0d0, transparent);
+    opacity: 0.5;
+    animation: ice-shimmer 3s ease-in-out infinite;
+}
+
+@keyframes ice-shimmer {
+    0%, 100% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+}
+
+/* Glacial code blocks */
+:root[data-theme="nord"] .note-content pre {
+    background: linear-gradient(135deg, rgba(59, 66, 82, 0.95) 0%, rgba(67, 76, 94, 0.95) 100%);
+    border: 1px solid rgba(136, 192, 208, 0.2);
+    box-shadow: 
+        inset 0 1px 2px rgba(0, 0, 0, 0.2),
+        0 4px 12px rgba(136, 192, 208, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="nord"] .note-content pre::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(236, 239, 244, 0.1) 0%, transparent 50%);
+    transform: rotate(45deg);
+    animation: ice-glint 10s linear infinite;
+}
+
+@keyframes ice-glint {
+    0% { transform: rotate(45deg) translateX(-100%); }
+    100% { transform: rotate(45deg) translateX(100%); }
+}
+
+/* Arctic wind effect for active tabs */
+:root[data-theme="nord"] .tab.active {
+    background: linear-gradient(135deg, #5e81ac 0%, #88c0d0 100%);
+    color: #2e3440;
+    box-shadow: 
+        0 2px 8px rgba(94, 129, 172, 0.3),
+        inset 0 1px 0 rgba(236, 239, 244, 0.3);
+    position: relative;
+}
+
+:root[data-theme="nord"] .tab.active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(236, 239, 244, 0.2), transparent);
+    animation: arctic-wind 3s ease-in-out infinite;
+}
+
+@keyframes arctic-wind {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Crystalline buttons */
+:root[data-theme="nord"] .button-primary {
+    background: linear-gradient(135deg, #88c0d0 0%, #81a1c1 100%);
+    border: 1px solid rgba(236, 239, 244, 0.2);
+    box-shadow: 
+        inset 0 1px 0 rgba(236, 239, 244, 0.3),
+        0 2px 8px rgba(136, 192, 208, 0.3);
+    text-shadow: 0 1px 2px rgba(46, 52, 64, 0.3);
+}
+
+:root[data-theme="nord"] .button-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        inset 0 1px 0 rgba(236, 239, 244, 0.3),
+        0 4px 16px rgba(136, 192, 208, 0.4);
+}
+
+/* Frozen search input */
+:root[data-theme="nord"] .search-input:focus {
+    border-color: #88c0d0;
+    box-shadow: 
+        0 0 0 3px rgba(136, 192, 208, 0.1),
+        inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    background: rgba(236, 239, 244, 0.05);
+}
+
+/* Ice-covered tags */
+:root[data-theme="nord"] .tag {
+    background: rgba(136, 192, 208, 0.15);
+    border: 1px solid rgba(136, 192, 208, 0.3);
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="nord"] .tag:hover {
+    background: rgba(136, 192, 208, 0.25);
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(136, 192, 208, 0.3);
+}
+
+/* Polar night scrollbar */
+:root[data-theme="nord"] ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #5e81ac 0%, #88c0d0 100%);
+    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
+}

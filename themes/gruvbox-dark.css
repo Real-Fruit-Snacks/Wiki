@@ -1,54 +1,91 @@
-/* Gruvbox Dark Theme Variables */
+/* Gruvbox Dark Theme - Enhanced Retro Warmth Edition */
 :root[data-theme="gruvbox-dark"] {
     /* Background Colors */
-    --bg-primary: #282828;
-    --bg-secondary: #3c3836;
-    --bg-sidebar: #504945;
-    --bg-code: #3c3836;
-    --bg-selection: var(--accent-primary)33;
-    --bg-dropdown: var(--bg-secondary);
-    --bg-hover: rgba(255, 255, 255, 0.05);
-    --bg-tag: var(--bg-secondary);
+    --bg-primary: #1d2021;
+    --bg-secondary: #282828;
+    --bg-sidebar: #32302f;
+    --bg-code: #282828;
+    --bg-selection: rgba(254, 128, 25, 0.2);
+    --bg-dropdown: #3c3836;
+    --bg-hover: rgba(235, 219, 178, 0.05);
+    --bg-tag: #504945;
+    --bg-modal: var(--bg-secondary);
+    --bg-input: #3c3836;
+    --bg-tooltip: #504945;
     
     /* Text Colors */
-    --text-primary: #ebdbb2;
-    --text-secondary: #d5c4a1;
-    --text-muted: #bdae93;
-    --text-heading: var(--text-primary);
+    --text-primary: #fbf1c7;
+    --text-secondary: #ebdbb2;
+    --text-muted: #a89984;
+    --text-heading: #fabd2f;
+    --text-inverse: #282828;
+    --text-link: #83a598;
+    --text-code: #8ec07c;
+    --text-selection: var(--text-primary);
     
-    /* Accent Colors */
-    --accent-primary: #83a598;
-    --accent-secondary: #458588;
-    --accent-warning: #fbbf24;
-    --accent-error: #ef4444;
-    --accent-info: var(--accent-primary);
-    --accent-success: #10b981;
+    /* Accent Colors - Warm Retro Palette */
+    --accent-primary: #fe8019;
+    --accent-secondary: #d65d0e;
+    --accent-warning: #fabd2f;
+    --accent-error: #fb4934;
+    --accent-info: #83a598;
+    --accent-success: #b8bb26;
+    --accent-primary-light: #fe8019;
+    --accent-secondary-light: #fabd2f;
     
     /* Border Colors */
     --border-primary: #504945;
-    --border-secondary: #3c3836;
+    --border-secondary: #665c54;
+    --border-active: var(--accent-primary);
+    --border-hover: #7c6f64;
     
     /* Button Colors */
-    --button-bg: var(--bg-secondary);
-    --button-hover: var(--bg-hover);
-    --button-active: var(--accent-primary);
+    --button-bg: #3c3836;
+    --button-hover: #504945;
+    --button-active: #665c54;
+    --button-text: var(--text-primary);
+    --button-border: var(--border-primary);
     
     /* Badge Colors */
-    --badge-bg: var(--accent-error);
-    --badge-text: #ffffff;
+    --badge-bg: var(--accent-warning);
+    --badge-text: var(--bg-primary);
+    --badge-info-bg: var(--bg-tag);
+    --badge-info-text: var(--text-secondary);
     
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
-    --shadow-xl: var(--shadow-lg);
+    /* Shadows - Warm and Deep */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.7), 0 4px 6px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.8), 0 10px 10px rgba(0, 0, 0, 0.6);
+    --shadow-focus: 0 0 0 3px rgba(254, 128, 25, 0.4);
+    --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    
+    /* Interactive States */
+    --state-hover-bg: rgba(254, 128, 25, 0.1);
+    --state-active-bg: rgba(254, 128, 25, 0.2);
+    --state-selected-bg: var(--bg-selection);
+    --state-focus-border: var(--accent-primary);
+    --state-disabled-opacity: 0.5;
+    
+    /* Typography */
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', monospace;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --line-height-normal: 1.6;
+    --line-height-condensed: 1.3;
+    
+    /* Transitions */
+    --transition-fast: 150ms ease-out;
+    --transition-base: 250ms ease-out;
+    --transition-slow: 400ms ease-out;
     
     /* Other */
-    --accent-color-alpha: rgba(131, 165, 152, 0.1);
-    --bg-code-block: #3c3836;
+    --accent-color-alpha: rgba(254, 128, 25, 0.15);
+    --bg-code-block: #282828;
+    --overlay-bg: rgba(29, 32, 33, 0.9);
+    --spinner-color: var(--accent-warning);
 }
 
-/* Syntax Highlighting - Gruvbox Dark Theme */
+/* Syntax Highlighting - Enhanced Gruvbox Dark Theme */
 :root[data-theme="gruvbox-dark"] .token.comment,
 :root[data-theme="gruvbox-dark"] .token.prolog,
 :root[data-theme="gruvbox-dark"] .token.doctype,
@@ -69,6 +106,7 @@
 :root[data-theme="gruvbox-dark"] .token.symbol,
 :root[data-theme="gruvbox-dark"] .token.deleted {
     color: #d3869b;
+    font-weight: 600;
 }
 
 :root[data-theme="gruvbox-dark"] .token.selector,
@@ -93,11 +131,13 @@
 :root[data-theme="gruvbox-dark"] .token.attr-value,
 :root[data-theme="gruvbox-dark"] .token.keyword {
     color: #fb4934;
+    font-weight: 600;
 }
 
 :root[data-theme="gruvbox-dark"] .token.function,
 :root[data-theme="gruvbox-dark"] .token.class-name {
     color: #fabd2f;
+    font-weight: 600;
 }
 
 :root[data-theme="gruvbox-dark"] .token.regex,
@@ -114,6 +154,7 @@
 :root[data-theme="gruvbox-dark"] ::-webkit-scrollbar-thumb {
     background: #665c54;
     border: 3px solid var(--bg-primary);
+    border-radius: 4px;
 }
 
 :root[data-theme="gruvbox-dark"] ::-webkit-scrollbar-thumb:hover {
@@ -123,4 +164,177 @@
 /* Firefox Scrollbar Gruvbox Dark Theme */
 :root[data-theme="gruvbox-dark"] * {
     scrollbar-color: #665c54 var(--bg-primary);
+}
+
+/* Retro Warm Theme Effects */
+:root[data-theme="gruvbox-dark"] body {
+    position: relative;
+}
+
+/* Subtle CRT monitor effect */
+:root[data-theme="gruvbox-dark"] body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.03),
+        rgba(0, 0, 0, 0.03) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* Warm glow effect */
+:root[data-theme="gruvbox-dark"] .sidebar {
+    background: linear-gradient(135deg, #32302f 0%, #282828 100%);
+    box-shadow: inset -2px 0 8px rgba(0, 0, 0, 0.3);
+}
+
+:root[data-theme="gruvbox-dark"] .tab-bar {
+    background: linear-gradient(180deg, #3c3836 0%, #32302f 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+:root[data-theme="gruvbox-dark"] .tab.active {
+    background: linear-gradient(180deg, #504945 0%, #3c3836 100%);
+    border-color: var(--border-primary);
+    box-shadow: inset 0 1px 0 rgba(251, 241, 199, 0.1);
+}
+
+/* Retro button styling */
+:root[data-theme="gruvbox-dark"] .button,
+:root[data-theme="gruvbox-dark"] button {
+    background: linear-gradient(180deg, #504945 0%, #3c3836 100%);
+    border: 1px solid var(--border-primary);
+    box-shadow: inset 0 1px 0 rgba(251, 241, 199, 0.1), 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    transition: all var(--transition-base);
+}
+
+:root[data-theme="gruvbox-dark"] .button:hover,
+:root[data-theme="gruvbox-dark"] button:hover {
+    background: linear-gradient(180deg, #665c54 0%, #504945 100%);
+    box-shadow: inset 0 1px 0 rgba(251, 241, 199, 0.2), 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+:root[data-theme="gruvbox-dark"] .button:active,
+:root[data-theme="gruvbox-dark"] button:active {
+    background: linear-gradient(180deg, #3c3836 0%, #504945 100%);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Code block styling with warm glow */
+:root[data-theme="gruvbox-dark"] pre {
+    background: var(--bg-code-block);
+    border: 1px solid var(--border-primary);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 20px rgba(254, 128, 25, 0.05);
+    position: relative;
+}
+
+:root[data-theme="gruvbox-dark"] pre::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(250, 189, 47, 0.5), transparent);
+    opacity: 0.8;
+}
+
+/* Warm link hover effect */
+:root[data-theme="gruvbox-dark"] .note-content a {
+    color: var(--text-link);
+    text-decoration: none;
+    position: relative;
+    transition: color var(--transition-base);
+}
+
+:root[data-theme="gruvbox-dark"] .note-content a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-warning));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition-base);
+}
+
+:root[data-theme="gruvbox-dark"] .note-content a:hover {
+    color: var(--accent-primary);
+}
+
+:root[data-theme="gruvbox-dark"] .note-content a:hover::after {
+    transform: scaleX(1);
+}
+
+/* Badge with retro style */
+:root[data-theme="gruvbox-dark"] .badge {
+    background: linear-gradient(135deg, var(--badge-bg), var(--accent-warning));
+    color: var(--badge-text);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    font-weight: 600;
+}
+
+/* Search input with warm glow */
+:root[data-theme="gruvbox-dark"] .search-input:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(254, 128, 25, 0.3), inset 0 0 8px rgba(254, 128, 25, 0.1);
+}
+
+/* Settings sections with depth */
+:root[data-theme="gruvbox-dark"] .settings-section {
+    background: linear-gradient(135deg, #3c3836 0%, #32302f 100%);
+    border: 1px solid var(--border-primary);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Tree items with warm hover */
+:root[data-theme="gruvbox-dark"] .tree-item:hover,
+:root[data-theme="gruvbox-dark"] .search-result:hover,
+:root[data-theme="gruvbox-dark"] .recent-file:hover {
+    background: linear-gradient(90deg, rgba(254, 128, 25, 0.1) 0%, transparent 100%);
+    border-left: 3px solid var(--accent-primary);
+    padding-left: calc(var(--tree-indent) - 3px);
+}
+
+/* Heading underlines with gradient */
+:root[data-theme="gruvbox-dark"] .note-content h1,
+:root[data-theme="gruvbox-dark"] .note-content h2 {
+    position: relative;
+    padding-bottom: 0.5em;
+}
+
+:root[data-theme="gruvbox-dark"] .note-content h1::after,
+:root[data-theme="gruvbox-dark"] .note-content h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-warning), var(--accent-primary), transparent);
+}
+
+/* Selection with warm color */
+:root[data-theme="gruvbox-dark"] ::selection {
+    background: rgba(250, 189, 47, 0.3);
+    color: var(--text-primary);
+}
+
+/* Focus states with glow */
+:root[data-theme="gruvbox-dark"] *:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 8px rgba(254, 128, 25, 0.4);
 }

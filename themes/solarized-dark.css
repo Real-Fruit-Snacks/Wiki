@@ -124,3 +124,200 @@
 :root[data-theme="solarized-dark"] * {
     scrollbar-color: #586e75 var(--bg-primary);
 }
+
+/* Modernized Solarized Dark with Smooth Transitions */
+:root[data-theme="solarized-dark"] {
+    --solarized-gradient: linear-gradient(135deg, #002b36, #073642, #094552);
+    --blue-glow: 0 0 20px rgba(38, 139, 210, 0.3);
+    --cyan-glow: 0 0 20px rgba(42, 161, 152, 0.3);
+}
+
+/* Subtle animated background gradient */
+:root[data-theme="solarized-dark"] body {
+    background: var(--bg-primary);
+    position: relative;
+}
+
+:root[data-theme="solarized-dark"] body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(38, 139, 210, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(42, 161, 152, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(181, 137, 0, 0.02) 0%, transparent 40%);
+    pointer-events: none;
+    animation: solarizedBreath 15s ease-in-out infinite;
+}
+
+@keyframes solarizedBreath {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
+
+/* Modern headers with subtle underline */
+:root[data-theme="solarized-dark"] h1,
+:root[data-theme="solarized-dark"] h2,
+:root[data-theme="solarized-dark"] h3 {
+    position: relative;
+    color: #93a1a1;
+    transition: color 0.3s ease;
+}
+
+:root[data-theme="solarized-dark"] h1:hover,
+:root[data-theme="solarized-dark"] h2:hover {
+    color: #268bd2;
+}
+
+:root[data-theme="solarized-dark"] h1::after,
+:root[data-theme="solarized-dark"] h2::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #268bd2, #2aa198);
+    transition: width 0.3s ease;
+}
+
+:root[data-theme="solarized-dark"] h1:hover::after,
+:root[data-theme="solarized-dark"] h2:hover::after {
+    width: 100%;
+}
+
+/* Enhanced code blocks with modern border */
+:root[data-theme="solarized-dark"] pre {
+    background: linear-gradient(135deg, #073642 0%, #003847 100%);
+    border: 1px solid rgba(38, 139, 210, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="solarized-dark"] pre::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #268bd2, transparent);
+    animation: solarizedScan 8s linear infinite;
+}
+
+@keyframes solarizedScan {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Modern link effects */
+:root[data-theme="solarized-dark"] a {
+    position: relative;
+    text-decoration: none;
+    background-image: linear-gradient(90deg, #268bd2, #268bd2);
+    background-size: 0% 2px;
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    transition: background-size 0.3s ease;
+}
+
+:root[data-theme="solarized-dark"] a:hover {
+    background-size: 100% 2px;
+    color: #268bd2;
+}
+
+/* Modernized buttons with gradient borders */
+:root[data-theme="solarized-dark"] button {
+    background: var(--bg-secondary);
+    border: 1px solid transparent;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="solarized-dark"] button::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background: linear-gradient(45deg, #268bd2, #2aa198, #859900, #b58900);
+    border-radius: 4px;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+}
+
+:root[data-theme="solarized-dark"] button:hover::before {
+    opacity: 1;
+}
+
+:root[data-theme="solarized-dark"] button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(38, 139, 210, 0.2);
+}
+
+/* Enhanced sidebar with gradient */
+:root[data-theme="solarized-dark"] .sidebar {
+    background: linear-gradient(180deg, #094552 0%, #073642 50%, #002b36 100%);
+    border-right: 1px solid rgba(38, 139, 210, 0.1);
+}
+
+/* Modern file tree items */
+:root[data-theme="solarized-dark"] .file-item {
+    transition: all 0.2s ease;
+    border-radius: 4px;
+}
+
+:root[data-theme="solarized-dark"] .file-item:hover {
+    background: rgba(38, 139, 210, 0.1);
+    transform: translateX(2px);
+}
+
+/* Glowing input fields */
+:root[data-theme="solarized-dark"] input:focus,
+:root[data-theme="solarized-dark"] textarea:focus {
+    border-color: #268bd2;
+    box-shadow: 0 0 0 2px rgba(38, 139, 210, 0.2),
+                var(--blue-glow);
+}
+
+/* Modern selection */
+:root[data-theme="solarized-dark"] ::selection {
+    background: rgba(38, 139, 210, 0.3);
+    color: #fdf6e3;
+}
+
+/* Animated tags */
+:root[data-theme="solarized-dark"] .tag {
+    background: rgba(38, 139, 210, 0.2);
+    border: 1px solid rgba(38, 139, 210, 0.3);
+    transition: all 0.2s ease;
+}
+
+:root[data-theme="solarized-dark"] .tag:hover {
+    background: rgba(38, 139, 210, 0.3);
+    border-color: #268bd2;
+    transform: scale(1.05);
+}
+
+/* Modern tab indicators */
+:root[data-theme="solarized-dark"] .tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #268bd2, #2aa198);
+    animation: tabGlow 2s ease-in-out infinite;
+}
+
+@keyframes tabGlow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}

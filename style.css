@@ -4112,35 +4112,60 @@ select.dropdown:focus {
 }
 
 .theme-cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
     padding: var(--spacing-md) 0;
     max-width: 100%;
 }
 
+/* Theme category styling */
+.theme-category-section {
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.theme-category-header {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.theme-category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
 /* Ensure optimal layout in the wider modal */
 @media (min-width: 1100px) {
-    .theme-cards-grid {
-        grid-template-columns: repeat(5, 1fr);
-        max-width: 1100px;
-        margin: 0 auto;
+    .theme-category-grid {
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
 @media (min-width: 900px) and (max-width: 1099px) {
-    .theme-cards-grid {
-        grid-template-columns: repeat(4, 1fr);
-        max-width: 900px;
-        margin: 0 auto;
+    .theme-category-grid {
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
-@media (min-width: 700px) and (max-width: 899px) {
-    .theme-cards-grid {
-        grid-template-columns: repeat(3, 1fr);
-        max-width: 660px;
-        margin: 0 auto;
+@media (max-width: 899px) {
+    .theme-category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .theme-category-grid {
+        grid-template-columns: 1fr;
     }
 }
 

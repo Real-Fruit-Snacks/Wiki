@@ -1,60 +1,388 @@
-/* Ayu Light Theme for Notes Wiki */
+/* Ayu Light Theme - Bright & Warm with Modern Earthy Tones */
 :root[data-theme="ayu-light"] {
     /* Background Colors */
-    --bg-primary: #fafafa;
-    --bg-secondary: #f8f8f8;
-    --bg-sidebar: #f3f3f3;
-    --bg-code: #f8f8f8;
-    --bg-selection: #86b30033;
-    --bg-dropdown: #f8f8f8;
-    --bg-hover: #ebebeb;
-    --bg-tag: #ebebeb;
+    --bg-primary: #fcfcfc;
+    --bg-secondary: #f8f9fa;
+    --bg-sidebar: #f3f4f5;
+    --bg-code: #f7f8f9;
+    --bg-selection: rgba(134, 179, 0, 0.2);
+    --bg-dropdown: #ffffff;
+    --bg-hover: rgba(65, 166, 217, 0.08);
+    --bg-tag: #e8eaed;
+    --bg-accent-subtle: rgba(65, 166, 217, 0.06);
+    --bg-modal: rgba(255, 255, 255, 0.98);
+    --bg-tooltip: #ffffff;
     
     /* Text Colors */
-    --text-primary: #5c6773;
-    --text-secondary: #828c99;
-    --text-muted: #abb0b6;
-    --text-heading: #fa8419;
+    --text-primary: #5c6166;
+    --text-secondary: #787c82;
+    --text-muted: #959da5;
+    --text-heading: #ff6a00;
+    --text-link: #41a6d9;
+    --text-code: #e7525d;
+    --text-inverse: #ffffff;
     
     /* Accent Colors */
     --accent-primary: #41a6d9;
     --accent-secondary: #86b300;
+    --accent-tertiary: #f29718;
     --accent-warning: #fa8419;
     --accent-error: #f07178;
-    --accent-danger: #f07178;
+    --accent-danger: #ff3333;
     --accent-info: #41a6d9;
     --accent-success: #86b300;
+    --accent-primary-light: rgba(65, 166, 217, 0.12);
+    --accent-secondary-light: rgba(134, 179, 0, 0.12);
+    
+    /* Earthy Warm Tones (2024 Trend) */
+    --earth-sand: #f9f5f0;
+    --earth-terracotta: #e77f67;
+    --earth-sage: #95b99c;
+    --earth-clay: #d4a574;
+    --earth-stone: #a8a29e;
     
     /* Border Colors */
-    --border-primary: #e7e8e9;
-    --border-secondary: #d8d8d8;
+    --border-primary: #e1e4e8;
+    --border-secondary: #eaecef;
+    --border-active: #41a6d9;
+    --border-focus: rgba(65, 166, 217, 0.5);
     
     /* Button Colors */
-    --button-bg: #f8f8f8;
-    --button-hover: #ebebeb;
-    --button-active: #41a6d9;
+    --button-bg: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+    --button-hover: linear-gradient(180deg, #fafbfc 0%, #f3f4f5 100%);
+    --button-active: var(--accent-primary);
+    --button-text: var(--text-primary);
+    --button-shadow: 0 1px 3px rgba(92, 97, 102, 0.08);
     
     /* Badge Colors */
-    --badge-bg: #f07178;
-    --badge-text: #fafafa;
+    --badge-bg: var(--accent-error);
+    --badge-text: #ffffff;
+    --badge-glow: 0 2px 8px rgba(240, 113, 120, 0.3);
     
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgba(92, 103, 115, 0.1);
-    --shadow-md: 0 4px 6px -1px rgba(92, 103, 115, 0.15), 0 2px 4px -1px rgba(92, 103, 115, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(92, 103, 115, 0.2), 0 4px 6px -2px rgba(92, 103, 115, 0.15);
-    --shadow-xl: 0 20px 25px -5px rgba(92, 103, 115, 0.25), 0 10px 10px -5px rgba(92, 103, 115, 0.2);
+    /* Shadows (Softer & Warmer) */
+    --shadow-sm: 0 1px 2px 0 rgba(92, 97, 102, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(92, 97, 102, 0.08), 0 2px 4px -1px rgba(92, 97, 102, 0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(92, 97, 102, 0.1), 0 4px 6px -2px rgba(92, 97, 102, 0.06);
+    --shadow-xl: 0 20px 25px -5px rgba(92, 97, 102, 0.12), 0 10px 10px -5px rgba(92, 97, 102, 0.08);
+    --shadow-glow: 0 0 20px rgba(65, 166, 217, 0.2);
+    --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.04);
+    
+    /* Special Effects */
+    --gradient-subtle: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, transparent 100%);
+    --gradient-warm: linear-gradient(135deg, #ff6a00 0%, #fa8419 50%, #f29718 100%);
+    --gradient-nature: linear-gradient(135deg, #86b300 0%, #41a6d9 100%);
+    --animation-duration: 0.2s;
+    --transition-fast: 0.15s ease-out;
+    --transition-normal: 0.25s ease-out;
+    
+    /* Other */
+    --accent-color-alpha: rgba(65, 166, 217, 0.1);
+    --bg-code-block: #f7f8f9;
+    --scrollbar-bg: #f8f9fa;
+    --scrollbar-thumb: #d1d5da;
+    --scrollbar-thumb-hover: #41a6d9;
+    --input-bg: #ffffff;
+    --input-border: #e1e4e8;
+    --focus-ring: 0 0 0 3px rgba(65, 166, 217, 0.2);
 }
 
-/* Syntax Highlighting - Ayu Light */
+/* Modern Light Aesthetics with Warmth */
+:root[data-theme="ayu-light"] .header {
+    background: linear-gradient(180deg, #ffffff 0%, var(--earth-sand) 100%);
+    border-bottom: 1px solid var(--border-primary);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+:root[data-theme="ayu-light"] .sidebar {
+    background: linear-gradient(180deg, var(--bg-sidebar) 0%, var(--earth-sand) 100%);
+    border-right: 1px solid var(--border-primary);
+    box-shadow: 1px 0 3px rgba(0, 0, 0, 0.03);
+}
+
+:root[data-theme="ayu-light"] .site-title {
+    color: var(--text-heading);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    background: var(--gradient-warm);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+:root[data-theme="ayu-light"] .tab {
+    background: var(--button-bg);
+    border: 1px solid var(--border-secondary);
+    border-radius: 8px 8px 0 0;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="ayu-light"] .tab::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: transparent;
+    transition: background var(--transition-fast);
+}
+
+:root[data-theme="ayu-light"] .tab.active {
+    background: #ffffff;
+    border-color: var(--accent-primary);
+    border-bottom-color: transparent;
+    box-shadow: 0 2px 8px rgba(65, 166, 217, 0.12);
+}
+
+:root[data-theme="ayu-light"] .tab.active::after {
+    background: linear-gradient(90deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+}
+
+:root[data-theme="ayu-light"] .tab:hover:not(.active) {
+    background: #ffffff;
+    border-color: var(--border-primary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+:root[data-theme="ayu-light"] .tab:hover:not(.active)::after {
+    background: linear-gradient(90deg, var(--accent-primary) 0%, transparent 100%);
+}
+
+:root[data-theme="ayu-light"] .icon-button {
+    background: var(--button-bg);
+    border: 1px solid var(--border-secondary);
+    border-radius: 6px;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+    color: var(--text-secondary);
+}
+
+:root[data-theme="ayu-light"] .icon-button:hover {
+    background: #ffffff;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px var(--accent-primary-light), var(--shadow-md);
+    color: var(--accent-primary);
+    transform: translateY(-1px);
+}
+
+:root[data-theme="ayu-light"] .main-content {
+    background: 
+        radial-gradient(ellipse at 30% 30%, var(--earth-sand) 0%, transparent 40%),
+        radial-gradient(ellipse at 70% 70%, rgba(134, 179, 0, 0.03) 0%, transparent 50%),
+        linear-gradient(180deg, var(--bg-primary) 0%, var(--earth-sand) 100%);
+    min-height: 100vh;
+}
+
+:root[data-theme="ayu-light"] .note-content {
+    background: #ffffff;
+    border: 1px solid var(--border-secondary);
+    border-radius: 12px;
+    padding: 3rem;
+    margin: 1.5rem;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    transition: all var(--transition-normal);
+    overflow: hidden;
+}
+
+:root[data-theme="ayu-light"] .note-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-nature);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+:root[data-theme="ayu-light"] .note-content:hover {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--border-primary);
+}
+
+:root[data-theme="ayu-light"] .note-content:hover::before {
+    opacity: 1;
+}
+
+:root[data-theme="ayu-light"] .note-content h1,
+:root[data-theme="ayu-light"] .note-content h2,
+:root[data-theme="ayu-light"] .note-content h3 {
+    color: var(--text-heading);
+    font-weight: 700;
+    position: relative;
+    margin-top: 2em;
+    margin-bottom: 0.75em;
+}
+
+:root[data-theme="ayu-light"] .note-content h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    background: var(--gradient-warm);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding-bottom: 0.3em;
+    border-bottom: 2px solid var(--earth-clay);
+}
+
+:root[data-theme="ayu-light"] .note-content h2 {
+    font-size: 1.75em;
+    line-height: 1.3;
+    color: var(--earth-terracotta);
+}
+
+:root[data-theme="ayu-light"] .note-content h3 {
+    font-size: 1.375em;
+    line-height: 1.4;
+    color: #fa8419;
+}
+
+:root[data-theme="ayu-light"] .code-block {
+    background: var(--bg-code);
+    border: 1px solid var(--border-secondary);
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    margin: 1.5em 0;
+    border-left: 4px solid var(--accent-secondary);
+}
+
+:root[data-theme="ayu-light"] .code-block:hover {
+    box-shadow: var(--shadow-md);
+    border-left-color: var(--accent-primary);
+}
+
+:root[data-theme="ayu-light"] .search-result-item {
+    background: #ffffff;
+    border: 1px solid var(--border-secondary);
+    border-radius: 8px;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-sm);
+    border-left: 3px solid transparent;
+}
+
+:root[data-theme="ayu-light"] .search-result-item:hover {
+    border-color: var(--accent-primary);
+    border-left-color: var(--accent-primary);
+    box-shadow: var(--shadow-md);
+    transform: translateX(2px);
+    background: linear-gradient(90deg, var(--accent-primary-light) 0%, #ffffff 10%);
+}
+
+:root[data-theme="ayu-light"] .dropdown {
+    background: #ffffff;
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+    box-shadow: var(--shadow-lg);
+}
+
+:root[data-theme="ayu-light"] .context-switcher button {
+    background: var(--button-bg);
+    border: 1px solid var(--border-secondary);
+    border-radius: 6px;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-sm);
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="ayu-light"] .context-switcher button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, var(--accent-primary-light), transparent);
+    transition: left 0.5s;
+}
+
+:root[data-theme="ayu-light"] .context-switcher button:hover::before {
+    left: 100%;
+}
+
+:root[data-theme="ayu-light"] .context-switcher button.active {
+    background: var(--gradient-nature);
+    border-color: transparent;
+    color: #ffffff;
+    box-shadow: var(--shadow-md), var(--shadow-glow);
+    font-weight: 600;
+}
+
+:root[data-theme="ayu-light"] .search-box {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-sm);
+}
+
+:root[data-theme="ayu-light"] .search-box:focus {
+    border-color: var(--accent-primary);
+    box-shadow: var(--focus-ring);
+    background: linear-gradient(180deg, #ffffff 0%, var(--accent-primary-light) 100%);
+}
+
+:root[data-theme="ayu-light"] a {
+    color: var(--text-link);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all var(--transition-fast);
+}
+
+:root[data-theme="ayu-light"] a:hover {
+    color: #2589bd;
+    border-bottom-color: currentColor;
+}
+
+:root[data-theme="ayu-light"] .modal-overlay {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+:root[data-theme="ayu-light"] .modal-content {
+    background: var(--bg-modal);
+    border: 1px solid var(--border-primary);
+    border-radius: 12px;
+    box-shadow: var(--shadow-xl);
+    border-top: 3px solid var(--gradient-warm);
+}
+
+:root[data-theme="ayu-light"] .badge {
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    box-shadow: var(--badge-glow);
+    font-weight: 600;
+    letter-spacing: 0.025em;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+:root[data-theme="ayu-light"] .badge:hover {
+    transform: translateY(-1px) scale(1.05);
+    box-shadow: var(--shadow-md), var(--badge-glow);
+}
+
+/* Enhanced Syntax Highlighting with Warm Tones */
 :root[data-theme="ayu-light"] .token.comment,
 :root[data-theme="ayu-light"] .token.prolog,
 :root[data-theme="ayu-light"] .token.doctype,
 :root[data-theme="ayu-light"] .token.cdata {
-    color: #abb0b6;
+    color: #959da5;
+    font-style: italic;
 }
 
 :root[data-theme="ayu-light"] .token.punctuation {
-    color: #5c6773;
+    color: #5c6166;
+}
+
+:root[data-theme="ayu-light"] .token.namespace {
+    opacity: 0.7;
 }
 
 :root[data-theme="ayu-light"] .token.property,
@@ -88,7 +416,7 @@
 :root[data-theme="ayu-light"] .token.atrule,
 :root[data-theme="ayu-light"] .token.attr-value,
 :root[data-theme="ayu-light"] .token.keyword {
-    color: #ff6a00;
+    color: #fa8419;
 }
 
 :root[data-theme="ayu-light"] .token.function,
@@ -99,24 +427,89 @@
 :root[data-theme="ayu-light"] .token.regex,
 :root[data-theme="ayu-light"] .token.important,
 :root[data-theme="ayu-light"] .token.variable {
-    color: #fa8419;
+    color: var(--earth-terracotta);
 }
 
-/* Scrollbar Ayu Light Theme */
+:root[data-theme="ayu-light"] .token.important,
+:root[data-theme="ayu-light"] .token.bold {
+    font-weight: bold;
+}
+
+:root[data-theme="ayu-light"] .token.italic {
+    font-style: italic;
+}
+
+:root[data-theme="ayu-light"] .token.entity {
+    cursor: help;
+}
+
+/* Modern Scrollbar with Warm Tones */
+:root[data-theme="ayu-light"] ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
 :root[data-theme="ayu-light"] ::-webkit-scrollbar-track {
-    background: var(--bg-primary);
+    background: var(--scrollbar-bg);
+    border-radius: 5px;
 }
 
 :root[data-theme="ayu-light"] ::-webkit-scrollbar-thumb {
-    background: #d8d8d8;
-    border: 3px solid var(--bg-primary);
+    background: var(--scrollbar-thumb);
+    border: 2px solid var(--scrollbar-bg);
+    border-radius: 5px;
+    transition: background var(--transition-fast);
 }
 
 :root[data-theme="ayu-light"] ::-webkit-scrollbar-thumb:hover {
-    background: #c8c8c8;
+    background: var(--scrollbar-thumb-hover);
 }
 
-/* Firefox Scrollbar Ayu Light Theme */
+/* Firefox Scrollbar */
 :root[data-theme="ayu-light"] * {
-    scrollbar-color: #d8d8d8 var(--bg-primary);
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-bg);
+}
+
+/* Selection Styling */
+:root[data-theme="ayu-light"] ::selection {
+    background: var(--bg-selection);
+    color: var(--text-primary);
+}
+
+/* Focus Visible */
+:root[data-theme="ayu-light"] :focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+}
+
+/* Earthy Hover Effects */
+:root[data-theme="ayu-light"] .hoverable {
+    transition: all var(--transition-normal);
+}
+
+:root[data-theme="ayu-light"] .hoverable:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Special Earth-Tone Accents */
+:root[data-theme="ayu-light"] blockquote {
+    border-left: 4px solid var(--earth-terracotta);
+    background: linear-gradient(90deg, var(--earth-sand) 0%, transparent 100%);
+}
+
+:root[data-theme="ayu-light"] .callout-info {
+    background: linear-gradient(135deg, var(--accent-primary-light) 0%, var(--earth-sand) 100%);
+    border-left: 4px solid var(--accent-primary);
+}
+
+:root[data-theme="ayu-light"] .callout-warning {
+    background: linear-gradient(135deg, rgba(250, 132, 25, 0.1) 0%, var(--earth-sand) 100%);
+    border-left: 4px solid var(--accent-warning);
+}
+
+:root[data-theme="ayu-light"] .callout-success {
+    background: linear-gradient(135deg, var(--accent-secondary-light) 0%, var(--earth-sand) 100%);
+    border-left: 4px solid var(--accent-secondary);
 }

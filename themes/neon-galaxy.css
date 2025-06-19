@@ -212,3 +212,195 @@
     color: #ff0066;
     text-shadow: 0 0 5px rgba(255, 0, 102, 0.5);
 }
+
+/* Enhanced Neon Galaxy Effects */
+:root[data-theme="neon-galaxy"] {
+    --neon-glow-cyan: 0 0 20px rgba(0, 255, 204, 0.8), 0 0 40px rgba(0, 255, 204, 0.6);
+    --neon-glow-pink: 0 0 20px rgba(255, 0, 127, 0.8), 0 0 40px rgba(255, 0, 127, 0.6);
+    --neon-glow-yellow: 0 0 20px rgba(255, 204, 0, 0.8), 0 0 40px rgba(255, 204, 0, 0.6);
+}
+
+/* Animated starfield background */
+:root[data-theme="neon-galaxy"] .main-content::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background-image: 
+        radial-gradient(2px 2px at 20% 30%, white, transparent),
+        radial-gradient(2px 2px at 60% 70%, white, transparent),
+        radial-gradient(1px 1px at 50% 50%, white, transparent),
+        radial-gradient(1px 1px at 80% 20%, white, transparent);
+    background-size: 200px 200px;
+    opacity: 0.15;
+    animation: starfield 120s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes starfield {
+    from { transform: translate(0, 0); }
+    to { transform: translate(-100px, -100px); }
+}
+
+/* Neon flicker effect for active elements */
+@keyframes neon-flicker {
+    0%, 100% { opacity: 1; filter: brightness(1); }
+    41% { opacity: 1; filter: brightness(1); }
+    42% { opacity: 0.8; filter: brightness(0.8); }
+    43% { opacity: 1; filter: brightness(1); }
+    91% { opacity: 1; filter: brightness(1); }
+    92% { opacity: 0.8; filter: brightness(0.8); }
+    93% { opacity: 1; filter: brightness(1); }
+}
+
+:root[data-theme="neon-galaxy"] .tab.active {
+    animation: neon-pulse 2s ease-in-out infinite, neon-flicker 10s linear infinite;
+}
+
+/* Glowing borders on interactive elements */
+:root[data-theme="neon-galaxy"] .search-input:focus {
+    border-color: #00ffcc;
+    box-shadow: var(--neon-glow-cyan);
+    animation: border-pulse 2s ease-in-out infinite;
+}
+
+@keyframes border-pulse {
+    0%, 100% { 
+        border-color: #00ffcc;
+        box-shadow: var(--neon-glow-cyan);
+    }
+    50% { 
+        border-color: #ff007f;
+        box-shadow: var(--neon-glow-pink);
+    }
+}
+
+/* Neon text glow on hover */
+:root[data-theme="neon-galaxy"] a:hover,
+:root[data-theme="neon-galaxy"] .tree-item:hover .tree-item-content {
+    color: #00ffcc;
+    text-shadow: var(--neon-glow-cyan);
+    transition: all 0.3s ease;
+}
+
+/* Animated gradient borders */
+:root[data-theme="neon-galaxy"] .note-content pre {
+    position: relative;
+    background: #1a1a3a;
+    padding: 1.5rem;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+:root[data-theme="neon-galaxy"] .note-content pre::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #00ffcc, #ff007f, #ffcc00, #00ccff, #00ff66);
+    border-radius: 8px;
+    animation: gradient-rotate 4s linear infinite;
+    z-index: -1;
+}
+
+@keyframes gradient-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Neon particle effect on buttons */
+:root[data-theme="neon-galaxy"] .button-primary {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #00ffcc, #ff007f);
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="neon-galaxy"] .button-primary::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+:root[data-theme="neon-galaxy"] .button-primary:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* Glowing scrollbar */
+:root[data-theme="neon-galaxy"] ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #00ffcc, #ff007f);
+    box-shadow: var(--neon-glow-cyan);
+}
+
+/* Matrix-style code rain effect for code blocks */
+:root[data-theme="neon-galaxy"] .note-content pre code {
+    position: relative;
+    background: transparent;
+}
+
+:root[data-theme="neon-galaxy"] .note-content pre code::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(0deg, transparent 0%, rgba(0, 255, 204, 0.03) 50%, transparent 100%);
+    animation: code-scan 8s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes code-scan {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+/* Holographic effect for badges */
+:root[data-theme="neon-galaxy"] .tag {
+    background: linear-gradient(45deg, #00ffcc, #ff007f, #ffcc00, #00ccff);
+    background-size: 300% 300%;
+    animation: holographic 4s ease infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes holographic {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Neon grid background for sidebar */
+:root[data-theme="neon-galaxy"] .sidebar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(rgba(0, 255, 204, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 204, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: grid-move 20s linear infinite;
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+@keyframes grid-move {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}

@@ -1,60 +1,101 @@
-/* HackTheBox Theme for Notes Wiki */
+/* HackTheBox Theme - Elite Hacker Terminal Edition */
 :root[data-theme="hackthebox"] {
     /* Background Colors */
-    --bg-primary: #1a2332;
+    --bg-primary: #0a0e1b;
     --bg-secondary: #111927;
-    --bg-sidebar: #141d2b;
-    --bg-code: #0e1520;
-    --bg-selection: #313f55;
+    --bg-sidebar: #0d1117;
+    --bg-code: #040711;
+    --bg-selection: rgba(159, 239, 0, 0.2);
     --bg-dropdown: #111927;
-    --bg-hover: #313f55;
-    --bg-tag: #313f55;
+    --bg-hover: rgba(159, 239, 0, 0.05);
+    --bg-tag: #1a2332;
+    --bg-modal: #0a0e1b;
+    --bg-input: #111927;
+    --bg-tooltip: #9fef00;
     
     /* Text Colors */
-    --text-primary: #a4b1cd;
-    --text-secondary: #c5d1eb;
-    --text-muted: #7d8ca8;
-    --text-heading: #c5d1eb;
+    --text-primary: #c9d1d9;
+    --text-secondary: #a4b1cd;
+    --text-muted: #6e7681;
+    --text-heading: #9fef00;
+    --text-inverse: #0a0e1b;
+    --text-link: #00d9ff;
+    --text-code: #9fef00;
+    --text-selection: #c9d1d9;
     
-    /* Accent Colors */
+    /* Accent Colors - Hacker Palette */
     --accent-primary: #9fef00;
-    --accent-secondary: #2ee7b6;
-    --accent-warning: #c5f467;
+    --accent-secondary: #00d9ff;
+    --accent-warning: #ffb400;
     --accent-error: #ff3e3e;
-    --accent-danger: #ff3e3e;
-    --accent-info: #004cff;
+    --accent-info: #00a8ff;
     --accent-success: #9fef00;
+    --accent-primary-light: #c5f467;
+    --accent-secondary-light: #4dffff;
     
     /* Border Colors */
-    --border-primary: #313f55;
-    --border-secondary: #414f66;
+    --border-primary: #21262d;
+    --border-secondary: #30363d;
+    --border-active: var(--accent-primary);
+    --border-hover: #8b949e;
     
     /* Button Colors */
-    --button-bg: #313f55;
-    --button-hover: #414f66;
-    --button-active: #9fef00;
+    --button-bg: #1a2332;
+    --button-hover: #21262d;
+    --button-active: #30363d;
+    --button-text: var(--text-primary);
+    --button-border: var(--border-primary);
     
     /* Badge Colors */
-    --badge-bg: #9fef00;
-    --badge-text: #1a2332;
+    --badge-bg: var(--accent-primary);
+    --badge-text: #0a0e1b;
+    --badge-info-bg: var(--bg-tag);
+    --badge-info-text: var(--accent-primary);
     
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+    /* Shadows - Deep and Dark */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.8);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.8);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.9), 0 4px 6px rgba(0, 0, 0, 0.8);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.95), 0 10px 10px rgba(0, 0, 0, 0.9);
+    --shadow-focus: 0 0 0 3px rgba(159, 239, 0, 0.4);
+    --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+    
+    /* Interactive States */
+    --state-hover-bg: rgba(159, 239, 0, 0.1);
+    --state-active-bg: rgba(159, 239, 0, 0.2);
+    --state-selected-bg: var(--bg-selection);
+    --state-focus-border: var(--accent-primary);
+    --state-disabled-opacity: 0.4;
+    
+    /* Typography */
+    --font-mono: 'Fira Code', 'JetBrains Mono', 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --line-height-normal: 1.5;
+    --line-height-condensed: 1.25;
+    
+    /* Transitions */
+    --transition-fast: 100ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Other */
+    --accent-color-alpha: rgba(159, 239, 0, 0.1);
+    --bg-code-block: #040711;
+    --overlay-bg: rgba(0, 0, 0, 0.8);
+    --spinner-color: var(--accent-primary);
 }
 
-/* Syntax Highlighting - HackTheBox Theme */
+/* Syntax Highlighting - HackTheBox Terminal Theme */
 :root[data-theme="hackthebox"] .token.comment,
 :root[data-theme="hackthebox"] .token.prolog,
 :root[data-theme="hackthebox"] .token.doctype,
 :root[data-theme="hackthebox"] .token.cdata {
-    color: #7d8ca8;
+    color: #6e7681;
+    font-style: italic;
 }
 
 :root[data-theme="hackthebox"] .token.punctuation {
-    color: #a4b1cd;
+    color: #c9d1d9;
 }
 
 :root[data-theme="hackthebox"] .token.property,
@@ -65,6 +106,7 @@
 :root[data-theme="hackthebox"] .token.symbol,
 :root[data-theme="hackthebox"] .token.deleted {
     color: #ff3e3e;
+    font-weight: 600;
 }
 
 :root[data-theme="hackthebox"] .token.selector,
@@ -74,6 +116,7 @@
 :root[data-theme="hackthebox"] .token.builtin,
 :root[data-theme="hackthebox"] .token.inserted {
     color: #9fef00;
+    text-shadow: 0 0 3px rgba(159, 239, 0, 0.5);
 }
 
 :root[data-theme="hackthebox"] .token.operator,
@@ -81,25 +124,27 @@
 :root[data-theme="hackthebox"] .token.url,
 :root[data-theme="hackthebox"] .language-css .token.string,
 :root[data-theme="hackthebox"] .style .token.string {
-    color: #c5d1eb;
+    color: #00d9ff;
     background: transparent;
 }
 
 :root[data-theme="hackthebox"] .token.atrule,
 :root[data-theme="hackthebox"] .token.attr-value,
 :root[data-theme="hackthebox"] .token.keyword {
-    color: #004cff;
+    color: #00a8ff;
+    font-weight: 600;
 }
 
 :root[data-theme="hackthebox"] .token.function,
 :root[data-theme="hackthebox"] .token.class-name {
-    color: #2ee7b6;
+    color: #00d9ff;
+    font-weight: 600;
 }
 
 :root[data-theme="hackthebox"] .token.regex,
 :root[data-theme="hackthebox"] .token.important,
 :root[data-theme="hackthebox"] .token.variable {
-    color: #c5f467;
+    color: #ffb400;
 }
 
 /* Scrollbar HackTheBox Theme */
@@ -108,15 +153,264 @@
 }
 
 :root[data-theme="hackthebox"] ::-webkit-scrollbar-thumb {
-    background: #313f55;
-    border: 3px solid var(--bg-primary);
+    background: #30363d;
+    border: 2px solid var(--bg-primary);
+    border-radius: 2px;
 }
 
 :root[data-theme="hackthebox"] ::-webkit-scrollbar-thumb:hover {
-    background: #414f66;
+    background: #484f58;
 }
 
 /* Firefox Scrollbar HackTheBox Theme */
 :root[data-theme="hackthebox"] * {
-    scrollbar-color: #313f55 var(--bg-primary);
+    scrollbar-color: #30363d var(--bg-primary);
+}
+
+/* Terminal-like Effects */
+:root[data-theme="hackthebox"] body {
+    position: relative;
+    font-family: var(--font-mono);
+}
+
+/* Scanline effect */
+:root[data-theme="hackthebox"] body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        0deg,
+        transparent 0%,
+        rgba(159, 239, 0, 0.01) 50%,
+        transparent 100%
+    );
+    background-size: 100% 4px;
+    animation: hackthebox-scanline 8s linear infinite;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+@keyframes hackthebox-scanline {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100vh); }
+}
+
+/* Terminal glow effect */
+:root[data-theme="hackthebox"] .main-layout {
+    box-shadow: inset 0 0 100px rgba(159, 239, 0, 0.03);
+}
+
+/* Sidebar with terminal style */
+:root[data-theme="hackthebox"] .sidebar {
+    background: linear-gradient(180deg, #0d1117 0%, #0a0e1b 100%);
+    border-right: 1px solid var(--accent-primary);
+    box-shadow: 1px 0 10px rgba(159, 239, 0, 0.2);
+}
+
+/* Tab bar with terminal aesthetics */
+:root[data-theme="hackthebox"] .tab-bar {
+    background: #0d1117;
+    border-bottom: 1px solid var(--accent-primary);
+    box-shadow: 0 1px 10px rgba(159, 239, 0, 0.1);
+}
+
+:root[data-theme="hackthebox"] .tab {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+:root[data-theme="hackthebox"] .tab.active {
+    background: var(--bg-primary);
+    border-color: var(--accent-primary);
+    border-bottom-color: var(--bg-primary);
+    color: var(--accent-primary);
+    text-shadow: 0 0 5px rgba(159, 239, 0, 0.5);
+}
+
+/* Terminal-style buttons */
+:root[data-theme="hackthebox"] .button,
+:root[data-theme="hackthebox"] button {
+    background: var(--button-bg);
+    border: 1px solid var(--accent-primary);
+    color: var(--accent-primary);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-base);
+}
+
+:root[data-theme="hackthebox"] .button::before,
+:root[data-theme="hackthebox"] button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(159, 239, 0, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+:root[data-theme="hackthebox"] .button:hover::before,
+:root[data-theme="hackthebox"] button:hover::before {
+    left: 100%;
+}
+
+:root[data-theme="hackthebox"] .button:hover,
+:root[data-theme="hackthebox"] button:hover {
+    background: var(--button-hover);
+    text-shadow: 0 0 5px rgba(159, 239, 0, 0.8);
+    box-shadow: 0 0 10px rgba(159, 239, 0, 0.3);
+}
+
+/* Code blocks with terminal look */
+:root[data-theme="hackthebox"] pre {
+    background: var(--bg-code-block);
+    border: 1px solid #30363d;
+    position: relative;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+/* Terminal prompt for code blocks */
+:root[data-theme="hackthebox"] pre::before {
+    content: 'root@hackthebox:~# ';
+    color: var(--accent-primary);
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: 600;
+    text-shadow: 0 0 5px rgba(159, 239, 0, 0.5);
+}
+
+/* Glowing links */
+:root[data-theme="hackthebox"] .note-content a {
+    color: var(--text-link);
+    text-decoration: none;
+    position: relative;
+    transition: all var(--transition-base);
+}
+
+:root[data-theme="hackthebox"] .note-content a:hover {
+    color: var(--accent-secondary);
+    text-shadow: 0 0 5px rgba(0, 217, 255, 0.8);
+}
+
+/* Hacker-style badges */
+:root[data-theme="hackthebox"] .badge {
+    background: transparent;
+    color: var(--accent-primary);
+    border: 1px solid var(--accent-primary);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 0 3px rgba(159, 239, 0, 0.5);
+}
+
+/* Search input with terminal style */
+:root[data-theme="hackthebox"] .search-input {
+    background: var(--bg-input);
+    border: 1px solid #30363d;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+}
+
+:root[data-theme="hackthebox"] .search-input:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 1px var(--accent-primary), 0 0 20px rgba(159, 239, 0, 0.2);
+}
+
+/* Settings with cyber look */
+:root[data-theme="hackthebox"] .settings-section {
+    background: rgba(17, 25, 39, 0.5);
+    border: 1px solid #30363d;
+    backdrop-filter: blur(10px);
+}
+
+/* Tree items with hacker styling */
+:root[data-theme="hackthebox"] .tree-item:hover,
+:root[data-theme="hackthebox"] .search-result:hover,
+:root[data-theme="hackthebox"] .recent-file:hover {
+    background: var(--state-hover-bg);
+    border-left: 2px solid var(--accent-primary);
+    padding-left: calc(var(--tree-indent) - 2px);
+}
+
+/* Headings with terminal style */
+:root[data-theme="hackthebox"] .note-content h1,
+:root[data-theme="hackthebox"] .note-content h2,
+:root[data-theme="hackthebox"] .note-content h3 {
+    color: var(--text-heading);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(159, 239, 0, 0.3);
+}
+
+:root[data-theme="hackthebox"] .note-content h1::before {
+    content: '[+] ';
+    color: var(--accent-primary);
+}
+
+:root[data-theme="hackthebox"] .note-content h2::before {
+    content: '[-] ';
+    color: var(--accent-secondary);
+}
+
+:root[data-theme="hackthebox"] .note-content h3::before {
+    content: '[*] ';
+    color: var(--accent-warning);
+}
+
+/* Selection styling */
+:root[data-theme="hackthebox"] ::selection {
+    background: var(--bg-selection);
+    color: var(--text-selection);
+}
+
+/* Focus states with glow */
+:root[data-theme="hackthebox"] *:focus-visible {
+    outline: 1px solid var(--accent-primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 10px rgba(159, 239, 0, 0.4);
+}
+
+/* Cursor blink effect */
+@keyframes hackthebox-blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+:root[data-theme="hackthebox"] .search-input::after {
+    content: '_';
+    color: var(--accent-primary);
+    animation: hackthebox-blink 1s infinite;
+}
+
+/* Matrix rain effect for loading */
+:root[data-theme="hackthebox"] .spinner {
+    border-color: transparent;
+    border-top-color: var(--accent-primary);
+    box-shadow: 0 0 20px rgba(159, 239, 0, 0.5);
+}
+
+/* Terminal typing effect for tooltips */
+:root[data-theme="hackthebox"] [data-tooltip]::after {
+    background: #000;
+    color: var(--accent-primary);
+    border: 1px solid var(--accent-primary);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 0 10px rgba(159, 239, 0, 0.3);
 }

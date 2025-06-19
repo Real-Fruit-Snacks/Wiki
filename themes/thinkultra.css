@@ -120,3 +120,261 @@
 :root[data-theme="thinkultra"] * {
     scrollbar-color: #4D4D4D var(--bg-primary);
 }
+
+/* Enhanced ThinkPad-Inspired Professional Effects */
+:root[data-theme="thinkultra"] {
+    --trackpoint-red: #E60012;
+    --ibm-blue: #064A89;
+    --led-green: #00FF00;
+    --carbon-texture: repeating-linear-gradient(
+        45deg,
+        #1a1a1a,
+        #1a1a1a 2px,
+        #000000 2px,
+        #000000 4px
+    );
+}
+
+/* Carbon fiber texture overlay */
+:root[data-theme="thinkultra"] body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--carbon-texture);
+    opacity: 0.05;
+    pointer-events: none;
+}
+
+/* Professional headers with ThinkPad accent */
+:root[data-theme="thinkultra"] h1,
+:root[data-theme="thinkultra"] h2,
+:root[data-theme="thinkultra"] h3 {
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    position: relative;
+}
+
+:root[data-theme="thinkultra"] h1::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    background: var(--trackpoint-red);
+    border-radius: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 0 10px var(--trackpoint-red);
+}
+
+:root[data-theme="thinkultra"] h2::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: var(--trackpoint-red);
+    transition: width 0.3s ease;
+}
+
+:root[data-theme="thinkultra"] h2:hover::after {
+    width: 100%;
+}
+
+/* Industrial code blocks */
+:root[data-theme="thinkultra"] pre {
+    background: #0a0a0a;
+    border: 1px solid #333333;
+    box-shadow: 
+        inset 0 1px 3px rgba(0, 0, 0, 0.5),
+        0 1px 0 rgba(255, 255, 255, 0.05);
+    position: relative;
+}
+
+:root[data-theme="thinkultra"] pre::before {
+    content: 'CODE';
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 10px;
+    color: var(--ibm-blue);
+    letter-spacing: 2px;
+    opacity: 0.5;
+}
+
+/* LED status indicators for active elements */
+:root[data-theme="thinkultra"] .tab.active::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 6px;
+    height: 6px;
+    background: var(--led-green);
+    border-radius: 50%;
+    transform: translateY(-50%);
+    box-shadow: 
+        0 0 5px var(--led-green),
+        0 0 10px var(--led-green);
+    animation: ledBlink 2s ease-in-out infinite;
+}
+
+@keyframes ledBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* Professional links with underline */
+:root[data-theme="thinkultra"] a {
+    color: var(--ibm-blue);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+:root[data-theme="thinkultra"] a:hover {
+    color: var(--trackpoint-red);
+    border-bottom-color: var(--trackpoint-red);
+}
+
+/* ThinkPad-style buttons */
+:root[data-theme="thinkultra"] button {
+    background: #1a1a1a;
+    border: 1px solid #4D4D4D;
+    color: #E8E8E8;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="thinkultra"] button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(230, 0, 18, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+:root[data-theme="thinkultra"] button:hover {
+    background: #333333;
+    border-color: var(--trackpoint-red);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(230, 0, 18, 0.3);
+}
+
+:root[data-theme="thinkultra"] button:hover::before {
+    left: 100%;
+}
+
+:root[data-theme="thinkultra"] button:active {
+    transform: translateY(0);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Professional sidebar with accent stripe */
+:root[data-theme="thinkultra"] .sidebar {
+    background: #0a0a0a;
+    border-right: 3px solid var(--trackpoint-red);
+    position: relative;
+}
+
+:root[data-theme="thinkultra"] .sidebar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(180deg, 
+        var(--trackpoint-red) 0%, 
+        transparent 50%, 
+        var(--trackpoint-red) 100%);
+    animation: scanLine 10s linear infinite;
+}
+
+@keyframes scanLine {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+/* Industrial input fields */
+:root[data-theme="thinkultra"] input,
+:root[data-theme="thinkultra"] textarea {
+    background: #0a0a0a;
+    border: 1px solid #4D4D4D;
+    color: #E8E8E8;
+}
+
+:root[data-theme="thinkultra"] input:focus,
+:root[data-theme="thinkultra"] textarea:focus {
+    border-color: var(--ibm-blue);
+    box-shadow: 
+        0 0 0 2px rgba(6, 74, 137, 0.3),
+        inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Professional tags */
+:root[data-theme="thinkultra"] .tag {
+    background: #1a1a1a;
+    border: 1px solid #4D4D4D;
+    color: #B0B0B0;
+    font-size: 0.85em;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+}
+
+:root[data-theme="thinkultra"] .tag:hover {
+    border-color: var(--trackpoint-red);
+    color: #E8E8E8;
+    box-shadow: 0 0 5px rgba(230, 0, 18, 0.3);
+}
+
+/* Professional selection */
+:root[data-theme="thinkultra"] ::selection {
+    background: rgba(230, 0, 18, 0.3);
+    color: #FFFFFF;
+}
+
+/* File tree items with folder icons */
+:root[data-theme="thinkultra"] .file-item {
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+:root[data-theme="thinkultra"] .file-item:hover {
+    background: #1a1a1a;
+    border-left: 3px solid var(--trackpoint-red);
+    padding-left: 12px;
+}
+
+/* ThinkPad-style tooltips */
+:root[data-theme="thinkultra"] [title] {
+    position: relative;
+}
+
+:root[data-theme="thinkultra"] [title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333333;
+    color: #E8E8E8;
+    padding: 4px 8px;
+    border: 1px solid var(--trackpoint-red);
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+}

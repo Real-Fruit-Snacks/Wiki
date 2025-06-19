@@ -1,59 +1,142 @@
-/* Holographic Blue Theme - Futuristic & Sci-Fi */
+/* Holographic Blue Theme - Advanced Futuristic Interface */
 :root[data-theme="holographic-blue"] {
     /* Background Colors */
     --bg-primary: #050b1a;
     --bg-secondary: #0d1836;
     --bg-sidebar: #08102b;
-    --bg-code: #0d1836;
-    --bg-selection: rgba(0, 191, 255, 0.3);
+    --bg-code: #0a1429;
+    --bg-selection: rgba(0, 191, 255, 0.25);
     --bg-dropdown: #0d1836;
     --bg-hover: rgba(0, 191, 255, 0.1);
-    --bg-tag: #0d1836;
-    --bg-accent-subtle: rgba(0, 191, 255, 0.1);
+    --bg-tag: rgba(0, 191, 255, 0.15);
+    --bg-modal: rgba(5, 11, 26, 0.95);
+    --bg-input: rgba(13, 24, 54, 0.8);
+    --bg-tooltip: #00bfff;
     
     /* Text Colors */
     --text-primary: #e6f7ff;
     --text-secondary: #b3e6ff;
     --text-muted: #7cc7ff;
-    --text-heading: #00bfff;
+    --text-heading: #00e6ff;
+    --text-inverse: #050b1a;
+    --text-link: #00bfff;
+    --text-code: #4dffff;
+    --text-selection: #ffffff;
     
-    /* Accent Colors */
+    /* Accent Colors - Holographic Spectrum */
     --accent-primary: #00bfff;
-    --accent-secondary: #4da6ff;
+    --accent-secondary: #00e6ff;
     --accent-warning: #ffb366;
     --accent-error: #ff4757;
-    --accent-info: #00e6ff;
+    --accent-info: #66d9ff;
     --accent-success: #00ff88;
-    --accent-primary-light: rgba(0, 191, 255, 0.2);
+    --accent-primary-light: #4dffff;
+    --accent-secondary-light: #80ffff;
     
     /* Border Colors */
-    --border-primary: #00bfff;
-    --border-secondary: #4da6ff;
+    --border-primary: rgba(0, 191, 255, 0.5);
+    --border-secondary: rgba(77, 166, 255, 0.3);
+    --border-active: #00e6ff;
+    --border-hover: #4dffff;
     
     /* Button Colors */
-    --button-bg: linear-gradient(135deg, #00bfff, #4da6ff);
-    --button-hover: linear-gradient(135deg, #4da6ff, #00e6ff);
-    --button-active: #00bfff;
+    --button-bg: linear-gradient(135deg, rgba(0, 191, 255, 0.2), rgba(77, 166, 255, 0.15));
+    --button-hover: linear-gradient(135deg, rgba(0, 191, 255, 0.3), rgba(77, 166, 255, 0.25));
+    --button-active: linear-gradient(135deg, rgba(0, 191, 255, 0.4), rgba(77, 166, 255, 0.35));
+    --button-text: var(--text-primary);
+    --button-border: var(--border-primary);
     
     /* Badge Colors */
-    --badge-bg: #00bfff;
+    --badge-bg: linear-gradient(135deg, #00bfff, #00e6ff);
     --badge-text: #050b1a;
+    --badge-info-bg: var(--bg-tag);
+    --badge-info-text: var(--accent-primary);
     
-    /* Shadows */
+    /* Shadows - Holographic Glow */
     --shadow-sm: 0 2px 8px rgba(0, 191, 255, 0.3);
     --shadow-md: 0 4px 16px rgba(0, 191, 255, 0.4), 0 2px 8px rgba(77, 166, 255, 0.3);
     --shadow-lg: 0 8px 32px rgba(0, 191, 255, 0.5), 0 4px 16px rgba(77, 166, 255, 0.4);
     --shadow-xl: 0 16px 48px rgba(0, 191, 255, 0.6), 0 8px 24px rgba(77, 166, 255, 0.5);
+    --shadow-focus: 0 0 0 4px rgba(0, 191, 255, 0.4), 0 0 20px rgba(0, 191, 255, 0.6);
+    --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+    
+    /* Interactive States */
+    --state-hover-bg: rgba(0, 191, 255, 0.12);
+    --state-active-bg: rgba(0, 191, 255, 0.2);
+    --state-selected-bg: var(--bg-selection);
+    --state-focus-border: var(--accent-primary);
+    --state-disabled-opacity: 0.4;
+    
+    /* Typography */
+    --font-mono: 'Fira Code', 'JetBrains Mono', 'SF Mono', 'Cascadia Code', monospace;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --line-height-normal: 1.6;
+    --line-height-condensed: 1.3;
+    
+    /* Transitions */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
     
     /* Other */
     --accent-color-alpha: rgba(0, 191, 255, 0.1);
-    --bg-code-block: #0d1836;
+    --bg-code-block: rgba(10, 20, 41, 0.8);
+    --overlay-bg: rgba(5, 11, 26, 0.9);
+    --spinner-color: var(--accent-primary);
 }
 
-/* Futuristic holographic effects */
+/* Base holographic effects */
+:root[data-theme="holographic-blue"] body {
+    position: relative;
+    background: var(--bg-primary);
+}
+
+/* Holographic grid overlay */
+:root[data-theme="holographic-blue"] body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(rgba(0, 191, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 191, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: holographic-grid 20s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes holographic-grid {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+/* Holographic flicker effect */
+:root[data-theme="holographic-blue"] body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 191, 255, 0.02) 100%);
+    animation: holographic-flicker 3s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
+@keyframes holographic-flicker {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+/* Header with holographic shimmer */
 :root[data-theme="holographic-blue"] .header {
     background: linear-gradient(135deg, #050b1a 0%, #0d1836 50%, #050b1a 100%);
-    border-bottom: 2px solid #00bfff;
+    border-bottom: 2px solid transparent;
+    border-image: linear-gradient(90deg, transparent, #00bfff, #00e6ff, #00bfff, transparent) 1;
     box-shadow: 
         0 4px 24px rgba(0, 191, 255, 0.4),
         inset 0 1px 0 rgba(0, 191, 255, 0.3);
@@ -61,6 +144,7 @@
     overflow: hidden;
 }
 
+/* Animated scan line */
 :root[data-theme="holographic-blue"] .header::before {
     content: '';
     position: absolute;
@@ -83,14 +167,19 @@
     100% { left: 100%; }
 }
 
+/* Sidebar with depth effect */
 :root[data-theme="holographic-blue"] .sidebar {
-    background: linear-gradient(180deg, #08102b 0%, #0d1836 50%, #08102b 100%);
-    border-right: 2px solid #00bfff;
+    background: 
+        linear-gradient(180deg, rgba(8, 16, 43, 0.95) 0%, rgba(13, 24, 54, 0.95) 100%),
+        radial-gradient(ellipse at top right, rgba(0, 191, 255, 0.1) 0%, transparent 50%);
+    border-right: 1px solid var(--border-primary);
     box-shadow: 
         4px 0 16px rgba(0, 191, 255, 0.3),
         inset -1px 0 0 rgba(0, 191, 255, 0.2);
+    backdrop-filter: blur(10px);
 }
 
+/* Glowing site title */
 :root[data-theme="holographic-blue"] .site-title {
     background: linear-gradient(45deg, #00bfff, #4da6ff, #00e6ff, #00bfff);
     background-size: 300% 300%;
@@ -99,6 +188,8 @@
     background-clip: text;
     animation: holographic-shimmer 3s ease infinite;
     filter: drop-shadow(0 0 10px rgba(0, 191, 255, 0.8));
+    letter-spacing: 1px;
+    font-weight: 700;
 }
 
 @keyframes holographic-shimmer {
@@ -112,10 +203,12 @@
     }
 }
 
+/* Tab effects */
 :root[data-theme="holographic-blue"] .tab {
-    background: linear-gradient(135deg, #0d1836 0%, #1a2b4a 100%);
+    background: linear-gradient(135deg, rgba(13, 24, 54, 0.8) 0%, rgba(26, 43, 74, 0.8) 100%);
     border: 1px solid rgba(0, 191, 255, 0.3);
-    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    transition: all var(--transition-base);
     position: relative;
     overflow: hidden;
 }
@@ -127,7 +220,7 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0, 191, 255, 0.1), transparent);
+    background: linear-gradient(90deg, transparent, rgba(0, 191, 255, 0.2), transparent);
     transition: left 0.5s ease;
 }
 
@@ -136,21 +229,56 @@
 }
 
 :root[data-theme="holographic-blue"] .tab.active {
-    background: linear-gradient(135deg, #00bfff 0%, #4da6ff 100%);
-    color: #050b1a;
+    background: linear-gradient(135deg, rgba(0, 191, 255, 0.3) 0%, rgba(77, 166, 255, 0.25) 100%);
+    color: var(--text-primary);
     box-shadow: 
-        0 4px 20px rgba(0, 191, 255, 0.8),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        0 4px 20px rgba(0, 191, 255, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
     border: 1px solid rgba(0, 230, 255, 0.6);
+    text-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
 }
 
-:root[data-theme="holographic-blue"] .icon-button:hover {
-    background: linear-gradient(135deg, rgba(0, 191, 255, 0.2), rgba(77, 166, 255, 0.2));
-    box-shadow: 0 4px 16px rgba(0, 191, 255, 0.6);
+/* Holographic buttons */
+:root[data-theme="holographic-blue"] .button,
+:root[data-theme="holographic-blue"] button {
+    background: var(--button-bg);
+    border: 1px solid var(--border-primary);
+    backdrop-filter: blur(5px);
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-base);
+}
+
+:root[data-theme="holographic-blue"] .button::after,
+:root[data-theme="holographic-blue"] button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(0, 230, 255, 0.3) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    transition: all var(--transition-slow);
+}
+
+:root[data-theme="holographic-blue"] .button:hover::after,
+:root[data-theme="holographic-blue"] button:hover::after {
+    width: 200%;
+    height: 200%;
+}
+
+:root[data-theme="holographic-blue"] .button:hover,
+:root[data-theme="holographic-blue"] button:hover {
     transform: translateY(-2px);
-    border: 1px solid rgba(0, 191, 255, 0.4);
+    box-shadow: 
+        0 6px 20px rgba(0, 191, 255, 0.5),
+        0 3px 10px rgba(0, 230, 255, 0.4);
+    border-color: var(--border-active);
+    text-shadow: 0 0 5px rgba(0, 191, 255, 0.8);
 }
 
+/* Main content with holographic depth */
 :root[data-theme="holographic-blue"] .main-content {
     background: 
         radial-gradient(ellipse at 20% 30%, rgba(0, 191, 255, 0.05) 0%, transparent 60%),
@@ -158,6 +286,7 @@
         linear-gradient(180deg, transparent 0%, rgba(0, 191, 255, 0.02) 100%);
 }
 
+/* Holographic headings */
 :root[data-theme="holographic-blue"] .note-content h1,
 :root[data-theme="holographic-blue"] .note-content h2,
 :root[data-theme="holographic-blue"] .note-content h3 {
@@ -165,44 +294,76 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+    filter: drop-shadow(0 2px 4px rgba(0, 191, 255, 0.3));
     position: relative;
+    display: inline-block;
+    animation: holographic-text 5s ease-in-out infinite;
+}
+
+@keyframes holographic-text {
+    0%, 100% { filter: drop-shadow(0 2px 4px rgba(0, 191, 255, 0.3)) hue-rotate(0deg); }
+    50% { filter: drop-shadow(0 2px 8px rgba(0, 230, 255, 0.5)) hue-rotate(10deg); }
 }
 
 :root[data-theme="holographic-blue"] .note-content h1::after,
-:root[data-theme="holographic-blue"] .note-content h2::after,
-:root[data-theme="holographic-blue"] .note-content h3::after {
+:root[data-theme="holographic-blue"] .note-content h2::after {
     content: '';
     position: absolute;
-    bottom: -2px;
+    bottom: -4px;
     left: 0;
     width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, #00bfff, transparent);
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00bfff, #00e6ff, #00bfff, transparent);
+    animation: holographic-underline 3s ease-in-out infinite;
 }
 
-:root[data-theme="holographic-blue"] .search-result-item:hover {
-    background: linear-gradient(135deg, rgba(0, 191, 255, 0.1), rgba(77, 166, 255, 0.1));
-    border-left: 4px solid #00bfff;
-    box-shadow: 
-        0 4px 16px rgba(0, 191, 255, 0.3),
-        inset 0 0 20px rgba(0, 191, 255, 0.05);
+@keyframes holographic-underline {
+    0%, 100% { transform: scaleX(0.8); opacity: 0.8; }
+    50% { transform: scaleX(1); opacity: 1; }
 }
 
-:root[data-theme="holographic-blue"] .code-block {
-    border: 1px solid rgba(0, 191, 255, 0.3);
+/* Holographic code blocks */
+:root[data-theme="holographic-blue"] pre {
+    background: var(--bg-code-block);
+    border: 1px solid var(--border-primary);
     box-shadow: 
         0 4px 12px rgba(0, 191, 255, 0.2),
         inset 0 1px 0 rgba(0, 191, 255, 0.1);
+    backdrop-filter: blur(5px);
+    position: relative;
+    overflow: hidden;
 }
 
-/* Syntax Highlighting - Holographic Blue Theme */
+:root[data-theme="holographic-blue"] pre::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #00bfff, #00e6ff, #4dffff, #00bfff);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity var(--transition-base);
+    filter: blur(4px);
+}
+
+:root[data-theme="holographic-blue"] pre:hover::before {
+    opacity: 0.6;
+}
+
+/* Syntax Highlighting - Enhanced Holographic */
 :root[data-theme="holographic-blue"] .token.comment,
 :root[data-theme="holographic-blue"] .token.prolog,
 :root[data-theme="holographic-blue"] .token.doctype,
 :root[data-theme="holographic-blue"] .token.cdata {
     color: #7cc7ff;
     font-style: italic;
+    opacity: 0.8;
+}
+
+:root[data-theme="holographic-blue"] .token.punctuation {
+    color: #b3e6ff;
 }
 
 :root[data-theme="holographic-blue"] .token.property,
@@ -222,8 +383,8 @@
 :root[data-theme="holographic-blue"] .token.char,
 :root[data-theme="holographic-blue"] .token.builtin,
 :root[data-theme="holographic-blue"] .token.inserted {
-    color: #4da6ff;
-    text-shadow: 0 0 5px rgba(77, 166, 255, 0.5);
+    color: #4dffff;
+    text-shadow: 0 0 5px rgba(77, 255, 255, 0.5);
 }
 
 :root[data-theme="holographic-blue"] .token.operator,
@@ -240,12 +401,14 @@
 :root[data-theme="holographic-blue"] .token.keyword {
     color: #66d9ff;
     text-shadow: 0 0 5px rgba(102, 217, 255, 0.5);
+    font-weight: 600;
 }
 
 :root[data-theme="holographic-blue"] .token.function,
 :root[data-theme="holographic-blue"] .token.class-name {
     color: #99e6ff;
     text-shadow: 0 0 5px rgba(153, 230, 255, 0.5);
+    font-weight: 600;
 }
 
 :root[data-theme="holographic-blue"] .token.regex,
@@ -253,4 +416,123 @@
 :root[data-theme="holographic-blue"] .token.variable {
     color: #00ff88;
     text-shadow: 0 0 5px rgba(0, 255, 136, 0.5);
+}
+
+/* Scrollbar styling */
+:root[data-theme="holographic-blue"] ::-webkit-scrollbar-track {
+    background: rgba(5, 11, 26, 0.8);
+}
+
+:root[data-theme="holographic-blue"] ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #00bfff, #4da6ff);
+    border: 2px solid var(--bg-primary);
+    border-radius: 4px;
+}
+
+:root[data-theme="holographic-blue"] ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #4da6ff, #00e6ff);
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+}
+
+/* Firefox scrollbar */
+:root[data-theme="holographic-blue"] * {
+    scrollbar-color: #00bfff rgba(5, 11, 26, 0.8);
+}
+
+/* Links with holographic effect */
+:root[data-theme="holographic-blue"] .note-content a {
+    color: var(--text-link);
+    text-decoration: none;
+    position: relative;
+    transition: all var(--transition-base);
+}
+
+:root[data-theme="holographic-blue"] .note-content a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(90deg, #00bfff, #00e6ff);
+    box-shadow: 0 1px 4px rgba(0, 191, 255, 0.5);
+    transition: width var(--transition-base);
+}
+
+:root[data-theme="holographic-blue"] .note-content a:hover {
+    color: var(--accent-secondary);
+    text-shadow: 0 0 10px rgba(0, 230, 255, 0.5);
+}
+
+:root[data-theme="holographic-blue"] .note-content a:hover::after {
+    width: 100%;
+}
+
+/* Search input with holographic style */
+:root[data-theme="holographic-blue"] .search-input {
+    background: var(--bg-input);
+    border: 1px solid var(--border-primary);
+    backdrop-filter: blur(5px);
+    color: var(--text-primary);
+    transition: all var(--transition-base);
+}
+
+:root[data-theme="holographic-blue"] .search-input:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 
+        0 0 0 3px rgba(0, 191, 255, 0.2),
+        0 0 20px rgba(0, 191, 255, 0.3),
+        inset 0 0 10px rgba(0, 191, 255, 0.1);
+    background: rgba(13, 24, 54, 0.9);
+}
+
+/* Badges with holographic gradient */
+:root[data-theme="holographic-blue"] .badge {
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    box-shadow: 0 2px 8px rgba(0, 191, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Tree items with hover effect */
+:root[data-theme="holographic-blue"] .tree-item:hover,
+:root[data-theme="holographic-blue"] .search-result:hover,
+:root[data-theme="holographic-blue"] .recent-file:hover {
+    background: linear-gradient(90deg, rgba(0, 191, 255, 0.1) 0%, transparent 100%);
+    border-left: 3px solid var(--accent-primary);
+    padding-left: calc(var(--tree-indent) - 3px);
+    box-shadow: inset 0 0 20px rgba(0, 191, 255, 0.05);
+}
+
+/* Selection styling */
+:root[data-theme="holographic-blue"] ::selection {
+    background: var(--bg-selection);
+    color: var(--text-selection);
+    text-shadow: 0 0 2px rgba(0, 191, 255, 0.5);
+}
+
+/* Focus states */
+:root[data-theme="holographic-blue"] *:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+}
+
+/* Loading spinner */
+:root[data-theme="holographic-blue"] .spinner {
+    border-color: rgba(0, 191, 255, 0.2);
+    border-top-color: var(--accent-primary);
+    box-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
+}
+
+/* Tooltips */
+:root[data-theme="holographic-blue"] [data-tooltip]::after {
+    background: linear-gradient(135deg, #00bfff, #00e6ff);
+    color: var(--text-inverse);
+    box-shadow: 0 4px 12px rgba(0, 191, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    font-weight: 500;
 }

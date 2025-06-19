@@ -161,3 +161,234 @@
 :root[data-theme="sunset-dreams"] .token.variable {
     color: #ff3838;
 }
+
+/* Enhanced Sunset Animations and Effects */
+:root[data-theme="sunset-dreams"] {
+    --sunset-gradient-1: linear-gradient(135deg, #ff6b6b, #ff9a00, #feca57);
+    --sunset-gradient-2: linear-gradient(45deg, #5f27cd, #ff6b6b, #ff9a00);
+    --sun-glow: 0 0 60px rgba(255, 154, 0, 0.6);
+    --twilight-glow: 0 0 40px rgba(95, 39, 205, 0.4);
+}
+
+/* Animated sunset sky background */
+:root[data-theme="sunset-dreams"] body::before,
+:root[data-theme="sunset-dreams"] body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+:root[data-theme="sunset-dreams"] body::before {
+    background: 
+        radial-gradient(circle at 30% 20%, rgba(255, 107, 107, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 70% 40%, rgba(255, 154, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 50% 60%, rgba(254, 202, 87, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(95, 39, 205, 0.05) 0%, transparent 70%);
+    animation: sunsetSky 30s ease-in-out infinite;
+}
+
+:root[data-theme="sunset-dreams"] body::after {
+    background: linear-gradient(180deg, 
+        transparent 0%, 
+        rgba(255, 107, 107, 0.05) 30%,
+        rgba(255, 154, 0, 0.08) 60%,
+        rgba(95, 39, 205, 0.1) 100%);
+    animation: sunsetHorizon 20s ease-in-out infinite;
+}
+
+@keyframes sunsetSky {
+    0%, 100% { opacity: 0.3; transform: scale(1) rotate(0deg); }
+    25% { opacity: 0.5; transform: scale(1.05) rotate(90deg); }
+    50% { opacity: 0.7; transform: scale(1.1) rotate(180deg); }
+    75% { opacity: 0.5; transform: scale(1.05) rotate(270deg); }
+}
+
+@keyframes sunsetHorizon {
+    0%, 100% { opacity: 0.5; transform: translateY(0); }
+    50% { opacity: 0.8; transform: translateY(-10px); }
+}
+
+/* Sun-kissed headers */
+:root[data-theme="sunset-dreams"] h1,
+:root[data-theme="sunset-dreams"] h2 {
+    position: relative;
+    text-shadow: 
+        0 0 30px rgba(255, 107, 107, 0.5),
+        0 0 60px rgba(255, 154, 0, 0.3);
+    animation: sunGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes sunGlow {
+    from { filter: brightness(1) saturate(1); }
+    to { filter: brightness(1.2) saturate(1.2); }
+}
+
+:root[data-theme="sunset-dreams"] h1::after,
+:root[data-theme="sunset-dreams"] h2::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--sunset-gradient-1);
+    background-size: 200% 200%;
+    animation: sunsetFlow 3s linear infinite;
+    border-radius: 2px;
+}
+
+@keyframes sunsetFlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+/* Twilight code blocks */
+:root[data-theme="sunset-dreams"] pre {
+    background: linear-gradient(135deg, #2d1b14 0%, rgba(95, 39, 205, 0.1) 100%);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    box-shadow: 
+        inset 0 0 30px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(255, 107, 107, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="sunset-dreams"] pre::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 154, 0, 0.1) 0%, transparent 50%);
+    animation: sunRays 15s linear infinite;
+}
+
+@keyframes sunRays {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Warm glowing links */
+:root[data-theme="sunset-dreams"] a {
+    position: relative;
+    color: #ff9a00;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="sunset-dreams"] a:hover {
+    color: #ff6b6b;
+    text-shadow: 0 0 20px rgba(255, 107, 107, 0.6);
+}
+
+:root[data-theme="sunset-dreams"] a::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--sunset-gradient-1);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease;
+}
+
+:root[data-theme="sunset-dreams"] a:hover::before {
+    transform: scaleX(1);
+}
+
+/* Sunset-inspired buttons */
+:root[data-theme="sunset-dreams"] button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="sunset-dreams"] button::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: var(--sunset-gradient-2);
+    opacity: 0;
+    z-index: -1;
+    filter: blur(8px);
+    transition: opacity 0.3s ease;
+}
+
+:root[data-theme="sunset-dreams"] button:hover::before {
+    opacity: 0.7;
+    animation: sunsetPulse 2s ease-in-out infinite;
+}
+
+@keyframes sunsetPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Golden hour input fields */
+:root[data-theme="sunset-dreams"] input:focus,
+:root[data-theme="sunset-dreams"] textarea:focus {
+    border-color: #ff6b6b;
+    box-shadow: 
+        0 0 0 3px rgba(255, 107, 107, 0.2),
+        var(--sun-glow);
+    background: rgba(255, 244, 230, 0.05);
+}
+
+/* Sunset clouds for tags */
+:root[data-theme="sunset-dreams"] .tag {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(255, 154, 0, 0.2));
+    border: 1px solid rgba(255, 107, 107, 0.4);
+    color: #ffd4a3;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="sunset-dreams"] .tag::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: translateY(-50%);
+    transition: left 0.5s ease;
+}
+
+:root[data-theme="sunset-dreams"] .tag:hover::before {
+    left: 100%;
+}
+
+:root[data-theme="sunset-dreams"] .tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+}
+
+/* Dreamy selection */
+:root[data-theme="sunset-dreams"] ::selection {
+    background: rgba(255, 107, 107, 0.4);
+    color: #fff4e6;
+    text-shadow: 0 0 10px rgba(255, 154, 0, 0.5);
+}
+
+/* Sunset-themed scrollbar */
+:root[data-theme="sunset-dreams"] ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ff6b6b, #ff9a00);
+    border-radius: 10px;
+}
+
+:root[data-theme="sunset-dreams"] ::-webkit-scrollbar-track {
+    background: #1a0f0a;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
