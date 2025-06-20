@@ -30,6 +30,7 @@ const includes = [
     'GITLAB-DEPLOYMENT.md',
     '_config.yml',
     '.gitlab-ci.yml',
+    '.nojekyll',  // Include Jekyll bypass file
     'notes-index.json'  // Include the built index
 ];
 
@@ -52,10 +53,11 @@ try {
     console.log('📋 Package contents:');
     console.log('  - Complete application (HTML, CSS, JS)');
     console.log('  - All libraries (marked, prism, js-yaml)');
-    console.log('  - 50 themes');
+    console.log('  - 70 themes');
     console.log('  - All documentation and notes');
     console.log('  - Build tools and configuration');
     console.log('  - GitLab CI/CD configuration');
+    console.log('  - Jekyll bypass file (.nojekyll)');
     console.log('');
     console.log('🚀 Ready for deployment to GitLab Pages!');
 } catch (error) {

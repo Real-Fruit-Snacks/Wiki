@@ -1,6 +1,6 @@
 {
   "name": "notes-wiki",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "description": "A comprehensive personal knowledge management system with advanced search and navigation",
   "main": "script.js",
   "scripts": {
