@@ -28,6 +28,17 @@ class NotesWiki {
         this.tabContents = new Map(); // Map of tab ID to content HTML
         this.draggedTabId = null; // For drag and drop
         
+        // Tab Groups
+        this.tabGroups = new Map(); // Map of group ID to group data
+        this.groupIdCounter = 0;
+        this.groupColors = ['blue', 'green', 'yellow', 'red', 'purple', 'orange', 'pink', 'cyan'];
+        this.draggedGroupId = null; // For group drag and drop
+        
+        // Session management
+        this.tabSessions = {}; // Map of session keys to session data
+        this.activeSessionName = 'default'; // Currently active session
+        this.sessionAutoSaveInterval = null; // Auto-save timer
+        
         // Split view
         this.activePaneId = null;
         
@@ -189,7 +200,8 @@ class NotesWiki {
                 'search': 'Ctrl+K',
                 'settings': 'Ctrl+,',
                 'filter': 'Ctrl+F',
-                'bookmark': 'Ctrl+D'
+                'bookmark': 'Ctrl+D',
+                'quick-switcher': 'Ctrl+P'
             },
             // Pomodoro settings
             pomodoroEnabled: true,
@@ -335,6 +347,12 @@ class NotesWiki {
             
             // Initialize tab system
             this.initializeTabs();
+            
+            // Load and restore tab sessions
+            this.loadTabSessions();
+            
+            // Enable session auto-save
+            this.enableSessionAutoSave();
             
             // Setup page lifecycle cleanup handlers
             this.setupCleanupHandlers();
@@ -1489,6 +1507,42 @@ class NotesWiki {
                     return;
                 }
                 
+                // Split tab shortcuts
+                if (pressedCombo === 'Ctrl+Shift+T' || pressedCombo === 'Cmd+Shift+T') {
+                    e.preventDefault();
+                    this.createSplitTab();
+                    return;
+                }
+                
+                if (pressedCombo === 'Ctrl+Shift+H' || pressedCombo === 'Cmd+Shift+H') {
+                    e.preventDefault();
+                    this.createSplitTab('Horizontal Split', 'horizontal');
+                    return;
+                }
+                
+                if (pressedCombo === 'Ctrl+Shift+V' || pressedCombo === 'Cmd+Shift+V') {
+                    e.preventDefault();
+                    this.createSplitTab('Vertical Split', 'vertical');
+                    return;
+                }
+                
+                // Convert current tab to split
+                if (pressedCombo === 'Alt+Shift+H') {
+                    e.preventDefault();
+                    if (this.activeTabId) {
+                        this.convertTabToSplit(this.activeTabId, 'horizontal');
+                    }
+                    return;
+                }
+                
+                if (pressedCombo === 'Alt+Shift+V') {
+                    e.preventDefault();
+                    if (this.activeTabId) {
+                        this.convertTabToSplit(this.activeTabId, 'vertical');
+                    }
+                    return;
+                }
+                
                 // Legacy shortcuts (may conflict with browser but try anyway)
                 if (pressedCombo === 'Ctrl+W' || pressedCombo === 'Cmd+W') {
                     e.preventDefault();
@@ -1544,6 +1598,9 @@ class NotesWiki {
                             case 'bookmark':
                                 this.bookmarkCurrentNote();
                                 break;
+                            case 'quick-switcher':
+                                this.showQuickSwitcher();
+                                break;
                         }
                         break;
                     }
@@ -1581,6 +1638,26 @@ class NotesWiki {
                 e.preventDefault();
             }
         });
+        
+        // Session management event handlers
+        const sessionSelector = document.getElementById('session-selector');
+        if (sessionSelector) {
+            sessionSelector.addEventListener('change', (e) => {
+                const selectedSession = e.target.value;
+                if (selectedSession !== this.activeSessionName) {
+                    this.switchToSession(selectedSession);
+                }
+            });
+        }
+        
+        const sessionMenuButton = document.getElementById('session-menu-button');
+        if (sessionMenuButton) {
+            sessionMenuButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.closeAllDropdowns();
+                this.showSessionQuickMenu(e);
+            });
+        }
     }
     
     handleRoute() {
@@ -2769,6 +2846,373 @@ class NotesWiki {
             }
         };
         modal.addEventListener('click', clickOutsideHandler);
+    }
+    
+    // Quick File Switcher functionality
+    showQuickSwitcher() {
+        // Ensure notes index is loaded
+        if (!this.notesIndex || !this.notesIndex.notes) {
+            console.warn('Notes index not loaded yet');
+            this.showToast('Loading notes index...', 'info');
+            return;
+        }
+        
+        const modal = document.getElementById('quick-switcher-modal');
+        const input = document.getElementById('quick-switcher-input');
+        
+        // Initialize state
+        this.quickSwitcherSelectedIndex = 0;
+        this.quickSwitcherItems = [];
+        
+        // Show modal
+        modal.style.display = 'flex';
+        
+        // Add click-outside handler
+        const clickOutsideHandler = (e) => {
+            if (e.target === modal) {
+                this.hideQuickSwitcher();
+            }
+        };
+        modal.addEventListener('click', clickOutsideHandler);
+        modal._clickOutsideHandler = clickOutsideHandler;
+        
+        // Clear and focus input
+        input.value = '';
+        input.focus();
+        
+        // Show recent files initially
+        this.showQuickSwitcherRecent();
+        
+        // Setup event listeners
+        this.setupQuickSwitcherEvents();
+    }
+    
+    hideQuickSwitcher() {
+        const modal = document.getElementById('quick-switcher-modal');
+        modal.style.display = 'none';
+        
+        // Remove click-outside handler
+        if (modal._clickOutsideHandler) {
+            modal.removeEventListener('click', modal._clickOutsideHandler);
+            delete modal._clickOutsideHandler;
+        }
+        
+        // Cleanup event listeners
+        this.cleanupQuickSwitcherEvents();
+    }
+    
+    setupQuickSwitcherEvents() {
+        const input = document.getElementById('quick-switcher-input');
+        
+        // Search input handler
+        this.quickSwitcherInputHandler = (e) => {
+            const query = e.target.value.trim();
+            if (query) {
+                this.performQuickSwitcherSearch(query);
+            } else {
+                this.showQuickSwitcherRecent();
+            }
+        };
+        input.addEventListener('input', this.quickSwitcherInputHandler);
+        
+        // Keyboard navigation handler
+        this.quickSwitcherKeyHandler = (e) => {
+            if (e.key === 'Escape') {
+                this.hideQuickSwitcher();
+                return;
+            }
+            
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                this.navigateQuickSwitcher(1);
+                return;
+            }
+            
+            if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                this.navigateQuickSwitcher(-1);
+                return;
+            }
+            
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                if (e.ctrlKey || e.metaKey) {
+                    this.openQuickSwitcherItem(true); // Open in new tab
+                } else {
+                    this.openQuickSwitcherItem(false); // Open in current tab
+                }
+                return;
+            }
+        };
+        document.addEventListener('keydown', this.quickSwitcherKeyHandler);
+    }
+    
+    cleanupQuickSwitcherEvents() {
+        const input = document.getElementById('quick-switcher-input');
+        
+        if (this.quickSwitcherInputHandler) {
+            input.removeEventListener('input', this.quickSwitcherInputHandler);
+            delete this.quickSwitcherInputHandler;
+        }
+        
+        if (this.quickSwitcherKeyHandler) {
+            document.removeEventListener('keydown', this.quickSwitcherKeyHandler);
+            delete this.quickSwitcherKeyHandler;
+        }
+    }
+    
+    showQuickSwitcherRecent() {
+        const recentSection = document.getElementById('quick-switcher-recent-section');
+        const searchSection = document.getElementById('quick-switcher-search-section');
+        const emptyState = document.getElementById('quick-switcher-empty');
+        const recentResults = document.getElementById('quick-switcher-recent-results');
+        
+        // Show recent section, hide others
+        recentSection.style.display = 'block';
+        searchSection.style.display = 'none';
+        emptyState.style.display = 'none';
+        
+        // Get recent files (up to 8)
+        const recentFiles = this.recentFiles.slice(0, 8);
+        this.quickSwitcherItems = recentFiles;
+        this.quickSwitcherSelectedIndex = 0;
+        
+        if (recentFiles.length === 0) {
+            recentResults.innerHTML = '<div class="quick-switcher-item"><div class="quick-switcher-item-content"><div class="quick-switcher-item-title">No recent files</div></div></div>';
+            return;
+        }
+        
+        // Render recent files
+        recentResults.innerHTML = recentFiles.map((file, index) => {
+            const note = this.notesIndex.notes.find(n => n.path === file.path);
+            const title = note?.metadata?.title || file.title || 'Untitled';
+            const tags = note?.metadata?.tags || [];
+            const updated = note?.metadata?.updated || file.timestamp;
+            
+            return `
+                <button class="quick-switcher-item ${index === 0 ? 'selected' : ''}" data-index="${index}">
+                    <svg class="quick-switcher-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14,2 14,8 20,8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <path d="M10 9h1v4"/>
+                    </svg>
+                    <div class="quick-switcher-item-content">
+                        <div class="quick-switcher-item-title">${this.escapeHtml(title)}</div>
+                        <div class="quick-switcher-item-subtitle">${this.escapeHtml(file.path)}</div>
+                    </div>
+                    <div class="quick-switcher-item-meta">
+                        ${tags.length > 0 ? `<span class="quick-switcher-item-tag">${tags[0]}</span>` : ''}
+                        ${updated ? `<span class="quick-switcher-item-date">${this.formatDate(updated)}</span>` : ''}
+                    </div>
+                </button>
+            `;
+        }).join('');
+        
+        // Add click handlers
+        this.addQuickSwitcherClickHandlers();
+    }
+    
+    performQuickSwitcherSearch(query) {
+        const recentSection = document.getElementById('quick-switcher-recent-section');
+        const searchSection = document.getElementById('quick-switcher-search-section');
+        const emptyState = document.getElementById('quick-switcher-empty');
+        const searchResults = document.getElementById('quick-switcher-search-results');
+        
+        // Show search section, hide others
+        recentSection.style.display = 'none';
+        searchSection.style.display = 'block';
+        emptyState.style.display = 'none';
+        
+        // Perform fuzzy search
+        const results = this.fuzzySearchNotes(query);
+        this.quickSwitcherItems = results;
+        this.quickSwitcherSelectedIndex = 0;
+        
+        if (results.length === 0) {
+            searchSection.style.display = 'none';
+            emptyState.style.display = 'block';
+            return;
+        }
+        
+        // Render search results
+        searchResults.innerHTML = results.map((result, index) => {
+            const title = result.title || 'Untitled';
+            const tags = result.tags || [];
+            const updated = result.updated || result.created;
+            
+            return `
+                <button class="quick-switcher-item ${index === 0 ? 'selected' : ''}" data-index="${index}">
+                    <svg class="quick-switcher-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14,2 14,8 20,8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <path d="M10 9h1v4"/>
+                    </svg>
+                    <div class="quick-switcher-item-content">
+                        <div class="quick-switcher-item-title">${this.highlightSearchTerm(this.escapeHtml(title), query)}</div>
+                        <div class="quick-switcher-item-subtitle">${this.escapeHtml(result.path)}</div>
+                    </div>
+                    <div class="quick-switcher-item-meta">
+                        ${tags.length > 0 ? `<span class="quick-switcher-item-tag">${tags[0]}</span>` : ''}
+                        ${updated ? `<span class="quick-switcher-item-date">${this.formatDate(updated)}</span>` : ''}
+                    </div>
+                </button>
+            `;
+        }).join('');
+        
+        // Add click handlers
+        this.addQuickSwitcherClickHandlers();
+    }
+    
+    fuzzySearchNotes(query) {
+        const normalizedQuery = query.toLowerCase();
+        const allNotes = this.notesIndex.notes.map(note => ({
+            path: note.path,
+            title: note.metadata.title || '',
+            description: note.metadata.description || '',
+            tags: note.metadata.tags || [],
+            author: note.metadata.author || '',
+            content: note.searchable_content || '',
+            created: note.metadata.created,
+            updated: note.metadata.updated
+        }));
+        
+        // Score and filter results
+        const scored = allNotes.map(note => {
+            let score = 0;
+            
+            // Title match (highest priority)
+            if (note.title.toLowerCase().includes(normalizedQuery)) {
+                score += 100;
+                if (note.title.toLowerCase().startsWith(normalizedQuery)) {
+                    score += 50; // Bonus for starts with
+                }
+            }
+            
+            // Tags match
+            const tagMatch = note.tags.some(tag => tag.toLowerCase().includes(normalizedQuery));
+            if (tagMatch) score += 75;
+            
+            // Author match
+            if (note.author.toLowerCase().includes(normalizedQuery)) {
+                score += 50;
+            }
+            
+            // Path match
+            if (note.path.toLowerCase().includes(normalizedQuery)) {
+                score += 25;
+            }
+            
+            // Content match (lowest priority, but still valuable)
+            if (note.content.toLowerCase().includes(normalizedQuery)) {
+                score += 10;
+            }
+            
+            // Description match
+            if (note.description.toLowerCase().includes(normalizedQuery)) {
+                score += 30;
+            }
+            
+            return { ...note, score };
+        });
+        
+        // Filter and sort by score
+        return scored
+            .filter(note => note.score > 0)
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 20); // Limit to top 20 results
+    }
+    
+    highlightSearchTerm(text, query) {
+        if (!query) return text;
+        
+        const regex = new RegExp(`(${this.escapeRegex(query)})`, 'gi');
+        return text.replace(regex, '<span class="quick-switcher-highlight">$1</span>');
+    }
+    
+    escapeRegex(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    
+    navigateQuickSwitcher(direction) {
+        if (this.quickSwitcherItems.length === 0) return;
+        
+        // Update selected index
+        this.quickSwitcherSelectedIndex += direction;
+        
+        if (this.quickSwitcherSelectedIndex < 0) {
+            this.quickSwitcherSelectedIndex = this.quickSwitcherItems.length - 1;
+        } else if (this.quickSwitcherSelectedIndex >= this.quickSwitcherItems.length) {
+            this.quickSwitcherSelectedIndex = 0;
+        }
+        
+        // Update UI
+        const items = document.querySelectorAll('.quick-switcher-item');
+        items.forEach((item, index) => {
+            if (index === this.quickSwitcherSelectedIndex) {
+                item.classList.add('selected');
+                item.scrollIntoView({ block: 'nearest' });
+            } else {
+                item.classList.remove('selected');
+            }
+        });
+    }
+    
+    addQuickSwitcherClickHandlers() {
+        const items = document.querySelectorAll('.quick-switcher-item');
+        items.forEach(item => {
+            item.addEventListener('click', (e) => {
+                const index = parseInt(e.currentTarget.dataset.index);
+                if (!isNaN(index)) {
+                    this.quickSwitcherSelectedIndex = index;
+                    this.openQuickSwitcherItem(e.ctrlKey || e.metaKey);
+                }
+            });
+        });
+    }
+    
+    openQuickSwitcherItem(openInNewTab = false) {
+        if (this.quickSwitcherItems.length === 0 || this.quickSwitcherSelectedIndex < 0) return;
+        
+        const selectedItem = this.quickSwitcherItems[this.quickSwitcherSelectedIndex];
+        if (!selectedItem) return;
+        
+        this.hideQuickSwitcher();
+        
+        if (openInNewTab) {
+            // Open in new tab
+            this.createNewTab(selectedItem.path, selectedItem.title || 'New Tab');
+        } else {
+            // Open in current tab or create new if none exists
+            if (this.activeTabId) {
+                this.loadNoteInTab(selectedItem.path, this.activeTabId);
+            } else {
+                this.createNewTab(selectedItem.path, selectedItem.title || 'New Tab');
+            }
+        }
+    }
+    
+    formatDate(dateString) {
+        if (!dateString) return '';
+        
+        try {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffTime = Math.abs(now - date);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays === 1) return 'Today';
+            if (diffDays === 2) return 'Yesterday';
+            if (diffDays <= 7) return `${diffDays - 1} days ago`;
+            if (diffDays <= 30) return `${Math.ceil(diffDays / 7)} weeks ago`;
+            if (diffDays <= 365) return `${Math.ceil(diffDays / 30)} months ago`;
+            return `${Math.ceil(diffDays / 365)} years ago`;
+        } catch (error) {
+            return dateString;
+        }
     }
     
     toggleFocusMode() {
@@ -8364,6 +8808,14 @@ class NotesWiki {
             });
         }
         
+        // Set up create group button
+        const createGroupButton = document.getElementById('create-group-button');
+        if (createGroupButton) {
+            createGroupButton.addEventListener('click', () => {
+                this.showCreateGroupDialog();
+            });
+        }
+        
         // Try to restore saved tabs
         const tabsRestored = this.restoreTabState();
         
@@ -8404,17 +8856,22 @@ class NotesWiki {
         this.updateTagCountBadge();
     }
     
-    createNewTab(path = '/notes/index.md', title = 'New Tab', preserveContext = false) {
+    createNewTab(path = '/notes/index.md', title = 'New Tab', preserveContext = false, groupId = null) {
         const tabId = `tab-${this.tabIdCounter++}`;
         const tab = {
             id: tabId,
             path: path,
             title: title,
-            scrollPosition: 0
+            scrollPosition: 0,
+            isPinned: false,
+            groupId: groupId,
+            // Split view configuration
+            isSplitTab: false,
+            splitConfig: null
         };
         
         this.tabs.set(tabId, tab);
-        this.renderTab(tabId);
+        this.renderAllTabs();
         // Switch to tab and pass preserveContext flag
         this.switchToTab(tabId, preserveContext);
         
@@ -8422,6 +8879,54 @@ class NotesWiki {
         if (path) {
             this.loadNoteInTab(path, tabId);
         }
+        
+        // Save tab state
+        if (this.tabStateSaveDebounced) {
+            this.tabStateSaveDebounced();
+        }
+        
+        return tabId;
+    }
+    
+    createSplitTab(title = 'Split View', orientation = 'horizontal', groupId = null) {
+        const tabId = `tab-${this.tabIdCounter++}`;
+        const paneId1 = `pane-${this.tabIdCounter++}`;
+        const paneId2 = `pane-${this.tabIdCounter++}`;
+        
+        const tab = {
+            id: tabId,
+            path: null, // Split tabs don't have a single path
+            title: title,
+            scrollPosition: 0,
+            isPinned: false,
+            groupId: groupId,
+            // Split view configuration
+            isSplitTab: true,
+            splitConfig: {
+                orientation: orientation, // 'horizontal' or 'vertical'
+                activePaneId: paneId1,
+                panes: [
+                    {
+                        id: paneId1,
+                        path: null,
+                        title: 'Pane 1',
+                        scrollPosition: 0,
+                        size: 50 // percentage
+                    },
+                    {
+                        id: paneId2,
+                        path: null,
+                        title: 'Pane 2',
+                        scrollPosition: 0,
+                        size: 50 // percentage
+                    }
+                ]
+            }
+        };
+        
+        this.tabs.set(tabId, tab);
+        this.renderAllTabs();
+        this.switchToTab(tabId);
         
         // Save tab state
         if (this.tabStateSaveDebounced) {
@@ -8447,8 +8952,30 @@ class NotesWiki {
         tabElement.className = 'tab';
         tabElement.id = tabId;
         tabElement.draggable = !tab.isSplitView; // Split view tab should not be draggable
+        
+        // Apply group styling if tab belongs to a group
+        if (tab.groupId) {
+            const group = this.tabGroups.get(tab.groupId);
+            if (group) {
+                tabElement.classList.add('tab-grouped');
+                tabElement.style.setProperty('--group-color', `var(--color-${group.color})`);
+                tabElement.dataset.groupId = tab.groupId;
+            }
+        }
+        // Create split indicator for split tabs
+        const splitIndicator = tab.isSplitTab ? 
+            `<span class="split-indicator" title="${tab.splitConfig.panes.length} panes">⊞${tab.splitConfig.panes.length}</span>` : '';
+        
         tabElement.innerHTML = `
             <span class="tab-title">${this.escapeHtml(tab.title)}</span>
+            ${splitIndicator}
+            <button class="tab-pin" aria-label="${tab.isPinned ? 'Unpin tab' : 'Pin tab'}">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                    ${tab.isPinned 
+                        ? '<path d="M8 2l4 2v4l-4 2-4-2V4l4-2z" fill="currentColor"/>' 
+                        : '<path d="M8 2l4 2v4l-4 2-4-2V4l4-2z"/>'}
+                </svg>
+            </button>
             <button class="tab-close" aria-label="Close tab">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
                     <path d="M7 7.707l3.146 3.147a.5.5 0 00.708-.708L7.707 7l3.147-3.146a.5.5 0 00-.708-.708L7 6.293 3.854 3.146a.5.5 0 10-.708.708L6.293 7l-3.147 3.146a.5.5 0 00.708.708L7 7.707z"/>
@@ -8458,7 +8985,7 @@ class NotesWiki {
         
         // Click to switch tab
         tabElement.addEventListener('click', (e) => {
-            if (!e.target.closest('.tab-close')) {
+            if (!e.target.closest('.tab-close') && !e.target.closest('.tab-pin')) {
                 this.switchToTab(tabId);
             }
         });
@@ -8473,10 +9000,22 @@ class NotesWiki {
             }
         });
         
+        // Pin button
+        tabElement.querySelector('.tab-pin').addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.toggleTabPin(tabId);
+        });
+        
         // Close button
         tabElement.querySelector('.tab-close').addEventListener('click', (e) => {
             e.stopPropagation();
             this.closeTab(tabId);
+        });
+        
+        // Context menu for tab groups
+        tabElement.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            this.showTabContextMenu(e, tabId);
         });
         
         // Drag and drop
@@ -8571,13 +9110,21 @@ class NotesWiki {
                     }
                 }
             } else if (currentTab?.isSplitView) {
-                // Save split view pane scroll positions
+                // Save split view pane scroll positions (legacy)
                 const leftPane = document.getElementById('pane-content-left');
                 const rightPane = document.getElementById('pane-content-right');
                 if (leftPane && rightPane && this.splitViewState) {
                     this.splitViewState.leftScrollPosition = leftPane.scrollTop || 0;
                     this.splitViewState.rightScrollPosition = rightPane.scrollTop || 0;
                 }
+            } else if (currentTab?.isSplitTab) {
+                // Save multi-pane scroll positions
+                currentTab.splitConfig.panes.forEach(pane => {
+                    const paneContent = document.getElementById(`pane-content-${pane.id}`);
+                    if (paneContent) {
+                        pane.scrollPosition = paneContent.scrollTop || 0;
+                    }
+                });
             }
         }
         
@@ -8605,9 +9152,26 @@ class NotesWiki {
                 // Load failed, keep the placeholder title
             });
         } else {
-            // Check if this is a split view tab
-            if (tab.isSplitView) {
-                // Render split view content
+            // Check if this is a split tab (new system) or legacy split view tab
+            if (tab.isSplitTab) {
+                // Render multi-pane split content using the new system
+                this.renderMultiPaneSplitContent(tab.splitConfig);
+                
+                // Restore pane contents and scroll positions
+                setTimeout(() => {
+                    tab.splitConfig.panes.forEach(pane => {
+                        if (pane.path) {
+                            this.loadNoteInPane(pane.path, pane.id, tabId);
+                        }
+                        // Restore scroll position
+                        const paneContent = document.getElementById(`pane-content-${pane.id}`);
+                        if (paneContent && pane.scrollPosition) {
+                            paneContent.scrollTop = pane.scrollPosition;
+                        }
+                    });
+                }, 0);
+            } else if (tab.isSplitView) {
+                // Legacy split view tab (maintain backward compatibility)
                 this.renderSplitViewContent();
                 
                 // Restore any previously loaded notes
@@ -8674,14 +9238,20 @@ class NotesWiki {
     }
     
     closeTab(tabId) {
+        const tab = this.tabs.get(tabId);
+        if (!tab) return;
+        
+        // Check if tab is pinned
+        if (tab.isPinned) {
+            this.showToast('Cannot close pinned tab. Unpin it first.', 'warning');
+            return;
+        }
+        
         if (this.tabs.size <= 1) {
             // If this is the last tab, act like "Close All Tabs"
             this.closeAllTabs();
             return;
         }
-        
-        const tab = this.tabs.get(tabId);
-        if (!tab) return;
         
         // Check if confirmation is required
         if (this.settings.confirmOnClose) {
@@ -8776,24 +9346,43 @@ class NotesWiki {
     }
     
     closeAllTabs() {
-        // Clear all tabs from DOM
-        document.getElementById('tabs-container').innerHTML = '';
+        // Count pinned tabs
+        const pinnedTabs = Array.from(this.tabs.values()).filter(tab => tab.isPinned);
         
-        // Clear all tabs from memory
-        this.tabs.clear();
-        this.tabContents.clear();
-        
-        // Reset tab counter
-        this.tabIdCounter = 0;
-        
-        // Clear saved tab state
-        localStorage.removeItem('tabState');
-        
-        // Create a single tab with the home page
-        this.createNewTab('/notes/index.md', 'Home');
-        
-        // Show a confirmation toast
-        this.showToast('All tabs closed');
+        if (pinnedTabs.length > 0) {
+            // Only close non-pinned tabs
+            const tabsToClose = Array.from(this.tabs.keys()).filter(tabId => {
+                const tab = this.tabs.get(tabId);
+                return tab && !tab.isPinned;
+            });
+            
+            // Close each non-pinned tab
+            tabsToClose.forEach(tabId => {
+                const tabElement = document.getElementById(tabId);
+                if (tabElement) {
+                    tabElement.remove();
+                }
+                this.tabs.delete(tabId);
+                this.tabContents.delete(tabId);
+            });
+            
+            // If there's a pinned tab, switch to it
+            if (pinnedTabs.length > 0) {
+                this.switchToTab(pinnedTabs[0].id);
+            }
+            
+            this.saveTabState();
+            this.showToast(`Closed all tabs except ${pinnedTabs.length} pinned tab${pinnedTabs.length === 1 ? '' : 's'}`, 'info');
+        } else {
+            // No pinned tabs, close everything and create home tab
+            document.getElementById('tabs-container').innerHTML = '';
+            this.tabs.clear();
+            this.tabContents.clear();
+            this.tabIdCounter = 0;
+            localStorage.removeItem('tabState');
+            this.createNewTab('/notes/index.md', 'Home');
+            this.showToast('All tabs closed');
+        }
     }
     
     closeCurrentTab() {
@@ -8830,19 +9419,35 @@ class NotesWiki {
     }
     
     saveTabState() {
-        // Filter out special tabs like split view
+        // Use session-based saving if sessions are initialized
+        if (this.tabSessions && this.activeSessionName) {
+            this.saveCurrentSessionState();
+            this.saveTabSessions();
+            return;
+        }
+        
+        // Fallback to legacy tab state for backward compatibility
         const tabsToSave = Array.from(this.tabs.values()).filter(tab => !tab.isSpecial && !tab.isSplitView);
         
         const tabState = {
             tabs: tabsToSave,
             activeTabId: this.activeTabId === 'split-view-tab' ? null : this.activeTabId,
             tabIdCounter: this.tabIdCounter,
-            splitViewState: this.splitViewState // Save split view state
+            splitViewState: this.splitViewState, // Save split view state
+            // Tab Groups
+            tabGroups: Array.from(this.tabGroups.values()),
+            groupIdCounter: this.groupIdCounter
         };
         localStorage.setItem('tabState', JSON.stringify(tabState));
     }
     
     restoreTabState() {
+        // If sessions are initialized, use session system instead
+        if (this.tabSessions && this.activeSessionName) {
+            return this.switchToSession(this.activeSessionName);
+        }
+        
+        // Check for legacy tab state to migrate
         const savedState = localStorage.getItem('tabState');
         if (!savedState) return false;
         
@@ -8850,7 +9455,54 @@ class NotesWiki {
             const tabState = JSON.parse(savedState);
             if (!tabState.tabs || tabState.tabs.length === 0) return false;
             
-            console.log('Restoring tab state:', tabState);
+            console.log('Migrating legacy tab state to session system:', tabState);
+            
+            // Migrate legacy tab state to default session
+            if (this.tabSessions) {
+                this.tabSessions.default = {
+                    name: 'Default',
+                    tabs: tabState.tabs.map(tab => ({
+                        ...tab,
+                        isPinned: tab.isPinned || false,
+                        groupId: tab.groupId || null
+                    })),
+                    activeTabId: tabState.activeTabId,
+                    created: new Date().toISOString(),
+                    lastUsed: new Date().toISOString(),
+                    // Tab Groups
+                    tabGroups: tabState.tabGroups || [],
+                    groupIdCounter: tabState.groupIdCounter || 0
+                };
+                
+                // Update tab counter
+                this.tabIdCounter = tabState.tabIdCounter || 0;
+                
+                // Restore tab groups
+                if (tabState.tabGroups) {
+                    this.tabGroups.clear();
+                    tabState.tabGroups.forEach(group => {
+                        this.tabGroups.set(group.id, group);
+                    });
+                    this.groupIdCounter = tabState.groupIdCounter || 0;
+                }
+                
+                // Restore split view state if present
+                if (tabState.splitViewState) {
+                    this.splitViewState = tabState.splitViewState;
+                }
+                
+                // Save the migrated session
+                this.saveTabSessions();
+                
+                // Remove legacy tab state
+                localStorage.removeItem('tabState');
+                
+                // Switch to the default session to restore tabs
+                return this.switchToSession('default');
+            }
+            
+            // Fallback to legacy restoration if sessions not initialized
+            console.log('Restoring tab state (legacy mode):', tabState);
             
             // Clear existing tabs
             this.tabs.clear();
@@ -8859,6 +9511,15 @@ class NotesWiki {
             
             // Restore tab counter
             this.tabIdCounter = tabState.tabIdCounter || 0;
+            
+            // Restore tab groups
+            if (tabState.tabGroups) {
+                this.tabGroups.clear();
+                tabState.tabGroups.forEach(group => {
+                    this.tabGroups.set(group.id, group);
+                });
+                this.groupIdCounter = tabState.groupIdCounter || 0;
+            }
             
             // Restore split view state if present
             if (tabState.splitViewState) {
@@ -8880,14 +9541,19 @@ class NotesWiki {
                     id: tabData.id,
                     path: tabData.path,
                     title: tabData.title || 'Untitled',
-                    scrollPosition: tabData.scrollPosition || 0
+                    scrollPosition: tabData.scrollPosition || 0,
+                    isPinned: tabData.isPinned || false,
+                    groupId: tabData.groupId || null
                 });
-                this.renderTab(tabData.id);
+                this.updateTabVisuals(tabData.id);
                 
                 if (tabData.id === tabState.activeTabId) {
                     activeTabFound = true;
                 }
             });
+            
+            // Render all tabs with group organization
+            this.renderAllTabs();
             
             // If no tabs were successfully restored, return false
             if (this.tabs.size === 0) {
@@ -8926,6 +9592,435 @@ class NotesWiki {
         }
     }
     
+    // Tab Session Management System
+    loadTabSessions() {
+        try {
+            const sessions = localStorage.getItem('notesWiki_tabSessions');
+            this.tabSessions = sessions ? JSON.parse(sessions) : {};
+            
+            // Ensure default session exists
+            if (!this.tabSessions.default) {
+                this.tabSessions.default = {
+                    name: 'Default',
+                    tabs: [],
+                    activeTabId: null,
+                    created: new Date().toISOString(),
+                    lastUsed: new Date().toISOString()
+                };
+            }
+            
+            // Load active session name
+            this.activeSessionName = localStorage.getItem('notesWiki_activeSession') || 'default';
+            
+            console.log('Loaded tab sessions:', Object.keys(this.tabSessions));
+            return true;
+        } catch (error) {
+            console.error('Failed to load tab sessions:', error);
+            this.tabSessions = {
+                default: {
+                    name: 'Default',
+                    tabs: [],
+                    activeTabId: null,
+                    created: new Date().toISOString(),
+                    lastUsed: new Date().toISOString()
+                }
+            };
+            this.activeSessionName = 'default';
+            return false;
+        }
+    }
+    
+    saveTabSessions() {
+        try {
+            localStorage.setItem('notesWiki_tabSessions', JSON.stringify(this.tabSessions));
+            localStorage.setItem('notesWiki_activeSession', this.activeSessionName);
+            return true;
+        } catch (error) {
+            console.error('Failed to save tab sessions:', error);
+            this.showToast('Failed to save sessions', 'error');
+            return false;
+        }
+    }
+    
+    createTabSession(name) {
+        if (!name || name.trim() === '') {
+            this.showToast('Session name cannot be empty', 'error');
+            return false;
+        }
+        
+        const sessionKey = name.toLowerCase().replace(/[^a-z0-9-_]/g, '-');
+        
+        if (this.tabSessions[sessionKey]) {
+            this.showToast('Session already exists', 'error');
+            return false;
+        }
+        
+        // Save current session before creating new one
+        this.saveCurrentSessionState();
+        
+        // Create new session with current tabs
+        this.tabSessions[sessionKey] = {
+            name: name,
+            tabs: this.getTabsForSession(),
+            activeTabId: this.activeTabId,
+            created: new Date().toISOString(),
+            lastUsed: new Date().toISOString()
+        };
+        
+        this.saveTabSessions();
+        this.showToast(`Session "${name}" created`, 'success');
+        return sessionKey;
+    }
+    
+    deleteTabSession(sessionKey) {
+        if (sessionKey === 'default') {
+            this.showToast('Cannot delete default session', 'error');
+            return false;
+        }
+        
+        if (!this.tabSessions[sessionKey]) {
+            this.showToast('Session not found', 'error');
+            return false;
+        }
+        
+        const sessionName = this.tabSessions[sessionKey].name;
+        delete this.tabSessions[sessionKey];
+        
+        // If we deleted the active session, switch to default
+        if (this.activeSessionName === sessionKey) {
+            this.activeSessionName = 'default';
+            this.switchToSession('default');
+        }
+        
+        this.saveTabSessions();
+        this.showToast(`Session "${sessionName}" deleted`, 'info');
+        return true;
+    }
+    
+    switchToSession(sessionKey) {
+        if (!this.tabSessions[sessionKey]) {
+            this.showToast('Session not found', 'error');
+            return false;
+        }
+        
+        // Save current session state before switching
+        this.saveCurrentSessionState();
+        
+        // Clear current tabs
+        document.getElementById('tabs-container').innerHTML = '';
+        this.tabs.clear();
+        this.tabContents.clear();
+        
+        // Load new session
+        const session = this.tabSessions[sessionKey];
+        this.activeSessionName = sessionKey;
+        
+        // Update last used timestamp
+        session.lastUsed = new Date().toISOString();
+        
+        // Restore tab groups from session
+        if (session.tabGroups) {
+            this.tabGroups.clear();
+            session.tabGroups.forEach(group => {
+                this.tabGroups.set(group.id, group);
+            });
+            this.groupIdCounter = session.groupIdCounter || 0;
+        }
+        
+        // Restore tabs from session
+        if (session.tabs && session.tabs.length > 0) {
+            session.tabs.forEach(tabData => {
+                this.tabs.set(tabData.id, {
+                    id: tabData.id,
+                    path: tabData.path,
+                    title: tabData.title || 'Untitled',
+                    scrollPosition: tabData.scrollPosition || 0,
+                    isPinned: tabData.isPinned || false,
+                    groupId: tabData.groupId || null
+                });
+                this.updateTabVisuals(tabData.id);
+            });
+            
+            // Render all tabs with group organization
+            this.renderAllTabs();
+            
+            // Restore active tab
+            if (session.activeTabId && this.tabs.has(session.activeTabId)) {
+                this.switchToTab(session.activeTabId);
+            } else if (session.tabs.length > 0) {
+                this.switchToTab(session.tabs[0].id);
+            }
+        } else {
+            // Create default tab if session is empty
+            this.createNewTab('/notes/index.md', 'Home');
+        }
+        
+        this.saveTabSessions();
+        this.updateSessionUI();
+        this.showToast(`Switched to session "${session.name}"`, 'success');
+        return true;
+    }
+    
+    saveCurrentSessionState() {
+        if (!this.activeSessionName || !this.tabSessions[this.activeSessionName]) {
+            return;
+        }
+        
+        const session = this.tabSessions[this.activeSessionName];
+        session.tabs = this.getTabsForSession();
+        session.activeTabId = this.activeTabId;
+        session.lastUsed = new Date().toISOString();
+        // Save tab groups
+        session.tabGroups = Array.from(this.tabGroups.values());
+        session.groupIdCounter = this.groupIdCounter;
+    }
+    
+    getTabsForSession() {
+        // Get all tabs except legacy split view tabs and placeholders
+        // Include new split tabs (isSplitTab) but exclude legacy split view (isSplitView)
+        return Array.from(this.tabs.values()).filter(tab => 
+            !tab.isSplitView && !tab.isPlaceholder
+        );
+    }
+    
+    renameSession(sessionKey, newName) {
+        if (!this.tabSessions[sessionKey]) {
+            this.showToast('Session not found', 'error');
+            return false;
+        }
+        
+        if (!newName || newName.trim() === '') {
+            this.showToast('Session name cannot be empty', 'error');
+            return false;
+        }
+        
+        const oldName = this.tabSessions[sessionKey].name;
+        this.tabSessions[sessionKey].name = newName;
+        this.saveTabSessions();
+        this.updateSessionUI();
+        this.showToast(`Session renamed from "${oldName}" to "${newName}"`, 'success');
+        return true;
+    }
+    
+    duplicateSession(sessionKey, newName) {
+        if (!this.tabSessions[sessionKey]) {
+            this.showToast('Session not found', 'error');
+            return false;
+        }
+        
+        const newSessionKey = newName.toLowerCase().replace(/[^a-z0-9-_]/g, '-');
+        
+        if (this.tabSessions[newSessionKey]) {
+            this.showToast('Session already exists', 'error');
+            return false;
+        }
+        
+        // Deep copy the session
+        this.tabSessions[newSessionKey] = {
+            ...this.tabSessions[sessionKey],
+            name: newName,
+            created: new Date().toISOString(),
+            lastUsed: new Date().toISOString(),
+            tabs: this.tabSessions[sessionKey].tabs.map(tab => ({ ...tab }))
+        };
+        
+        this.saveTabSessions();
+        this.updateSessionUI();
+        this.showToast(`Session "${newName}" created from "${this.tabSessions[sessionKey].name}"`, 'success');
+        return newSessionKey;
+    }
+    
+    getSessionList() {
+        return Object.keys(this.tabSessions).map(key => ({
+            key: key,
+            name: this.tabSessions[key].name,
+            tabCount: this.tabSessions[key].tabs ? this.tabSessions[key].tabs.length : 0,
+            created: this.tabSessions[key].created,
+            lastUsed: this.tabSessions[key].lastUsed,
+            isActive: key === this.activeSessionName
+        })).sort((a, b) => new Date(b.lastUsed) - new Date(a.lastUsed));
+    }
+    
+    updateSessionUI() {
+        // Update session selector if it exists
+        const sessionSelector = document.getElementById('session-selector');
+        if (sessionSelector) {
+            sessionSelector.innerHTML = '';
+            this.getSessionList().forEach(session => {
+                const option = document.createElement('option');
+                option.value = session.key;
+                option.textContent = `${session.name} (${session.tabCount})`;
+                option.selected = session.isActive;
+                sessionSelector.appendChild(option);
+            });
+        }
+        
+        // Update session display in settings if open
+        this.updateSessionsSettings();
+    }
+    
+    updateSessionsSettings() {
+        // Will implement this when we add the settings UI
+        console.log('Session settings UI update placeholder');
+    }
+    
+    // Auto-save current session periodically
+    enableSessionAutoSave() {
+        if (this.sessionAutoSaveInterval) {
+            clearInterval(this.sessionAutoSaveInterval);
+        }
+        
+        // Auto-save every 30 seconds
+        this.sessionAutoSaveInterval = setInterval(() => {
+            this.saveCurrentSessionState();
+            this.saveTabSessions();
+        }, 30000);
+    }
+    
+    showSessionQuickMenu(event) {
+        // Remove existing quick menu
+        const existingMenu = document.getElementById('session-quick-menu');
+        if (existingMenu) {
+            existingMenu.remove();
+        }
+        
+        // Create quick menu
+        const menu = document.createElement('div');
+        menu.id = 'session-quick-menu';
+        menu.className = 'dropdown-menu session-quick-menu';
+        
+        const sessions = this.getSessionList();
+        const currentSession = this.tabSessions[this.activeSessionName];
+        
+        menu.innerHTML = `
+            <div class="session-menu-header">
+                <strong>Session: ${currentSession?.name || 'Default'}</strong>
+            </div>
+            <div class="session-menu-divider"></div>
+            <button class="session-menu-item" data-action="create">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2z"/>
+                </svg>
+                Create New Session
+            </button>
+            <button class="session-menu-item" data-action="save">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L8.5 8.293V1z"/>
+                </svg>
+                Save Current Session
+            </button>
+            ${this.activeSessionName !== 'default' ? `
+                <button class="session-menu-item" data-action="rename">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+                    </svg>
+                    Rename Session
+                </button>
+                <button class="session-menu-item" data-action="duplicate">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                    Duplicate Session
+                </button>
+                <div class="session-menu-divider"></div>
+                <button class="session-menu-item session-menu-danger" data-action="delete">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                    </svg>
+                    Delete Session
+                </button>
+            ` : ''}
+        `;
+        
+        // Position menu relative to button
+        const buttonRect = event.target.closest('button').getBoundingClientRect();
+        menu.style.position = 'fixed';
+        menu.style.top = `${buttonRect.bottom + 5}px`;
+        menu.style.right = `${window.innerWidth - buttonRect.right}px`;
+        menu.style.zIndex = '1000';
+        menu.style.display = 'block';
+        
+        // Add event listeners
+        menu.addEventListener('click', (e) => {
+            const action = e.target.closest('[data-action]')?.dataset.action;
+            if (action) {
+                this.handleSessionAction(action);
+                menu.remove();
+            }
+        });
+        
+        // Close menu when clicking outside
+        const closeMenu = (e) => {
+            if (!menu.contains(e.target)) {
+                menu.remove();
+                document.removeEventListener('click', closeMenu);
+            }
+        };
+        setTimeout(() => document.addEventListener('click', closeMenu), 100);
+        
+        document.body.appendChild(menu);
+    }
+    
+    handleSessionAction(action) {
+        switch (action) {
+            case 'create':
+                this.createSessionDialog();
+                break;
+            case 'save':
+                this.saveCurrentSessionState();
+                this.saveTabSessions();
+                this.showToast('Session saved', 'success');
+                break;
+            case 'rename':
+                this.renameSessionDialog();
+                break;
+            case 'duplicate':
+                this.duplicateSessionDialog();
+                break;
+            case 'delete':
+                this.deleteSessionDialog();
+                break;
+        }
+    }
+    
+    createSessionDialog() {
+        const name = prompt('Enter session name:');
+        if (name && name.trim()) {
+            const sessionKey = this.createTabSession(name.trim());
+            if (sessionKey) {
+                this.updateSessionUI();
+            }
+        }
+    }
+    
+    renameSessionDialog() {
+        const currentName = this.tabSessions[this.activeSessionName]?.name || 'Current Session';
+        const newName = prompt(`Rename session "${currentName}":`, currentName);
+        if (newName && newName.trim() && newName.trim() !== currentName) {
+            this.renameSession(this.activeSessionName, newName.trim());
+        }
+    }
+    
+    duplicateSessionDialog() {
+        const currentName = this.tabSessions[this.activeSessionName]?.name || 'Current Session';
+        const newName = prompt(`Duplicate session "${currentName}" as:`, `${currentName} Copy`);
+        if (newName && newName.trim()) {
+            const sessionKey = this.duplicateSession(this.activeSessionName, newName.trim());
+            if (sessionKey) {
+                this.updateSessionUI();
+            }
+        }
+    }
+    
+    deleteSessionDialog() {
+        const sessionName = this.tabSessions[this.activeSessionName]?.name || 'Current Session';
+        if (confirm(`Are you sure you want to delete session "${sessionName}"?`)) {
+            this.deleteTabSession(this.activeSessionName);
+            this.updateSessionUI();
+        }
+    }
     
     openInNewTab(path) {
         // Prevent duplicate tabs by tracking pending tab creations
@@ -8975,6 +10070,628 @@ class NotesWiki {
             }
         }
         return null;
+    }
+    
+    // Pin/Unpin tab functionality
+    pinTab(tabId) {
+        const tab = this.tabs.get(tabId);
+        if (!tab) return;
+        
+        tab.isPinned = true;
+        this.updateTabVisuals(tabId);
+        this.saveTabState();
+        this.showToast('Tab pinned', 'success');
+    }
+    
+    unpinTab(tabId) {
+        const tab = this.tabs.get(tabId);
+        if (!tab) return;
+        
+        tab.isPinned = false;
+        this.updateTabVisuals(tabId);
+        this.saveTabState();
+        this.showToast('Tab unpinned', 'info');
+    }
+    
+    toggleTabPin(tabId) {
+        const tab = this.tabs.get(tabId);
+        if (!tab) return;
+        
+        if (tab.isPinned) {
+            this.unpinTab(tabId);
+        } else {
+            this.pinTab(tabId);
+        }
+    }
+    
+    updateTabVisuals(tabId) {
+        const tab = this.tabs.get(tabId);
+        const tabElement = document.getElementById(tabId);
+        if (!tab || !tabElement) return;
+        
+        // Update pin visual state
+        const pinButton = tabElement.querySelector('.tab-pin');
+        const pinSvg = pinButton.querySelector('svg');
+        
+        if (tab.isPinned) {
+            tabElement.classList.add('pinned');
+            pinButton.setAttribute('aria-label', 'Unpin tab');
+            pinSvg.innerHTML = '<path d="M8 2l4 2v4l-4 2-4-2V4l4-2z" fill="currentColor"/>';
+        } else {
+            tabElement.classList.remove('pinned');
+            pinButton.setAttribute('aria-label', 'Pin tab');
+            pinSvg.innerHTML = '<path d="M8 2l4 2v4l-4 2-4-2V4l4-2z"/>';
+        }
+    }
+    
+    // Tab Group Management Methods
+    createTabGroup(name, color = null) {
+        if (!name || name.trim() === '') {
+            this.showToast('Group name cannot be empty', 'error');
+            return null;
+        }
+        
+        const groupId = `group-${this.groupIdCounter++}`;
+        const group = {
+            id: groupId,
+            name: name.trim(),
+            color: color || this.groupColors[this.groupIdCounter % this.groupColors.length],
+            isCollapsed: false,
+            order: this.tabGroups.size,
+            createdAt: new Date().toISOString()
+        };
+        
+        this.tabGroups.set(groupId, group);
+        this.saveTabState();
+        this.renderAllTabs();
+        this.showToast(`Group "${name}" created`, 'success');
+        return groupId;
+    }
+    
+    deleteTabGroup(groupId) {
+        const group = this.tabGroups.get(groupId);
+        if (!group) {
+            this.showToast('Group not found', 'error');
+            return false;
+        }
+        
+        // Move all tabs in this group to ungrouped
+        Array.from(this.tabs.values())
+            .filter(tab => tab.groupId === groupId)
+            .forEach(tab => {
+                tab.groupId = null;
+            });
+        
+        this.tabGroups.delete(groupId);
+        this.saveTabState();
+        this.renderAllTabs();
+        this.showToast(`Group "${group.name}" deleted`, 'info');
+        return true;
+    }
+    
+    renameTabGroup(groupId, newName) {
+        const group = this.tabGroups.get(groupId);
+        if (!group) {
+            this.showToast('Group not found', 'error');
+            return false;
+        }
+        
+        if (!newName || newName.trim() === '') {
+            this.showToast('Group name cannot be empty', 'error');
+            return false;
+        }
+        
+        const oldName = group.name;
+        group.name = newName.trim();
+        this.saveTabState();
+        this.renderAllTabs();
+        this.showToast(`Group renamed from "${oldName}" to "${newName}"`, 'success');
+        return true;
+    }
+    
+    assignTabToGroup(tabId, groupId) {
+        const tab = this.tabs.get(tabId);
+        if (!tab) {
+            console.warn(`Tab ${tabId} not found`);
+            return false;
+        }
+        
+        // Validate group exists (null is valid for ungrouped)
+        if (groupId !== null && !this.tabGroups.has(groupId)) {
+            console.warn(`Group ${groupId} not found`);
+            return false;
+        }
+        
+        tab.groupId = groupId;
+        this.saveTabState();
+        this.renderAllTabs();
+        
+        if (groupId) {
+            const group = this.tabGroups.get(groupId);
+            this.showToast(`Tab moved to group "${group.name}"`, 'info');
+        } else {
+            this.showToast('Tab moved to ungrouped', 'info');
+        }
+        return true;
+    }
+    
+    toggleGroupCollapse(groupId) {
+        const group = this.tabGroups.get(groupId);
+        if (!group) return false;
+        
+        group.isCollapsed = !group.isCollapsed;
+        this.saveTabState();
+        this.renderAllTabs();
+        
+        const status = group.isCollapsed ? 'collapsed' : 'expanded';
+        this.showToast(`Group "${group.name}" ${status}`, 'info');
+        return true;
+    }
+    
+    closeGroupTabs(groupId) {
+        const group = this.tabGroups.get(groupId);
+        if (!group) return false;
+        
+        const tabsInGroup = Array.from(this.tabs.values())
+            .filter(tab => tab.groupId === groupId);
+        
+        if (tabsInGroup.length === 0) {
+            this.showToast('No tabs in this group', 'info');
+            return false;
+        }
+        
+        // Check for pinned tabs in the group
+        const pinnedTabsInGroup = tabsInGroup.filter(tab => tab.isPinned);
+        const unpinnedTabsInGroup = tabsInGroup.filter(tab => !tab.isPinned);
+        
+        // Close unpinned tabs
+        unpinnedTabsInGroup.forEach(tab => {
+            this.closeTab(tab.id);
+        });
+        
+        const closedCount = unpinnedTabsInGroup.length;
+        const pinnedCount = pinnedTabsInGroup.length;
+        
+        if (pinnedCount > 0) {
+            this.showToast(`Closed ${closedCount} tabs in group "${group.name}" (${pinnedCount} pinned tabs kept)`, 'info');
+        } else {
+            this.showToast(`Closed ${closedCount} tabs in group "${group.name}"`, 'info');
+        }
+        
+        return true;
+    }
+    
+    renderGroupHeader(group) {
+        const groupHeader = document.createElement('div');
+        groupHeader.className = 'tab-group-header';
+        groupHeader.dataset.groupId = group.id;
+        
+        // Apply group color using CSS custom property
+        groupHeader.style.setProperty('--group-color', `var(--color-${group.color})`);
+        
+        groupHeader.innerHTML = `
+            <div class="tab-group-header-content">
+                <button class="tab-group-collapse" aria-label="${group.isCollapsed ? 'Expand group' : 'Collapse group'}">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" class="collapse-icon ${group.isCollapsed ? 'collapsed' : ''}">
+                        <path d="M4.5 1.5L9 6l-4.5 4.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    </svg>
+                </button>
+                <span class="tab-group-name">${this.escapeHtml(group.name)}</span>
+                <div class="tab-group-actions">
+                    <button class="tab-group-menu" aria-label="Group menu">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        // Add event listeners
+        const collapseButton = groupHeader.querySelector('.tab-group-collapse');
+        collapseButton.addEventListener('click', () => {
+            this.toggleGroupCollapse(group.id);
+        });
+        
+        const menuButton = groupHeader.querySelector('.tab-group-menu');
+        menuButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.showGroupContextMenu(e, group.id);
+        });
+        
+        // Allow dropping tabs onto group header
+        this.setupGroupDropZone(groupHeader, group.id);
+        
+        return groupHeader;
+    }
+    
+    renderAllTabs() {
+        const container = document.getElementById('tabs-container');
+        if (!container) return;
+        
+        // Clear container
+        container.innerHTML = '';
+        
+        // Organize tabs by groups
+        const tabsByGroup = new Map();
+        const ungroupedTabs = [];
+        
+        // Sort tabs by their DOM order if they exist, otherwise by creation order
+        const sortedTabs = Array.from(this.tabs.values()).sort((a, b) => {
+            const aElement = document.getElementById(a.id);
+            const bElement = document.getElementById(b.id);
+            
+            if (aElement && bElement) {
+                // Both exist in DOM, use DOM order
+                const aIndex = Array.from(container.children).indexOf(aElement);
+                const bIndex = Array.from(container.children).indexOf(bElement);
+                return aIndex - bIndex;
+            }
+            
+            // Fallback to creation order (by tab ID number)
+            const aNum = parseInt(a.id.replace('tab-', ''));
+            const bNum = parseInt(b.id.replace('tab-', ''));
+            return aNum - bNum;
+        });
+        
+        // Group tabs
+        sortedTabs.forEach(tab => {
+            if (tab.groupId) {
+                if (!tabsByGroup.has(tab.groupId)) {
+                    tabsByGroup.set(tab.groupId, []);
+                }
+                tabsByGroup.get(tab.groupId).push(tab);
+            } else {
+                ungroupedTabs.push(tab);
+            }
+        });
+        
+        // Render ungrouped tabs first
+        ungroupedTabs.forEach(tab => {
+            this.renderTab(tab.id);
+        });
+        
+        // Render groups and their tabs
+        const sortedGroups = Array.from(this.tabGroups.values()).sort((a, b) => a.order - b.order);
+        sortedGroups.forEach(group => {
+            const tabsInGroup = tabsByGroup.get(group.id) || [];
+            if (tabsInGroup.length > 0) {
+                // Add group header
+                const groupHeader = this.renderGroupHeader(group);
+                container.appendChild(groupHeader);
+                
+                // Add tabs in this group (only if not collapsed)
+                if (!group.isCollapsed) {
+                    tabsInGroup.forEach(tab => {
+                        this.renderTab(tab.id);
+                    });
+                }
+            }
+        });
+    }
+    
+    setupGroupDropZone(groupHeader, groupId) {
+        groupHeader.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            if (this.draggedTabId) {
+                groupHeader.classList.add('drop-zone-active');
+            }
+        });
+        
+        groupHeader.addEventListener('dragleave', () => {
+            groupHeader.classList.remove('drop-zone-active');
+        });
+        
+        groupHeader.addEventListener('drop', (e) => {
+            e.preventDefault();
+            groupHeader.classList.remove('drop-zone-active');
+            
+            if (this.draggedTabId) {
+                this.assignTabToGroup(this.draggedTabId, groupId);
+            }
+        });
+    }
+    
+    showGroupContextMenu(event, groupId) {
+        // Remove existing context menu
+        const existingMenu = document.getElementById('group-context-menu');
+        if (existingMenu) {
+            existingMenu.remove();
+        }
+        
+        const group = this.tabGroups.get(groupId);
+        if (!group) return;
+        
+        // Create context menu
+        const menu = document.createElement('div');
+        menu.id = 'group-context-menu';
+        menu.className = 'dropdown-menu group-context-menu';
+        
+        menu.innerHTML = `
+            <div class="group-menu-header">
+                <strong>Group: ${this.escapeHtml(group.name)}</strong>
+            </div>
+            <div class="session-menu-divider"></div>
+            <button class="session-menu-item" data-action="rename">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+                </svg>
+                Rename Group
+            </button>
+            <button class="session-menu-item" data-action="collapse">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="${group.isCollapsed 
+                        ? 'M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z' 
+                        : 'M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z'}"/>
+                </svg>
+                ${group.isCollapsed ? 'Expand Group' : 'Collapse Group'}
+            </button>
+            <button class="session-menu-item" data-action="close-tabs">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+                Close All Tabs
+            </button>
+            <div class="session-menu-divider"></div>
+            <button class="session-menu-item session-menu-danger" data-action="delete">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                </svg>
+                Delete Group
+            </button>
+        `;
+        
+        // Position menu relative to click
+        const rect = event.target.getBoundingClientRect();
+        menu.style.position = 'fixed';
+        menu.style.top = `${rect.bottom + 5}px`;
+        menu.style.left = `${rect.left}px`;
+        menu.style.zIndex = '1000';
+        menu.style.display = 'block';
+        
+        // Add event listeners
+        menu.addEventListener('click', (e) => {
+            const action = e.target.closest('[data-action]')?.dataset.action;
+            if (action) {
+                this.handleGroupAction(groupId, action);
+                menu.remove();
+            }
+        });
+        
+        // Close menu when clicking outside
+        const closeMenu = (e) => {
+            if (!menu.contains(e.target)) {
+                menu.remove();
+                document.removeEventListener('click', closeMenu);
+            }
+        };
+        setTimeout(() => document.addEventListener('click', closeMenu), 100);
+        
+        document.body.appendChild(menu);
+    }
+    
+    handleGroupAction(groupId, action) {
+        const group = this.tabGroups.get(groupId);
+        if (!group) return;
+        
+        switch (action) {
+            case 'rename':
+                const newName = prompt(`Rename group "${group.name}":`, group.name);
+                if (newName && newName.trim() && newName.trim() !== group.name) {
+                    this.renameTabGroup(groupId, newName.trim());
+                }
+                break;
+            case 'collapse':
+                this.toggleGroupCollapse(groupId);
+                break;
+            case 'close-tabs':
+                if (confirm(`Close all tabs in group "${group.name}"?`)) {
+                    this.closeGroupTabs(groupId);
+                }
+                break;
+            case 'delete':
+                if (confirm(`Delete group "${group.name}"? Tabs will be ungrouped.`)) {
+                    this.deleteTabGroup(groupId);
+                }
+                break;
+        }
+    }
+    
+    showCreateGroupDialog() {
+        const modal = document.getElementById('group-creation-modal');
+        const nameInput = document.getElementById('group-name-input');
+        const colorPicker = document.getElementById('group-color-picker');
+        const addTabCheckbox = document.getElementById('add-current-tab-checkbox');
+        const createBtn = document.getElementById('create-group-btn');
+        
+        // Reset form
+        nameInput.value = '';
+        addTabCheckbox.checked = this.activeTabId ? true : false;
+        addTabCheckbox.parentElement.style.display = this.activeTabId ? 'block' : 'none';
+        
+        // Pre-select a color (cycle through colors)
+        const colorIndex = this.tabGroups.size % this.groupColors.length;
+        const preselectedColor = this.groupColors[colorIndex];
+        
+        // Clear previous selections
+        colorPicker.querySelectorAll('.color-option').forEach(option => {
+            option.classList.remove('selected');
+        });
+        
+        // Select default color
+        const defaultColorOption = colorPicker.querySelector(`[data-color="${preselectedColor}"]`);
+        if (defaultColorOption) {
+            defaultColorOption.classList.add('selected');
+        }
+        
+        // Set up color picker event handlers
+        const handleColorClick = (e) => {
+            if (e.target.classList.contains('color-option')) {
+                colorPicker.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+                e.target.classList.add('selected');
+            }
+        };
+        
+        // Set up create button handler
+        const handleCreateGroup = () => {
+            const name = nameInput.value.trim();
+            const selectedColorElement = colorPicker.querySelector('.color-option.selected');
+            const color = selectedColorElement?.dataset.color || preselectedColor;
+            
+            if (!name) {
+                nameInput.focus();
+                this.showToast('Please enter a group name', 'error');
+                return;
+            }
+            
+            const groupId = this.createTabGroup(name, color);
+            
+            if (groupId && addTabCheckbox.checked && this.activeTabId) {
+                this.assignTabToGroup(this.activeTabId, groupId);
+            }
+            
+            // Close modal and cleanup
+            modal.style.display = 'none';
+            colorPicker.removeEventListener('click', handleColorClick);
+            createBtn.removeEventListener('click', handleCreateGroup);
+        };
+        
+        // Set up event handlers
+        colorPicker.addEventListener('click', handleColorClick);
+        createBtn.addEventListener('click', handleCreateGroup);
+        
+        // Handle Enter key in name input
+        const handleKeyPress = (e) => {
+            if (e.key === 'Enter') {
+                handleCreateGroup();
+            }
+        };
+        nameInput.addEventListener('keypress', handleKeyPress);
+        
+        // Show modal and focus name input
+        modal.style.display = 'flex';
+        setTimeout(() => nameInput.focus(), 100);
+        
+        // Clean up event listeners when modal closes
+        const originalCloseHandler = () => {
+            colorPicker.removeEventListener('click', handleColorClick);
+            createBtn.removeEventListener('click', handleCreateGroup);
+            nameInput.removeEventListener('keypress', handleKeyPress);
+        };
+        
+        // Store cleanup function for manual closing
+        modal._cleanup = originalCloseHandler;
+    }
+    
+    closeGroupModal() {
+        const modal = document.getElementById('group-creation-modal');
+        if (modal._cleanup) {
+            modal._cleanup();
+            modal._cleanup = null;
+        }
+        modal.style.display = 'none';
+    }
+    
+    showTabContextMenu(event, tabId) {
+        // Remove any existing context menu
+        const existingMenu = document.getElementById('tab-context-menu');
+        if (existingMenu) {
+            existingMenu.remove();
+        }
+        
+        const tab = this.tabs.get(tabId);
+        if (!tab) return;
+        
+        // Create context menu
+        const menu = document.createElement('div');
+        menu.id = 'tab-context-menu';
+        menu.className = 'context-menu';
+        menu.style.position = 'fixed';
+        menu.style.left = event.clientX + 'px';
+        menu.style.top = event.clientY + 'px';
+        menu.style.zIndex = '10000';
+        
+        const groups = Array.from(this.tabGroups.values());
+        
+        let menuHTML = `
+            <div class="context-menu-item" data-action="new-group">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2z"/>
+                </svg>
+                Create New Group
+            </div>
+        `;
+        
+        if (tab.groupId) {
+            menuHTML += `
+                <div class="context-menu-item" data-action="remove-from-group">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                    </svg>
+                    Remove from Group
+                </div>
+            `;
+        }
+        
+        if (groups.length > 0) {
+            menuHTML += `<div class="context-menu-separator"></div>`;
+            groups.forEach(group => {
+                const isInGroup = tab.groupId === group.id;
+                menuHTML += `
+                    <div class="context-menu-item ${isInGroup ? 'selected' : ''}" data-action="assign-to-group" data-group-id="${group.id}">
+                        <div class="group-indicator" style="background: var(--color-${group.color})"></div>
+                        ${this.escapeHtml(group.name)}
+                        ${isInGroup ? '<svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M11.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L4.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>' : ''}
+                    </div>
+                `;
+            });
+        }
+        
+        menu.innerHTML = menuHTML;
+        
+        // Add event listeners
+        menu.addEventListener('click', (e) => {
+            const item = e.target.closest('.context-menu-item');
+            if (!item) return;
+            
+            const action = item.dataset.action;
+            const groupId = item.dataset.groupId;
+            
+            switch (action) {
+                case 'new-group':
+                    this.showCreateGroupDialog();
+                    break;
+                case 'remove-from-group':
+                    this.assignTabToGroup(tabId, null);
+                    break;
+                case 'assign-to-group':
+                    this.assignTabToGroup(tabId, groupId);
+                    break;
+            }
+            
+            menu.remove();
+        });
+        
+        // Remove menu on outside click
+        const removeMenu = (e) => {
+            if (!menu.contains(e.target)) {
+                menu.remove();
+                document.removeEventListener('click', removeMenu);
+            }
+        };
+        
+        document.addEventListener('click', removeMenu);
+        document.body.appendChild(menu);
+        
+        // Position menu within viewport
+        const rect = menu.getBoundingClientRect();
+        if (rect.right > window.innerWidth) {
+            menu.style.left = (event.clientX - rect.width) + 'px';
+        }
+        if (rect.bottom > window.innerHeight) {
+            menu.style.top = (event.clientY - rect.height) + 'px';
+        }
     }
     
     loadNoteInTab(path, tabId) {
@@ -9548,6 +11265,7 @@ class NotesWiki {
         document.getElementById('shortcut-filter').textContent = shortcuts['filter'] || 'Ctrl+F';
         document.getElementById('shortcut-settings').textContent = shortcuts['settings'] || 'Ctrl+,';
         document.getElementById('shortcut-bookmark').textContent = shortcuts['bookmark'] || 'Ctrl+D';
+        document.getElementById('shortcut-quick-switcher').textContent = shortcuts['quick-switcher'] || 'Ctrl+P';
     }
     
     showConfirmation(title, message, onConfirm) {
@@ -9889,8 +11607,11 @@ class NotesWiki {
     }
     
     updateFileTreeDragState() {
+        const activeTab = this.tabs.get(this.activeTabId);
+        const shouldEnableDrag = this.settings.splitViewEnabled || (activeTab && activeTab.isSplitTab);
+        
         document.querySelectorAll('.file-tree-link').forEach(link => {
-            if (this.settings.splitViewEnabled) {
+            if (shouldEnableDrag) {
                 link.draggable = true;
                 link.addEventListener('dragstart', this.handleFileDragStart.bind(this));
             } else {
@@ -10314,6 +12035,527 @@ class NotesWiki {
         }
     }
     
+    // ============================================
+    // MULTI-PANE SPLIT TABS IMPLEMENTATION
+    // ============================================
+    
+    renderMultiPaneSplitContent(splitConfig) {
+        const mainContent = document.getElementById('main-content');
+        if (!mainContent) return;
+        
+        // Clear any existing content
+        mainContent.innerHTML = '';
+        
+        // Create split container
+        const splitContainer = document.createElement('div');
+        splitContainer.className = `multi-split-container ${splitConfig.orientation}`;
+        splitContainer.dataset.orientation = splitConfig.orientation;
+        
+        // Add split controls header
+        const controlsHeader = document.createElement('div');
+        controlsHeader.className = 'split-controls-header';
+        controlsHeader.innerHTML = `
+            <div class="split-controls">
+                <button class="split-control-btn" id="add-pane-btn" title="Add pane">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 2a.75.75 0 01.75.75v4.5h4.5a.75.75 0 010 1.5h-4.5v4.5a.75.75 0 01-1.5 0v-4.5h-4.5a.75.75 0 010-1.5h4.5v-4.5A.75.75 0 018 2z"/>
+                    </svg>
+                    Add Pane
+                </button>
+                <button class="split-control-btn" id="toggle-orientation-btn" title="Toggle orientation">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 2a.75.75 0 01.75.75v4.5h4.5a.75.75 0 010 1.5h-4.5v4.5a.75.75 0 01-1.5 0v-4.5h-4.5a.75.75 0 010-1.5h4.5v-4.5A.75.75 0 018 2z"/>
+                    </svg>
+                    ${splitConfig.orientation === 'horizontal' ? 'Vertical' : 'Horizontal'}
+                </button>
+            </div>
+        `;
+        
+        splitContainer.appendChild(controlsHeader);
+        
+        // Create panes container
+        const panesContainer = document.createElement('div');
+        panesContainer.className = 'panes-container';
+        
+        // Generate panes HTML
+        splitConfig.panes.forEach((pane, index) => {
+            const paneElement = this.createPaneElement(pane, index, splitConfig);
+            panesContainer.appendChild(paneElement);
+            
+            // Add divider between panes (except after the last one)
+            if (index < splitConfig.panes.length - 1) {
+                const divider = document.createElement('div');
+                divider.className = 'multi-pane-divider';
+                divider.dataset.paneIndex = index;
+                panesContainer.appendChild(divider);
+            }
+        });
+        
+        splitContainer.appendChild(panesContainer);
+        mainContent.appendChild(splitContainer);
+        
+        // Setup functionality
+        this.setupMultiPaneResizing();
+        this.setupMultiPaneNavigation(splitConfig);
+        this.setupMultiPaneDragDrop();
+        this.setupSplitControls(splitConfig);
+        
+        // Set initial active pane
+        if (splitConfig.activePaneId) {
+            this.setActivePaneById(splitConfig.activePaneId);
+        }
+    }
+    
+    createPaneElement(pane, index, splitConfig) {
+        const paneElement = document.createElement('div');
+        paneElement.className = `multi-split-pane ${pane.id === splitConfig.activePaneId ? 'active' : ''}`;
+        paneElement.id = `pane-${pane.id}`;
+        paneElement.style.flexBasis = `${pane.size}%`;
+        
+        paneElement.innerHTML = `
+            <div class="multi-pane-header">
+                <span class="multi-pane-title">${this.escapeHtml(pane.title)}</span>
+                <div class="multi-pane-actions">
+                    ${splitConfig.panes.length > 2 ? 
+                        `<button class="pane-action-btn close-pane-btn" data-pane-id="${pane.id}" title="Close pane">
+                            <svg width="12" height="12" viewBox="0 0 14 14" fill="currentColor">
+                                <path d="M7 7.707l3.146 3.147a.5.5 0 00.708-.708L7.707 7l3.147-3.146a.5.5 0 00-.708-.708L7 6.293 3.854 3.146a.5.5 0 10-.708.708L6.293 7l-3.147 3.146a.5.5 0 00.708.708L7 7.707z"/>
+                            </svg>
+                        </button>` : ''
+                    }
+                </div>
+            </div>
+            <div class="multi-pane-content" id="pane-content-${pane.id}">
+                <div class="empty-state">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" opacity="0.3">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+                        <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+                    </svg>
+                    <p>Drag a note here or click one in the sidebar</p>
+                </div>
+            </div>
+        `;
+        
+        return paneElement;
+    }
+    
+    setupMultiPaneResizing() {
+        let isResizing = false;
+        let currentDivider = null;
+        let startSizes = [];
+        let startX = 0;
+        let startY = 0;
+        
+        document.querySelectorAll('.multi-pane-divider').forEach(divider => {
+            divider.addEventListener('mousedown', (e) => {
+                isResizing = true;
+                currentDivider = divider;
+                const paneIndex = parseInt(divider.dataset.paneIndex);
+                
+                startX = e.clientX;
+                startY = e.clientY;
+                
+                // Get initial sizes of adjacent panes
+                const panes = document.querySelectorAll('.multi-split-pane');
+                startSizes = Array.from(panes).map(pane => ({
+                    element: pane,
+                    size: parseFloat(pane.style.flexBasis) || (100 / panes.length)
+                }));
+                
+                document.body.style.cursor = divider.closest('.horizontal') ? 'row-resize' : 'col-resize';
+                e.preventDefault();
+            });
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!isResizing || !currentDivider) return;
+            
+            const paneIndex = parseInt(currentDivider.dataset.paneIndex);
+            const container = currentDivider.closest('.multi-split-container');
+            const isHorizontal = container.classList.contains('horizontal');
+            
+            const delta = isHorizontal ? (e.clientY - startY) : (e.clientX - startX);
+            const containerSize = isHorizontal ? container.offsetHeight : container.offsetWidth;
+            const deltaPercent = (delta / containerSize) * 100;
+            
+            // Update adjacent panes
+            if (startSizes[paneIndex] && startSizes[paneIndex + 1]) {
+                const newSize1 = Math.max(10, Math.min(90, startSizes[paneIndex].size + deltaPercent));
+                const newSize2 = Math.max(10, Math.min(90, startSizes[paneIndex + 1].size - deltaPercent));
+                
+                startSizes[paneIndex].element.style.flexBasis = `${newSize1}%`;
+                startSizes[paneIndex + 1].element.style.flexBasis = `${newSize2}%`;
+            }
+        });
+        
+        document.addEventListener('mouseup', () => {
+            if (isResizing) {
+                isResizing = false;
+                currentDivider = null;
+                document.body.style.cursor = '';
+                startSizes = [];
+                
+                // Save the new sizes to tab configuration
+                this.saveCurrentPaneSizes();
+            }
+        });
+    }
+    
+    setupMultiPaneNavigation(splitConfig) {
+        // Handle clicks on panes to set active pane
+        document.querySelectorAll('.multi-split-pane').forEach(pane => {
+            pane.addEventListener('click', () => {
+                this.setActivePaneById(pane.id.replace('pane-', ''));
+            });
+        });
+    }
+    
+    setupMultiPaneDragDrop() {
+        // Make file tree links draggable for multi-pane
+        this.updateFileTreeDragStateForMultiPane();
+        
+        // Set up drop zones on panes
+        document.querySelectorAll('.multi-split-pane').forEach(pane => {
+            pane.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'copy';
+                pane.classList.add('drag-over');
+            });
+            
+            pane.addEventListener('dragleave', (e) => {
+                if (!pane.contains(e.relatedTarget)) {
+                    pane.classList.remove('drag-over');
+                }
+            });
+            
+            pane.addEventListener('drop', (e) => {
+                e.preventDefault();
+                pane.classList.remove('drag-over');
+                
+                const notePath = e.dataTransfer.getData('text/plain');
+                if (notePath) {
+                    const paneId = pane.id.replace('pane-', '');
+                    this.setActivePaneById(paneId);
+                    this.loadNoteInPane(notePath, paneId, this.activeTabId);
+                }
+            });
+        });
+    }
+    
+    setupSplitControls(splitConfig) {
+        // Add pane button
+        const addPaneBtn = document.getElementById('add-pane-btn');
+        if (addPaneBtn) {
+            addPaneBtn.addEventListener('click', () => {
+                this.addPaneToCurrentTab();
+            });
+        }
+        
+        // Toggle orientation button
+        const toggleOrientationBtn = document.getElementById('toggle-orientation-btn');
+        if (toggleOrientationBtn) {
+            toggleOrientationBtn.addEventListener('click', () => {
+                this.toggleSplitOrientation();
+            });
+        }
+        
+        // Close pane buttons
+        document.querySelectorAll('.close-pane-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const paneId = btn.dataset.paneId;
+                this.removePaneFromCurrentTab(paneId);
+            });
+        });
+    }
+    
+    updateFileTreeDragStateForMultiPane() {
+        // Use the unified drag state update method
+        this.updateFileTreeDragState();
+    }
+    
+    setActivePaneById(paneId) {
+        document.querySelectorAll('.multi-split-pane').forEach(pane => {
+            pane.classList.remove('active');
+        });
+        
+        const targetPane = document.getElementById(`pane-${paneId}`);
+        if (targetPane) {
+            targetPane.classList.add('active');
+            
+            // Update the active pane in the current tab's configuration
+            const activeTab = this.tabs.get(this.activeTabId);
+            if (activeTab && activeTab.isSplitTab) {
+                activeTab.splitConfig.activePaneId = paneId;
+                this.saveTabSessions();
+            }
+        }
+    }
+    
+    async loadNoteInPane(path, paneId, tabId) {
+        const paneContent = document.getElementById(`pane-content-${paneId}`);
+        if (!paneContent) {
+            console.error('Pane content not found:', paneId);
+            return;
+        }
+        
+        // Validate path
+        if (!path || typeof path !== 'string' || path.trim() === '') {
+            console.error('Invalid path provided to loadNoteInPane:', path);
+            paneContent.innerHTML = `
+                <div class="content-wrapper content-view">
+                    <h1>Invalid Path</h1>
+                    <p>The requested path is invalid.</p>
+                    <p><a href="#/notes/index.md">Return to home</a></p>
+                </div>
+            `;
+            return;
+        }
+        
+        // Show loading state
+        paneContent.innerHTML = `
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Loading...</p>
+            </div>
+        `;
+        
+        try {
+            // Normalize path
+            if (!path.startsWith('/')) {
+                path = '/' + path;
+            }
+            
+            // Load note data
+            const note = this.notesIndex.notes.find(n => n.path === path);
+            if (!note) {
+                throw new Error(`Note not found: ${path}`);
+            }
+            
+            // Fetch note content  
+            const fetchPath = path.slice(1);
+            const fullPath = this.basePath ? `${this.basePath}${fetchPath}` : fetchPath;
+            const response = await fetch(fullPath);
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            const content = await response.text();
+            const { metadata, content: body } = this.parseFrontmatter(content);
+            
+            // Render the note in this specific pane
+            this.renderNoteInMultiPane(paneContent, { metadata, content: body }, paneId);
+            
+            // Update pane configuration
+            const tab = this.tabs.get(tabId);
+            if (tab && tab.isSplitTab) {
+                const pane = tab.splitConfig.panes.find(p => p.id === paneId);
+                if (pane) {
+                    pane.path = path;
+                    pane.title = metadata.title || `Pane ${paneId}`;
+                    
+                    // Update pane header title
+                    const paneTitle = document.querySelector(`#pane-${paneId} .multi-pane-title`);
+                    if (paneTitle) {
+                        paneTitle.textContent = pane.title;
+                    }
+                    
+                    this.saveTabSessions();
+                }
+            }
+            
+        } catch (error) {
+            console.error('Failed to load note in pane:', error);
+            paneContent.innerHTML = `
+                <div class="content-wrapper content-view">
+                    <h1>Error Loading Note</h1>
+                    <p>Failed to load the requested note.</p>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                    <p><a href="#" onclick="notesWiki.loadNoteInPane('${path}', '${paneId}', '${tabId}'); return false;">Try again</a></p>
+                </div>
+            `;
+        }
+    }
+    
+    renderNoteInMultiPane(container, note, paneId) {
+        // Similar to renderNote but adapted for multi-pane
+        const content = this.renderMarkdown(note.content, note.metadata);
+        
+        container.innerHTML = `
+            <div class="content-wrapper content-view">
+                ${content}
+            </div>
+        `;
+        
+        // Setup content event listeners
+        this.setupContentEventListeners(container);
+        this.applySyntaxHighlighting(container);
+        
+        // Setup scroll event listener to save position
+        container.addEventListener('scroll', () => {
+            const tab = this.tabs.get(this.activeTabId);
+            if (tab && tab.isSplitTab) {
+                const pane = tab.splitConfig.panes.find(p => p.id === paneId);
+                if (pane) {
+                    pane.scrollPosition = container.scrollTop;
+                }
+            }
+        });
+    }
+    
+    addPaneToCurrentTab() {
+        const activeTab = this.tabs.get(this.activeTabId);
+        if (!activeTab || !activeTab.isSplitTab) return;
+        
+        const newPaneId = `pane-${this.tabIdCounter++}`;
+        const newPane = {
+            id: newPaneId,
+            path: null,
+            title: `Pane ${activeTab.splitConfig.panes.length + 1}`,
+            scrollPosition: 0,
+            size: Math.floor(100 / (activeTab.splitConfig.panes.length + 1))
+        };
+        
+        // Adjust existing pane sizes
+        const newSize = Math.floor(100 / (activeTab.splitConfig.panes.length + 1));
+        activeTab.splitConfig.panes.forEach(pane => {
+            pane.size = newSize;
+        });
+        
+        activeTab.splitConfig.panes.push(newPane);
+        
+        // Re-render the split content
+        this.renderMultiPaneSplitContent(activeTab.splitConfig);
+        
+        // Update tab title to reflect new pane count
+        this.updateTabTitle(activeTab.id);
+        
+        this.saveTabSessions();
+        this.showToast(`Added new pane (${activeTab.splitConfig.panes.length} total)`);
+    }
+    
+    removePaneFromCurrentTab(paneId) {
+        const activeTab = this.tabs.get(this.activeTabId);
+        if (!activeTab || !activeTab.isSplitTab || activeTab.splitConfig.panes.length <= 2) {
+            this.showToast('Cannot remove pane: minimum 2 panes required', 'warning');
+            return;
+        }
+        
+        // Remove the pane
+        activeTab.splitConfig.panes = activeTab.splitConfig.panes.filter(p => p.id !== paneId);
+        
+        // Adjust remaining pane sizes
+        const newSize = Math.floor(100 / activeTab.splitConfig.panes.length);
+        activeTab.splitConfig.panes.forEach(pane => {
+            pane.size = newSize;
+        });
+        
+        // Update active pane if necessary
+        if (activeTab.splitConfig.activePaneId === paneId) {
+            activeTab.splitConfig.activePaneId = activeTab.splitConfig.panes[0].id;
+        }
+        
+        // Re-render the split content
+        this.renderMultiPaneSplitContent(activeTab.splitConfig);
+        
+        // Update tab title
+        this.updateTabTitle(activeTab.id);
+        
+        this.saveTabSessions();
+        this.showToast(`Removed pane (${activeTab.splitConfig.panes.length} total)`);
+    }
+    
+    toggleSplitOrientation() {
+        const activeTab = this.tabs.get(this.activeTabId);
+        if (!activeTab || !activeTab.isSplitTab) return;
+        
+        // Toggle orientation
+        activeTab.splitConfig.orientation = activeTab.splitConfig.orientation === 'horizontal' ? 'vertical' : 'horizontal';
+        
+        // Re-render the split content
+        this.renderMultiPaneSplitContent(activeTab.splitConfig);
+        
+        this.saveTabSessions();
+        this.showToast(`Switched to ${activeTab.splitConfig.orientation} layout`);
+    }
+    
+    saveCurrentPaneSizes() {
+        const activeTab = this.tabs.get(this.activeTabId);
+        if (!activeTab || !activeTab.isSplitTab) return;
+        
+        // Update pane sizes in configuration
+        document.querySelectorAll('.multi-split-pane').forEach((paneElement, index) => {
+            const paneId = paneElement.id.replace('pane-', '');
+            const pane = activeTab.splitConfig.panes.find(p => p.id === paneId);
+            if (pane) {
+                pane.size = parseFloat(paneElement.style.flexBasis) || pane.size;
+            }
+        });
+        
+        this.saveTabSessions();
+    }
+    
+    updateTabTitle(tabId) {
+        const tab = this.tabs.get(tabId);
+        if (!tab) return;
+        
+        const tabElement = document.getElementById(tabId);
+        if (!tabElement) return;
+        
+        const splitIndicator = tabElement.querySelector('.split-indicator');
+        if (splitIndicator && tab.isSplitTab) {
+            splitIndicator.textContent = `⊞${tab.splitConfig.panes.length}`;
+            splitIndicator.title = `${tab.splitConfig.panes.length} panes`;
+        }
+    }
+    
+    convertTabToSplit(tabId, orientation = 'horizontal') {
+        const tab = this.tabs.get(tabId);
+        if (!tab || tab.isSplitTab || tab.isSplitView) {
+            this.showToast('Cannot convert this tab to split view', 'warning');
+            return;
+        }
+        
+        // Store the current note path and title
+        const currentPath = tab.path;
+        const currentTitle = tab.title;
+        
+        // Convert tab to split configuration
+        const paneId1 = `pane-${this.tabIdCounter++}`;
+        const paneId2 = `pane-${this.tabIdCounter++}`;
+        
+        tab.isSplitTab = true;
+        tab.path = null; // Split tabs don't have a single path
+        tab.title = `Split: ${currentTitle}`;
+        tab.splitConfig = {
+            orientation: orientation,
+            activePaneId: paneId1,
+            panes: [
+                {
+                    id: paneId1,
+                    path: currentPath,
+                    title: currentTitle,
+                    scrollPosition: 0,
+                    size: 50
+                },
+                {
+                    id: paneId2,
+                    path: null,
+                    title: 'New Pane',
+                    scrollPosition: 0,
+                    size: 50
+                }
+            ]
+        };
+        
+        // Re-render the tab and its content
+        this.renderAllTabs();
+        this.switchToTab(tabId);
+        
+        this.saveTabSessions();
+        this.showToast(`Converted tab to ${orientation} split view`);
+    }
+
     // ============================================
     // STICKY NOTES IMPLEMENTATION
     // ============================================
