@@ -27,6 +27,9 @@ This comprehensive guide covers all the ways you can deploy your wiki, from clou
 
 # Your wiki will be available at:
 # https://[username].github.io/Wiki/
+# Note: You can name your repository anything! The wiki automatically
+# detects the path and adjusts all resource URLs accordingly.
+# Examples: /my-notes/, /documentation/, /knowledge-base/
 ```
 
 **Pros:**
@@ -47,6 +50,7 @@ This comprehensive guide covers all the ways you can deploy your wiki, from clou
 # Step 1: Create new GitLab project
 git clone https://github.com/Real-Fruit-Snacks/Wiki.git
 cd Wiki
+# Note: You can rename the project to anything you like!
 
 # Step 2: Add GitLab remote
 git remote add gitlab https://gitlab.com/yourusername/wiki.git

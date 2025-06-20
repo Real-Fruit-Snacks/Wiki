@@ -9,7 +9,7 @@ updated: 2025-06-13
 
 # Theme Showcase & Test
 
-This page showcases all **50 professional themes** available in the Notes Wiki system. Each theme is carefully crafted to provide excellent readability and beautiful syntax highlighting.
+This page showcases all **70 professional themes** available in the Notes Wiki system. Each theme is carefully crafted to provide excellent readability and beautiful syntax highlighting.
 
 ## How to Test Themes
 
@@ -18,7 +18,7 @@ This page showcases all **50 professional themes** available in the Notes Wiki s
 3. **Apply Theme** - Click a theme card to apply it permanently
 4. **Auto Detection** - Enable auto light/dark theme detection in settings
 
-## Complete Theme Collection (50 Themes)
+## Complete Theme Collection (70 Themes)
 
 ### ✨ Classic Themes
 - **Light** - Clean, minimal light theme for daytime reading
@@ -905,7 +905,7 @@ When testing themes, pay attention to:
 
 ## Theme Implementation Complete!
 
-All 50+ professional themes have been successfully implemented with:
+All 70 professional themes have been successfully implemented with:
 
 - ✅ Full CSS custom property definitions
 - ✅ Comprehensive syntax highlighting for all languages

@@ -17,7 +17,7 @@ build:
     - mkdir -p public
     
     # Copy all static assets to public directory
-    - cp -r index.html 404.html style.css script.js libs themes notes images public/
+    - cp -r index.html 404.html style.css script.js libs themes notes images *.md public/
     
     # Run build script to generate notes-index.json
     - python3 build.py

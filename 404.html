@@ -11,11 +11,21 @@
         // Load base styles with correct path
         (function() {
             const pathname = window.location.pathname;
+            const hostname = window.location.hostname;
             let basePath = '';
-            if (pathname.includes('/Wiki/') || pathname.includes('/wiki/')) {
-                const match = pathname.match(/\/(Wiki|wiki)\//);
-                if (match) {
-                    basePath = pathname.substring(0, pathname.indexOf(match[0]) + match[0].length);
+            // Same detection logic as main app
+            if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '') {
+                // Local development
+            } else if (hostname.includes('github.io') || hostname.includes('gitlab.io')) {
+                const pathSegments = pathname.split('/').filter(segment => segment);
+                if (pathSegments.length > 0) {
+                    // Check if last segment is a file
+                    const lastSegment = pathSegments[pathSegments.length - 1];
+                    const isFile = lastSegment && (lastSegment.includes('.html') || lastSegment.includes('.'));
+                    
+                    if (!isFile || pathSegments.length > 1) {
+                        basePath = '/' + pathSegments[0] + '/';
+                    }
                 }
             }
             const link = document.createElement('link');
@@ -33,11 +43,21 @@
         (function() {
             // Detect base path
             const pathname = window.location.pathname;
+            const hostname = window.location.hostname;
             let basePath = '';
-            if (pathname.includes('/Wiki/') || pathname.includes('/wiki/')) {
-                const match = pathname.match(/\/(Wiki|wiki)\//);
-                if (match) {
-                    basePath = pathname.substring(0, pathname.indexOf(match[0]) + match[0].length);
+            // Same detection logic as main app
+            if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '') {
+                // Local development
+            } else if (hostname.includes('github.io') || hostname.includes('gitlab.io')) {
+                const pathSegments = pathname.split('/').filter(segment => segment);
+                if (pathSegments.length > 0) {
+                    // Check if last segment is a file
+                    const lastSegment = pathSegments[pathSegments.length - 1];
+                    const isFile = lastSegment && (lastSegment.includes('.html') || lastSegment.includes('.'));
+                    
+                    if (!isFile || pathSegments.length > 1) {
+                        basePath = '/' + pathSegments[0] + '/';
+                    }
                 }
             }
             
@@ -258,12 +278,27 @@
         // Detect base path for navigation
         function getBasePath() {
             const pathname = window.location.pathname;
-            if (pathname.includes('/Wiki/') || pathname.includes('/wiki/')) {
-                const match = pathname.match(/\/(Wiki|wiki)\//);
-                if (match) {
-                    return pathname.substring(0, pathname.indexOf(match[0]) + match[0].length);
+            const hostname = window.location.hostname;
+            
+            // Local development
+            if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '') {
+                return '/';
+            }
+            
+            // GitHub/GitLab Pages
+            if (hostname.includes('github.io') || hostname.includes('gitlab.io')) {
+                const pathSegments = pathname.split('/').filter(segment => segment);
+                if (pathSegments.length > 0) {
+                    // Check if last segment is a file
+                    const lastSegment = pathSegments[pathSegments.length - 1];
+                    const isFile = lastSegment && (lastSegment.includes('.html') || lastSegment.includes('.'));
+                    
+                    if (!isFile || pathSegments.length > 1) {
+                        return '/' + pathSegments[0] + '/';
+                    }
                 }
             }
+            
             return '/';
         }
         

@@ -3,7 +3,7 @@
 # 📚 Wiki - Modern Knowledge Management System
 
 <p align="center">
-  <strong>Transform your documentation with a blazing-fast, offline-first wiki system featuring 50+ themes and enterprise-grade search capabilities</strong>
+  <strong>Transform your documentation with a blazing-fast, offline-first wiki system featuring 70 themes and enterprise-grade search capabilities</strong>
 </p>
 
 <p align="center">
@@ -15,7 +15,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Version-3.3.0-green?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License">
-  <img src="https://img.shields.io/badge/Themes-70+-purple?style=flat-square" alt="Themes">
+  <img src="https://img.shields.io/badge/Themes-70-purple?style=flat-square" alt="Themes">
   <img src="https://img.shields.io/badge/Dependencies-Zero-orange?style=flat-square" alt="Zero Dependencies">
   <img src="https://img.shields.io/badge/Offline-Ready-red?style=flat-square" alt="Offline Ready">
 </p>
@@ -151,7 +151,7 @@ This wiki is designed to work completely offline without external dependencies. 
 ### 📦 What's Included for Self-Contained Operation
 
 - **Zero External Dependencies**: All JavaScript libraries are bundled in `/libs/`
-- **Complete Theme Collection**: 50+ themes in `/themes/` directory
+- **Complete Theme Collection**: 70 themes in `/themes/` directory
 - **Self-Contained Assets**: All icons, fonts, and resources are embedded
 - **Local Search**: Full-text search index generated locally
 - **GitLab CI/CD Ready**: `.gitlab-ci.yml` included for automated deployment
@@ -222,7 +222,7 @@ git push
 ```bash
 # Verify all dependencies are present
 ls libs/           # Should contain: js-yaml.min.js, marked.min.js, prism.min.js
-ls themes/         # Should contain 50+ CSS theme files
+ls themes/         # Should contain 70 CSS theme files
 ls -la index.html  # Main application file
 ```
 
@@ -253,7 +253,7 @@ wiki/
 │   ├── js-yaml.min.js
 │   ├── marked.min.js
 │   └── prism.min.js
-├── themes/                # 50+ CSS themes
+├── themes/                # 70 CSS themes
 │   ├── tokyo-night.css
 │   ├── dracula.css
 │   └── [48 more themes]
@@ -352,7 +352,7 @@ async function fetchData() {
 ```
 ```
 
-Features line numbers, syntax highlighting, collapsible sections, and copy buttons.
+Features toggleable line numbers (CSS counter-based), syntax highlighting for 20+ languages, collapsible sections, custom titles, and copy buttons.
 </details>
 
 <details>
@@ -382,7 +382,7 @@ Features line numbers, syntax highlighting, collapsible sections, and copy butto
 
 ## 🎨 Stunning Themes
 
-Choose from 70+ professionally crafted themes:
+Choose from 70 professionally crafted themes:
 
 | Dark Themes | Light Themes | Special Themes |
 |------------|--------------|----------------|
@@ -484,7 +484,7 @@ See our [Contributing Guide](CONTRIBUTING.md) for details.
 
 - **🚀 Zero Runtime Dependencies** - Everything is bundled
 - **📦 ~44MB Total Package** - Including all themes, libraries, and documentation
-- **🎨 70+ Professional Themes** - Carefully curated collection
+- **🎨 70 Professional Themes** - Carefully curated collection
 - **📝 8,800+ Lines of Code** - Comprehensive single-page application
 - **⚡ < 100ms Load Time** - Measured on average hardware
 - **🌍 100% Offline Capable** - No internet required after initial load

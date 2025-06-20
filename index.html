@@ -11,13 +11,25 @@
         // Load base styles with correct path
         (function() {
             const pathname = window.location.pathname;
+            const hostname = window.location.hostname;
             let basePath = '';
-            if (pathname.includes('/Wiki/') || pathname.includes('/wiki/')) {
-                const match = pathname.match(/\/(Wiki|wiki)\//);
-                if (match) {
-                    basePath = pathname.substring(0, pathname.indexOf(match[0]) + match[0].length);
+            
+            // Same detection logic as theme loading
+            if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '') {
+                // Local development
+            } else if (hostname.includes('github.io') || hostname.includes('gitlab.io')) {
+                const pathSegments = pathname.split('/').filter(segment => segment);
+                if (pathSegments.length > 0) {
+                    // Check if last segment is a file
+                    const lastSegment = pathSegments[pathSegments.length - 1];
+                    const isFile = lastSegment && (lastSegment.includes('.html') || lastSegment.includes('.'));
+                    
+                    if (!isFile || pathSegments.length > 1) {
+                        basePath = '/' + pathSegments[0] + '/';
+                    }
                 }
             }
+            
             const link = document.createElement('link');
             link.rel = 'stylesheet';
             link.href = basePath ? `${basePath}style.css` : 'style.css';
@@ -31,22 +43,82 @@
     <!-- Set initial theme path for GitHub Pages compatibility -->
     <script>
         (function() {
+            console.log('[Theme Init] Starting initial theme setup');
+            
             // Detect base path
             const pathname = window.location.pathname;
+            const hostname = window.location.hostname;
+            console.log('[Theme Init] Current pathname:', pathname);
+            console.log('[Theme Init] Current hostname:', hostname);
+            
             let basePath = '';
-            if (pathname.includes('/Wiki/') || pathname.includes('/wiki/')) {
-                const match = pathname.match(/\/(Wiki|wiki)\//);
-                if (match) {
-                    basePath = pathname.substring(0, pathname.indexOf(match[0]) + match[0].length);
+            
+            // Local development - no base path needed
+            if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '') {
+                console.log('[Theme Init] Local development detected');
+            }
+            // GitHub Pages pattern
+            else if (hostname.includes('github.io')) {
+                const pathSegments = pathname.split('/').filter(segment => segment);
+                if (pathSegments.length > 0) {
+                    basePath = '/' + pathSegments[0] + '/';
+                    console.log('[Theme Init] GitHub Pages detected, base path:', basePath);
+                }
+            }
+            // GitLab Pages pattern
+            else if (hostname.includes('gitlab.io') || pathname.split('/').filter(s => s).length > 0) {
+                const pathSegments = pathname.split('/').filter(segment => segment);
+                const lastSegment = pathSegments[pathSegments.length - 1];
+                const isFile = lastSegment && (lastSegment.includes('.html') || lastSegment.includes('.'));
+                
+                if (pathSegments.length > 0 && !isFile) {
+                    basePath = '/' + pathSegments[0] + '/';
+                    console.log('[Theme Init] GitLab Pages detected, base path:', basePath);
+                } else if (pathSegments.length > 1) {
+                    basePath = '/' + pathSegments[0] + '/';
+                    console.log('[Theme Init] GitLab Pages with file detected, base path:', basePath);
                 }
             }
             
             // Set default theme
             const defaultTheme = 'tokyo-night';
-            const savedTheme = localStorage.getItem('notesWiki_theme') || defaultTheme;
+            let savedTheme = defaultTheme;
+            
+            try {
+                savedTheme = localStorage.getItem('notesWiki_theme') || defaultTheme;
+                console.log('[Theme Init] Retrieved saved theme:', savedTheme);
+            } catch (e) {
+                console.error('[Theme Init] Failed to access localStorage:', e);
+                console.log('[Theme Init] Using default theme:', defaultTheme);
+            }
+            
             const themeLink = document.getElementById('theme-stylesheet');
             if (themeLink) {
-                themeLink.href = basePath ? `${basePath}themes/${savedTheme}.css` : `themes/${savedTheme}.css`;
+                const themeUrl = basePath ? `${basePath}themes/${savedTheme}.css` : `themes/${savedTheme}.css`;
+                console.log('[Theme Init] Setting initial theme URL:', themeUrl);
+                
+                // Add error handling for initial theme load
+                themeLink.onerror = function(error) {
+                    console.error('[Theme Init] Failed to load initial theme:', savedTheme);
+                    console.error('[Theme Init] Error:', error);
+                    console.error('[Theme Init] Attempted URL:', themeUrl);
+                    
+                    // Try fallback to default if not already default
+                    if (savedTheme !== defaultTheme) {
+                        console.log('[Theme Init] Attempting fallback to default theme');
+                        const fallbackUrl = basePath ? `${basePath}themes/${defaultTheme}.css` : `themes/${defaultTheme}.css`;
+                        themeLink.href = fallbackUrl;
+                    }
+                };
+                
+                themeLink.onload = function() {
+                    console.log('[Theme Init] Successfully loaded initial theme:', savedTheme);
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                };
+                
+                themeLink.href = themeUrl;
+            } else {
+                console.error('[Theme Init] Theme stylesheet element not found!');
             }
         })();
     </script>

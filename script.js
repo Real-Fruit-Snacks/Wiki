@@ -221,18 +221,54 @@ class NotesWiki {
     }
     
     getBasePath() {
-        // Detect if we're running on GitHub Pages or locally
+        // Detect if we're running on GitHub/GitLab Pages or locally
         const pathname = window.location.pathname;
-        // GitHub Pages serves from /repository-name/
-        // Local serves from / or /index.html
-        if (pathname.includes('/Wiki/') || pathname.includes('/wiki/')) {
-            // We're on GitHub Pages
-            const match = pathname.match(/\/(Wiki|wiki)\//);
-            if (match) {
-                return pathname.substring(0, pathname.indexOf(match[0]) + match[0].length);
+        const hostname = window.location.hostname;
+        
+        console.log('[Path Detection] Current pathname:', pathname);
+        console.log('[Path Detection] Current hostname:', hostname);
+        
+        // Local development - no base path needed
+        if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '') {
+            console.log('[Path Detection] Local development detected');
+            return '';
+        }
+        
+        // GitHub Pages pattern: username.github.io/repository-name/
+        if (hostname.includes('github.io')) {
+            // Extract the first path segment as the repository name
+            const pathSegments = pathname.split('/').filter(segment => segment);
+            if (pathSegments.length > 0) {
+                const basePath = '/' + pathSegments[0] + '/';
+                console.log('[Path Detection] GitHub Pages detected, base path:', basePath);
+                return basePath;
             }
         }
-        // Local development - use relative paths
+        
+        // GitLab Pages pattern: username.gitlab.io/project-name/
+        // or custom domain with project path
+        if (hostname.includes('gitlab.io') || pathname.split('/').filter(s => s).length > 0) {
+            // For GitLab Pages, if we're not at the root, assume first segment is project
+            const pathSegments = pathname.split('/').filter(segment => segment);
+            
+            // If the pathname ends with index.html or a specific file, don't include it
+            const lastSegment = pathSegments[pathSegments.length - 1];
+            const isFile = lastSegment && (lastSegment.includes('.html') || lastSegment.includes('.'));
+            
+            if (pathSegments.length > 0 && !isFile) {
+                const basePath = '/' + pathSegments[0] + '/';
+                console.log('[Path Detection] GitLab Pages detected, base path:', basePath);
+                return basePath;
+            } else if (pathSegments.length > 1) {
+                // If we have a file, use the first segment
+                const basePath = '/' + pathSegments[0] + '/';
+                console.log('[Path Detection] GitLab Pages with file detected, base path:', basePath);
+                return basePath;
+            }
+        }
+        
+        // Default: no base path
+        console.log('[Path Detection] No specific pattern detected, using root path');
         return '';
     }
     
@@ -981,15 +1017,19 @@ class NotesWiki {
         const autoThemeCheckbox = document.getElementById('auto-theme');
         if (autoThemeCheckbox) {
             autoThemeCheckbox.addEventListener('change', (e) => {
+                console.log(`[Theme Auto] Auto-theme toggled: ${e.target.checked}`);
                 this.settings.autoTheme = e.target.checked;
                 this.saveSettings();
                 
                 // Reinitialize theme based on new setting
+                console.log('[Theme Auto] Reinitializing theme with auto-theme setting');
                 this.initializeTheme();
                 
                 // Update theme cards state
                 this.updateAutoThemeState();
             });
+        } else {
+            console.warn('[Theme Auto] Auto-theme checkbox not found in DOM');
         }
         
         // Sticky search toggle
@@ -4692,8 +4732,11 @@ class NotesWiki {
             
             // Handle theme selection
             card.addEventListener('click', () => {
+                console.log(`[Theme UI] Theme card clicked: ${theme.id}`);
+                
                 // If auto-theme is enabled, disable it when user selects a theme
                 if (this.settings.autoTheme) {
+                    console.log('[Theme UI] Disabling auto-theme due to manual selection');
                     this.settings.autoTheme = false;
                     this.saveSettings();
                     
@@ -4708,6 +4751,7 @@ class NotesWiki {
                 }
                 
                 // Apply the selected theme
+                console.log(`[Theme UI] Applying selected theme: ${theme.id}`);
                 this.applyTheme(theme.id);
                 this.settings.theme = theme.id;
                 this.saveSettings();
@@ -6971,29 +7015,43 @@ class NotesWiki {
     }
     
     initializeTheme() {
+        console.log('[Theme] Initializing theme system');
+        console.log(`[Theme] Auto-theme enabled: ${this.settings.autoTheme}`);
+        
         // Check if auto theme is enabled
         if (this.settings.autoTheme) {
             // Apply theme based on system preference
             const systemTheme = this.getSystemTheme();
+            console.log(`[Theme] System theme detected: ${systemTheme}`);
             this.applyTheme(systemTheme);
             
             // Set up listener for system theme changes
             this.setupSystemThemeListener();
         } else {
             // Apply saved theme
+            console.log(`[Theme] Applying saved theme: ${this.settings.theme}`);
             this.applyTheme(this.settings.theme);
         }
     }
     
     getSystemTheme() {
         // Check if the browser supports prefers-color-scheme
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            return 'dark';
+        if (window.matchMedia) {
+            const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            console.log(`[Theme] System prefers-color-scheme: ${darkQuery.matches ? 'dark' : 'light'}`);
+            
+            if (darkQuery.matches) {
+                return 'dark';
+            }
+        } else {
+            console.warn('[Theme] window.matchMedia not supported, defaulting to light theme');
         }
         return 'light';
     }
     
     setupSystemThemeListener() {
+        console.log('[Theme] Setting up system theme change listener');
+        
         // Listen for changes to system theme preference
         if (window.matchMedia) {
             const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -7001,8 +7059,10 @@ class NotesWiki {
             // Modern browsers
             if (darkModeQuery.addEventListener) {
                 darkModeQuery.addEventListener('change', (e) => {
+                    console.log(`[Theme] System theme changed to: ${e.matches ? 'dark' : 'light'}`);
                     if (this.settings.autoTheme) {
                         const newTheme = e.matches ? 'dark' : 'light';
+                        console.log(`[Theme] Auto-applying system theme: ${newTheme}`);
                         this.applyTheme(newTheme);
                     }
                 });
@@ -7019,36 +7079,70 @@ class NotesWiki {
     }
     
     applyTheme(themeId) {
+        console.log(`[Theme] Applying theme: ${themeId}`);
+        const startTime = performance.now();
+        
         // Validate theme exists
         const themeExists = this.themes.find(t => t.id === themeId);
         if (!themeExists) {
-            console.warn(`Theme '${themeId}' not found, falling back to default`);
+            console.warn(`[Theme] Theme '${themeId}' not found in available themes:`, this.themes.map(t => t.id));
+            console.log(`[Theme] Falling back to default theme: ayu-mirage`);
             themeId = 'ayu-mirage'; // Default theme
         }
         
         const link = document.getElementById('theme-stylesheet');
         if (!link) {
-            console.error('Theme stylesheet link element not found');
+            console.error('[Theme] CRITICAL: Theme stylesheet link element not found in DOM');
+            console.error('[Theme] Expected element with id="theme-stylesheet"');
             return;
         }
         
+        const previousTheme = link.href;
+        console.log(`[Theme] Previous theme URL: ${previousTheme}`);
+        
         // Set up error handling for CSS loading
         const handleThemeLoad = () => {
+            const loadTime = performance.now() - startTime;
+            console.log(`[Theme] Successfully loaded theme: ${themeId} (${loadTime.toFixed(2)}ms)`);
+            
             document.documentElement.setAttribute('data-theme', themeId);
+            console.log(`[Theme] Set data-theme attribute to: ${themeId}`);
+            
             // Update current theme in settings if not using auto theme
             if (!this.settings.autoTheme) {
                 this.settings.theme = themeId;
+                console.log(`[Theme] Updated settings.theme to: ${themeId}`);
             }
+            
+            // Verify CSS rules loaded
+            try {
+                const sheet = link.sheet;
+                if (sheet && sheet.cssRules) {
+                    console.log(`[Theme] CSS rules loaded: ${sheet.cssRules.length} rules`);
+                } else {
+                    console.warn(`[Theme] CSS sheet loaded but no rules found`);
+                }
+            } catch (e) {
+                console.warn(`[Theme] Cannot access CSS rules (CORS):`, e.message);
+            }
+            
             // Update current theme display in settings modal
             this.updateCurrentThemeDisplay();
         };
         
-        const handleThemeError = () => {
-            console.error(`Failed to load theme: ${themeId}`);
+        const handleThemeError = (error) => {
+            console.error(`[Theme] Failed to load theme: ${themeId}`);
+            console.error(`[Theme] Error details:`, error);
+            console.error(`[Theme] Attempted URL: ${link.href}`);
+            
             this.showToast(`Failed to load theme: ${themeId}`, 'error');
+            
             if (themeId !== 'ayu-mirage') {
+                console.log(`[Theme] Attempting fallback to default theme`);
                 // Fallback to default theme
                 this.applyTheme('ayu-mirage');
+            } else {
+                console.error(`[Theme] CRITICAL: Default theme also failed to load!`);
             }
         };
         
@@ -7062,6 +7156,9 @@ class NotesWiki {
         
         // Use base path for GitHub Pages compatibility
         const themePath = this.basePath ? `${this.basePath}themes/${themeId}.css` : `themes/${themeId}.css`;
+        console.log(`[Theme] Setting theme URL to: ${themePath}`);
+        console.log(`[Theme] Base path: ${this.basePath || '(none)'}`);
+        
         link.href = themePath;
     }
     

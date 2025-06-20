@@ -46,6 +46,23 @@ The included `.gitlab-ci.yml` provides:
 
 ## 🔧 Customization for GitLab
 
+### Project Name Flexibility
+The application now automatically detects your GitLab project name and adjusts all resource paths accordingly. **You can name your project anything** - it doesn't have to be "Wiki"!
+
+**How it works:**
+- Automatically detects if running on GitLab Pages (`*.gitlab.io`)
+- Extracts project name from URL path
+- Adjusts all resource paths (themes, notes, images) automatically
+- No manual configuration needed
+
+**Examples:**
+- `username.gitlab.io/my-notes/` → Works automatically
+- `username.gitlab.io/knowledge-base/` → Works automatically
+- `username.gitlab.io/team-docs/` → Works automatically
+
+**Customizing the App Name:**
+While the project name is flexible, you'll want to update the displayed application name. See `CUSTOMIZATION.md` for a simple 3-line change to rebrand the app with your own name.
+
 ### Environment Variables
 No environment variables required - works out of the box.
 
@@ -156,6 +173,12 @@ Add your preferred analytics by editing `index.html`:
 - Ensure `404.html` is created during build
 - Check client-side routing configuration
 - Verify file paths in `notes-index.json`
+
+**Resources Not Loading (CSS/JS/Images):**
+- Check browser console for path detection logs
+- Verify project is accessed via GitLab Pages URL
+- Clear browser cache and reload
+- Console will show: `[Path Detection] GitLab Pages detected, base path: /your-project-name/`
 
 ### Build Logs
 Access detailed build logs in:

@@ -36,7 +36,7 @@ python3 build.py  # Should output "Build complete!" with stats
 ```bash
 npm run package
 ```
-This creates a versioned zip file (`notes-wiki-v3.3.0-complete.zip`) with all necessary assets for offline deployment.
+This creates a versioned zip file (`notes-wiki-v{version}-complete.zip`) with all necessary assets for offline deployment.
 
 ## Architecture Overview
 
@@ -66,9 +66,11 @@ When making significant changes, consider the modular refactoring plan:
 2. **Main Application**: `script.js` - Contains the monolithic `NotesWiki` class that handles:
    - Tab management with drag-and-drop
    - Advanced search with operators (`tag:`, `author:`, `"phrase"`, `-exclude`, etc.)
-   - Theme switching (70 themes in `/themes/`)
+   - Theme switching (70 themes organized in 10 categories)
    - Settings persistence via localStorage
-   - Pomodoro timer, keyboard shortcuts, responsive context filtering with dropdown
+   - Pomodoro timer, keyboard shortcuts, responsive context filtering
+   - Sticky notes (floating mini-notes with drag/resize)
+   - Split view (side-by-side note viewing)
 
 3. **Build System**: `build.py` - Python script that:
    - Scans `/notes/` directory recursively
@@ -92,6 +94,8 @@ When making significant changes, consider the modular refactoring plan:
   - GitHub Actions workflow in `.github/workflows/static.yml`
 - **GitLab Pages**: 
   - Automatic deployment via `.gitlab-ci.yml`
+  - Python 3.11-alpine image for builds
+  - 30-day artifact retention for production
   - See `GITLAB-DEPLOYMENT.md` for detailed instructions
 - **General Deployment**: 
   - See `DEPLOYMENT-GUIDE.md` for platform-agnostic instructions
@@ -103,6 +107,7 @@ When making significant changes, consider the modular refactoring plan:
 - **Static generation**: No server-side processing required
 - **Search optimization**: Full content is indexed, including code blocks
 - **Theme flexibility**: CSS-only themes that can be switched dynamically
+- **Project-name agnostic**: Automatically detects and adjusts paths for any project name
 
 ### Browser Compatibility
 
@@ -217,6 +222,8 @@ element.innerHTML = userInput; // Only for trusted SVG/static content
 18. **Enhanced Combined Code Blocks Styling**: Added theme-aware colored borders and visual effects for better distinction
 19. **Split View Implementation**: Added side-by-side note viewing with draggable pane resizing
 20. **Sticky Notes Feature**: Implemented floating mini-notes with drag, resize, and color options
+21. **Dynamic Path Detection**: Works with any project name on GitHub/GitLab Pages (not just "Wiki")
+22. **Theme Loading Error Logging**: Comprehensive logging for theme loading operations
 
 ### Layout and Styling Architecture
 
@@ -250,12 +257,13 @@ The application includes a comprehensive help modal accessible via the `?` key:
 
 ### Testing Infrastructure
 
-⚠️ **Current Testing Status**: While test scripts are defined in package.json, the actual test files are not implemented. The referenced test files (test-puppeteer.js, comprehensive-audit.js, extended-comprehensive-audit.js) do not exist.
+⚠️ **Current Testing Status**: While test scripts are defined in package.json, the actual test files are not implemented. The referenced test files (test-puppeteer.js, comprehensive-audit.js, extended-comprehensive-audit.js) exist but focus on theme testing only.
 
 Available validation commands:
 ```bash
 npm run validate      # Check JavaScript syntax
-python3 build.py      # Validate and build search index
+npm run test         # Run Puppeteer theme tests
+python3 build.py     # Validate and build search index
 ```
 
 ### Content Management
@@ -338,15 +346,36 @@ The application includes dynamic base path detection to work correctly when host
 ### Implementation in `script.js`:
 ```javascript
 getBasePath() {
-    // Detect if we're running on GitHub Pages or locally
+    // Detect if we're running on GitHub/GitLab Pages or locally
     const pathname = window.location.pathname;
-    // GitHub Pages serves from /repository-name/
-    if (pathname.includes('/Wiki/') || pathname.includes('/wiki/')) {
-        const match = pathname.match(/\/(Wiki|wiki)\//);
-        if (match) {
-            return pathname.substring(0, pathname.indexOf(match[0]) + match[0].length);
+    const hostname = window.location.hostname;
+    
+    // Local development - no base path needed
+    if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '') {
+        return '';
+    }
+    
+    // GitHub Pages pattern: username.github.io/repository-name/
+    if (hostname.includes('github.io')) {
+        const pathSegments = pathname.split('/').filter(segment => segment);
+        if (pathSegments.length > 0) {
+            return '/' + pathSegments[0] + '/';
         }
     }
+    
+    // GitLab Pages pattern: username.gitlab.io/project-name/
+    if (hostname.includes('gitlab.io') || pathname.split('/').filter(s => s).length > 0) {
+        const pathSegments = pathname.split('/').filter(segment => segment);
+        const lastSegment = pathSegments[pathSegments.length - 1];
+        const isFile = lastSegment && (lastSegment.includes('.html') || lastSegment.includes('.'));
+        
+        if (pathSegments.length > 0 && !isFile) {
+            return '/' + pathSegments[0] + '/';
+        } else if (pathSegments.length > 1) {
+            return '/' + pathSegments[0] + '/';
+        }
+    }
+    
     return '';
 }
 ```
@@ -415,6 +444,16 @@ The feature automatically detects the correct comment syntax for 30+ languages:
 - **Learning**: Aggregate related code snippets for easy reference
 - **Development**: Quickly combine modular code blocks into a full script
 
+## Customization Guide
+
+For users deploying with different project names, see `CUSTOMIZATION.md` for:
+- How to change the application name/title (3 simple edits)
+- Package.json customization for forks
+- Meta description updates
+- Repository URL updates
+
+The application automatically works with any project name on GitHub/GitLab Pages - no path configuration needed.
+
 ## Development Workflow
 
 When making changes to this codebase:
@@ -430,3 +469,28 @@ When making changes to this codebase:
 2. Run `npm run package` to create release bundle
 3. Tag release in git with version number
 4. Upload release zip to GitHub/GitLab releases
+
+## Theme Categories Structure
+
+Themes are organized into 10 categories in the settings modal:
+1. **Classic Dark** - Traditional dark themes
+2. **Classic Light** - Traditional light themes
+3. **Material Design** - Material design inspired themes
+4. **Nature & Earth** - Natural color palettes
+5. **Arctic & Winter** - Cool, icy color schemes
+6. **Ocean & Sky** - Blue and aqua based themes
+7. **Cyberpunk & Neon** - Futuristic neon themes
+8. **Elegant & Pastel** - Soft, muted colors
+9. **Professional** - Business-appropriate themes
+10. **Special Effects** - Themes with unique visual effects
+
+## Theme Loading Error Logging
+
+The application includes comprehensive logging for theme operations:
+- **[Theme]** - Core theme loading operations
+- **[Theme Init]** - Initial page load theme setup
+- **[Theme UI]** - User interface interactions
+- **[Theme Auto]** - Auto-theme system operations
+- **[Path Detection]** - Base path detection for resources
+
+Enable browser console to see detailed theme loading information, timing, and any errors.

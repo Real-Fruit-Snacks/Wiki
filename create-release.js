@@ -25,6 +25,7 @@ const includes = [
     'package.json',
     'README.md',
     'CLAUDE.md',
+    'CUSTOMIZATION.md',
     'DEPLOYMENT-GUIDE.md',
     'GITLAB-DEPLOYMENT.md',
     '_config.yml',
