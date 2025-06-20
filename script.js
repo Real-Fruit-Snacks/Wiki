@@ -198,7 +198,9 @@ class NotesWiki {
             pomodoroLongBreakMinutes: 15,
             pomodoroSessionsBeforeLongBreak: 4,
             pomodoroAutoStartNext: false,
-            pomodoroPlaySounds: true
+            pomodoroPlaySounds: true,
+            // Confirm dialogs
+            confirmOnClose: true
         };
         
         // Search state
@@ -1037,6 +1039,15 @@ class NotesWiki {
         if (stickySearchCheckbox) {
             stickySearchCheckbox.addEventListener('change', (e) => {
                 this.settings.stickySearch = e.target.checked;
+                this.saveSettings();
+            });
+        }
+        
+        // Confirm on close toggle
+        const confirmOnCloseCheckbox = document.getElementById('confirm-on-close');
+        if (confirmOnCloseCheckbox) {
+            confirmOnCloseCheckbox.addEventListener('change', (e) => {
+                this.settings.confirmOnClose = e.target.checked;
                 this.saveSettings();
             });
         }
@@ -2707,6 +2718,59 @@ class NotesWiki {
         }
     }
     
+    showConfirmationDialog(title, message, onConfirm, onCancel) {
+        const modal = document.getElementById('confirmation-modal');
+        const titleElement = document.getElementById('confirmation-title');
+        const messageElement = document.getElementById('confirmation-message');
+        const confirmButton = document.getElementById('confirmation-confirm');
+        const cancelButton = document.getElementById('confirmation-cancel');
+        
+        // Set content
+        titleElement.textContent = title;
+        messageElement.textContent = message;
+        
+        // Show modal
+        modal.style.display = 'flex';
+        
+        // Remove any existing handlers
+        const newConfirmButton = confirmButton.cloneNode(true);
+        const newCancelButton = cancelButton.cloneNode(true);
+        confirmButton.parentNode.replaceChild(newConfirmButton, confirmButton);
+        cancelButton.parentNode.replaceChild(newCancelButton, cancelButton);
+        
+        // Add event handlers
+        const confirmHandler = () => {
+            modal.style.display = 'none';
+            if (onConfirm) onConfirm();
+        };
+        
+        const cancelHandler = () => {
+            modal.style.display = 'none';
+            if (onCancel) onCancel();
+        };
+        
+        newConfirmButton.addEventListener('click', confirmHandler);
+        newCancelButton.addEventListener('click', cancelHandler);
+        
+        // Close on escape key
+        const escapeHandler = (e) => {
+            if (e.key === 'Escape') {
+                cancelHandler();
+                document.removeEventListener('keydown', escapeHandler);
+            }
+        };
+        document.addEventListener('keydown', escapeHandler);
+        
+        // Close on click outside
+        const clickOutsideHandler = (e) => {
+            if (e.target === modal) {
+                cancelHandler();
+                modal.removeEventListener('click', clickOutsideHandler);
+            }
+        };
+        modal.addEventListener('click', clickOutsideHandler);
+    }
+    
     toggleFocusMode() {
         try {
             // Toggle focus mode state
@@ -4140,6 +4204,12 @@ class NotesWiki {
         const stickySearchCheckbox = document.getElementById('sticky-search-setting');
         if (stickySearchCheckbox) {
             stickySearchCheckbox.checked = this.settings.stickySearch || false;
+        }
+        
+        // Update confirm on close checkbox
+        const confirmOnCloseCheckbox = document.getElementById('confirm-on-close');
+        if (confirmOnCloseCheckbox) {
+            confirmOnCloseCheckbox.checked = this.settings.confirmOnClose || false;
         }
         
         // Initialize current theme display
@@ -8613,6 +8683,25 @@ class NotesWiki {
         const tab = this.tabs.get(tabId);
         if (!tab) return;
         
+        // Check if confirmation is required
+        if (this.settings.confirmOnClose) {
+            this.showConfirmationDialog(
+                'Close Tab?',
+                `Are you sure you want to close "${tab.title || 'this tab'}"?`,
+                () => {
+                    this.doCloseTab(tabId);
+                }
+            );
+            return;
+        }
+        
+        this.doCloseTab(tabId);
+    }
+    
+    doCloseTab(tabId) {
+        const tab = this.tabs.get(tabId);
+        if (!tab) return;
+        
         // If closing split view tab, disable split view without recursion
         if (tab.isSplitView) {
             this.settings.splitViewEnabled = false;
@@ -10483,6 +10572,25 @@ class NotesWiki {
     
     
     closeStickyNote(noteId) {
+        // Check if confirmation is required
+        if (this.settings.confirmOnClose) {
+            const note = this.stickyNotes.get(noteId);
+            const noteTitle = note?.title || 'this sticky note';
+            
+            this.showConfirmationDialog(
+                'Close Sticky Note?',
+                `Are you sure you want to close "${noteTitle}"?`,
+                () => {
+                    this.doCloseStickyNote(noteId);
+                }
+            );
+            return;
+        }
+        
+        this.doCloseStickyNote(noteId);
+    }
+    
+    doCloseStickyNote(noteId) {
         const element = document.getElementById(noteId);
         if (element) {
             element.remove();
