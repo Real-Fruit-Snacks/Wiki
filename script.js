@@ -13306,7 +13306,13 @@ class NotesWiki {
         this.stickyNoteHistory = new Map(); // Version history for each note
         this.stickyNoteShortcuts = this.initializeStickyShortcuts();
         this.selectedStickyNotes = new Set(); // For bulk operations
-        this.loadStickyNotes();
+        this.activeStickyNotes = new Set(); // Track which notes are currently displayed
+        
+        // Load saved notes but don't auto-render them
+        this.loadStickyNotes(false);
+        
+        // Check for notes that should be restored
+        this.restoreLastSession();
     }
     
     createStickyNote(options = {}) {
@@ -13328,9 +13334,11 @@ class NotesWiki {
         };
         
         this.stickyNotes.set(note.id, note);
+        this.activeStickyNotes.add(note.id);
         this.setStickyNoteSaveStatus(note.id, 'saving');
         this.renderStickyNote(note);
         this.saveStickyNotes();
+        this.saveActiveNotes();
         
         // Focus the textarea
         setTimeout(() => {
@@ -13954,8 +13962,54 @@ class NotesWiki {
             this.stickySaveTimers.delete(noteId);
         }
         
-        this.stickyNotes.delete(noteId);
-        this.saveStickyNotes();
+        // Don't delete from stickyNotes, just mark as inactive
+        this.activeStickyNotes.delete(noteId);
+        this.saveActiveNotes();
+        
+        // Note remains in storage for later retrieval
+        this.showToast('Note closed (saved for later)', 'info');
+    }
+    
+    saveActiveNotes() {
+        try {
+            const activeIds = Array.from(this.activeStickyNotes);
+            localStorage.setItem('stickyNotes_active', JSON.stringify(activeIds));
+        } catch (error) {
+            console.warn('Failed to save active notes list:', error);
+        }
+    }
+    
+    restoreLastSession() {
+        try {
+            const activeIds = localStorage.getItem('stickyNotes_active');
+            if (activeIds) {
+                const ids = JSON.parse(activeIds);
+                ids.forEach(id => {
+                    const note = this.stickyNotes.get(id);
+                    if (note) {
+                        this.renderStickyNote(note);
+                        this.activeStickyNotes.add(id);
+                        this.setStickyNoteSaveStatus(id, 'saved');
+                    }
+                });
+            } else {
+                // If no active notes are saved but there are notes in storage,
+                // restore all notes (this handles the first-time load case)
+                const notes = Array.from(this.stickyNotes.values());
+                if (notes.length > 0) {
+                    console.log('[StickyNotes] No active session found, restoring all saved notes');
+                    notes.forEach(note => {
+                        this.renderStickyNote(note);
+                        this.activeStickyNotes.add(note.id);
+                        this.setStickyNoteSaveStatus(note.id, 'saved');
+                    });
+                    // Save the active notes list for next time
+                    this.saveActiveNotes();
+                }
+            }
+        } catch (error) {
+            console.warn('Failed to restore last session:', error);
+        }
     }
     
     saveStickyNotes() {
@@ -14060,7 +14114,7 @@ class NotesWiki {
         }
     }
     
-    loadStickyNotes() {
+    loadStickyNotes(autoRender = true) {
         try {
             const stored = localStorage.getItem('stickyNotes');
             if (stored) {
@@ -14122,8 +14176,13 @@ class NotesWiki {
                     };
                     
                     this.stickyNotes.set(enhancedNote.id, enhancedNote);
-                    this.renderStickyNote(enhancedNote);
-                    this.setStickyNoteSaveStatus(enhancedNote.id, 'saved');
+                    
+                    // Only render if autoRender is true
+                    if (autoRender) {
+                        this.renderStickyNote(enhancedNote);
+                        this.activeStickyNotes.add(enhancedNote.id);
+                        this.setStickyNoteSaveStatus(enhancedNote.id, 'saved');
+                    }
                 });
                 
                 // Load version history if available
@@ -14156,6 +14215,7 @@ class NotesWiki {
         }
         this.stickyNoteSaveTimeout = setTimeout(() => {
             this.saveStickyNotes();
+            this.saveActiveNotes(); // Also save the active notes list
         }, 1000);
     }
     
@@ -14274,16 +14334,21 @@ class NotesWiki {
     renderStickyNoteCard(note) {
         const lastModified = new Date(note.lastModified).toLocaleDateString();
         const preview = note.content.substring(0, 150) + (note.content.length > 150 ? '...' : '');
+        const isActive = this.activeStickyNotes.has(note.id);
         
         return `
-            <div class="sticky-note-card sticky-note-${note.color}" data-note-id="${note.id}">
+            <div class="sticky-note-card sticky-note-${note.color} ${isActive ? 'active-note' : 'archived-note'}" data-note-id="${note.id}">
                 <div class="note-card-header">
                     <input type="checkbox" class="note-checkbox" data-note-id="${note.id}" onchange="notesWiki.toggleNoteSelection('${note.id}')">
                     <div class="note-category">${note.category}</div>
+                    ${!isActive ? '<span class="archived-badge">Archived</span>' : ''}
                     <div class="note-actions">
-                        <button class="icon-button" onclick="notesWiki.focusOnStickyNote('${note.id}')" title="Focus note">
+                        <button class="icon-button" onclick="notesWiki.focusOnStickyNote('${note.id}')" title="${isActive ? 'Focus on note' : 'Restore note'}">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
+                                ${isActive ? 
+                                    '<path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>' :
+                                    '<path d="M13,3A9,9 0 0,0 4,12H1L4.89,15.89L4.96,16.03L9,12H6A7,7 0 0,1 13,5A7,7 0 0,1 20,12A7,7 0 0,1 13,19C11.07,19 9.32,18.21 8.06,16.94L6.64,18.36C8.27,20 10.5,21 13,21A9,9 0 0,0 22,12A9,9 0 0,0 13,3Z"/>'
+                                }
                             </svg>
                         </button>
                         <button class="icon-button" onclick="notesWiki.duplicateStickyNote('${note.id}')" title="Duplicate">
@@ -14363,13 +14428,39 @@ class NotesWiki {
     
     focusOnStickyNote(noteId) {
         const element = document.getElementById(noteId);
+        
         if (element) {
+            // Note is already active, just scroll to it
             element.scrollIntoView({ behavior: 'smooth', block: 'center' });
             element.style.animation = 'pulse 1s ease-in-out';
             setTimeout(() => {
                 element.style.animation = '';
             }, 1000);
+        } else {
+            // Note is not active, restore it
+            const note = this.stickyNotes.get(noteId);
+            if (note) {
+                this.renderStickyNote(note);
+                this.activeStickyNotes.add(noteId);
+                this.setStickyNoteSaveStatus(noteId, 'saved');
+                this.saveActiveNotes();
+                
+                // Wait for render then scroll
+                setTimeout(() => {
+                    const newElement = document.getElementById(noteId);
+                    if (newElement) {
+                        newElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        newElement.style.animation = 'pulse 1s ease-in-out';
+                        setTimeout(() => {
+                            newElement.style.animation = '';
+                        }, 1000);
+                    }
+                }, 100);
+                
+                this.showToast('Note restored', 'success');
+            }
         }
+        
         this.closeStickyNotesManager();
     }
     
