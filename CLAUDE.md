@@ -243,6 +243,14 @@ When making changes to this codebase:
 5. **Memory management**: Implement proper event listener cleanup
 6. **Deployment**: Push to main branch for automatic deployment
 
+### Repository Cleanup Status
+
+✅ **Repository cleaned** - Development artifacts removed, keeping only essential files:
+- Core application files (index.html, script.js, style.css, build.py)
+- Configuration files (_config.yml, package.json, CLAUDE.md)  
+- User documentation (README.md, deployment guides, changelog)
+- Application assets (libs/, themes/, notes/, images/)
+
 ### Key Methods to Know
 
 **Tab Management**:

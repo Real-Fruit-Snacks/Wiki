@@ -9511,13 +9511,7 @@ class NotesWiki {
         tabElement.innerHTML = `
             <span class="tab-title">${this.escapeHtml(tab.title)}</span>
             ${splitIndicator}
-            <button class="tab-pin" aria-label="${tab.isPinned ? 'Unpin tab' : 'Pin tab'}">
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
-                    ${tab.isPinned 
-                        ? '<path d="M8 2l4 2v4l-4 2-4-2V4l4-2z" fill="currentColor"/>' 
-                        : '<path d="M8 2l4 2v4l-4 2-4-2V4l4-2z"/>'}
-                </svg>
-            </button>
+            ${tab.isPinned ? '<span class="tab-pin-indicator" title="Pinned tab">📌</span>' : ''}
             <button class="tab-close" aria-label="Close tab">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
                     <path d="M7 7.707l3.146 3.147a.5.5 0 00.708-.708L7.707 7l3.147-3.146a.5.5 0 00-.708-.708L7 6.293 3.854 3.146a.5.5 0 10-.708.708L6.293 7l-3.147 3.146a.5.5 0 00.708.708L7 7.707z"/>
@@ -9527,7 +9521,7 @@ class NotesWiki {
         
         // Click to switch tab
         tabElement.addEventListener('click', (e) => {
-            if (!e.target.closest('.tab-close') && !e.target.closest('.tab-pin')) {
+            if (!e.target.closest('.tab-close')) {
                 this.switchToTab(tabId);
             }
         });
@@ -9540,12 +9534,6 @@ class NotesWiki {
                 e.preventDefault();
                 this.closeTab(tabId);
             }
-        });
-        
-        // Pin button
-        tabElement.querySelector('.tab-pin').addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.toggleTabPin(tabId);
         });
         
         // Close button
@@ -10726,17 +10714,24 @@ class NotesWiki {
         if (!tab || !tabElement) return;
         
         // Update pin visual state
-        const pinButton = tabElement.querySelector('.tab-pin');
-        const pinSvg = pinButton.querySelector('svg');
-        
         if (tab.isPinned) {
             tabElement.classList.add('pinned');
-            pinButton.setAttribute('aria-label', 'Unpin tab');
-            pinSvg.innerHTML = '<path d="M8 2l4 2v4l-4 2-4-2V4l4-2z" fill="currentColor"/>';
+            // Add pin indicator if it doesn't exist
+            if (!tabElement.querySelector('.tab-pin-indicator')) {
+                const closeButton = tabElement.querySelector('.tab-close');
+                const pinIndicator = document.createElement('span');
+                pinIndicator.className = 'tab-pin-indicator';
+                pinIndicator.title = 'Pinned tab';
+                pinIndicator.textContent = '📌';
+                tabElement.insertBefore(pinIndicator, closeButton);
+            }
         } else {
             tabElement.classList.remove('pinned');
-            pinButton.setAttribute('aria-label', 'Pin tab');
-            pinSvg.innerHTML = '<path d="M8 2l4 2v4l-4 2-4-2V4l4-2z"/>';
+            // Remove pin indicator if it exists
+            const pinIndicator = tabElement.querySelector('.tab-pin-indicator');
+            if (pinIndicator) {
+                pinIndicator.remove();
+            }
         }
     }
     
@@ -11231,6 +11226,15 @@ class NotesWiki {
         const groups = Array.from(this.tabGroups.values());
         
         let menuHTML = `
+            <div class="context-menu-item" data-action="${tab.isPinned ? 'unpin' : 'pin'}">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    ${tab.isPinned 
+                        ? '<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>'
+                        : '<path d="M9.828.722a.5.5 0 0 1 .09.707L8.025 3.322l1.97 1.97a.5.5 0 0 1 0 .707l-8.5 8.5a.5.5 0 0 1-.707 0L.422 14.133a.5.5 0 0 1 0-.707L8.636 5.211l-1.97-1.97L8.56.346a.5.5 0 0 1 .707 0l.561.376z"/>'}
+                </svg>
+                ${tab.isPinned ? 'Unpin Tab' : 'Pin Tab'}
+            </div>
+            <div class="context-menu-separator"></div>
             <div class="context-menu-item" data-action="new-group">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                     <path d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2z"/>
@@ -11275,6 +11279,12 @@ class NotesWiki {
             const groupId = item.dataset.groupId;
             
             switch (action) {
+                case 'pin':
+                    this.pinTab(tabId);
+                    break;
+                case 'unpin':
+                    this.unpinTab(tabId);
+                    break;
                 case 'new-group':
                     this.showCreateGroupDialog();
                     break;
