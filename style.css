@@ -1140,6 +1140,26 @@ body {
     border-bottom: 1px solid var(--border-color);
 }
 
+.modal-header-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+
+/* Icon buttons with text labels */
+.icon-button.with-text {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    min-width: auto;
+}
+
+.icon-button.with-text span {
+    font-size: var(--text-sm);
+    font-weight: 500;
+}
+
 .modal-header h3 {
     margin: 0;
     color: var(--text-primary);

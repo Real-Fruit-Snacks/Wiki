@@ -1596,15 +1596,17 @@
             <div class="modal-header">
                 <h2>Sticky Notes Manager</h2>
                 <div class="modal-header-actions">
-                    <button class="icon-button" onclick="notesWiki.exportStickyNotes()" title="Export all notes">
+                    <button class="icon-button with-text" onclick="notesWiki.exportStickyNotes()" title="Export all notes">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
                         </svg>
+                        <span>Export</span>
                     </button>
-                    <button class="icon-button" onclick="notesWiki.importStickyNotes()" title="Import notes">
+                    <button class="icon-button with-text" onclick="notesWiki.importStickyNotes()" title="Import notes">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                            <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
                         </svg>
+                        <span>Import</span>
                     </button>
                     <button class="close-btn" onclick="notesWiki.closeStickyNotesManager()">×</button>
                 </div>
