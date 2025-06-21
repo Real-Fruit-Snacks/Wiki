@@ -10620,10 +10620,15 @@ class NotesWiki {
     
     deleteSessionDialog() {
         const sessionName = this.tabSessions[this.activeSessionName]?.name || 'Current Session';
-        if (confirm(`Are you sure you want to delete session "${sessionName}"?`)) {
-            this.deleteTabSession(this.activeSessionName);
-            this.updateSessionUI();
-        }
+        this.showConfirmationDialog(
+            'Delete Session',
+            `Are you sure you want to delete session "${sessionName}"?`,
+            () => {
+                this.deleteTabSession(this.activeSessionName);
+                this.updateSessionUI();
+            },
+            null // No special cancel action needed
+        );
     }
     
     openInNewTab(path) {
