@@ -13307,6 +13307,7 @@ class NotesWiki {
         this.stickyNoteShortcuts = this.initializeStickyShortcuts();
         this.selectedStickyNotes = new Set(); // For bulk operations
         this.activeStickyNotes = new Set(); // Track which notes are currently displayed
+        this.currentStatusFilter = 'all'; // Track current filter status
         
         // Load saved notes but don't auto-render them
         this.loadStickyNotes(false);
@@ -14274,6 +14275,19 @@ class NotesWiki {
         const notes = Array.from(this.stickyNotes.values());
         const totalWords = notes.reduce((sum, note) => sum + (note.wordCount || 0), 0);
         
+        // Count active and archived notes
+        const activeNotes = notes.filter(note => this.activeStickyNotes.has(note.id));
+        const archivedNotes = notes.filter(note => !this.activeStickyNotes.has(note.id));
+        
+        // Update filter counts
+        const allCountEl = document.getElementById('all-notes-count');
+        const activeCountEl = document.getElementById('active-notes-count');
+        const archivedCountEl = document.getElementById('archived-notes-count');
+        
+        if (allCountEl) allCountEl.textContent = notes.length;
+        if (activeCountEl) activeCountEl.textContent = activeNotes.length;
+        if (archivedCountEl) archivedCountEl.textContent = archivedNotes.length;
+        
         document.getElementById('notes-count').textContent = 
             `${notes.length} note${notes.length !== 1 ? 's' : ''}`;
         document.getElementById('total-words').textContent = 
@@ -14380,6 +14394,13 @@ class NotesWiki {
     getFilteredStickyNotes(notes) {
         let filtered = [...notes];
         
+        // Apply status filter
+        if (this.currentStatusFilter === 'active') {
+            filtered = filtered.filter(note => this.activeStickyNotes.has(note.id));
+        } else if (this.currentStatusFilter === 'archived') {
+            filtered = filtered.filter(note => !this.activeStickyNotes.has(note.id));
+        }
+        
         // Apply search filter
         const searchTerm = document.getElementById('sticky-search-input')?.value.toLowerCase();
         if (searchTerm) {
@@ -14423,6 +14444,17 @@ class NotesWiki {
     }
     
     sortStickyNotes() {
+        this.renderStickyNotesGrid();
+    }
+    
+    filterByStatus(status) {
+        this.currentStatusFilter = status;
+        
+        // Update active filter button
+        document.querySelectorAll('.status-filter-buttons .filter-button').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-filter') === status);
+        });
+        
         this.renderStickyNotesGrid();
     }
     
@@ -14481,8 +14513,8 @@ class NotesWiki {
         }
     }
     
-    deleteStickyNote(noteId) {
-        if (this.settings.confirmOnClose) {
+    deleteStickyNote(noteId, skipConfirmation = false) {
+        if (this.settings.confirmOnClose && !skipConfirmation) {
             const note = this.stickyNotes.get(noteId);
             const noteTitle = note?.title || 'this note';
             
@@ -14506,6 +14538,14 @@ class NotesWiki {
         
         if (checkbox && card) {
             card.classList.toggle('selected', checkbox.checked);
+            
+            // Update selected notes set
+            if (checkbox.checked) {
+                this.selectedStickyNotes.add(noteId);
+            } else {
+                this.selectedStickyNotes.delete(noteId);
+            }
+            
             this.updateBulkActionButtons();
         }
     }
@@ -14524,23 +14564,15 @@ class NotesWiki {
     }
     
     updateBulkActionButtons() {
-        const selectedCount = document.querySelectorAll('.note-checkbox:checked').length;
-        const bulkActions = document.querySelector('.bulk-actions');
+        const selectedCount = this.selectedStickyNotes.size;
+        const deleteBtn = document.getElementById('delete-selected-btn');
+        const archiveBtn = document.getElementById('archive-selected-btn');
         
-        if (bulkActions) {
-            bulkActions.style.display = selectedCount > 0 ? 'flex' : 'none';
-            
-            const deleteBtn = bulkActions.querySelector('.delete-selected');
-            const exportBtn = bulkActions.querySelector('.export-selected');
-            const colorBtn = bulkActions.querySelector('.color-selected');
-            const categoryBtn = bulkActions.querySelector('.category-selected');
-            
-            if (deleteBtn) {
-                deleteBtn.textContent = `Delete (${selectedCount})`;
-            }
-            if (exportBtn) {
-                exportBtn.textContent = `Export (${selectedCount})`;
-            }
+        if (deleteBtn) {
+            deleteBtn.disabled = selectedCount === 0;
+        }
+        if (archiveBtn) {
+            archiveBtn.disabled = selectedCount === 0;
         }
     }
     
@@ -14564,6 +14596,48 @@ class NotesWiki {
         });
         
         this.updateBulkActionButtons();
+    }
+    
+    deleteSelectedStickyNotes() {
+        const selectedCount = this.selectedStickyNotes.size;
+        if (selectedCount === 0) return;
+        
+        const confirmMsg = `Are you sure you want to delete ${selectedCount} sticky note${selectedCount > 1 ? 's' : ''}?`;
+        if (confirm(confirmMsg)) {
+            this.selectedStickyNotes.forEach(noteId => {
+                this.deleteStickyNote(noteId, true); // true = skip confirmation
+            });
+            this.selectedStickyNotes.clear();
+            this.refreshStickyNotesManager();
+            this.showToast(`Deleted ${selectedCount} note${selectedCount > 1 ? 's' : ''}`);
+        }
+    }
+    
+    archiveSelectedStickyNotes() {
+        const selectedCount = this.selectedStickyNotes.size;
+        if (selectedCount === 0) return;
+        
+        let archivedCount = 0;
+        this.selectedStickyNotes.forEach(noteId => {
+            // Archive the note by removing it from active notes
+            if (this.activeStickyNotes.has(noteId)) {
+                this.activeStickyNotes.delete(noteId);
+                const element = document.getElementById(noteId);
+                if (element) {
+                    element.remove();
+                }
+                archivedCount++;
+            }
+        });
+        
+        // Save the updated active notes list
+        this.saveActiveNotes();
+        this.selectedStickyNotes.clear();
+        this.refreshStickyNotesManager();
+        
+        if (archivedCount > 0) {
+            this.showToast(`Archived ${archivedCount} note${archivedCount > 1 ? 's' : ''}`);
+        }
     }
     
     showTemplateSelector() {
