@@ -9500,7 +9500,7 @@ class NotesWiki {
             const group = this.tabGroups.get(tab.groupId);
             if (group) {
                 tabElement.classList.add('tab-grouped');
-                tabElement.style.setProperty('--group-color', `var(--color-${group.color})`);
+                tabElement.style.setProperty('--group-color', `var(--group-color-${group.color})`);
                 tabElement.dataset.groupId = tab.groupId;
             }
         }
@@ -10878,7 +10878,7 @@ class NotesWiki {
         groupHeader.dataset.groupId = group.id;
         
         // Apply group color using CSS custom property
-        groupHeader.style.setProperty('--group-color', `var(--color-${group.color})`);
+        groupHeader.style.setProperty('--group-color', `var(--group-color-${group.color})`);
         
         groupHeader.innerHTML = `
             <div class="tab-group-header-content">
@@ -11260,7 +11260,7 @@ class NotesWiki {
                 const isInGroup = tab.groupId === group.id;
                 menuHTML += `
                     <div class="context-menu-item ${isInGroup ? 'selected' : ''}" data-action="assign-to-group" data-group-id="${group.id}">
-                        <div class="group-indicator" style="background: var(--color-${group.color})"></div>
+                        <div class="group-indicator" style="background: var(--group-color-${group.color})"></div>
                         ${this.escapeHtml(group.name)}
                         ${isInGroup ? '<svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M11.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L4.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>' : ''}
                     </div>

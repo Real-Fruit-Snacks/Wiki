@@ -52,6 +52,16 @@
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
     --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.5);
+
+    /* Tab Group Colors */
+    --group-color-blue: #3b82f6;
+    --group-color-green: #10b981;
+    --group-color-yellow: #f59e0b;
+    --group-color-red: #ef4444;
+    --group-color-purple: #8b5cf6;
+    --group-color-orange: #f97316;
+    --group-color-pink: #ec4899;
+    --group-color-cyan: #06b6d4;
 }
 
 /* Syntax Highlighting - Dracula Theme */

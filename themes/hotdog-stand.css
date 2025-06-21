@@ -52,6 +52,16 @@
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 8px 12px rgba(0, 0, 0, 0.3);
     --shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.3);
+
+    /* Tab Group Colors - High Contrast */
+    --group-color-blue: #0000ff;
+    --group-color-green: #00ff00;
+    --group-color-yellow: #ffff00;
+    --group-color-red: #ff0000;
+    --group-color-purple: #ff00ff;
+    --group-color-orange: #ff8800;
+    --group-color-pink: #ff0088;
+    --group-color-cyan: #00ffff;
 }
 
 /* Syntax Highlighting - Hot Dog Stand Style (optimized for dark code bg) */

@@ -56,6 +56,16 @@
     /* Other */
     --accent-color-alpha: rgba(38, 139, 210, 0.1);
     --bg-code-block: #f7f1de;
+
+    /* Tab Group Colors */
+    --group-color-blue: #2563eb;
+    --group-color-green: #059669;
+    --group-color-yellow: #d97706;
+    --group-color-red: #dc2626;
+    --group-color-purple: #7c3aed;
+    --group-color-orange: #ea580c;
+    --group-color-pink: #db2777;
+    --group-color-cyan: #0891b2;
 }
 
 /* Syntax Highlighting - Solarized Light Theme */
