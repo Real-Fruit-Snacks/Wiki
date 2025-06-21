@@ -57,15 +57,15 @@
     --accent-color-alpha: rgba(38, 139, 210, 0.1);
     --bg-code-block: #003847;
 
-    /* Tab Group Colors */
-    --group-color-blue: #3b82f6;
-    --group-color-green: #10b981;
-    --group-color-yellow: #f59e0b;
-    --group-color-red: #ef4444;
-    --group-color-purple: #8b5cf6;
-    --group-color-orange: #f97316;
-    --group-color-pink: #ec4899;
-    --group-color-cyan: #06b6d4;
+    /* Tab Group Colors - Solarized Dark palette */
+    --group-color-blue: #268bd2;   /* Blue from accent-primary */
+    --group-color-green: #859900;  /* Green from syntax highlighting */
+    --group-color-yellow: #b58900; /* Yellow from syntax highlighting */
+    --group-color-red: #dc322f;    /* Red from syntax highlighting */
+    --group-color-purple: #6c71c4; /* Violet from Solarized palette */
+    --group-color-orange: #cb4b16; /* Orange from syntax highlighting */
+    --group-color-pink: #d33682;   /* Magenta from Solarized palette */
+    --group-color-cyan: #2aa198;   /* Cyan from syntax highlighting */
 }
 
 /* Syntax Highlighting - Solarized Dark Theme */

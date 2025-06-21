@@ -57,16 +57,15 @@
     --accent-color-alpha: rgba(88, 166, 255, 0.1);
     --bg-code-block: #161b22;
 
-    /* Tab Group Colors */
-    --group-color-blue: #3b82f6;
-    --group-color-green: #10b981;
-    --group-color-yellow: #f59e0b;
-    --group-color-red: #ef4444;
-    --group-color-purple: #8b5cf6;
-    --group-color-orange: #f97316;
-    --group-color-pink: #ec4899;
-    --group-color-cyan: #06b6d4;
-}
+    /* Tab Group Colors - Github Dark palette */
+    --group-color-blue: #58a6ff;   /* Theme blue */
+    --group-color-green: #10b981;  /* Theme green */
+    --group-color-yellow: #fbbf24; /* Theme yellow */
+    --group-color-red: #ef4444;    /* Theme red */
+    --group-color-purple: #ff7b72; /* Theme purple */
+    --group-color-orange: #f97316; /* Theme orange */
+    --group-color-pink: #ef4444;   /* Theme pink */
+    --group-color-cyan: #58a6ff;   /* Theme cyan */}
 
 /* Syntax Highlighting - GitHub Dark Theme */
 :root[data-theme="github-dark"] .token.comment,

@@ -54,16 +54,15 @@
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
-    /* Tab Group Colors */
-    --group-color-blue: #2563eb;
-    --group-color-green: #059669;
-    --group-color-yellow: #d97706;
-    --group-color-red: #dc2626;
-    --group-color-purple: #7c3aed;
-    --group-color-orange: #ea580c;
-    --group-color-pink: #db2777;
-    --group-color-cyan: #0891b2;
-}
+    /* Tab Group Colors - Light palette */
+    --group-color-blue: #3b82f6;   /* Theme blue */
+    --group-color-green: #10b981;  /* Theme green */
+    --group-color-yellow: #fbbf24; /* Theme yellow */
+    --group-color-red: #ef4444;    /* Theme red */
+    --group-color-purple: #2563eb; /* Theme purple */
+    --group-color-orange: #f97316; /* Theme orange */
+    --group-color-pink: #ef4444;   /* Theme pink */
+    --group-color-cyan: #3b82f6;   /* Theme cyan */}
 
 /* Syntax Highlighting - Light Theme */
 .token.comment,

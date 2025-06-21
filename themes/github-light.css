@@ -57,15 +57,15 @@
     --accent-color-alpha: rgba(9, 105, 218, 0.1);
     --bg-code-block: #f6f8fa;
 
-    /* Tab Group Colors */
-    --group-color-blue: #2563eb;
-    --group-color-green: #059669;
-    --group-color-yellow: #d97706;
-    --group-color-red: #dc2626;
-    --group-color-purple: #7c3aed;
-    --group-color-orange: #ea580c;
-    --group-color-pink: #db2777;
-    --group-color-cyan: #0891b2;
+    /* Tab Group Colors - GitHub Light palette */
+    --group-color-blue: #0969da;   /* Blue from accent-primary */
+    --group-color-green: #1a7f37;  /* GitHub green */
+    --group-color-yellow: #9a6700; /* GitHub yellow/amber */
+    --group-color-red: #cf222e;    /* GitHub red from syntax */
+    --group-color-purple: #8250df; /* Purple from syntax highlighting */
+    --group-color-orange: #953800; /* Orange from syntax highlighting */
+    --group-color-pink: #bf3989;   /* GitHub pink */
+    --group-color-cyan: #1b7c83;   /* GitHub teal */
 }
 
 /* Syntax Highlighting - GitHub Light Theme */

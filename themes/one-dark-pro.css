@@ -57,15 +57,15 @@
     --accent-color-alpha: rgba(97, 175, 239, 0.1);
     --bg-code-block: #21252b;
 
-    /* Tab Group Colors */
-    --group-color-blue: #3b82f6;
-    --group-color-green: #10b981;
-    --group-color-yellow: #f59e0b;
-    --group-color-red: #ef4444;
-    --group-color-purple: #8b5cf6;
-    --group-color-orange: #f97316;
-    --group-color-pink: #ec4899;
-    --group-color-cyan: #06b6d4;
+    /* Tab Group Colors - One Dark Pro palette */
+    --group-color-blue: #61afef;   /* Blue from accent-primary */
+    --group-color-green: #98c379;  /* Green from syntax highlighting */
+    --group-color-yellow: #e5c07b; /* Yellow from syntax highlighting */
+    --group-color-red: #e06c75;    /* Red from syntax highlighting */
+    --group-color-purple: #c678dd; /* Purple from syntax highlighting */
+    --group-color-orange: #d19a66; /* Orange from syntax highlighting */
+    --group-color-pink: #e06c75;   /* Pink same as red */
+    --group-color-cyan: #56b6c2;   /* Cyan from syntax highlighting */
 }
 
 /* Syntax Highlighting - One Dark Pro Theme */

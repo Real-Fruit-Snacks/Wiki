@@ -57,15 +57,15 @@
     --accent-color-alpha: rgba(136, 192, 208, 0.1);
     --bg-code-block: #3b4252;
 
-    /* Tab Group Colors */
-    --group-color-blue: #3b82f6;
-    --group-color-green: #10b981;
-    --group-color-yellow: #f59e0b;
-    --group-color-red: #ef4444;
-    --group-color-purple: #8b5cf6;
-    --group-color-orange: #f97316;
-    --group-color-pink: #ec4899;
-    --group-color-cyan: #06b6d4;
+    /* Tab Group Colors - Nord palette */
+    --group-color-blue: #5e81ac;   /* Nord10 - Frost blue */
+    --group-color-green: #a3be8c;  /* Nord14 - Aurora green */
+    --group-color-yellow: #ebcb8b; /* Nord13 - Aurora yellow */
+    --group-color-red: #bf616a;    /* Nord11 - Aurora red */
+    --group-color-purple: #b48ead; /* Nord15 - Aurora purple */
+    --group-color-orange: #d08770; /* Nord12 - Aurora orange */
+    --group-color-pink: #b48ead;   /* Nord15 - same as purple */
+    --group-color-cyan: #88c0d0;   /* Nord8 - Frost cyan (accent) */
 }
 
 /* Syntax Highlighting - Nord Theme */

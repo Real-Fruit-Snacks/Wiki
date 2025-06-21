@@ -57,16 +57,15 @@
     --accent-color-alpha: rgba(158, 255, 255, 0.1);
     --bg-code-block: #122738;
 
-    /* Tab Group Colors */
-    --group-color-blue: #3b82f6;
-    --group-color-green: #10b981;
-    --group-color-yellow: #f59e0b;
-    --group-color-red: #ef4444;
-    --group-color-purple: #8b5cf6;
-    --group-color-orange: #f97316;
-    --group-color-pink: #ec4899;
-    --group-color-cyan: #06b6d4;
-}
+    /* Tab Group Colors - Cobalt2 palette */
+    --group-color-blue: #9EFFFF;   /* Theme blue */
+    --group-color-green: #80ffbb;  /* Theme green */
+    --group-color-yellow: #ffc600; /* Theme yellow */
+    --group-color-red: #ff628c;    /* Theme red */
+    --group-color-purple: #ffc600; /* Theme purple */
+    --group-color-orange: #f97316; /* Theme orange */
+    --group-color-pink: #ff628c;   /* Theme pink */
+    --group-color-cyan: #0088ff;   /* Theme cyan */}
 
 /* Syntax Highlighting - Cobalt2 Theme */
 :root[data-theme="cobalt2"] .token.comment,

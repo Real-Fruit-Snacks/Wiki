@@ -54,16 +54,15 @@
     --shadow-lg: 0 10px 15px -3px rgba(87, 82, 121, 0.2), 0 4px 6px -2px rgba(87, 82, 121, 0.15);
     --shadow-xl: 0 20px 25px -5px rgba(87, 82, 121, 0.25), 0 10px 10px -5px rgba(87, 82, 121, 0.2);
 
-    /* Tab Group Colors */
-    --group-color-blue: #3b82f6;
-    --group-color-green: #10b981;
-    --group-color-yellow: #f59e0b;
-    --group-color-red: #ef4444;
-    --group-color-purple: #8b5cf6;
-    --group-color-orange: #f97316;
-    --group-color-pink: #ec4899;
-    --group-color-cyan: #06b6d4;
-}
+    /* Tab Group Colors - Rose Pine Dawn palette */
+    --group-color-blue: #907aa9;   /* Theme blue */
+    --group-color-green: #56949f;  /* Theme green */
+    --group-color-yellow: #ea9d34; /* Theme yellow */
+    --group-color-red: #b4637a;    /* Theme red */
+    --group-color-purple: #907aa9; /* Theme purple */
+    --group-color-orange: #f97316; /* Theme orange */
+    --group-color-pink: #b4637a;   /* Theme pink */
+    --group-color-cyan: #907aa9;   /* Theme cyan */}
 
 /* Syntax Highlighting - Rosé Pine Dawn */
 :root[data-theme="rose-pine-dawn"] .token.comment,

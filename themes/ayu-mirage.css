@@ -195,16 +195,15 @@
     --z-popover: 1060;
     --z-tooltip: 1070;
 
-    /* Tab Group Colors */
-    --group-color-blue: #3b82f6;
-    --group-color-green: #10b981;
-    --group-color-yellow: #f59e0b;
-    --group-color-red: #ef4444;
-    --group-color-purple: #8b5cf6;
-    --group-color-orange: #f97316;
-    --group-color-pink: #ec4899;
-    --group-color-cyan: #06b6d4;
-}
+    /* Tab Group Colors - Ayu Mirage palette */
+    --group-color-blue: #5ccfe6;   /* Theme blue */
+    --group-color-green: #d5ff80;  /* Theme green */
+    --group-color-yellow: #ffcc66; /* Theme yellow */
+    --group-color-red: #f28779;    /* Theme red */
+    --group-color-purple: var; /* Theme purple */
+    --group-color-orange: #f97316; /* Theme orange */
+    --group-color-pink: #f28779;   /* Theme pink */
+    --group-color-cyan: #5ccfe6;   /* Theme cyan */}
 
 /* Theme-specific component styles */
 [data-theme="ayu-mirage"] {

@@ -54,16 +54,15 @@
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.12), 0 10px 10px -5px rgba(0, 0, 0, 0.06);
 
-    /* Tab Group Colors */
-    --group-color-blue: #2563eb;
-    --group-color-green: #059669;
-    --group-color-yellow: #d97706;
-    --group-color-red: #dc2626;
-    --group-color-purple: #7c3aed;
-    --group-color-orange: #ea580c;
-    --group-color-pink: #db2777;
-    --group-color-cyan: #0891b2;
-}
+    /* Tab Group Colors - Soft Era palette */
+    --group-color-blue: #b68fb5;   /* Theme blue */
+    --group-color-green: #a3b88c;  /* Theme green */
+    --group-color-yellow: #e4b781; /* Theme yellow */
+    --group-color-red: #cf8a8b;    /* Theme red */
+    --group-color-purple: #958ac5; /* Theme purple */
+    --group-color-orange: #f97316; /* Theme orange */
+    --group-color-pink: #cf8a8b;   /* Theme pink */
+    --group-color-cyan: #89b7c2;   /* Theme cyan */}
 
 /* Syntax Highlighting - Soft Era Theme */
 :root[data-theme="soft-era"] .token.comment,

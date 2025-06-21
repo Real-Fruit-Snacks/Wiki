@@ -57,16 +57,15 @@
     --accent-color-alpha: rgba(114, 192, 93, 0.1);
     --bg-code-block: #243443;
 
-    /* Tab Group Colors */
-    --group-color-blue: #3b82f6;
-    --group-color-green: #10b981;
-    --group-color-yellow: #f59e0b;
-    --group-color-red: #ef4444;
-    --group-color-purple: #8b5cf6;
-    --group-color-orange: #f97316;
-    --group-color-pink: #ec4899;
-    --group-color-cyan: #06b6d4;
-}
+    /* Tab Group Colors - Lucario palette */
+    --group-color-blue: #72c05d;   /* Theme blue */
+    --group-color-green: #72c05d;  /* Theme green */
+    --group-color-yellow: #ffab28; /* Theme yellow */
+    --group-color-red: #ff6541;    /* Theme red */
+    --group-color-purple: #ff6541; /* Theme purple */
+    --group-color-orange: #f97316; /* Theme orange */
+    --group-color-pink: #ff6541;   /* Theme pink */
+    --group-color-cyan: #5c98cd;   /* Theme cyan */}
 
 /* Syntax Highlighting - Lucario Theme */
 :root[data-theme="lucario"] .token.comment,

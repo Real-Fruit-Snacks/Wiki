@@ -57,16 +57,15 @@
     --accent-color-alpha: rgba(16, 177, 254, 0.1);
     --bg-code-block: #2f333d;
 
-    /* Tab Group Colors */
-    --group-color-blue: #3b82f6;
-    --group-color-green: #10b981;
-    --group-color-yellow: #f59e0b;
-    --group-color-red: #ef4444;
-    --group-color-purple: #8b5cf6;
-    --group-color-orange: #f97316;
-    --group-color-pink: #ec4899;
-    --group-color-cyan: #06b6d4;
-}
+    /* Tab Group Colors - Bluloco Dark palette */
+    --group-color-blue: #10b1fe;   /* Theme blue */
+    --group-color-green: #3fc56b;  /* Theme green */
+    --group-color-yellow: #f9c859; /* Theme yellow */
+    --group-color-red: #ff6480;    /* Theme red */
+    --group-color-purple: #10b1fe; /* Theme purple */
+    --group-color-orange: #f97316; /* Theme orange */
+    --group-color-pink: #ff6480;   /* Theme pink */
+    --group-color-cyan: #10b1fe;   /* Theme cyan */}
 
 /* Syntax Highlighting - Bluloco Dark Theme */
 :root[data-theme="bluloco-dark"] .token.comment,

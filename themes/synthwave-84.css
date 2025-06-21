@@ -54,16 +54,15 @@
     --shadow-lg: 0 10px 15px -3px rgba(255, 126, 219, 0.4), 0 4px 6px -2px rgba(255, 126, 219, 0.3);
     --shadow-xl: 0 20px 25px -5px rgba(255, 126, 219, 0.5), 0 10px 10px -5px rgba(255, 126, 219, 0.4);
 
-    /* Tab Group Colors */
-    --group-color-blue: #3b82f6;
-    --group-color-green: #10b981;
-    --group-color-yellow: #f59e0b;
-    --group-color-red: #ef4444;
-    --group-color-purple: #8b5cf6;
-    --group-color-orange: #f97316;
-    --group-color-pink: #ec4899;
-    --group-color-cyan: #06b6d4;
-}
+    /* Tab Group Colors - Synthwave '84 palette */
+    --group-color-blue: #36f9f6;   /* Neon cyan */
+    --group-color-green: #72f1b8;  /* Neon green */
+    --group-color-yellow: #fede5d; /* Neon yellow */
+    --group-color-red: #f97e72;    /* Neon coral */
+    --group-color-purple: #b893ce; /* Neon purple */
+    --group-color-orange: #fe8019; /* Neon orange */
+    --group-color-pink: #ff7edb;   /* Neon pink (primary) */
+    --group-color-cyan: #36f9f6;   /* Neon cyan */}
 
 /* Syntax Highlighting - Synthwave '84 Theme */
 :root[data-theme="synthwave-84"] .token.comment,

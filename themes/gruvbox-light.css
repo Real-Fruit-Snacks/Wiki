@@ -57,15 +57,15 @@
     --accent-color-alpha: rgba(7, 102, 120, 0.1);
     --bg-code-block: #f2e5bc;
 
-    /* Tab Group Colors */
-    --group-color-blue: #2563eb;
-    --group-color-green: #059669;
-    --group-color-yellow: #d97706;
-    --group-color-red: #dc2626;
-    --group-color-purple: #7c3aed;
-    --group-color-orange: #ea580c;
-    --group-color-pink: #db2777;
-    --group-color-cyan: #0891b2;
+    /* Tab Group Colors - Gruvbox Light palette */
+    --group-color-blue: #076678;   /* Blue from accent-primary */
+    --group-color-green: #79740e;  /* Green from syntax highlighting */
+    --group-color-yellow: #b57614; /* Yellow from syntax highlighting */
+    --group-color-red: #9d0006;    /* Red from syntax highlighting */
+    --group-color-purple: #8f3f71; /* Purple from syntax highlighting */
+    --group-color-orange: #af3a03; /* Orange from syntax highlighting */
+    --group-color-pink: #8f3f71;   /* Pink same as purple */
+    --group-color-cyan: #427b58;   /* Aqua/Cyan from syntax */
 }
 
 /* Syntax Highlighting - Gruvbox Light Theme */

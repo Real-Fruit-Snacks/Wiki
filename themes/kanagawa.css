@@ -135,16 +135,15 @@
     --syntax-builtin: #7E9CD8;
     --syntax-type: #7AA89F;
 
-    /* Tab Group Colors */
-    --group-color-blue: #3b82f6;
-    --group-color-green: #10b981;
-    --group-color-yellow: #f59e0b;
-    --group-color-red: #ef4444;
-    --group-color-purple: #8b5cf6;
-    --group-color-orange: #f97316;
-    --group-color-pink: #ec4899;
-    --group-color-cyan: #06b6d4;
-}
+    /* Tab Group Colors - Kanagawa palette */
+    --group-color-blue: #7FB4CA;   /* Theme blue */
+    --group-color-green: #98BB6C;  /* Theme green */
+    --group-color-yellow: #E6C384; /* Theme yellow */
+    --group-color-red: #E82424;    /* Theme red */
+    --group-color-purple: #8b5cf6; /* Theme purple */
+    --group-color-orange: #f97316; /* Theme orange */
+    --group-color-pink: #E82424;   /* Theme pink */
+    --group-color-cyan: #7FB4CA;   /* Theme cyan */}
 
 /* Syntax highlighting classes for Kanagawa theme */
 :root[data-theme="kanagawa"] .token.comment,

@@ -54,16 +54,15 @@
     --shadow-lg: 0 10px 15px -3px rgba(76, 79, 105, 0.2), 0 4px 6px -2px rgba(76, 79, 105, 0.15);
     --shadow-xl: 0 20px 25px -5px rgba(76, 79, 105, 0.25), 0 10px 10px -5px rgba(76, 79, 105, 0.2);
 
-    /* Tab Group Colors */
-    --group-color-blue: #2563eb;
-    --group-color-green: #059669;
-    --group-color-yellow: #d97706;
-    --group-color-red: #dc2626;
-    --group-color-purple: #7c3aed;
-    --group-color-orange: #ea580c;
-    --group-color-pink: #db2777;
-    --group-color-cyan: #0891b2;
-}
+    /* Tab Group Colors - Catppuccin Latte palette */
+    --group-color-blue: #1e66f5;   /* Blue */
+    --group-color-green: #40a02b;  /* Green */
+    --group-color-yellow: #df8e1d; /* Yellow */
+    --group-color-red: #d20f39;    /* Red */
+    --group-color-purple: #8839ef; /* Mauve */
+    --group-color-orange: #fe640b; /* Peach */
+    --group-color-pink: #ea76cb;   /* Pink */
+    --group-color-cyan: #179299;   /* Teal */}
 
 /* Syntax Highlighting - Catppuccin Latte */
 :root[data-theme="catppuccin-latte"] .token.comment,

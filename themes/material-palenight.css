@@ -57,16 +57,15 @@
     --accent-color-alpha: rgba(130, 170, 255, 0.1);
     --bg-code-block: #32374D;
 
-    /* Tab Group Colors */
-    --group-color-blue: #3b82f6;
-    --group-color-green: #10b981;
-    --group-color-yellow: #f59e0b;
-    --group-color-red: #ef4444;
-    --group-color-purple: #8b5cf6;
-    --group-color-orange: #f97316;
-    --group-color-pink: #ec4899;
-    --group-color-cyan: #06b6d4;
-}
+    /* Tab Group Colors - Material Palenight palette */
+    --group-color-blue: #82AAFF;   /* Theme blue */
+    --group-color-green: #C3E88D;  /* Theme green */
+    --group-color-yellow: #FFCB6B; /* Theme yellow */
+    --group-color-red: #FF5370;    /* Theme red */
+    --group-color-purple: #C792EA; /* Theme purple */
+    --group-color-orange: #f97316; /* Theme orange */
+    --group-color-pink: #FF5370;   /* Theme pink */
+    --group-color-cyan: #82AAFF;   /* Theme cyan */}
 
 /* Syntax Highlighting - Material Palenight Theme */
 :root[data-theme="material-palenight"] .token.comment,

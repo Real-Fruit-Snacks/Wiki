@@ -57,15 +57,15 @@
     --accent-color-alpha: rgba(122, 162, 247, 0.1);
     --bg-code-block: #24283b;
 
-    /* Tab Group Colors */
-    --group-color-blue: #3b82f6;
-    --group-color-green: #10b981;
-    --group-color-yellow: #f59e0b;
-    --group-color-red: #ef4444;
-    --group-color-purple: #8b5cf6;
-    --group-color-orange: #f97316;
-    --group-color-pink: #ec4899;
-    --group-color-cyan: #06b6d4;
+    /* Tab Group Colors - Tokyo Night Palette */
+    --group-color-blue: #7aa2f7;
+    --group-color-green: #9ece6a;
+    --group-color-yellow: #e0af68;
+    --group-color-red: #f7768e;
+    --group-color-purple: #bb9af7;
+    --group-color-orange: #ff9e64;
+    --group-color-pink: #ff007c;
+    --group-color-cyan: #7dcfff;
 }
 
 /* Syntax Highlighting - Tokyo Night Theme */
