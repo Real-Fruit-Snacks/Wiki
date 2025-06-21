@@ -13298,11 +13298,14 @@ class NotesWiki {
     
     initializeStickyNotes() {
         this.stickyNotes = new Map();
-        this.stickyColors = ['yellow', 'blue', 'green', 'pink'];
+        this.stickyColors = ['yellow', 'blue', 'green', 'pink', 'purple', 'orange', 'teal', 'red'];
         this.stickyZIndex = 1001;
-        this.stickyNoteCategories = ['personal', 'work', 'ideas', 'reminders', 'todo'];
+        this.stickyNoteCategories = ['personal', 'work', 'ideas', 'reminders', 'todo', 'research', 'reference', 'project'];
         this.stickyNoteTemplates = this.initializeStickyTemplates();
         this.stickyNoteSaveStatus = new Map(); // Track save status for each note
+        this.stickyNoteHistory = new Map(); // Version history for each note
+        this.stickyNoteShortcuts = this.initializeStickyShortcuts();
+        this.selectedStickyNotes = new Set(); // For bulk operations
         this.loadStickyNotes();
     }
     
@@ -13364,8 +13367,108 @@ class NotesWiki {
                 title: 'Reminder',
                 content: '⏰ Reminder: \n\nDue: \nPriority: \nNotes: ',
                 category: 'reminders'
+            },
+            'research': {
+                title: 'Research Notes',
+                content: '📚 Topic: \n\nKey findings:\n• \n• \n• \n\nSources:\n1. \n2. \n\nQuestions:\n• ',
+                category: 'research'
+            },
+            'project': {
+                title: 'Project Plan',
+                content: '🎯 Project: \n\nGoals:\n• \n• \n\nTasks:\n☐ \n☐ \n☐ \n\nDeadline: \nStatus: ',
+                category: 'project'
+            },
+            'reference': {
+                title: 'Reference',
+                content: '📌 Reference: \n\nKey points:\n• \n• \n• \n\nLinks:\n• ',
+                category: 'reference'
             }
         };
+    }
+    
+    initializeStickyShortcuts() {
+        // Setup global sticky note keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Ctrl+Shift+N - Create new sticky note
+            if (e.ctrlKey && e.shiftKey && e.key === 'N') {
+                e.preventDefault();
+                this.createStickyNote();
+            }
+            // Ctrl+Shift+M - Open sticky notes manager
+            else if (e.ctrlKey && e.shiftKey && e.key === 'M') {
+                e.preventDefault();
+                this.openStickyNotesManager();
+            }
+            // Ctrl+Shift+S - Save all sticky notes
+            else if (e.ctrlKey && e.shiftKey && e.key === 'S') {
+                e.preventDefault();
+                this.saveStickyNotes();
+                this.showToast('All sticky notes saved', 'success');
+            }
+        });
+        
+        return {
+            'Ctrl+Shift+N': () => this.createStickyNote(),
+            'Ctrl+Shift+M': () => this.openStickyNotesManager(),
+            'Ctrl+Shift+S': () => this.saveStickyNotes(),
+            'Escape': (e, noteId) => {
+                if (noteId) {
+                    const textarea = document.querySelector(`#${noteId} .sticky-note-textarea`);
+                    if (textarea) textarea.blur();
+                }
+            }
+        };
+    }
+    
+    handleStickyNoteKeyboard(e) {
+        const noteElement = e.target.closest('.sticky-note');
+        if (!noteElement) return;
+        
+        const noteId = noteElement.id;
+        
+        // Tab - Navigate between elements in sticky note
+        if (e.key === 'Tab' && !e.shiftKey) {
+            e.preventDefault();
+            this.focusNextStickyElement(noteElement);
+        }
+        // Shift+Tab - Navigate backwards
+        else if (e.key === 'Tab' && e.shiftKey) {
+            e.preventDefault();
+            this.focusPreviousStickyElement(noteElement);
+        }
+        // Ctrl+Enter - Minimize/Expand toggle
+        else if (e.ctrlKey && e.key === 'Enter') {
+            e.preventDefault();
+            this.toggleStickyMinimize(noteId);
+        }
+        // Ctrl+Delete - Delete note
+        else if (e.ctrlKey && e.key === 'Delete') {
+            e.preventDefault();
+            this.closeStickyNote(noteId);
+        }
+        // Ctrl+C (with Alt) - Cycle color
+        else if (e.ctrlKey && e.altKey && e.key === 'c') {
+            e.preventDefault();
+            this.cycleStickyColor(noteId);
+        }
+    }
+    
+    focusNextStickyElement(noteElement) {
+        const focusableElements = noteElement.querySelectorAll(
+            '.sticky-note-title, .sticky-note-textarea, .sticky-note-btn'
+        );
+        const currentIndex = Array.from(focusableElements).indexOf(document.activeElement);
+        const nextIndex = (currentIndex + 1) % focusableElements.length;
+        focusableElements[nextIndex]?.focus();
+    }
+    
+    focusPreviousStickyElement(noteElement) {
+        const focusableElements = noteElement.querySelectorAll(
+            '.sticky-note-title, .sticky-note-textarea, .sticky-note-btn'
+        );
+        const currentIndex = Array.from(focusableElements).indexOf(document.activeElement);
+        const prevIndex = currentIndex - 1 < 0 ? focusableElements.length - 1 : currentIndex - 1;
+        focusableElements[prevIndex]?.focus();
     }
     
     renderStickyNote(note) {
@@ -13380,46 +13483,69 @@ class NotesWiki {
         noteEl.style.height = note.minimized ? '32px' : `${note.size.height}px`;
         noteEl.style.zIndex = note.zIndex;
         
-        // Create secure HTML without inline event handlers
+        // Create secure HTML with accessibility attributes
+        noteEl.setAttribute('role', 'article');
+        noteEl.setAttribute('aria-label', `Sticky note: ${note.title}`);
+        noteEl.setAttribute('tabindex', '0');
+        
         noteEl.innerHTML = `
-            <div class="sticky-note-header">
+            <div class="sticky-note-header" role="banner">
                 <input class="sticky-note-title" 
                        type="text" 
                        value="${this.escapeHtml(note.title)}" 
                        placeholder="Note title..."
-                       data-note-id="${note.id}">
-                <div class="sticky-note-save-status" id="save-status-${note.id}" title="Save status">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="save-indicator">
+                       data-note-id="${note.id}"
+                       aria-label="Note title"
+                       maxlength="100">
+                <div class="sticky-note-save-status" id="save-status-${note.id}" 
+                     role="status" 
+                     aria-live="polite" 
+                     aria-label="Save status">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="save-indicator" aria-hidden="true">
                         <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                     </svg>
                 </div>
-                <div class="sticky-note-actions">
-                    <button class="sticky-note-btn minimize-btn" data-note-id="${note.id}" title="${note.minimized ? 'Expand' : 'Minimize'}">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <div class="sticky-note-actions" role="toolbar" aria-label="Note actions">
+                    <button class="sticky-note-btn minimize-btn" 
+                            data-note-id="${note.id}" 
+                            aria-label="${note.minimized ? 'Expand note' : 'Minimize note'}"
+                            aria-pressed="${note.minimized}">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             ${note.minimized ? 
                                 '<path d="M19 13H5c-1.1 0-2-.9-2-2s.9-2 2-2h14c1.1 0 2 .9 2 2s-.9 2-2 2zm0 6H5c-1.1 0-2-.9-2-2s.9-2 2-2h14c1.1 0 2 .9 2 2s-.9 2-2 2z"/>' :
                                 '<path d="M19 13H5c-1.1 0-2-.9-2-2s.9-2 2-2h14c1.1 0 2 .9 2 2s-.9 2-2 2z"/>'
                             }
                         </svg>
                     </button>
-                    <button class="sticky-note-btn color-btn" data-note-id="${note.id}" title="Change color">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <button class="sticky-note-btn color-btn" 
+                            data-note-id="${note.id}" 
+                            aria-label="Change note color (current: ${note.color})">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path d="M12 22C6.49 22 2 17.51 2 12S6.49 2 12 2s10 4.49 10 10-4.49 10-10 10zm0-18c-4.41 0-8 3.59-8 8 0 1.82.62 3.49 1.64 4.83 1.43-1.74 4.9-2.33 6.36-2.33s4.93.59 6.36 2.33C19.38 15.49 20 13.82 20 12c0-4.41-3.59-8-8-8z"/>
                         </svg>
                     </button>
-                    <button class="sticky-note-btn close-btn" data-note-id="${note.id}" title="Close">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <button class="sticky-note-btn close-btn" 
+                            data-note-id="${note.id}" 
+                            aria-label="Close note">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
                         </svg>
                     </button>
                 </div>
             </div>
-            <div class="sticky-note-content" style="display: ${note.minimized ? 'none' : 'block'}">
+            <div class="sticky-note-content" role="main" style="display: ${note.minimized ? 'none' : 'block'}">
                 <textarea class="sticky-note-textarea" 
                           placeholder="Start typing your thoughts..." 
-                          data-note-id="${note.id}">${this.escapeHtml(note.content)}</textarea>
+                          data-note-id="${note.id}"
+                          aria-label="Note content"
+                          spellcheck="true">${this.escapeHtml(note.content)}</textarea>
             </div>
-            <div class="sticky-note-resize-handle" style="display: ${note.minimized ? 'none' : 'block'}"></div>
+            <div class="sticky-note-resize-handle" 
+                 role="separator" 
+                 aria-label="Resize handle - drag to resize note"
+                 aria-orientation="vertical"
+                 tabindex="0"
+                 style="display: ${note.minimized ? 'none' : 'block'}"></div>
         `;
         
         // Add secure event listeners
@@ -13711,21 +13837,24 @@ class NotesWiki {
         const indicator = document.getElementById(`save-status-${noteId}`);
         if (!indicator) return;
         
-        const svg = indicator.querySelector('svg');
-        indicator.className = `sticky-note-save-status status-${status}`;
+        // Remove all status classes
+        indicator.classList.remove('saving', 'saved', 'error');
+        
+        // Add the new status class
+        indicator.classList.add(status);
         
         switch(status) {
             case 'saved':
-                indicator.title = 'Saved';
-                svg.innerHTML = '<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>';
+                indicator.title = 'All changes saved';
+                setTimeout(() => {
+                    indicator.classList.remove('saved');
+                }, 2000);
                 break;
             case 'saving':
-                indicator.title = 'Saving...';
-                svg.innerHTML = '<path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/>';
+                indicator.title = 'Saving changes...';
                 break;
             case 'error':
-                indicator.title = 'Save failed';
-                svg.innerHTML = '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>';
+                indicator.title = 'Failed to save changes';
                 break;
         }
     }
@@ -13832,7 +13961,34 @@ class NotesWiki {
     saveStickyNotes() {
         try {
             const notes = Array.from(this.stickyNotes.values());
-            localStorage.setItem('stickyNotes', JSON.stringify(notes));
+            
+            // Create compressed version with minimal data
+            const compressedNotes = notes.map(note => ({
+                id: note.id,
+                t: note.title, // title
+                c: note.content, // content
+                p: note.position, // position
+                s: note.size, // size
+                co: note.color, // color
+                m: note.minimized ? 1 : 0, // minimized
+                ca: note.category, // category
+                cr: note.createdAt, // created
+                mo: note.lastModified, // modified
+                z: note.zIndex, // z-index
+                tg: note.tags || [], // tags
+                w: note.wordCount || 0 // word count
+            }));
+            
+            const storageData = {
+                v: 2, // version
+                d: new Date().toISOString(), // date
+                n: compressedNotes // notes
+            };
+            
+            localStorage.setItem('stickyNotes', JSON.stringify(storageData));
+            
+            // Save version history for important notes
+            this.saveNoteVersions(notes);
             
             // Update save status for all notes
             this.stickyNotes.forEach((note, noteId) => {
@@ -13840,10 +13996,67 @@ class NotesWiki {
             });
         } catch (error) {
             console.warn('Failed to save sticky notes:', error);
-            // Update save status to error for all notes
-            this.stickyNotes.forEach((note, noteId) => {
-                this.setStickyNoteSaveStatus(noteId, 'error');
-            });
+            
+            if (error.name === 'QuotaExceededError') {
+                this.handleStorageQuotaExceeded();
+            } else {
+                // Update save status to error for all notes
+                this.stickyNotes.forEach((note, noteId) => {
+                    this.setStickyNoteSaveStatus(noteId, 'error');
+                });
+            }
+        }
+    }
+    
+    saveNoteVersions(notes) {
+        // Save version history for notes with significant changes
+        notes.forEach(note => {
+            const history = this.stickyNoteHistory.get(note.id) || [];
+            const lastVersion = history[history.length - 1];
+            
+            // Only save version if content changed significantly
+            if (!lastVersion || 
+                lastVersion.content !== note.content || 
+                lastVersion.title !== note.title) {
+                
+                history.push({
+                    content: note.content,
+                    title: note.title,
+                    timestamp: note.lastModified,
+                    wordCount: note.wordCount || 0
+                });
+                
+                // Keep only last 5 versions
+                if (history.length > 5) {
+                    history.shift();
+                }
+                
+                this.stickyNoteHistory.set(note.id, history);
+            }
+        });
+    }
+    
+    handleStorageQuotaExceeded() {
+        // Try to clear old data and save minimal version
+        try {
+            const minimalNotes = Array.from(this.stickyNotes.values()).map(note => ({
+                id: note.id,
+                t: note.title.substring(0, 50),
+                c: note.content.substring(0, 500),
+                p: note.position,
+                co: note.color,
+                ca: note.category
+            }));
+            
+            localStorage.setItem('stickyNotes_minimal', JSON.stringify({
+                v: 2,
+                d: new Date().toISOString(),
+                n: minimalNotes
+            }));
+            
+            this.showToast('Storage quota exceeded - saved minimal data', 'warning');
+        } catch (error) {
+            this.showToast('Storage quota exceeded - unable to save', 'error');
         }
     }
     
@@ -13851,7 +14064,53 @@ class NotesWiki {
         try {
             const stored = localStorage.getItem('stickyNotes');
             if (stored) {
-                const notes = JSON.parse(stored);
+                const data = JSON.parse(stored);
+                let notes = [];
+                
+                // Handle different storage formats
+                if (data.v === 2) {
+                    // New compressed format
+                    notes = data.n.map(compressed => ({
+                        id: compressed.id,
+                        title: compressed.t,
+                        content: compressed.c,
+                        position: compressed.p,
+                        size: compressed.s,
+                        color: compressed.co,
+                        minimized: compressed.m === 1,
+                        category: compressed.ca,
+                        createdAt: compressed.cr,
+                        lastModified: compressed.mo,
+                        zIndex: compressed.z,
+                        tags: compressed.tg || [],
+                        wordCount: compressed.w || 0
+                    }));
+                } else if (Array.isArray(data)) {
+                    // Old format - direct array
+                    notes = data;
+                } else {
+                    // Fallback for minimal storage
+                    const minimal = localStorage.getItem('stickyNotes_minimal');
+                    if (minimal) {
+                        const minData = JSON.parse(minimal);
+                        notes = minData.n.map(compressed => ({
+                            id: compressed.id,
+                            title: compressed.t,
+                            content: compressed.c,
+                            position: compressed.p,
+                            color: compressed.co,
+                            category: compressed.ca,
+                            size: { width: 280, height: 200 },
+                            minimized: false,
+                            createdAt: new Date().toISOString(),
+                            lastModified: new Date().toISOString(),
+                            zIndex: 1001,
+                            tags: [],
+                            wordCount: 0
+                        }));
+                    }
+                }
+                
                 notes.forEach(noteData => {
                     // Ensure backward compatibility with old note format
                     const enhancedNote = {
@@ -13866,9 +14125,27 @@ class NotesWiki {
                     this.renderStickyNote(enhancedNote);
                     this.setStickyNoteSaveStatus(enhancedNote.id, 'saved');
                 });
+                
+                // Load version history if available
+                this.loadNoteHistory();
             }
         } catch (error) {
             console.warn('Failed to load sticky notes:', error);
+            this.showToast('Some sticky notes could not be loaded', 'warning');
+        }
+    }
+    
+    loadNoteHistory() {
+        try {
+            const historyData = localStorage.getItem('stickyNotes_history');
+            if (historyData) {
+                const history = JSON.parse(historyData);
+                Object.entries(history).forEach(([noteId, versions]) => {
+                    this.stickyNoteHistory.set(noteId, versions);
+                });
+            }
+        } catch (error) {
+            console.warn('Failed to load note history:', error);
         }
     }
     
@@ -13950,20 +14227,48 @@ class NotesWiki {
         // Apply current filters and sorting
         const filteredNotes = this.getFilteredStickyNotes(notes);
         
+        // Update bulk action controls visibility
+        this.updateBulkActionButtons();
+        
         if (filteredNotes.length === 0) {
             grid.innerHTML = `
                 <div class="empty-state">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" opacity="0.3">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor" opacity="0.2">
                         <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
                     </svg>
-                    <p>No sticky notes found</p>
-                    <button class="btn" onclick="notesWiki.createStickyNote()">Create your first note</button>
+                    <h3>No sticky notes found</h3>
+                    <p>Create a new note to get started</p>
+                    <div class="empty-state-actions">
+                        <button class="btn btn-primary" onclick="notesWiki.createStickyNote()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                            </svg>
+                            Create Note
+                        </button>
+                        <button class="btn btn-secondary" onclick="notesWiki.showTemplateSelector()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M13,9V3.5L18.5,9H13Z"/>
+                            </svg>
+                            Use Template
+                        </button>
+                    </div>
                 </div>
             `;
             return;
         }
         
-        grid.innerHTML = filteredNotes.map(note => this.renderStickyNoteCard(note)).join('');
+        // Add select all checkbox and results count
+        const resultsHeader = `
+            <div class="results-header">
+                <label class="select-all-container">
+                    <input type="checkbox" id="select-all-notes" onchange="notesWiki.toggleSelectAllNotes()">
+                    <span>Select all</span>
+                </label>
+                <span class="results-count">${filteredNotes.length} note${filteredNotes.length !== 1 ? 's' : ''} found</span>
+            </div>
+        `;
+        
+        grid.innerHTML = resultsHeader + filteredNotes.map(note => this.renderStickyNoteCard(note)).join('');
     }
     
     renderStickyNoteCard(note) {
@@ -14129,14 +14434,119 @@ class NotesWiki {
     
     updateBulkActionButtons() {
         const selectedCount = document.querySelectorAll('.note-checkbox:checked').length;
-        const deleteBtn = document.getElementById('delete-selected-btn');
-        const selectAllBtn = document.getElementById('select-all-btn');
+        const bulkActions = document.querySelector('.bulk-actions');
         
-        deleteBtn.disabled = selectedCount === 0;
-        deleteBtn.textContent = selectedCount > 0 ? `Delete Selected (${selectedCount})` : 'Delete Selected';
+        if (bulkActions) {
+            bulkActions.style.display = selectedCount > 0 ? 'flex' : 'none';
+            
+            const deleteBtn = bulkActions.querySelector('.delete-selected');
+            const exportBtn = bulkActions.querySelector('.export-selected');
+            const colorBtn = bulkActions.querySelector('.color-selected');
+            const categoryBtn = bulkActions.querySelector('.category-selected');
+            
+            if (deleteBtn) {
+                deleteBtn.textContent = `Delete (${selectedCount})`;
+            }
+            if (exportBtn) {
+                exportBtn.textContent = `Export (${selectedCount})`;
+            }
+        }
+    }
+    
+    toggleSelectAllNotes() {
+        const selectAllCheckbox = document.getElementById('select-all-notes');
+        const checkboxes = document.querySelectorAll('.note-checkbox');
         
-        const totalNotes = document.querySelectorAll('.note-checkbox').length;
-        selectAllBtn.textContent = selectedCount === totalNotes ? 'Deselect All' : 'Select All';
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = selectAllCheckbox.checked;
+            const noteId = checkbox.dataset.noteId;
+            if (selectAllCheckbox.checked) {
+                this.selectedStickyNotes.add(noteId);
+            } else {
+                this.selectedStickyNotes.delete(noteId);
+            }
+            
+            const card = document.querySelector(`[data-note-id="${noteId}"]`);
+            if (card) {
+                card.classList.toggle('selected', checkbox.checked);
+            }
+        });
+        
+        this.updateBulkActionButtons();
+    }
+    
+    showTemplateSelector() {
+        const templates = Object.entries(this.stickyNoteTemplates);
+        const modal = document.createElement('div');
+        modal.className = 'modal template-selector-modal';
+        modal.innerHTML = `
+            <div class="modal-content template-selector-content">
+                <div class="modal-header">
+                    <h2>Choose a Template</h2>
+                    <button class="modal-close" onclick="this.closest('.modal').remove()">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="template-grid">
+                        ${templates.map(([key, template]) => `
+                            <div class="template-card" onclick="notesWiki.createStickyNoteFromTemplate('${key}')">
+                                <div class="template-icon">${this.getTemplateIcon(key)}</div>
+                                <h3>${template.title}</h3>
+                                <p>${this.getTemplateDescription(key)}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        modal.style.display = 'flex';
+    }
+    
+    getTemplateIcon(templateKey) {
+        const icons = {
+            blank: '📝',
+            todo: '✓',
+            meeting: '👥',
+            idea: '💡',
+            reminder: '⏰',
+            research: '📚',
+            project: '🎯',
+            reference: '📌'
+        };
+        return icons[templateKey] || '📄';
+    }
+    
+    getTemplateDescription(templateKey) {
+        const descriptions = {
+            blank: 'Start with a blank note',
+            todo: 'Create a checklist of tasks',
+            meeting: 'Capture meeting minutes',
+            idea: 'Document your ideas',
+            reminder: 'Set a reminder note',
+            research: 'Organize research findings',
+            project: 'Plan your project',
+            reference: 'Keep important references'
+        };
+        return descriptions[templateKey] || '';
+    }
+    
+    createStickyNoteFromTemplate(templateKey) {
+        const template = this.stickyNoteTemplates[templateKey];
+        if (template) {
+            this.createStickyNote({
+                title: template.title,
+                content: template.content,
+                category: template.category
+            });
+            
+            // Close template selector
+            const modal = document.querySelector('.template-selector-modal');
+            if (modal) modal.remove();
+            
+            // Close manager if open
+            this.closeStickyNotesManager();
+        }
     }
     
     deleteSelectedStickyNotes() {

@@ -7163,7 +7163,7 @@ body.focus-mode.focus-mode-wide .multi-pane-content .content-wrapper {
 }
 
 /* ============================================
-   STICKY NOTES STYLES - MODERN REVAMP
+   STICKY NOTES STYLES - PREMIUM GLASS MORPHISM
    ============================================ */
 
 .sticky-notes-container {
@@ -7178,23 +7178,27 @@ body.focus-mode.focus-mode-wide .multi-pane-content .content-wrapper {
 
 .sticky-note {
     position: absolute;
-    min-width: 240px;
-    min-height: 180px;
+    min-width: 280px;
+    min-height: 200px;
     background: var(--sticky-gradient);
     border: 1px solid var(--sticky-border);
-    border-radius: 12px;
+    border-radius: 16px;
     box-shadow: 
-        0 4px 20px var(--sticky-shadow-color),
-        0 1px 3px rgba(0, 0, 0, 0.1),
+        0 20px 40px -12px var(--sticky-shadow-color),
+        0 4px 20px -4px rgba(0, 0, 0, 0.12),
+        0 1px 4px rgba(0, 0, 0, 0.08),
         inset 0 1px 0 var(--sticky-highlight);
     pointer-events: auto;
     display: flex;
     flex-direction: column;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     overflow: hidden;
-    transform: translateZ(0); /* Force hardware acceleration */
+    transform: translateZ(0);
+    position: relative;
+    isolation: isolate;
 }
 
 .sticky-note:hover {
@@ -7351,7 +7355,41 @@ body.focus-mode.focus-mode-wide .multi-pane-content .content-wrapper {
     opacity: 0.7;
 }
 
-/* Modern Color Schemes */
+/* Save Status Indicator */
+.sticky-note-save-status {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-right: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sticky-note-save-status.saving,
+.sticky-note-save-status.saved,
+.sticky-note-save-status.error {
+    opacity: 1;
+}
+
+.sticky-note-save-status.saving .save-indicator {
+    animation: pulse-save 1.5s ease-in-out infinite;
+    color: var(--accent-primary);
+}
+
+.sticky-note-save-status.saved .save-indicator {
+    color: var(--accent-success);
+}
+
+.sticky-note-save-status.error .save-indicator {
+    color: var(--accent-danger);
+}
+
+@keyframes pulse-save {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* Premium Color Schemes - Extended Palette */
 .sticky-note-yellow {
     --sticky-gradient: linear-gradient(135deg, #fef7cd 0%, #fef08a 100%);
     --sticky-border: rgba(251, 191, 36, 0.3);
@@ -7608,13 +7646,19 @@ body.focus-mode.focus-mode-wide .multi-pane-content .content-wrapper {
     letter-spacing: 0.5px;
 }
 
-/* Sticky Notes Manager Modal */
+/* ============================================
+   STICKY NOTES MANAGER - PREMIUM DESIGN
+   ============================================ */
 .sticky-notes-manager-content {
-    max-width: 900px;
-    width: 90vw;
-    max-height: 80vh;
+    max-width: 1200px;
+    width: 95vw;
+    max-height: 90vh;
     display: flex;
     flex-direction: column;
+    background: var(--bg-primary);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 .modal-header-actions {
@@ -7713,31 +7757,112 @@ body.focus-mode.focus-mode-wide .multi-pane-content .content-wrapper {
 
 .sticky-notes-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-    max-height: 400px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+    max-height: 600px;
     overflow-y: auto;
-    padding: 4px;
+    padding: 20px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+/* Results header for sticky notes grid */
+.results-header {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--bg-primary);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border: 1px solid var(--border-primary);
+}
+
+.select-all-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+}
+
+.select-all-container:hover {
+    color: var(--text-primary);
+}
+
+.results-count {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+}
+
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-secondary);
+}
+
+.empty-state h3 {
+    margin: 16px 0 8px 0;
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.empty-state p {
+    margin-bottom: 24px;
+    font-size: var(--text-sm);
+}
+
+.empty-state-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.btn-secondary {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-primary);
+}
+
+.btn-secondary:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-hover);
 }
 
 .sticky-note-card {
     border: 1px solid var(--sticky-border);
-    border-radius: 8px;
-    padding: 16px;
+    border-radius: 12px;
+    padding: 20px;
     background: var(--sticky-gradient);
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     position: relative;
+    backdrop-filter: blur(10px);
+    box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 var(--sticky-highlight);
 }
 
 .sticky-note-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px var(--sticky-shadow-color);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 
+        0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04),
+        0 0 0 1px var(--sticky-border);
 }
 
 .sticky-note-card.selected {
     border-color: var(--accent-primary);
-    box-shadow: 0 0 0 2px var(--accent-primary-light);
+    box-shadow: 
+        0 0 0 3px var(--accent-primary-light),
+        0 20px 25px -5px rgba(59, 130, 246, 0.2);
+    transform: scale(1.02);
 }
 
 .note-card-header {
@@ -7843,11 +7968,102 @@ body.focus-mode.focus-mode-wide .multi-pane-content .content-wrapper {
     font-size: 16px;
 }
 
-/* Pulse animation for focus */
+/* Template selector modal */
+.template-selector-modal .modal-content {
+    max-width: 800px;
+    width: 90vw;
+}
+
+.template-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    padding: 20px;
+}
+
+.template-card {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-primary);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.template-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-primary);
+    box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.15);
+}
+
+.template-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    filter: grayscale(0.2);
+}
+
+.template-card h3 {
+    margin: 0 0 8px 0;
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.template-card p {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+}
+
+/* Bulk actions panel */
+.bulk-actions {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-primary);
+    padding: 16px;
+    display: none;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+.bulk-actions button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Animations */
 @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.sticky-note-card {
+    animation: fadeInUp 0.4s ease-out;
+    animation-fill-mode: both;
+}
+
+.sticky-note-card:nth-child(n) {
+    animation-delay: calc(0.05s * var(--card-index, 1));
 }
 
 /* Mobile adjustments */
