@@ -1612,6 +1612,21 @@
             
             <div class="modal-body">
                 <div class="sticky-manager-toolbar">
+                    <div class="status-filter-buttons">
+                        <button class="filter-button active" data-filter="all" onclick="notesWiki.filterByStatus('all')">
+                            All Notes
+                            <span class="filter-count" id="all-notes-count">0</span>
+                        </button>
+                        <button class="filter-button" data-filter="active" onclick="notesWiki.filterByStatus('active')">
+                            Active
+                            <span class="filter-count" id="active-notes-count">0</span>
+                        </button>
+                        <button class="filter-button" data-filter="archived" onclick="notesWiki.filterByStatus('archived')">
+                            Archived
+                            <span class="filter-count" id="archived-notes-count">0</span>
+                        </button>
+                    </div>
+                    
                     <div class="search-container">
                         <input type="text" 
                                id="sticky-search-input" 
@@ -1643,12 +1658,14 @@
                     <div class="bulk-actions">
                         <button class="btn btn-sm" onclick="notesWiki.selectAllStickyNotes()" id="select-all-btn">Select All</button>
                         <button class="btn btn-sm btn-danger" onclick="notesWiki.deleteSelectedStickyNotes()" id="delete-selected-btn" disabled>Delete Selected</button>
+                        <button class="btn btn-sm" onclick="notesWiki.archiveSelectedStickyNotes()" id="archive-selected-btn" disabled>Archive Selected</button>
                     </div>
                 </div>
                 
                 <div class="sticky-notes-stats">
                     <span id="notes-count">0 notes</span>
                     <span id="total-words">0 words total</span>
+                    <span id="active-archived-status"></span>
                 </div>
                 
                 <div class="sticky-notes-grid" id="sticky-notes-grid">
