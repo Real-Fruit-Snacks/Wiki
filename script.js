@@ -5,6 +5,20 @@
 
 class NotesWiki {
     constructor() {
+        // Configuration constants
+        this.CONSTANTS = {
+            SIDEBAR_WIDTH: 280,
+            QUICK_SWITCHER_DEBOUNCE: 150,
+            THEME_SCHEDULER_DEBOUNCE: 1000,
+            MOBILE_BREAKPOINT: 768,
+            MAX_SEARCH_RESULTS: 200,
+            MAX_RECENT_FILES: 50,
+            MAX_STICKY_Z_INDEX: 1000,
+            AUTO_SAVE_DELAY: 500,
+            THEME_TRANSITION_DURATION: 500,
+            SOLAR_CACHE_PRECISION: 2
+        };
+        
         this.notesIndex = null;
         this.currentNote = null;
         this.currentNotePath = null;
@@ -46,6 +60,12 @@ class NotesWiki {
         this.stickyNotes = new Map();
         this.stickyColors = ['yellow', 'blue', 'green', 'pink'];
         this.stickyZIndex = 1001;
+        this.maxStickyZIndex = this.CONSTANTS.MAX_STICKY_Z_INDEX;
+        this.stickySaveTimers = new Map();
+        this.stickyEventHandlers = new Map();
+        
+        // Bind methods to preserve context
+        this.getNextStickyZIndex = this.getNextStickyZIndex.bind(this);
         // Organized themes by category
         this.themeCategories = [
             {
@@ -299,6 +319,19 @@ class NotesWiki {
         // Default: no base path
         console.log('[Path Detection] No specific pattern detected, using root path');
         return '';
+    }
+    
+    // Utility method for debouncing function calls
+    debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func.apply(this, args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
     }
     
     async init() {
@@ -3053,13 +3086,12 @@ class NotesWiki {
         modal.style.display = 'flex';
         
         // Add click-outside handler
-        const clickOutsideHandler = (e) => {
+        this.quickSwitcherClickOutsideHandler = (e) => {
             if (e.target === modal) {
                 this.hideQuickSwitcher();
             }
         };
-        modal.addEventListener('click', clickOutsideHandler);
-        modal._clickOutsideHandler = clickOutsideHandler;
+        modal.addEventListener('click', this.quickSwitcherClickOutsideHandler);
         
         // Clear and focus input
         input.value = '';
@@ -3077,9 +3109,9 @@ class NotesWiki {
         modal.style.display = 'none';
         
         // Remove click-outside handler
-        if (modal._clickOutsideHandler) {
-            modal.removeEventListener('click', modal._clickOutsideHandler);
-            delete modal._clickOutsideHandler;
+        if (this.quickSwitcherClickOutsideHandler) {
+            modal.removeEventListener('click', this.quickSwitcherClickOutsideHandler);
+            delete this.quickSwitcherClickOutsideHandler;
         }
         
         // Cleanup event listeners
@@ -3089,8 +3121,8 @@ class NotesWiki {
     setupQuickSwitcherEvents() {
         const input = document.getElementById('quick-switcher-input');
         
-        // Search input handler
-        this.quickSwitcherInputHandler = (e) => {
+        // Search input handler with debouncing
+        const searchFunction = (e) => {
             const query = e.target.value.trim();
             if (query) {
                 this.performQuickSwitcherSearch(query);
@@ -3098,6 +3130,7 @@ class NotesWiki {
                 this.showQuickSwitcherRecent();
             }
         };
+        this.quickSwitcherInputHandler = this.debounce(searchFunction, this.CONSTANTS.QUICK_SWITCHER_DEBOUNCE);
         input.addEventListener('input', this.quickSwitcherInputHandler);
         
         // Keyboard navigation handler
@@ -3254,50 +3287,64 @@ class NotesWiki {
     
     fuzzySearchNotes(query) {
         const normalizedQuery = query.toLowerCase();
-        const allNotes = this.notesIndex.notes.map(note => ({
-            path: note.path,
-            title: note.metadata.title || '',
-            description: note.metadata.description || '',
-            tags: note.metadata.tags || [],
-            author: note.metadata.author || '',
-            content: note.searchable_content || '',
-            created: note.metadata.created,
-            updated: note.metadata.updated
-        }));
+        
+        // Cache normalized notes for better performance
+        if (!this._quickSwitcherCache) {
+            this._quickSwitcherCache = this.notesIndex.notes.map(note => ({
+                path: note.path,
+                title: note.metadata.title || '',
+                description: note.metadata.description || '',
+                tags: note.metadata.tags || [],
+                author: note.metadata.author || '',
+                content: note.searchable_content || '',
+                created: note.metadata.created,
+                updated: note.metadata.updated,
+                // Pre-normalize strings for faster searching
+                _normalized: {
+                    title: (note.metadata.title || '').toLowerCase(),
+                    description: (note.metadata.description || '').toLowerCase(),
+                    tags: (note.metadata.tags || []).map(tag => tag.toLowerCase()),
+                    author: (note.metadata.author || '').toLowerCase(),
+                    content: (note.searchable_content || '').toLowerCase()
+                }
+            }));
+        }
+        
+        const allNotes = this._quickSwitcherCache;
         
         // Score and filter results
         const scored = allNotes.map(note => {
             let score = 0;
             
             // Title match (highest priority)
-            if (note.title.toLowerCase().includes(normalizedQuery)) {
+            if (note._normalized.title.includes(normalizedQuery)) {
                 score += 100;
-                if (note.title.toLowerCase().startsWith(normalizedQuery)) {
+                if (note._normalized.title.startsWith(normalizedQuery)) {
                     score += 50; // Bonus for starts with
                 }
             }
             
             // Tags match
-            const tagMatch = note.tags.some(tag => tag.toLowerCase().includes(normalizedQuery));
+            const tagMatch = note._normalized.tags.some(tag => tag.includes(normalizedQuery));
             if (tagMatch) score += 75;
             
             // Author match
-            if (note.author.toLowerCase().includes(normalizedQuery)) {
+            if (note._normalized.author.includes(normalizedQuery)) {
                 score += 50;
             }
             
-            // Path match
+            // Path match (normalize path on the fly since it's not cached)
             if (note.path.toLowerCase().includes(normalizedQuery)) {
                 score += 25;
             }
             
             // Content match (lowest priority, but still valuable)
-            if (note.content.toLowerCase().includes(normalizedQuery)) {
+            if (note._normalized.content.includes(normalizedQuery)) {
                 score += 10;
             }
             
             // Description match
-            if (note.description.toLowerCase().includes(normalizedQuery)) {
+            if (note._normalized.description.includes(normalizedQuery)) {
                 score += 30;
             }
             
@@ -7876,9 +7923,15 @@ class NotesWiki {
         // Check themes immediately
         this.checkScheduledThemes();
         
-        // Set up interval to check every minute
+        // Set up interval to check every minute with debounced method
+        if (!this.debouncedCheckScheduledThemes) {
+            this.debouncedCheckScheduledThemes = this.debounce(() => {
+                this.checkScheduledThemes();
+            }, this.CONSTANTS.THEME_SCHEDULER_DEBOUNCE);
+        }
+        
         this.themeSchedulerInterval = setInterval(() => {
-            this.checkScheduledThemes();
+            this.debouncedCheckScheduledThemes();
         }, 60000);
         
         console.log('Theme scheduler enabled:', this.settings.scheduleMode);
@@ -7893,7 +7946,7 @@ class NotesWiki {
         let shouldUseEveningTheme = false;
         
         if (this.settings.scheduleMode === 'solar' && this.settings.location.lat && this.settings.location.lng) {
-            const solarTimes = this.calculateSolarTimes(this.settings.location.lat, this.settings.location.lng, now);
+            const solarTimes = this.getCachedSolarTimes(this.settings.location.lat, this.settings.location.lng, now);
             shouldUseEveningTheme = now < solarTimes.sunrise || now > solarTimes.sunset;
         } else {
             // Time-based scheduling
@@ -7937,6 +7990,46 @@ class NotesWiki {
         sunsetDate.setHours(Math.floor(sunset), Math.floor((sunset % 1) * 60), 0, 0);
         
         return { sunrise: sunriseDate, sunset: sunsetDate };
+    }
+    
+    getCachedSolarTimes(lat, lng, date) {
+        // Create cache key based on date and location
+        const dateKey = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+        const locationKey = `${lat.toFixed(this.CONSTANTS.SOLAR_CACHE_PRECISION)}-${lng.toFixed(this.CONSTANTS.SOLAR_CACHE_PRECISION)}`;
+        const cacheKey = `${dateKey}-${locationKey}`;
+        
+        // Initialize cache if not exists
+        if (!this._solarTimesCache) {
+            this._solarTimesCache = new Map();
+        }
+        
+        // Return cached value if available and valid
+        if (this._solarTimesCache.has(cacheKey)) {
+            return this._solarTimesCache.get(cacheKey);
+        }
+        
+        // Calculate and cache new solar times
+        const solarTimes = this.calculateSolarTimes(lat, lng, date);
+        this._solarTimesCache.set(cacheKey, solarTimes);
+        
+        // Clean old cache entries (keep only current day)
+        this._solarTimesCache.forEach((value, key) => {
+            if (!key.startsWith(dateKey.split('-').slice(0, 2).join('-'))) {
+                this._solarTimesCache.delete(key);
+            }
+        });
+        
+        return solarTimes;
+    }
+    
+    // Utility method for managing sticky note z-index
+    getNextStickyZIndex() {
+        this.stickyZIndex = Math.min(this.stickyZIndex + 1, this.maxStickyZIndex);
+        if (this.stickyZIndex >= this.maxStickyZIndex) {
+            // Reset z-index cycle to prevent overflow
+            this.stickyZIndex = 1001;
+        }
+        return this.stickyZIndex;
     }
     
     checkBlueLight(currentTime) {
@@ -9981,15 +10074,16 @@ class NotesWiki {
             // Restore tabs
             let activeTabFound = false;
             tabState.tabs.forEach(tabData => {
-                console.log('Restoring tab:', tabData);
-                
-                // Validate tab data
-                if (!tabData.path || typeof tabData.path !== 'string') {
-                    console.warn('Invalid tab path, skipping:', tabData);
-                    return;
-                }
-                
-                this.tabs.set(tabData.id, {
+                try {
+                    console.log('Restoring tab:', tabData);
+                    
+                    // Enhanced validation using our validation method
+                    if (!this.validateTabData(tabData)) {
+                        console.warn('Invalid tab data, skipping:', tabData);
+                        return;
+                    }
+                    
+                    this.tabs.set(tabData.id, {
                     id: tabData.id,
                     path: tabData.path,
                     title: tabData.title || 'Untitled',
@@ -10007,6 +10101,10 @@ class NotesWiki {
                 
                 if (tabData.id === tabState.activeTabId) {
                     activeTabFound = true;
+                }
+                } catch (error) {
+                    console.error('Failed to restore tab:', error, tabData);
+                    // Continue with next tab
                 }
             });
             
@@ -10051,10 +10149,64 @@ class NotesWiki {
     }
     
     // Tab Session Management System
+    validateSessionsData(sessions) {
+        // Check if sessions is an object
+        if (!sessions || typeof sessions !== 'object' || Array.isArray(sessions)) {
+            return false;
+        }
+        
+        // Validate each session
+        for (const [sessionKey, session] of Object.entries(sessions)) {
+            if (!this.validateSessionData(session)) {
+                console.warn(`Invalid session data for key: ${sessionKey}`);
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    validateSessionData(session) {
+        // Check required properties
+        if (!session || typeof session !== 'object') return false;
+        if (typeof session.name !== 'string') return false;
+        if (!Array.isArray(session.tabs)) return false;
+        
+        // Validate each tab in the session
+        for (const tab of session.tabs) {
+            if (!this.validateTabData(tab)) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    validateTabData(tabData) {
+        if (!tabData || typeof tabData !== 'object') return false;
+        if (typeof tabData.id !== 'string' || !tabData.id) return false;
+        if (typeof tabData.path !== 'string' || !tabData.path) return false;
+        
+        // Optional fields validation
+        if (tabData.title !== undefined && typeof tabData.title !== 'string') return false;
+        if (tabData.isPinned !== undefined && typeof tabData.isPinned !== 'boolean') return false;
+        if (tabData.scrollPosition !== undefined && typeof tabData.scrollPosition !== 'number') return false;
+        
+        return true;
+    }
+    
     loadTabSessions() {
         try {
             const sessions = localStorage.getItem('notesWiki_tabSessions');
-            this.tabSessions = sessions ? JSON.parse(sessions) : {};
+            const parsed = sessions ? JSON.parse(sessions) : {};
+            
+            // Validate session data structure
+            if (!this.validateSessionsData(parsed)) {
+                console.warn('Invalid session data detected, using defaults');
+                this.tabSessions = {};
+            } else {
+                this.tabSessions = parsed;
+            }
             
             // Ensure default session exists
             if (!this.tabSessions.default) {
@@ -13218,23 +13370,21 @@ class NotesWiki {
         noteEl.style.height = note.minimized ? '32px' : `${note.size.height}px`;
         noteEl.style.zIndex = note.zIndex;
         
+        // Create secure HTML without inline event handlers
         noteEl.innerHTML = `
             <div class="sticky-note-header">
                 <input class="sticky-note-title" 
                        type="text" 
                        value="${this.escapeHtml(note.title)}" 
                        placeholder="Note title..."
-                       onchange="notesWiki.updateStickyTitle('${note.id}', this.value)"
-                       onclick="event.stopPropagation()"
-                       onmousedown="event.stopPropagation()"
-                       onkeydown="if(event.key === 'Enter') this.blur(); if(event.key === 'Escape') { this.value = '${this.escapeHtml(note.title)}'; this.blur(); }">
+                       data-note-id="${note.id}">
                 <div class="sticky-note-save-status" id="save-status-${note.id}" title="Save status">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="save-indicator">
                         <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                     </svg>
                 </div>
                 <div class="sticky-note-actions">
-                    <button class="sticky-note-btn minimize-btn" onclick="notesWiki.toggleStickyMinimize('${note.id}')" title="${note.minimized ? 'Expand' : 'Minimize'}">
+                    <button class="sticky-note-btn minimize-btn" data-note-id="${note.id}" title="${note.minimized ? 'Expand' : 'Minimize'}">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                             ${note.minimized ? 
                                 '<path d="M19 13H5c-1.1 0-2-.9-2-2s.9-2 2-2h14c1.1 0 2 .9 2 2s-.9 2-2 2zm0 6H5c-1.1 0-2-.9-2-2s.9-2 2-2h14c1.1 0 2 .9 2 2s-.9 2-2 2z"/>' :
@@ -13242,12 +13392,12 @@ class NotesWiki {
                             }
                         </svg>
                     </button>
-                    <button class="sticky-note-btn color-btn" onclick="notesWiki.cycleStickyColor('${note.id}')" title="Change color">
+                    <button class="sticky-note-btn color-btn" data-note-id="${note.id}" title="Change color">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 22C6.49 22 2 17.51 2 12S6.49 2 12 2s10 4.49 10 10-4.49 10-10 10zm0-18c-4.41 0-8 3.59-8 8 0 1.82.62 3.49 1.64 4.83 1.43-1.74 4.9-2.33 6.36-2.33s4.93.59 6.36 2.33C19.38 15.49 20 13.82 20 12c0-4.41-3.59-8-8-8z"/>
                         </svg>
                     </button>
-                    <button class="sticky-note-btn close-btn" onclick="notesWiki.closeStickyNote('${note.id}')" title="Close">
+                    <button class="sticky-note-btn close-btn" data-note-id="${note.id}" title="Close">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
                         </svg>
@@ -13257,14 +13407,177 @@ class NotesWiki {
             <div class="sticky-note-content" style="display: ${note.minimized ? 'none' : 'block'}">
                 <textarea class="sticky-note-textarea" 
                           placeholder="Start typing your thoughts..." 
-                          oninput="notesWiki.updateStickyContent('${note.id}', this.value)">${note.content}</textarea>
+                          data-note-id="${note.id}">${this.escapeHtml(note.content)}</textarea>
             </div>
             <div class="sticky-note-resize-handle" style="display: ${note.minimized ? 'none' : 'block'}"></div>
         `;
         
+        // Add secure event listeners
+        this.setupStickyNoteEventListeners(noteEl, note);
+        
         container.appendChild(noteEl);
         this.makeStickyDraggable(noteEl, note);
         this.makeStickyResizable(noteEl, note);
+    }
+    
+    setupStickyNoteEventListeners(noteEl, note) {
+        // Initialize event handler storage if not exists
+        if (!this.stickyEventHandlers) {
+            this.stickyEventHandlers = new Map();
+        }
+        
+        const handlers = {
+            titleChange: null,
+            titleClick: null,
+            titleMousedown: null,
+            titleKeydown: null,
+            textareaInput: null,
+            minimizeClick: null,
+            colorClick: null,
+            closeClick: null
+        };
+        
+        // Title input handlers
+        const titleInput = noteEl.querySelector('.sticky-note-title');
+        if (titleInput) {
+            handlers.titleChange = (e) => {
+                try {
+                    this.updateStickyTitle(note.id, e.target.value);
+                } catch (error) {
+                    console.error('Error updating sticky title:', error);
+                }
+            };
+            
+            handlers.titleClick = (e) => {
+                e.stopPropagation();
+            };
+            
+            handlers.titleMousedown = (e) => {
+                e.stopPropagation();
+            };
+            
+            handlers.titleKeydown = (e) => {
+                if (e.key === 'Enter') {
+                    e.target.blur();
+                } else if (e.key === 'Escape') {
+                    e.target.value = note.title;
+                    e.target.blur();
+                }
+            };
+            
+            titleInput.addEventListener('change', handlers.titleChange);
+            titleInput.addEventListener('click', handlers.titleClick);
+            titleInput.addEventListener('mousedown', handlers.titleMousedown);
+            titleInput.addEventListener('keydown', handlers.titleKeydown);
+        }
+        
+        // Textarea input handler
+        const textarea = noteEl.querySelector('.sticky-note-textarea');
+        if (textarea) {
+            handlers.textareaInput = (e) => {
+                try {
+                    this.updateStickyContent(note.id, e.target.value);
+                } catch (error) {
+                    console.error('Error updating sticky content:', error);
+                }
+            };
+            
+            textarea.addEventListener('input', handlers.textareaInput);
+        }
+        
+        // Button handlers with error handling
+        const minimizeBtn = noteEl.querySelector('.minimize-btn');
+        if (minimizeBtn) {
+            handlers.minimizeClick = (e) => {
+                try {
+                    this.toggleStickyMinimize(note.id);
+                } catch (error) {
+                    console.error('Error toggling minimize:', error);
+                    this.showToast('Failed to minimize note', 'error');
+                }
+            };
+            
+            minimizeBtn.addEventListener('click', handlers.minimizeClick);
+        }
+        
+        const colorBtn = noteEl.querySelector('.color-btn');
+        if (colorBtn) {
+            handlers.colorClick = (e) => {
+                try {
+                    this.cycleStickyColor(note.id);
+                } catch (error) {
+                    console.error('Error cycling color:', error);
+                    this.showToast('Failed to change color', 'error');
+                }
+            };
+            
+            colorBtn.addEventListener('click', handlers.colorClick);
+        }
+        
+        const closeBtn = noteEl.querySelector('.close-btn');
+        if (closeBtn) {
+            handlers.closeClick = (e) => {
+                try {
+                    this.closeStickyNote(note.id);
+                } catch (error) {
+                    console.error('Error closing sticky note:', error);
+                    this.showToast('Failed to close note', 'error');
+                }
+            };
+            
+            closeBtn.addEventListener('click', handlers.closeClick);
+        }
+        
+        // Store handlers for cleanup
+        this.stickyEventHandlers.set(note.id, handlers);
+    }
+    
+    cleanupStickyNoteEventListeners(noteId) {
+        if (!this.stickyEventHandlers) return;
+        
+        const handlers = this.stickyEventHandlers.get(noteId);
+        if (!handlers) return;
+        
+        const noteEl = document.getElementById(noteId);
+        if (!noteEl) return;
+        
+        try {
+            // Remove title input handlers
+            const titleInput = noteEl.querySelector('.sticky-note-title');
+            if (titleInput && handlers.titleChange) {
+                titleInput.removeEventListener('change', handlers.titleChange);
+                titleInput.removeEventListener('click', handlers.titleClick);
+                titleInput.removeEventListener('mousedown', handlers.titleMousedown);
+                titleInput.removeEventListener('keydown', handlers.titleKeydown);
+            }
+            
+            // Remove textarea handler
+            const textarea = noteEl.querySelector('.sticky-note-textarea');
+            if (textarea && handlers.textareaInput) {
+                textarea.removeEventListener('input', handlers.textareaInput);
+            }
+            
+            // Remove button handlers
+            const minimizeBtn = noteEl.querySelector('.minimize-btn');
+            if (minimizeBtn && handlers.minimizeClick) {
+                minimizeBtn.removeEventListener('click', handlers.minimizeClick);
+            }
+            
+            const colorBtn = noteEl.querySelector('.color-btn');
+            if (colorBtn && handlers.colorClick) {
+                colorBtn.removeEventListener('click', handlers.colorClick);
+            }
+            
+            const closeBtn = noteEl.querySelector('.close-btn');
+            if (closeBtn && handlers.closeClick) {
+                closeBtn.removeEventListener('click', handlers.closeClick);
+            }
+            
+            // Remove stored handlers
+            this.stickyEventHandlers.delete(noteId);
+        } catch (error) {
+            console.warn('Error cleaning up sticky note event listeners:', error);
+        }
     }
     
     makeStickyDraggable(element, note) {
@@ -13488,10 +13801,20 @@ class NotesWiki {
     }
     
     doCloseStickyNote(noteId) {
+        // Clean up event listeners before removing element
+        this.cleanupStickyNoteEventListeners(noteId);
+        
         const element = document.getElementById(noteId);
         if (element) {
             element.remove();
         }
+        
+        // Clean up any save timers
+        if (this.stickySaveTimers && this.stickySaveTimers.has(noteId)) {
+            clearTimeout(this.stickySaveTimers.get(noteId));
+            this.stickySaveTimers.delete(noteId);
+        }
+        
         this.stickyNotes.delete(noteId);
         this.saveStickyNotes();
     }
