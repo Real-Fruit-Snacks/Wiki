@@ -185,13 +185,25 @@ Themes are organized into 10 categories in the settings modal:
 9. **Professional** - Business-appropriate themes
 10. **Special Effects** - Themes with unique visual effects
 
-### Recent Major Features (v3.1.0 - v3.3.0)
+### Recent Major Features (v3.1.0 - v3.4.0)
 
 1. **Split View Implementation** - Side-by-side note viewing with draggable pane resizing
 2. **Sticky Notes Feature** - Floating mini-notes with drag, resize, and color options
 3. **Dynamic Path Detection** - Works with any project name on GitHub/GitLab Pages
 4. **Confirmation Dialogs** - Optional (now default) confirmations when closing tabs/sticky notes
 5. **Enhanced Error Logging** - Comprehensive logging for theme loading and other operations
+
+### Advanced Quality of Life Features (v3.4.0)
+
+6. **Quick File Switcher** - Fuzzy search file switcher with Ctrl+P shortcut and recent files prioritization
+7. **Pin Important Tabs** - Pin tabs to prevent accidental closure with visual indicators and persistence
+8. **Tab Session Management** - Save and restore tab configurations with named workspaces and auto-save
+9. **Tab Groups** - Organize tabs into color-coded groups with professional modal management
+10. **Multiple Split Tabs** - Enhanced split system supporting 2+ panes per tab with flexible layouts
+11. **Tab History Navigation** - Per-tab back/forward navigation with browser-style history tracking
+12. **Sticky Note Storage** - Comprehensive management panel with auto-save, export/import, and recovery
+13. **Breadcrumb Navigation** - Clickable folder hierarchy navigation for better file context
+14. **Smart Theme Scheduling** - Automatic time-based theme switching with blue light filter and solar scheduling
 
 ### Combined Code Blocks Feature
 

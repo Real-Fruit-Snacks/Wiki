@@ -181,6 +181,21 @@ class NotesWiki {
             recentLimit: 20,
             theme: 'ayu-mirage',
             autoTheme: false, // Enable automatic theme switching based on system preferences
+            // Smart Theme Scheduling
+            scheduleEnabled: false,
+            scheduleMode: 'time', // 'time' or 'solar'
+            morningTheme: 'light',
+            eveningTheme: 'dark',
+            morningTime: '06:00',
+            eveningTime: '18:00',
+            blueLight: {
+                enabled: false,
+                intensity: 50, // 0-100
+                startTime: '20:00',
+                endTime: '06:00'
+            },
+            transitionDuration: 500, // milliseconds
+            location: { lat: null, lng: null }, // for solar-based scheduling
             activeContext: null,  // Store active context in settings
             stickySearch: false,  // Keep search query when reopening search
             contentWidth: 'narrow',  // Default to narrow width
@@ -299,6 +314,12 @@ class NotesWiki {
             
             // Initialize Pomodoro mode
             this.initializePomodoroMode();
+            
+            // Initialize theme scheduling system
+            this.setupThemeScheduler();
+            
+            // Update scheduling UI visibility based on current settings
+            this.updateSchedulingUIVisibility();
         
         // Apply line number setting
         this.applyLineNumberSetting();
@@ -353,6 +374,9 @@ class NotesWiki {
             
             // Enable session auto-save
             this.enableSessionAutoSave();
+            
+            // Setup smart theme scheduler
+            this.setupThemeScheduler();
             
             // Setup page lifecycle cleanup handlers
             this.setupCleanupHandlers();
@@ -1052,6 +1076,137 @@ class NotesWiki {
             console.warn('[Theme Auto] Auto-theme checkbox not found in DOM');
         }
         
+        // Smart Theme Scheduling event handlers
+        const smartThemeEnabledCheckbox = document.getElementById('smart-theme-enabled');
+        if (smartThemeEnabledCheckbox) {
+            smartThemeEnabledCheckbox.checked = this.settings.scheduleEnabled;
+            smartThemeEnabledCheckbox.addEventListener('change', (e) => {
+                this.settings.scheduleEnabled = e.target.checked;
+                this.saveSettings();
+                this.setupThemeScheduler();
+                this.updateSchedulingUIVisibility();
+                this.showToast(`Theme scheduling ${e.target.checked ? 'enabled' : 'disabled'}`);
+            });
+        }
+        
+        const scheduleModeSelect = document.getElementById('schedule-mode-select');
+        if (scheduleModeSelect) {
+            scheduleModeSelect.value = this.settings.scheduleMode;
+            scheduleModeSelect.addEventListener('change', (e) => {
+                this.settings.scheduleMode = e.target.value;
+                this.saveSettings();
+                this.updateSchedulingUIVisibility();
+                this.setupThemeScheduler();
+                this.showToast(`Switched to ${e.target.value} scheduling`);
+            });
+        }
+        
+        const morningThemeSelect = document.getElementById('morning-theme-select');
+        if (morningThemeSelect) {
+            morningThemeSelect.value = this.settings.morningTheme;
+            morningThemeSelect.addEventListener('change', (e) => {
+                this.settings.morningTheme = e.target.value;
+                this.saveSettings();
+                this.checkScheduledThemes();
+            });
+        }
+        
+        const eveningThemeSelect = document.getElementById('evening-theme-select');
+        if (eveningThemeSelect) {
+            eveningThemeSelect.value = this.settings.eveningTheme;
+            eveningThemeSelect.addEventListener('change', (e) => {
+                this.settings.eveningTheme = e.target.value;
+                this.saveSettings();
+                this.checkScheduledThemes();
+            });
+        }
+        
+        const morningTimeInput = document.getElementById('morning-time-input');
+        if (morningTimeInput) {
+            morningTimeInput.value = this.settings.morningTime;
+            morningTimeInput.addEventListener('change', (e) => {
+                this.settings.morningTime = e.target.value;
+                this.saveSettings();
+                this.checkScheduledThemes();
+            });
+        }
+        
+        const eveningTimeInput = document.getElementById('evening-time-input');
+        if (eveningTimeInput) {
+            eveningTimeInput.value = this.settings.eveningTime;
+            eveningTimeInput.addEventListener('change', (e) => {
+                this.settings.eveningTime = e.target.value;
+                this.saveSettings();
+                this.checkScheduledThemes();
+            });
+        }
+        
+        const getLocationBtn = document.getElementById('get-location-btn');
+        if (getLocationBtn) {
+            getLocationBtn.addEventListener('click', () => {
+                this.getLocationForSolarScheduling();
+            });
+        }
+        
+        const blueLightEnabledCheckbox = document.getElementById('blue-light-enabled');
+        if (blueLightEnabledCheckbox) {
+            blueLightEnabledCheckbox.checked = this.settings.blueLight.enabled;
+            blueLightEnabledCheckbox.addEventListener('change', (e) => {
+                this.settings.blueLight.enabled = e.target.checked;
+                this.saveSettings();
+                this.updateSchedulingUIVisibility();
+                this.checkScheduledThemes();
+                this.showToast(`Blue light filter ${e.target.checked ? 'enabled' : 'disabled'}`);
+            });
+        }
+        
+        const blueLightIntensitySlider = document.getElementById('blue-light-intensity');
+        const blueLightIntensityValue = document.getElementById('blue-light-intensity-value');
+        if (blueLightIntensitySlider && blueLightIntensityValue) {
+            blueLightIntensitySlider.value = this.settings.blueLight.intensity;
+            blueLightIntensityValue.textContent = this.settings.blueLight.intensity + '%';
+            blueLightIntensitySlider.addEventListener('input', (e) => {
+                const value = parseInt(e.target.value);
+                this.settings.blueLight.intensity = value;
+                blueLightIntensityValue.textContent = value + '%';
+                this.saveSettings();
+                this.checkScheduledThemes();
+            });
+        }
+        
+        const blueLightStartTimeInput = document.getElementById('blue-light-start-time');
+        if (blueLightStartTimeInput) {
+            blueLightStartTimeInput.value = this.settings.blueLight.startTime;
+            blueLightStartTimeInput.addEventListener('change', (e) => {
+                this.settings.blueLight.startTime = e.target.value;
+                this.saveSettings();
+                this.checkScheduledThemes();
+            });
+        }
+        
+        const blueLightEndTimeInput = document.getElementById('blue-light-end-time');
+        if (blueLightEndTimeInput) {
+            blueLightEndTimeInput.value = this.settings.blueLight.endTime;
+            blueLightEndTimeInput.addEventListener('change', (e) => {
+                this.settings.blueLight.endTime = e.target.value;
+                this.saveSettings();
+                this.checkScheduledThemes();
+            });
+        }
+        
+        const transitionDurationSelect = document.getElementById('transition-duration-select');
+        if (transitionDurationSelect) {
+            transitionDurationSelect.value = this.settings.transitionDuration.toString();
+            transitionDurationSelect.addEventListener('change', (e) => {
+                this.settings.transitionDuration = parseInt(e.target.value);
+                this.saveSettings();
+                this.showToast(`Transition duration set to ${e.target.selectedOptions[0].text}`);
+            });
+        }
+        
+        // Initialize UI visibility
+        this.updateSchedulingUIVisibility();
+        
         // Sticky search toggle
         const stickySearchCheckbox = document.getElementById('sticky-search-setting');
         if (stickySearchCheckbox) {
@@ -1448,6 +1603,23 @@ class NotesWiki {
                     return;
                 }
                 
+                // Sticky notes manager with Ctrl+Shift+M
+                if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'M') {
+                    e.preventDefault();
+                    this.openStickyNotesManager();
+                    return;
+                }
+                
+                // Close sticky notes manager with Escape
+                if (e.key === 'Escape') {
+                    const managerModal = document.getElementById('sticky-notes-manager');
+                    if (managerModal && managerModal.style.display === 'block') {
+                        e.preventDefault();
+                        this.closeStickyNotesManager();
+                        return;
+                    }
+                }
+                
                 // Check custom shortcuts
                 const pressedCombo = this.getKeyCombo(e);
                 
@@ -1504,6 +1676,19 @@ class NotesWiki {
                 if (pressedCombo === 'Alt+PageDown') {
                     e.preventDefault();
                     this.switchToNextTab();
+                    return;
+                }
+                
+                // Tab history navigation with Alt+Left/Right (browser-compatible)
+                if (pressedCombo === 'Alt+ArrowLeft') {
+                    e.preventDefault();
+                    this.navigateBack();
+                    return;
+                }
+                
+                if (pressedCombo === 'Alt+ArrowRight') {
+                    e.preventDefault();
+                    this.navigateForward();
                     return;
                 }
                 
@@ -7676,6 +7861,243 @@ class NotesWiki {
         link.href = themePath;
     }
     
+    // Smart Theme Scheduling System
+    setupThemeScheduler() {
+        // Clean up existing scheduler
+        if (this.themeSchedulerInterval) {
+            clearInterval(this.themeSchedulerInterval);
+        }
+        
+        if (!this.settings.scheduleEnabled) {
+            this.removeBlueLight();
+            return;
+        }
+        
+        // Check themes immediately
+        this.checkScheduledThemes();
+        
+        // Set up interval to check every minute
+        this.themeSchedulerInterval = setInterval(() => {
+            this.checkScheduledThemes();
+        }, 60000);
+        
+        console.log('Theme scheduler enabled:', this.settings.scheduleMode);
+    }
+    
+    checkScheduledThemes() {
+        if (!this.settings.scheduleEnabled) return;
+        
+        const now = new Date();
+        const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+        
+        let shouldUseEveningTheme = false;
+        
+        if (this.settings.scheduleMode === 'solar' && this.settings.location.lat && this.settings.location.lng) {
+            const solarTimes = this.calculateSolarTimes(this.settings.location.lat, this.settings.location.lng, now);
+            shouldUseEveningTheme = now < solarTimes.sunrise || now > solarTimes.sunset;
+        } else {
+            // Time-based scheduling
+            const morningTime = this.settings.morningTime;
+            const eveningTime = this.settings.eveningTime;
+            
+            // Handle time comparison
+            if (eveningTime > morningTime) {
+                // Normal case: evening time is later in the day
+                shouldUseEveningTheme = currentTime >= eveningTime || currentTime < morningTime;
+            } else {
+                // Edge case: evening time is next day (e.g., evening at 22:00, morning at 06:00)
+                shouldUseEveningTheme = currentTime >= eveningTime && currentTime < morningTime;
+            }
+        }
+        
+        const targetTheme = shouldUseEveningTheme ? this.settings.eveningTheme : this.settings.morningTheme;
+        
+        // Only switch if the theme is different
+        if (this.settings.theme !== targetTheme) {
+            this.applyThemeWithTransition(targetTheme);
+        }
+        
+        // Handle blue light filter
+        this.checkBlueLight(currentTime);
+    }
+    
+    calculateSolarTimes(lat, lng, date) {
+        // Simplified solar calculation (for production, consider using a library like SunCalc)
+        const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 86400000);
+        const solarDeclinationAngle = 23.45 * Math.sin((360 / 365) * (dayOfYear - 81) * Math.PI / 180);
+        const hourAngle = Math.acos(-Math.tan(lat * Math.PI / 180) * Math.tan(solarDeclinationAngle * Math.PI / 180));
+        
+        const sunrise = 12 - (hourAngle * 180 / Math.PI) / 15;
+        const sunset = 12 + (hourAngle * 180 / Math.PI) / 15;
+        
+        const sunriseDate = new Date(date);
+        sunriseDate.setHours(Math.floor(sunrise), Math.floor((sunrise % 1) * 60), 0, 0);
+        
+        const sunsetDate = new Date(date);
+        sunsetDate.setHours(Math.floor(sunset), Math.floor((sunset % 1) * 60), 0, 0);
+        
+        return { sunrise: sunriseDate, sunset: sunsetDate };
+    }
+    
+    checkBlueLight(currentTime) {
+        if (!this.settings.blueLight.enabled) {
+            this.removeBlueLight();
+            return;
+        }
+        
+        const startTime = this.settings.blueLight.startTime;
+        const endTime = this.settings.blueLight.endTime;
+        
+        let shouldApplyFilter = false;
+        
+        if (startTime > endTime) {
+            // Filter spans midnight (e.g., 20:00 to 06:00)
+            shouldApplyFilter = currentTime >= startTime || currentTime < endTime;
+        } else {
+            // Filter within same day
+            shouldApplyFilter = currentTime >= startTime && currentTime < endTime;
+        }
+        
+        if (shouldApplyFilter) {
+            this.applyBlueLight(this.settings.blueLight.intensity);
+        } else {
+            this.removeBlueLight();
+        }
+    }
+    
+    applyBlueLight(intensity) {
+        // Remove existing filter
+        this.removeBlueLight();
+        
+        // Calculate filter values based on intensity (0-100)
+        const normalizedIntensity = Math.max(0, Math.min(100, intensity)) / 100;
+        
+        // Create filter values
+        const contrast = 1.05 + (normalizedIntensity * 0.1);
+        const brightness = 1.0 - (normalizedIntensity * 0.2);
+        const sepia = normalizedIntensity * 20;
+        const saturate = 1.1 + (normalizedIntensity * 0.3);
+        const hueRotate = normalizedIntensity * 20;
+        
+        const filterStyle = `
+            contrast(${contrast}) 
+            brightness(${brightness}) 
+            sepia(${sepia}%) 
+            saturate(${saturate}) 
+            hue-rotate(${hueRotate}deg)
+        `;
+        
+        document.documentElement.style.filter = filterStyle;
+        document.documentElement.style.transition = 'filter var(--transition-slow)';
+        
+        console.log('Blue light filter applied:', intensity + '%');
+    }
+    
+    removeBlueLight() {
+        if (document.documentElement.style.filter) {
+            document.documentElement.style.filter = '';
+            console.log('Blue light filter removed');
+        }
+    }
+    
+    async applyThemeWithTransition(themeId) {
+        if (this.settings.transitionDuration <= 0) {
+            this.applyTheme(themeId);
+            return;
+        }
+        
+        // Create transition overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'theme-transition-overlay';
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity ${this.settings.transitionDuration}ms ease;
+            pointer-events: none;
+        `;
+        
+        document.body.appendChild(overlay);
+        
+        // Fade in overlay
+        setTimeout(() => {
+            overlay.style.opacity = '0.3';
+        }, 10);
+        
+        // Apply theme after fade in
+        setTimeout(() => {
+            this.applyTheme(themeId);
+            
+            // Fade out overlay
+            overlay.style.opacity = '0';
+            
+            // Remove overlay after animation
+            setTimeout(() => {
+                if (overlay.parentNode) {
+                    overlay.parentNode.removeChild(overlay);
+                }
+            }, this.settings.transitionDuration);
+            
+        }, this.settings.transitionDuration / 2);
+        
+        this.showToast(`Switched to ${themeId} theme`, 'info');
+    }
+    
+    getLocationForSolarScheduling() {
+        if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    this.settings.location.lat = position.coords.latitude;
+                    this.settings.location.lng = position.coords.longitude;
+                    this.saveSettings();
+                    this.showToast('Location detected for solar scheduling', 'success');
+                    this.checkScheduledThemes();
+                },
+                (error) => {
+                    console.warn('Could not get location for solar scheduling:', error);
+                    this.showToast('Location access denied. Using time-based scheduling.', 'warning');
+                }
+            );
+        }
+    }
+    
+    updateSchedulingUIVisibility() {
+        const scheduleContainer = document.getElementById('theme-scheduling-container');
+        const manualControls = document.getElementById('manual-schedule-controls');
+        const solarControls = document.getElementById('solar-schedule-controls');
+        const blueLightControls = document.getElementById('blue-light-controls');
+        
+        if (!scheduleContainer) return;
+        
+        // Show/hide entire scheduling section
+        if (this.settings.scheduleEnabled) {
+            scheduleContainer.style.display = 'block';
+            
+            // Show/hide manual vs solar controls
+            if (manualControls && solarControls) {
+                if (this.settings.scheduleType === 'manual') {
+                    manualControls.style.display = 'block';
+                    solarControls.style.display = 'none';
+                } else {
+                    manualControls.style.display = 'none';
+                    solarControls.style.display = 'block';
+                }
+            }
+            
+            // Show/hide blue light controls
+            if (blueLightControls) {
+                blueLightControls.style.display = this.settings.blueLight.enabled ? 'block' : 'none';
+            }
+        } else {
+            scheduleContainer.style.display = 'none';
+        }
+    }
+    
     loadRecentFiles() {
         const stored = localStorage.getItem('notesWiki_recentFiles');
         if (stored) {
@@ -8816,6 +9238,21 @@ class NotesWiki {
             });
         }
         
+        // Set up navigation buttons
+        const backButton = document.getElementById('nav-back-button');
+        if (backButton) {
+            backButton.addEventListener('click', () => {
+                this.navigateBack();
+            });
+        }
+        
+        const forwardButton = document.getElementById('nav-forward-button');
+        if (forwardButton) {
+            forwardButton.addEventListener('click', () => {
+                this.navigateForward();
+            });
+        }
+        
         // Try to restore saved tabs
         const tabsRestored = this.restoreTabState();
         
@@ -8867,7 +9304,10 @@ class NotesWiki {
             groupId: groupId,
             // Split view configuration
             isSplitTab: false,
-            splitConfig: null
+            splitConfig: null,
+            // Tab history for back/forward navigation
+            history: path ? [path] : [],
+            historyIndex: 0
         };
         
         this.tabs.set(tabId, tab);
@@ -8911,17 +9351,26 @@ class NotesWiki {
                         path: null,
                         title: 'Pane 1',
                         scrollPosition: 0,
-                        size: 50 // percentage
+                        size: 50, // percentage
+                        // Each pane has its own history
+                        history: [],
+                        historyIndex: -1
                     },
                     {
                         id: paneId2,
                         path: null,
                         title: 'Pane 2',
                         scrollPosition: 0,
-                        size: 50 // percentage
+                        size: 50, // percentage
+                        // Each pane has its own history
+                        history: [],
+                        historyIndex: -1
                     }
                 ]
-            }
+            },
+            // Tab history (not used for split tabs, but maintained for consistency)
+            history: [],
+            historyIndex: -1
         };
         
         this.tabs.set(tabId, tab);
@@ -9234,6 +9683,9 @@ class NotesWiki {
             this.setActiveFile(tab.path);
         }, 0);
         
+        // Update history navigation button states
+        this.updateHistoryButtonStates(tabId);
+        
         this.saveTabState();
     }
     
@@ -9543,7 +9995,13 @@ class NotesWiki {
                     title: tabData.title || 'Untitled',
                     scrollPosition: tabData.scrollPosition || 0,
                     isPinned: tabData.isPinned || false,
-                    groupId: tabData.groupId || null
+                    groupId: tabData.groupId || null,
+                    // Restore split view configuration if present
+                    isSplitTab: tabData.isSplitTab || false,
+                    splitConfig: tabData.splitConfig || null,
+                    // Restore history data
+                    history: tabData.history || (tabData.path ? [tabData.path] : []),
+                    historyIndex: tabData.historyIndex !== undefined ? tabData.historyIndex : (tabData.path ? 0 : -1)
                 });
                 this.updateTabVisuals(tabData.id);
                 
@@ -9736,7 +10194,13 @@ class NotesWiki {
                     title: tabData.title || 'Untitled',
                     scrollPosition: tabData.scrollPosition || 0,
                     isPinned: tabData.isPinned || false,
-                    groupId: tabData.groupId || null
+                    groupId: tabData.groupId || null,
+                    // Restore split view configuration if present
+                    isSplitTab: tabData.isSplitTab || false,
+                    splitConfig: tabData.splitConfig || null,
+                    // Restore history data
+                    history: tabData.history || (tabData.path ? [tabData.path] : []),
+                    historyIndex: tabData.historyIndex !== undefined ? tabData.historyIndex : (tabData.path ? 0 : -1)
                 });
                 this.updateTabVisuals(tabData.id);
             });
@@ -10693,10 +11157,120 @@ class NotesWiki {
             menu.style.top = (event.clientY - rect.height) + 'px';
         }
     }
+
+    // Tab History Management Methods
+    addToTabHistory(tabId, path) {
+        const tab = this.tabs.get(tabId);
+        if (!tab || !path) return;
+
+        // Don't add duplicate consecutive entries
+        if (tab.history.length > 0 && tab.history[tab.historyIndex] === path) {
+            return;
+        }
+
+        // If we're not at the end of history, remove future entries
+        if (tab.historyIndex < tab.history.length - 1) {
+            tab.history = tab.history.slice(0, tab.historyIndex + 1);
+        }
+
+        // Add new entry
+        tab.history.push(path);
+        tab.historyIndex = tab.history.length - 1;
+        tab.path = path; // Update current path
+
+        // Limit history size (keep last 50 entries)
+        if (tab.history.length > 50) {
+            tab.history = tab.history.slice(-50);
+            tab.historyIndex = tab.history.length - 1;
+        }
+
+        // Update back/forward button states
+        this.updateHistoryButtonStates(tabId);
+    }
+
+    canNavigateBack(tabId) {
+        const tab = this.tabs.get(tabId);
+        return tab && tab.historyIndex > 0;
+    }
+
+    canNavigateForward(tabId) {
+        const tab = this.tabs.get(tabId);
+        return tab && tab.historyIndex < tab.history.length - 1;
+    }
+
+    updateHistoryButtonStates(tabId) {
+        if (tabId !== this.activeTabId) return; // Only update for active tab
+
+        const backButton = document.getElementById('nav-back-button');
+        const forwardButton = document.getElementById('nav-forward-button');
+
+        if (backButton) {
+            backButton.disabled = !this.canNavigateBack(tabId);
+            backButton.classList.toggle('disabled', !this.canNavigateBack(tabId));
+        }
+
+        if (forwardButton) {
+            forwardButton.disabled = !this.canNavigateForward(tabId);
+            forwardButton.classList.toggle('disabled', !this.canNavigateForward(tabId));
+        }
+    }
+
+    navigateBack() {
+        if (!this.activeTabId) return;
+        
+        const tab = this.tabs.get(this.activeTabId);
+        if (!tab || !this.canNavigateBack(this.activeTabId)) return;
+
+        // Move to previous entry in history
+        tab.historyIndex--;
+        const previousPath = tab.history[tab.historyIndex];
+        
+        if (previousPath) {
+            // Load the note without adding to history (skipHistory = true)
+            this.loadNoteInTab(previousPath, this.activeTabId, true);
+            
+            // Update the tab's current path
+            tab.path = previousPath;
+            
+            // Update button states
+            this.updateHistoryButtonStates(this.activeTabId);
+            
+            this.showToast('Navigated back', 'info');
+        }
+    }
+
+    navigateForward() {
+        if (!this.activeTabId) return;
+        
+        const tab = this.tabs.get(this.activeTabId);
+        if (!tab || !this.canNavigateForward(this.activeTabId)) return;
+
+        // Move to next entry in history
+        tab.historyIndex++;
+        const nextPath = tab.history[tab.historyIndex];
+        
+        if (nextPath) {
+            // Load the note without adding to history (skipHistory = true)
+            this.loadNoteInTab(nextPath, this.activeTabId, true);
+            
+            // Update the tab's current path
+            tab.path = nextPath;
+            
+            // Update button states
+            this.updateHistoryButtonStates(this.activeTabId);
+            
+            this.showToast('Navigated forward', 'info');
+        }
+    }
     
-    loadNoteInTab(path, tabId) {
+    loadNoteInTab(path, tabId, skipHistory = false) {
         // Check if this is the active tab
         const isActiveTab = tabId === this.activeTabId;
+        
+        // Add to history unless specifically skipped (for back/forward navigation)
+        if (!skipHistory) {
+            this.addToTabHistory(tabId, path);
+        }
         
         if (isActiveTab) {
             // For active tab, just load normally
@@ -12564,10 +13138,14 @@ class NotesWiki {
         this.stickyNotes = new Map();
         this.stickyColors = ['yellow', 'blue', 'green', 'pink'];
         this.stickyZIndex = 1001;
+        this.stickyNoteCategories = ['personal', 'work', 'ideas', 'reminders', 'todo'];
+        this.stickyNoteTemplates = this.initializeStickyTemplates();
+        this.stickyNoteSaveStatus = new Map(); // Track save status for each note
         this.loadStickyNotes();
     }
     
     createStickyNote(options = {}) {
+        const now = new Date().toISOString();
         const note = {
             id: `sticky-${Date.now()}`,
             title: options.title || 'Note',
@@ -12576,11 +13154,16 @@ class NotesWiki {
             size: options.size || { width: 280, height: 200 },
             color: options.color || this.stickyColors[0],
             minimized: options.minimized || false,
-            createdAt: options.createdAt || new Date().toISOString(),
+            createdAt: options.createdAt || now,
+            lastModified: now,
+            category: options.category || 'personal',
+            tags: options.tags || [],
+            wordCount: 0,
             zIndex: this.stickyZIndex++
         };
         
         this.stickyNotes.set(note.id, note);
+        this.setStickyNoteSaveStatus(note.id, 'saving');
         this.renderStickyNote(note);
         this.saveStickyNotes();
         
@@ -12591,6 +13174,36 @@ class NotesWiki {
         }, 100);
         
         return note;
+    }
+    
+    initializeStickyTemplates() {
+        return {
+            'blank': {
+                title: 'Quick Note',
+                content: '',
+                category: 'personal'
+            },
+            'todo': {
+                title: 'Todo List',
+                content: '☐ Task 1\n☐ Task 2\n☐ Task 3',
+                category: 'todo'
+            },
+            'meeting': {
+                title: 'Meeting Notes',
+                content: 'Date: \nAttendees: \nAgenda:\n• \n• \n• \n\nAction Items:\n• \n• ',
+                category: 'work'
+            },
+            'idea': {
+                title: 'Idea',
+                content: '💡 Main idea:\n\nDetails:\n• \n• \n• \n\nNext steps:\n• ',
+                category: 'ideas'
+            },
+            'reminder': {
+                title: 'Reminder',
+                content: '⏰ Reminder: \n\nDue: \nPriority: \nNotes: ',
+                category: 'reminders'
+            }
+        };
     }
     
     renderStickyNote(note) {
@@ -12615,6 +13228,11 @@ class NotesWiki {
                        onclick="event.stopPropagation()"
                        onmousedown="event.stopPropagation()"
                        onkeydown="if(event.key === 'Enter') this.blur(); if(event.key === 'Escape') { this.value = '${this.escapeHtml(note.title)}'; this.blur(); }">
+                <div class="sticky-note-save-status" id="save-status-${note.id}" title="Save status">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="save-indicator">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                </div>
                 <div class="sticky-note-actions">
                     <button class="sticky-note-btn minimize-btn" onclick="notesWiki.toggleStickyMinimize('${note.id}')" title="${note.minimized ? 'Expand' : 'Minimize'}">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -12740,6 +13358,9 @@ class NotesWiki {
         const note = this.stickyNotes.get(noteId);
         if (note) {
             note.content = content;
+            note.lastModified = new Date().toISOString();
+            note.wordCount = this.countWords(content);
+            this.setStickyNoteSaveStatus(noteId, 'saving');
             this.throttledSaveStickyNotes();
         }
     }
@@ -12748,7 +13369,41 @@ class NotesWiki {
         const note = this.stickyNotes.get(noteId);
         if (note) {
             note.title = title || 'Quick Note';
+            note.lastModified = new Date().toISOString();
+            this.setStickyNoteSaveStatus(noteId, 'saving');
             this.saveStickyNotes();
+        }
+    }
+    
+    countWords(text) {
+        return text.trim() ? text.trim().split(/\s+/).length : 0;
+    }
+    
+    setStickyNoteSaveStatus(noteId, status) {
+        this.stickyNoteSaveStatus.set(noteId, status);
+        this.updateSaveStatusIndicator(noteId, status);
+    }
+    
+    updateSaveStatusIndicator(noteId, status) {
+        const indicator = document.getElementById(`save-status-${noteId}`);
+        if (!indicator) return;
+        
+        const svg = indicator.querySelector('svg');
+        indicator.className = `sticky-note-save-status status-${status}`;
+        
+        switch(status) {
+            case 'saved':
+                indicator.title = 'Saved';
+                svg.innerHTML = '<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>';
+                break;
+            case 'saving':
+                indicator.title = 'Saving...';
+                svg.innerHTML = '<path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/>';
+                break;
+            case 'error':
+                indicator.title = 'Save failed';
+                svg.innerHTML = '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>';
+                break;
         }
     }
     
@@ -12845,8 +13500,17 @@ class NotesWiki {
         try {
             const notes = Array.from(this.stickyNotes.values());
             localStorage.setItem('stickyNotes', JSON.stringify(notes));
+            
+            // Update save status for all notes
+            this.stickyNotes.forEach((note, noteId) => {
+                this.setStickyNoteSaveStatus(noteId, 'saved');
+            });
         } catch (error) {
             console.warn('Failed to save sticky notes:', error);
+            // Update save status to error for all notes
+            this.stickyNotes.forEach((note, noteId) => {
+                this.setStickyNoteSaveStatus(noteId, 'error');
+            });
         }
     }
     
@@ -12856,8 +13520,18 @@ class NotesWiki {
             if (stored) {
                 const notes = JSON.parse(stored);
                 notes.forEach(noteData => {
-                    this.stickyNotes.set(noteData.id, noteData);
-                    this.renderStickyNote(noteData);
+                    // Ensure backward compatibility with old note format
+                    const enhancedNote = {
+                        ...noteData,
+                        lastModified: noteData.lastModified || noteData.createdAt || new Date().toISOString(),
+                        category: noteData.category || 'personal',
+                        tags: noteData.tags || [],
+                        wordCount: noteData.wordCount || this.countWords(noteData.content || '')
+                    };
+                    
+                    this.stickyNotes.set(enhancedNote.id, enhancedNote);
+                    this.renderStickyNote(enhancedNote);
+                    this.setStickyNoteSaveStatus(enhancedNote.id, 'saved');
                 });
             }
         } catch (error) {
@@ -12873,6 +13547,364 @@ class NotesWiki {
         this.stickyNoteSaveTimeout = setTimeout(() => {
             this.saveStickyNotes();
         }, 1000);
+    }
+    
+    // ============================================
+    // STICKY NOTES MANAGEMENT METHODS
+    // ============================================
+    
+    createStickyFromTemplate(templateId) {
+        const template = this.stickyNoteTemplates[templateId];
+        if (template) {
+            this.createStickyNote({
+                title: template.title,
+                content: template.content,
+                category: template.category
+            });
+        }
+    }
+    
+    toggleStickyDropdown() {
+        const dropdown = document.getElementById('sticky-dropdown-menu');
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        
+        // Close dropdown when clicking outside
+        const closeDropdown = (e) => {
+            if (!e.target.closest('#sticky-note-dropdown')) {
+                dropdown.style.display = 'none';
+                document.removeEventListener('click', closeDropdown);
+            }
+        };
+        
+        if (dropdown.style.display === 'block') {
+            setTimeout(() => document.addEventListener('click', closeDropdown), 100);
+        }
+    }
+    
+    openStickyNotesManager() {
+        const modal = document.getElementById('sticky-notes-manager');
+        modal.style.display = 'block';
+        this.refreshStickyNotesManager();
+        
+        // Close dropdown
+        document.getElementById('sticky-dropdown-menu').style.display = 'none';
+    }
+    
+    closeStickyNotesManager() {
+        const modal = document.getElementById('sticky-notes-manager');
+        modal.style.display = 'none';
+    }
+    
+    refreshStickyNotesManager() {
+        this.updateStickyNotesStats();
+        this.renderStickyNotesGrid();
+    }
+    
+    updateStickyNotesStats() {
+        const notes = Array.from(this.stickyNotes.values());
+        const totalWords = notes.reduce((sum, note) => sum + (note.wordCount || 0), 0);
+        
+        document.getElementById('notes-count').textContent = 
+            `${notes.length} note${notes.length !== 1 ? 's' : ''}`;
+        document.getElementById('total-words').textContent = 
+            `${totalWords} word${totalWords !== 1 ? 's' : ''} total`;
+    }
+    
+    renderStickyNotesGrid() {
+        const grid = document.getElementById('sticky-notes-grid');
+        const notes = Array.from(this.stickyNotes.values());
+        
+        // Apply current filters and sorting
+        const filteredNotes = this.getFilteredStickyNotes(notes);
+        
+        if (filteredNotes.length === 0) {
+            grid.innerHTML = `
+                <div class="empty-state">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" opacity="0.3">
+                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                    </svg>
+                    <p>No sticky notes found</p>
+                    <button class="btn" onclick="notesWiki.createStickyNote()">Create your first note</button>
+                </div>
+            `;
+            return;
+        }
+        
+        grid.innerHTML = filteredNotes.map(note => this.renderStickyNoteCard(note)).join('');
+    }
+    
+    renderStickyNoteCard(note) {
+        const lastModified = new Date(note.lastModified).toLocaleDateString();
+        const preview = note.content.substring(0, 150) + (note.content.length > 150 ? '...' : '');
+        
+        return `
+            <div class="sticky-note-card sticky-note-${note.color}" data-note-id="${note.id}">
+                <div class="note-card-header">
+                    <input type="checkbox" class="note-checkbox" data-note-id="${note.id}" onchange="notesWiki.toggleNoteSelection('${note.id}')">
+                    <div class="note-category">${note.category}</div>
+                    <div class="note-actions">
+                        <button class="icon-button" onclick="notesWiki.focusOnStickyNote('${note.id}')" title="Focus note">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
+                            </svg>
+                        </button>
+                        <button class="icon-button" onclick="notesWiki.duplicateStickyNote('${note.id}')" title="Duplicate">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/>
+                            </svg>
+                        </button>
+                        <button class="icon-button text-danger" onclick="notesWiki.deleteStickyNote('${note.id}')" title="Delete">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="note-card-content">
+                    <h4 class="note-title">${this.escapeHtml(note.title)}</h4>
+                    <p class="note-preview">${this.escapeHtml(preview)}</p>
+                    
+                    <div class="note-metadata">
+                        <span class="note-wordcount">${note.wordCount || 0} words</span>
+                        <span class="note-date">Modified ${lastModified}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    getFilteredStickyNotes(notes) {
+        let filtered = [...notes];
+        
+        // Apply search filter
+        const searchTerm = document.getElementById('sticky-search-input')?.value.toLowerCase();
+        if (searchTerm) {
+            filtered = filtered.filter(note => 
+                note.title.toLowerCase().includes(searchTerm) ||
+                note.content.toLowerCase().includes(searchTerm)
+            );
+        }
+        
+        // Apply category filter
+        const categoryFilter = document.getElementById('category-filter')?.value;
+        if (categoryFilter) {
+            filtered = filtered.filter(note => note.category === categoryFilter);
+        }
+        
+        // Apply sorting
+        const sortOrder = document.getElementById('sort-order')?.value || 'lastModified';
+        filtered.sort((a, b) => {
+            switch (sortOrder) {
+                case 'title':
+                    return a.title.localeCompare(b.title);
+                case 'created':
+                    return new Date(b.createdAt) - new Date(a.createdAt);
+                case 'wordCount':
+                    return (b.wordCount || 0) - (a.wordCount || 0);
+                case 'lastModified':
+                default:
+                    return new Date(b.lastModified) - new Date(a.lastModified);
+            }
+        });
+        
+        return filtered;
+    }
+    
+    searchStickyNotes(searchTerm) {
+        this.renderStickyNotesGrid();
+    }
+    
+    filterStickyNotes() {
+        this.renderStickyNotesGrid();
+    }
+    
+    sortStickyNotes() {
+        this.renderStickyNotesGrid();
+    }
+    
+    focusOnStickyNote(noteId) {
+        const element = document.getElementById(noteId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            element.style.animation = 'pulse 1s ease-in-out';
+            setTimeout(() => {
+                element.style.animation = '';
+            }, 1000);
+        }
+        this.closeStickyNotesManager();
+    }
+    
+    duplicateStickyNote(noteId) {
+        const original = this.stickyNotes.get(noteId);
+        if (original) {
+            this.createStickyNote({
+                title: `${original.title} (Copy)`,
+                content: original.content,
+                category: original.category,
+                color: original.color,
+                position: { 
+                    x: original.position.x + 20, 
+                    y: original.position.y + 20 
+                }
+            });
+            this.refreshStickyNotesManager();
+        }
+    }
+    
+    deleteStickyNote(noteId) {
+        if (this.settings.confirmOnClose) {
+            const note = this.stickyNotes.get(noteId);
+            const noteTitle = note?.title || 'this note';
+            
+            this.showConfirmationDialog(
+                'Delete Sticky Note?',
+                `Are you sure you want to permanently delete "${noteTitle}"?`,
+                () => {
+                    this.doCloseStickyNote(noteId);
+                    this.refreshStickyNotesManager();
+                }
+            );
+        } else {
+            this.doCloseStickyNote(noteId);
+            this.refreshStickyNotesManager();
+        }
+    }
+    
+    toggleNoteSelection(noteId) {
+        const checkbox = document.querySelector(`input[data-note-id="${noteId}"]`);
+        const card = document.querySelector(`[data-note-id="${noteId}"]`);
+        
+        if (checkbox && card) {
+            card.classList.toggle('selected', checkbox.checked);
+            this.updateBulkActionButtons();
+        }
+    }
+    
+    selectAllStickyNotes() {
+        const checkboxes = document.querySelectorAll('.note-checkbox');
+        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+        
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = !allChecked;
+            this.toggleNoteSelection(checkbox.dataset.noteId);
+        });
+        
+        const btn = document.getElementById('select-all-btn');
+        btn.textContent = allChecked ? 'Select All' : 'Deselect All';
+    }
+    
+    updateBulkActionButtons() {
+        const selectedCount = document.querySelectorAll('.note-checkbox:checked').length;
+        const deleteBtn = document.getElementById('delete-selected-btn');
+        const selectAllBtn = document.getElementById('select-all-btn');
+        
+        deleteBtn.disabled = selectedCount === 0;
+        deleteBtn.textContent = selectedCount > 0 ? `Delete Selected (${selectedCount})` : 'Delete Selected';
+        
+        const totalNotes = document.querySelectorAll('.note-checkbox').length;
+        selectAllBtn.textContent = selectedCount === totalNotes ? 'Deselect All' : 'Select All';
+    }
+    
+    deleteSelectedStickyNotes() {
+        const selectedCheckboxes = document.querySelectorAll('.note-checkbox:checked');
+        const selectedIds = Array.from(selectedCheckboxes).map(cb => cb.dataset.noteId);
+        
+        if (selectedIds.length === 0) return;
+        
+        const confirmMessage = selectedIds.length === 1 
+            ? 'Are you sure you want to delete the selected note?'
+            : `Are you sure you want to delete ${selectedIds.length} selected notes?`;
+            
+        this.showConfirmationDialog(
+            'Delete Selected Notes?',
+            confirmMessage,
+            () => {
+                selectedIds.forEach(noteId => this.doCloseStickyNote(noteId));
+                this.refreshStickyNotesManager();
+                this.showToast(`Deleted ${selectedIds.length} note${selectedIds.length !== 1 ? 's' : ''}`, 'success');
+            }
+        );
+    }
+    
+    exportStickyNotes() {
+        try {
+            const notes = Array.from(this.stickyNotes.values());
+            const exportData = {
+                version: '1.0',
+                exportDate: new Date().toISOString(),
+                totalNotes: notes.length,
+                notes: notes
+            };
+            
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { 
+                type: 'application/json' 
+            });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `sticky-notes-export-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            this.showToast(`Exported ${notes.length} sticky notes`, 'success');
+        } catch (error) {
+            console.error('Export failed:', error);
+            this.showToast('Export failed', 'error');
+        }
+    }
+    
+    importStickyNotes() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json';
+        
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const importData = JSON.parse(e.target.result);
+                    
+                    if (!importData.notes || !Array.isArray(importData.notes)) {
+                        throw new Error('Invalid file format');
+                    }
+                    
+                    let importedCount = 0;
+                    importData.notes.forEach(noteData => {
+                        // Generate new ID to avoid conflicts
+                        const newNote = {
+                            ...noteData,
+                            id: `sticky-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+                            position: {
+                                x: (noteData.position?.x || 100) + (importedCount * 20),
+                                y: (noteData.position?.y || 100) + (importedCount * 20)
+                            }
+                        };
+                        
+                        this.stickyNotes.set(newNote.id, newNote);
+                        this.renderStickyNote(newNote);
+                        importedCount++;
+                    });
+                    
+                    this.saveStickyNotes();
+                    this.refreshStickyNotesManager();
+                    this.showToast(`Imported ${importedCount} sticky notes`, 'success');
+                    
+                } catch (error) {
+                    console.error('Import failed:', error);
+                    this.showToast('Import failed: Invalid file format', 'error');
+                }
+            };
+            reader.readAsText(file);
+        };
+        
+        input.click();
     }
     
     setupCleanupHandlers() {
