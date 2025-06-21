@@ -856,6 +856,16 @@ body {
     --color-orange: #f97316;
     --color-pink: #ec4899;
     --color-cyan: #06b6d4;
+    
+    /* Group color variables for color picker */
+    --group-color-blue: #3b82f6;
+    --group-color-green: #10b981;
+    --group-color-yellow: #f59e0b;
+    --group-color-red: #ef4444;
+    --group-color-purple: #8b5cf6;
+    --group-color-orange: #f97316;
+    --group-color-pink: #ec4899;
+    --group-color-cyan: #06b6d4;
 }
 
 /* Context Menu */
@@ -1158,6 +1168,47 @@ body {
 
 .modal-body {
     padding: var(--spacing-lg);
+}
+
+/* Color picker styles for tab groups */
+.color-picker {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 8px 0;
+}
+
+.color-option {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    position: relative;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.color-option:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.color-option.selected {
+    border-color: var(--text-primary);
+    transform: scale(1.1);
+}
+
+.color-option.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .modal-footer {
