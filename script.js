@@ -8786,56 +8786,33 @@ class NotesWiki {
         contextMenu.style.top = `${event.clientY}px`;
         contextMenu.style.zIndex = '10000';
         
-        // Menu items with simple SVG strings (matching header format exactly)
+        // Create menu items with proper icons for each action
         const menuItems = [
             {
                 label: tab.isPinned ? 'Unpin Tab' : 'Pin Tab',
-                icon: tab.isPinned ? 
-                    `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M8 5a1 1 0 012 0v6a1 1 0 11-2 0V5z"/>
-                        <path d="M9 1a1 1 0 000 2 1 1 0 000-2z"/>
-                        <path d="M12 1a1 1 0 100 2 1 1 0 000-2z"/>
-                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v1a1 1 0 01-1 1H4a1 1 0 01-1-1V4z"/>
-                        <path d="M5 7v10a2 2 0 002 2h6a2 2 0 002-2V7H5z"/>
-                    </svg>` :
-                    `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M8 3a1 1 0 012 0v6l3-3a1 1 0 111.414 1.414L10 11.828l-4.414-4.414A1 1 0 117 6l3 3V3z"/>
-                        <path d="M3 13a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/>
-                    </svg>`,
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a2 2 0 00-2 2v10H4a2 2 0 01-2-2V6a2 2 0 012-2h4zm2 0h6a2 2 0 012 2v8a2 2 0 01-2 2h-2V6a2 2 0 00-2-2z" clip-rule="evenodd"/></svg>`,
                 action: () => this.togglePinTab(tabId)
             },
             {
                 label: 'Duplicate Tab',
-                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z"/>
-                    <path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z"/>
-                </svg>`,
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1a1 1 0 001 1h1a1 1 0 001-1V3a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zM6 5v6h4V5H6z" clip-rule="evenodd"/><path d="M11 10a1 1 0 100 2h1a1 1 0 001-1v-1a1 1 0 00-1-1h-1z"/><path fill-rule="evenodd" d="M5 14a2 2 0 012-2v1a1 1 0 001 1h1a1 1 0 001-1v-1a2 2 0 012 2v2a2 2 0 01-2 2H7a2 2 0 01-2-2v-2zm2 0v2h4v-2H7z" clip-rule="evenodd"/></svg>`,
                 action: () => this.duplicateTab(tabId)
             },
             {
                 label: 'Close Tab',
-                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                </svg>`,
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`,
                 action: () => this.closeTab(tabId),
                 className: 'danger'
             },
             {
                 label: 'Close Other Tabs',
-                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M9 2a1 1 0 00-1 1v1a1 1 0 001 1h2a1 1 0 001-1V3a1 1 0 00-1-1H9z"/>
-                    <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 00-2 2v6a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2 1 1 0 100-2 2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/>
-                </svg>`,
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"/><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1" fill="none" opacity="0.3"/></svg>`,
                 action: () => this.closeOtherTabs(tabId),
                 className: 'danger'
             },
             {
                 label: 'Close All Tabs',
-                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M9 2a1 1 0 00-1 1v1a1 1 0 002 0V3a1 1 0 00-1-1z"/>
-                    <path d="M11 2a1 1 0 00-1 1v1a1 1 0 002 0V3a1 1 0 00-1-1z"/>
-                    <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 00-2 2v6a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2 1 1 0 100-2 2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 011-1h.01a1 1 0 110 2H8a1 1 0 01-1-1zm3 0a1 1 0 011-1h.01a1 1 0 110 2H11a1 1 0 01-1-1zm3 0a1 1 0 011-1h.01a1 1 0 110 2H14a1 1 0 01-1-1z" clip-rule="evenodd"/>
-                </svg>`,
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>`,
                 action: () => this.closeAllTabs(),
                 className: 'danger'
             }
@@ -8962,28 +8939,21 @@ class NotesWiki {
         // Check if note is already bookmarked
         const isBookmarked = this.bookmarks.some(bookmark => bookmark.path === notePath);
         
-        // Menu items with simple SVG strings
+        // Create menu items with proper icons for each action
         const menuItems = [
             {
                 label: 'Open in New Tab',
-                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
-                    <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 00-2 2v6a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2 1 1 0 100-2 2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/>
-                </svg>`,
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 100 2h4a1 1 0 100-2H8zm0-3a1 1 0 100 2h4a1 1 0 100-2H8z" clip-rule="evenodd"/><path d="M12 2.586V6a1 1 0 001 1h3.414L12 2.586z"/></svg>`,
                 action: () => this.openInNewTab(notePath)
             },
             {
                 label: isBookmarked ? 'Remove Bookmark' : 'Bookmark Note',
-                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                </svg>`,
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`,
                 action: () => this.toggleNoteBookmark(notePath, noteTitle)
             },
             {
                 label: 'Share Note',
-                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z"/>
-                </svg>`,
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z"/></svg>`,
                 action: () => this.shareNote(notePath, noteTitle)
             }
         ];
