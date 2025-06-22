@@ -7329,6 +7329,13 @@ class NotesWiki {
             if (!this.settings.autoTheme) {
                 this.settings.theme = themeId;
                 console.log(`[Theme] Updated settings.theme to: ${themeId}`);
+                // Also update the individual theme key for initial load consistency
+                try {
+                    localStorage.setItem('notesWiki_theme', themeId);
+                    console.log(`[Theme] Synced theme to localStorage key: notesWiki_theme`);
+                } catch (e) {
+                    console.warn(`[Theme] Failed to sync theme to localStorage:`, e);
+                }
             }
             
             // Verify CSS rules loaded

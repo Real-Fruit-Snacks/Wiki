@@ -206,24 +206,26 @@
 }
 
 /* Custom scrollbar for Ayu Mirage */
-[data-theme="ayu-mirage"] ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
+@supports selector(::-webkit-scrollbar) {
+    [data-theme="ayu-mirage"] ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
 
-[data-theme="ayu-mirage"] ::-webkit-scrollbar-track {
-    background: var(--scrollbar-track);
-    border-radius: var(--radius-sm);
-}
+    [data-theme="ayu-mirage"] ::-webkit-scrollbar-track {
+        background: var(--scrollbar-track);
+        border-radius: var(--radius-sm);
+    }
 
-[data-theme="ayu-mirage"] ::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-thumb);
-    border-radius: var(--radius-sm);
-    transition: background-color var(--transition-fast);
-}
+    [data-theme="ayu-mirage"] ::-webkit-scrollbar-thumb {
+        background: var(--scrollbar-thumb);
+        border-radius: var(--radius-sm);
+        transition: background-color var(--transition-fast);
+    }
 
-[data-theme="ayu-mirage"] ::-webkit-scrollbar-thumb:hover {
-    background: var(--scrollbar-thumb-hover);
+    [data-theme="ayu-mirage"] ::-webkit-scrollbar-thumb:hover {
+        background: var(--scrollbar-thumb-hover);
+    }
 }
 
 /* Selection color */

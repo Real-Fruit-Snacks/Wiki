@@ -50,7 +50,6 @@ body {
     color: var(--text-primary);
     background-color: var(--bg-primary);
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Utility classes */
@@ -468,8 +467,10 @@ body {
     -ms-overflow-style: none;
 }
 
-.tabs-container::-webkit-scrollbar {
-    display: none;
+@supports selector(::-webkit-scrollbar) {
+    .tabs-container::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 /* Individual tab */
@@ -3063,21 +3064,23 @@ body:not(.show-line-numbers) .code-with-counters .code-line::before {
 }
 
 /* Scrollbar styling for settings modal */
-.settings-body::-webkit-scrollbar {
-    width: 8px;
-}
+@supports selector(::-webkit-scrollbar) {
+    .settings-body::-webkit-scrollbar {
+        width: 8px;
+    }
 
-.settings-body::-webkit-scrollbar-track {
-    background: var(--bg-secondary);
-}
+    .settings-body::-webkit-scrollbar-track {
+        background: var(--bg-secondary);
+    }
 
-.settings-body::-webkit-scrollbar-thumb {
-    background: var(--border-primary);
-    border-radius: 4px;
-}
+    .settings-body::-webkit-scrollbar-thumb {
+        background: var(--border-primary);
+        border-radius: 4px;
+    }
 
-.settings-body::-webkit-scrollbar-thumb:hover {
-    background: var(--text-secondary);
+    .settings-body::-webkit-scrollbar-thumb:hover {
+        background: var(--text-secondary);
+    }
 }
 
 /* Focus states for accessibility */
@@ -6253,9 +6256,12 @@ body.focus-mode .floating-share {
     /* Footer for each page */
     @page {
         margin: 1in;
+        /* Note: @bottom-right margin box is not widely supported by browsers
+           Commenting out to prevent console warnings
         @bottom-right {
             content: counter(page);
         }
+        */
     }
     
     /* Avoid breaking inside important elements */
