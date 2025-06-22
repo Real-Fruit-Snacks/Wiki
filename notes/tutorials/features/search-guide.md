@@ -13,7 +13,7 @@ The Notes Wiki includes a powerful search system that goes far beyond simple tex
 ## 🔍 Quick Search Access
 
 - **Header Search**: Click the search icon or search box in the header
-- **Keyboard Shortcut**: Press <kbd>/</kbd> or <kbd>Ctrl</kbd>+<kbd>K</kbd> to focus search instantly
+- **Keyboard Shortcut**: Press <kbd>Ctrl</kbd>+<kbd>K</kbd> to focus search instantly
 - **URL Search**: Use `#/search/your+search+term` for direct search links
 
 ## 🎯 Search Operators
@@ -85,57 +85,27 @@ author:"Wiki Admin" tag:demo -test
 - Select multiple tags for filtering
 - Choose between OR/AND logic
 
-### Tag Logic Options
-
-**OR Logic (Default):** Shows notes with ANY selected tag
-```
-Selected: [javascript] OR [python] OR [tutorial]
-Result: Notes with javascript OR python OR tutorial
-```
-
-**AND Logic:** Shows notes with ALL selected tags  
-```
-Selected: [javascript] AND [tutorial] AND [beginner]
-Result: Only notes tagged with all three
-```
-
-### Tag Exclusion
-Click tags with <kbd>Shift</kbd> to exclude them:
-```
-Include: [tutorial] [javascript]
-Exclude: [advanced] [framework]
-Result: JavaScript tutorials excluding advanced framework content
-```
+### Tag Logic
+Tag filtering uses simple matching:
+- Multiple tags selected work as OR logic by default
+- Shows notes that match any of the selected tags
+- Use search operators for precise tag combinations
 
 ## 🎨 Smart Search Features
 
-### Auto-Complete
-Search suggestions appear as you type:
-- **Recent searches** - Your previous search terms
-- **Popular tags** - Frequently used tags
-- **Note titles** - Matching note titles
-- **Authors** - Available authors
-
 ### Search History
-Access your recent searches:
-- Click the search dropdown arrow
-- Navigate with <kbd>↑</kbd>/<kbd>↓</kbd> arrow keys
-- Press <kbd>Enter</kbd> to repeat a search
-
-### Fuzzy Matching
-Search is forgiving of typos and variations:
-- `javascrpt` finds "JavaScript" content
-- `teh` finds "the" 
-- `algoritm` finds "algorithm"
+Your recent searches are saved automatically:
+- Up to 50 recent searches stored locally
+- Previous searches remembered across sessions
+- Access history through browser localStorage
 
 ## 📊 Search Results
 
-### Result Sorting
-Results are ranked by relevance:
-1. **Title matches** - Highest priority
-2. **Tag matches** - High priority  
-3. **Content matches** - Medium priority
-4. **Description matches** - Lower priority
+### Result Ordering
+Results appear in the order they exist in the search index:
+- No relevance ranking or scoring applied
+- All matching notes displayed in index order
+- Pagination available for large result sets (20 per page)
 
 ### Result Information
 Each result shows:
@@ -295,14 +265,14 @@ Result: Your active personal project notes
 
 ## 🔧 Search Configuration
 
-### Search Settings
-Customize search behavior in **Settings** → **Search**:
+### Search Behavior
+The search system uses these built-in behaviors:
 
-- **Enable fuzzy matching** - Find typos and variations
-- **Search delay** - Milliseconds before search executes
-- **Max results** - Limit displayed results
-- **Include content** - Search inside note content
-- **Include code blocks** - Search code block content
+- **Search delay** - 150ms debounce before search executes
+- **Results per page** - 20 results with pagination
+- **Content inclusion** - Searches titles, descriptions, content, and tags
+- **Case insensitive** - All searches ignore letter case
+- **Exact matching** - No fuzzy matching or approximation
 
 ### Performance Tips
 
@@ -324,4 +294,4 @@ Customize search behavior in **Settings** → **Search**:
 
 The search system becomes more powerful as you learn your content patterns. Experiment with different operators and develop search strategies that match your workflow!
 
-**Pro Tip:** Use <kbd>/</kbd> for instant search access, and don't forget that search results can be opened in multiple tabs with <kbd>Ctrl</kbd>+<kbd>Click</kbd> for research sessions.
+**Pro Tip:** Use <kbd>Ctrl</kbd>+<kbd>K</kbd> for instant search access, and don't forget that search results can be opened in multiple tabs with <kbd>Ctrl</kbd>+<kbd>Click</kbd> for research sessions.

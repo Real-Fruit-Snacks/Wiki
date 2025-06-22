@@ -297,8 +297,8 @@ ls -la images/reference/your-image.jpg
 **Regular Markdown Links:**
 ```markdown
 <!-- Use correct relative paths -->
-[Link Text](../features/search-guide.md)
-[Link Text](./creating-notes.md)
+[Search Guide](../features/search-guide.md)
+[Creating Notes](./creating-notes.md)
 ```
 
 ### Hash Navigation Issues

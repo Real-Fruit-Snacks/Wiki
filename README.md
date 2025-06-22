@@ -476,7 +476,7 @@ We welcome contributions! Here's how to get involved:
 4. ✅ Test thoroughly
 5. 📤 Submit a Pull Request
 
-See our [Contributing Guide](CONTRIBUTING.md) for details.
+Check our GitHub Issues page for contribution opportunities.
 
 ---
 
