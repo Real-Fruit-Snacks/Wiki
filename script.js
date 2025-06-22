@@ -10068,6 +10068,7 @@ class NotesWiki {
         const overflowDropdown = document.getElementById('tab-overflow-dropdown');
         let dropdownMenu = overflowDropdown?.querySelector('.tab-overflow-menu');
         
+        console.log("Toggle: Dropdown menu element:", dropdownMenu);
         if (!dropdownMenu) {
             console.log('Dropdown menu not found, calling updateTabOverflow');
             this.updateTabOverflow();
@@ -10089,6 +10090,7 @@ class NotesWiki {
     
     showTabOverflowDropdown() {
         const overflowDropdown = document.getElementById('tab-overflow-dropdown');
+        console.log("showTabOverflowDropdown called");
         let dropdownMenu = overflowDropdown?.querySelector('.tab-overflow-menu');
         
         if (!dropdownMenu) {
