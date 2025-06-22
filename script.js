@@ -110,7 +110,6 @@ class NotesWiki {
                     { id: 'city-lights', name: 'City Lights', description: 'Dark theme with vibrant cyan and pink accents' },
                     { id: 'cyberpunk', name: 'Cyberpunk', description: 'Dystopian theme with glitch effects' },
                     { id: 'digital-rain', name: 'Digital Rain', description: 'Matrix-inspired green code rain on deep black backgrounds' },
-                    { id: 'matrix', name: 'Matrix', description: 'Terminal green with falling code rain' },
                     { id: 'outrun', name: 'Outrun', description: 'Electric blues and hot pinks with intense neon glow' },
                     { id: 'snazzy', name: 'Snazzy', description: 'Terminal-inspired colorful theme with bright accents' },
                     { id: 'synthwave-84', name: 'Synthwave \'84', description: 'Retro neon aesthetic with vibrant synthwave colors' },
@@ -4993,7 +4992,6 @@ class NotesWiki {
                 
                 // Show success feedback with theme-specific message
                 const successMessages = {
-                    'matrix': '🟢 Entering the Matrix...',
                     'cyberpunk': '⚡ Welcome to Night City!',
                     'dracula': '🦇 Welcome to the castle...',
                     'tokyo-night': '🌃 Welcome to Tokyo!',
@@ -5311,13 +5309,6 @@ class NotesWiki {
                 accent: '#81a2be',
                 text: '#c5c8c6',
                 textMuted: '#969896'
-            },
-            'matrix': {
-                bg: '#0D0208',
-                border: '#008F11',
-                accent: '#00FF41',
-                text: '#00FF41',
-                textMuted: '#006600'
             },
             'witch-hazel': {
                 bg: '#433e56',
@@ -5845,13 +5836,6 @@ class NotesWiki {
                 comment: '#969896',
                 number: '#de935f'
             },
-            'matrix': {
-                keyword: '#00FF41',
-                function: '#00FF41',
-                string: '#008F11',
-                comment: '#006600',
-                number: '#00FF41'
-            },
             'witch-hazel': {
                 keyword: '#c5a3ff',
                 function: '#1bc5e0',
@@ -6182,22 +6166,6 @@ class NotesWiki {
     getThemeDecoration(themeId, colors) {
         // Return theme-specific decorative content
         const decorations = {
-            'matrix': `
-                <div class="matrix-rain" style="
-                    position: absolute;
-                    inset: 0;
-                    overflow: hidden;
-                    opacity: 0.1;
-                    font-family: monospace;
-                    font-size: 10px;
-                    color: #00ff41;
-                    pointer-events: none;
-                ">
-                    <div style="animation: matrixFall 5s linear infinite;">10101010</div>
-                    <div style="animation: matrixFall 5s linear infinite; animation-delay: -2s; margin-left: 50px;">01001101</div>
-                    <div style="animation: matrixFall 5s linear infinite; animation-delay: -4s; margin-left: 100px;">11010011</div>
-                </div>
-            `,
             'cyberpunk': `
                 <div class="cyberpunk-scanline" style="
                     position: absolute;
@@ -7426,17 +7394,6 @@ class NotesWiki {
     addThemeCardEffects(card, themeId, colors) {
         // Add theme-specific interactive effects
         
-        // Matrix theme: Add digital rain effect on hover
-        if (themeId === 'matrix') {
-            card.addEventListener('mouseenter', () => {
-                const rain = card.querySelector('.matrix-rain');
-                if (rain) rain.style.opacity = '0.3';
-            });
-            card.addEventListener('mouseleave', () => {
-                const rain = card.querySelector('.matrix-rain');
-                if (rain) rain.style.opacity = '0.1';
-            });
-        }
         
         // Cyberpunk theme: Add glitch effect on hover
         if (themeId === 'cyberpunk') {
@@ -7457,7 +7414,6 @@ class NotesWiki {
                 
                 // Theme-specific hover shadows
                 const hoverShadows = {
-                    'matrix': `0 0 30px rgba(0, 255, 65, 0.5)`,
                     'cyberpunk': `0 0 30px rgba(234, 0, 217, 0.5), 0 0 60px rgba(10, 189, 198, 0.3)`,
                     'dracula': `0 0 30px rgba(189, 147, 249, 0.4), 0 0 60px rgba(255, 121, 198, 0.2)`,
                     'tokyo-night': `0 0 20px ${colors.accent}40`,
