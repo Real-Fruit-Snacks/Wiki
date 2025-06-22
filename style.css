@@ -81,7 +81,7 @@ body {
 .header {
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 200; /* Above Quick Notes panel (150) to ensure dropdowns are visible */
     height: var(--header-height);
     background-color: var(--bg-secondary);
     border-bottom: 1px solid var(--border-primary);
