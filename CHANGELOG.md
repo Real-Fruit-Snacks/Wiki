@@ -1,5 +1,39 @@
 # Changelog
 
+## [3.4.0] - 2025-06-22
+
+### 📌 Tab Management Enhancement
+
+This release introduces the highly requested tab pinning feature along with additional tab management capabilities.
+
+### ✨ New Features
+- **Pinned Tabs**: Right-click any tab to pin it
+  - Pinned tabs cannot be closed until unpinned
+  - Pinned tabs prevent navigation to different notes
+  - Visual indicator (📌) shows pinned state
+  - Bold tab title for better visibility
+  - Pin state persists across sessions
+- **Duplicate Tab**: Right-click menu option to duplicate any tab
+  - Creates a new tab with the same content
+  - Preserves scroll position and state
+- **Close Other Tabs**: Close all tabs except the current one
+  - Respects pinned tabs (won't close them)
+  - Shows confirmation dialog if enabled
+  - Reports number of tabs closed
+
+### 🎨 UI Improvements
+- Enhanced tab context menu with new options
+- Visual styling for pinned tabs with accent border
+- Improved tab dragging (disabled for pinned tabs)
+- Better error messages for tab operations
+
+### 🔧 Technical Changes
+- Added `togglePinTab()`, `duplicateTab()`, and `closeOtherTabs()` methods
+- Enhanced tab state persistence with pin status
+- Improved memory management for tab operations
+
+## [3.3.1] - Previous Release
+
 ## [3.2.0] - 2025-06-19
 
 ### 🎨 Theme System Overhaul & Application Cleanup

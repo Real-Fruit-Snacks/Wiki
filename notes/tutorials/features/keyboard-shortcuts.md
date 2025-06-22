@@ -26,6 +26,7 @@ The Notes Wiki includes a comprehensive set of keyboard shortcuts designed to bo
 | <kbd>Ctrl</kbd>+<kbd>T</kbd> | New tab | Open a new empty tab |
 | <kbd>Ctrl</kbd>+<kbd>W</kbd> | Close tab | Close the current tab |
 | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd> | Close all tabs | Close all open tabs |
+| <kbd>Alt</kbd>+<kbd>P</kbd> | Pin/unpin tab | Toggle pin status of current tab |
 | <kbd>Ctrl</kbd>+<kbd>1</kbd>-<kbd>9</kbd> | Switch to tab | Jump to tab by number (1-9) |
 | <kbd>Ctrl</kbd>+<kbd>Tab</kbd> | Next tab | Switch to the next tab |
 | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Tab</kbd> | Previous tab | Switch to the previous tab |

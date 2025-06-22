@@ -53,6 +53,20 @@ The Notes Wiki includes a powerful tab system that enables efficient multi-docum
 - Right-click tab → "Close Other Tabs"
 - Right-click tab → "Close Tabs to Right"
 
+### Pinning Tabs
+
+**Pin Important Tabs:**
+- Press <kbd>Alt</kbd>+<kbd>P</kbd> to pin/unpin current tab
+- Right-click tab → "Pin Tab"
+- Click the pin icon on the tab (when available)
+
+**Pinned Tab Features:**
+- **Protection from closure** - Pinned tabs cannot be accidentally closed
+- **Visual indicator** - Pin icon shows tab is pinned
+- **Persistent position** - Pinned tabs stay at the beginning of the tab bar
+- **Session persistence** - Pinned tabs are restored when reopening the wiki
+- **No accidental closure** - Close button disabled on pinned tabs
+
 ## 🎯 Drag-and-Drop Features
 
 ### Reordering Tabs
@@ -88,7 +102,7 @@ Perfect for gathering information from multiple sources:
 2. Ctrl+Click related links → Open in background tabs
 3. Ctrl+1-9 to jump between tabs
 4. Drag tabs to group related content
-5. Keep reference tabs pinned
+5. Pin reference tabs with Alt+P to keep them accessible
 ```
 
 **Example Research Session:**
@@ -107,7 +121,7 @@ Ideal for content creation with references:
 1. Open draft in main tab
 2. Open reference materials in background tabs
 3. Use Ctrl+Tab to cycle between draft and references
-4. Keep style guide pinned
+4. Pin style guide tab with Alt+P for persistent access
 5. Use duplicate tabs for before/after comparisons
 ```
 
@@ -152,7 +166,7 @@ Organize learning materials efficiently:
 
 **Status Indicators:**
 - **Modified** - Dot indicator for unsaved changes
-- **Pinned** - Pin icon for persistent tabs
+- **Pinned** - 📌 Pin icon for persistent tabs (protected from closure)
 - **Shared** - Share icon for shared content
 
 ### Tab Titles
@@ -178,7 +192,7 @@ Manage performance with tab limits:
 - **Default limit** - 10 tabs (configurable)
 - **Warning threshold** - 8 tabs
 - **Auto-close** - Oldest unused tabs closed when limit reached
-- **Exempt tabs** - Pinned tabs never auto-closed
+- **Exempt tabs** - Pinned tabs are never auto-closed and don't count toward the limit
 
 ### Tab Groups (Future Feature)
 Organize tabs into logical groups:
@@ -238,8 +252,9 @@ Workflow 3: Content creation
 **Manage Tab Count:**
 - Close unused tabs regularly
 - Use bookmarks for long-term references
-- Pin frequently accessed tabs
+- Pin frequently accessed tabs with Alt+P
 - Set reasonable tab limits
+- Pinned tabs are protected from accidental closure
 
 **Optimize for Your Screen:**
 - Larger screens - More tabs visible
@@ -252,6 +267,7 @@ Workflow 3: Content creation
 ```
 Ctrl+T - New tab (most important)
 Ctrl+W - Close tab (second most important)
+Alt+P - Pin/unpin tab (protect important tabs)
 Ctrl+1-9 - Jump to specific tabs
 Ctrl+Tab - Cycle through tabs
 ```

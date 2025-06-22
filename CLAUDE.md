@@ -185,13 +185,14 @@ Themes are organized into 10 categories in the settings modal:
 9. **Professional** - Business-appropriate themes
 10. **Special Effects** - Themes with unique visual effects
 
-### Recent Major Features (v3.1.0 - v3.3.0)
+### Recent Major Features (v3.1.0 - v3.4.0)
 
 1. **Split View Implementation** - Side-by-side note viewing with draggable pane resizing
 2. **Sticky Notes Feature** - Floating mini-notes with drag, resize, and color options
 3. **Dynamic Path Detection** - Works with any project name on GitHub/GitLab Pages
 4. **Confirmation Dialogs** - Optional (now default) confirmations when closing tabs/sticky notes
 5. **Enhanced Error Logging** - Comprehensive logging for theme loading and other operations
+6. **Pinned Tabs** - Right-click tabs to pin them, preventing closure and navigation to different notes
 
 ### Combined Code Blocks Feature
 
@@ -237,6 +238,9 @@ When making changes to this codebase:
 - `createNewTab(path, title)` - Creates a new tab
 - `closeTab(tabId)` - Shows confirmation if enabled, then closes
 - `switchToTab(tabId)` - Switches active tab
+- `togglePinTab(tabId)` - Toggles pin state for a tab
+- `duplicateTab(tabId)` - Creates a duplicate of the specified tab
+- `closeOtherTabs(tabId)` - Closes all other non-pinned tabs
 
 **Settings Management**:
 - `loadSettings()` - Loads from localStorage

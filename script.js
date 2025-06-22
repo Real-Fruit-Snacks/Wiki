@@ -1489,6 +1489,15 @@ class NotesWiki {
                     return;
                 }
                 
+                // Pin/unpin current tab with Alt+P
+                if (e.altKey && e.key.toLowerCase() === 'p') {
+                    e.preventDefault();
+                    if (this.currentTabId) {
+                        this.togglePinTab(this.currentTabId);
+                    }
+                    return;
+                }
+                
                 // Legacy shortcuts (may conflict with browser but try anyway)
                 if (pressedCombo === 'Ctrl+W' || pressedCombo === 'Cmd+W') {
                     e.preventDefault();
@@ -8410,7 +8419,8 @@ class NotesWiki {
             id: tabId,
             path: path,
             title: title,
-            scrollPosition: 0
+            scrollPosition: 0,
+            isPinned: false
         };
         
         this.tabs.set(tabId, tab);
@@ -8444,12 +8454,13 @@ class NotesWiki {
         }
         
         tabElement = document.createElement('div');
-        tabElement.className = 'tab';
+        tabElement.className = `tab${tab.isPinned ? ' pinned' : ''}`;
         tabElement.id = tabId;
-        tabElement.draggable = !tab.isSplitView; // Split view tab should not be draggable
+        tabElement.draggable = !tab.isSplitView && !tab.isPinned; // Pinned tabs should not be draggable
         tabElement.innerHTML = `
+            ${tab.isPinned ? '<span class="tab-pin-indicator" title="Pinned tab">📌</span>' : ''}
             <span class="tab-title">${this.escapeHtml(tab.title)}</span>
-            <button class="tab-close" aria-label="Close tab">
+            <button class="tab-close" aria-label="Close tab" ${tab.isPinned ? 'style="display: none;"' : ''}>
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
                     <path d="M7 7.707l3.146 3.147a.5.5 0 00.708-.708L7.707 7l3.147-3.146a.5.5 0 00-.708-.708L7 6.293 3.854 3.146a.5.5 0 10-.708.708L6.293 7l-3.147 3.146a.5.5 0 00.708.708L7 7.707z"/>
                 </svg>
@@ -8469,7 +8480,9 @@ class NotesWiki {
         tabElement.addEventListener('mousedown', (e) => {
             if (e.button === 1) {
                 e.preventDefault();
-                this.closeTab(tabId);
+                if (!tab.isPinned) {
+                    this.closeTab(tabId);
+                }
             }
         });
         
@@ -8477,6 +8490,12 @@ class NotesWiki {
         tabElement.querySelector('.tab-close').addEventListener('click', (e) => {
             e.stopPropagation();
             this.closeTab(tabId);
+        });
+        
+        // Context menu (right-click)
+        tabElement.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            this.showTabContextMenu(e, tabId);
         });
         
         // Drag and drop
@@ -8673,6 +8692,143 @@ class NotesWiki {
         this.saveTabState();
     }
     
+    showTabContextMenu(event, tabId) {
+        const tab = this.tabs.get(tabId);
+        if (!tab) return;
+        
+        // Create context menu container
+        const contextMenu = document.createElement('div');
+        contextMenu.className = 'tab-context-menu';
+        contextMenu.style.position = 'fixed';
+        contextMenu.style.left = `${event.clientX}px`;
+        contextMenu.style.top = `${event.clientY}px`;
+        contextMenu.style.zIndex = '10000';
+        
+        // Menu items
+        const menuItems = [
+            {
+                label: tab.isPinned ? 'Unpin Tab' : 'Pin Tab',
+                icon: tab.isPinned ? '📌' : '📍',
+                action: () => this.togglePinTab(tabId)
+            },
+            {
+                label: 'Duplicate Tab',
+                icon: '📋',
+                action: () => this.duplicateTab(tabId)
+            },
+            {
+                label: 'Close Tab',
+                icon: '✕',
+                action: () => this.closeTab(tabId),
+                className: 'danger'
+            },
+            {
+                label: 'Close Other Tabs',
+                icon: '🗑️',
+                action: () => this.closeOtherTabs(tabId),
+                className: 'danger'
+            },
+            {
+                label: 'Close All Tabs',
+                icon: '💥',
+                action: () => this.closeAllTabs(),
+                className: 'danger'
+            }
+        ];
+        
+        // Build menu HTML
+        contextMenu.innerHTML = menuItems.map(item => `
+            <div class="context-menu-item${item.className ? ' ' + item.className : ''}">
+                <span class="context-menu-icon">${item.icon}</span>
+                <span class="context-menu-label">${item.label}</span>
+            </div>
+        `).join('');
+        
+        // Add event listeners
+        const items = contextMenu.querySelectorAll('.context-menu-item');
+        items.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                menuItems[index].action();
+                contextMenu.remove();
+            });
+        });
+        
+        // Close menu when clicking outside
+        const closeMenu = (e) => {
+            if (!contextMenu.contains(e.target)) {
+                contextMenu.remove();
+                document.removeEventListener('click', closeMenu);
+                document.removeEventListener('contextmenu', closeMenu);
+            }
+        };
+        
+        // Delay adding the close listener to prevent immediate closure
+        setTimeout(() => {
+            document.addEventListener('click', closeMenu);
+            document.addEventListener('contextmenu', closeMenu);
+        }, 0);
+        
+        // Add to document
+        document.body.appendChild(contextMenu);
+        
+        // Adjust position if menu goes off-screen
+        const rect = contextMenu.getBoundingClientRect();
+        if (rect.right > window.innerWidth) {
+            contextMenu.style.left = `${window.innerWidth - rect.width - 5}px`;
+        }
+        if (rect.bottom > window.innerHeight) {
+            contextMenu.style.top = `${window.innerHeight - rect.height - 5}px`;
+        }
+    }
+    
+    togglePinTab(tabId) {
+        const tab = this.tabs.get(tabId);
+        if (!tab) return;
+        
+        tab.isPinned = !tab.isPinned;
+        
+        // Re-render the tab to update UI
+        const tabElement = document.getElementById(tabId);
+        if (tabElement) {
+            // Update classes
+            if (tab.isPinned) {
+                tabElement.classList.add('pinned');
+                tabElement.draggable = false;
+                
+                // Add pin indicator if not exists
+                if (!tabElement.querySelector('.tab-pin-indicator')) {
+                    const pinIndicator = document.createElement('span');
+                    pinIndicator.className = 'tab-pin-indicator';
+                    pinIndicator.title = 'Pinned tab';
+                    pinIndicator.textContent = '📌';
+                    tabElement.insertBefore(pinIndicator, tabElement.firstChild);
+                }
+                
+                // Hide close button
+                const closeBtn = tabElement.querySelector('.tab-close');
+                if (closeBtn) closeBtn.style.display = 'none';
+            } else {
+                tabElement.classList.remove('pinned');
+                tabElement.draggable = !tab.isSplitView;
+                
+                // Remove pin indicator
+                const pinIndicator = tabElement.querySelector('.tab-pin-indicator');
+                if (pinIndicator) pinIndicator.remove();
+                
+                // Show close button
+                const closeBtn = tabElement.querySelector('.tab-close');
+                if (closeBtn) closeBtn.style.display = '';
+            }
+        }
+        
+        // Save tab state
+        if (this.tabStateSaveDebounced) {
+            this.tabStateSaveDebounced();
+        }
+        
+        this.showToast(tab.isPinned ? 'Tab pinned' : 'Tab unpinned', 'info');
+    }
+    
     closeTab(tabId) {
         if (this.tabs.size <= 1) {
             // If this is the last tab, act like "Close All Tabs"
@@ -8682,6 +8838,12 @@ class NotesWiki {
         
         const tab = this.tabs.get(tabId);
         if (!tab) return;
+        
+        // Prevent closing pinned tabs
+        if (tab.isPinned) {
+            this.showToast('Cannot close pinned tab. Unpin it first.', 'warning');
+            return;
+        }
         
         // Check if confirmation is required
         if (this.settings.confirmOnClose) {
@@ -8701,6 +8863,12 @@ class NotesWiki {
     doCloseTab(tabId) {
         const tab = this.tabs.get(tabId);
         if (!tab) return;
+        
+        // Double-check: prevent closing pinned tabs
+        if (tab.isPinned) {
+            this.showToast('Cannot close pinned tab. Unpin it first.', 'warning');
+            return;
+        }
         
         // If closing split view tab, disable split view without recursion
         if (tab.isSplitView) {
@@ -8802,6 +8970,74 @@ class NotesWiki {
         }
     }
     
+    duplicateTab(tabId) {
+        const tab = this.tabs.get(tabId);
+        if (!tab) return;
+        
+        // Create a new tab with the same path and title
+        const newTabId = this.createNewTab(tab.path, tab.title);
+        
+        // Copy the content if it exists
+        const existingContent = this.tabContents.get(tabId);
+        if (existingContent) {
+            this.tabContents.set(newTabId, existingContent);
+        }
+        
+        this.showToast('Tab duplicated');
+    }
+    
+    closeOtherTabs(tabId) {
+        const tab = this.tabs.get(tabId);
+        if (!tab) return;
+        
+        // Check if there are other tabs that can be closed
+        const tabsToClose = Array.from(this.tabs.entries()).filter(([id, t]) => 
+            id !== tabId && !t.isPinned && !t.isSplitView
+        );
+        
+        if (tabsToClose.length === 0) {
+            this.showToast('No other tabs to close', 'info');
+            return;
+        }
+        
+        // Show confirmation if enabled
+        if (this.settings.confirmOnClose) {
+            this.showConfirmationDialog(
+                'Close Other Tabs?',
+                `Are you sure you want to close ${tabsToClose.length} other tab${tabsToClose.length > 1 ? 's' : ''}? Pinned tabs will not be closed.`,
+                () => {
+                    this.doCloseOtherTabs(tabId);
+                }
+            );
+        } else {
+            this.doCloseOtherTabs(tabId);
+        }
+    }
+    
+    doCloseOtherTabs(tabId) {
+        const tabsToClose = Array.from(this.tabs.entries()).filter(([id, tab]) => 
+            id !== tabId && !tab.isPinned && !tab.isSplitView
+        );
+        
+        // Close each tab
+        tabsToClose.forEach(([id]) => {
+            // Remove from DOM
+            document.getElementById(id)?.remove();
+            
+            // Remove from memory
+            this.tabs.delete(id);
+            this.tabContents.delete(id);
+        });
+        
+        // Switch to the remaining tab if it's not already active
+        if (this.activeTabId !== tabId) {
+            this.switchToTab(tabId);
+        }
+        
+        this.saveTabState();
+        this.showToast(`Closed ${tabsToClose.length} tab${tabsToClose.length > 1 ? 's' : ''}`);
+    }
+    
     switchToTabByIndex(index) {
         const tabIds = Array.from(this.tabs.keys());
         if (index >= 0 && index < tabIds.length) {
@@ -8880,7 +9116,8 @@ class NotesWiki {
                     id: tabData.id,
                     path: tabData.path,
                     title: tabData.title || 'Untitled',
-                    scrollPosition: tabData.scrollPosition || 0
+                    scrollPosition: tabData.scrollPosition || 0,
+                    isPinned: tabData.isPinned || false
                 });
                 this.renderTab(tabData.id);
                 
@@ -8978,6 +9215,17 @@ class NotesWiki {
     }
     
     loadNoteInTab(path, tabId) {
+        // Get the tab
+        const tab = this.tabs.get(tabId);
+        if (!tab) return;
+        
+        // Check if tab is pinned and trying to load a different note
+        if (tab.isPinned && tab.path && tab.path !== path) {
+            // Show a toast message that pinned tabs cannot load different notes
+            this.showToast('Cannot load a different note into a pinned tab. Unpin the tab first or open in a new tab.');
+            return;
+        }
+        
         // Check if this is the active tab
         const isActiveTab = tabId === this.activeTabId;
         

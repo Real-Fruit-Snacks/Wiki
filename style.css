@@ -571,6 +571,32 @@ body {
     height: 14px;
 }
 
+/* Pinned tab styles */
+.tab.pinned {
+    background-color: var(--bg-hover);
+    border-left: 2px solid var(--accent-primary);
+    padding-left: 10px;
+}
+
+.tab.pinned .tab-title {
+    font-weight: 600;
+}
+
+.tab-pin-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+    color: var(--accent-primary);
+}
+
+.tab-pin-indicator svg {
+    width: 12px;
+    height: 12px;
+}
+
 /* New tab button */
 .tab-new-button {
     display: flex;
@@ -588,6 +614,65 @@ body {
 .tab-new-button:hover {
     background-color: var(--bg-hover);
     color: var(--text-primary);
+}
+
+/* Tab context menu */
+.tab-context-menu {
+    position: fixed;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    min-width: 200px;
+    padding: var(--spacing-xs);
+    display: none;
+}
+
+.tab-context-menu.show {
+    display: block;
+}
+
+.context-menu-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+}
+
+.context-menu-item:hover {
+    background-color: var(--bg-hover);
+}
+
+.context-menu-item.danger {
+    color: var(--color-danger);
+}
+
+.context-menu-item.danger:hover {
+    background-color: var(--color-danger-light);
+    color: var(--color-danger);
+}
+
+.context-menu-separator {
+    height: 1px;
+    background-color: var(--border-primary);
+    margin: var(--spacing-xs) var(--spacing-sm);
+}
+
+.context-menu-icon {
+    font-size: var(--text-sm);
+    width: 16px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.context-menu-label {
+    flex: 1;
 }
 
 /* Main layout */
