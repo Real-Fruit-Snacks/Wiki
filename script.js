@@ -9820,7 +9820,7 @@ class NotesWiki {
         this.tabContents.delete(tabId);
         
         // Update tab scroll buttons after removing tab
-        this.updateTabScrollButtons();
+        this.updateTabOverflow();
         
         // If closing active tab, switch to another
         if (tabId === this.activeTabId) {
@@ -11153,7 +11153,7 @@ class NotesWiki {
         });
         
         // Update tab scroll buttons after rendering tabs
-        this.updateTabScrollButtons();
+        this.updateTabOverflow();
     }
     
     setupGroupDropZone(groupHeader, groupId) {
