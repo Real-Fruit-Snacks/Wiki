@@ -457,12 +457,67 @@ body {
     align-items: center;
 }
 
-.tab-nav-controls {
+/* Tab overflow dropdown */
+.tab-overflow-dropdown {
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    border-right: 1px solid var(--border-primary);
+    position: relative;
+}
+
+.tab-overflow-button {
     display: flex;
     align-items: center;
     gap: 4px;
-    padding: 0 4px;
-    border-right: 1px solid var(--border-primary);
+    padding: 4px 8px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: var(--text-sm);
+}
+
+.tab-overflow-button:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: var(--border-primary);
+}
+
+.tab-overflow-button.active {
+    background-color: var(--bg-hover);
+    color: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+.tab-overflow-count {
+    background: var(--accent-primary);
+    color: white;
+    padding: 1px 5px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    min-width: 18px;
+    text-align: center;
+}
+
+/* Tab overflow menu */
+.tab-overflow-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    min-width: 250px;
+    max-width: 350px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 1000;
+    margin-top: 4px;
 }
 
 .tab-nav-button {
@@ -498,49 +553,47 @@ body {
     display: flex;
     flex: 1;
     height: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    overscroll-behavior-x: contain; /* Prevent scroll chaining */
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    scroll-behavior: smooth;
+    overflow: hidden;
     position: relative;
 }
 
-.tabs-container::-webkit-scrollbar {
-    display: none;
+/* Tab overflow menu items */
+.tab-overflow-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+    border-bottom: 1px solid var(--border-secondary);
 }
 
-/* Shadow indicators for scrollable tabs */
-.tabs-container::before,
-.tabs-container::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 20px;
-    pointer-events: none;
-    z-index: 10;
-    opacity: 0;
-    transition: opacity var(--transition-fast);
+.tab-overflow-item:last-child {
+    border-bottom: none;
 }
 
-.tabs-container::before {
-    left: 0;
-    background: linear-gradient(to right, var(--bg-primary), transparent);
+.tab-overflow-item:hover {
+    background-color: var(--bg-hover);
 }
 
-.tabs-container::after {
-    right: 0;
-    background: linear-gradient(to left, var(--bg-primary), transparent);
+.tab-overflow-item.active {
+    background-color: var(--bg-accent-subtle);
+    color: var(--accent-primary);
 }
 
-.tabs-container.can-scroll-left::before {
-    opacity: 1;
+.tab-overflow-item-title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: var(--text-sm);
 }
 
-.tabs-container.can-scroll-right::after {
-    opacity: 1;
+.tab-overflow-item-group {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
 }
 
 /* Individual tab */
@@ -8875,3 +8928,40 @@ body.focus-mode.focus-mode-wide .multi-pane-content .content-wrapper {
     border-radius: 2px;
     font-weight: 600;
 }
+
+.tab-overflow-item-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow: hidden;
+}
+
+.tab-overflow-item-path {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tab-overflow-item-close {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.tab-overflow-item-close:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+}
+

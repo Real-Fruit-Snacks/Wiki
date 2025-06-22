@@ -278,17 +278,13 @@
         <!-- Tab bar -->
         <div class="tab-bar" id="tab-bar">
             <div class="tab-bar-inner">
-                <!-- Navigation controls -->
-                <div class="tab-nav-controls">
-                    <button class="icon-button tab-nav-button" id="scroll-tabs-left" aria-label="Scroll tabs left" title="Scroll tabs left" style="display: none;">
+                <!-- Tab overflow dropdown -->
+                <div class="tab-overflow-dropdown" id="tab-overflow-dropdown" style="display: none;">
+                    <button class="icon-button tab-overflow-button" id="tab-overflow-button" aria-label="Show more tabs" title="Show more tabs">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                         </svg>
-                    </button>
-                    <button class="icon-button tab-nav-button" id="scroll-tabs-right" aria-label="Scroll tabs right" title="Scroll tabs right" style="display: none;">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                        </svg>
+                        <span class="tab-overflow-count">0</span>
                     </button>
                 </div>
                 
