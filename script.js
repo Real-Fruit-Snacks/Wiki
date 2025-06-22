@@ -32,9 +32,6 @@ class NotesWiki {
         this.activePaneId = null;
         
         // Sticky notes
-        this.stickyNotes = new Map();
-        this.stickyColors = ['yellow', 'blue', 'green', 'pink'];
-        this.stickyZIndex = 1001;
         // Organized themes by category
         this.themeCategories = [
             {
@@ -10955,17 +10952,11 @@ class NotesWiki {
     
     addQuickNote() {
         const note = {
-            id: `sticky-${Date.now()}`,
-            title: options.title || 'Note',
-            content: options.content || '',
-            position: options.position || { x: 100 + Math.random() * 200, y: 100 + Math.random() * 200 },
-            size: options.size || { width: 280, height: 200 },
-            color: options.color || this.stickyColors[0],
-            minimized: options.minimized || false,
-            createdAt: options.createdAt || new Date().toISOString(),
-            zIndex: this.stickyZIndex++
+            id: `note-${Date.now()}`,
+            content: '',
+            created: new Date().toISOString(),
+            updated: new Date().toISOString()
         };
-        
         
         this.quickNotes.push(note);
         this.currentNoteIndex = this.quickNotes.length - 1;
@@ -11101,6 +11092,30 @@ class NotesWiki {
                 this.quickNotes = JSON.parse(stored);
                 if (!Array.isArray(this.quickNotes)) {
                     this.quickNotes = [];
+                }
+            } else {
+                // Migrate from old sticky notes if they exist
+                const oldSticky = localStorage.getItem('stickyNotes');
+                if (oldSticky) {
+                    try {
+                        const oldNotes = JSON.parse(oldSticky);
+                        if (oldNotes && typeof oldNotes === 'object') {
+                            // Convert Map entries or object to array format
+                            const notesArray = Array.from(oldNotes instanceof Map ? oldNotes.values() : Object.values(oldNotes));
+                            this.quickNotes = notesArray.map(note => ({
+                                id: note.id || `note-${Date.now()}-${Math.random()}`,
+                                content: note.content || '',
+                                created: note.createdAt || note.created || new Date().toISOString(),
+                                updated: note.updatedAt || note.updated || new Date().toISOString()
+                            }));
+                            this.saveQuickNotes();
+                            // Remove old sticky notes data
+                            localStorage.removeItem('stickyNotes');
+                            console.log('Migrated', this.quickNotes.length, 'sticky notes to quick notes');
+                        }
+                    } catch (e) {
+                        console.warn('Failed to migrate sticky notes:', e);
+                    }
                 }
             }
         } catch (error) {
