@@ -960,9 +960,9 @@
     "platforms": 1
   },
   "authors": [
-    "Wiki Team",
+    "Wiki Admin",
     "Test Author",
-    "Wiki Admin"
+    "Wiki Team"
   ],
   "categories": [
     "tutorial",
@@ -980,6 +980,6 @@
       "noteCount": 1
     }
   ],
-  "generated": "2025-06-22T18:52:31.605210",
+  "generated": "2025-06-22T19:05:38.681796",
   "totalNotes": 32
 }

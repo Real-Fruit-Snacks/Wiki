@@ -5001,6 +5001,11 @@ class NotesWiki {
                     'nord': '🎿 Welcome to the Arctic!',
                     'hotdog-stand': '🌭 Classic taste!',
                     'hackthebox': '💻 Access granted...',
+                    'neon-light': '💡 Neon lights activated!',
+                    'digital-rain': '🟢 Wake up, Neo...',
+                    'corporate-dystopia': '📊 Welcome, Employee #451',
+                    'holographic': '🌈 Hologram initialized!',
+                    'amber-interface': '📟 Terminal ready...'
                 };
                 
                 const message = successMessages[theme.id] || `${theme.name} theme applied!`;
@@ -5600,6 +5605,41 @@ class NotesWiki {
                 accent: '#52dab2',
                 text: '#bfc9ca',
                 textMuted: '#798188'
+            },
+            'neon-light': {
+                bg: '#ffffff',
+                border: '#e5e7eb',
+                accent: '#00d9ff',
+                text: '#111827',
+                textMuted: '#4b5563'
+            },
+            'digital-rain': {
+                bg: '#000000',
+                border: '#00ff4133',
+                accent: '#00ff41',
+                text: '#00ff41',
+                textMuted: '#00cc33'
+            },
+            'corporate-dystopia': {
+                bg: '#1a1d21',
+                border: '#374151',
+                accent: '#3b82f6',
+                text: '#e5e7eb',
+                textMuted: '#9ca3af'
+            },
+            'holographic': {
+                bg: 'rgba(240, 248, 255, 0.85)',
+                border: 'rgba(168, 85, 247, 0.2)',
+                accent: '#8b5cf6',
+                text: '#1e293b',
+                textMuted: '#475569'
+            },
+            'amber-interface': {
+                bg: '#0a0400',
+                border: '#ff990033',
+                accent: '#ff9900',
+                text: '#ff9900',
+                textMuted: '#cc7700'
             }
         };
         
@@ -6098,6 +6138,41 @@ class NotesWiki {
                 string: '#93d94e',
                 comment: '#798188',
                 number: '#f59e5f'
+            },
+            'neon-light': {
+                keyword: '#ff0080',
+                function: '#00d9ff',
+                string: '#00ff88',
+                comment: '#9ca3af',
+                number: '#ff00ff'
+            },
+            'digital-rain': {
+                keyword: '#00ff41',
+                function: '#00ff41',
+                string: '#00ff00',
+                comment: '#008822',
+                number: '#00ffaa'
+            },
+            'corporate-dystopia': {
+                keyword: '#6366f1',
+                function: '#60a5fa',
+                string: '#10b981',
+                comment: '#6b7280',
+                number: '#fbbf24'
+            },
+            'holographic': {
+                keyword: '#8b5cf6',
+                function: '#6366f1',
+                string: '#10b981',
+                comment: '#64748b',
+                number: '#f59e0b'
+            },
+            'amber-interface': {
+                keyword: '#ff9900',
+                function: '#ffaa00',
+                string: '#ffaa00',
+                comment: '#995500',
+                number: '#ffbb00'
             }
         };
         
@@ -7169,6 +7244,179 @@ class NotesWiki {
                     opacity: 0.15;
                     animation: wobble 3s ease-in-out infinite;
                 ">🐼</div>
+            `,
+            'neon-light': `
+                <div class="neon-light-glow" style="
+                    position: absolute;
+                    inset: 0;
+                    pointer-events: none;
+                ">
+                    <div style="
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        width: 30px;
+                        height: 30px;
+                        background: radial-gradient(circle, #00d9ff 0%, transparent 70%);
+                        filter: blur(10px);
+                        animation: pulseGlow 2s ease-in-out infinite;
+                    "></div>
+                    <div style="
+                        position: absolute;
+                        bottom: 10px;
+                        left: 10px;
+                        width: 25px;
+                        height: 25px;
+                        background: radial-gradient(circle, #ff0080 0%, transparent 70%);
+                        filter: blur(8px);
+                        animation: pulseGlow 2s ease-in-out infinite;
+                        animation-delay: -1s;
+                    "></div>
+                </div>
+            `,
+            'digital-rain': `
+                <div class="matrix-rain-advanced" style="
+                    position: absolute;
+                    inset: 0;
+                    overflow: hidden;
+                    pointer-events: none;
+                ">
+                    <div style="
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        background: repeating-linear-gradient(
+                            0deg,
+                            transparent,
+                            transparent 2px,
+                            rgba(0, 255, 65, 0.03) 2px,
+                            rgba(0, 255, 65, 0.03) 4px
+                        );
+                    "></div>
+                    <div style="
+                        font-family: monospace;
+                        font-size: 10px;
+                        color: #00ff41;
+                        opacity: 0.1;
+                        position: absolute;
+                        top: -20px;
+                        left: 20%;
+                        animation: matrixFall 5s linear infinite;
+                    ">1010110</div>
+                    <div style="
+                        font-family: monospace;
+                        font-size: 8px;
+                        color: #00cc33;
+                        opacity: 0.08;
+                        position: absolute;
+                        top: -20px;
+                        right: 30%;
+                        animation: matrixFall 6s linear infinite;
+                        animation-delay: -2s;
+                    ">01101001</div>
+                </div>
+            `,
+            'corporate-dystopia': `
+                <div class="corporate-grid" style="
+                    position: absolute;
+                    inset: 0;
+                    background-image: 
+                        linear-gradient(rgba(59, 130, 246, 0.02) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(59, 130, 246, 0.02) 1px, transparent 1px);
+                    background-size: 20px 20px;
+                    pointer-events: none;
+                ">
+                    <div style="
+                        position: absolute;
+                        top: 10px;
+                        left: 10px;
+                        font-family: monospace;
+                        font-size: 10px;
+                        font-weight: 700;
+                        color: #fbbf24;
+                        text-transform: uppercase;
+                        letter-spacing: 2px;
+                        opacity: 0.3;
+                    ">[CLASSIFIED]</div>
+                </div>
+            `,
+            'holographic': `
+                <div class="holographic-shimmer" style="
+                    position: absolute;
+                    inset: 0;
+                    pointer-events: none;
+                    overflow: hidden;
+                ">
+                    <div style="
+                        position: absolute;
+                        top: -50%;
+                        left: -50%;
+                        width: 200%;
+                        height: 200%;
+                        background: linear-gradient(105deg, 
+                            transparent 40%, 
+                            rgba(139, 92, 246, 0.1) 42%,
+                            rgba(236, 72, 153, 0.1) 44%,
+                            rgba(59, 130, 246, 0.1) 46%,
+                            rgba(16, 185, 129, 0.1) 48%,
+                            transparent 50%);
+                        animation: holographicShimmer 3s linear infinite;
+                    "></div>
+                    <div style="
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        width: 40px;
+                        height: 40px;
+                        background: conic-gradient(
+                            from 0deg,
+                            #8b5cf6 0deg,
+                            #ec4899 90deg,
+                            #3b82f6 180deg,
+                            #10b981 270deg,
+                            #8b5cf6 360deg
+                        );
+                        border-radius: 50%;
+                        opacity: 0.1;
+                        filter: blur(10px);
+                        animation: rotate 8s linear infinite;
+                    "></div>
+                </div>
+            `,
+            'amber-interface': `
+                <div class="amber-crt" style="
+                    position: absolute;
+                    inset: 0;
+                    pointer-events: none;
+                ">
+                    <div style="
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        background: repeating-linear-gradient(
+                            0deg,
+                            transparent,
+                            transparent 2px,
+                            rgba(255, 153, 0, 0.03) 2px,
+                            rgba(255, 153, 0, 0.03) 4px
+                        );
+                    "></div>
+                    <div style="
+                        position: absolute;
+                        top: 10px;
+                        left: 10px;
+                        font-family: monospace;
+                        font-size: 12px;
+                        color: #ff9900;
+                        opacity: 0.4;
+                        animation: cursorBlink 1s steps(1) infinite;
+                    ">&gt; _</div>
+                    <div style="
+                        position: absolute;
+                        inset: 0;
+                        background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.2) 100%);
+                    "></div>
+                </div>
             `
         };
         

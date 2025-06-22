@@ -6734,6 +6734,101 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     font-family: 'Georgia', serif;
 }
 
+/* Neon Light theme card */
+.theme-card-neon-light {
+    background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%) !important;
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
+}
+
+.theme-card-neon-light:hover {
+    box-shadow: 0 0 30px rgba(0, 217, 255, 0.4), 0 0 40px rgba(255, 0, 128, 0.2);
+}
+
+/* Digital Rain theme card */
+.theme-card-digital-rain {
+    background: #000000 !important;
+    font-family: 'Courier New', monospace;
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-card-digital-rain::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 255, 65, 0.1) 100%);
+    pointer-events: none;
+}
+
+.theme-card-digital-rain * {
+    text-shadow: 0 0 3px #00ff41;
+}
+
+/* Corporate Dystopia theme card */
+.theme-card-corporate-dystopia {
+    background: #1a1d21 !important;
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+    border-radius: 0 !important;
+}
+
+.theme-card-corporate-dystopia .theme-card-title {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+}
+
+/* Holographic theme card */
+.theme-card-holographic {
+    background: linear-gradient(135deg, 
+        rgba(240, 248, 255, 0.85) 0%, 
+        rgba(241, 245, 249, 0.85) 50%, 
+        rgba(248, 250, 252, 0.85) 100%) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.theme-card-holographic::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, #8b5cf6, #ec4899, #3b82f6, #10b981, #8b5cf6);
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0.3;
+    filter: blur(5px);
+}
+
+.theme-card-holographic:hover {
+    transform: translateY(-2px) scale(1.02);
+}
+
+/* Amber Interface theme card */
+.theme-card-amber-interface {
+    background: #0a0400 !important;
+    font-family: 'IBM Plex Mono', 'SF Mono', Monaco, monospace;
+    position: relative;
+}
+
+.theme-card-amber-interface::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+    pointer-events: none;
+}
+
+.theme-card-amber-interface * {
+    text-shadow: 0 0 2px #ff9900, 0 0 4px #ff990080;
+}
+
+.theme-card-amber-interface:hover {
+    box-shadow: 0 0 20px #ff9900;
+}
+
 /* Ensure animations respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
     .theme-card::before,
@@ -6847,7 +6942,36 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
 @keyframes bloom {
     0%, 100% { transform: scale(1) rotate(0deg); }
     50% { transform: scale(1.2) rotate(180deg); }
-}/* Quick Notes Panel Styles */
+}
+
+@keyframes pulseGlow {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.2); }
+}
+
+@keyframes matrixFall {
+    0% { transform: translateY(-20px); opacity: 0; }
+    10% { opacity: 0.1; }
+    90% { opacity: 0.1; }
+    100% { transform: translateY(100px); opacity: 0; }
+}
+
+@keyframes holographicShimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes scanline {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100vh); }
+}
+
+@keyframes auroraShimmer {
+    0%, 100% { opacity: 0.3; transform: translateY(0); }
+    50% { opacity: 0.6; transform: translateY(-10px); }
+}
+
+/* Quick Notes Panel Styles */
 .quick-notes-panel {
     position: fixed;
     top: calc(var(--header-height) + var(--tab-bar-height));
