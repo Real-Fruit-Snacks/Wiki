@@ -24,7 +24,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-3.4.0-blue?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/Version-3.4.1-blue?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/Size-~30MB-green?style=flat-square" alt="Size">
   <img src="https://img.shields.io/badge/Load_Time-<100ms-orange?style=flat-square" alt="Performance">
   <img src="https://img.shields.io/badge/Works-Offline-red?style=flat-square" alt="Offline">
@@ -235,7 +235,7 @@ python3 -m http.server 8000
 <summary><strong>📥 Option 4: Download Release Package</strong></summary>
 
 1. [Download Latest Release](https://github.com/Real-Fruit-Snacks/Wiki/releases/latest)
-2. Extract `notes-wiki-v3.4.0-complete.zip`
+2. Extract `notes-wiki-v3.4.1-complete.zip`
 3. Upload to any web hosting or open `index.html` locally
 4. Complete offline package with all 70 themes included!
 
