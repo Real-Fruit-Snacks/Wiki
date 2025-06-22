@@ -402,8 +402,8 @@ class NotesWiki {
             // Initialize tab system
             this.initializeTabs();
             
-            // Set up tab overflow
-            this.setupTabOverflow();
+            // Setup horizontal tab scrolling
+            this.setupTabScrolling();
             
             // Load and restore tab sessions
             this.loadTabSessions();
@@ -9780,8 +9780,6 @@ class NotesWiki {
             this.tabs.delete(tabId);
             this.tabContents.delete(tabId);
             
-            // Update tab scroll buttons after removing tab
-            this.updateTabOverflow();
             
             // Return to previous tab
             if (this.tabBeforeSplitView && this.tabs.has(this.tabBeforeSplitView)) {
@@ -9819,8 +9817,6 @@ class NotesWiki {
         this.tabs.delete(tabId);
         this.tabContents.delete(tabId);
         
-        // Update tab scroll buttons after removing tab
-        this.updateTabOverflow();
         
         // If closing active tab, switch to another
         if (tabId === this.activeTabId) {
@@ -9920,210 +9916,60 @@ class NotesWiki {
         this.switchToTab(tabIds[newIndex]);
     }
     
-    // Tab Overflow Methods
-    setupTabOverflow() {
-        console.log('Setting up tab overflow functionality');
-        // Setup overflow dropdown functionality
-        const overflowDropdown = document.getElementById('tab-overflow-dropdown');
-        const overflowButton = document.getElementById('tab-overflow-button');
+    setupTabScrolling() {
+        const tabsContainer = document.getElementById('tabs-container');
+        if (!tabsContainer) return;
         
-        console.log('Overflow dropdown element:', overflowDropdown);
-        console.log('Overflow button element:', overflowButton);
-        
-        if (!overflowDropdown || !overflowButton) {
-            console.log('Missing overflow elements, aborting setup');
-            return;
-        }
-        
-        // Event handler for overflow button
-        overflowButton.addEventListener('click', (e) => {
-            e.stopPropagation();
-            console.log('Calling toggleTabOverflowDropdown');
-            this.toggleTabOverflowDropdown();
-        });
-        
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!overflowDropdown.contains(e.target) && overflowDropdown.classList.contains('active')) {
-                this.hideTabOverflowDropdown();
+        // Convert vertical scroll to horizontal scroll when over tabs
+        tabsContainer.addEventListener('wheel', (e) => {
+            // Only convert if scrolling vertically
+            if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+                e.preventDefault();
+                
+                // Convert vertical scroll to horizontal
+                const scrollAmount = e.deltaY;
+                tabsContainer.scrollLeft += scrollAmount;
+                
+                // Update scroll indicators after scrolling
+                this.updateScrollIndicators();
             }
+        }, { passive: false });
+        
+        // Update indicators when tabs container scrolls
+        tabsContainer.addEventListener('scroll', () => {
+            this.updateScrollIndicators();
         });
         
-        // Update overflow on window resize
-        const resizeHandler = () => {
-            this.updateTabOverflow();
-        };
-        window.addEventListener('resize', resizeHandler);
-        
-        // Store handler for cleanup
-        this.tabOverflowResizeHandler = resizeHandler;
+        // Update indicators when window resizes
+        window.addEventListener('resize', () => {
+            this.updateScrollIndicators();
+        });
         
         // Initial update
-        this.updateTabOverflow();
+        this.updateScrollIndicators();
+        
+        console.log('Tab horizontal scrolling setup complete');
     }
     
-    updateTabOverflow() {
-        console.log('updateTabOverflow called');
+    updateScrollIndicators() {
         const tabsContainer = document.getElementById('tabs-container');
-        const overflowDropdown = document.getElementById('tab-overflow-dropdown');
-        const overflowButton = document.getElementById('tab-overflow-button');
-        const overflowCount = overflowButton?.querySelector('.tab-overflow-count');
+        if (!tabsContainer) return;
         
-        if (!tabsContainer || !overflowDropdown || !overflowButton || !overflowCount) return;
+        const { scrollLeft, scrollWidth, clientWidth } = tabsContainer;
+        const maxScrollLeft = scrollWidth - clientWidth;
         
-        const tabs = Array.from(tabsContainer.querySelectorAll('.tab'));
-        const availableWidth = tabsContainer.clientWidth;
-        let totalWidth = 0;
-        const visibleTabs = [];
-        const overflowTabs = [];
-        
-        // Calculate which tabs fit in available space
-        tabs.forEach(tab => {
-            const tabWidth = tab.offsetWidth;
-            if (totalWidth + tabWidth <= availableWidth) {
-                totalWidth += tabWidth;
-                visibleTabs.push(tab);
-            } else {
-                overflowTabs.push(tab);
-            }
-        });
-        
-        console.log('Tabs found:', tabs.length, 'Available width:', availableWidth, 'Overflow tabs:', overflowTabs.length);
-        
-        // Update overflow dropdown visibility
-        if (overflowTabs.length > 0) {
-            console.log('Showing overflow dropdown with', overflowTabs.length, 'tabs');
-            overflowDropdown.style.display = 'flex';
-            overflowCount.textContent = overflowTabs.length;
-            this.updateOverflowDropdownMenu(overflowTabs);
+        // Show left indicator if scrolled right
+        if (scrollLeft > 0) {
+            tabsContainer.classList.add('scrollable-left');
         } else {
-            console.log('Hiding overflow dropdown - no overflow tabs');
-            overflowDropdown.style.display = 'none';
-            this.hideTabOverflowDropdown();
+            tabsContainer.classList.remove('scrollable-left');
         }
         
-        // Ensure active tab is always visible
-        const activeTab = tabsContainer.querySelector('.tab.active');
-        if (activeTab && overflowTabs.includes(activeTab)) {
-            this.moveTabToVisible(activeTab);
-        }
-    }
-    
-    updateOverflowDropdownMenu(overflowTabs) {
-        const overflowDropdown = document.getElementById('tab-overflow-dropdown');
-        let dropdownMenu = overflowDropdown.querySelector('.tab-overflow-menu');
-        
-        // Create dropdown menu if it doesn't exist
-        if (!dropdownMenu) {
-            dropdownMenu = document.createElement('div');
-            dropdownMenu.className = 'tab-overflow-menu';
-            overflowDropdown.appendChild(dropdownMenu);
-        }
-        
-        // Clear existing menu items
-        dropdownMenu.innerHTML = '';
-        
-        // Add overflow tabs to dropdown menu
-        overflowTabs.forEach(tab => {
-            const tabId = tab.dataset.tabId;
-            const tabData = this.tabs.get(tabId);
-            if (!tabData) return;
-            
-            const menuItem = document.createElement('div');
-            menuItem.className = 'tab-overflow-item';
-            menuItem.innerHTML = `
-                <div class="tab-overflow-item-content">
-                    <span class="tab-overflow-item-title">${tabData.title}</span>
-                    <span class="tab-overflow-item-path">${tabData.path}</span>
-                </div>
-                <button class="tab-overflow-item-close" aria-label="Close tab">
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
-                        <path d="M9.75 3.75L8.25 2.25 6 4.5 3.75 2.25 2.25 3.75 4.5 6 2.25 8.25 3.75 9.75 6 7.5 8.25 9.75 9.75 8.25 7.5 6z"/>
-                    </svg>
-                </button>
-            `;
-            
-            // Add click handler for switching tabs
-            menuItem.querySelector('.tab-overflow-item-content').addEventListener('click', () => {
-                this.switchToTab(tabId);
-                this.hideTabOverflowDropdown();
-            });
-            
-            // Add click handler for closing tabs
-            menuItem.querySelector('.tab-overflow-item-close').addEventListener('click', (e) => {
-                e.stopPropagation();
-                this.closeTab(tabId);
-            });
-            
-            dropdownMenu.appendChild(menuItem);
-        });
-    }
-    
-    toggleTabOverflowDropdown() {
-        const overflowDropdown = document.getElementById('tab-overflow-dropdown');
-        if (!overflowDropdown) return;
-        
-        const isActive = overflowDropdown.classList.contains('active');
-        console.log('Toggle tab overflow dropdown, currently active:', isActive);
-        
-        if (isActive) {
-            this.hideTabOverflowDropdown();
+        // Show right indicator if can scroll more
+        if (scrollLeft < maxScrollLeft - 1) { // -1 for rounding tolerance
+            tabsContainer.classList.add('scrollable-right');
         } else {
-            this.showTabOverflowDropdown();
-        }
-    }
-    
-    showTabOverflowDropdown() {
-        const overflowDropdown = document.getElementById('tab-overflow-dropdown');
-        if (!overflowDropdown) return;
-        
-        overflowDropdown.classList.add('active');
-        console.log('Tab overflow dropdown shown');
-    }
-    
-    hideTabOverflowDropdown() {
-        const overflowDropdown = document.getElementById('tab-overflow-dropdown');
-        if (!overflowDropdown) return;
-        
-        overflowDropdown.classList.remove('active');
-        console.log('Tab overflow dropdown hidden');
-    }
-    
-    moveTabToVisible(activeTab) {
-        // Move the active tab to the visible area by swapping with the last visible tab
-        const tabsContainer = document.getElementById('tabs-container');
-        const tabs = Array.from(tabsContainer.querySelectorAll('.tab'));
-        const activeTabIndex = tabs.indexOf(activeTab);
-        
-        if (activeTabIndex === -1) return;
-        
-        // Find the last visible tab position
-        const availableWidth = tabsContainer.clientWidth;
-        let totalWidth = 0;
-        let lastVisibleIndex = -1;
-        
-        for (let i = 0; i < tabs.length; i++) {
-            const tabWidth = tabs[i].offsetWidth;
-            if (totalWidth + tabWidth <= availableWidth) {
-                totalWidth += tabWidth;
-                lastVisibleIndex = i;
-            } else {
-                break;
-            }
-        }
-        
-        if (lastVisibleIndex >= 0 && activeTabIndex > lastVisibleIndex) {
-            // Swap the active tab with the last visible tab
-            const lastVisibleTab = tabs[lastVisibleIndex];
-            const parent = tabsContainer;
-            
-            // Swap DOM positions
-            const tempNextSibling = activeTab.nextElementSibling;
-            parent.insertBefore(activeTab, lastVisibleTab);
-            parent.insertBefore(lastVisibleTab, tempNextSibling);
-            
-            // Update overflow after swap
-            this.updateTabOverflow();
+            tabsContainer.classList.remove('scrollable-right');
         }
     }
     
@@ -11155,8 +11001,8 @@ class NotesWiki {
             }
         });
         
-        // Update tab scroll buttons after rendering tabs
-        this.updateTabOverflow();
+        // Update scroll indicators after rendering all tabs
+        this.updateScrollIndicators();
     }
     
     setupGroupDropZone(groupHeader, groupId) {
@@ -14948,11 +14794,6 @@ class NotesWiki {
                     this.contextResizeHandler = null;
                 }
                 
-                // Remove tab overflow resize handler
-                if (this.tabOverflowResizeHandler) {
-                    window.removeEventListener('resize', this.tabOverflowResizeHandler);
-                    this.tabOverflowResizeHandler = null;
-                }
                 
                 // Disconnect ResizeObserver
                 if (this.contextResizeObserver) {
