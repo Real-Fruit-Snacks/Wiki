@@ -193,6 +193,7 @@ Themes are organized into 10 categories in the settings modal:
 4. **Confirmation Dialogs** - Optional (now default) confirmations when closing tabs/sticky notes
 5. **Enhanced Error Logging** - Comprehensive logging for theme loading and other operations
 6. **Pinned Tabs** - Right-click tabs to pin them, preventing closure and navigation to different notes
+7. **Note Context Menus** - Right-click any note for quick actions (Open in New Tab, Pin Note, Share Note)
 
 ### Combined Code Blocks Feature
 
@@ -241,6 +242,9 @@ When making changes to this codebase:
 - `togglePinTab(tabId)` - Toggles pin state for a tab
 - `duplicateTab(tabId)` - Creates a duplicate of the specified tab
 - `closeOtherTabs(tabId)` - Closes all other non-pinned tabs
+- `showNoteContextMenu(event, notePath, noteTitle)` - Shows context menu for note actions
+- `toggleNoteBookmark(notePath, noteTitle)` - Adds/removes note from bookmarks
+- `shareNote(notePath, noteTitle)` - Copies note URL to clipboard
 
 **Settings Management**:
 - `loadSettings()` - Loads from localStorage

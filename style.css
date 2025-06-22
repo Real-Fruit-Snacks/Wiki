@@ -675,6 +675,23 @@ body {
     flex: 1;
 }
 
+/* Note context menu */
+.note-context-menu {
+    position: fixed;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 10000;
+    min-width: 180px;
+    padding: var(--spacing-xs);
+    display: none;
+}
+
+.note-context-menu.show {
+    display: block;
+}
+
 /* Main layout */
 .main-layout {
     display: flex;

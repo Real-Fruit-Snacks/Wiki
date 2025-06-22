@@ -523,6 +523,11 @@ class NotesWiki {
                         }
                     });
                     
+                    // Handle right-click context menu
+                    a.addEventListener('contextmenu', (e) => {
+                        this.showNoteContextMenu(e, value.path, value.metadata.title || name.replace('.md', ''));
+                    });
+                    
                     li.appendChild(a);
                 } else {
                     // It's a folder
@@ -3883,6 +3888,11 @@ class NotesWiki {
                     e.preventDefault();
                     this.openInNewTab(match.path);
                 }
+            });
+            
+            // Handle right-click context menu
+            a.addEventListener('contextmenu', (e) => {
+                this.showNoteContextMenu(e, match.path, match.title);
             });
             
             results.appendChild(a);
@@ -7445,6 +7455,11 @@ class NotesWiki {
                 this.showRecentFileActions(file, actionsBtn);
             });
             
+            // Handle right-click context menu
+            a.addEventListener('contextmenu', (e) => {
+                this.showNoteContextMenu(e, file.path, file.title);
+            });
+            
             container.appendChild(a);
             container.appendChild(actionsBtn);
             li.appendChild(container);
@@ -7792,11 +7807,11 @@ class NotesWiki {
                     const bookmarkPath = bookmark.path.startsWith('/') ? bookmark.path : '/' + bookmark.path;
                     return `
                         <li class="bookmark-item">
-                            <a href="#${bookmarkPath}" class="bookmark-link" onclick="event.preventDefault(); notesWiki.navigateToBookmark('${bookmarkPath}')">
+                            <a href="#${bookmarkPath}" class="bookmark-link" data-path="${bookmarkPath}" data-title="${this.escapeHtml(bookmark.title)}">
                                 <span class="bookmark-title">${this.escapeHtml(bookmark.title)}</span>
                                 ${bookmark.context ? `<span class="bookmark-context ${contextClass}">${bookmark.context}</span>` : ''}
                             </a>
-                            <button class="bookmark-remove" onclick="notesWiki.removeBookmark('${bookmark.path}')" aria-label="Remove bookmark">
+                            <button class="bookmark-remove" data-path="${bookmark.path}" aria-label="Remove bookmark">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                     <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L8 6.586l2.293-2.293a1 1 0 111.414 1.414L9.414 8l2.293 2.293a1 1 0 01-1.414 1.414L8 9.414l-2.293 2.293a1 1 0 01-1.414-1.414L6.586 8 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
                                 </svg>
@@ -7804,6 +7819,32 @@ class NotesWiki {
                         </li>
                     `;
                 }).join('');
+                
+                // Add event listeners for bookmark interactions
+                list.querySelectorAll('.bookmark-link').forEach(link => {
+                    const path = link.dataset.path;
+                    const title = link.dataset.title;
+                    
+                    // Handle bookmark click
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        this.navigateToBookmark(path);
+                    });
+                    
+                    // Handle right-click context menu
+                    link.addEventListener('contextmenu', (e) => {
+                        this.showNoteContextMenu(e, path, title);
+                    });
+                });
+                
+                // Add event listeners for remove buttons
+                list.querySelectorAll('.bookmark-remove').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        this.removeBookmark(button.dataset.path);
+                    });
+                });
             }
         }
         
@@ -8862,6 +8903,168 @@ class NotesWiki {
         }
         
         this.showToast(tab.isPinned ? 'Tab pinned' : 'Tab unpinned', 'info');
+    }
+    
+    showNoteContextMenu(event, notePath, noteTitle) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        // Create context menu container
+        const contextMenu = document.createElement('div');
+        contextMenu.className = 'note-context-menu';
+        contextMenu.style.position = 'fixed';
+        contextMenu.style.left = `${event.clientX}px`;
+        contextMenu.style.top = `${event.clientY}px`;
+        contextMenu.style.zIndex = '10000';
+        
+        // Check if note is already bookmarked
+        const isBookmarked = this.bookmarks.some(bookmark => bookmark.path === notePath);
+        
+        // Menu items
+        const menuItems = [
+            {
+                label: 'Open in New Tab',
+                icon: '📄',
+                action: () => this.openInNewTab(notePath)
+            },
+            {
+                label: isBookmarked ? 'Remove Bookmark' : 'Pin Note',
+                icon: isBookmarked ? '📌' : '📍',
+                action: () => this.toggleNoteBookmark(notePath, noteTitle)
+            },
+            {
+                label: 'Share Note',
+                icon: '🔗',
+                action: () => this.shareNote(notePath, noteTitle)
+            }
+        ];
+        
+        // Build menu HTML
+        contextMenu.innerHTML = menuItems.map(item => `
+            <div class="context-menu-item${item.className ? ' ' + item.className : ''}">
+                <span class="context-menu-icon">${item.icon}</span>
+                <span class="context-menu-label">${item.label}</span>
+            </div>
+        `).join('');
+        
+        // Add event listeners
+        const items = contextMenu.querySelectorAll('.context-menu-item');
+        items.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                menuItems[index].action();
+                contextMenu.remove();
+            });
+        });
+        
+        // Close menu when clicking outside
+        const closeMenu = (e) => {
+            if (!contextMenu.contains(e.target)) {
+                contextMenu.remove();
+                document.removeEventListener('click', closeMenu);
+                document.removeEventListener('contextmenu', closeMenu);
+            }
+        };
+        
+        // Delay adding the close listener to prevent immediate closure
+        setTimeout(() => {
+            document.addEventListener('click', closeMenu);
+            document.addEventListener('contextmenu', closeMenu);
+        }, 0);
+        
+        // Add to document
+        document.body.appendChild(contextMenu);
+        
+        // Show the menu by adding the show class
+        contextMenu.classList.add('show');
+        
+        // Adjust position if menu goes off-screen
+        const rect = contextMenu.getBoundingClientRect();
+        if (rect.right > window.innerWidth) {
+            contextMenu.style.left = `${window.innerWidth - rect.width - 5}px`;
+        }
+        if (rect.bottom > window.innerHeight) {
+            contextMenu.style.top = `${window.innerHeight - rect.height - 5}px`;
+        }
+    }
+    
+    toggleNoteBookmark(notePath, noteTitle) {
+        const existingIndex = this.bookmarks.findIndex(bookmark => bookmark.path === notePath);
+        
+        if (existingIndex !== -1) {
+            // Remove bookmark
+            this.bookmarks.splice(existingIndex, 1);
+            this.showToast('Note unpinned', 'info');
+        } else {
+            // Add bookmark
+            const bookmark = {
+                path: notePath,
+                title: noteTitle || this.getNoteTitleFromPath(notePath),
+                timestamp: Date.now()
+            };
+            this.bookmarks.unshift(bookmark);
+            
+            // Limit bookmarks to prevent overflow
+            if (this.bookmarks.length > 50) {
+                this.bookmarks = this.bookmarks.slice(0, 50);
+            }
+            
+            this.showToast('Note pinned', 'success');
+        }
+        
+        // Save and update UI
+        localStorage.setItem('notesWiki_bookmarks', JSON.stringify(this.bookmarks));
+        this.updateBookmarksUI();
+    }
+    
+    shareNote(notePath, noteTitle) {
+        const baseUrl = window.location.origin + window.location.pathname;
+        const noteUrl = `${baseUrl}#${notePath}`;
+        
+        // Try to use the modern clipboard API
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(noteUrl).then(() => {
+                this.showToast('Note URL copied to clipboard', 'success');
+            }).catch(() => {
+                this.fallbackCopyToClipboard(noteUrl);
+            });
+        } else {
+            this.fallbackCopyToClipboard(noteUrl);
+        }
+    }
+    
+    fallbackCopyToClipboard(text) {
+        // Fallback for older browsers or non-secure contexts
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+            document.execCommand('copy');
+            this.showToast('Note URL copied to clipboard', 'success');
+        } catch (err) {
+            this.showToast('Could not copy URL. Please copy manually: ' + text, 'warning');
+        }
+        
+        document.body.removeChild(textArea);
+    }
+    
+    getNoteTitleFromPath(path) {
+        // Extract title from path or use filename
+        if (this.notesIndex && this.notesIndex.notes) {
+            const note = this.notesIndex.notes.find(n => n.path === path);
+            if (note && note.metadata && note.metadata.title) {
+                return note.metadata.title;
+            }
+        }
+        
+        // Fallback to filename
+        const filename = path.split('/').pop();
+        return filename.replace('.md', '').replace(/-/g, ' ');
     }
     
     closeTab(tabId) {
