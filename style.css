@@ -520,6 +520,11 @@ body {
     margin-top: 4px;
 }
 
+/* Show tab overflow menu when dropdown is active */
+.tab-overflow-dropdown.dropdown-active .tab-overflow-menu {
+    display: block !important;
+}
+
 .tab-nav-button {
     width: 28px;
     height: 28px;

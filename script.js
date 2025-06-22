@@ -10086,7 +10086,6 @@ class NotesWiki {
     
     showTabOverflowDropdown() {
         const overflowDropdown = document.getElementById('tab-overflow-dropdown');
-        console.log("showTabOverflowDropdown called");
         let dropdownMenu = overflowDropdown?.querySelector('.tab-overflow-menu');
         
         if (!dropdownMenu) {
