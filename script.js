@@ -10109,16 +10109,11 @@ class NotesWiki {
     
     hideTabOverflowDropdown() {
         const overflowDropdown = document.getElementById('tab-overflow-dropdown');
-        let dropdownMenu = overflowDropdown?.querySelector('.tab-overflow-menu');
+        const dropdownMenu = overflowDropdown?.querySelector('.tab-overflow-menu');
         
         if (!dropdownMenu) {
-            console.log('Dropdown menu not found, calling updateTabOverflow');
-            this.updateTabOverflow();
-            dropdownMenu = overflowDropdown?.querySelector('.tab-overflow-menu');
-            if (!dropdownMenu) {
-                console.log('Still no dropdown menu after update');
-                return;
-            }
+            console.log('Dropdown menu not found, cannot hide');
+            return;
         }
         
         dropdownMenu.style.display = 'none';
