@@ -206,7 +206,7 @@
 }
 
 /* Custom scrollbar for Ayu Mirage */
-@supports selector(::-webkit-scrollbar) {
+@supports (-webkit-appearance: none) {
     [data-theme="ayu-mirage"] ::-webkit-scrollbar {
         width: 8px;
         height: 8px;

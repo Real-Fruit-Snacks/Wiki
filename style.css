@@ -467,7 +467,7 @@ body {
     -ms-overflow-style: none;
 }
 
-@supports selector(::-webkit-scrollbar) {
+@supports (-webkit-appearance: none) {
     .tabs-container::-webkit-scrollbar {
         display: none;
     }
@@ -3064,7 +3064,7 @@ body:not(.show-line-numbers) .code-with-counters .code-line::before {
 }
 
 /* Scrollbar styling for settings modal */
-@supports selector(::-webkit-scrollbar) {
+@supports (-webkit-appearance: none) {
     .settings-body::-webkit-scrollbar {
         width: 8px;
     }
