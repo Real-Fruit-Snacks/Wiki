@@ -665,10 +665,17 @@ body {
 }
 
 .context-menu-icon {
-    font-size: var(--text-sm);
     width: 16px;
-    text-align: center;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
+}
+
+.context-menu-icon svg {
+    width: 16px;
+    height: 16px;
 }
 
 .context-menu-label {
