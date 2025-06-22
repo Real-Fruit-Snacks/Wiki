@@ -190,12 +190,12 @@
                                 </svg>
                                 <span>Split View</span>
                             </button>
-                            <button class="mobile-menu-item" id="mobile-sticky-note-btn" aria-label="Sticky note">
+                            <button class="mobile-menu-item" id="mobile-sticky-note-btn" aria-label="Quick Notes">
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 100 2h4a1 1 0 100-2H8zm0-3a1 1 0 100 2h4a1 1 0 100-2H8z"/>
                                     <path d="M12 2.586V6a1 1 0 001 1h3.414L12 2.586z"/>
                                 </svg>
-                                <span>New Sticky Note</span>
+                                <span>Quick Notes</span>
                             </button>
                             <button class="mobile-menu-item" id="mobile-settings-toggle" aria-label="Settings">
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
@@ -259,8 +259,8 @@
                             </svg>
                         </button>
                         
-                        <!-- Sticky Notes -->
-                        <button class="icon-button" id="sticky-note-btn" onclick="notesWiki.createStickyNote()" title="New sticky note (Ctrl+Shift+S)" aria-label="New sticky note">
+                        <!-- Quick Notes -->
+                        <button class="icon-button" id="sticky-note-btn" onclick="notesWiki.createStickyNote()" title="Quick Notes (Ctrl+Shift+S)" aria-label="Quick Notes">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 100 2h4a1 1 0 100-2H8zm0-3a1 1 0 100 2h4a1 1 0 100-2H8z"/>
                                 <path d="M12 2.586V6a1 1 0 001 1h3.414L12 2.586z"/>
@@ -1132,6 +1132,10 @@
                             <span class="shortcut-key">Settings → Code</span>
                             <span class="shortcut-desc">Toggle line numbers globally</span>
                         </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Ctrl+Shift+S</span>
+                            <span class="shortcut-desc">Toggle quick notes panel</span>
+                        </div>
                     </div>
                     
                     <div class="shortcuts-section">
@@ -1229,8 +1233,5 @@
             });
         })();
     </script>
-    
-    <!-- Sticky Notes Container -->
-    <div id="sticky-notes-container" class="sticky-notes-container"></div>
 </body>
 </html>

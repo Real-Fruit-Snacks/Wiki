@@ -1,106 +1,107 @@
 ---
-title: Sticky Notes
+title: Quick Notes Panel
 tags: [productivity, quick-notes, interface]
 author: Wiki Admin
 created: 2025-01-18
-description: Create floating mini-notes for quick thoughts and temporary reminders
+updated: 2025-06-22
+description: Slide-out panel for quick thoughts and temporary notes
 ---
 
-# Sticky Notes
+# Quick Notes Panel
 
-Sticky notes provide a quick way to capture thoughts, reminders, and temporary notes that float above your workspace. Perfect for jotting down ideas while reading or working on other content.
+The Quick Notes panel provides a dedicated space for capturing thoughts, ideas, and temporary notes without interrupting your main workflow. The elegant slide-out panel keeps your notes organized and easily accessible.
 
-## Creating Sticky Notes
+## Accessing Quick Notes
 
 ### 🖱️ Click Method
-Click the sticky note icon (document with lines) in the header navigation bar.
+Click the Quick Notes icon (document with lines) in the header navigation bar.
 
 ### ⌨️ Keyboard Shortcut
-Press **Ctrl+Shift+S** (or **Cmd+Shift+S** on Mac) to instantly create a new sticky note.
+Press **Ctrl+Shift+S** (or **Cmd+Shift+S** on Mac) to toggle the Quick Notes panel.
 
 ## Features
 
-### 🎨 Four Color Options
-- **Yellow**: Default classic sticky note color
-- **Blue**: Cool and professional
-- **Green**: Nature-inspired and calming  
-- **Pink**: Vibrant and attention-grabbing
+### 📝 Multiple Notes Management
+- **Tab System**: Each note appears as a tab at the top of the panel
+- **Easy Switching**: Click any tab to switch between notes
+- **Preview**: See the first 30 characters of each note in the tab
+- **Date Tracking**: View when each note was last updated
 
-### 📐 Fully Interactive
-- **Drag**: Click and drag the header to move anywhere on screen
-- **Resize**: Drag the bottom-right corner to resize
-- **Minimize**: Click the **−** button to collapse to header only
-- **Expand**: Click the **□** button to restore full size
+### ✨ Clean Interface
+- **Slide-out Panel**: Smoothly slides in from the right side
+- **Full Height**: Uses the entire screen height for maximum space
+- **Auto-save**: Notes save automatically as you type
+- **Persistent**: All notes saved across browser sessions
 
-## Sticky Note Controls
+## Panel Controls
 
-Each sticky note has a header with several action buttons:
+The Quick Notes panel includes intuitive controls:
 
-### 🎨 Color Cycling
-- **Button**: Paint palette icon
-- **Action**: Click to cycle through yellow → blue → green → pink
+### ➕ Add New Note
+- **Button**: Plus icon in the header
+- **Action**: Creates a new empty note
+- **Focus**: Automatically focuses the text area
 
-### 🗕 Minimize/Maximize
-- **Minimize (−)**: Collapses to header only
-- **Maximize (□)**: Restores to full size
-- **Use case**: Keep important reminders visible but compact
+### ❌ Close Panel
+- **Button**: × icon in the header
+- **Action**: Slides the panel away
+- **Shortcut**: Also use Ctrl+Shift+S to toggle
 
-### ❌ Close
-- **Button**: × icon
-- **Action**: Permanently deletes the sticky note
-- **Warning**: Content is lost forever
+### 🗑️ Delete Note
+- **Button**: × icon on each note tab
+- **Action**: Removes the selected note
+- **Confirmation**: Asks before deleting (if enabled in settings)
 
 ## Smart Behaviors
 
 ### 💾 Auto-Save
-- Content saves automatically as you type
-- Position and size saved when moved/resized
-- All changes persist between browser sessions
+- Content saves automatically as you type (1-second delay)
+- All notes persist between browser sessions
+- No manual save needed
 
-### 📚 Z-Index Management
-- Newly clicked sticky notes come to front
-- Multiple stickies stack naturally
-- No limit on number of sticky notes
+### 🔄 Note Management
+- Switch between notes with a single click
+- Notes organized chronologically by last update
+- Empty notes show helpful placeholder text
 
-### 🎯 Collision Avoidance
-- New stickies appear with slight random positioning
-- Prevents stacking exactly on top of each other
+### 📱 Responsive Design
+- Panel adapts to screen size
+- On mobile, uses full screen width
+- Touch-friendly interface for tablets
 
 ## Practical Use Cases
 
 ### 📝 Quick Capture
-```
-💡 Remember to check the new API docs
-🔍 Research: distributed systems patterns  
-📞 Call Sarah about project timeline
-```
+- Jot down ideas without leaving your current page
+- Capture quotes or references while reading
+- Save code snippets for later use
 
-### 🎯 Temporary Reminders
-- Shopping lists while browsing recipes
-- Meeting notes during documentation review
-- Code snippets while reading tutorials
+### 🎯 Research Notes
+- Keep research findings in one place
+- Track questions to investigate
+- Store temporary information during exploration
 
 ### 🧠 Brainstorming
-- Ideas that pop up while reading
-- Questions to research later
-- Links between different concepts
+- Draft outlines for new documents
+- Collect related thoughts and ideas
+- Build connections between concepts
 
-### 📋 Task Lists
-- Quick to-dos that don't warrant full notes
-- Temporary project reminders
-- Daily goals and priorities
+### 📋 Task Management
+- Create quick to-do lists
+- Track progress on current work
+- Note follow-up items from reading
 
 ## Mobile Experience
 
 ### 📱 Touch Support
-- **Tap and hold** header to drag
-- **Pinch** to resize (where supported)
-- **Double-tap** header to minimize/maximize
+- **Tap** tabs to switch between notes
+- **Swipe** to scroll through long notes
+- **Tap** × button to delete notes
 
 ### 📐 Responsive Design
-- Automatically constrains to screen bounds
-- Minimum size maintained for usability
-- Touch targets optimized for fingers
+- Full-screen panel on mobile devices
+- Larger touch targets for easy interaction
+- Optimized text input for mobile keyboards
 
 ## Storage & Privacy
 
@@ -117,19 +118,19 @@ Each sticky note has a header with several action buttons:
 ## Tips & Best Practices
 
 ### ⚡ Workflow Tips
-1. **Use colors meaningfully**: Yellow for ideas, blue for tasks, green for research, pink for urgent
-2. **Keep content short**: Stickies work best for brief notes
-3. **Position strategically**: Place where they won't block important content
+1. **One thought per note**: Keep each note focused on a single topic
+2. **Regular cleanup**: Delete completed or outdated notes
+3. **Use keyboard shortcut**: Ctrl+Shift+S for quick access
 
 ### 🎨 Organization
-- **Group by color** for related thoughts
-- **Minimize when not active** to reduce clutter  
-- **Use consistent positioning** for different types of notes
+- **Date awareness**: Check note dates to track age
+- **Preview scanning**: Use tab previews to find notes quickly
+- **Limit active notes**: Keep 5-10 notes maximum for clarity
 
 ### 🔄 Workflow Integration
-- Create stickies while reading long documents
-- Jot down cross-references between notes
-- Capture spontaneous ideas during research
-- Track temporary reminders during work sessions
+- Open panel while reading to capture insights
+- Use for drafting before creating permanent notes
+- Keep research questions visible while exploring
+- Track progress on complex topics
 
-Sticky notes bridge the gap between fleeting thoughts and permanent knowledge, making your note-taking workflow more fluid and efficient!
+The Quick Notes panel seamlessly integrates temporary note-taking into your workflow, ensuring no thought is lost while maintaining a clean, organized interface!

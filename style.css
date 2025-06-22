@@ -6403,344 +6403,180 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
 }
 
 /* ============================================
-   STICKY NOTES STYLES - MODERN REVAMP
+   QUICK NOTES PANEL STYLES
    ============================================ */
 
-.sticky-notes-container {
+.quick-notes-panel {
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1000;
-}
-
-.sticky-note {
-    position: absolute;
-    min-width: 240px;
-    min-height: 180px;
-    background: var(--sticky-gradient);
-    border: 1px solid var(--sticky-border);
-    border-radius: 12px;
-    box-shadow: 
-        0 4px 20px var(--sticky-shadow-color),
-        0 1px 3px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 var(--sticky-highlight);
-    pointer-events: auto;
+    right: -400px;
+    width: 400px;
+    height: 100vh;
+    background: var(--bg-secondary);
+    border-left: 1px solid var(--border-color);
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+    z-index: 999;
     display: flex;
     flex-direction: column;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    overflow: hidden;
-    transform: translateZ(0); /* Force hardware acceleration */
 }
 
-.sticky-note:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 
-        0 8px 30px var(--sticky-shadow-color),
-        0 4px 12px rgba(0, 0, 0, 0.15),
-        inset 0 1px 0 var(--sticky-highlight);
+.quick-notes-panel.open {
+    right: 0;
 }
 
-.sticky-note.dragging {
-    transform: scale(1.05) rotate(2deg);
-    cursor: move;
-    z-index: 1001;
-    box-shadow: 
-        0 12px 40px var(--sticky-shadow-color),
-        0 6px 20px rgba(0, 0, 0, 0.2);
-}
-
-.sticky-note.resizing {
-    transition: none;
-}
-
-.sticky-note-header {
+.quick-notes-header {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
-    padding: 12px 16px 8px 16px;
-    background: var(--sticky-header-bg);
-    border-radius: 12px 12px 0 0;
-    cursor: move;
-    border-bottom: 1px solid var(--sticky-border);
-    backdrop-filter: blur(20px);
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-primary);
 }
 
-.sticky-note-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--sticky-title-color);
-    letter-spacing: 0.2px;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    background: transparent;
-    border: none;
-    outline: none;
-    padding: 0;
+.quick-notes-header h3 {
     margin: 0;
-    flex: 1;
-    min-width: 0;
-    cursor: text;
-    font-family: inherit;
+    font-size: 1.1rem;
+    font-weight: 600;
 }
 
-.sticky-note-title:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-    padding: 0 4px;
-}
-
-.sticky-note-title:focus {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
-    padding: 0 4px;
-    box-shadow: 0 0 0 2px var(--sticky-border);
-}
-
-.sticky-note-title::placeholder {
-    color: var(--sticky-placeholder-color);
-    opacity: 0.7;
-    font-weight: 400;
-}
-
-.sticky-note-actions {
+.quick-notes-controls {
     display: flex;
-    gap: 6px;
-    align-items: center;
+    gap: var(--spacing-xs);
 }
 
-.sticky-note-btn {
-    background: var(--sticky-btn-bg);
-    border: 1px solid var(--sticky-btn-border);
+.quick-notes-tabs {
+    display: flex;
+    flex-direction: column;
+    max-height: 200px;
+    overflow-y: auto;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-tertiary);
+}
+
+.quick-note-tab {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
     cursor: pointer;
-    padding: 6px 8px;
-    border-radius: 8px;
-    font-size: 13px;
-    color: var(--sticky-btn-color);
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(10px);
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 28px;
-    height: 28px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s ease;
 }
 
-.sticky-note-btn:hover {
-    background: var(--sticky-btn-hover-bg);
-    border-color: var(--sticky-btn-hover-border);
-    color: var(--sticky-btn-hover-color);
-    transform: translateY(-1px);
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+.quick-note-tab:hover {
+    background: var(--bg-hover);
 }
 
-.sticky-note-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+.quick-note-tab.active {
+    background: var(--accent-primary);
+    color: var(--badge-text);
 }
 
-.sticky-note-content {
+.note-tab-content {
     flex: 1;
-    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
     overflow: hidden;
-    background: var(--sticky-content-bg);
 }
 
-.sticky-note-textarea {
-    width: 100%;
-    height: 100%;
-    border: none;
-    background: transparent;
-    resize: none;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    font-size: 14px;
-    line-height: 1.5;
-    color: var(--sticky-text-color);
-    outline: none;
-    font-weight: 400;
-    letter-spacing: 0.1px;
-}
-
-.sticky-note-textarea::placeholder {
-    color: var(--sticky-placeholder-color);
-    font-style: italic;
-    opacity: 0.7;
-}
-
-.sticky-note-resize-handle {
-    position: absolute;
-    bottom: 4px;
-    right: 4px;
-    width: 20px;
-    height: 20px;
-    cursor: nwse-resize;
-    background: radial-gradient(circle at center, var(--sticky-handle-color) 30%, transparent 30%);
-    background-size: 6px 6px;
-    border-radius: 0 0 12px 0;
-    opacity: 0.4;
-    transition: opacity 0.2s;
-}
-
-.sticky-note:hover .sticky-note-resize-handle {
-    opacity: 0.7;
-}
-
-/* Modern Color Schemes */
-.sticky-note-yellow {
-    --sticky-gradient: linear-gradient(135deg, #fef7cd 0%, #fef08a 100%);
-    --sticky-border: rgba(251, 191, 36, 0.3);
-    --sticky-shadow-color: rgba(251, 191, 36, 0.25);
-    --sticky-highlight: rgba(255, 255, 255, 0.8);
-    --sticky-header-bg: rgba(254, 240, 138, 0.8);
-    --sticky-content-bg: rgba(255, 255, 255, 0.1);
-    --sticky-title-color: #92400e;
-    --sticky-text-color: #451a03;
-    --sticky-placeholder-color: #a16207;
-    --sticky-handle-color: rgba(180, 83, 9, 0.4);
-    --sticky-btn-bg: rgba(255, 255, 255, 0.3);
-    --sticky-btn-border: rgba(251, 191, 36, 0.3);
-    --sticky-btn-color: #92400e;
-    --sticky-btn-hover-bg: rgba(255, 255, 255, 0.5);
-    --sticky-btn-hover-border: rgba(251, 191, 36, 0.5);
-    --sticky-btn-hover-color: #78350f;
-}
-
-.sticky-note-blue {
-    --sticky-gradient: linear-gradient(135deg, #dbeafe 0%, #93c5fd 100%);
-    --sticky-border: rgba(59, 130, 246, 0.3);
-    --sticky-shadow-color: rgba(59, 130, 246, 0.25);
-    --sticky-highlight: rgba(255, 255, 255, 0.8);
-    --sticky-header-bg: rgba(147, 197, 253, 0.8);
-    --sticky-content-bg: rgba(255, 255, 255, 0.1);
-    --sticky-title-color: #1e40af;
-    --sticky-text-color: #1e3a8a;
-    --sticky-placeholder-color: #3730a3;
-    --sticky-handle-color: rgba(29, 78, 216, 0.4);
-    --sticky-btn-bg: rgba(255, 255, 255, 0.3);
-    --sticky-btn-border: rgba(59, 130, 246, 0.3);
-    --sticky-btn-color: #1e40af;
-    --sticky-btn-hover-bg: rgba(255, 255, 255, 0.5);
-    --sticky-btn-hover-border: rgba(59, 130, 246, 0.5);
-    --sticky-btn-hover-color: #1d4ed8;
-}
-
-.sticky-note-green {
-    --sticky-gradient: linear-gradient(135deg, #dcfce7 0%, #86efac 100%);
-    --sticky-border: rgba(34, 197, 94, 0.3);
-    --sticky-shadow-color: rgba(34, 197, 94, 0.25);
-    --sticky-highlight: rgba(255, 255, 255, 0.8);
-    --sticky-header-bg: rgba(134, 239, 172, 0.8);
-    --sticky-content-bg: rgba(255, 255, 255, 0.1);
-    --sticky-title-color: #15803d;
-    --sticky-text-color: #14532d;
-    --sticky-placeholder-color: #166534;
-    --sticky-handle-color: rgba(21, 128, 61, 0.4);
-    --sticky-btn-bg: rgba(255, 255, 255, 0.3);
-    --sticky-btn-border: rgba(34, 197, 94, 0.3);
-    --sticky-btn-color: #15803d;
-    --sticky-btn-hover-bg: rgba(255, 255, 255, 0.5);
-    --sticky-btn-hover-border: rgba(34, 197, 94, 0.5);
-    --sticky-btn-hover-color: #166534;
-}
-
-.sticky-note-pink {
-    --sticky-gradient: linear-gradient(135deg, #fce7f3 0%, #f9a8d4 100%);
-    --sticky-border: rgba(236, 72, 153, 0.3);
-    --sticky-shadow-color: rgba(236, 72, 153, 0.25);
-    --sticky-highlight: rgba(255, 255, 255, 0.8);
-    --sticky-header-bg: rgba(249, 168, 212, 0.8);
-    --sticky-content-bg: rgba(255, 255, 255, 0.1);
-    --sticky-title-color: #be185d;
-    --sticky-text-color: #831843;
-    --sticky-placeholder-color: #9d174d;
-    --sticky-handle-color: rgba(190, 24, 93, 0.4);
-    --sticky-btn-bg: rgba(255, 255, 255, 0.3);
-    --sticky-btn-border: rgba(236, 72, 153, 0.3);
-    --sticky-btn-color: #be185d;
-    --sticky-btn-hover-bg: rgba(255, 255, 255, 0.5);
-    --sticky-btn-hover-border: rgba(236, 72, 153, 0.5);
-    --sticky-btn-hover-color: #a21caf;
-}
-
-/* Minimized sticky note styles */
-.sticky-note.minimized {
-    min-width: 120px;
-    max-width: 120px;
-    min-height: 32px;
-    max-height: 32px;
-    transform: none;
-    box-shadow: 
-        0 1px 4px var(--sticky-shadow-color),
-        0 0.5px 1px rgba(0, 0, 0, 0.05);
-    border-radius: 16px;
-}
-
-.sticky-note.minimized:hover {
-    transform: translateY(-1px) scale(1.05);
-    box-shadow: 
-        0 2px 8px var(--sticky-shadow-color),
-        0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.sticky-note.minimized .sticky-note-header {
-    padding: 4px 8px;
-    border-radius: 16px;
-}
-
-.sticky-note.minimized .sticky-note-title {
-    font-size: 11px;
-    font-weight: 500;
+.note-tab-preview {
+    font-size: 0.9rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 60px;
-    opacity: 0.9;
-    padding: 0;
-    background: transparent;
 }
 
-.sticky-note.minimized .sticky-note-title:hover,
-.sticky-note.minimized .sticky-note-title:focus {
-    padding: 0;
-    box-shadow: none;
-    background: transparent;
+.note-tab-date {
+    font-size: 0.75rem;
+    opacity: 0.7;
 }
 
-.sticky-note.minimized .sticky-note-actions {
-    gap: 2px;
-}
-
-.sticky-note.minimized .sticky-note-btn {
-    padding: 4px;
-    min-width: 24px;
-    height: 24px;
-    border-radius: 6px;
-    background: transparent;
+.note-tab-delete {
+    background: none;
     border: none;
-    box-shadow: none;
+    padding: 4px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+    color: inherit;
+    border-radius: var(--border-radius-sm);
 }
 
-.sticky-note.minimized .sticky-note-btn:hover {
-    background: var(--sticky-btn-hover-bg);
-    transform: none;
-    box-shadow: none;
+.note-tab-delete:hover {
+    opacity: 1;
+    background: var(--bg-hover);
 }
 
-.sticky-note.minimized .sticky-note-btn svg {
-    width: 12px;
-    height: 12px;
+.quick-notes-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
-.sticky-note.minimized .color-btn {
-    display: none;
+.quick-note-editor {
+    flex: 1;
+    padding: var(--spacing-md);
 }
 
+.quick-note-textarea {
+    width: 100%;
+    height: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    resize: none;
+    transition: border-color 0.2s ease;
+}
+
+.quick-note-textarea:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+}
+
+.quick-note-textarea::placeholder {
+    color: var(--text-tertiary);
+    opacity: 0.7;
+}
+
+.quick-notes-empty {
+    padding: var(--spacing-lg);
+    text-align: center;
+    color: var(--text-tertiary);
+    font-style: italic;
+}
+
+/* Button active state when panel is open */
+#sticky-note-btn.active,
+#mobile-sticky-note-btn.active {
+    background: var(--accent-primary);
+    color: var(--badge-text);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .quick-notes-panel {
+        width: 100%;
+        right: -100%;
+    }
+    
+    .quick-notes-panel.open {
+        right: 0;
+    }
+}
+
+/* Dark theme adjustments */
+@media (prefers-color-scheme: dark) {
+    .quick-notes-panel {
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+    }
+}
 /* Mobile adjustments */
 @media (max-width: 768px) {
     .split-container {

@@ -324,8 +324,8 @@ class NotesWiki {
         // Load bookmarks
         this.loadBookmarks();
         
-        // Initialize sticky notes
-        this.initializeStickyNotes();
+        // Initialize quick notes panel
+        this.initializeQuickNotes();
         
         // Populate theme picker
         this.populateThemePicker();
@@ -1432,7 +1432,7 @@ class NotesWiki {
                     return;
                 }
                 
-                // Sticky note creation with Ctrl+Shift+S
+                // Quick notes panel with Ctrl+Shift+S
                 if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'S') {
                     e.preventDefault();
                     this.createStickyNote();
@@ -10875,17 +10875,85 @@ class NotesWiki {
     }
     
     // ============================================
-    // STICKY NOTES IMPLEMENTATION
+    // QUICK NOTES PANEL IMPLEMENTATION
     // ============================================
     
-    initializeStickyNotes() {
-        this.stickyNotes = new Map();
-        this.stickyColors = ['yellow', 'blue', 'green', 'pink'];
-        this.stickyZIndex = 1001;
-        this.loadStickyNotes();
+    initializeQuickNotes() {
+        this.quickNotes = [];
+        this.isNotesPanelOpen = false;
+        this.currentNoteIndex = 0;
+        this.loadQuickNotes();
+        this.setupNotesPanel();
     }
     
-    createStickyNote(options = {}) {
+    setupNotesPanel() {
+        // Create the slide-out panel structure
+        const panelHTML = `
+            <div id="quick-notes-panel" class="quick-notes-panel">
+                <div class="quick-notes-header">
+                    <h3>Quick Notes</h3>
+                    <div class="quick-notes-controls">
+                        <button class="icon-button" id="add-quick-note" title="Add new note">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
+                        <button class="icon-button" id="close-notes-panel" title="Close panel">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="quick-notes-tabs" id="quick-notes-tabs"></div>
+                <div class="quick-notes-content" id="quick-notes-content">
+                    <div class="quick-note-editor" id="quick-note-editor">
+                        <textarea class="quick-note-textarea" id="quick-note-textarea" placeholder="Start typing your thoughts..."></textarea>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Add panel to the page
+        document.body.insertAdjacentHTML('beforeend', panelHTML);
+        
+        // Set up event listeners
+        document.getElementById('add-quick-note').addEventListener('click', () => this.addQuickNote());
+        document.getElementById('close-notes-panel').addEventListener('click', () => this.toggleNotesPanel());
+        document.getElementById('quick-note-textarea').addEventListener('input', (e) => this.updateCurrentNote(e.target.value));
+        
+        // Load and display notes
+        this.displayQuickNotes();
+    }
+    
+    toggleNotesPanel() {
+        const panel = document.getElementById('quick-notes-panel');
+        const button = document.getElementById('sticky-note-btn');
+        const mobileButton = document.getElementById('mobile-sticky-note-btn');
+        
+        if (!panel) return;
+        
+        this.isNotesPanelOpen = !this.isNotesPanelOpen;
+        
+        if (this.isNotesPanelOpen) {
+            panel.classList.add('open');
+            button?.classList.add('active');
+            mobileButton?.classList.add('active');
+            
+            // Focus textarea if there's a current note
+            if (this.quickNotes.length > 0) {
+                setTimeout(() => {
+                    document.getElementById('quick-note-textarea')?.focus();
+                }, 300);
+            }
+        } else {
+            panel.classList.remove('open');
+            button?.classList.remove('active');
+            mobileButton?.classList.remove('active');
+        }
+    }
+    
+    addQuickNote() {
         const note = {
             id: `sticky-${Date.now()}`,
             title: options.title || 'Note',
@@ -10898,310 +10966,164 @@ class NotesWiki {
             zIndex: this.stickyZIndex++
         };
         
-        this.stickyNotes.set(note.id, note);
-        this.renderStickyNote(note);
-        this.saveStickyNotes();
+        
+        this.quickNotes.push(note);
+        this.currentNoteIndex = this.quickNotes.length - 1;
+        this.displayQuickNotes();
+        this.saveQuickNotes();
         
         // Focus the textarea
-        setTimeout(() => {
-            const textarea = document.querySelector(`#${note.id} .sticky-note-textarea`);
-            if (textarea) textarea.focus();
-        }, 100);
-        
-        return note;
-    }
-    
-    renderStickyNote(note) {
-        const container = document.getElementById('sticky-notes-container');
-        
-        const noteEl = document.createElement('div');
-        noteEl.className = `sticky-note sticky-note-${note.color}${note.minimized ? ' minimized' : ''}`;
-        noteEl.id = note.id;
-        noteEl.style.left = `${note.position.x}px`;
-        noteEl.style.top = `${note.position.y}px`;
-        noteEl.style.width = note.minimized ? '120px' : `${note.size.width}px`;
-        noteEl.style.height = note.minimized ? '32px' : `${note.size.height}px`;
-        noteEl.style.zIndex = note.zIndex;
-        
-        noteEl.innerHTML = `
-            <div class="sticky-note-header">
-                <input class="sticky-note-title" 
-                       type="text" 
-                       value="${this.escapeHtml(note.title)}" 
-                       placeholder="Note title..."
-                       onchange="notesWiki.updateStickyTitle('${note.id}', this.value)"
-                       onclick="event.stopPropagation()"
-                       onmousedown="event.stopPropagation()"
-                       onkeydown="if(event.key === 'Enter') this.blur(); if(event.key === 'Escape') { this.value = '${this.escapeHtml(note.title)}'; this.blur(); }">
-                <div class="sticky-note-actions">
-                    <button class="sticky-note-btn minimize-btn" onclick="notesWiki.toggleStickyMinimize('${note.id}')" title="${note.minimized ? 'Expand' : 'Minimize'}">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                            ${note.minimized ? 
-                                '<path d="M19 13H5c-1.1 0-2-.9-2-2s.9-2 2-2h14c1.1 0 2 .9 2 2s-.9 2-2 2zm0 6H5c-1.1 0-2-.9-2-2s.9-2 2-2h14c1.1 0 2 .9 2 2s-.9 2-2 2z"/>' :
-                                '<path d="M19 13H5c-1.1 0-2-.9-2-2s.9-2 2-2h14c1.1 0 2 .9 2 2s-.9 2-2 2z"/>'
-                            }
-                        </svg>
-                    </button>
-                    <button class="sticky-note-btn color-btn" onclick="notesWiki.cycleStickyColor('${note.id}')" title="Change color">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 22C6.49 22 2 17.51 2 12S6.49 2 12 2s10 4.49 10 10-4.49 10-10 10zm0-18c-4.41 0-8 3.59-8 8 0 1.82.62 3.49 1.64 4.83 1.43-1.74 4.9-2.33 6.36-2.33s4.93.59 6.36 2.33C19.38 15.49 20 13.82 20 12c0-4.41-3.59-8-8-8z"/>
-                        </svg>
-                    </button>
-                    <button class="sticky-note-btn close-btn" onclick="notesWiki.closeStickyNote('${note.id}')" title="Close">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <div class="sticky-note-content" style="display: ${note.minimized ? 'none' : 'block'}">
-                <textarea class="sticky-note-textarea" 
-                          placeholder="Start typing your thoughts..." 
-                          oninput="notesWiki.updateStickyContent('${note.id}', this.value)">${note.content}</textarea>
-            </div>
-            <div class="sticky-note-resize-handle" style="display: ${note.minimized ? 'none' : 'block'}"></div>
-        `;
-        
-        container.appendChild(noteEl);
-        this.makeStickyDraggable(noteEl, note);
-        this.makeStickyResizable(noteEl, note);
-    }
-    
-    makeStickyDraggable(element, note) {
-        const header = element.querySelector('.sticky-note-header');
-        let isDragging = false;
-        let startX, startY, initialX, initialY;
-        
-        header.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            startX = e.clientX;
-            startY = e.clientY;
-            initialX = note.position.x;
-            initialY = note.position.y;
-            
-            element.style.zIndex = this.stickyZIndex++;
-            note.zIndex = element.style.zIndex;
-            element.classList.add('dragging');
-            e.preventDefault();
-        });
-        
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            
-            const deltaX = e.clientX - startX;
-            const deltaY = e.clientY - startY;
-            
-            const newX = initialX + deltaX;
-            const newY = initialY + deltaY;
-            
-            const maxX = window.innerWidth - element.offsetWidth;
-            const maxY = window.innerHeight - element.offsetHeight;
-            
-            note.position.x = Math.max(0, Math.min(newX, maxX));
-            note.position.y = Math.max(0, Math.min(newY, maxY));
-            
-            element.style.left = `${note.position.x}px`;
-            element.style.top = `${note.position.y}px`;
-        });
-        
-        document.addEventListener('mouseup', () => {
-            if (isDragging) {
-                isDragging = false;
-                element.classList.remove('dragging');
-                this.saveStickyNotes();
-            }
-        });
-    }
-    
-    makeStickyResizable(element, note) {
-        const handle = element.querySelector('.sticky-note-resize-handle');
-        let isResizing = false;
-        let startX, startY, startWidth, startHeight;
-        
-        handle.addEventListener('mousedown', (e) => {
-            isResizing = true;
-            startX = e.clientX;
-            startY = e.clientY;
-            startWidth = note.size.width;
-            startHeight = note.size.height;
-            element.classList.add('resizing');
-            e.preventDefault();
-            e.stopPropagation();
-        });
-        
-        document.addEventListener('mousemove', (e) => {
-            if (!isResizing) return;
-            
-            const deltaX = e.clientX - startX;
-            const deltaY = e.clientY - startY;
-            
-            const newWidth = Math.max(240, startWidth + deltaX);
-            const newHeight = Math.max(180, startHeight + deltaY);
-            
-            note.size.width = newWidth;
-            note.size.height = newHeight;
-            
-            element.style.width = `${newWidth}px`;
-            element.style.height = `${newHeight}px`;
-        });
-        
-        document.addEventListener('mouseup', () => {
-            if (isResizing) {
-                isResizing = false;
-                element.classList.remove('resizing');
-                this.saveStickyNotes();
-            }
-        });
-    }
-    
-    updateStickyContent(noteId, content) {
-        const note = this.stickyNotes.get(noteId);
-        if (note) {
-            note.content = content;
-            this.throttledSaveStickyNotes();
+        const textarea = document.getElementById('quick-note-textarea');
+        if (textarea) {
+            textarea.value = '';
+            textarea.focus();
         }
     }
     
-    updateStickyTitle(noteId, title) {
-        const note = this.stickyNotes.get(noteId);
-        if (note) {
-            note.title = title || 'Quick Note';
-            this.saveStickyNotes();
+    
+    selectQuickNote(index) {
+        if (index >= 0 && index < this.quickNotes.length) {
+            this.currentNoteIndex = index;
+            this.displayQuickNotes();
+            
+            const textarea = document.getElementById('quick-note-textarea');
+            if (textarea) {
+                textarea.value = this.quickNotes[index].content;
+                textarea.focus();
+            }
         }
     }
     
-    toggleStickyMinimize(noteId) {
-        const note = this.stickyNotes.get(noteId);
-        const element = document.getElementById(noteId);
-        
-        if (note && element) {
-            note.minimized = !note.minimized;
+    deleteQuickNote(index) {
+        if (index >= 0 && index < this.quickNotes.length) {
+            const noteText = this.quickNotes[index].content.substring(0, 50) || 'this note';
             
-            const content = element.querySelector('.sticky-note-content');
-            const resizeHandle = element.querySelector('.sticky-note-resize-handle');
-            const minimizeBtn = element.querySelector('.minimize-btn');
-            
-            if (note.minimized) {
-                element.style.height = '32px';
-                element.style.width = '120px';
-                element.classList.add('minimized');
-                content.style.display = 'none';
-                resizeHandle.style.display = 'none';
-                minimizeBtn.innerHTML = `
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M19 13H5c-1.1 0-2-.9-2-2s.9-2 2-2h14c1.1 0 2 .9 2 2s-.9 2-2 2zm0 6H5c-1.1 0-2-.9-2-2s.9-2 2-2h14c1.1 0 2 .9 2 2s-.9 2-2 2z"/>
-                    </svg>
-                `;
-                minimizeBtn.title = 'Expand';
+            if (this.settings.confirmOnClose) {
+                this.showConfirmationDialog(
+                    'Delete Note?',
+                    `Are you sure you want to delete "${noteText}..."?`,
+                    () => {
+                        this.doDeleteQuickNote(index);
+                    }
+                );
             } else {
-                element.style.height = `${note.size.height}px`;
-                element.style.width = `${note.size.width}px`;
-                element.classList.remove('minimized');
-                content.style.display = 'block';
-                resizeHandle.style.display = 'block';
-                minimizeBtn.innerHTML = `
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M19 13H5c-1.1 0-2-.9-2-2s.9-2 2-2h14c1.1 0 2 .9 2 2s-.9 2-2 2z"/>
+                this.doDeleteQuickNote(index);
+            }
+        }
+    }
+    
+    doDeleteQuickNote(index) {
+        this.quickNotes.splice(index, 1);
+        
+        // Adjust current index if needed
+        if (this.currentNoteIndex >= this.quickNotes.length) {
+            this.currentNoteIndex = Math.max(0, this.quickNotes.length - 1);
+        }
+        
+        this.displayQuickNotes();
+        this.saveQuickNotes();
+    }
+    
+    updateCurrentNote(content) {
+        if (this.quickNotes.length > 0 && this.currentNoteIndex >= 0) {
+            this.quickNotes[this.currentNoteIndex].content = content;
+            this.quickNotes[this.currentNoteIndex].updated = new Date().toISOString();
+            this.throttledSaveQuickNotes();
+            
+            // Update tab preview
+            const tab = document.querySelector(`[data-note-index="${this.currentNoteIndex}"] .note-tab-preview`);
+            if (tab) {
+                const preview = content.substring(0, 30) || 'Empty note';
+                tab.textContent = preview;
+            }
+        }
+    }
+    
+    displayQuickNotes() {
+        const tabsContainer = document.getElementById('quick-notes-tabs');
+        const textarea = document.getElementById('quick-note-textarea');
+        
+        if (!tabsContainer || !textarea) return;
+        
+        // Clear existing tabs
+        tabsContainer.innerHTML = '';
+        
+        // Create tabs for each note
+        this.quickNotes.forEach((note, index) => {
+            const tab = document.createElement('div');
+            tab.className = `quick-note-tab ${index === this.currentNoteIndex ? 'active' : ''}`;
+            tab.setAttribute('data-note-index', index);
+            
+            const preview = note.content.substring(0, 30) || 'Empty note';
+            const date = new Date(note.updated).toLocaleDateString();
+            
+            tab.innerHTML = `
+                <div class="note-tab-content" onclick="notesWiki.selectQuickNote(${index})">
+                    <div class="note-tab-preview">${this.escapeHtml(preview)}</div>
+                    <div class="note-tab-date">${date}</div>
+                </div>
+                <button class="note-tab-delete" onclick="notesWiki.deleteQuickNote(${index})" title="Delete note">
+                    <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
                     </svg>
-                `;
-                minimizeBtn.title = 'Minimize';
-            }
+                </button>
+            `;
             
-            this.saveStickyNotes();
-        }
-    }
-    
-    cycleStickyColor(noteId) {
-        const note = this.stickyNotes.get(noteId);
-        const element = document.getElementById(noteId);
+            tabsContainer.appendChild(tab);
+        });
         
-        if (note && element) {
-            const currentIndex = this.stickyColors.indexOf(note.color);
-            const nextIndex = (currentIndex + 1) % this.stickyColors.length;
-            note.color = this.stickyColors[nextIndex];
-            
-            // Remove old color class and add new one
-            this.stickyColors.forEach(color => {
-                element.classList.remove(`sticky-note-${color}`);
-            });
-            element.classList.add(`sticky-note-${note.color}`);
-            
-            this.saveStickyNotes();
-        }
-    }
-    
-    
-    closeStickyNote(noteId) {
-        // Check if confirmation is required
-        if (this.settings.confirmOnClose) {
-            const note = this.stickyNotes.get(noteId);
-            const noteTitle = note?.title || 'this sticky note';
-            
-            this.showConfirmationDialog(
-                'Close Sticky Note?',
-                `Are you sure you want to close "${noteTitle}"?`,
-                () => {
-                    this.doCloseStickyNote(noteId);
-                }
-            );
-            return;
+        // Update textarea with current note
+        if (this.quickNotes.length > 0 && this.currentNoteIndex >= 0) {
+            textarea.value = this.quickNotes[this.currentNoteIndex].content;
+        } else {
+            textarea.value = '';
+            textarea.placeholder = 'Click the + button to create a new note';
         }
         
-        this.doCloseStickyNote(noteId);
-    }
-    
-    doCloseStickyNote(noteId) {
-        const element = document.getElementById(noteId);
-        if (element) {
-            element.remove();
+        // Show/hide empty state
+        if (this.quickNotes.length === 0) {
+            tabsContainer.innerHTML = '<div class="quick-notes-empty">No notes yet. Click + to create one.</div>';
         }
-        this.stickyNotes.delete(noteId);
-        this.saveStickyNotes();
     }
     
-    saveStickyNotes() {
+    saveQuickNotes() {
         try {
-            const notes = Array.from(this.stickyNotes.values());
-            localStorage.setItem('stickyNotes', JSON.stringify(notes));
+            localStorage.setItem('quickNotes', JSON.stringify(this.quickNotes));
         } catch (error) {
-            console.warn('Failed to save sticky notes:', error);
+            console.warn('Failed to save quick notes:', error);
         }
     }
     
-    loadStickyNotes() {
+    loadQuickNotes() {
         try {
-            const stored = localStorage.getItem('stickyNotes');
+            const stored = localStorage.getItem('quickNotes');
             if (stored) {
-                const notes = JSON.parse(stored);
-                // Ensure notes is an array
-                if (Array.isArray(notes)) {
-                    notes.forEach(noteData => {
-                        this.stickyNotes.set(noteData.id, noteData);
-                        this.renderStickyNote(noteData);
-                    });
-                } else {
-                    console.warn('Sticky notes data is not an array, clearing corrupt data');
-                    localStorage.removeItem('stickyNotes');
+                this.quickNotes = JSON.parse(stored);
+                if (!Array.isArray(this.quickNotes)) {
+                    this.quickNotes = [];
                 }
             }
         } catch (error) {
-            console.warn('Failed to load sticky notes:', error);
-            // Clear corrupt data
-            localStorage.removeItem('stickyNotes');
+            console.warn('Failed to load quick notes:', error);
+            this.quickNotes = [];
         }
     }
     
     // Throttled save for performance
-    throttledSaveStickyNotes() {
-        if (this.stickyNoteSaveTimeout) {
-            clearTimeout(this.stickyNoteSaveTimeout);
+    throttledSaveQuickNotes() {
+        if (this.quickNoteSaveTimeout) {
+            clearTimeout(this.quickNoteSaveTimeout);
         }
-        this.stickyNoteSaveTimeout = setTimeout(() => {
-            this.saveStickyNotes();
+        this.quickNoteSaveTimeout = setTimeout(() => {
+            this.saveQuickNotes();
         }, 1000);
     }
     
-    setupMobileMenu() {
+    // Replace createStickyNote method to toggle the panel instead
+    createStickyNote() {
+        this.toggleNotesPanel();
+    }
+        setupMobileMenu() {
         const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
         const mobileMenuContent = document.getElementById('mobile-menu-content');
         
@@ -11308,6 +11230,12 @@ class NotesWiki {
                 if (this.resetPressTimer) {
                     clearTimeout(this.resetPressTimer);
                     this.resetPressTimer = null;
+                }
+                
+                // Clear quick note save timeout
+                if (this.quickNoteSaveTimeout) {
+                    clearTimeout(this.quickNoteSaveTimeout);
+                    this.quickNoteSaveTimeout = null;
                 }
                 
                 // Close AudioContext if it exists
