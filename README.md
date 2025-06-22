@@ -2,9 +2,9 @@
 
 <h1>
   <br>
-  <img src="https://raw.githubusercontent.com/Real-Fruit-Snacks/Wiki/main/images/logo.svg" alt="Wiki Logo" width="100">
+  📚
   <br>
-  Wiki
+  Notes Wiki
   <br>
 </h1>
 
@@ -47,7 +47,7 @@
 
 ---
 
-## ✨ **Standout Features**
+## ✨ **What Makes This Special**
 
 <table>
 <tr>
@@ -66,7 +66,7 @@ Not just dark and light. Choose from:
 
 ### 🚀 **Zero Dependencies**
 Everything included. No CDNs. No npm.
-- **11,000+ lines** of pure JavaScript
+- **11,376+ lines** of pure JavaScript
 - **All libraries bundled** - works offline instantly  
 - **No build step** - just open and use
 - **No tracking** - your data stays yours
@@ -83,16 +83,17 @@ Everything included. No CDNs. No npm.
 ### 📑 **Multi-Tab Workspace**
 Work like a pro with browser-style tabs:
 - **Drag & drop** tabs to reorder
-- **Pin important tabs** - protected from closure
+- **Pin important tabs** - protected from closure and navigation
 - **Tab overflow handling** - scroll through many tabs
 - **Smart confirmations** - never lose work accidentally
 - **Keyboard navigation** - Ctrl+1-9 to jump between tabs
 
 ### 🔍 **Advanced Search That Actually Works**
 ```
-tag:javascript "async await" -promise author:"John Doe"
+tag:javascript "async await" -promise author:"John Doe" status:published
 ```
-- **Search operators** - tags, authors, exact phrases, exclusions
+- **Enhanced operators** - tags, authors, exact phrases, exclusions, status, category
+- **YAML metadata search** - search by status, category, aliases, keywords
 - **Full-text search** - searches content, not just titles
 - **Instant results** - blazing fast with highlighting
 - **Search history** - remembers your last 50 searches
@@ -110,24 +111,39 @@ Not just responsive - actually optimized:
 - **Independent scrolling** - each pane tracks its position
 - **Responsive** - automatically adapts on smaller screens
 
-### 📌 **Floating Sticky Notes**
-Quick thoughts deserve quick capture:
-- **4 colors** - yellow, blue, green, pink
-- **Drag anywhere** - position freely on screen
-- **Resize at will** - make them tiny or huge
-- **Persistent** - survive browser restarts
-- **Keyboard shortcut** - Ctrl+Shift+S for instant creation
+### 📝 **Quick Notes Panel** *(New in v3.4.0)*
+Slide-out panel for instant thought capture:
+- **Multi-note tabs** - organize multiple quick thoughts
+- **Auto-save** - content saves as you type
+- **First-line preview** - quickly identify notes
+- **Persistent storage** - survives browser restarts
+- **Keyboard shortcut** - Ctrl+Shift+S for instant access
+
+### 🏷️ **Enhanced YAML Metadata** *(New in v3.4.0)*
+Rich frontmatter support for better organization:
+```yaml
+---
+title: Advanced Guide
+status: published
+category: tutorial  
+aliases: [guide, howto]
+keywords: [advanced, tutorial, guide]
+related: [/notes/basic-guide.md]
+dependencies: [/notes/prerequisites.md]
+---
+```
 
 ### 🎯 **Smart Context Menus**
 Right-click any note for instant actions:
 - **Open in new tab** - research without losing your place
 - **Bookmark instantly** - build your reading list
 - **Share note URL** - copy link with one click
+- **Professional SVG icons** - matches header design
 - **Works everywhere** - sidebar, search results, content links
 
 ---
 
-## 💡 **Why Wiki Stands Out**
+## 💡 **Why Notes Wiki Stands Out**
 
 <table>
 <tr>
@@ -216,12 +232,12 @@ python3 -m http.server 8000
 </details>
 
 <details>
-<summary><strong>📥 Option 4: Download & Go</strong></summary>
+<summary><strong>📥 Option 4: Download Release Package</strong></summary>
 
-1. [Download Latest Release](https://github.com/Real-Fruit-Snacks/Wiki/releases)
-2. Extract anywhere
-3. Open `index.html`
-4. Start documenting!
+1. [Download Latest Release](https://github.com/Real-Fruit-Snacks/Wiki/releases/latest)
+2. Extract `notes-wiki-v3.4.0-complete.zip`
+3. Upload to any web hosting or open `index.html` locally
+4. Complete offline package with all 70 themes included!
 
 </details>
 
@@ -237,6 +253,10 @@ title: My First Note
 tags: [getting-started, tutorial]
 author: Your Name
 created: 2025-06-22
+status: published
+category: tutorial
+aliases: [first-note, getting-started-guide]
+keywords: [tutorial, getting-started, first, note]
 ---
 
 # My First Note
@@ -248,6 +268,7 @@ Welcome to your new knowledge base!
 - Press `Ctrl+K` to search
 - Right-click this note to bookmark it
 - Press `F` for focus mode
+- Press `Ctrl+Shift+S` for Quick Notes panel
 ```
 
 Then rebuild the search index:
@@ -263,7 +284,7 @@ python3 build.py
 <tr>
 <td align="center">
 
-**Ayu Mirage** (Default)  
+**Tokyo Night** (Default)  
 Modern & comfortable
 
 </td>
@@ -289,7 +310,7 @@ Retro neon vibes
 </table>
 
 <div align="center">
-  <strong>... and 66 more themes to explore!</strong>
+  <strong>... and 66 more themes organized in 10 categories!</strong>
 </div>
 
 ---
@@ -302,7 +323,7 @@ Retro neon vibes
 - `Ctrl+T` - New tab
 - `Alt+P` - Pin/unpin tab
 - `F` - Focus mode
-- `Ctrl+Shift+S` - Create sticky note
+- `Ctrl+Shift+S` - Toggle Quick Notes panel
 
 ### 🔧 **Customization**
 - **Custom CSS** - Make it truly yours
@@ -310,12 +331,14 @@ Retro neon vibes
 - **Keyboard shortcut customization** - Your workflow, your keys
 - **Content width options** - Narrow, wide, or full
 
-### 📊 **Advanced Search**
+### 📊 **Advanced Search Operators**
 - `"exact phrase"` - Find specific text
 - `tag:javascript` - Filter by tags
 - `author:"John Doe"` - Find by author
+- `status:published` - Filter by status
+- `category:tutorial` - Filter by category
 - `-excluded` - Exclude terms
-- Combine operators for precision
+- Combine operators for surgical precision
 
 ---
 
@@ -366,10 +389,33 @@ sensitive docs, privacy
 | **Load Time** | <100ms | Instant on any device |
 | **Lines of Code** | 11,376+ | All features, zero dependencies |
 | **Themes** | 70 | More than most IDEs |
+| **Notes Indexed** | 32+ | Ready-to-use documentation |
 | **External Requests** | 0 | Complete privacy |
 | **Build Dependencies** | 0 | Just Python for search index |
 
 </div>
+
+---
+
+## 🆕 **What's New in v3.4.0**
+
+### ✨ **Major Features**
+- **Quick Notes Panel** - Replaced floating sticky notes with elegant slide-out panel
+- **Enhanced YAML Metadata** - Status, category, aliases, keywords, and more
+- **Professional Context Menus** - SVG icons matching header design
+- **Improved Search** - New operators for status, category, and metadata
+
+### 🔧 **Improvements**
+- **Memory Management** - Comprehensive cleanup to prevent memory leaks
+- **Mobile UX** - Better touch interactions and responsive design
+- **Theme Loading** - Enhanced error handling and fallback themes
+- **Repository Cleanup** - Lean codebase with optimized .gitignore
+
+### 🐛 **Fixes**
+- Fixed SVG icon rendering in context menus
+- Improved textarea behavior in Quick Notes
+- Enhanced GitLab Pages compatibility
+- Better build artifact management
 
 ---
 
