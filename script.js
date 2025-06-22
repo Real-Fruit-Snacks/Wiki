@@ -11068,9 +11068,12 @@ class NotesWiki {
         // Update textarea with current note
         if (this.quickNotes.length > 0 && this.currentNoteIndex >= 0) {
             textarea.value = this.quickNotes[this.currentNoteIndex].content;
+            textarea.disabled = false;
+            textarea.placeholder = 'Start typing your thoughts...';
         } else {
             textarea.value = '';
             textarea.placeholder = 'Click the + button to create a new note';
+            textarea.disabled = true;
         }
         
         // Show/hide empty state
