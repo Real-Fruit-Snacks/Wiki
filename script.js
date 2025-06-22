@@ -53,6 +53,7 @@ class NotesWiki {
                     { id: 'atom-one-light', name: 'Atom One Light', description: 'Clean bright theme with gradient accents' },
                     { id: 'github-light', name: 'GitHub Light', description: 'Modern GitHub theme with clean shadows' },
                     { id: 'light', name: 'Light', description: 'Modern light theme with glassmorphism effects' },
+                    { id: 'neon-light', name: 'Neon Light', description: 'Bright, clean theme with saturated neon accents on light backgrounds' },
                     { id: 'solarized-light', name: 'Solarized Light', description: 'Precision colors with warm paper effects' }
                 ]
             },
@@ -108,6 +109,7 @@ class NotesWiki {
                     { id: '2077', name: '2077 Theme', description: 'Cyberpunk 2077 with neon glow and scan lines' },
                     { id: 'city-lights', name: 'City Lights', description: 'Dark theme with vibrant cyan and pink accents' },
                     { id: 'cyberpunk', name: 'Cyberpunk', description: 'Dystopian theme with glitch effects' },
+                    { id: 'digital-rain', name: 'Digital Rain', description: 'Matrix-inspired green code rain on deep black backgrounds' },
                     { id: 'matrix', name: 'Matrix', description: 'Terminal green with falling code rain' },
                     { id: 'outrun', name: 'Outrun', description: 'Electric blues and hot pinks with intense neon glow' },
                     { id: 'snazzy', name: 'Snazzy', description: 'Terminal-inspired colorful theme with bright accents' },
@@ -135,6 +137,7 @@ class NotesWiki {
                 name: 'Professional',
                 themes: [
                     { id: 'apprentice', name: 'Apprentice', description: 'Low-contrast dark theme for long coding sessions' },
+                    { id: 'corporate-dystopia', name: 'Corporate Dystopia', description: 'Clean slate grays with corporate tech styling and warning accents' },
                     { id: 'flatland', name: 'Flatland', description: 'Flat design dark theme with minimal shadows' },
                     { id: 'github-dark', name: 'GitHub Dark', description: 'GitHub\'s modern developer theme' },
                     { id: 'material', name: 'Material', description: 'Original Material Design theme' },
@@ -149,7 +152,9 @@ class NotesWiki {
             {
                 name: 'Special Effects',
                 themes: [
+                    { id: 'amber-interface', name: 'Amber Interface', description: 'Retro amber monochrome terminal with scan lines and CRT effects' },
                     { id: 'hackthebox', name: 'HackTheBox', description: 'Hacker terminal theme with sweep effects' },
+                    { id: 'holographic', name: 'Holographic', description: 'Translucent interfaces with shimmering rainbow highlights and glass effects' },
                     { id: 'hotdog-stand', name: 'Hot Dog Stand', description: 'Windows 3.1 retro theme with pixel cursors' },
                     { id: 'panda', name: 'Panda', description: 'High contrast theme with distinctive green accents' }
                 ]

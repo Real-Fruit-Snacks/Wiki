@@ -1,0 +1,269 @@
+/* Holographic Theme for Notes Wiki */
+/* Translucent interfaces with shimmering rainbow highlights and glass effects */
+:root[data-theme="holographic"] {
+    /* Background Colors - Translucent with glass effect */
+    --bg-primary: rgba(240, 248, 255, 0.85);
+    --bg-secondary: rgba(248, 250, 252, 0.9);
+    --bg-sidebar: rgba(241, 245, 249, 0.85);
+    --bg-code: rgba(248, 250, 252, 0.7);
+    --bg-selection: rgba(168, 85, 247, 0.2);
+    --bg-dropdown: rgba(255, 255, 255, 0.95);
+    --bg-hover: rgba(168, 85, 247, 0.1);
+    --bg-tag: rgba(168, 85, 247, 0.15);
+    
+    /* Additional Background Colors */
+    --bg-modal: rgba(248, 250, 252, 0.98);
+    --bg-tooltip: rgba(30, 41, 59, 0.95);
+    --bg-input: rgba(248, 250, 252, 0.8);
+    --bg-highlight: rgba(168, 85, 247, 0.15);
+    --text-link: #8b5cf6;
+    --text-code: #ec4899;
+    --text-inverse: #f8fafc;
+    --button-text: #334155;
+    
+    /* Text Colors */
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --text-heading: #0f172a;
+    
+    /* Accent Colors - Holographic spectrum */
+    --accent-primary: #8b5cf6;      /* Purple */
+    --accent-secondary: #ec4899;    /* Pink */
+    --accent-warning: #f59e0b;      /* Amber */
+    --accent-error: #ef4444;        /* Red */
+    --accent-danger: #dc2626;
+    --accent-info: #3b82f6;         /* Blue */
+    --accent-success: #10b981;      /* Emerald */
+    
+    /* Border Colors - Subtle with rainbow shimmer */
+    --border-primary: rgba(168, 85, 247, 0.2);
+    --border-secondary: rgba(168, 85, 247, 0.15);
+    --border-color: rgba(168, 85, 247, 0.2);
+    
+    /* Button Colors */
+    --button-bg: rgba(248, 250, 252, 0.8);
+    --button-hover: rgba(241, 245, 249, 0.9);
+    --button-active: rgba(168, 85, 247, 0.2);
+    
+    /* Badge Colors */
+    --badge-bg: linear-gradient(135deg, #8b5cf6, #ec4899);
+    --badge-text: #ffffff;
+    
+    /* Component-specific Colors */
+    --header-bg: rgba(248, 250, 252, 0.85);
+    --sidebar-bg: rgba(241, 245, 249, 0.85);
+    --modal-bg: rgba(248, 250, 252, 0.98);
+    --modal-backdrop: rgba(15, 23, 42, 0.3);
+    
+    /* Interactive Elements */
+    --hover-bg: rgba(168, 85, 247, 0.1);
+    --focus-ring: #8b5cf6;
+    --selection-bg: rgba(168, 85, 247, 0.2);
+    
+    /* Code Block Colors */
+    --code-bg: rgba(248, 250, 252, 0.7);
+    --code-border: rgba(168, 85, 247, 0.2);
+    
+    /* Search Highlighting */
+    --search-highlight-bg: rgba(251, 191, 36, 0.3);
+    --search-highlight-current: rgba(139, 92, 246, 0.3);
+    
+    /* Status Colors */
+    --status-success: #10b981;
+    --status-warning: #f59e0b;
+    --status-error: #ef4444;
+    --status-info: #3b82f6;
+    
+    /* Shadows - Soft with color shifts */
+    --shadow-sm: 0 1px 3px 0 rgba(139, 92, 246, 0.1), 0 1px 2px 0 rgba(236, 72, 153, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(139, 92, 246, 0.1), 0 2px 4px -1px rgba(236, 72, 153, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(139, 92, 246, 0.1), 0 4px 6px -2px rgba(236, 72, 153, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(139, 92, 246, 0.1), 0 10px 10px -5px rgba(236, 72, 153, 0.04);
+    
+    /* Scrollbar */
+    --scrollbar-track: rgba(241, 245, 249, 0.5);
+    --scrollbar-thumb: rgba(168, 85, 247, 0.3);
+    --scrollbar-thumb-hover: rgba(168, 85, 247, 0.5);
+    
+    /* Special Holographic Effects */
+    --gradient-holographic: linear-gradient(135deg, #8b5cf6 0%, #ec4899 25%, #3b82f6 50%, #10b981 75%, #8b5cf6 100%);
+    --gradient-shimmer: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.7) 50%, transparent 60%);
+    --backdrop-blur: blur(10px);
+}
+
+/* Syntax Highlighting - Holographic */
+:root[data-theme="holographic"] .token.comment,
+:root[data-theme="holographic"] .token.prolog,
+:root[data-theme="holographic"] .token.doctype,
+:root[data-theme="holographic"] .token.cdata {
+    color: #64748b;
+}
+
+:root[data-theme="holographic"] .token.punctuation {
+    color: #475569;
+}
+
+:root[data-theme="holographic"] .token.property,
+:root[data-theme="holographic"] .token.tag,
+:root[data-theme="holographic"] .token.boolean,
+:root[data-theme="holographic"] .token.number,
+:root[data-theme="holographic"] .token.constant,
+:root[data-theme="holographic"] .token.symbol,
+:root[data-theme="holographic"] .token.deleted {
+    color: #ec4899;
+}
+
+:root[data-theme="holographic"] .token.selector,
+:root[data-theme="holographic"] .token.attr-name,
+:root[data-theme="holographic"] .token.string,
+:root[data-theme="holographic"] .token.char,
+:root[data-theme="holographic"] .token.builtin,
+:root[data-theme="holographic"] .token.inserted {
+    color: #10b981;
+}
+
+:root[data-theme="holographic"] .token.operator,
+:root[data-theme="holographic"] .token.entity,
+:root[data-theme="holographic"] .token.url,
+:root[data-theme="holographic"] .language-css .token.string,
+:root[data-theme="holographic"] .style .token.string {
+    color: #3b82f6;
+    background: transparent;
+}
+
+:root[data-theme="holographic"] .token.atrule,
+:root[data-theme="holographic"] .token.attr-value,
+:root[data-theme="holographic"] .token.keyword {
+    color: #8b5cf6;
+}
+
+:root[data-theme="holographic"] .token.function,
+:root[data-theme="holographic"] .token.class-name {
+    color: #6366f1;
+}
+
+:root[data-theme="holographic"] .token.regex,
+:root[data-theme="holographic"] .token.important,
+:root[data-theme="holographic"] .token.variable {
+    color: #f59e0b;
+}
+
+/* Special Holographic Effects */
+[data-theme="holographic"] {
+    color-scheme: light;
+}
+
+/* Glass morphism effect */
+[data-theme="holographic"] .header,
+[data-theme="holographic"] .tab-bar,
+[data-theme="holographic"] .sidebar,
+[data-theme="holographic"] .modal,
+[data-theme="holographic"] .dropdown-content {
+    backdrop-filter: var(--backdrop-blur);
+    -webkit-backdrop-filter: var(--backdrop-blur);
+}
+
+/* Holographic shimmer animation */
+@keyframes holographic-shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+/* Holographic borders */
+[data-theme="holographic"] .tab.active {
+    background: rgba(248, 250, 252, 0.8);
+    border-bottom: 2px solid transparent;
+    background-image: linear-gradient(rgba(248, 250, 252, 0.8), rgba(248, 250, 252, 0.8)), var(--gradient-holographic);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+}
+
+[data-theme="holographic"] .btn-primary {
+    background: var(--gradient-holographic);
+    color: #ffffff;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+[data-theme="holographic"] .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient-shimmer);
+    background-size: 200% 100%;
+    animation: holographic-shimmer 2s infinite;
+    pointer-events: none;
+}
+
+[data-theme="holographic"] .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+/* Holographic links */
+[data-theme="holographic"] a {
+    color: var(--accent-primary);
+    position: relative;
+    text-decoration: none;
+}
+
+[data-theme="holographic"] a:hover {
+    background: var(--gradient-holographic);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+[data-theme="holographic"] ::selection {
+    background: var(--bg-selection);
+    color: var(--text-primary);
+}
+
+/* Holographic cards */
+[data-theme="holographic"] .note-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+[data-theme="holographic"] .note-card:hover {
+    border-color: transparent;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), var(--gradient-holographic);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+}
+
+/* Webkit Scrollbar */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    [data-theme="holographic"] ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    [data-theme="holographic"] ::-webkit-scrollbar-track {
+        background: var(--scrollbar-track);
+        border-radius: 5px;
+    }
+
+    [data-theme="holographic"] ::-webkit-scrollbar-thumb {
+        background: var(--scrollbar-thumb);
+        border-radius: 5px;
+        border: 2px solid var(--scrollbar-track);
+    }
+
+    [data-theme="holographic"] ::-webkit-scrollbar-thumb:hover {
+        background: var(--scrollbar-thumb-hover);
+    }
+}
+
+/* Firefox Scrollbar */
+[data-theme="holographic"] * {
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+    scrollbar-width: thin;
+}

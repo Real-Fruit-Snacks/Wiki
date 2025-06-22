@@ -1,0 +1,245 @@
+/* Digital Rain Theme for Notes Wiki */
+/* Matrix-inspired green code rain on deep black backgrounds */
+:root[data-theme="digital-rain"] {
+    /* Background Colors */
+    --bg-primary: #000000;
+    --bg-secondary: #0a0a0a;
+    --bg-sidebar: #050505;
+    --bg-code: #0a0f0a;
+    --bg-selection: #00ff4133;
+    --bg-dropdown: #0a0a0a;
+    --bg-hover: #00ff4111;
+    --bg-tag: #00ff4122;
+    
+    /* Additional Background Colors */
+    --bg-modal: #000000ee;
+    --bg-tooltip: #0a0f0a;
+    --bg-input: #0a0a0a;
+    --bg-highlight: #00ff4133;
+    --text-link: #00ff41;
+    --text-code: #00ff41;
+    --text-inverse: #000000;
+    --button-text: #00ff41;
+    
+    /* Text Colors - Matrix Green */
+    --text-primary: #00ff41;
+    --text-secondary: #00cc33;
+    --text-muted: #008822;
+    --text-heading: #00ff41;
+    
+    /* Accent Colors - Various shades of green */
+    --accent-primary: #00ff41;
+    --accent-secondary: #00cc33;
+    --accent-warning: #41ff00;
+    --accent-error: #ff0041;
+    --accent-danger: #ff0041;
+    --accent-info: #00ffaa;
+    --accent-success: #00ff00;
+    
+    /* Border Colors */
+    --border-primary: #00ff4133;
+    --border-secondary: #00cc3333;
+    --border-color: #00ff4133;
+    
+    /* Button Colors */
+    --button-bg: #00ff4111;
+    --button-hover: #00ff4122;
+    --button-active: #00ff4144;
+    
+    /* Badge Colors */
+    --badge-bg: #00ff41;
+    --badge-text: #000000;
+    
+    /* Component-specific Colors */
+    --header-bg: #000000;
+    --sidebar-bg: #050505;
+    --modal-bg: #0a0a0a;
+    --modal-backdrop: rgba(0, 0, 0, 0.8);
+    
+    /* Interactive Elements */
+    --hover-bg: #00ff4111;
+    --focus-ring: #00ff41;
+    --selection-bg: #00ff4133;
+    
+    /* Code Block Colors */
+    --code-bg: #0a0f0a;
+    --code-border: #00ff4133;
+    
+    /* Search Highlighting */
+    --search-highlight-bg: #41ff0066;
+    --search-highlight-current: #00ff4166;
+    
+    /* Status Colors */
+    --status-success: #00ff00;
+    --status-warning: #41ff00;
+    --status-error: #ff0041;
+    --status-info: #00ffaa;
+    
+    /* Shadows - Green glow effects */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 255, 65, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 255, 65, 0.15), 0 2px 4px -1px rgba(0, 255, 65, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 255, 65, 0.2), 0 4px 6px -2px rgba(0, 255, 65, 0.15);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 255, 65, 0.25), 0 10px 10px -5px rgba(0, 255, 65, 0.2);
+    
+    /* Scrollbar */
+    --scrollbar-track: #0a0a0a;
+    --scrollbar-thumb: #00ff4144;
+    --scrollbar-thumb-hover: #00ff4166;
+    
+    /* Special Effects */
+    --glow-green: 0 0 10px rgba(0, 255, 65, 0.8);
+    --text-shadow-matrix: 0 0 5px #00ff41, 0 0 10px #00ff41;
+    --scan-line: linear-gradient(180deg, transparent 0%, rgba(0, 255, 65, 0.03) 50%, transparent 100%);
+}
+
+/* Syntax Highlighting - Digital Rain */
+:root[data-theme="digital-rain"] .token.comment,
+:root[data-theme="digital-rain"] .token.prolog,
+:root[data-theme="digital-rain"] .token.doctype,
+:root[data-theme="digital-rain"] .token.cdata {
+    color: #008822;
+}
+
+:root[data-theme="digital-rain"] .token.punctuation {
+    color: #00cc33;
+}
+
+:root[data-theme="digital-rain"] .token.property,
+:root[data-theme="digital-rain"] .token.tag,
+:root[data-theme="digital-rain"] .token.boolean,
+:root[data-theme="digital-rain"] .token.number,
+:root[data-theme="digital-rain"] .token.constant,
+:root[data-theme="digital-rain"] .token.symbol,
+:root[data-theme="digital-rain"] .token.deleted {
+    color: #00ff41;
+}
+
+:root[data-theme="digital-rain"] .token.selector,
+:root[data-theme="digital-rain"] .token.attr-name,
+:root[data-theme="digital-rain"] .token.string,
+:root[data-theme="digital-rain"] .token.char,
+:root[data-theme="digital-rain"] .token.builtin,
+:root[data-theme="digital-rain"] .token.inserted {
+    color: #00ff00;
+}
+
+:root[data-theme="digital-rain"] .token.operator,
+:root[data-theme="digital-rain"] .token.entity,
+:root[data-theme="digital-rain"] .token.url,
+:root[data-theme="digital-rain"] .language-css .token.string,
+:root[data-theme="digital-rain"] .style .token.string {
+    color: #00ffaa;
+    background: transparent;
+}
+
+:root[data-theme="digital-rain"] .token.atrule,
+:root[data-theme="digital-rain"] .token.attr-value,
+:root[data-theme="digital-rain"] .token.keyword {
+    color: #41ff00;
+}
+
+:root[data-theme="digital-rain"] .token.function,
+:root[data-theme="digital-rain"] .token.class-name {
+    color: #00ff41;
+}
+
+:root[data-theme="digital-rain"] .token.regex,
+:root[data-theme="digital-rain"] .token.important,
+:root[data-theme="digital-rain"] .token.variable {
+    color: #00ffaa;
+}
+
+/* Special Matrix Effects */
+[data-theme="digital-rain"] {
+    color-scheme: dark;
+}
+
+/* Subtle text glow */
+[data-theme="digital-rain"] * {
+    text-shadow: 0 0 1px currentColor;
+}
+
+/* Matrix-style cursor */
+[data-theme="digital-rain"] .note-content {
+    caret-color: #00ff41;
+}
+
+/* Glowing active elements */
+[data-theme="digital-rain"] .tab.active {
+    box-shadow: inset 0 -2px 0 0 var(--accent-primary), 0 0 10px rgba(0, 255, 65, 0.3);
+}
+
+[data-theme="digital-rain"] .btn-primary {
+    background: #00ff4122;
+    color: #00ff41;
+    border: 1px solid #00ff41;
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+}
+
+[data-theme="digital-rain"] .btn-primary:hover {
+    background: #00ff4133;
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.8);
+}
+
+[data-theme="digital-rain"] a {
+    color: var(--accent-primary);
+}
+
+[data-theme="digital-rain"] a:hover {
+    text-shadow: var(--text-shadow-matrix);
+}
+
+[data-theme="digital-rain"] ::selection {
+    background: var(--bg-selection);
+    color: #00ff00;
+}
+
+/* Subtle scan line effect for headers */
+[data-theme="digital-rain"] .header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--scan-line);
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* Code blocks with enhanced Matrix feel */
+[data-theme="digital-rain"] pre {
+    background: #0a0f0a;
+    border: 1px solid #00ff4133;
+    box-shadow: inset 0 0 20px rgba(0, 255, 65, 0.05);
+}
+
+/* Webkit Scrollbar */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    [data-theme="digital-rain"] ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    [data-theme="digital-rain"] ::-webkit-scrollbar-track {
+        background: var(--scrollbar-track);
+        border-radius: 0;
+    }
+
+    [data-theme="digital-rain"] ::-webkit-scrollbar-thumb {
+        background: var(--scrollbar-thumb);
+        border-radius: 0;
+        box-shadow: inset 0 0 3px rgba(0, 255, 65, 0.5);
+    }
+
+    [data-theme="digital-rain"] ::-webkit-scrollbar-thumb:hover {
+        background: var(--scrollbar-thumb-hover);
+        box-shadow: inset 0 0 5px rgba(0, 255, 65, 0.8);
+    }
+}
+
+/* Firefox Scrollbar */
+[data-theme="digital-rain"] * {
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+    scrollbar-width: thin;
+}

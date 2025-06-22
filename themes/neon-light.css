@@ -1,0 +1,212 @@
+/* Neon Light Theme for Notes Wiki */
+/* Bright, clean theme with saturated neon accents on light backgrounds */
+:root[data-theme="neon-light"] {
+    /* Background Colors */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --bg-sidebar: #f3f4f6;
+    --bg-code: #f8fafc;
+    --bg-selection: #00d9ff33;
+    --bg-dropdown: #ffffff;
+    --bg-hover: #e5e7eb;
+    --bg-tag: #e0f2fe;
+    
+    /* Additional Background Colors */
+    --bg-modal: #ffffffee;
+    --bg-tooltip: #1f2937;
+    --bg-input: #f9fafb;
+    --bg-highlight: #00d9ff22;
+    --text-link: #00d9ff;
+    --text-code: #ff0080;
+    --text-inverse: #000000;
+    --button-text: #374151;
+    
+    /* Text Colors */
+    --text-primary: #111827;
+    --text-secondary: #4b5563;
+    --text-muted: #9ca3af;
+    --text-heading: #00d9ff;
+    
+    /* Accent Colors - Vibrant Neon */
+    --accent-primary: #00d9ff;      /* Cyan */
+    --accent-secondary: #ff0080;    /* Hot Pink */
+    --accent-warning: #ffff00;      /* Yellow */
+    --accent-error: #ff0040;        /* Red */
+    --accent-danger: #ff0040;
+    --accent-info: #00d9ff;
+    --accent-success: #00ff88;      /* Green */
+    
+    /* Border Colors */
+    --border-primary: #e5e7eb;
+    --border-secondary: #d1d5db;
+    --border-color: #e5e7eb;
+    
+    /* Button Colors */
+    --button-bg: #f3f4f6;
+    --button-hover: #e5e7eb;
+    --button-active: #00d9ff;
+    
+    /* Badge Colors */
+    --badge-bg: #ff0080;
+    --badge-text: #ffffff;
+    
+    /* Component-specific Colors */
+    --header-bg: #ffffff;
+    --sidebar-bg: #f9fafb;
+    --modal-bg: #ffffff;
+    --modal-backdrop: rgba(0, 0, 0, 0.4);
+    
+    /* Interactive Elements */
+    --hover-bg: #00d9ff11;
+    --focus-ring: #00d9ff;
+    --selection-bg: #00d9ff33;
+    
+    /* Code Block Colors */
+    --code-bg: #f8fafc;
+    --code-border: #e5e7eb;
+    
+    /* Search Highlighting */
+    --search-highlight-bg: #ffff0066;
+    --search-highlight-current: #00d9ff66;
+    
+    /* Status Colors */
+    --status-success: #00ff88;
+    --status-warning: #ffff00;
+    --status-error: #ff0040;
+    --status-info: #00d9ff;
+    
+    /* Shadows - Subtle with neon glow */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 217, 255, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 217, 255, 0.15);
+    
+    /* Scrollbar */
+    --scrollbar-track: #f3f4f6;
+    --scrollbar-thumb: #d1d5db;
+    --scrollbar-thumb-hover: #9ca3af;
+    
+    /* Special Effects */
+    --glow-cyan: 0 0 20px rgba(0, 217, 255, 0.5);
+    --glow-pink: 0 0 20px rgba(255, 0, 128, 0.5);
+    --text-shadow-neon: 0 0 10px currentColor;
+}
+
+/* Syntax Highlighting - Neon Light */
+:root[data-theme="neon-light"] .token.comment,
+:root[data-theme="neon-light"] .token.prolog,
+:root[data-theme="neon-light"] .token.doctype,
+:root[data-theme="neon-light"] .token.cdata {
+    color: #9ca3af;
+}
+
+:root[data-theme="neon-light"] .token.punctuation {
+    color: #4b5563;
+}
+
+:root[data-theme="neon-light"] .token.property,
+:root[data-theme="neon-light"] .token.tag,
+:root[data-theme="neon-light"] .token.boolean,
+:root[data-theme="neon-light"] .token.number,
+:root[data-theme="neon-light"] .token.constant,
+:root[data-theme="neon-light"] .token.symbol,
+:root[data-theme="neon-light"] .token.deleted {
+    color: #ff0080;
+}
+
+:root[data-theme="neon-light"] .token.selector,
+:root[data-theme="neon-light"] .token.attr-name,
+:root[data-theme="neon-light"] .token.string,
+:root[data-theme="neon-light"] .token.char,
+:root[data-theme="neon-light"] .token.builtin,
+:root[data-theme="neon-light"] .token.inserted {
+    color: #00ff88;
+}
+
+:root[data-theme="neon-light"] .token.operator,
+:root[data-theme="neon-light"] .token.entity,
+:root[data-theme="neon-light"] .token.url,
+:root[data-theme="neon-light"] .language-css .token.string,
+:root[data-theme="neon-light"] .style .token.string {
+    color: #00d9ff;
+    background: transparent;
+}
+
+:root[data-theme="neon-light"] .token.atrule,
+:root[data-theme="neon-light"] .token.attr-value,
+:root[data-theme="neon-light"] .token.keyword {
+    color: #ff0080;
+}
+
+:root[data-theme="neon-light"] .token.function,
+:root[data-theme="neon-light"] .token.class-name {
+    color: #00d9ff;
+}
+
+:root[data-theme="neon-light"] .token.regex,
+:root[data-theme="neon-light"] .token.important,
+:root[data-theme="neon-light"] .token.variable {
+    color: #ff00ff;
+}
+
+/* Special Neon Effects */
+[data-theme="neon-light"] {
+    color-scheme: light;
+}
+
+/* Neon glow for active elements */
+[data-theme="neon-light"] .tab.active {
+    box-shadow: inset 0 -2px 0 0 var(--accent-primary), 0 2px 8px rgba(0, 217, 255, 0.2);
+}
+
+[data-theme="neon-light"] .btn-primary {
+    background: var(--accent-primary);
+    color: #000000;
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.4);
+}
+
+[data-theme="neon-light"] .btn-primary:hover {
+    box-shadow: 0 0 25px rgba(0, 217, 255, 0.6);
+}
+
+[data-theme="neon-light"] a {
+    color: var(--accent-primary);
+}
+
+[data-theme="neon-light"] a:hover {
+    text-shadow: 0 0 8px rgba(0, 217, 255, 0.5);
+}
+
+[data-theme="neon-light"] ::selection {
+    background: var(--bg-selection);
+    color: var(--text-primary);
+}
+
+/* Webkit Scrollbar */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    [data-theme="neon-light"] ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    [data-theme="neon-light"] ::-webkit-scrollbar-track {
+        background: var(--scrollbar-track);
+        border-radius: 4px;
+    }
+
+    [data-theme="neon-light"] ::-webkit-scrollbar-thumb {
+        background: var(--scrollbar-thumb);
+        border-radius: 4px;
+    }
+
+    [data-theme="neon-light"] ::-webkit-scrollbar-thumb:hover {
+        background: var(--scrollbar-thumb-hover);
+        box-shadow: 0 0 8px rgba(0, 217, 255, 0.3);
+    }
+}
+
+/* Firefox Scrollbar */
+[data-theme="neon-light"] * {
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+    scrollbar-width: thin;
+}

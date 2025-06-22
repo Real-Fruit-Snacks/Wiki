@@ -1,0 +1,251 @@
+/* Corporate Dystopia Theme for Notes Wiki */
+/* Clean slate grays with corporate tech styling and warning accents */
+:root[data-theme="corporate-dystopia"] {
+    /* Background Colors */
+    --bg-primary: #1a1d21;
+    --bg-secondary: #20242a;
+    --bg-sidebar: #161a1f;
+    --bg-code: #252a31;
+    --bg-selection: #3b82f633;
+    --bg-dropdown: #20242a;
+    --bg-hover: #2a2f36;
+    --bg-tag: #2a2f36;
+    
+    /* Additional Background Colors */
+    --bg-modal: #1a1d21ee;
+    --bg-tooltip: #2a2f36;
+    --bg-input: #252a31;
+    --bg-highlight: #3b82f622;
+    --text-link: #3b82f6;
+    --text-code: #60a5fa;
+    --text-inverse: #1a1d21;
+    --button-text: #e5e7eb;
+    
+    /* Text Colors - Corporate Grays */
+    --text-primary: #e5e7eb;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+    --text-heading: #f9fafb;
+    
+    /* Accent Colors - Corporate Blue with Warning Accents */
+    --accent-primary: #3b82f6;      /* Corporate Blue */
+    --accent-secondary: #6366f1;    /* Indigo */
+    --accent-warning: #fbbf24;      /* Warning Yellow */
+    --accent-error: #ef4444;        /* Error Red */
+    --accent-danger: #dc2626;       /* Danger Red */
+    --accent-info: #3b82f6;
+    --accent-success: #10b981;      /* Success Green */
+    
+    /* Border Colors */
+    --border-primary: #374151;
+    --border-secondary: #4b5563;
+    --border-color: #374151;
+    
+    /* Button Colors */
+    --button-bg: #374151;
+    --button-hover: #4b5563;
+    --button-active: #3b82f6;
+    
+    /* Badge Colors */
+    --badge-bg: #ef4444;
+    --badge-text: #ffffff;
+    
+    /* Component-specific Colors */
+    --header-bg: #161a1f;
+    --sidebar-bg: #161a1f;
+    --modal-bg: #20242a;
+    --modal-backdrop: rgba(0, 0, 0, 0.75);
+    
+    /* Interactive Elements */
+    --hover-bg: #2a2f36;
+    --focus-ring: #3b82f6;
+    --selection-bg: #3b82f633;
+    
+    /* Code Block Colors */
+    --code-bg: #252a31;
+    --code-border: #374151;
+    
+    /* Search Highlighting */
+    --search-highlight-bg: #fbbf2466;
+    --search-highlight-current: #3b82f666;
+    
+    /* Status Colors */
+    --status-success: #10b981;
+    --status-warning: #fbbf24;
+    --status-error: #ef4444;
+    --status-info: #3b82f6;
+    
+    /* Shadows - Sharp and minimal */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+    
+    /* Scrollbar */
+    --scrollbar-track: #20242a;
+    --scrollbar-thumb: #4b5563;
+    --scrollbar-thumb-hover: #6b7280;
+    
+    /* Special Corporate Effects */
+    --border-warning: 2px solid #fbbf24;
+    --text-shadow-warning: 0 0 3px #fbbf24;
+    --gradient-corporate: linear-gradient(135deg, #1a1d21 0%, #20242a 100%);
+}
+
+/* Syntax Highlighting - Corporate Dystopia */
+:root[data-theme="corporate-dystopia"] .token.comment,
+:root[data-theme="corporate-dystopia"] .token.prolog,
+:root[data-theme="corporate-dystopia"] .token.doctype,
+:root[data-theme="corporate-dystopia"] .token.cdata {
+    color: #6b7280;
+}
+
+:root[data-theme="corporate-dystopia"] .token.punctuation {
+    color: #9ca3af;
+}
+
+:root[data-theme="corporate-dystopia"] .token.property,
+:root[data-theme="corporate-dystopia"] .token.tag,
+:root[data-theme="corporate-dystopia"] .token.boolean,
+:root[data-theme="corporate-dystopia"] .token.number,
+:root[data-theme="corporate-dystopia"] .token.constant,
+:root[data-theme="corporate-dystopia"] .token.symbol,
+:root[data-theme="corporate-dystopia"] .token.deleted {
+    color: #ef4444;
+}
+
+:root[data-theme="corporate-dystopia"] .token.selector,
+:root[data-theme="corporate-dystopia"] .token.attr-name,
+:root[data-theme="corporate-dystopia"] .token.string,
+:root[data-theme="corporate-dystopia"] .token.char,
+:root[data-theme="corporate-dystopia"] .token.builtin,
+:root[data-theme="corporate-dystopia"] .token.inserted {
+    color: #10b981;
+}
+
+:root[data-theme="corporate-dystopia"] .token.operator,
+:root[data-theme="corporate-dystopia"] .token.entity,
+:root[data-theme="corporate-dystopia"] .token.url,
+:root[data-theme="corporate-dystopia"] .language-css .token.string,
+:root[data-theme="corporate-dystopia"] .style .token.string {
+    color: #3b82f6;
+    background: transparent;
+}
+
+:root[data-theme="corporate-dystopia"] .token.atrule,
+:root[data-theme="corporate-dystopia"] .token.attr-value,
+:root[data-theme="corporate-dystopia"] .token.keyword {
+    color: #6366f1;
+}
+
+:root[data-theme="corporate-dystopia"] .token.function,
+:root[data-theme="corporate-dystopia"] .token.class-name {
+    color: #60a5fa;
+}
+
+:root[data-theme="corporate-dystopia"] .token.regex,
+:root[data-theme="corporate-dystopia"] .token.important,
+:root[data-theme="corporate-dystopia"] .token.variable {
+    color: #fbbf24;
+}
+
+/* Special Corporate Styling */
+[data-theme="corporate-dystopia"] {
+    color-scheme: dark;
+}
+
+/* Monospace everything for that corporate terminal feel */
+[data-theme="corporate-dystopia"] {
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+}
+
+/* Warning indicators */
+[data-theme="corporate-dystopia"] .badge {
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+[data-theme="corporate-dystopia"] .tab.active {
+    box-shadow: inset 0 -2px 0 0 var(--accent-primary);
+    background: var(--bg-hover);
+}
+
+[data-theme="corporate-dystopia"] .btn-primary {
+    background: var(--accent-primary);
+    color: #ffffff;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+[data-theme="corporate-dystopia"] .btn-primary:hover {
+    background: #2563eb;
+}
+
+/* Corporate warning styling */
+[data-theme="corporate-dystopia"] .callout-warning {
+    border: var(--border-warning);
+    background: rgba(251, 191, 36, 0.1);
+}
+
+[data-theme="corporate-dystopia"] .callout-warning .callout-title {
+    color: #fbbf24;
+    text-shadow: var(--text-shadow-warning);
+}
+
+[data-theme="corporate-dystopia"] a {
+    color: var(--accent-primary);
+    text-decoration: none;
+}
+
+[data-theme="corporate-dystopia"] a:hover {
+    text-decoration: underline;
+}
+
+[data-theme="corporate-dystopia"] ::selection {
+    background: var(--bg-selection);
+    color: #ffffff;
+}
+
+/* Corporate grid pattern for backgrounds */
+[data-theme="corporate-dystopia"] .header {
+    background-image: 
+        linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-position: -1px -1px;
+}
+
+/* Sharp corners everywhere */
+[data-theme="corporate-dystopia"] * {
+    border-radius: 0 !important;
+}
+
+/* Webkit Scrollbar */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    [data-theme="corporate-dystopia"] ::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+
+    [data-theme="corporate-dystopia"] ::-webkit-scrollbar-track {
+        background: var(--scrollbar-track);
+    }
+
+    [data-theme="corporate-dystopia"] ::-webkit-scrollbar-thumb {
+        background: var(--scrollbar-thumb);
+        border: 2px solid var(--scrollbar-track);
+    }
+
+    [data-theme="corporate-dystopia"] ::-webkit-scrollbar-thumb:hover {
+        background: var(--scrollbar-thumb-hover);
+    }
+}
+
+/* Firefox Scrollbar */
+[data-theme="corporate-dystopia"] * {
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+    scrollbar-width: auto;
+}

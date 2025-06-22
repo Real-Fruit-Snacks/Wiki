@@ -1,0 +1,296 @@
+/* Amber Interface Theme for Notes Wiki */
+/* Retro amber monochrome terminal with scan lines and CRT effects */
+:root[data-theme="amber-interface"] {
+    /* Background Colors - CRT Black */
+    --bg-primary: #0a0400;
+    --bg-secondary: #0f0600;
+    --bg-sidebar: #080300;
+    --bg-code: #140800;
+    --bg-selection: #ff990033;
+    --bg-dropdown: #0f0600;
+    --bg-hover: #1a0a00;
+    --bg-tag: #1a0a00;
+    
+    /* Additional Background Colors */
+    --bg-modal: #0a0400ee;
+    --bg-tooltip: #1a0a00;
+    --bg-input: #140800;
+    --bg-highlight: #ff990033;
+    --text-link: #ffaa00;
+    --text-code: #ff9900;
+    --text-inverse: #0a0400;
+    --button-text: #ff9900;
+    
+    /* Text Colors - Amber Monochrome */
+    --text-primary: #ff9900;
+    --text-secondary: #cc7700;
+    --text-muted: #995500;
+    --text-heading: #ffaa00;
+    
+    /* Accent Colors - All Amber Variations */
+    --accent-primary: #ff9900;
+    --accent-secondary: #ffaa00;
+    --accent-warning: #ffbb00;
+    --accent-error: #ff6600;
+    --accent-danger: #ff6600;
+    --accent-info: #ffaa00;
+    --accent-success: #ffbb00;
+    
+    /* Border Colors */
+    --border-primary: #ff990033;
+    --border-secondary: #cc770033;
+    --border-color: #ff990033;
+    
+    /* Button Colors */
+    --button-bg: #ff990011;
+    --button-hover: #ff990022;
+    --button-active: #ff990044;
+    
+    /* Badge Colors */
+    --badge-bg: #ff9900;
+    --badge-text: #0a0400;
+    
+    /* Component-specific Colors */
+    --header-bg: #0a0400;
+    --sidebar-bg: #080300;
+    --modal-bg: #0f0600;
+    --modal-backdrop: rgba(0, 0, 0, 0.9);
+    
+    /* Interactive Elements */
+    --hover-bg: #ff990011;
+    --focus-ring: #ff9900;
+    --selection-bg: #ff990033;
+    
+    /* Code Block Colors */
+    --code-bg: #140800;
+    --code-border: #ff990033;
+    
+    /* Search Highlighting */
+    --search-highlight-bg: #ffbb0066;
+    --search-highlight-current: #ff990066;
+    
+    /* Status Colors */
+    --status-success: #ffbb00;
+    --status-warning: #ff9900;
+    --status-error: #ff6600;
+    --status-info: #ffaa00;
+    
+    /* Shadows - CRT Glow */
+    --shadow-sm: 0 0 2px #ff9900;
+    --shadow-md: 0 0 5px #ff9900;
+    --shadow-lg: 0 0 10px #ff9900;
+    --shadow-xl: 0 0 20px #ff9900;
+    
+    /* Scrollbar */
+    --scrollbar-track: #0f0600;
+    --scrollbar-thumb: #ff990044;
+    --scrollbar-thumb-hover: #ff990066;
+    
+    /* Special CRT Effects */
+    --glow-amber: 0 0 10px #ff9900;
+    --text-shadow-crt: 0 0 2px #ff9900, 0 0 4px #ff990080;
+    --scan-lines: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 153, 0, 0.03) 2px,
+        rgba(255, 153, 0, 0.03) 4px
+    );
+}
+
+/* Syntax Highlighting - Amber Interface */
+:root[data-theme="amber-interface"] .token.comment,
+:root[data-theme="amber-interface"] .token.prolog,
+:root[data-theme="amber-interface"] .token.doctype,
+:root[data-theme="amber-interface"] .token.cdata {
+    color: #995500;
+}
+
+:root[data-theme="amber-interface"] .token.punctuation {
+    color: #cc7700;
+}
+
+:root[data-theme="amber-interface"] .token.property,
+:root[data-theme="amber-interface"] .token.tag,
+:root[data-theme="amber-interface"] .token.boolean,
+:root[data-theme="amber-interface"] .token.number,
+:root[data-theme="amber-interface"] .token.constant,
+:root[data-theme="amber-interface"] .token.symbol,
+:root[data-theme="amber-interface"] .token.deleted {
+    color: #ff9900;
+}
+
+:root[data-theme="amber-interface"] .token.selector,
+:root[data-theme="amber-interface"] .token.attr-name,
+:root[data-theme="amber-interface"] .token.string,
+:root[data-theme="amber-interface"] .token.char,
+:root[data-theme="amber-interface"] .token.builtin,
+:root[data-theme="amber-interface"] .token.inserted {
+    color: #ffaa00;
+}
+
+:root[data-theme="amber-interface"] .token.operator,
+:root[data-theme="amber-interface"] .token.entity,
+:root[data-theme="amber-interface"] .token.url,
+:root[data-theme="amber-interface"] .language-css .token.string,
+:root[data-theme="amber-interface"] .style .token.string {
+    color: #ffbb00;
+    background: transparent;
+}
+
+:root[data-theme="amber-interface"] .token.atrule,
+:root[data-theme="amber-interface"] .token.attr-value,
+:root[data-theme="amber-interface"] .token.keyword {
+    color: #ff9900;
+}
+
+:root[data-theme="amber-interface"] .token.function,
+:root[data-theme="amber-interface"] .token.class-name {
+    color: #ffaa00;
+}
+
+:root[data-theme="amber-interface"] .token.regex,
+:root[data-theme="amber-interface"] .token.important,
+:root[data-theme="amber-interface"] .token.variable {
+    color: #ffbb00;
+}
+
+/* Special CRT Effects */
+[data-theme="amber-interface"] {
+    color-scheme: dark;
+}
+
+/* CRT scan lines overlay */
+[data-theme="amber-interface"] body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--scan-lines);
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.8;
+}
+
+/* CRT screen curve effect */
+[data-theme="amber-interface"] body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+    pointer-events: none;
+    z-index: 9998;
+}
+
+/* Terminal font */
+[data-theme="amber-interface"] {
+    font-family: 'IBM Plex Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    text-rendering: optimizeLegibility;
+}
+
+/* CRT text glow */
+[data-theme="amber-interface"] * {
+    text-shadow: var(--text-shadow-crt);
+}
+
+/* Blinking cursor effect */
+@keyframes amber-blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+[data-theme="amber-interface"] .note-content {
+    caret-color: #ff9900;
+}
+
+/* CRT phosphor persistence effect */
+[data-theme="amber-interface"] .tab.active {
+    box-shadow: inset 0 -2px 0 0 var(--accent-primary), var(--glow-amber);
+    animation: amber-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes amber-glow {
+    0% { box-shadow: inset 0 -2px 0 0 var(--accent-primary), 0 0 5px #ff9900; }
+    100% { box-shadow: inset 0 -2px 0 0 var(--accent-primary), 0 0 15px #ff9900; }
+}
+
+[data-theme="amber-interface"] .btn-primary {
+    background: transparent;
+    color: #ff9900;
+    border: 1px solid #ff9900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    box-shadow: var(--glow-amber);
+}
+
+[data-theme="amber-interface"] .btn-primary:hover {
+    background: #ff990022;
+    box-shadow: 0 0 20px #ff9900;
+}
+
+[data-theme="amber-interface"] a {
+    color: var(--accent-primary);
+    text-decoration: none;
+}
+
+[data-theme="amber-interface"] a:hover {
+    text-decoration: underline;
+    text-shadow: 0 0 5px #ff9900;
+}
+
+[data-theme="amber-interface"] ::selection {
+    background: var(--bg-selection);
+    color: #ffbb00;
+}
+
+/* CRT flicker effect (subtle) */
+@keyframes crt-flicker {
+    0%, 100% { opacity: 1; }
+    92% { opacity: 0.95; }
+}
+
+[data-theme="amber-interface"] .header {
+    animation: crt-flicker 10s infinite;
+}
+
+/* Retro terminal styling for code blocks */
+[data-theme="amber-interface"] pre {
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    box-shadow: inset 0 0 20px rgba(255, 153, 0, 0.05);
+}
+
+/* Webkit Scrollbar */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    [data-theme="amber-interface"] ::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+
+    [data-theme="amber-interface"] ::-webkit-scrollbar-track {
+        background: var(--scrollbar-track);
+        border: 1px solid #ff990022;
+    }
+
+    [data-theme="amber-interface"] ::-webkit-scrollbar-thumb {
+        background: var(--scrollbar-thumb);
+        border: 1px solid #ff990044;
+        box-shadow: inset 0 0 3px rgba(255, 153, 0, 0.5);
+    }
+
+    [data-theme="amber-interface"] ::-webkit-scrollbar-thumb:hover {
+        background: var(--scrollbar-thumb-hover);
+        box-shadow: inset 0 0 5px rgba(255, 153, 0, 0.8);
+    }
+}
+
+/* Firefox Scrollbar */
+[data-theme="amber-interface"] * {
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+    scrollbar-width: auto;
+}
