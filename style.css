@@ -503,10 +503,44 @@ body {
     overscroll-behavior-x: contain; /* Prevent scroll chaining */
     scrollbar-width: none;
     -ms-overflow-style: none;
+    scroll-behavior: smooth;
+    position: relative;
 }
 
 .tabs-container::-webkit-scrollbar {
     display: none;
+}
+
+/* Shadow indicators for scrollable tabs */
+.tabs-container::before,
+.tabs-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 20px;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.tabs-container::before {
+    left: 0;
+    background: linear-gradient(to right, var(--bg-primary), transparent);
+}
+
+.tabs-container::after {
+    right: 0;
+    background: linear-gradient(to left, var(--bg-primary), transparent);
+}
+
+.tabs-container.can-scroll-left::before {
+    opacity: 1;
+}
+
+.tabs-container.can-scroll-right::after {
+    opacity: 1;
 }
 
 /* Individual tab */
@@ -913,7 +947,7 @@ body {
     z-index: 10000;
     max-height: 300px;
     overflow-y: auto;
-    backdrop-filter: blur(10px);
+    /* Removed backdrop-filter for opaque background */
 }
 
 .group-menu-header {

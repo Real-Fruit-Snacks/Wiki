@@ -402,6 +402,9 @@ class NotesWiki {
             // Initialize tab system
             this.initializeTabs();
             
+            // Set up tab scrolling
+            this.setupTabScrolling();
+            
             // Load and restore tab sessions
             this.loadTabSessions();
             
@@ -9817,6 +9820,9 @@ class NotesWiki {
             this.tabs.delete(tabId);
             this.tabContents.delete(tabId);
             
+            // Update tab scroll buttons after removing tab
+            this.updateTabScrollButtons();
+            
             // Return to previous tab
             if (this.tabBeforeSplitView && this.tabs.has(this.tabBeforeSplitView)) {
                 this.switchToTab(this.tabBeforeSplitView);
@@ -9852,6 +9858,9 @@ class NotesWiki {
         // Remove from memory
         this.tabs.delete(tabId);
         this.tabContents.delete(tabId);
+        
+        // Update tab scroll buttons after removing tab
+        this.updateTabScrollButtons();
         
         // If closing active tab, switch to another
         if (tabId === this.activeTabId) {
@@ -9949,6 +9958,107 @@ class NotesWiki {
         }
         
         this.switchToTab(tabIds[newIndex]);
+    }
+    
+    // Tab Scrolling Methods
+    setupTabScrolling() {
+        const container = document.getElementById('tabs-container');
+        const leftButton = document.getElementById('scroll-tabs-left');
+        const rightButton = document.getElementById('scroll-tabs-right');
+        
+        if (!container || !leftButton || !rightButton) return;
+        
+        // Event handlers for scroll buttons
+        leftButton.addEventListener('click', () => this.scrollTabsLeft());
+        rightButton.addEventListener('click', () => this.scrollTabsRight());
+        
+        // Update button visibility on scroll
+        container.addEventListener('scroll', () => {
+            this.updateTabScrollButtons();
+        });
+        
+        // Update button visibility on window resize
+        const resizeHandler = () => {
+            this.updateTabScrollButtons();
+        };
+        window.addEventListener('resize', resizeHandler);
+        
+        // Store handler for cleanup
+        this.tabScrollResizeHandler = resizeHandler;
+        
+        // Initial update
+        this.updateTabScrollButtons();
+    }
+    
+    updateTabScrollButtons() {
+        const container = document.getElementById('tabs-container');
+        const leftButton = document.getElementById('scroll-tabs-left');
+        const rightButton = document.getElementById('scroll-tabs-right');
+        
+        if (!container || !leftButton || !rightButton) return;
+        
+        // Check if scrolling is needed
+        const canScroll = container.scrollWidth > container.clientWidth;
+        
+        if (!canScroll) {
+            // Hide both buttons if no scrolling needed
+            leftButton.style.display = 'none';
+            rightButton.style.display = 'none';
+            // Remove scroll indicator classes when no scrolling needed
+            container.classList.remove('can-scroll-left', 'can-scroll-right');
+            return;
+        }
+        
+        // Show buttons
+        leftButton.style.display = 'flex';
+        rightButton.style.display = 'flex';
+        
+        // Update button states based on scroll position
+        const scrollLeft = container.scrollLeft;
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        
+        // Disable left button if at the start
+        leftButton.disabled = scrollLeft <= 0;
+        
+        // Disable right button if at the end (with small tolerance for rounding)
+        rightButton.disabled = scrollLeft >= maxScroll - 1;
+        
+        // Update CSS classes for shadow indicators
+        if (scrollLeft > 0) {
+            container.classList.add('can-scroll-left');
+        } else {
+            container.classList.remove('can-scroll-left');
+        }
+        
+        if (scrollLeft < maxScroll - 1) {
+            container.classList.add('can-scroll-right');
+        } else {
+            container.classList.remove('can-scroll-right');
+        }
+    }
+    
+    scrollTabsLeft() {
+        const container = document.getElementById('tabs-container');
+        if (!container) return;
+        
+        // Scroll by tab width or fixed amount
+        const scrollAmount = 200; // You can adjust this value
+        container.scrollBy({
+            left: -scrollAmount,
+            behavior: 'smooth'
+        });
+    }
+    
+    scrollTabsRight() {
+        const container = document.getElementById('tabs-container');
+        if (!container) return;
+        
+        // Scroll by tab width or fixed amount
+        const scrollAmount = 200; // You can adjust this value
+        container.scrollBy({
+            left: scrollAmount,
+            behavior: 'smooth'
+        });
     }
     
     saveTabState() {
@@ -10984,6 +11094,9 @@ class NotesWiki {
                 }
             }
         });
+        
+        // Update tab scroll buttons after rendering tabs
+        this.updateTabScrollButtons();
     }
     
     setupGroupDropZone(groupHeader, groupId) {
@@ -14881,6 +14994,12 @@ class NotesWiki {
                 if (this.contextResizeHandler) {
                     window.removeEventListener('resize', this.contextResizeHandler);
                     this.contextResizeHandler = null;
+                }
+                
+                // Remove tab scroll resize handler
+                if (this.tabScrollResizeHandler) {
+                    window.removeEventListener('resize', this.tabScrollResizeHandler);
+                    this.tabScrollResizeHandler = null;
                 }
                 
                 // Disconnect ResizeObserver
