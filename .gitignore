@@ -105,14 +105,18 @@ env/
 public/
 .gitlab-ci-local/
 
-# Testing and QA
+# Testing and QA - Be specific to avoid blocking legitimate docs
 test-*.html
 test-*.css
 test-*.js
-*-test.*
-*-demo.*
-*.spec.*
-*.test.*
+*.spec.js
+*.spec.ts
+*.test.js
+*.test.ts
+*.test.py
+*-test.py
+*-test.js
+*-test.ts
 coverage/
 .nyc_output
 .coverage
@@ -124,6 +128,15 @@ test-outputs/
 .jest/
 cypress/
 playwright-report/
+
+# Release artifacts (should not be tracked)
+notes-wiki-*.zip
+notes-wiki-*.tar.gz
+*.release.zip
+
+# Local IDE and tool settings
+.claude/
+*.local.json
 
 # Documentation Build
 docs/_build/
