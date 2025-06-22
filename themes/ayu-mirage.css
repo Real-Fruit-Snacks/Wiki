@@ -60,6 +60,10 @@
     --input-color: #cbccc6;
     --input-placeholder: #707a8c;
     
+    /* Badge Colors */
+    --badge-bg: #5ccfe6;
+    --badge-text: #1f2430;
+    
     /* Tag Colors */
     --tag-bg: rgba(92, 207, 230, 0.15);
     --tag-color: #5ccfe6;

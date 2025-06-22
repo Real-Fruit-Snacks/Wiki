@@ -830,7 +830,7 @@ body {
 
 .file-tree-link.active {
     background-color: var(--accent-primary);
-    color: white;
+    color: var(--badge-text);
 }
 
 .file-tree-folder {
