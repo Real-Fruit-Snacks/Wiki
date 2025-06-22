@@ -9922,15 +9922,23 @@ class NotesWiki {
     
     // Tab Overflow Methods
     setupTabOverflow() {
+        console.log('Setting up tab overflow functionality');
         // Setup overflow dropdown functionality
         const overflowDropdown = document.getElementById('tab-overflow-dropdown');
         const overflowButton = document.getElementById('tab-overflow-button');
         
-        if (!overflowDropdown || !overflowButton) return;
+        console.log('Overflow dropdown element:', overflowDropdown);
+        console.log('Overflow button element:', overflowButton);
+        
+        if (!overflowDropdown || !overflowButton) {
+            console.log('Missing overflow elements, aborting setup');
+            return;
+        }
         
         // Event handler for overflow button
         overflowButton.addEventListener('click', (e) => {
             e.stopPropagation();
+            console.log('Calling toggleTabOverflowDropdown');
             this.toggleTabOverflowDropdown();
         });
         
