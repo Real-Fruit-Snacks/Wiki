@@ -11024,7 +11024,8 @@ class NotesWiki {
             // Update tab preview
             const tab = document.querySelector(`[data-note-index="${this.currentNoteIndex}"] .note-tab-preview`);
             if (tab) {
-                const preview = content.substring(0, 30) || 'Empty note';
+                const firstLine = content.split('\n')[0].trim();
+                const preview = firstLine.substring(0, 50) || 'Empty note';
                 tab.textContent = preview;
             }
         }
@@ -11045,7 +11046,8 @@ class NotesWiki {
             tab.className = `quick-note-tab ${index === this.currentNoteIndex ? 'active' : ''}`;
             tab.setAttribute('data-note-index', index);
             
-            const preview = note.content.substring(0, 30) || 'Empty note';
+            const firstLine = note.content.split('\n')[0].trim();
+            const preview = firstLine.substring(0, 50) || 'Empty note';
             const date = new Date(note.updated).toLocaleDateString();
             
             tab.innerHTML = `
