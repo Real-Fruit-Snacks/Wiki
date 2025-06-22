@@ -405,10 +405,16 @@ class NotesWiki {
             return;
         }
         
-        // Filter notes by active context
-        const notes = this.activeContext 
-            ? this.notesIndex.notes.filter(note => note.context === this.activeContext)
-            : this.notesIndex.notes;
+        // Filter notes by active context and hideFromSearch setting
+        const notes = this.notesIndex.notes.filter(note => {
+            // Skip notes marked as hidden from search
+            if (note.metadata.hideFromSearch) {
+                return false;
+            }
+            
+            // Apply context filter if active
+            return this.activeContext ? note.context === this.activeContext : true;
+        });
             
         this.searchIndex = notes.map(note => ({
             path: note.path,
@@ -418,7 +424,14 @@ class NotesWiki {
             author: note.metadata.author || '',
             content: note.searchable_content || note.content_preview || '',
             context: note.context,
-            codeBlocksCount: note.code_blocks_count || 0
+            codeBlocksCount: note.code_blocks_count || 0,
+            // Include new metadata fields for enhanced functionality
+            category: note.metadata.category || '',
+            status: note.metadata.status || '',
+            aliases: note.metadata.aliases || [],
+            related: note.metadata.related || [],
+            dependencies: note.metadata.dependencies || [],
+            keywords: note.metadata.keywords || []
         }));
         
     }
@@ -1849,42 +1862,84 @@ class NotesWiki {
     }
     
     renderRelatedPages(metadata) {
-        if (!metadata.related || (Array.isArray(metadata.related) && metadata.related.length === 0)) {
+        const hasRelated = metadata.related && Array.isArray(metadata.related) && metadata.related.length > 0;
+        const hasDependencies = metadata.dependencies && Array.isArray(metadata.dependencies) && metadata.dependencies.length > 0;
+        
+        if (!hasRelated && !hasDependencies) {
             return '';
         }
         
-        // Ensure related is an array
-        const relatedPaths = Array.isArray(metadata.related) ? metadata.related : [metadata.related];
+        let html = '';
         
-        // Build related pages HTML
-        const relatedItems = relatedPaths.map(relatedPath => {
-            const normalizedPath = this.normalizeRelatedPath(relatedPath, this.currentNote.path);
+        // Render dependencies section
+        if (hasDependencies) {
+            const dependencyItems = metadata.dependencies.map(dependencyPath => {
+                const normalizedPath = this.normalizeRelatedPath(dependencyPath, this.currentNote.path);
+                
+                // Try to find the note in the index to get its title
+                const noteInfo = this.notesIndex.notes.find(note => {
+                    const notePath = normalizedPath.replace('#', '');
+                    return note.path === notePath;
+                });
+                
+                const title = noteInfo ? noteInfo.metadata.title : dependencyPath;
+                const description = noteInfo ? noteInfo.metadata.description : '';
+                
+                return `
+                    <a href="${normalizedPath}" class="dependency-item">
+                        <div class="dependency-icon">📚</div>
+                        <div class="dependency-content">
+                            <div class="dependency-title">${this.escapeHtml(title)}</div>
+                            ${description ? `<div class="dependency-description">${this.escapeHtml(description)}</div>` : ''}
+                        </div>
+                    </a>
+                `;
+            }).join('');
             
-            // Try to find the note in the index to get its title
-            const noteInfo = this.notesIndex.notes.find(note => {
-                const notePath = normalizedPath.replace('#', '');
-                return note.path === notePath;
-            });
-            
-            const title = noteInfo ? noteInfo.metadata.title : relatedPath;
-            const description = noteInfo ? noteInfo.metadata.description : '';
-            
-            return `
-                <a href="${normalizedPath}" class="related-page-item">
-                    <div class="related-page-title">${this.escapeHtml(title)}</div>
-                    ${description ? `<div class="related-page-description">${this.escapeHtml(description)}</div>` : ''}
-                </a>
-            `;
-        }).join('');
-        
-        return `
-            <div class="related-pages">
-                <h2 class="related-pages-title">Related Pages</h2>
-                <div class="related-pages-list">
-                    ${relatedItems}
+            html += `
+                <div class="dependencies">
+                    <h2 class="dependencies-title">📋 Prerequisites</h2>
+                    <p class="dependencies-subtitle">Read these notes first for better understanding</p>
+                    <div class="dependencies-list">
+                        ${dependencyItems}
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
+        }
+        
+        // Render related pages section
+        if (hasRelated) {
+            const relatedItems = metadata.related.map(relatedPath => {
+                const normalizedPath = this.normalizeRelatedPath(relatedPath, this.currentNote.path);
+                
+                // Try to find the note in the index to get its title
+                const noteInfo = this.notesIndex.notes.find(note => {
+                    const notePath = normalizedPath.replace('#', '');
+                    return note.path === notePath;
+                });
+                
+                const title = noteInfo ? noteInfo.metadata.title : relatedPath;
+                const description = noteInfo ? noteInfo.metadata.description : '';
+                
+                return `
+                    <a href="${normalizedPath}" class="related-page-item">
+                        <div class="related-page-title">${this.escapeHtml(title)}</div>
+                        ${description ? `<div class="related-page-description">${this.escapeHtml(description)}</div>` : ''}
+                    </a>
+                `;
+            }).join('');
+            
+            html += `
+                <div class="related-pages">
+                    <h2 class="related-pages-title">🔗 Related Pages</h2>
+                    <div class="related-pages-list">
+                        ${relatedItems}
+                    </div>
+                </div>
+            `;
+        }
+        
+        return html;
     }
     
     parseFrontmatter(markdown) {
@@ -2560,9 +2615,30 @@ class NotesWiki {
         // Update expand button state after rendering
         this.updateExpandButtonState();
         
-        // Generate and setup Table of Contents (use requestAnimationFrame to ensure DOM is ready)
+        // Generate and setup Table of Contents based on YAML field (use requestAnimationFrame to ensure DOM is ready)
         requestAnimationFrame(() => {
-            this.generateTableOfContents();
+            const tocSetting = metadata.tableOfContents;
+            
+            // Determine if TOC should be generated
+            let shouldGenerateToc = false;
+            
+            if (tocSetting === 'auto' || tocSetting === true) {
+                // Explicitly enabled
+                shouldGenerateToc = true;
+            } else if (tocSetting === 'none' || tocSetting === false) {
+                // Explicitly disabled
+                shouldGenerateToc = false;
+            } else if (tocSetting === 'manual') {
+                // Manual TOC - user will add their own
+                shouldGenerateToc = false;
+            } else {
+                // No explicit setting, fall back to global setting
+                shouldGenerateToc = this.settings.showTableOfContents;
+            }
+            
+            if (shouldGenerateToc) {
+                this.generateTableOfContents();
+            }
         });
         
         // Setup reading progress and time
@@ -3937,6 +4013,8 @@ class NotesWiki {
             phrases: [],
             tags: [],
             author: null,
+            status: null,
+            category: null,
             basic: []
         };
         
@@ -3968,6 +4046,20 @@ class NotesWiki {
             query = query.replace(/author:\S+/g, '');
         }
         
+        // Extract status filter
+        const statusMatch = query.match(/status:(\S+)/);
+        if (statusMatch) {
+            parsed.status = statusMatch[1].toLowerCase();
+            query = query.replace(/status:\S+/g, '');
+        }
+        
+        // Extract category filter
+        const categoryMatch = query.match(/category:(\S+)/);
+        if (categoryMatch) {
+            parsed.category = categoryMatch[1].toLowerCase();
+            query = query.replace(/category:\S+/g, '');
+        }
+        
         // Remaining terms are basic search terms
         parsed.basic = query.trim().toLowerCase().split(/\s+/).filter(t => t);
         
@@ -3978,6 +4070,8 @@ class NotesWiki {
         const searchText = `${item.title} ${item.description} ${item.content}`.toLowerCase();
         const itemTags = item.tags.map(t => t.toLowerCase());
         const itemAuthor = item.author.toLowerCase();
+        const itemStatus = (item.status || '').toLowerCase();
+        const itemCategory = (item.category || '').toLowerCase();
         
         // Check excluded terms first
         for (const excluded of parsedQuery.excluded) {
@@ -4002,6 +4096,16 @@ class NotesWiki {
         
         // Check author filter
         if (parsedQuery.author && !itemAuthor.includes(parsedQuery.author)) {
+            return false;
+        }
+        
+        // Check status filter
+        if (parsedQuery.status && itemStatus !== parsedQuery.status) {
+            return false;
+        }
+        
+        // Check category filter
+        if (parsedQuery.category && itemCategory !== parsedQuery.category) {
             return false;
         }
         
@@ -8148,6 +8252,11 @@ class NotesWiki {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
+    }
+    
+    capitalizeFirst(text) {
+        if (!text) return text;
+        return text.charAt(0).toUpperCase() + text.slice(1);
     }
     
     createCalloutExtension() {

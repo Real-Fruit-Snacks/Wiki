@@ -195,6 +195,32 @@ def process_markdown_file(file_path, base_dir):
             if os.path.isdir(context_path):
                 context = potential_context
         
+        # Process aliases and keywords for enhanced searchability
+        aliases = metadata.get('aliases', [])
+        keywords = metadata.get('keywords', [])
+        if not isinstance(aliases, list):
+            aliases = []
+        if not isinstance(keywords, list):
+            keywords = []
+        
+        # Enhance searchable content with aliases and keywords
+        enhanced_searchable_content = searchable_content
+        if aliases:
+            enhanced_searchable_content += ' ' + ' '.join(aliases)
+        if keywords:
+            enhanced_searchable_content += ' ' + ' '.join(keywords)
+        
+        # Process related notes and dependencies
+        related = metadata.get('related', [])
+        dependencies = metadata.get('dependencies', [])
+        if not isinstance(related, list):
+            related = []
+        if not isinstance(dependencies, list):
+            dependencies = []
+        
+        # Check if note should be hidden from search
+        hide_from_search = metadata.get('hideFromSearch', False)
+        
         # Add note to index
         note_entry = {
             'path': relative_path,
@@ -207,10 +233,16 @@ def process_markdown_file(file_path, base_dir):
                 'description': metadata.get('description', ''),
                 'updated': str(metadata.get('updated')) if metadata.get('updated') else None,
                 'category': metadata.get('category'),
-                'status': metadata.get('status')
+                'status': metadata.get('status'),
+                'aliases': aliases,
+                'related': related,
+                'dependencies': dependencies,
+                'keywords': keywords,
+                'tableOfContents': metadata.get('tableOfContents', 'auto'),
+                'hideFromSearch': hide_from_search
             },
             'content_preview': content_preview,
-            'searchable_content': searchable_content,
+            'searchable_content': enhanced_searchable_content,
             'code_blocks_count': len(code_blocks)
         }
         
