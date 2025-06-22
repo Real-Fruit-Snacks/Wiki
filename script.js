@@ -8773,6 +8773,25 @@ class NotesWiki {
         this.saveTabState();
     }
     
+    // Helper function to create SVG elements properly
+    createSVGIcon(width, height, viewBox, paths) {
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('width', width);
+        svg.setAttribute('height', height);
+        svg.setAttribute('viewBox', viewBox);
+        svg.setAttribute('fill', 'currentColor');
+        
+        paths.forEach(pathData => {
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            if (pathData.d) path.setAttribute('d', pathData.d);
+            if (pathData.fillRule) path.setAttribute('fill-rule', pathData.fillRule);
+            if (pathData.clipRule) path.setAttribute('clip-rule', pathData.clipRule);
+            svg.appendChild(path);
+        });
+        
+        return svg;
+    }
+
     showTabContextMenu(event, tabId) {
         const tab = this.tabs.get(tabId);
         if (!tab) return;
@@ -8785,35 +8804,50 @@ class NotesWiki {
         contextMenu.style.top = `${event.clientY}px`;
         contextMenu.style.zIndex = '10000';
         
-        // Menu items
+        // Menu items with SVG data
         const menuItems = [
             {
                 label: tab.isPinned ? 'Unpin Tab' : 'Pin Tab',
-                icon: tab.isPinned ? 
-                    '<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M11.816 2.984a1 1 0 00-1.632 0l-.772 1.09A2 2 0 017.414 5H5a1 1 0 000 2h5.5l-.544 5.448a1.5 1.5 0 00.44 1.233l.809.809a1 1 0 001.414 0l.809-.809a1.5 1.5 0 00.44-1.233L13.324 7H19a1 1 0 100-2h-2.414a2 2 0 01-1.998-.926l-.772-1.09z"/><path d="M10 17a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1z"/></svg>' :
-                    '<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M6.77 2.43a.75.75 0 01.55-.23h5.36c.2 0 .4.08.55.23.14.15.22.35.22.57v1.5c0 .21-.08.41-.22.56a.75.75 0 01-.55.23h-.42l-.67 6.7c.52.1.92.56.92 1.11 0 .3-.12.57-.31.78l2.48 2.48a.75.75 0 11-1.06 1.06l-2.12-2.12V18a.75.75 0 01-1.5 0v-2.74l-2.12 2.12a.75.75 0 11-1.06-1.06l2.48-2.48a1.1 1.1 0 01-.31-.78c0-.55.4-1.01.92-1.11l-.67-6.7h-.42a.75.75 0 01-.55-.23.79.79 0 01-.22-.56V3c0-.22.08-.42.22-.57z"/></svg>',
+                iconData: tab.isPinned ? 
+                    { width: '16', height: '16', viewBox: '0 0 20 20', paths: [
+                        { d: "M11.816 2.984a1 1 0 00-1.632 0l-.772 1.09A2 2 0 017.414 5H5a1 1 0 000 2h5.5l-.544 5.448a1.5 1.5 0 00.44 1.233l.809.809a1 1 0 001.414 0l.809-.809a1.5 1.5 0 00.44-1.233L13.324 7H19a1 1 0 100-2h-2.414a2 2 0 01-1.998-.926l-.772-1.09z" },
+                        { d: "M10 17a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1z" }
+                    ]} :
+                    { width: '16', height: '16', viewBox: '0 0 20 20', paths: [
+                        { d: "M6.77 2.43a.75.75 0 01.55-.23h5.36c.2 0 .4.08.55.23.14.15.22.35.22.57v1.5c0 .21-.08.41-.22.56a.75.75 0 01-.55.23h-.42l-.67 6.7c.52.1.92.56.92 1.11 0 .3-.12.57-.31.78l2.48 2.48a.75.75 0 11-1.06 1.06l-2.12-2.12V18a.75.75 0 01-1.5 0v-2.74l-2.12 2.12a.75.75 0 11-1.06-1.06l2.48-2.48a1.1 1.1 0 01-.31-.78c0-.55.4-1.01.92-1.11l-.67-6.7h-.42a.75.75 0 01-.55-.23.79.79 0 01-.22-.56V3c0-.22.08-.42.22-.57z" }
+                    ]},
                 action: () => this.togglePinTab(tabId)
             },
             {
                 label: 'Duplicate Tab',
-                icon: '<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z"/><path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z"/></svg>',
+                iconData: { width: '16', height: '16', viewBox: '0 0 20 20', paths: [
+                    { d: "M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" },
+                    { d: "M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z" }
+                ]},
                 action: () => this.duplicateTab(tabId)
             },
             {
                 label: 'Close Tab',
-                icon: '<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>',
+                iconData: { width: '16', height: '16', viewBox: '0 0 20 20', paths: [
+                    { d: "M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z", fillRule: "evenodd", clipRule: "evenodd" }
+                ]},
                 action: () => this.closeTab(tabId),
                 className: 'danger'
             },
             {
                 label: 'Close Other Tabs',
-                icon: '<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 00-1 1v1a1 1 0 001 1h2a1 1 0 001-1V3a1 1 0 00-1-1H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 00-2 2v6a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2 1 1 0 100-2 2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/></svg>',
+                iconData: { width: '16', height: '16', viewBox: '0 0 20 20', paths: [
+                    { d: "M9 2a1 1 0 00-1 1v1a1 1 0 001 1h2a1 1 0 001-1V3a1 1 0 00-1-1H9z" },
+                    { d: "M4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 00-2 2v6a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2 1 1 0 100-2 2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2V5z", fillRule: "evenodd", clipRule: "evenodd" }
+                ]},
                 action: () => this.closeOtherTabs(tabId),
                 className: 'danger'
             },
             {
                 label: 'Close All Tabs',
-                icon: '<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-1 1v1a1 1 0 002 0V3a1 1 0 00-1-1zM4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 00-2 2v6a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2 1 1 0 100-2 2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 011-1h.01a1 1 0 110 2H8a1 1 0 01-1-1zm3 0a1 1 0 011-1h.01a1 1 0 110 2H11a1 1 0 01-1-1zm3 0a1 1 0 011-1h.01a1 1 0 110 2H14a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>',
+                iconData: { width: '16', height: '16', viewBox: '0 0 20 20', paths: [
+                    { d: "M9 2a1 1 0 00-1 1v1a1 1 0 002 0V3a1 1 0 00-1-1zM4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 00-2 2v6a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2 1 1 0 100-2 2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 011-1h.01a1 1 0 110 2H8a1 1 0 01-1-1zm3 0a1 1 0 011-1h.01a1 1 0 110 2H11a1 1 0 01-1-1zm3 0a1 1 0 011-1h.01a1 1 0 110 2H14a1 1 0 01-1-1z", fillRule: "evenodd", clipRule: "evenodd" }
+                ]},
                 action: () => this.closeAllTabs(),
                 className: 'danger'
             }
@@ -8826,7 +8860,15 @@ class NotesWiki {
             
             const iconSpan = document.createElement('span');
             iconSpan.className = 'context-menu-icon';
-            iconSpan.innerHTML = item.icon;
+            
+            // Create SVG using proper DOM methods
+            const svg = this.createSVGIcon(
+                item.iconData.width,
+                item.iconData.height,
+                item.iconData.viewBox,
+                item.iconData.paths
+            );
+            iconSpan.appendChild(svg);
             
             const labelSpan = document.createElement('span');
             labelSpan.className = 'context-menu-label';
@@ -8938,23 +8980,28 @@ class NotesWiki {
         // Check if note is already bookmarked
         const isBookmarked = this.bookmarks.some(bookmark => bookmark.path === notePath);
         
-        // Menu items
+        // Menu items with SVG data
         const menuItems = [
             {
                 label: 'Open in New Tab',
-                icon: '<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 00-2 2v6a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2 1 1 0 100-2 2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/></svg>',
+                iconData: { width: '16', height: '16', viewBox: '0 0 20 20', paths: [
+                    { d: "M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" },
+                    { d: "M4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 00-2 2v6a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2 1 1 0 100-2 2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2V5z", fillRule: "evenodd", clipRule: "evenodd" }
+                ]},
                 action: () => this.openInNewTab(notePath)
             },
             {
                 label: isBookmarked ? 'Remove Bookmark' : 'Bookmark Note',
-                icon: isBookmarked ? 
-                    '<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>' :
-                    '<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>',
+                iconData: { width: '16', height: '16', viewBox: '0 0 20 20', paths: [
+                    { d: "M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" }
+                ]},
                 action: () => this.toggleNoteBookmark(notePath, noteTitle)
             },
             {
                 label: 'Share Note',
-                icon: '<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z"/></svg>',
+                iconData: { width: '16', height: '16', viewBox: '0 0 20 20', paths: [
+                    { d: "M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" }
+                ]},
                 action: () => this.shareNote(notePath, noteTitle)
             }
         ];
@@ -8966,7 +9013,15 @@ class NotesWiki {
             
             const iconSpan = document.createElement('span');
             iconSpan.className = 'context-menu-icon';
-            iconSpan.innerHTML = item.icon;
+            
+            // Create SVG using proper DOM methods
+            const svg = this.createSVGIcon(
+                item.iconData.width,
+                item.iconData.height,
+                item.iconData.viewBox,
+                item.iconData.paths
+            );
+            iconSpan.appendChild(svg);
             
             const labelSpan = document.createElement('span');
             labelSpan.className = 'context-menu-label';
