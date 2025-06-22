@@ -19,6 +19,7 @@ const includes = [
     'script.js',
     'libs',
     'themes',
+    'fonts',  // Include fonts directory
     'notes',
     'images',
     'build.py',

@@ -37,6 +37,43 @@
         })();
     </script>
     
+    <!-- Custom fonts loader -->
+    <script>
+        (function() {
+            const pathname = window.location.pathname;
+            const hostname = window.location.hostname;
+            let basePath = '';
+            
+            // Same detection logic as style loading
+            if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '') {
+                // Local development
+            } else if (hostname.includes('github.io') || hostname.includes('gitlab.io')) {
+                const pathSegments = pathname.split('/').filter(segment => segment);
+                if (pathSegments.length > 0) {
+                    const lastSegment = pathSegments[pathSegments.length - 1];
+                    const isFile = lastSegment && (lastSegment.includes('.html') || lastSegment.includes('.'));
+                    
+                    if (!isFile || pathSegments.length > 1) {
+                        basePath = '/' + pathSegments[0] + '/';
+                    }
+                }
+            }
+            
+            // Load custom fonts CSS
+            const fontLink = document.createElement('link');
+            fontLink.rel = 'stylesheet';
+            fontLink.href = basePath ? `${basePath}fonts/fonts.css` : 'fonts/fonts.css';
+            fontLink.onload = function() {
+                document.body.classList.add('custom-fonts-loaded');
+                console.log('[Fonts] Custom fonts loaded successfully');
+            };
+            fontLink.onerror = function() {
+                console.log('[Fonts] Custom fonts not found, using system fonts');
+            };
+            document.head.appendChild(fontLink);
+        })();
+    </script>
+    
     <!-- Theme stylesheet - dynamically loaded -->
     <link rel="stylesheet" href="" id="theme-stylesheet">
     
@@ -757,6 +794,7 @@
                                         <option value="sans-serif">Sans-serif</option>
                                         <option value="serif">Serif</option>
                                         <option value="monospace">Monospace</option>
+                                        <option value="jetbrains-mono">Code (JetBrains Mono)</option>
                                     </select>
                                 </div>
                             </div>

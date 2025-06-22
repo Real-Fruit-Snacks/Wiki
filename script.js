@@ -182,7 +182,7 @@ class NotesWiki {
             specificHomeNote: '', // Path to specific note
             externalLinksNewTab: true,
             fontSize: 'normal', // 'small', 'normal', 'large', 'extra-large'
-            fontFamily: 'monospace', // 'system', 'sans-serif', 'serif', 'monospace'
+            fontFamily: 'monospace', // 'system', 'sans-serif', 'serif', 'monospace', 'jetbrains-mono'
             defaultCodeLanguage: 'bash',
             customCSS: '',
             keyboardShortcuts: {
@@ -8749,7 +8749,7 @@ class NotesWiki {
         document.body.classList.add(`font-size-${this.settings.fontSize}`);
         
         // Apply font family
-        document.body.classList.remove('font-family-system', 'font-family-sans-serif', 'font-family-serif', 'font-family-monospace');
+        document.body.classList.remove('font-family-system', 'font-family-sans-serif', 'font-family-serif', 'font-family-monospace', 'font-family-jetbrains-mono');
         document.body.classList.add(`font-family-${this.settings.fontFamily}`);
     }
     
