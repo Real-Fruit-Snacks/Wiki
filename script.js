@@ -8771,6 +8771,9 @@ class NotesWiki {
         // Add to document
         document.body.appendChild(contextMenu);
         
+        // Show the menu by adding the show class
+        contextMenu.classList.add('show');
+        
         // Adjust position if menu goes off-screen
         const rect = contextMenu.getBoundingClientRect();
         if (rect.right > window.innerWidth) {
