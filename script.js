@@ -10017,11 +10017,7 @@ class NotesWiki {
         if (!dropdownMenu) {
             dropdownMenu = document.createElement('div');
             dropdownMenu.className = 'tab-overflow-menu dropdown-menu';
-            dropdownMenu.style.position = 'absolute';
-            dropdownMenu.style.top = '100%';
-            dropdownMenu.style.right = '0';
             dropdownMenu.style.display = 'none';
-            dropdownMenu.style.zIndex = '1000';
             overflowDropdown.appendChild(dropdownMenu);
         }
         
