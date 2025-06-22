@@ -9963,6 +9963,7 @@ class NotesWiki {
     }
     
     updateTabOverflow() {
+        console.log('updateTabOverflow called');
         const tabsContainer = document.getElementById('tabs-container');
         const overflowDropdown = document.getElementById('tab-overflow-dropdown');
         const overflowButton = document.getElementById('tab-overflow-button');
@@ -9987,12 +9988,16 @@ class NotesWiki {
             }
         });
         
+        console.log('Tabs found:', tabs.length, 'Available width:', availableWidth, 'Overflow tabs:', overflowTabs.length);
+        
         // Update overflow dropdown visibility
         if (overflowTabs.length > 0) {
+            console.log('Showing overflow dropdown with', overflowTabs.length, 'tabs');
             overflowDropdown.style.display = 'flex';
             overflowCount.textContent = overflowTabs.length;
             this.updateOverflowDropdownMenu(overflowTabs);
         } else {
+            console.log('Hiding overflow dropdown - no overflow tabs');
             overflowDropdown.style.display = 'none';
             this.hideTabOverflowDropdown();
         }
