@@ -1715,18 +1715,6 @@ class NotesWiki {
                     return;
                 }
                 
-                // Tab history navigation with Alt+Left/Right (browser-compatible)
-                if (pressedCombo === 'Alt+ArrowLeft') {
-                    e.preventDefault();
-                    this.navigateBack();
-                    return;
-                }
-                
-                if (pressedCombo === 'Alt+ArrowRight') {
-                    e.preventDefault();
-                    this.navigateForward();
-                    return;
-                }
                 
                 // Split tab shortcuts
                 if (pressedCombo === 'Ctrl+Shift+T' || pressedCombo === 'Cmd+Shift+T') {
@@ -9334,20 +9322,6 @@ class NotesWiki {
             });
         }
         
-        // Set up navigation buttons
-        const backButton = document.getElementById('nav-back-button');
-        if (backButton) {
-            backButton.addEventListener('click', () => {
-                this.navigateBack();
-            });
-        }
-        
-        const forwardButton = document.getElementById('nav-forward-button');
-        if (forwardButton) {
-            forwardButton.addEventListener('click', () => {
-                this.navigateForward();
-            });
-        }
         
         // Try to restore saved tabs
         const tabsRestored = this.restoreTabState();
@@ -9401,9 +9375,6 @@ class NotesWiki {
             // Split view configuration
             isSplitTab: false,
             splitConfig: null,
-            // Tab history for back/forward navigation
-            history: path ? [path] : [],
-            historyIndex: 0
         };
         
         this.tabs.set(tabId, tab);
@@ -9448,9 +9419,6 @@ class NotesWiki {
                         title: 'Pane 1',
                         scrollPosition: 0,
                         size: 50, // percentage
-                        // Each pane has its own history
-                        history: [],
-                        historyIndex: -1
                     },
                     {
                         id: paneId2,
@@ -9458,15 +9426,9 @@ class NotesWiki {
                         title: 'Pane 2',
                         scrollPosition: 0,
                         size: 50, // percentage
-                        // Each pane has its own history
-                        history: [],
-                        historyIndex: -1
                     }
                 ]
             },
-            // Tab history (not used for split tabs, but maintained for consistency)
-            history: [],
-            historyIndex: -1
         };
         
         this.tabs.set(tabId, tab);
@@ -9767,8 +9729,6 @@ class NotesWiki {
             this.setActiveFile(tab.path);
         }, 0);
         
-        // Update history navigation button states
-        this.updateHistoryButtonStates(tabId);
         
         this.saveTabState();
     }
@@ -10191,9 +10151,6 @@ class NotesWiki {
                     // Restore split view configuration if present
                     isSplitTab: tabData.isSplitTab || false,
                     splitConfig: tabData.splitConfig || null,
-                    // Restore history data
-                    history: tabData.history || (tabData.path ? [tabData.path] : []),
-                    historyIndex: tabData.historyIndex !== undefined ? tabData.historyIndex : (tabData.path ? 0 : -1)
                 });
                 this.updateTabVisuals(tabData.id);
                 
@@ -10448,9 +10405,6 @@ class NotesWiki {
                     // Restore split view configuration if present
                     isSplitTab: tabData.isSplitTab || false,
                     splitConfig: tabData.splitConfig || null,
-                    // Restore history data
-                    history: tabData.history || (tabData.path ? [tabData.path] : []),
-                    historyIndex: tabData.historyIndex !== undefined ? tabData.historyIndex : (tabData.path ? 0 : -1)
                 });
                 this.updateTabVisuals(tabData.id);
             });
@@ -11438,119 +11392,11 @@ class NotesWiki {
         }
     }
 
-    // Tab History Management Methods
-    addToTabHistory(tabId, path) {
-        const tab = this.tabs.get(tabId);
-        if (!tab || !path) return;
-
-        // Don't add duplicate consecutive entries
-        if (tab.history.length > 0 && tab.history[tab.historyIndex] === path) {
-            return;
-        }
-
-        // If we're not at the end of history, remove future entries
-        if (tab.historyIndex < tab.history.length - 1) {
-            tab.history = tab.history.slice(0, tab.historyIndex + 1);
-        }
-
-        // Add new entry
-        tab.history.push(path);
-        tab.historyIndex = tab.history.length - 1;
-        tab.path = path; // Update current path
-
-        // Limit history size (keep last 50 entries)
-        if (tab.history.length > 50) {
-            tab.history = tab.history.slice(-50);
-            tab.historyIndex = tab.history.length - 1;
-        }
-
-        // Update back/forward button states
-        this.updateHistoryButtonStates(tabId);
-    }
-
-    canNavigateBack(tabId) {
-        const tab = this.tabs.get(tabId);
-        return tab && tab.historyIndex > 0;
-    }
-
-    canNavigateForward(tabId) {
-        const tab = this.tabs.get(tabId);
-        return tab && tab.historyIndex < tab.history.length - 1;
-    }
-
-    updateHistoryButtonStates(tabId) {
-        if (tabId !== this.activeTabId) return; // Only update for active tab
-
-        const backButton = document.getElementById('nav-back-button');
-        const forwardButton = document.getElementById('nav-forward-button');
-
-        if (backButton) {
-            backButton.disabled = !this.canNavigateBack(tabId);
-            backButton.classList.toggle('disabled', !this.canNavigateBack(tabId));
-        }
-
-        if (forwardButton) {
-            forwardButton.disabled = !this.canNavigateForward(tabId);
-            forwardButton.classList.toggle('disabled', !this.canNavigateForward(tabId));
-        }
-    }
-
-    navigateBack() {
-        if (!this.activeTabId) return;
-        
-        const tab = this.tabs.get(this.activeTabId);
-        if (!tab || !this.canNavigateBack(this.activeTabId)) return;
-
-        // Move to previous entry in history
-        tab.historyIndex--;
-        const previousPath = tab.history[tab.historyIndex];
-        
-        if (previousPath) {
-            // Load the note without adding to history (skipHistory = true)
-            this.loadNoteInTab(previousPath, this.activeTabId, true);
-            
-            // Update the tab's current path
-            tab.path = previousPath;
-            
-            // Update button states
-            this.updateHistoryButtonStates(this.activeTabId);
-            
-            this.showToast('Navigated back', 'info');
-        }
-    }
-
-    navigateForward() {
-        if (!this.activeTabId) return;
-        
-        const tab = this.tabs.get(this.activeTabId);
-        if (!tab || !this.canNavigateForward(this.activeTabId)) return;
-
-        // Move to next entry in history
-        tab.historyIndex++;
-        const nextPath = tab.history[tab.historyIndex];
-        
-        if (nextPath) {
-            // Load the note without adding to history (skipHistory = true)
-            this.loadNoteInTab(nextPath, this.activeTabId, true);
-            
-            // Update the tab's current path
-            tab.path = nextPath;
-            
-            // Update button states
-            this.updateHistoryButtonStates(this.activeTabId);
-            
-            this.showToast('Navigated forward', 'info');
-        }
-    }
     
-    loadNoteInTab(path, tabId, skipHistory = false) {
+    loadNoteInTab(path, tabId) {
         // Check if this is the active tab
         const isActiveTab = tabId === this.activeTabId;
         
-        // Add to history unless specifically skipped (for back/forward navigation)
-        if (!skipHistory) {
-            this.addToTabHistory(tabId, path);
-        }
         
         if (isActiveTab) {
             // For active tab, just load normally
