@@ -206,7 +206,8 @@
 }
 
 /* Custom scrollbar for Ayu Mirage */
-@supports (-webkit-appearance: none) {
+/* Webkit-only media query to hide from Firefox parser */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
     [data-theme="ayu-mirage"] ::-webkit-scrollbar {
         width: 8px;
         height: 8px;

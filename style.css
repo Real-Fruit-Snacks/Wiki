@@ -467,7 +467,8 @@ body {
     -ms-overflow-style: none;
 }
 
-@supports (-webkit-appearance: none) {
+/* Webkit-only media query to hide from Firefox parser */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
     .tabs-container::-webkit-scrollbar {
         display: none;
     }
@@ -3064,7 +3065,8 @@ body:not(.show-line-numbers) .code-with-counters .code-line::before {
 }
 
 /* Scrollbar styling for settings modal */
-@supports (-webkit-appearance: none) {
+/* Webkit-only media query to hide from Firefox parser */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
     .settings-body::-webkit-scrollbar {
         width: 8px;
     }
