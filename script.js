@@ -1571,6 +1571,9 @@ class NotesWiki {
         
         document.addEventListener('keydown', this.keyboardHandler);
         
+        // Mobile menu event listeners
+        this.setupMobileMenu();
+        
         // Timer event listeners
         document.getElementById('timer-play-pause').addEventListener('click', () => {
             this.toggleTimer();
@@ -7357,6 +7360,9 @@ class NotesWiki {
                 list.appendChild(section);
             });
         }
+        
+        // Sync mobile badges
+        this.syncMobileBadges();
     }
     
     groupFilesByContext(files) {
@@ -7860,6 +7866,9 @@ class NotesWiki {
                 bookmarkBtn.classList.toggle('bookmarked', isBookmarked);
             }
         }
+        
+        // Sync mobile badges
+        this.syncMobileBadges();
     }
     
     loadSettings() {
@@ -11138,6 +11147,93 @@ class NotesWiki {
         this.stickyNoteSaveTimeout = setTimeout(() => {
             this.saveStickyNotes();
         }, 1000);
+    }
+    
+    setupMobileMenu() {
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenuContent = document.getElementById('mobile-menu-content');
+        
+        if (!mobileMenuToggle || !mobileMenuContent) return;
+        
+        // Toggle mobile menu
+        mobileMenuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            mobileMenuContent.classList.toggle('show');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!document.getElementById('mobile-menu').contains(e.target)) {
+                mobileMenuContent.classList.remove('show');
+            }
+        });
+        
+        // Wire up mobile menu items to desktop functionality
+        
+        // Search
+        document.getElementById('mobile-search-toggle')?.addEventListener('click', () => {
+            mobileMenuContent.classList.remove('show');
+            document.getElementById('search-toggle')?.click();
+        });
+        
+        // Recent files 
+        document.getElementById('mobile-recent-toggle')?.addEventListener('click', () => {
+            mobileMenuContent.classList.remove('show');
+            const recentDropdown = document.getElementById('recent-dropdown');
+            const dropdownContent = document.getElementById('recent-dropdown-content');
+            if (recentDropdown && dropdownContent) {
+                dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+            }
+        });
+        
+        // Bookmarks
+        document.getElementById('mobile-bookmarks-toggle')?.addEventListener('click', () => {
+            mobileMenuContent.classList.remove('show');
+            const bookmarksDropdown = document.getElementById('bookmarks-dropdown');
+            const dropdownContent = document.getElementById('bookmarks-dropdown-content');
+            if (bookmarksDropdown && dropdownContent) {
+                dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+            }
+        });
+        
+        // Split view
+        document.getElementById('mobile-split-view-toggle')?.addEventListener('click', () => {
+            mobileMenuContent.classList.remove('show');
+            this.toggleSplitView();
+        });
+        
+        // Sticky note
+        document.getElementById('mobile-sticky-note-btn')?.addEventListener('click', () => {
+            mobileMenuContent.classList.remove('show');
+            this.createStickyNote();
+        });
+        
+        // Settings
+        document.getElementById('mobile-settings-toggle')?.addEventListener('click', () => {
+            mobileMenuContent.classList.remove('show');
+            this.showSettings();
+        });
+        
+        // Sync badge counts
+        this.syncMobileBadges();
+    }
+    
+    syncMobileBadges() {
+        // Sync recent files count
+        const recentCount = document.getElementById('recent-count');
+        const mobileRecentCount = document.getElementById('mobile-recent-count');
+        if (recentCount && mobileRecentCount) {
+            mobileRecentCount.textContent = recentCount.textContent;
+            mobileRecentCount.style.display = recentCount.style.display;
+        }
+        
+        // Sync bookmarks count
+        const bookmarksCount = document.getElementById('bookmarks-count');
+        const mobileBookmarksCount = document.getElementById('mobile-bookmarks-count');
+        if (bookmarksCount && mobileBookmarksCount) {
+            mobileBookmarksCount.textContent = bookmarksCount.textContent;
+            mobileBookmarksCount.style.display = bookmarksCount.style.display;
+        }
     }
     
     setupCleanupHandlers() {

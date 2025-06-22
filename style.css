@@ -4900,7 +4900,76 @@ select.dropdown:focus {
 }
 
 /* Responsive design */
+/* Mobile menu styles */
+.mobile-menu-dropdown {
+    position: relative;
+    display: none;
+}
+
+.mobile-menu-content {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    min-width: 200px;
+    z-index: 1000;
+    display: none;
+    overflow: hidden;
+}
+
+.mobile-menu-content.show {
+    display: block;
+}
+
+.mobile-menu-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    width: 100%;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: var(--text-base);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+    text-align: left;
+    position: relative;
+}
+
+.mobile-menu-item:hover {
+    background-color: var(--bg-hover);
+}
+
+.mobile-menu-item svg {
+    flex-shrink: 0;
+    color: var(--text-secondary);
+}
+
+.mobile-menu-item span:not(.mobile-badge) {
+    flex: 1;
+}
+
+.mobile-badge {
+    position: static;
+    margin-left: auto;
+    min-width: 20px;
+    height: 20px;
+    font-size: 10px;
+}
+
 @media (max-width: 768px) {
+    .desktop-nav {
+        display: none;
+    }
+    
+    .mobile-menu-dropdown {
+        display: block;
+    }
+    
     .sidebar-toggle {
         display: flex;
     }
