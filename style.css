@@ -4900,6 +4900,13 @@ select.dropdown:focus {
 }
 
 /* Responsive design */
+/* Desktop navigation */
+.desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
 /* Mobile menu styles */
 .mobile-menu-dropdown {
     position: relative;
