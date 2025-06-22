@@ -22,7 +22,7 @@ This release introduces the highly requested tab pinning feature along with addi
   - Reports number of tabs closed
 - **Note Context Menus**: Right-click any note for quick actions
   - "Open in New Tab" - Opens note in a new tab
-  - "Pin Note" - Adds/removes note from bookmarks
+  - "Bookmark Note" - Adds/removes note from bookmarks
   - "Share Note" - Copies note URL to clipboard
   - Available in navigation tree, search results, recent files, and bookmarks
 

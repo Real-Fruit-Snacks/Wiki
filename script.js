@@ -8928,8 +8928,8 @@ class NotesWiki {
                 action: () => this.openInNewTab(notePath)
             },
             {
-                label: isBookmarked ? 'Remove Bookmark' : 'Pin Note',
-                icon: isBookmarked ? '📌' : '📍',
+                label: isBookmarked ? 'Remove Bookmark' : 'Bookmark Note',
+                icon: isBookmarked ? '🔖' : '⭐',
                 action: () => this.toggleNoteBookmark(notePath, noteTitle)
             },
             {
@@ -8993,7 +8993,7 @@ class NotesWiki {
         if (existingIndex !== -1) {
             // Remove bookmark
             this.bookmarks.splice(existingIndex, 1);
-            this.showToast('Note unpinned', 'info');
+            this.showToast('Bookmark removed', 'info');
         } else {
             // Add bookmark
             const bookmark = {
@@ -9008,7 +9008,7 @@ class NotesWiki {
                 this.bookmarks = this.bookmarks.slice(0, 50);
             }
             
-            this.showToast('Note pinned', 'success');
+            this.showToast('Note bookmarked', 'success');
         }
         
         // Save and update UI
