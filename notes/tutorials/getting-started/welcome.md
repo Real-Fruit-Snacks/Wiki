@@ -17,13 +17,13 @@ Welcome to your personal knowledge management system! This guide will help you g
 1. **Navigate Notes**: Click on any note in the sidebar to open it
 2. **Search Everything**: Press `Ctrl+K` or `/` to search across all notes
 3. **Open Multiple Tabs**: Middle-click or Ctrl+click notes to open in new tabs
-4. **Switch Themes**: Press `Ctrl+,` to open settings and choose from 50+ themes
+4. **Switch Themes**: Press `Ctrl+,` to open settings and choose from 70 themes
 
 ### Essential Features at a Glance
 
 - 📑 **Multi-tab browsing** - Work with multiple notes simultaneously
 - 🔍 **Powerful search** - Find anything instantly with advanced operators
-- 🎨 **50+ themes** - Customize your reading experience
+- 🎨 **70 themes** - Customize your reading experience
 - 📱 **Fully responsive** - Works on desktop, tablet, and mobile
 - 🔒 **Privacy-first** - Everything runs locally in your browser
 

@@ -23,7 +23,7 @@ New to Notes Wiki? Start here:
 ### 📝 Core Features
 - **[[tutorials/features/tab-management|Tab Management]]** - Multi-tab browsing system
 - **[[tutorials/features/search-guide|Advanced Search]]** - Powerful search with operators
-- **[[tutorials/features/themes|Themes Gallery]]** - 50+ beautiful themes
+- **[[tutorials/features/themes|Themes Gallery]]** - 70 beautiful themes
 - **[[tutorials/features/settings-customization|Settings & Customization]]** - Make it yours
 
 ### 🧭 Navigation & Organization  

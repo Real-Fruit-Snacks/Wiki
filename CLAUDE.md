@@ -51,7 +51,7 @@ This is a **single-page application (SPA)** built with vanilla JavaScript - no f
 ### Critical Architecture Issues
 
 ⚠️ **MONOLITHIC DESIGN WARNING**: The application currently suffers from severe architectural debt:
-- **10,600+ lines** in a single `script.js` file
+- **11,376+ lines** in a single `script.js` file
 - **200+ methods** in one `NotesWiki` class
 - **Difficult to maintain, test, and extend**
 

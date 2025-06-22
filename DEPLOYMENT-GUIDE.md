@@ -1,4 +1,4 @@
-# Deployment Guide for Notes Wiki v2.9.0
+# Deployment Guide for Notes Wiki v3.4.0
 
 ## Offline GitLab Pages Deployment
 
@@ -8,8 +8,8 @@ This release includes everything needed for complete offline hosting on GitLab P
 
 #### Core Application Files
 - `index.html` - Main application entry point
-- `script.js` - Complete application logic (6,598+ lines)
-- `style.css` - All styles including new features (5,600+ lines)
+- `script.js` - Complete application logic (11,376+ lines)
+- `style.css` - All styles including new features (7,016+ lines)
 - `build.py` - Python script to generate search index
 
 #### Self-Contained Dependencies
@@ -19,7 +19,7 @@ This release includes everything needed for complete offline hosting on GitLab P
 - **No external CDN dependencies**
 
 #### Theme System
-- `themes/` directory with 50+ complete themes
+- `themes/` directory with 70 complete themes
 - All theme files are self-contained CSS
 
 #### Build & Deployment
@@ -71,11 +71,11 @@ This release includes everything needed for complete offline hosting on GitLab P
 #### Core Functionality
 - ✅ Full-text search with operators
 - ✅ Tag-based filtering
-- ✅ Theme switching (50+ themes)
+- ✅ Theme switching (70 themes)
 - ✅ Tab management with drag-and-drop
 - ✅ Keyboard shortcuts
 
-#### New in v2.9.0
+#### New in v3.4.0
 - ✅ **Responsive Context Filtering** - Smart dropdown that adapts to screen size
 - ✅ **Mobile Optimization** - Touch-friendly interface for all devices
 - ✅ **Enhanced Memory Management** - Proper cleanup for all UI components
@@ -150,7 +150,7 @@ To verify complete offline functionality:
 
 - **GitHub Issues**: https://github.com/Real-Fruit-Snacks/Wiki/issues
 - **Documentation**: See `CLAUDE.md` for development details
-- **Version**: v2.9.0 (Released 2025-06-17)
+- **Version**: v3.4.0 (Released 2025-06-22)
 
 ---
 

@@ -41,7 +41,7 @@ To create a callout, use the following syntax:
 > seem outdated, you can manually rebuild the index using the `build.py` script.
 
 > [!INFO] Theme System Architecture
-> The wiki includes 50+ professional themes that use CSS custom properties for dynamic 
+> The wiki includes 70 professional themes that use CSS custom properties for dynamic 
 > switching. Each theme provides comprehensive styling for syntax highlighting, UI elements, 
 > and responsive design across all device types.
 
@@ -276,4 +276,4 @@ To create a callout, use the following syntax:
 ## Theme Compatibility
 
 > [!SUCCESS] Works with All Themes!
-> The callout system is designed to work seamlessly with all 15+ built-in themes. Colors and styles automatically adapt to maintain readability and visual consistency.
+> The callout system is designed to work seamlessly with all 70 built-in themes. Colors and styles automatically adapt to maintain readability and visual consistency.

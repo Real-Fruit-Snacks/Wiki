@@ -45,7 +45,7 @@ If you're forking for your own project:
 ```json
 {
   "name": "notes-wiki",
-  "version": "3.3.0",
+  "version": "3.4.0",
   ...
 }
 ```
@@ -109,7 +109,7 @@ That's it! Your custom-branded knowledge base is ready to deploy.
 ## 💡 Pro Tips
 
 - **Favicon**: Replace the SVG favicon in index.html and 404.html with your own
-- **Theme defaults**: Change the default theme in index.html line 72 from 'tokyo-night' to your preference
+- **Theme defaults**: Change the default theme in script.js settings from 'ayu-mirage' to your preference
 - **Welcome page**: Customize `/notes/index.md` with your own welcome content
 
 ## 🤔 Why So Few Changes?

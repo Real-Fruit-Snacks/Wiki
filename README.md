@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-3.3.0-green?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/Version-3.4.0-green?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/Themes-70-purple?style=flat-square" alt="Themes">
   <img src="https://img.shields.io/badge/Dependencies-Zero-orange?style=flat-square" alt="Zero Dependencies">
@@ -483,9 +483,9 @@ See our [Contributing Guide](CONTRIBUTING.md) for details.
 ## 📊 Project Stats
 
 - **🚀 Zero Runtime Dependencies** - Everything is bundled
-- **📦 ~44MB Total Package** - Including all themes, libraries, and documentation
+- **📦 ~30MB Total Package** - Including all themes, libraries, and documentation
 - **🎨 70 Professional Themes** - Carefully curated collection
-- **📝 8,800+ Lines of Code** - Comprehensive single-page application
+- **📝 11,376+ Lines of Code** - Comprehensive single-page application
 - **⚡ < 100ms Load Time** - Measured on average hardware
 - **🌍 100% Offline Capable** - No internet required after initial load
 - **📱 Mobile Responsive** - Touch-optimized interface
