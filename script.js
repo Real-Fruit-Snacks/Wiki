@@ -8819,21 +8819,29 @@ class NotesWiki {
             }
         ];
         
-        // Build menu HTML
-        contextMenu.innerHTML = menuItems.map(item => `
-            <div class="context-menu-item${item.className ? ' ' + item.className : ''}">
-                <span class="context-menu-icon">${item.icon}</span>
-                <span class="context-menu-label">${item.label}</span>
-            </div>
-        `).join('');
-        
-        // Add event listeners
-        const items = contextMenu.querySelectorAll('.context-menu-item');
-        items.forEach((item, index) => {
-            item.addEventListener('click', () => {
-                menuItems[index].action();
+        // Build menu with proper SVG handling
+        menuItems.forEach(item => {
+            const menuItem = document.createElement('div');
+            menuItem.className = `context-menu-item${item.className ? ' ' + item.className : ''}`;
+            
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'context-menu-icon';
+            iconSpan.innerHTML = item.icon;
+            
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'context-menu-label';
+            labelSpan.textContent = item.label;
+            
+            menuItem.appendChild(iconSpan);
+            menuItem.appendChild(labelSpan);
+            
+            // Add click handler
+            menuItem.addEventListener('click', () => {
+                item.action();
                 contextMenu.remove();
             });
+            
+            contextMenu.appendChild(menuItem);
         });
         
         // Close menu when clicking outside
@@ -8951,21 +8959,29 @@ class NotesWiki {
             }
         ];
         
-        // Build menu HTML
-        contextMenu.innerHTML = menuItems.map(item => `
-            <div class="context-menu-item${item.className ? ' ' + item.className : ''}">
-                <span class="context-menu-icon">${item.icon}</span>
-                <span class="context-menu-label">${item.label}</span>
-            </div>
-        `).join('');
-        
-        // Add event listeners
-        const items = contextMenu.querySelectorAll('.context-menu-item');
-        items.forEach((item, index) => {
-            item.addEventListener('click', () => {
-                menuItems[index].action();
+        // Build menu with proper SVG handling
+        menuItems.forEach(item => {
+            const menuItem = document.createElement('div');
+            menuItem.className = `context-menu-item${item.className ? ' ' + item.className : ''}`;
+            
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'context-menu-icon';
+            iconSpan.innerHTML = item.icon;
+            
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'context-menu-label';
+            labelSpan.textContent = item.label;
+            
+            menuItem.appendChild(iconSpan);
+            menuItem.appendChild(labelSpan);
+            
+            // Add click handler
+            menuItem.addEventListener('click', () => {
+                item.action();
                 contextMenu.remove();
             });
+            
+            contextMenu.appendChild(menuItem);
         });
         
         // Close menu when clicking outside
