@@ -8451,7 +8451,7 @@ class NotesWiki {
         const closeAllButton = document.getElementById('tab-close-all-button');
         if (closeAllButton) {
             closeAllButton.addEventListener('click', () => {
-                this.closeAllTabs();
+                this.confirmCloseAllTabs();
             });
         }
         
@@ -9185,25 +9185,77 @@ class NotesWiki {
         this.saveTabState();
     }
     
+    confirmCloseAllTabs() {
+        const pinnedTabs = Array.from(this.tabs.values()).filter(tab => tab.isPinned);
+        const totalTabs = this.tabs.size;
+        
+        let message, confirmText;
+        
+        if (pinnedTabs.length === 0) {
+            // No pinned tabs - close all
+            message = `Are you sure you want to close all ${totalTabs} tabs?`;
+            confirmText = 'Close All Tabs';
+        } else if (pinnedTabs.length === totalTabs) {
+            // All tabs are pinned - can't close any
+            this.showToast('Cannot close tabs - all tabs are pinned. Unpin them first.', 'warning');
+            return;
+        } else {
+            // Some tabs are pinned - close only unpinned ones
+            const unpinnedCount = totalTabs - pinnedTabs.length;
+            message = `Close ${unpinnedCount} unpinned tabs? (${pinnedTabs.length} pinned tabs will remain open)`;
+            confirmText = `Close ${unpinnedCount} Tabs`;
+        }
+        
+        this.showConfirmationDialog(
+            'Close Tabs?',
+            message,
+            () => {
+                this.closeAllTabs();
+            },
+            null
+        );
+    }
+    
     closeAllTabs() {
-        // Clear all tabs from DOM
-        document.getElementById('tabs-container').innerHTML = '';
+        const pinnedTabs = Array.from(this.tabs.entries()).filter(([_, tab]) => tab.isPinned);
+        const totalTabsBefore = this.tabs.size;
         
-        // Clear all tabs from memory
-        this.tabs.clear();
-        this.tabContents.clear();
+        if (pinnedTabs.length === totalTabsBefore) {
+            // All tabs are pinned - shouldn't get here but just in case
+            this.showToast('Cannot close tabs - all tabs are pinned', 'warning');
+            return;
+        }
         
-        // Reset tab counter
-        this.tabIdCounter = 0;
-        
-        // Clear saved tab state
-        localStorage.removeItem('tabState');
-        
-        // Create a single tab with the home page
-        this.createNewTab('/notes/index.md', 'Home');
-        
-        // Show a confirmation toast
-        this.showToast('All tabs closed');
+        if (pinnedTabs.length === 0) {
+            // No pinned tabs - close everything and create new home tab
+            document.getElementById('tabs-container').innerHTML = '';
+            this.tabs.clear();
+            this.tabContents.clear();
+            this.tabIdCounter = 0;
+            localStorage.removeItem('tabState');
+            this.createNewTab('/notes/index.md', 'Home');
+            this.showToast('All tabs closed');
+        } else {
+            // Some tabs are pinned - only close unpinned ones
+            const unpinnedTabs = Array.from(this.tabs.entries()).filter(([_, tab]) => !tab.isPinned);
+            
+            // Remove unpinned tabs from DOM and memory
+            unpinnedTabs.forEach(([tabId, tab]) => {
+                document.getElementById(tabId)?.remove();
+                this.tabs.delete(tabId);
+                this.tabContents.delete(tabId);
+            });
+            
+            // If the active tab was closed, switch to first pinned tab
+            if (!this.tabs.has(this.activeTabId)) {
+                const firstPinnedTabId = pinnedTabs[0][0];
+                this.switchToTab(firstPinnedTabId);
+            }
+            
+            this.saveTabState();
+            const closedCount = unpinnedTabs.length;
+            this.showToast(`${closedCount} tabs closed (${pinnedTabs.length} pinned tabs remain)`);
+        }
     }
     
     closeCurrentTab() {
