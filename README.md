@@ -1,92 +1,76 @@
 <div align="center">
 
-# 📚 Wiki - Modern Knowledge Management System
+<h1>
+  <br>
+  <img src="https://raw.githubusercontent.com/Real-Fruit-Snacks/Wiki/main/images/logo.svg" alt="Wiki Logo" width="100">
+  <br>
+  Wiki
+  <br>
+</h1>
+
+<h3>🚀 The Self-Contained Knowledge Base That Works Everywhere</h3>
 
 <p align="center">
-  <strong>Transform your documentation with a blazing-fast, offline-first wiki system featuring 70 themes and enterprise-grade search capabilities</strong>
+  <strong>70 Themes • Zero Dependencies • Complete Offline • Lightning Fast</strong>
 </p>
 
 <p align="center">
   <a href="https://real-fruit-snacks.github.io/Wiki/">
-    <img src="https://img.shields.io/badge/Live%20Demo-Visit%20Now-blue?style=for-the-badge" alt="Live Demo">
+    <img src="https://img.shields.io/badge/🔥_Live_Demo-Try_Now-ff4458?style=for-the-badge&labelColor=1a1a1a" alt="Live Demo">
+  </a>
+  <a href="#-deploy-in-60-seconds">
+    <img src="https://img.shields.io/badge/⚡_Quick_Start-Deploy-00d4aa?style=for-the-badge&labelColor=1a1a1a" alt="Quick Start">
   </a>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-3.4.0-green?style=flat-square" alt="Version">
-  <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License">
-  <img src="https://img.shields.io/badge/Themes-70-purple?style=flat-square" alt="Themes">
-  <img src="https://img.shields.io/badge/Dependencies-Zero-orange?style=flat-square" alt="Zero Dependencies">
-  <img src="https://img.shields.io/badge/Offline-Ready-red?style=flat-square" alt="Offline Ready">
+  <img src="https://img.shields.io/badge/Version-3.4.0-blue?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/Size-~30MB-green?style=flat-square" alt="Size">
+  <img src="https://img.shields.io/badge/Load_Time-<100ms-orange?style=flat-square" alt="Performance">
+  <img src="https://img.shields.io/badge/Works-Offline-red?style=flat-square" alt="Offline">
 </p>
 
 </div>
 
 ---
 
-## 🎯 Why Wiki?
+<div align="center">
 
-**Wiki** is not just another documentation tool – it's a complete knowledge management solution designed for modern teams and individuals who value **speed**, **privacy**, and **flexibility**.
+### 🎯 **One Wiki. Endless Possibilities.**
 
-### 🚀 Key Benefits
+**Deploy anywhere.** GitHub Pages, GitLab, Netlify, or your laptop.  
+**Theme everything.** 70 professional themes from VSCode to Cyberpunk.  
+**Work offline.** Air-gapped networks? No problem. Zero external requests.  
+**Stay organized.** Multi-tab interface, drag-and-drop, split view, and more.
 
-- **⚡ Lightning Fast**: Pure JavaScript with zero server dependencies means instant page loads
-- **🔒 Privacy First**: Your data never leaves your device - perfect for sensitive documentation
-- **🎨 Beautiful by Default**: 70 professional themes including VSCode, Dracula, Night Owl, and Synthwave '84
-- **📱 Works Everywhere**: Desktop, tablet, mobile - even offline or in air-gapped environments
-- **🔍 Enterprise Search**: Advanced operators, full-text search, and code-aware indexing
-- **🛠️ Zero Configuration**: Deploy in minutes with GitHub/GitLab Pages or any static host
+</div>
 
 ---
 
-## ✨ Features That Set Us Apart
+## ✨ **Standout Features**
 
 <table>
 <tr>
-<td width="50%">
+<td width="50%" valign="top">
 
-### 🎯 Smart Organization
-- **Multi-tab Interface** - Work on multiple documents simultaneously
-- **Drag & Drop Tabs** - Organize your workspace effortlessly  
-- **Split View Mode** - Compare documents side-by-side
-- **Responsive Context Filtering** - Smart dropdown adapts to screen size
-- **Smart Folders** - Expand/collapse with one click
-- **Focus Mode** - Distraction-free reading with wide content display
-
-</td>
-<td width="50%">
-
-### 🔍 Powerful Search
-- **Full-Text Indexing** - Search content, not just titles
-- **Code-Aware Search** - Find snippets across all languages
-- **Advanced Operators** - `tag:`, `author:`, exact phrases, exclusions
-- **In-Note Search** - Ctrl+F to search within current document
-- **Real-Time Results** - Instant search as you type
-- **Tag-Based Filtering** - Organize and filter by tags
+### 🎨 **70 Professional Themes**
+Not just dark and light. Choose from:
+- **Developer favorites**: VSCode, Dracula, Monokai
+- **Eye comfort**: Nord, Solarized, Tomorrow Night
+- **Creative**: Synthwave '84, Cyberpunk, Matrix
+- **Professional**: GitHub, Notion, Bear
+- **Special effects**: Neon glow, gradients, animations
 
 </td>
-</tr>
-<tr>
-<td width="50%">
+<td width="50%" valign="top">
 
-### 🎨 Customization
-- **70 Professional Themes** - From minimal to vibrant
-- **Custom CSS Support** - Make it truly yours
-- **Flexible Layouts** - Narrow, wide, or custom widths
-- **Font Controls** - Size, family, and line spacing
-
-</td>
-<td width="50%">
-
-### 💡 Productivity Tools
-- **Pomodoro Timer** - Built-in focus sessions
-- **Keyboard Shortcuts** - Fully customizable
-- **Recent Files & Bookmarks** - Pin and access favorites quickly
-- **Reading Progress** - Track your position and estimated time
-- **Table of Contents** - Auto-generated navigation
-- **Sticky Notes** - Quick notes overlay
-- **Wiki Links** - `[[Link]]` style internal navigation
-- **Persistent State** - Pick up where you left off
+### 🚀 **Zero Dependencies**
+Everything included. No CDNs. No npm.
+- **11,000+ lines** of pure JavaScript
+- **All libraries bundled** - works offline instantly  
+- **No build step** - just open and use
+- **No tracking** - your data stays yours
+- **Air-gap ready** - perfect for secure environments
 
 </td>
 </tr>
@@ -94,40 +78,134 @@
 
 ---
 
-## 🚀 Get Started in 60 Seconds
+## 🎯 **Killer Features**
 
-### Option 1: GitHub Pages (Recommended)
+### 📑 **Multi-Tab Workspace**
+Work like a pro with browser-style tabs:
+- **Drag & drop** tabs to reorder
+- **Pin important tabs** - protected from closure
+- **Tab overflow handling** - scroll through many tabs
+- **Smart confirmations** - never lose work accidentally
+- **Keyboard navigation** - Ctrl+1-9 to jump between tabs
+
+### 🔍 **Advanced Search That Actually Works**
+```
+tag:javascript "async await" -promise author:"John Doe"
+```
+- **Search operators** - tags, authors, exact phrases, exclusions
+- **Full-text search** - searches content, not just titles
+- **Instant results** - blazing fast with highlighting
+- **Search history** - remembers your last 50 searches
+
+### 📱 **True Mobile Experience**
+Not just responsive - actually optimized:
+- **Touch-friendly menu** - hamburger navigation with labeled actions
+- **Long-press context menus** - right-click functionality on mobile
+- **Smart layout adaptation** - content reflows perfectly
+- **Mobile-first features** - designed for fingers, not cursors
+
+### 🗂️ **Split View & Productivity**
+- **Side-by-side notes** - compare or reference while writing
+- **Draggable divider** - adjust pane sizes to your needs
+- **Independent scrolling** - each pane tracks its position
+- **Responsive** - automatically adapts on smaller screens
+
+### 📌 **Floating Sticky Notes**
+Quick thoughts deserve quick capture:
+- **4 colors** - yellow, blue, green, pink
+- **Drag anywhere** - position freely on screen
+- **Resize at will** - make them tiny or huge
+- **Persistent** - survive browser restarts
+- **Keyboard shortcut** - Ctrl+Shift+S for instant creation
+
+### 🎯 **Smart Context Menus**
+Right-click any note for instant actions:
+- **Open in new tab** - research without losing your place
+- **Bookmark instantly** - build your reading list
+- **Share note URL** - copy link with one click
+- **Works everywhere** - sidebar, search results, content links
+
+---
+
+## 💡 **Why Wiki Stands Out**
+
+<table>
+<tr>
+<td align="center" width="25%">
+
+**⚡ Instant**  
+<100ms load time  
+No server round-trips  
+Everything cached locally
+
+</td>
+<td align="center" width="25%">
+
+**🔒 Private**  
+Zero tracking  
+No analytics  
+No external requests
+
+</td>
+<td align="center" width="25%">
+
+**🌍 Universal**  
+Works everywhere  
+No internet required  
+Any web browser
+
+</td>
+<td align="center" width="25%">
+
+**🎨 Beautiful**  
+70 themes included  
+Responsive design  
+Smooth animations
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🚀 **Deploy in 60 Seconds**
+
+<details open>
+<summary><strong>📦 Option 1: GitHub Pages (Recommended)</strong></summary>
 
 ```bash
-# 1. Fork this repository
+# 1. Fork this repository (click Fork button above)
 # 2. Go to Settings → Pages → Source: GitHub Actions
 # 3. Your wiki is live at: https://[username].github.io/Wiki/
 ```
 
-### Option 2: GitLab Pages (Self-Hosted)
+That's it. Seriously. ✨
 
-Perfect for private GitLab instances:
+</details>
+
+<details>
+<summary><strong>🦊 Option 2: GitLab Pages</strong></summary>
 
 ```bash
-# 1. Clone or download this repository
+# Clone the repository
 git clone https://github.com/Real-Fruit-Snacks/Wiki.git
 cd Wiki
 
-# 2. Build the search index
-python3 build.py
+# Push to GitLab
+git remote add gitlab https://gitlab.com/your-username/wiki.git
+git push gitlab main
 
-# 3. Push to your GitLab instance
-git remote set-url origin https://your-gitlab.com/username/wiki.git
-git push -u origin main
-
-# 4. Enable GitLab Pages in your project settings
-# Your wiki is now available at: https://username.your-gitlab.com/wiki/
+# Enable GitLab Pages in project settings
+# Live at: https://your-username.gitlab.io/wiki/
 ```
 
-### Option 3: Local Development
+</details>
+
+<details>
+<summary><strong>💻 Option 3: Run Locally</strong></summary>
 
 ```bash
-# Clone and run
+# Clone and serve
 git clone https://github.com/Real-Fruit-Snacks/Wiki.git
 cd Wiki
 python3 -m http.server 8000
@@ -135,330 +213,142 @@ python3 -m http.server 8000
 # Open http://localhost:8000
 ```
 
-### Option 4: Download & Go
+</details>
+
+<details>
+<summary><strong>📥 Option 4: Download & Go</strong></summary>
 
 1. [Download Latest Release](https://github.com/Real-Fruit-Snacks/Wiki/releases)
 2. Extract anywhere
 3. Open `index.html`
 4. Start documenting!
 
----
-
-## 🔒 Self-Contained Deployment Guide
-
-This wiki is designed to work completely offline without external dependencies. Everything you need is included in this repository.
-
-### 📦 What's Included for Self-Contained Operation
-
-- **Zero External Dependencies**: All JavaScript libraries are bundled in `/libs/`
-- **Complete Theme Collection**: 70 themes in `/themes/` directory
-- **Self-Contained Assets**: All icons, fonts, and resources are embedded
-- **Local Search**: Full-text search index generated locally
-- **GitLab CI/CD Ready**: `.gitlab-ci.yml` included for automated deployment
-
-### 🚀 Complete Setup for GitLab Pages
-
-#### Step 1: Prepare Your Environment
-
-```bash
-# Required: Python 3.6+ (for building search index)
-python3 --version
-
-# Optional: Git (for version control)
-git --version
-```
-
-#### Step 2: Deploy to Private GitLab
-
-```bash
-# Download and extract the latest release
-wget https://github.com/Real-Fruit-Snacks/Wiki/archive/refs/heads/main.zip
-unzip main.zip
-cd Wiki-main
-
-# Build the search index from your notes
-python3 build.py
-
-# Initialize git repository (if not cloning)
-git init
-git add .
-git commit -m "Initial wiki deployment"
-
-# Push to your private GitLab instance
-git remote add origin https://your-gitlab.domain.com/your-group/wiki.git
-git push -u origin main
-```
-
-#### Step 3: Configure GitLab Pages
-
-1. **Navigate to Project Settings** → **Pages**
-2. **Set Source Branch**: `main` 
-3. **Set Source Directory**: `/` (root directory)
-4. **Enable Pages**: Your wiki will be available at `https://your-group.your-gitlab.domain.com/wiki/`
-
-#### Step 4: Customize for Your Environment
-
-```bash
-# Add your content to /notes/ directory
-mkdir -p notes/your-topic
-echo "---
-title: Your First Note
-tags: [example]
----
-# Welcome to Your Wiki" > notes/your-topic/example.md
-
-# Rebuild search index after adding content
-python3 build.py
-
-# Commit and push changes
-git add .
-git commit -m "Add custom content"
-git push
-```
-
-### 🔧 Self-Contained Environment Considerations
-
-#### File Verification
-```bash
-# Verify all dependencies are present
-ls libs/           # Should contain: js-yaml.min.js, marked.min.js, prism.min.js
-ls themes/         # Should contain 70 CSS theme files
-ls -la index.html  # Main application file
-```
-
-#### Manual Deployment (No Git)
-1. Copy the entire directory to your web server
-2. Ensure Python is available for building search index
-3. Run `python3 build.py` whenever you add/modify notes
-4. Serve the directory with any web server
-
-#### Security Notes
-- **No Network Requests**: Application never contacts external servers
-- **No Analytics**: Zero tracking or telemetry
-- **Local Storage Only**: All data stored in browser's localStorage
-- **Content Security**: All included libraries are minified and verified
-
-### 📁 Directory Structure for Deployment
-
-```
-wiki/
-├── index.html              # Main application
-├── style.css              # Base styles
-├── script.js              # Application logic
-├── 404.html               # Custom error page
-├── _config.yml            # Jekyll bypass config
-├── .gitlab-ci.yml         # GitLab CI/CD pipeline
-├── build.py               # Search index builder
-├── libs/                  # JavaScript dependencies
-│   ├── js-yaml.min.js
-│   ├── marked.min.js
-│   └── prism.min.js
-├── themes/                # 70 CSS themes
-│   ├── tokyo-night.css
-│   ├── dracula.css
-│   └── [48 more themes]
-├── notes/                 # Your content
-│   ├── index.md
-│   └── [your directories]
-└── images/               # Assets
-    ├── reference/
-    └── tutorials/
-```
-
-### 🛠️ Maintenance Commands
-
-```bash
-# Rebuild search index (run after content changes)
-python3 build.py
-
-# Validate JavaScript syntax
-node -c script.js
-
-# Test locally
-python3 -m http.server 8000
-
-# Create deployment package
-zip -r wiki-deployment.zip . -x "*.git*" "node_modules/*" "*.log"
-```
-
-### ⚠️ Troubleshooting
-
-**Search Not Working?**
-- Ensure `notes-index.json` exists and is up to date
-- Run `python3 build.py` to regenerate
-
-**Themes Not Loading?**
-- Verify all CSS files exist in `/themes/` directory
-- Check browser console for 404 errors
-
-**GitLab Pages Not Updating?**
-- Check CI/CD pipeline status in GitLab
-- Ensure `.gitlab-ci.yml` is in repository root
-- Verify GitLab Pages is enabled in project settings
-
----
-
-## 📖 How It Works
-
-Wiki uses a simple yet powerful architecture:
-
-```
-Your Notes (Markdown) → Build Script (Python) → Search Index → Beautiful Wiki
-```
-
-1. **Write** markdown files with YAML frontmatter
-2. **Build** the search index with `python3 build.py`
-3. **Deploy** anywhere - GitHub Pages, GitLab, Netlify, or locally
-4. **Access** your knowledge base from any device
-
----
-
-## 💻 Writing Content
-
-### Basic Note Structure
-
-```markdown
----
-title: API Documentation
-tags: [api, reference, backend]
-author: John Doe
-created: 2024-01-15
-updated: 2024-01-20
-description: Complete API reference guide
-combineCodeBlocks: true
----
-
-# API Documentation
-
-Your content here with **full markdown support**...
-```
-
-**Frontmatter Options:**
-- `combineCodeBlocks: true` - Automatically combine all code blocks at the end
-- `combinedBlockLanguage: javascript` - Set language for combined block
-- `combinedBlockTitle: "Complete Code"` - Custom title for combined block
-
-### Advanced Features
-
-<details>
-<summary><strong>📝 Enhanced Code Blocks</strong></summary>
-
-```markdown
-```javascript title:"API Example" collapse:true
-async function fetchData() {
-  const response = await fetch('/api/data');
-  return response.json();
-}
-```
-```
-
-Features toggleable line numbers (CSS counter-based), syntax highlighting for 20+ languages, collapsible sections, custom titles, and copy buttons.
-</details>
-
-<details>
-<summary><strong>💬 Callout Blocks</strong></summary>
-
-```markdown
-> [!TIP] Pro Tip
-> Use callouts to highlight important information
-
-> [!WARNING]
-> Critical warnings stand out visually
-```
-
-14 different callout types available: TIP, WARNING, INFO, NOTE, DANGER, SUCCESS, and more.
-</details>
-
-<details>
-<summary><strong>🔍 Search Like a Pro</strong></summary>
-
-- `"exact phrase"` - Find exact matches
-- `javascript -jquery` - Include/exclude terms
-- `tag:tutorial author:john` - Filter by metadata
-- `term1 term2` - Multiple terms (AND logic)
 </details>
 
 ---
 
-## 🎨 Stunning Themes
+## 📖 **Writing Your First Note**
 
-Choose from 70 professionally crafted themes:
+Create a markdown file in `/notes/`:
 
-| Dark Themes | Light Themes | Special Themes |
-|------------|--------------|----------------|
-| Ayu Mirage (Default) | GitHub Light | Matrix (Terminal Green) |
-| VSCode Dark+ | Solarized Light | Neon Galaxy (Amazing) |
-| Dracula | Atom One Light | Luxury Gold (Fancy) |
-| Tokyo Night | Aero Glass (Translucent) | Holographic Blue (Futuristic) |
-| One Dark Pro | Winter is Coming Light | Sunset Dreams (Unique) |
-
+```markdown
+---
+title: My First Note
+tags: [getting-started, tutorial]
+author: Your Name
+created: 2025-06-22
 ---
 
-## ⚙️ Configuration & Customization
+# My First Note
 
-### Global Settings (Ctrl+,)
-- Theme selection with live preview
-- Font size, family, and line height
-- Custom CSS injection
-- Keyboard shortcut customization
-- Default homepage behavior
-- External link handling
+Welcome to your new knowledge base! 
 
-### Build Configuration
+**Features to try:**
+- Press `?` to see keyboard shortcuts
+- Press `Ctrl+K` to search
+- Right-click this note to bookmark it
+- Press `F` for focus mode
+```
+
+Then rebuild the search index:
 ```bash
-# Rebuild search index after adding notes
 python3 build.py
-
-# Output shows indexed content
-✅ Build complete!
-📊 Stats:
-   - Total notes: 127
-   - Total tags: 45
-   - Total authors: 3
 ```
 
 ---
 
-## 🌟 Use Cases
+## 🎨 **Theme Showcase**
 
 <table>
 <tr>
-<td align="center" width="33%">
+<td align="center">
 
-### 📚 Personal Knowledge Base
-Perfect for notes, journals, and learning resources
-
-</td>
-<td align="center" width="33%">
-
-### 👥 Team Documentation
-Collaborate on docs without complex infrastructure
+**Ayu Mirage** (Default)  
+Modern & comfortable
 
 </td>
-<td align="center" width="33%">
+<td align="center">
 
-### 🔒 Secure Documentation
-Air-gapped environments and sensitive data
+**Dracula**  
+Popular dark theme
+
+</td>
+<td align="center">
+
+**GitHub Light**  
+Clean & professional
+
+</td>
+<td align="center">
+
+**Synthwave '84**  
+Retro neon vibes
 
 </td>
 </tr>
+</table>
+
+<div align="center">
+  <strong>... and 66 more themes to explore!</strong>
+</div>
+
+---
+
+## 🛠️ **Power User Features**
+
+### ⌨️ **Keyboard Shortcuts**
+- `?` - Show all shortcuts
+- `Ctrl+K` - Quick search
+- `Ctrl+T` - New tab
+- `Alt+P` - Pin/unpin tab
+- `F` - Focus mode
+- `Ctrl+Shift+S` - Create sticky note
+
+### 🔧 **Customization**
+- **Custom CSS** - Make it truly yours
+- **Settings export/import** - Backup your preferences
+- **Keyboard shortcut customization** - Your workflow, your keys
+- **Content width options** - Narrow, wide, or full
+
+### 📊 **Advanced Search**
+- `"exact phrase"` - Find specific text
+- `tag:javascript` - Filter by tags
+- `author:"John Doe"` - Find by author
+- `-excluded` - Exclude terms
+- Combine operators for precision
+
+---
+
+## 💼 **Perfect For**
+
+<table>
 <tr>
-<td align="center" width="33%">
+<td align="center">
 
-### 📖 Technical Writing
-API docs, tutorials, and code examples
-
-</td>
-<td align="center" width="33%">
-
-### 🎓 Educational Content
-Course materials and interactive learning
+**👩‍💻 Developers**  
+API docs, code snippets,  
+project notes, TIL
 
 </td>
-<td align="center" width="33%">
+<td align="center">
 
-### 💼 Project Management
-Meeting notes, specs, and planning docs
+**📚 Students**  
+Lecture notes, research,  
+study guides, resources
+
+</td>
+<td align="center">
+
+**👥 Teams**  
+Documentation, guides,  
+onboarding, knowledge base
+
+</td>
+<td align="center">
+
+**🔒 Security**  
+Air-gapped networks,  
+sensitive docs, privacy
 
 </td>
 </tr>
@@ -466,70 +356,66 @@ Meeting notes, specs, and planning docs
 
 ---
 
-## 🤝 Contributing
+## 📊 **By The Numbers**
 
-We welcome contributions! Here's how to get involved:
+<div align="center">
 
-1. 🍴 Fork the repository
-2. 🌿 Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. 💻 Make your changes
-4. ✅ Test thoroughly
-5. 📤 Submit a Pull Request
+| Metric | Value | What It Means |
+|--------|-------|---------------|
+| **Total Package** | ~30MB | Including all themes & features |
+| **Load Time** | <100ms | Instant on any device |
+| **Lines of Code** | 11,376+ | All features, zero dependencies |
+| **Themes** | 70 | More than most IDEs |
+| **External Requests** | 0 | Complete privacy |
+| **Build Dependencies** | 0 | Just Python for search index |
 
-Check our GitHub Issues page for contribution opportunities.
-
----
-
-## 📊 Project Stats
-
-- **🚀 Zero Runtime Dependencies** - Everything is bundled
-- **📦 ~30MB Total Package** - Including all themes, libraries, and documentation
-- **🎨 70 Professional Themes** - Carefully curated collection
-- **📝 11,376+ Lines of Code** - Comprehensive single-page application
-- **⚡ < 100ms Load Time** - Measured on average hardware
-- **🌍 100% Offline Capable** - No internet required after initial load
-- **📱 Mobile Responsive** - Touch-optimized interface
-- **🛡️ Privacy-First** - No tracking, no external requests
+</div>
 
 ---
 
-## 🛡️ Security & Privacy
+## 🤝 **Contributing**
 
-- **No Tracking** - Zero analytics or telemetry
-- **No External Requests** - All resources are local
-- **No Database** - Simple file-based structure
-- **No Login Required** - Your data stays yours
-- **Client-Side Only** - No server processing
+We welcome contributions! Here's how to help:
+
+1. 🐛 **Report bugs** - [Open an issue](https://github.com/Real-Fruit-Snacks/Wiki/issues)
+2. 💡 **Suggest features** - Share your ideas
+3. 🎨 **Create themes** - Add to our collection
+4. 📝 **Improve docs** - Help others get started
+5. 🌍 **Translate** - Make it accessible
 
 ---
 
-## 📜 License
+## 🔒 **Privacy & Security**
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- ✅ **No tracking** - Zero analytics or telemetry
+- ✅ **No external requests** - All resources are local
+- ✅ **No cookies** - Only localStorage for settings
+- ✅ **No registration** - No accounts or sign-ups
+- ✅ **Air-gap compatible** - Works without internet
+- ✅ **GDPR compliant** - We literally collect nothing
+
+---
+
+## 📜 **License**
+
+MIT License - use it for anything! See [LICENSE](LICENSE) for details.
 
 ---
 
 <div align="center">
 
-## 🙏 Acknowledgments
+### 🌟 **Ready to Transform Your Documentation?**
 
-Built with ❤️ using:
-- [Marked.js](https://marked.js.org/) for Markdown parsing
-- [Prism.js](https://prismjs.com/) for syntax highlighting  
-- [js-yaml](https://github.com/nodeca/js-yaml) for frontmatter parsing
-
-<br>
-
-**[⬆ Back to Top](#-wiki---modern-knowledge-management-system)**
-
-<br>
-
-<p align="center">
-  <a href="https://github.com/Real-Fruit-Snacks/Wiki/issues">Report Bug</a>
-  ·
-  <a href="https://github.com/Real-Fruit-Snacks/Wiki/issues">Request Feature</a>
-  ·
-  <a href="https://real-fruit-snacks.github.io/Wiki/">Live Demo</a>
+<p>
+  <a href="https://real-fruit-snacks.github.io/Wiki/">
+    <img src="https://img.shields.io/badge/🚀_Try_The_Demo-Experience_it_Now-ff4458?style=for-the-badge&labelColor=1a1a1a" alt="Try Demo">
+  </a>
 </p>
+
+<p>
+  <strong>Join developers, students, and teams who've made the switch to a better wiki.</strong>
+</p>
+
+<sub>Built with ❤️ using vanilla JavaScript, no frameworks needed.</sub>
 
 </div>
