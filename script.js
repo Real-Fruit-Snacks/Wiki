@@ -8794,11 +8794,6 @@ class NotesWiki {
                 action: () => this.togglePinTab(tabId)
             },
             {
-                label: 'Duplicate Tab',
-                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1a1 1 0 001 1h1a1 1 0 001-1V3a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zM6 5v6h4V5H6z" clip-rule="evenodd"/><path d="M11 10a1 1 0 100 2h1a1 1 0 001-1v-1a1 1 0 00-1-1h-1z"/><path fill-rule="evenodd" d="M5 14a2 2 0 012-2v1a1 1 0 001 1h1a1 1 0 001-1v-1a2 2 0 012 2v2a2 2 0 01-2 2H7a2 2 0 01-2-2v-2zm2 0v2h4v-2H7z" clip-rule="evenodd"/></svg>`,
-                action: () => this.duplicateTab(tabId)
-            },
-            {
                 label: 'Close Tab',
                 icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`,
                 action: () => this.closeTab(tabId),

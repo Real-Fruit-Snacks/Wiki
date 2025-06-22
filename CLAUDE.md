@@ -64,21 +64,23 @@ When making significant changes, consider the modular refactoring plan:
 - SettingsManager.js (settings handling)
 - ThemeManager.js (theme system)
 - PomodoroManager.js (timer functionality)
-- StickyNotesManager.js (sticky notes)
+- QuickNotesManager.js (quick notes panel)
 - SplitViewManager.js (split view)
+- ContextMenuManager.js (right-click menus)
 ```
 
 ### Core Components
 
 1. **Entry Point**: `index.html` - Single HTML file that loads all resources with dynamic base path detection for GitHub Pages compatibility
 2. **Main Application**: `script.js` - Contains the monolithic `NotesWiki` class that handles:
-   - Tab management with drag-and-drop
+   - Tab management with drag-and-drop and pinning
    - Advanced search with operators (`tag:`, `author:`, `"phrase"`, `-exclude`, etc.)
    - Theme switching (70 themes organized in 10 categories)
    - Settings persistence via localStorage
    - Pomodoro timer, keyboard shortcuts, responsive context filtering
-   - Sticky notes (floating mini-notes with drag/resize)
+   - Quick Notes panel (slide-out from right side for temporary notes)
    - Split view (side-by-side note viewing)
+   - Context menus (tab and note right-click menus with SVG icons)
    - Confirmation dialogs for closing tabs/sticky notes (enabled by default)
 
 3. **Build System**: `build.py` - Python script that:
@@ -187,13 +189,13 @@ Themes are organized into 10 categories in the settings modal:
 
 ### Recent Major Features (v3.1.0 - v3.4.0)
 
-1. **Split View Implementation** - Side-by-side note viewing with draggable pane resizing
-2. **Sticky Notes Feature** - Floating mini-notes with drag, resize, and color options
+1. **Quick Notes Panel** - Slide-out panel from right side (replaced floating sticky notes)
+2. **Split View Implementation** - Side-by-side note viewing with draggable pane resizing
 3. **Dynamic Path Detection** - Works with any project name on GitHub/GitLab Pages
 4. **Confirmation Dialogs** - Optional (now default) confirmations when closing tabs/sticky notes
 5. **Enhanced Error Logging** - Comprehensive logging for theme loading and other operations
 6. **Pinned Tabs** - Right-click tabs to pin them, preventing closure and navigation to different notes
-7. **Note Context Menus** - Right-click any note for quick actions (Open in New Tab, Bookmark Note, Share Note)
+7. **Note Context Menus** - Right-click any note for quick actions with proper SVG icons
 
 ### Combined Code Blocks Feature
 
@@ -233,6 +235,16 @@ When making changes to this codebase:
 5. **Memory management**: Implement proper event listener cleanup
 6. **Deployment**: Push to main branch for automatic deployment
 
+### Critical Implementation Notes
+
+**Context Menu Icons**: Always use semantic, action-specific SVG icons. Avoid duplicate icons across menu items. Test rendering across themes to ensure visibility.
+
+**Quick Notes vs Sticky Notes**: The application transitioned from floating sticky notes to a slide-out Quick Notes panel in v3.4.0. Any references to "sticky notes" in code should refer to the new panel system.
+
+**Tab Context Menu**: Available actions are Pin/Unpin Tab, Close Tab, Close Other Tabs, and Close All Tabs. Duplicate Tab was removed in v3.4.0.
+
+**SVG Icon Patterns**: Use `fill="currentColor"` for theme compatibility. Ensure 16x16 viewbox and proper path definitions. Test in context menus specifically as they have different rendering behavior than header icons.
+
 ### Key Methods to Know
 
 **Tab Management**:
@@ -240,7 +252,6 @@ When making changes to this codebase:
 - `closeTab(tabId)` - Shows confirmation if enabled, then closes
 - `switchToTab(tabId)` - Switches active tab
 - `togglePinTab(tabId)` - Toggles pin state for a tab
-- `duplicateTab(tabId)` - Creates a duplicate of the specified tab
 - `closeOtherTabs(tabId)` - Closes all other non-pinned tabs
 - `showNoteContextMenu(event, notePath, noteTitle)` - Shows context menu for note actions
 - `toggleNoteBookmark(notePath, noteTitle)` - Adds/removes note from bookmarks
@@ -260,6 +271,13 @@ When making changes to this codebase:
 **UI Helpers**:
 - `showToast(message, type)` - Shows temporary notification
 - `showConfirmationDialog(title, message, onConfirm, onCancel)` - Shows confirmation modal
+
+**Quick Notes Management**:
+- `toggleQuickNotes()` - Shows/hides the Quick Notes panel
+- `addQuickNote()` - Creates a new quick note
+- `deleteQuickNote(id)` - Removes a quick note with confirmation
+- `displayQuickNotes()` - Refreshes the notes list display
+- `updateCurrentNote()` - Auto-saves current note content
 
 **Memory Management**:
 - `setupCleanupHandlers()` - Sets up page lifecycle cleanup
