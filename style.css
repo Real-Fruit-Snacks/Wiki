@@ -6842,7 +6842,7 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     background: var(--bg-secondary);
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
     transition: right var(--transition-normal);
-    z-index: 1000;
+    z-index: 150; /* Below dropdowns (200) but above content */
     display: flex;
     flex-direction: column;
 }
