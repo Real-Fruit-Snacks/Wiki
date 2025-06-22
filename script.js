@@ -10861,13 +10861,21 @@ class NotesWiki {
             const stored = localStorage.getItem('stickyNotes');
             if (stored) {
                 const notes = JSON.parse(stored);
-                notes.forEach(noteData => {
-                    this.stickyNotes.set(noteData.id, noteData);
-                    this.renderStickyNote(noteData);
-                });
+                // Ensure notes is an array
+                if (Array.isArray(notes)) {
+                    notes.forEach(noteData => {
+                        this.stickyNotes.set(noteData.id, noteData);
+                        this.renderStickyNote(noteData);
+                    });
+                } else {
+                    console.warn('Sticky notes data is not an array, clearing corrupt data');
+                    localStorage.removeItem('stickyNotes');
+                }
             }
         } catch (error) {
             console.warn('Failed to load sticky notes:', error);
+            // Clear corrupt data
+            localStorage.removeItem('stickyNotes');
         }
     }
     
