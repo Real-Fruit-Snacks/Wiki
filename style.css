@@ -503,8 +503,9 @@ body {
     text-align: center;
 }
 
-/* Tab overflow menu */
+/* Tab overflow menu - dedicated system */
 .tab-overflow-menu {
+    display: none;
     position: absolute;
     top: 100%;
     right: 0;
@@ -521,8 +522,8 @@ body {
 }
 
 /* Show tab overflow menu when dropdown is active */
-.tab-overflow-dropdown.dropdown-active .tab-overflow-menu {
-    display: block !important;
+.tab-overflow-dropdown.active .tab-overflow-menu {
+    display: block;
 }
 
 .tab-nav-button {

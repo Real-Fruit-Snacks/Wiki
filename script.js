@@ -9944,7 +9944,7 @@ class NotesWiki {
         
         // Close dropdown when clicking outside
         document.addEventListener('click', (e) => {
-            if (!overflowDropdown.contains(e.target)) {
+            if (!overflowDropdown.contains(e.target) && overflowDropdown.classList.contains('active')) {
                 this.hideTabOverflowDropdown();
             }
         });
@@ -10016,8 +10016,7 @@ class NotesWiki {
         // Create dropdown menu if it doesn't exist
         if (!dropdownMenu) {
             dropdownMenu = document.createElement('div');
-            dropdownMenu.className = 'tab-overflow-menu dropdown-menu';
-            dropdownMenu.style.display = 'none';
+            dropdownMenu.className = 'tab-overflow-menu';
             overflowDropdown.appendChild(dropdownMenu);
         }
         
@@ -10031,7 +10030,7 @@ class NotesWiki {
             if (!tabData) return;
             
             const menuItem = document.createElement('div');
-            menuItem.className = 'tab-overflow-item dropdown-item';
+            menuItem.className = 'tab-overflow-item';
             menuItem.innerHTML = `
                 <div class="tab-overflow-item-content">
                     <span class="tab-overflow-item-title">${tabData.title}</span>
@@ -10062,22 +10061,12 @@ class NotesWiki {
     
     toggleTabOverflowDropdown() {
         const overflowDropdown = document.getElementById('tab-overflow-dropdown');
-        let dropdownMenu = overflowDropdown?.querySelector('.tab-overflow-menu');
+        if (!overflowDropdown) return;
         
-        console.log("Toggle: Dropdown menu element:", dropdownMenu);
-        if (!dropdownMenu) {
-            console.log('Dropdown menu not found, calling updateTabOverflow');
-            this.updateTabOverflow();
-            dropdownMenu = overflowDropdown?.querySelector('.tab-overflow-menu');
-            if (!dropdownMenu) {
-                console.log('Still no dropdown menu after update');
-                return;
-            }
-        }
+        const isActive = overflowDropdown.classList.contains('active');
+        console.log('Toggle tab overflow dropdown, currently active:', isActive);
         
-        const isVisible = dropdownMenu.style.display === 'block';
-        
-        if (isVisible) {
+        if (isActive) {
             this.hideTabOverflowDropdown();
         } else {
             this.showTabOverflowDropdown();
@@ -10086,33 +10075,18 @@ class NotesWiki {
     
     showTabOverflowDropdown() {
         const overflowDropdown = document.getElementById('tab-overflow-dropdown');
-        let dropdownMenu = overflowDropdown?.querySelector('.tab-overflow-menu');
+        if (!overflowDropdown) return;
         
-        if (!dropdownMenu) {
-            console.log('Dropdown menu not found, calling updateTabOverflow');
-            this.updateTabOverflow();
-            dropdownMenu = overflowDropdown?.querySelector('.tab-overflow-menu');
-            if (!dropdownMenu) {
-                console.log('Still no dropdown menu after update');
-                return;
-            }
-        }
-        
-        dropdownMenu.style.display = 'block';
-        overflowDropdown.classList.add('dropdown-active');
+        overflowDropdown.classList.add('active');
+        console.log('Tab overflow dropdown shown');
     }
     
     hideTabOverflowDropdown() {
         const overflowDropdown = document.getElementById('tab-overflow-dropdown');
-        const dropdownMenu = overflowDropdown?.querySelector('.tab-overflow-menu');
+        if (!overflowDropdown) return;
         
-        if (!dropdownMenu) {
-            console.log('Dropdown menu not found, cannot hide');
-            return;
-        }
-        
-        dropdownMenu.style.display = 'none';
-        overflowDropdown.classList.remove('dropdown-active');
+        overflowDropdown.classList.remove('active');
+        console.log('Tab overflow dropdown hidden');
     }
     
     moveTabToVisible(activeTab) {
