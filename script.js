@@ -8785,11 +8785,6 @@ class NotesWiki {
                 action: () => this.togglePinTab(tabId)
             },
             {
-                label: 'Duplicate Tab',
-                icon: '📋',
-                action: () => this.duplicateTab(tabId)
-            },
-            {
                 label: 'Close Tab',
                 icon: '✕',
                 action: () => this.closeTab(tabId),
