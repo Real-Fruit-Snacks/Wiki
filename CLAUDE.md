@@ -245,6 +245,7 @@ When making changes to this codebase:
 - `showNoteContextMenu(event, notePath, noteTitle)` - Shows context menu for note actions
 - `toggleNoteBookmark(notePath, noteTitle)` - Adds/removes note from bookmarks
 - `shareNote(notePath, noteTitle)` - Copies note URL to clipboard
+- `loadNoteInSplitPane(path, paneId)` - Loads note into split view pane with pinned tab protection
 
 **Settings Management**:
 - `loadSettings()` - Loads from localStorage

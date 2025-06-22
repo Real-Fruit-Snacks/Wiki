@@ -10417,6 +10417,20 @@ class NotesWiki {
             return;
         }
         
+        // Check if split view tab is pinned
+        const splitViewTab = this.tabs.get('split-view-tab');
+        if (splitViewTab && splitViewTab.isPinned) {
+            // Get current path for this pane
+            const paneType = paneId.split('-')[1]; // 'left' or 'right'
+            const currentPath = this.splitViewState ? this.splitViewState[`${paneType}Path`] : null;
+            
+            // If trying to load a different note into a pinned split view pane, prevent it
+            if (currentPath && currentPath !== path) {
+                this.showToast('Cannot load a different note into a pinned split view. Unpin the tab first.', 'warning');
+                return;
+            }
+        }
+        
         // Validate path
         if (!path || typeof path !== 'string' || path.trim() === '') {
             console.error('Invalid path provided to loadNoteInSplitPane:', path);

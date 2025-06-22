@@ -46,6 +46,10 @@ This release introduces the highly requested tab pinning feature along with addi
   - Fixed in-note link clicks respecting pinned tab state
   - Fixed URL hash navigation respecting pinned tab state
   - When current tab is pinned, clicking any note link opens it in a new tab instead
+- **Critical Fix**: Pinned split view tabs now properly prevent pane content changes
+  - Split view panes respect pinned tab state
+  - Drag and drop into pinned split view panes is blocked
+  - All navigation methods check pinned status for split view tabs
 
 ## [3.3.1] - Previous Release
 
