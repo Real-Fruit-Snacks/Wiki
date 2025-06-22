@@ -501,9 +501,13 @@ class NotesWiki {
                                 // Switch to existing tab
                                 this.switchToTab(existingTabId);
                             } else {
-                                // Update current tab
+                                // Check if current tab is pinned
                                 const tab = this.tabs.get(this.activeTabId);
-                                if (tab) {
+                                if (tab && tab.isPinned) {
+                                    // Open in new tab if current tab is pinned
+                                    this.openInNewTab(value.path);
+                                } else if (tab) {
+                                    // Update current tab
                                     tab.path = value.path;
                                     this.loadNote(value.path);
                                 }
@@ -1631,7 +1635,14 @@ class NotesWiki {
         } else if (hash === '/bookmarks') {
             this.showBookmarks();
         } else {
-            this.loadNote(hash);
+            // Check if current tab is pinned
+            const tab = this.tabs.get(this.activeTabId);
+            if (tab && tab.isPinned) {
+                // Open in new tab if current tab is pinned
+                this.openInNewTab(hash);
+            } else {
+                this.loadNote(hash);
+            }
         }
     }
     
@@ -2594,9 +2605,13 @@ class NotesWiki {
                             // Switch to existing tab
                             this.switchToTab(existingTabId);
                         } else {
-                            // Update current tab's path
+                            // Check if current tab is pinned
                             const tab = this.tabs.get(this.activeTabId);
-                            if (tab) {
+                            if (tab && tab.isPinned) {
+                                // Open in new tab if current tab is pinned
+                                this.openInNewTab(path);
+                            } else if (tab) {
+                                // Update current tab's path
                                 tab.path = path;
                                 this.loadNote(tab.path);
                             }
@@ -3845,9 +3860,13 @@ class NotesWiki {
                         // Switch to existing tab
                         this.switchToTab(existingTabId);
                     } else {
-                        // Update current tab
+                        // Check if current tab is pinned
                         const tab = this.tabs.get(this.activeTabId);
-                        if (tab) {
+                        if (tab && tab.isPinned) {
+                            // Open in new tab if current tab is pinned
+                            this.openInNewTab(match.path);
+                        } else if (tab) {
+                            // Update current tab
                             tab.path = match.path;
                             this.loadNote(match.path);
                         }
@@ -4069,8 +4088,13 @@ class NotesWiki {
         // Keep it for backward compatibility if called elsewhere
         const tab = this.tabs.get(this.activeTabId);
         if (tab) {
-            tab.path = path;
-            this.loadNote(path);
+            if (tab.isPinned) {
+                // Open in new tab if current tab is pinned
+                this.openInNewTab(path);
+            } else {
+                tab.path = path;
+                this.loadNote(path);
+            }
         }
         this.hideSearch();
     }
@@ -7442,9 +7466,13 @@ class NotesWiki {
             if (existingTabId && existingTabId !== this.activeTabId) {
                 this.switchToTab(existingTabId);
             } else {
-                // Update current tab
+                // Check if current tab is pinned
                 const tab = this.tabs.get(this.activeTabId);
-                if (tab) {
+                if (tab && tab.isPinned) {
+                    // Open in new tab if current tab is pinned
+                    this.openInNewTab(file.path);
+                } else if (tab) {
+                    // Update current tab
                     tab.path = file.path;
                     this.loadNote(file.path);
                 }
@@ -7724,9 +7752,13 @@ class NotesWiki {
         if (existingTabId && existingTabId !== this.activeTabId) {
             this.switchToTab(existingTabId);
         } else {
-            // Update current tab and load note
+            // Check if current tab is pinned
             const tab = this.tabs.get(this.activeTabId);
-            if (tab) {
+            if (tab && tab.isPinned) {
+                // Open in new tab if current tab is pinned
+                this.openInNewTab(path);
+            } else if (tab) {
+                // Update current tab and load note
                 tab.path = path;
                 this.loadNote(path);
             }
@@ -9322,9 +9354,13 @@ class NotesWiki {
                             // Switch to existing tab
                             this.switchToTab(existingTabId);
                         } else {
-                            // Update current tab's path
+                            // Check if current tab is pinned
                             const tab = this.tabs.get(this.activeTabId);
-                            if (tab) {
+                            if (tab && tab.isPinned) {
+                                // Open in new tab if current tab is pinned
+                                this.openInNewTab(path);
+                            } else if (tab) {
+                                // Update current tab's path
                                 tab.path = path;
                                 this.loadNote(tab.path);
                             }

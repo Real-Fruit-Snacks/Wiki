@@ -32,6 +32,16 @@ This release introduces the highly requested tab pinning feature along with addi
 - Enhanced tab state persistence with pin status
 - Improved memory management for tab operations
 
+### 🐛 Bug Fixes
+- **Critical Fix**: Pinned tabs now properly prevent navigation to different notes
+  - Fixed navigation tree links respecting pinned tab state
+  - Fixed search result clicks respecting pinned tab state  
+  - Fixed recent files clicks respecting pinned tab state
+  - Fixed bookmark clicks respecting pinned tab state
+  - Fixed in-note link clicks respecting pinned tab state
+  - Fixed URL hash navigation respecting pinned tab state
+  - When current tab is pinned, clicking any note link opens it in a new tab instead
+
 ## [3.3.1] - Previous Release
 
 ## [3.2.0] - 2025-06-19
