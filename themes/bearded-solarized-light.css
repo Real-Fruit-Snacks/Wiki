@@ -89,12 +89,12 @@
     --tag-border: rgba(92, 207, 230, 0.3);
 
     /* Code Block Colors */
-    --code-bg: #232834;
-    --code-border: #2a2f3a;
-    --code-color: #cbccc6;
-    --line-number-bg: #1a1f29;
-    --line-number-color: #707a8c;
-    --line-number-border: #2a2f3a;
+    --code-bg: #eee8d5;
+    --code-border: #ddd6c1;
+    --code-color: #586e75;
+    --line-number-bg: #fdf6e3;
+    --line-number-color: #93a1a1;
+    --line-number-border: #ddd6c1;
 
     /* Syntax Highlighting Colors */
     --syntax-comment: #5c6773;

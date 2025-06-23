@@ -27,8 +27,8 @@
     --text-heading: var(--text-primary);
     
     /* Accent Colors - Pure gold */
-    --accent-primary: #ffd700;
-    --accent-secondary: #ffeb3b;
+    --accent-primary: #c7910c;
+    --accent-secondary: #d4a520;
     --accent-warning: #ffa500;
     --accent-error: #ff6b6b;
     --accent-info: var(--accent-primary);

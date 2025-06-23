@@ -70,12 +70,12 @@
     --tag-border: rgba(92, 207, 230, 0.3);
     
     /* Code Block Colors */
-    --code-bg: #232834;
-    --code-border: #2a2f3a;
-    --code-color: #cbccc6;
-    --line-number-bg: #1a1f29;
-    --line-number-color: #707a8c;
-    --line-number-border: #2a2f3a;
+    --code-bg: #f3f0f8;
+    --code-border: #e5e0f0;
+    --code-color: #3d2f5f;
+    --line-number-bg: #f8f5fc;
+    --line-number-color: #9b91a8;
+    --line-number-border: #e5e0f0;
     
     /* Syntax Highlighting Colors */
     --syntax-comment: #9575cd;

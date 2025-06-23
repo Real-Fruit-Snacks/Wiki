@@ -27,8 +27,8 @@
     --text-heading: var(--text-primary);
     
     /* Accent Colors */
-    --accent-primary: #c678dd;
-    --accent-secondary: #d291e4;
+    --accent-primary: #a85ff1;
+    --accent-secondary: #b77ff5;
     --accent-warning: #e5c07b;
     --accent-error: #e06c75;
     --accent-info: var(--accent-primary);
