@@ -861,6 +861,15 @@ class NotesWiki {
                 this.performSearch(e.target.value);
             }, 150); // 150ms debounce delay
         });
+
+        // Search input right-click menu
+        document.getElementById('search-input').addEventListener('contextmenu', (e) => {
+            // Only show our custom menu if there's no text selection
+            if (e.target.selectionStart === e.target.selectionEnd) {
+                e.preventDefault();
+                this.showSearchInputContextMenu(e);
+            }
+        });
         
         // Sticky search checkbox
         document.getElementById('sticky-search').addEventListener('change', (e) => {
@@ -995,6 +1004,12 @@ class NotesWiki {
             this.closeAllDropdowns();
             this.showSettings();
         });
+
+        // Settings button right-click menu
+        document.getElementById('settings-toggle').addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            this.showSettingsButtonContextMenu(e);
+        });
         
         document.getElementById('close-settings').addEventListener('click', () => {
             this.hideSettings();
@@ -1004,6 +1019,12 @@ class NotesWiki {
         document.getElementById('tags-button').addEventListener('click', () => {
             this.closeAllDropdowns();
             this.showTagsModal();
+        });
+
+        // Tags button right-click menu
+        document.getElementById('tags-button').addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            this.showTagsButtonContextMenu(e);
         });
         
         document.getElementById('close-tags').addEventListener('click', () => {
@@ -11388,6 +11409,594 @@ class NotesWiki {
         // Fallback to filename
         const filename = path.split('/').pop();
         return filename.replace('.md', '').replace(/-/g, ' ');
+    }
+
+    showTagsButtonContextMenu(event) {
+        // Create context menu container
+        const contextMenu = document.createElement('div');
+        contextMenu.className = 'filter-context-menu';
+        contextMenu.style.position = 'fixed';
+        contextMenu.style.left = `${event.clientX}px`;
+        contextMenu.style.top = `${event.clientY}px`;
+        contextMenu.style.zIndex = '10000';
+        
+        // Calculate filter counts
+        const selectedCount = this.selectedTags.size;
+        const excludedCount = this.excludedTags.size;
+        const totalTags = this.availableTags ? this.availableTags.size : 0;
+        const hasFilters = selectedCount > 0 || excludedCount > 0;
+        
+        // Create menu items
+        const menuItems = [
+            {
+                label: 'Clear All Filters',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>`,
+                action: () => this.clearAllFilters(),
+                disabled: !hasFilters
+            },
+            {
+                label: 'Show Filter Summary',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>`,
+                action: () => this.showFilterSummary()
+            },
+            {
+                label: 'Filter by Popular Tags',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`,
+                action: () => this.filterByPopularTags()
+            },
+            {
+                label: 'Reset to All Notes',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/></svg>`,
+                action: () => this.resetToAllNotes()
+            }
+        ];
+        
+        // Build menu
+        menuItems.forEach(item => {
+            const menuItem = document.createElement('div');
+            menuItem.className = `context-menu-item${item.className ? ' ' + item.className : ''}`;
+            
+            if (item.disabled) {
+                menuItem.classList.add('disabled');
+                menuItem.style.opacity = '0.5';
+                menuItem.style.cursor = 'not-allowed';
+            }
+            
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'context-menu-icon';
+            iconSpan.innerHTML = item.icon;
+            
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'context-menu-label';
+            labelSpan.textContent = item.label;
+            
+            menuItem.appendChild(iconSpan);
+            menuItem.appendChild(labelSpan);
+            
+            // Add click handler
+            if (!item.disabled) {
+                menuItem.addEventListener('click', () => {
+                    item.action();
+                    contextMenu.remove();
+                });
+            }
+            
+            contextMenu.appendChild(menuItem);
+        });
+        
+        // Close menu when clicking outside
+        const closeMenu = (e) => {
+            if (!contextMenu.contains(e.target)) {
+                contextMenu.remove();
+                document.removeEventListener('click', closeMenu);
+                document.removeEventListener('contextmenu', closeMenu);
+            }
+        };
+        
+        // Delay adding the close listener to prevent immediate closure
+        setTimeout(() => {
+            document.addEventListener('click', closeMenu);
+            document.addEventListener('contextmenu', closeMenu);
+        }, 0);
+        
+        // Add to document
+        document.body.appendChild(contextMenu);
+        
+        // Show the menu
+        contextMenu.classList.add('show');
+        
+        // Adjust position if menu goes off-screen
+        const rect = contextMenu.getBoundingClientRect();
+        if (rect.right > window.innerWidth) {
+            contextMenu.style.left = `${window.innerWidth - rect.width - 5}px`;
+        }
+        if (rect.bottom > window.innerHeight) {
+            contextMenu.style.top = `${window.innerHeight - rect.height - 5}px`;
+        }
+    }
+
+    clearAllFilters() {
+        this.selectedTags.clear();
+        this.excludedTags.clear();
+        this.filterNotesByTags();
+        this.buildTagFilter();
+        this.updateTagCountBadge();
+        this.showToast('All filters cleared', 'info');
+    }
+
+    showFilterSummary() {
+        const selectedCount = this.selectedTags.size;
+        const excludedCount = this.excludedTags.size;
+        const totalNotes = this.activeContext 
+            ? this.notesIndex.notes.filter(note => note.context === this.activeContext).length
+            : this.notesIndex.notes.length;
+        
+        let message = `Filter Summary:\n`;
+        message += `• Selected tags: ${selectedCount}\n`;
+        message += `• Excluded tags: ${excludedCount}\n`;
+        message += `• Total notes: ${totalNotes}`;
+        
+        if (selectedCount > 0) {
+            message += `\n• Selected: ${Array.from(this.selectedTags).join(', ')}`;
+        }
+        if (excludedCount > 0) {
+            message += `\n• Excluded: ${Array.from(this.excludedTags).join(', ')}`;
+        }
+        
+        alert(message);
+    }
+
+    filterByPopularTags() {
+        // Get tag counts from notes index
+        const tagCounts = new Map();
+        const contextNotes = this.activeContext 
+            ? this.notesIndex.notes.filter(note => note.context === this.activeContext)
+            : this.notesIndex.notes;
+        
+        contextNotes.forEach(note => {
+            if (note.metadata && note.metadata.tags) {
+                note.metadata.tags.forEach(tag => {
+                    tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+                });
+            }
+        });
+        
+        // Get top 5 most popular tags
+        const popularTags = Array.from(tagCounts.entries())
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 5)
+            .map(([tag]) => tag);
+        
+        if (popularTags.length > 0) {
+            this.selectedTags.clear();
+            this.excludedTags.clear();
+            popularTags.forEach(tag => this.selectedTags.add(tag));
+            this.filterNotesByTags();
+            this.buildTagFilter();
+            this.updateTagCountBadge();
+            this.showToast(`Filtered by popular tags: ${popularTags.join(', ')}`, 'success');
+        } else {
+            this.showToast('No tags found', 'warning');
+        }
+    }
+
+    resetToAllNotes() {
+        this.selectedTags.clear();
+        this.excludedTags.clear();
+        this.setActiveContext(null); // Show all contexts too
+        this.filterNotesByTags();
+        this.buildTagFilter();
+        this.updateTagCountBadge();
+        this.showToast('Showing all notes from all contexts', 'info');
+    }
+
+    showSearchInputContextMenu(event) {
+        const searchInput = event.target;
+        const hasValue = searchInput.value.trim().length > 0;
+        const hasHistory = this.searchHistory && this.searchHistory.length > 0;
+        
+        // Create context menu container
+        const contextMenu = document.createElement('div');
+        contextMenu.className = 'search-context-menu';
+        contextMenu.style.position = 'fixed';
+        contextMenu.style.left = `${event.clientX}px`;
+        contextMenu.style.top = `${event.clientY}px`;
+        contextMenu.style.zIndex = '10000';
+        
+        // Create menu items
+        const menuItems = [
+            {
+                label: 'Clear Search',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>`,
+                action: () => this.clearSearch(),
+                disabled: !hasValue
+            },
+            {
+                label: 'Search History',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>`,
+                action: () => this.showSearchHistory(),
+                disabled: !hasHistory
+            },
+            {
+                label: 'Search Operators Help',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>`,
+                action: () => this.toggleSearchHelp()
+            },
+            {
+                label: 'Quick Search: Tag',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>`,
+                action: () => this.quickSearchTag()
+            },
+            {
+                label: 'Quick Search: Author',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>`,
+                action: () => this.quickSearchAuthor()
+            },
+            {
+                label: 'Clear Search History',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>`,
+                action: () => this.clearSearchHistory(),
+                disabled: !hasHistory,
+                className: 'danger'
+            }
+        ];
+        
+        // Build menu
+        menuItems.forEach(item => {
+            const menuItem = document.createElement('div');
+            menuItem.className = `context-menu-item${item.className ? ' ' + item.className : ''}`;
+            
+            if (item.disabled) {
+                menuItem.classList.add('disabled');
+                menuItem.style.opacity = '0.5';
+                menuItem.style.cursor = 'not-allowed';
+            }
+            
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'context-menu-icon';
+            iconSpan.innerHTML = item.icon;
+            
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'context-menu-label';
+            labelSpan.textContent = item.label;
+            
+            menuItem.appendChild(iconSpan);
+            menuItem.appendChild(labelSpan);
+            
+            // Add click handler
+            if (!item.disabled) {
+                menuItem.addEventListener('click', () => {
+                    item.action();
+                    contextMenu.remove();
+                });
+            }
+            
+            contextMenu.appendChild(menuItem);
+        });
+        
+        // Close menu when clicking outside
+        const closeMenu = (e) => {
+            if (!contextMenu.contains(e.target)) {
+                contextMenu.remove();
+                document.removeEventListener('click', closeMenu);
+                document.removeEventListener('contextmenu', closeMenu);
+            }
+        };
+        
+        // Delay adding the close listener to prevent immediate closure
+        setTimeout(() => {
+            document.addEventListener('click', closeMenu);
+            document.addEventListener('contextmenu', closeMenu);
+        }, 0);
+        
+        // Add to document
+        document.body.appendChild(contextMenu);
+        
+        // Show the menu
+        contextMenu.classList.add('show');
+        
+        // Adjust position if menu goes off-screen
+        const rect = contextMenu.getBoundingClientRect();
+        if (rect.right > window.innerWidth) {
+            contextMenu.style.left = `${window.innerWidth - rect.width - 5}px`;
+        }
+        if (rect.bottom > window.innerHeight) {
+            contextMenu.style.top = `${window.innerHeight - rect.height - 5}px`;
+        }
+    }
+
+    clearSearch() {
+        const searchInput = document.getElementById('search-input');
+        searchInput.value = '';
+        searchInput.focus();
+        this.performSearch('');
+        this.showToast('Search cleared', 'info');
+    }
+
+    showSearchHistory() {
+        if (!this.searchHistory || this.searchHistory.length === 0) {
+            this.showToast('No search history', 'info');
+            return;
+        }
+        
+        const historyText = this.searchHistory.slice(0, 10).map((query, i) => `${i + 1}. ${query}`).join('\n');
+        alert(`Recent searches:\n\n${historyText}\n\nClick on a search result to use it again.`);
+    }
+
+    quickSearchTag() {
+        const searchInput = document.getElementById('search-input');
+        searchInput.value = 'tag:';
+        searchInput.focus();
+        searchInput.setSelectionRange(4, 4); // Position cursor after "tag:"
+        this.showToast('Type a tag name after "tag:"', 'info');
+    }
+
+    quickSearchAuthor() {
+        const searchInput = document.getElementById('search-input');
+        searchInput.value = 'author:';
+        searchInput.focus();
+        searchInput.setSelectionRange(7, 7); // Position cursor after "author:"
+        this.showToast('Type an author name after "author:"', 'info');
+    }
+
+    clearSearchHistory() {
+        this.searchHistory = [];
+        localStorage.removeItem('notesWiki_searchHistory');
+        this.showToast('Search history cleared', 'info');
+    }
+
+    showSettingsButtonContextMenu(event) {
+        // Create context menu container
+        const contextMenu = document.createElement('div');
+        contextMenu.className = 'settings-context-menu';
+        contextMenu.style.position = 'fixed';
+        contextMenu.style.left = `${event.clientX}px`;
+        contextMenu.style.top = `${event.clientY}px`;
+        contextMenu.style.zIndex = '10000';
+        
+        // Get current theme info for menu
+        const currentTheme = this.settings.theme || 'ayu-mirage';
+        const isDarkTheme = this.isDarkTheme(currentTheme);
+        
+        // Create menu items
+        const menuItems = [
+            {
+                label: 'Quick Theme Switch',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/></svg>`,
+                action: () => this.showQuickThemeMenu()
+            },
+            {
+                label: 'Random Theme',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/></svg>`,
+                action: () => this.applyRandomTheme()
+            },
+            {
+                label: isDarkTheme ? 'Switch to Light Theme' : 'Switch to Dark Theme',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">${isDarkTheme ? '<path d="M10 2L13.09 8.26L20 9L14 14.74L15.18 21.02L10 18L4.82 21.02L6 14.74L0 9L6.91 8.26L10 2Z"/>' : '<path fill-rule="evenodd" d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" clip-rule="evenodd"/>'}</svg>`,
+                action: () => this.toggleLightDarkTheme()
+            },
+            {
+                label: 'Theme Favorites',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`,
+                action: () => this.showThemeFavorites()
+            },
+            {
+                label: 'Reset All Settings',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/></svg>`,
+                action: () => this.resetAllSettings(),
+                className: 'danger'
+            },
+            {
+                label: 'Export Settings',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`,
+                action: () => this.exportSettings()
+            }
+        ];
+        
+        // Build menu
+        menuItems.forEach(item => {
+            const menuItem = document.createElement('div');
+            menuItem.className = `context-menu-item${item.className ? ' ' + item.className : ''}`;
+            
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'context-menu-icon';
+            iconSpan.innerHTML = item.icon;
+            
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'context-menu-label';
+            labelSpan.textContent = item.label;
+            
+            menuItem.appendChild(iconSpan);
+            menuItem.appendChild(labelSpan);
+            
+            // Add click handler
+            menuItem.addEventListener('click', () => {
+                item.action();
+                contextMenu.remove();
+            });
+            
+            contextMenu.appendChild(menuItem);
+        });
+        
+        // Close menu when clicking outside
+        const closeMenu = (e) => {
+            if (!contextMenu.contains(e.target)) {
+                contextMenu.remove();
+                document.removeEventListener('click', closeMenu);
+                document.removeEventListener('contextmenu', closeMenu);
+            }
+        };
+        
+        // Delay adding the close listener to prevent immediate closure
+        setTimeout(() => {
+            document.addEventListener('click', closeMenu);
+            document.addEventListener('contextmenu', closeMenu);
+        }, 0);
+        
+        // Add to document
+        document.body.appendChild(contextMenu);
+        
+        // Show the menu
+        contextMenu.classList.add('show');
+        
+        // Adjust position if menu goes off-screen
+        const rect = contextMenu.getBoundingClientRect();
+        if (rect.right > window.innerWidth) {
+            contextMenu.style.left = `${window.innerWidth - rect.width - 5}px`;
+        }
+        if (rect.bottom > window.innerHeight) {
+            contextMenu.style.top = `${window.innerHeight - rect.height - 5}px`;
+        }
+    }
+
+    showQuickThemeMenu() {
+        const popularThemes = ['ayu-mirage', 'dracula', 'nord', 'one-dark', 'gruvbox-dark', 'tokyo-night', 'ayu-light', 'github-light'];
+        const currentTheme = this.settings.theme;
+        
+        let message = 'Quick Theme Switch:\n\n';
+        popularThemes.forEach((theme, i) => {
+            const current = theme === currentTheme ? ' (current)' : '';
+            message += `${i + 1}. ${theme.replace(/-/g, ' ')}${current}\n`;
+        });
+        message += '\n0. Open full theme settings';
+        
+        const choice = prompt(message + '\n\nEnter theme number:');
+        if (choice !== null) {
+            const themeIndex = parseInt(choice);
+            if (themeIndex === 0) {
+                this.showSettings();
+            } else if (themeIndex >= 1 && themeIndex <= popularThemes.length) {
+                this.applyTheme(popularThemes[themeIndex - 1]);
+                this.settings.theme = popularThemes[themeIndex - 1];
+                this.saveSettings();
+                this.showToast(`Applied theme: ${popularThemes[themeIndex - 1]}`, 'success');
+            }
+        }
+    }
+
+    applyRandomTheme() {
+        // Get available themes from the theme configuration
+        const allThemes = Object.keys(this.getThemePreviewColors());
+        const currentTheme = this.settings.theme;
+        
+        // Filter out current theme
+        const otherThemes = allThemes.filter(theme => theme !== currentTheme);
+        
+        if (otherThemes.length > 0) {
+            const randomTheme = otherThemes[Math.floor(Math.random() * otherThemes.length)];
+            this.applyTheme(randomTheme);
+            this.settings.theme = randomTheme;
+            this.saveSettings();
+            this.showToast(`Random theme applied: ${randomTheme}`, 'success');
+        }
+    }
+
+    isDarkTheme(themeName) {
+        const lightThemes = ['ayu-light', 'github-light', 'solarized-light', 'tomorrow', 'bearded-light'];
+        const darkThemes = ['ayu-dark', 'ayu-mirage', 'dracula', 'nord', 'one-dark', 'gruvbox-dark', 'tokyo-night'];
+        
+        if (lightThemes.includes(themeName)) return false;
+        if (darkThemes.includes(themeName)) return true;
+        
+        // Default assumption for unknown themes
+        return !themeName.includes('light');
+    }
+
+    toggleLightDarkTheme() {
+        const currentTheme = this.settings.theme;
+        const isDark = this.isDarkTheme(currentTheme);
+        
+        let newTheme;
+        if (isDark) {
+            // Switch to light theme
+            if (currentTheme.includes('ayu')) newTheme = 'ayu-light';
+            else if (currentTheme.includes('github')) newTheme = 'github-light';
+            else if (currentTheme.includes('solarized')) newTheme = 'solarized-light';
+            else newTheme = 'ayu-light'; // Default light theme
+        } else {
+            // Switch to dark theme
+            if (currentTheme.includes('ayu')) newTheme = 'ayu-mirage';
+            else if (currentTheme.includes('github')) newTheme = 'one-dark';
+            else if (currentTheme.includes('solarized')) newTheme = 'gruvbox-dark';
+            else newTheme = 'ayu-mirage'; // Default dark theme
+        }
+        
+        this.applyTheme(newTheme);
+        this.settings.theme = newTheme;
+        this.saveSettings();
+        this.showToast(`Switched to ${isDark ? 'light' : 'dark'} theme: ${newTheme}`, 'success');
+    }
+
+    showThemeFavorites() {
+        const favorites = this.settings.themeFavorites || [];
+        
+        if (favorites.length === 0) {
+            this.showToast('No theme favorites yet. Star themes in settings to add favorites.', 'info');
+            this.showSettings();
+            return;
+        }
+        
+        let message = 'Theme Favorites:\n\n';
+        favorites.forEach((theme, i) => {
+            const current = theme === this.settings.theme ? ' (current)' : '';
+            message += `${i + 1}. ${theme.replace(/-/g, ' ')}${current}\n`;
+        });
+        
+        const choice = prompt(message + '\n\nEnter theme number:');
+        if (choice !== null) {
+            const themeIndex = parseInt(choice);
+            if (themeIndex >= 1 && themeIndex <= favorites.length) {
+                const selectedTheme = favorites[themeIndex - 1];
+                this.applyTheme(selectedTheme);
+                this.settings.theme = selectedTheme;
+                this.saveSettings();
+                this.showToast(`Applied favorite theme: ${selectedTheme}`, 'success');
+            }
+        }
+    }
+
+    resetAllSettings() {
+        if (confirm('Are you sure you want to reset all settings to defaults? This cannot be undone.')) {
+            // Clear all localStorage settings
+            Object.keys(localStorage).forEach(key => {
+                if (key.startsWith('notesWiki_')) {
+                    localStorage.removeItem(key);
+                }
+            });
+            
+            // Reset to defaults
+            this.settings = this.getDefaultSettings();
+            this.applyTheme(this.settings.theme);
+            this.saveSettings();
+            
+            this.showToast('All settings reset to defaults', 'info');
+            
+            // Reload page to ensure clean state
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        }
+    }
+
+    exportSettings() {
+        const settingsData = {
+            settings: this.settings,
+            bookmarks: this.bookmarks || [],
+            recentFiles: this.recentFiles || [],
+            searchHistory: this.searchHistory || [],
+            themeFavorites: this.settings.themeFavorites || [],
+            exportDate: new Date().toISOString()
+        };
+        
+        const dataStr = JSON.stringify(settingsData, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(dataBlob);
+        link.download = `notes-wiki-settings-${new Date().toISOString().split('T')[0]}.json`;
+        link.click();
+        
+        this.showToast('Settings exported successfully', 'success');
     }
     
     closeTab(tabId) {
