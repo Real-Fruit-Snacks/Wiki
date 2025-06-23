@@ -202,7 +202,7 @@ body.custom-fonts-loaded {
     gap: var(--spacing-xs);
     padding: var(--spacing-xs) var(--spacing-md);
     background-color: transparent;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-primary);
     border-radius: var(--radius-md);
     color: var(--text-secondary);
     font-size: var(--text-sm);
@@ -234,7 +234,7 @@ body.custom-fonts-loaded {
     top: calc(100% + var(--spacing-xs));
     right: 0;
     background-color: var(--bg-primary);
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-primary);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-lg);
     min-width: 200px;
@@ -246,6 +246,8 @@ body.custom-fonts-loaded {
     z-index: 1000;
     display: none;
     padding: var(--spacing-xs);
+    opacity: 1;
+    backdrop-filter: none;
 }
 
 .context-dropdown.active .context-dropdown-menu {
@@ -635,10 +637,12 @@ body.custom-fonts-loaded {
     border: 1px solid var(--border-primary);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-lg);
-    z-index: 1000;
+    z-index: 10000;
     min-width: 200px;
     padding: var(--spacing-xs);
     display: none;
+    opacity: 1;
+    backdrop-filter: none;
 }
 
 .tab-context-menu.show {
@@ -705,9 +709,68 @@ body.custom-fonts-loaded {
     min-width: 180px;
     padding: var(--spacing-xs);
     display: none;
+    opacity: 1;
+    backdrop-filter: none;
 }
 
 .note-context-menu.show {
+    display: block;
+}
+
+/* Filter/Tag button context menu */
+.filter-context-menu {
+    position: fixed;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 10000;
+    min-width: 200px;
+    padding: var(--spacing-xs);
+    display: none;
+    opacity: 1;
+    backdrop-filter: none;
+}
+
+.filter-context-menu.show {
+    display: block;
+}
+
+/* Search input context menu */
+.search-context-menu {
+    position: fixed;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 10000;
+    min-width: 220px;
+    padding: var(--spacing-xs);
+    display: none;
+    opacity: 1;
+    backdrop-filter: none;
+}
+
+.search-context-menu.show {
+    display: block;
+}
+
+/* Settings button context menu */
+.settings-context-menu {
+    position: fixed;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 10000;
+    min-width: 200px;
+    padding: var(--spacing-xs);
+    display: none;
+    opacity: 1;
+    backdrop-filter: none;
+}
+
+.settings-context-menu.show {
     display: block;
 }
 
@@ -4045,6 +4108,8 @@ select.dropdown:focus {
     box-shadow: var(--shadow-lg);
     z-index: 1000;
     min-width: 160px;
+    opacity: 1;
+    backdrop-filter: none;
 }
 
 .actions-menu-item {
