@@ -5069,9 +5069,34 @@ class NotesWiki {
             // Get theme-specific decorative content
             const themeDecorations = this.getThemeDecoration(theme.id, previewColors);
             
+            // Check if theme is favorited
+            const isFavorited = this.settings.themeFavorites && this.settings.themeFavorites.includes(theme.id);
+            
             card.innerHTML = `
                 ${themeDecorations}
                 <div class="theme-card-main-content" style="position: relative; z-index: 10;">
+                    <button class="theme-favorite-btn" data-theme-id="${theme.id}" title="${isFavorited ? 'Remove from favorites' : 'Add to favorites'}" style="
+                        position: absolute;
+                        top: 8px;
+                        right: 8px;
+                        background: ${isFavorited ? previewColors.accent : 'rgba(0,0,0,0.5)'};
+                        color: ${isFavorited ? previewColors.bg : '#ffffff'};
+                        border: none;
+                        border-radius: 50%;
+                        width: 24px;
+                        height: 24px;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 20;
+                        transition: all 0.2s ease;
+                        backdrop-filter: blur(4px);
+                    ">
+                        <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                    </button>
                     <div class="theme-card-preview-full" style="
                         background: ${previewColors.bg};
                         border: 1px solid ${previewColors.border};
@@ -5116,6 +5141,28 @@ class NotesWiki {
             
             // Add theme-specific interactive effects
             this.addThemeCardEffects(card, theme.id, previewColors);
+            
+            // Handle favorite button click
+            const favoriteBtn = card.querySelector('.theme-favorite-btn');
+            favoriteBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent card click
+                
+                const themeId = favoriteBtn.dataset.themeId;
+                const wasAdded = this.toggleThemeFavorite(themeId);
+                
+                // Update button visual state
+                if (wasAdded) {
+                    favoriteBtn.style.background = previewColors.accent;
+                    favoriteBtn.style.color = previewColors.bg;
+                    favoriteBtn.title = 'Remove from favorites';
+                    this.showToast(`Added ${theme.name} to favorites`, 'success');
+                } else {
+                    favoriteBtn.style.background = 'rgba(0,0,0,0.5)';
+                    favoriteBtn.style.color = '#ffffff';
+                    favoriteBtn.title = 'Add to favorites';
+                    this.showToast(`Removed ${theme.name} from favorites`, 'info');
+                }
+            });
             
             // Handle theme selection
             card.addEventListener('click', () => {
@@ -11832,6 +11879,11 @@ class NotesWiki {
                 label: 'Export Settings',
                 icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`,
                 action: () => this.exportSettings()
+            },
+            {
+                label: 'Import Settings',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>`,
+                action: () => this.importSettings()
             }
         ];
         
@@ -11892,33 +11944,233 @@ class NotesWiki {
     }
 
     showQuickThemeMenu() {
-        const popularThemes = ['ayu-mirage', 'dracula', 'nord', 'one-dark', 'gruvbox-dark', 'tokyo-night', 'ayu-light', 'github-light'];
+        const popularThemes = ['ayu-mirage', 'dracula', 'nord', 'one-dark-pro', 'gruvbox-dark', 'tokyo-night', 'ayu-light', 'github-light', 'solarized-light', 'material-palenight'];
         const currentTheme = this.settings.theme;
         
-        let message = 'Quick Theme Switch:\n\n';
-        popularThemes.forEach((theme, i) => {
-            const current = theme === currentTheme ? ' (current)' : '';
-            message += `${i + 1}. ${theme.replace(/-/g, ' ')}${current}\n`;
-        });
-        message += '\n0. Open full theme settings';
+        // Create modal overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        `;
         
-        const choice = prompt(message + '\n\nEnter theme number:');
-        if (choice !== null) {
-            const themeIndex = parseInt(choice);
-            if (themeIndex === 0) {
-                this.showSettings();
-            } else if (themeIndex >= 1 && themeIndex <= popularThemes.length) {
-                this.applyTheme(popularThemes[themeIndex - 1]);
-                this.settings.theme = popularThemes[themeIndex - 1];
-                this.saveSettings();
-                this.showToast(`Applied theme: ${popularThemes[themeIndex - 1]}`, 'success');
+        // Create modal content
+        const modal = document.createElement('div');
+        modal.className = 'quick-theme-modal';
+        modal.style.cssText = `
+            background: var(--bg-primary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: var(--spacing-lg);
+            min-width: 400px;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        `;
+        
+        // Modal header
+        const header = document.createElement('div');
+        header.style.cssText = `
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--border-primary);
+        `;
+        
+        const title = document.createElement('h3');
+        title.textContent = 'Quick Theme Switch';
+        title.style.cssText = `
+            margin: 0;
+            color: var(--text-primary);
+            font-size: var(--text-lg);
+            font-weight: 600;
+        `;
+        
+        const closeButton = document.createElement('button');
+        closeButton.innerHTML = `<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`;
+        closeButton.style.cssText = `
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: var(--spacing-xs);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        `;
+        closeButton.addEventListener('mouseenter', () => {
+            closeButton.style.backgroundColor = 'var(--bg-hover)';
+            closeButton.style.color = 'var(--text-primary)';
+        });
+        closeButton.addEventListener('mouseleave', () => {
+            closeButton.style.backgroundColor = 'transparent';
+            closeButton.style.color = 'var(--text-secondary)';
+        });
+        
+        header.appendChild(title);
+        header.appendChild(closeButton);
+        
+        // Theme list
+        const themeList = document.createElement('div');
+        themeList.style.cssText = `
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+        `;
+        
+        popularThemes.forEach(theme => {
+            const themeItem = document.createElement('button');
+            const isCurrentTheme = theme === currentTheme;
+            
+            themeItem.style.cssText = `
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: var(--spacing-md);
+                background: ${isCurrentTheme ? 'var(--accent-primary)' : 'var(--bg-secondary)'};
+                color: ${isCurrentTheme ? 'var(--bg-primary)' : 'var(--text-primary)'};
+                border: 1px solid ${isCurrentTheme ? 'var(--accent-primary)' : 'var(--border-primary)'};
+                border-radius: var(--radius-md);
+                cursor: pointer;
+                text-align: left;
+                font-size: var(--text-base);
+                transition: all var(--transition-fast);
+            `;
+            
+            const themeName = document.createElement('span');
+            themeName.textContent = theme.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+            themeName.style.fontWeight = isCurrentTheme ? '600' : '500';
+            
+            const themeStatus = document.createElement('span');
+            themeStatus.textContent = isCurrentTheme ? 'Current' : '';
+            themeStatus.style.cssText = `
+                font-size: var(--text-sm);
+                opacity: 0.8;
+                font-weight: 500;
+            `;
+            
+            themeItem.appendChild(themeName);
+            themeItem.appendChild(themeStatus);
+            
+            if (!isCurrentTheme) {
+                themeItem.addEventListener('mouseenter', () => {
+                    themeItem.style.backgroundColor = 'var(--bg-hover)';
+                    themeItem.style.borderColor = 'var(--border-hover)';
+                });
+                themeItem.addEventListener('mouseleave', () => {
+                    themeItem.style.backgroundColor = 'var(--bg-secondary)';
+                    themeItem.style.borderColor = 'var(--border-primary)';
+                });
             }
-        }
+            
+            themeItem.addEventListener('click', () => {
+                if (!isCurrentTheme) {
+                    this.applyTheme(theme);
+                    this.settings.theme = theme;
+                    this.saveSettings();
+                    this.showToast(`Applied theme: ${theme.replace(/-/g, ' ')}`, 'success');
+                }
+                document.body.removeChild(overlay);
+            });
+            
+            themeList.appendChild(themeItem);
+        });
+        
+        // Footer with full settings link
+        const footer = document.createElement('div');
+        footer.style.cssText = `
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--border-primary);
+        `;
+        
+        const fullSettingsButton = document.createElement('button');
+        fullSettingsButton.textContent = 'Open Full Theme Settings';
+        fullSettingsButton.style.cssText = `
+            width: 100%;
+            padding: var(--spacing-md);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: var(--text-base);
+            transition: all var(--transition-fast);
+        `;
+        fullSettingsButton.addEventListener('mouseenter', () => {
+            fullSettingsButton.style.backgroundColor = 'var(--bg-hover)';
+            fullSettingsButton.style.borderColor = 'var(--border-hover)';
+        });
+        fullSettingsButton.addEventListener('mouseleave', () => {
+            fullSettingsButton.style.backgroundColor = 'var(--bg-secondary)';
+            fullSettingsButton.style.borderColor = 'var(--border-primary)';
+        });
+        fullSettingsButton.addEventListener('click', () => {
+            document.body.removeChild(overlay);
+            this.showSettings();
+            // Switch to appearance tab
+            setTimeout(() => {
+                const appearanceTab = document.querySelector('[data-section="appearance"]');
+                if (appearanceTab) appearanceTab.click();
+            }, 100);
+        });
+        
+        footer.appendChild(fullSettingsButton);
+        
+        // Assemble modal
+        modal.appendChild(header);
+        modal.appendChild(themeList);
+        modal.appendChild(footer);
+        overlay.appendChild(modal);
+        
+        // Close handlers
+        const closeModal = () => {
+            if (document.body.contains(overlay)) {
+                document.body.removeChild(overlay);
+            }
+        };
+        
+        closeButton.addEventListener('click', closeModal);
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeModal();
+        });
+        
+        // ESC key handler
+        const escHandler = (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                document.removeEventListener('keydown', escHandler);
+            }
+        };
+        document.addEventListener('keydown', escHandler);
+        
+        // Show modal
+        document.body.appendChild(overlay);
     }
 
     applyRandomTheme() {
-        // Get available themes from the theme configuration
-        const allThemes = Object.keys(this.getThemePreviewColors());
+        // Get all available themes from theme categories
+        const allThemes = [];
+        this.themeCategories.forEach(category => {
+            category.themes.forEach(theme => {
+                allThemes.push(theme.id);
+            });
+        });
+        
         const currentTheme = this.settings.theme;
         
         // Filter out current theme
@@ -11929,7 +12181,7 @@ class NotesWiki {
             this.applyTheme(randomTheme);
             this.settings.theme = randomTheme;
             this.saveSettings();
-            this.showToast(`Random theme applied: ${randomTheme}`, 'success');
+            this.showToast(`Random theme applied: ${randomTheme.replace(/-/g, ' ')}`, 'success');
         }
     }
 
@@ -11975,30 +12227,470 @@ class NotesWiki {
         if (favorites.length === 0) {
             this.showToast('No theme favorites yet. Star themes in settings to add favorites.', 'info');
             this.showSettings();
+            // Switch to appearance tab
+            setTimeout(() => {
+                const appearanceTab = document.querySelector('[data-section="appearance"]');
+                if (appearanceTab) appearanceTab.click();
+            }, 100);
             return;
         }
         
-        let message = 'Theme Favorites:\n\n';
-        favorites.forEach((theme, i) => {
-            const current = theme === this.settings.theme ? ' (current)' : '';
-            message += `${i + 1}. ${theme.replace(/-/g, ' ')}${current}\n`;
+        const currentTheme = this.settings.theme;
+        
+        // Create modal overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        `;
+        
+        // Create modal content
+        const modal = document.createElement('div');
+        modal.className = 'theme-favorites-modal';
+        modal.style.cssText = `
+            background: var(--bg-primary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: var(--spacing-lg);
+            min-width: 400px;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        `;
+        
+        // Modal header
+        const header = document.createElement('div');
+        header.style.cssText = `
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--border-primary);
+        `;
+        
+        const title = document.createElement('h3');
+        title.innerHTML = `<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" style="margin-right: 8px; vertical-align: -3px;"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>Theme Favorites`;
+        title.style.cssText = `
+            margin: 0;
+            color: var(--text-primary);
+            font-size: var(--text-lg);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        `;
+        
+        const closeButton = document.createElement('button');
+        closeButton.innerHTML = `<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`;
+        closeButton.style.cssText = `
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: var(--spacing-xs);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        `;
+        closeButton.addEventListener('mouseenter', () => {
+            closeButton.style.backgroundColor = 'var(--bg-hover)';
+            closeButton.style.color = 'var(--text-primary)';
+        });
+        closeButton.addEventListener('mouseleave', () => {
+            closeButton.style.backgroundColor = 'transparent';
+            closeButton.style.color = 'var(--text-secondary)';
         });
         
-        const choice = prompt(message + '\n\nEnter theme number:');
-        if (choice !== null) {
-            const themeIndex = parseInt(choice);
-            if (themeIndex >= 1 && themeIndex <= favorites.length) {
-                const selectedTheme = favorites[themeIndex - 1];
-                this.applyTheme(selectedTheme);
-                this.settings.theme = selectedTheme;
-                this.saveSettings();
-                this.showToast(`Applied favorite theme: ${selectedTheme}`, 'success');
+        header.appendChild(title);
+        header.appendChild(closeButton);
+        
+        // Favorites list
+        const favoritesList = document.createElement('div');
+        favoritesList.style.cssText = `
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+        `;
+        
+        favorites.forEach(theme => {
+            const favoriteItem = document.createElement('div');
+            const isCurrentTheme = theme === currentTheme;
+            
+            favoriteItem.style.cssText = `
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: var(--spacing-md);
+                background: ${isCurrentTheme ? 'var(--accent-primary)' : 'var(--bg-secondary)'};
+                color: ${isCurrentTheme ? 'var(--bg-primary)' : 'var(--text-primary)'};
+                border: 1px solid ${isCurrentTheme ? 'var(--accent-primary)' : 'var(--border-primary)'};
+                border-radius: var(--radius-md);
+                transition: all var(--transition-fast);
+            `;
+            
+            const themeInfo = document.createElement('div');
+            themeInfo.style.cssText = `
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-sm);
+                flex: 1;
+            `;
+            
+            const starIcon = document.createElement('span');
+            starIcon.innerHTML = `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`;
+            starIcon.style.color = isCurrentTheme ? 'var(--bg-primary)' : 'var(--accent-primary)';
+            
+            const themeName = document.createElement('span');
+            themeName.textContent = theme.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+            themeName.style.fontWeight = isCurrentTheme ? '600' : '500';
+            
+            const themeStatus = document.createElement('span');
+            themeStatus.textContent = isCurrentTheme ? 'Current' : '';
+            themeStatus.style.cssText = `
+                font-size: var(--text-sm);
+                opacity: 0.8;
+                font-weight: 500;
+            `;
+            
+            themeInfo.appendChild(starIcon);
+            themeInfo.appendChild(themeName);
+            
+            const actionButtons = document.createElement('div');
+            actionButtons.style.cssText = `
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-sm);
+            `;
+            
+            if (!isCurrentTheme) {
+                const applyButton = document.createElement('button');
+                applyButton.textContent = 'Apply';
+                applyButton.style.cssText = `
+                    background: var(--accent-primary);
+                    color: var(--bg-primary);
+                    border: none;
+                    padding: var(--spacing-xs) var(--spacing-sm);
+                    border-radius: var(--radius-sm);
+                    font-size: var(--text-sm);
+                    font-weight: 500;
+                    cursor: pointer;
+                    transition: all var(--transition-fast);
+                `;
+                applyButton.addEventListener('mouseenter', () => {
+                    applyButton.style.opacity = '0.9';
+                });
+                applyButton.addEventListener('mouseleave', () => {
+                    applyButton.style.opacity = '1';
+                });
+                applyButton.addEventListener('click', () => {
+                    this.applyTheme(theme);
+                    this.settings.theme = theme;
+                    this.saveSettings();
+                    this.showToast(`Applied favorite theme: ${theme.replace(/-/g, ' ')}`, 'success');
+                    document.body.removeChild(overlay);
+                });
+                actionButtons.appendChild(applyButton);
             }
+            
+            const removeButton = document.createElement('button');
+            removeButton.innerHTML = `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`;
+            removeButton.style.cssText = `
+                background: none;
+                border: none;
+                color: ${isCurrentTheme ? 'var(--bg-primary)' : 'var(--text-secondary)'};
+                cursor: pointer;
+                padding: var(--spacing-xs);
+                border-radius: var(--radius-sm);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            `;
+            removeButton.title = 'Remove from favorites';
+            removeButton.addEventListener('mouseenter', () => {
+                removeButton.style.backgroundColor = isCurrentTheme ? 'rgba(255,255,255,0.1)' : 'var(--bg-hover)';
+                removeButton.style.color = isCurrentTheme ? 'var(--bg-primary)' : 'var(--accent-error)';
+            });
+            removeButton.addEventListener('mouseleave', () => {
+                removeButton.style.backgroundColor = 'transparent';
+                removeButton.style.color = isCurrentTheme ? 'var(--bg-primary)' : 'var(--text-secondary)';
+            });
+            removeButton.addEventListener('click', () => {
+                this.toggleThemeFavorite(theme);
+                favoriteItem.remove();
+                if (favoritesList.children.length === 0) {
+                    document.body.removeChild(overlay);
+                    this.showToast('No more favorite themes', 'info');
+                } else {
+                    this.showToast(`Removed ${theme.replace(/-/g, ' ')} from favorites`, 'info');
+                }
+            });
+            actionButtons.appendChild(removeButton);
+            
+            actionButtons.appendChild(themeStatus);
+            
+            favoriteItem.appendChild(themeInfo);
+            favoriteItem.appendChild(actionButtons);
+            
+            favoritesList.appendChild(favoriteItem);
+        });
+        
+        // Footer
+        const footer = document.createElement('div');
+        footer.style.cssText = `
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--border-primary);
+        `;
+        
+        const manageButton = document.createElement('button');
+        manageButton.textContent = 'Manage Favorites in Settings';
+        manageButton.style.cssText = `
+            width: 100%;
+            padding: var(--spacing-md);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: var(--text-base);
+            transition: all var(--transition-fast);
+        `;
+        manageButton.addEventListener('mouseenter', () => {
+            manageButton.style.backgroundColor = 'var(--bg-hover)';
+            manageButton.style.borderColor = 'var(--border-hover)';
+        });
+        manageButton.addEventListener('mouseleave', () => {
+            manageButton.style.backgroundColor = 'var(--bg-secondary)';
+            manageButton.style.borderColor = 'var(--border-primary)';
+        });
+        manageButton.addEventListener('click', () => {
+            document.body.removeChild(overlay);
+            this.showSettings();
+            // Switch to appearance tab
+            setTimeout(() => {
+                const appearanceTab = document.querySelector('[data-section="appearance"]');
+                if (appearanceTab) appearanceTab.click();
+            }, 100);
+        });
+        
+        footer.appendChild(manageButton);
+        
+        // Assemble modal
+        modal.appendChild(header);
+        modal.appendChild(favoritesList);
+        modal.appendChild(footer);
+        overlay.appendChild(modal);
+        
+        // Close handlers
+        const closeModal = () => {
+            if (document.body.contains(overlay)) {
+                document.body.removeChild(overlay);
+            }
+        };
+        
+        closeButton.addEventListener('click', closeModal);
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeModal();
+        });
+        
+        // ESC key handler
+        const escHandler = (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                document.removeEventListener('keydown', escHandler);
+            }
+        };
+        document.addEventListener('keydown', escHandler);
+        
+        // Show modal
+        document.body.appendChild(overlay);
+    }
+
+    toggleThemeFavorite(themeId) {
+        if (!this.settings.themeFavorites) {
+            this.settings.themeFavorites = [];
+        }
+        
+        const index = this.settings.themeFavorites.indexOf(themeId);
+        if (index === -1) {
+            // Add to favorites
+            this.settings.themeFavorites.push(themeId);
+            this.saveSettings();
+            return true; // Added
+        } else {
+            // Remove from favorites
+            this.settings.themeFavorites.splice(index, 1);
+            this.saveSettings();
+            return false; // Removed
         }
     }
 
     resetAllSettings() {
-        if (confirm('Are you sure you want to reset all settings to defaults? This cannot be undone.')) {
+        // Create modal overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        `;
+        
+        // Create modal content
+        const modal = document.createElement('div');
+        modal.className = 'reset-settings-modal';
+        modal.style.cssText = `
+            background: var(--bg-primary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: var(--spacing-lg);
+            min-width: 400px;
+            max-width: 500px;
+        `;
+        
+        // Modal header
+        const header = document.createElement('div');
+        header.style.cssText = `
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+        `;
+        
+        const icon = document.createElement('div');
+        icon.innerHTML = `<svg width="24" height="24" viewBox="0 0 20 20" fill="currentColor" style="color: var(--accent-error);"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>`;
+        
+        const title = document.createElement('h3');
+        title.textContent = 'Reset All Settings';
+        title.style.cssText = `
+            margin: 0;
+            color: var(--text-primary);
+            font-size: var(--text-lg);
+            font-weight: 600;
+        `;
+        
+        header.appendChild(icon);
+        header.appendChild(title);
+        
+        // Modal body
+        const body = document.createElement('div');
+        body.style.cssText = `
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+            line-height: 1.5;
+        `;
+        
+        body.innerHTML = `
+            <p style="margin: 0 0 var(--spacing-md) 0;">
+                This will reset <strong>all settings</strong> to their default values, including:
+            </p>
+            <ul style="margin: 0 0 var(--spacing-md) 0; padding-left: var(--spacing-lg); color: var(--text-secondary);">
+                <li>Theme and appearance settings</li>
+                <li>Pomodoro and timer preferences</li>
+                <li>Keyboard shortcuts and behavior</li>
+                <li>Recent files and bookmarks</li>
+                <li>Search history and favorites</li>
+            </ul>
+            <p style="margin: 0; color: var(--accent-error); font-weight: 500;">
+                ⚠️ This action cannot be undone.
+            </p>
+        `;
+        
+        // Modal footer
+        const footer = document.createElement('div');
+        footer.style.cssText = `
+            display: flex;
+            gap: var(--spacing-sm);
+            justify-content: flex-end;
+        `;
+        
+        const cancelButton = document.createElement('button');
+        cancelButton.textContent = 'Cancel';
+        cancelButton.style.cssText = `
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: var(--text-base);
+            font-weight: 500;
+            transition: all var(--transition-fast);
+        `;
+        cancelButton.addEventListener('mouseenter', () => {
+            cancelButton.style.backgroundColor = 'var(--bg-hover)';
+            cancelButton.style.borderColor = 'var(--border-hover)';
+        });
+        cancelButton.addEventListener('mouseleave', () => {
+            cancelButton.style.backgroundColor = 'var(--bg-secondary)';
+            cancelButton.style.borderColor = 'var(--border-primary)';
+        });
+        
+        const resetButton = document.createElement('button');
+        resetButton.textContent = 'Reset All Settings';
+        resetButton.style.cssText = `
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background: var(--accent-error);
+            color: white;
+            border: 1px solid var(--accent-error);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: var(--text-base);
+            font-weight: 600;
+            transition: all var(--transition-fast);
+        `;
+        resetButton.addEventListener('mouseenter', () => {
+            resetButton.style.opacity = '0.9';
+            resetButton.style.transform = 'translateY(-1px)';
+        });
+        resetButton.addEventListener('mouseleave', () => {
+            resetButton.style.opacity = '1';
+            resetButton.style.transform = 'translateY(0)';
+        });
+        
+        footer.appendChild(cancelButton);
+        footer.appendChild(resetButton);
+        
+        // Assemble modal
+        modal.appendChild(header);
+        modal.appendChild(body);
+        modal.appendChild(footer);
+        overlay.appendChild(modal);
+        
+        // Close handlers
+        const closeModal = () => {
+            if (document.body.contains(overlay)) {
+                document.body.removeChild(overlay);
+            }
+        };
+        
+        cancelButton.addEventListener('click', closeModal);
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeModal();
+        });
+        
+        // Reset button handler
+        resetButton.addEventListener('click', () => {
             // Clear all localStorage settings
             Object.keys(localStorage).forEach(key => {
                 if (key.startsWith('notesWiki_')) {
@@ -12011,13 +12703,26 @@ class NotesWiki {
             this.applyTheme(this.settings.theme);
             this.saveSettings();
             
+            closeModal();
             this.showToast('All settings reset to defaults', 'info');
             
             // Reload page to ensure clean state
             setTimeout(() => {
                 window.location.reload();
             }, 1000);
-        }
+        });
+        
+        // ESC key handler
+        const escHandler = (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                document.removeEventListener('keydown', escHandler);
+            }
+        };
+        document.addEventListener('keydown', escHandler);
+        
+        // Show modal
+        document.body.appendChild(overlay);
     }
 
     exportSettings() {
@@ -12039,6 +12744,153 @@ class NotesWiki {
         link.click();
         
         this.showToast('Settings exported successfully', 'success');
+    }
+
+    importSettings() {
+        // Create file input element
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = '.json';
+        fileInput.style.display = 'none';
+        
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const importedData = JSON.parse(event.target.result);
+                    
+                    // Validate the imported data structure
+                    if (!importedData.settings) {
+                        throw new Error('Invalid settings file: Missing settings object');
+                    }
+                    
+                    // Merge with default settings to ensure all required properties exist
+                    const defaultSettings = this.getDefaultSettings();
+                    const mergedSettings = { ...defaultSettings, ...importedData.settings };
+                    
+                    // Validate critical settings
+                    if (mergedSettings.theme && !this.isValidTheme(mergedSettings.theme)) {
+                        console.warn(`[Import] Invalid theme: ${mergedSettings.theme}, falling back to default`);
+                        mergedSettings.theme = defaultSettings.theme;
+                    }
+                    
+                    // Apply imported settings
+                    this.settings = mergedSettings;
+                    
+                    // Import optional data arrays if they exist
+                    if (importedData.bookmarks && Array.isArray(importedData.bookmarks)) {
+                        this.bookmarks = importedData.bookmarks;
+                        localStorage.setItem('notesWiki_bookmarks', JSON.stringify(this.bookmarks));
+                    }
+                    
+                    if (importedData.recentFiles && Array.isArray(importedData.recentFiles)) {
+                        this.recentFiles = importedData.recentFiles;
+                        localStorage.setItem('notesWiki_recentFiles', JSON.stringify(this.recentFiles));
+                    }
+                    
+                    if (importedData.searchHistory && Array.isArray(importedData.searchHistory)) {
+                        this.searchHistory = importedData.searchHistory;
+                        localStorage.setItem('notesWiki_searchHistory', JSON.stringify(this.searchHistory));
+                    }
+                    
+                    // Apply theme and save settings
+                    this.applyTheme(this.settings.theme);
+                    this.saveSettings();
+                    
+                    // Update UI
+                    this.updateSettingsUI();
+                    
+                    this.showToast('Settings imported successfully! Reloading page...', 'success');
+                    
+                    // Reload page to ensure all settings are properly applied
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                    
+                } catch (error) {
+                    console.error('[Import] Error importing settings:', error);
+                    this.showToast(`Failed to import settings: ${error.message}`, 'error');
+                }
+            };
+            
+            reader.onerror = () => {
+                this.showToast('Error reading file. Please try again.', 'error');
+            };
+            
+            reader.readAsText(file);
+            
+            // Clean up
+            document.body.removeChild(fileInput);
+        });
+        
+        // Trigger file selection
+        document.body.appendChild(fileInput);
+        fileInput.click();
+    }
+
+    isValidTheme(themeId) {
+        // Check if theme exists in any category
+        return this.themeCategories.some(category => 
+            category.themes.some(theme => theme.id === themeId)
+        );
+    }
+
+    updateSettingsUI() {
+        // Update all UI elements to reflect imported settings
+        const updateCheckbox = (id, value) => {
+            const element = document.getElementById(id);
+            if (element) element.checked = value;
+        };
+        
+        const updateSelect = (id, value) => {
+            const element = document.getElementById(id);
+            if (element) element.value = value;
+        };
+        
+        const updateRange = (id, value) => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.value = value;
+                // Trigger any display updates
+                const event = new Event('input', { bubbles: true });
+                element.dispatchEvent(event);
+            }
+        };
+        
+        // Update all settings controls
+        updateCheckbox('track-recent', this.settings.trackRecent);
+        updateCheckbox('show-line-numbers', this.settings.showLineNumbers);
+        updateCheckbox('enable-word-wrap', this.settings.enableWordWrap);
+        updateCheckbox('auto-theme', this.settings.autoTheme);
+        updateCheckbox('confirm-on-close', this.settings.confirmOnClose);
+        updateCheckbox('focus-mode', this.settings.focusMode);
+        updateCheckbox('enable-toc', this.settings.enableToc);
+        updateCheckbox('enable-reading-progress', this.settings.enableReadingProgress);
+        updateCheckbox('enable-animations', this.settings.enableAnimations);
+        updateCheckbox('enable-sound', this.settings.enableSound);
+        updateCheckbox('enable-auto-complete', this.settings.enableAutoComplete);
+        updateCheckbox('pomodoro-auto-start-break', this.settings.pomodoroAutoStartBreak);
+        updateCheckbox('pomodoro-auto-start-work', this.settings.pomodoroAutoStartWork);
+        updateCheckbox('pomodoro-notifications', this.settings.pomodoroNotifications);
+        
+        updateSelect('content-width', this.settings.contentWidth);
+        updateSelect('font-family', this.settings.fontFamily);
+        updateSelect('quick-notes-position', this.settings.quickNotesPosition);
+        
+        updateRange('recent-limit', this.settings.recentLimit);
+        updateRange('pomodoro-work-duration', this.settings.pomodoroWorkDuration);
+        updateRange('pomodoro-break-duration', this.settings.pomodoroBreakDuration);
+        updateRange('pomodoro-long-break-duration', this.settings.pomodoroLongBreakDuration);
+        updateRange('pomodoro-cycles-before-long-break', this.settings.pomodoroCyclesBeforeLongBreak);
+        
+        // Re-populate theme cards to reflect current theme
+        this.populateThemeCards();
+        
+        // Update auto-theme state
+        this.updateAutoThemeState();
     }
     
     closeTab(tabId) {
