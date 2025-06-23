@@ -9512,16 +9512,35 @@ class NotesWiki {
         link.onload = null;
         link.onerror = null;
         
-        // Set up new event listeners
-        link.onload = handleThemeLoad;
-        link.onerror = handleThemeError;
-        
         // Use base path for GitHub Pages compatibility
         const themePath = this.basePath ? `${this.basePath}themes/${themeId}.css` : `themes/${themeId}.css`;
         console.log(`[Theme] Setting theme URL to: ${themePath}`);
         console.log(`[Theme] Base path: ${this.basePath || '(none)'}`);
         
-        link.href = themePath;
+        // Force theme reload by adding cache-busting query parameter
+        const cacheBuster = `?t=${Date.now()}`;
+        const themeUrl = themePath + cacheBuster;
+        
+        // For GitLab Pages and other environments with aggressive caching,
+        // we need to force a reload by creating a new link element
+        const oldLink = link;
+        const newLink = document.createElement('link');
+        newLink.rel = 'stylesheet';
+        newLink.id = 'theme-stylesheet';
+        newLink.onload = () => {
+            handleThemeLoad();
+            // Remove old link after new one loads
+            if (oldLink.parentNode) {
+                oldLink.parentNode.removeChild(oldLink);
+            }
+        };
+        newLink.onerror = handleThemeError;
+        
+        // Insert new link before old one
+        oldLink.parentNode.insertBefore(newLink, oldLink);
+        
+        // Set the href to trigger loading
+        newLink.href = themeUrl;
     }
     
     loadRecentFiles() {
