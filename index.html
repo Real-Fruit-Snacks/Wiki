@@ -1069,17 +1069,21 @@
             <div class="modal-body shortcuts-modal-body">
                 <div class="shortcuts-grid">
                     <div class="shortcuts-section">
-                        <h3>⚡ Navigation</h3>
+                        <h3>⚡ Navigation & Search</h3>
                         <div class="shortcut-item">
                             <span class="shortcut-key" id="shortcut-new-tab">Alt+T</span>
                             <span class="shortcut-desc">New tab</span>
                         </div>
                         <div class="shortcut-item">
                             <span class="shortcut-key" id="shortcut-search">Ctrl+K</span>
-                            <span class="shortcut-desc">Search notes</span>
+                            <span class="shortcut-desc">Global search (all notes)</span>
                         </div>
                         <div class="shortcut-item">
                             <span class="shortcut-key" id="shortcut-filter">Ctrl+F</span>
+                            <span class="shortcut-desc">Tag filter modal</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Ctrl+Shift+F</span>
                             <span class="shortcut-desc">Search within current note</span>
                         </div>
                         <div class="shortcut-item">
@@ -1092,11 +1096,15 @@
                         </div>
                         <div class="shortcut-item">
                             <span class="shortcut-key">?</span>
-                            <span class="shortcut-desc">Show this cheatsheet</span>
+                            <span class="shortcut-desc">Show this help</span>
                         </div>
                         <div class="shortcut-item">
                             <span class="shortcut-key">F</span>
                             <span class="shortcut-desc">Toggle focus mode</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Ctrl+P</span>
+                            <span class="shortcut-desc">Print / Save as PDF</span>
                         </div>
                     </div>
                     
@@ -1111,28 +1119,36 @@
                             <span class="shortcut-desc">Close all tabs</span>
                         </div>
                         <div class="shortcut-item">
+                            <span class="shortcut-key">Alt+P</span>
+                            <span class="shortcut-desc">Pin/unpin current tab</span>
+                        </div>
+                        <div class="shortcut-item">
                             <span class="shortcut-key">Alt+1-9</span>
                             <span class="shortcut-desc">Switch to tab by number</span>
                         </div>
                         <div class="shortcut-item">
-                            <span class="shortcut-key">Alt+PageUp/PageDown</span>
+                            <span class="shortcut-key">Alt+PageUp/Down</span>
                             <span class="shortcut-desc">Navigate between tabs</span>
                         </div>
                         <div class="shortcut-item">
-                            <span class="shortcut-key">Alt+P</span>
-                            <span class="shortcut-desc">Pin/unpin current tab</span>
+                            <span class="shortcut-key">Right-click tab</span>
+                            <span class="shortcut-desc">Tab context menu (pin, close others)</span>
                         </div>
-                        <div class="shortcut-item browser-warning">
-                            <span class="shortcut-key">⚠️</span>
-                            <span class="shortcut-desc">Note: Ctrl+W, Ctrl+T, Ctrl+1-9 may conflict with browser</span>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Drag tab</span>
+                            <span class="shortcut-desc">Reorder tabs (except pinned)</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Middle-click tab</span>
+                            <span class="shortcut-desc">Close tab (if not pinned)</span>
                         </div>
                     </div>
                     
                     <div class="shortcuts-section">
-                        <h3>🔍 Search & Navigation</h3>
+                        <h3>🔍 Search Operators</h3>
                         <div class="shortcut-item">
                             <span class="shortcut-key">"phrase"</span>
-                            <span class="shortcut-desc">Search exact phrase</span>
+                            <span class="shortcut-desc">Exact phrase match</span>
                         </div>
                         <div class="shortcut-item">
                             <span class="shortcut-key">-exclude</span>
@@ -1147,64 +1163,125 @@
                             <span class="shortcut-desc">Filter by author</span>
                         </div>
                         <div class="shortcut-item">
-                            <span class="shortcut-key">term1 term2</span>
-                            <span class="shortcut-desc">Search multiple terms (AND logic)</span>
+                            <span class="shortcut-key">word1 word2</span>
+                            <span class="shortcut-desc">All words must match (AND)</span>
                         </div>
                         <div class="shortcut-item">
-                            <span class="shortcut-key">↑↓ + Enter</span>
+                            <span class="shortcut-key">↑↓ Enter</span>
                             <span class="shortcut-desc">Navigate & open results</span>
                         </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Ctrl+Enter</span>
+                            <span class="shortcut-desc">Open result in new tab</span>
+                        </div>
                     </div>
                     
                     <div class="shortcuts-section">
-                        <h3>📄 Content Actions</h3>
+                        <h3>⊞ Split View</h3>
                         <div class="shortcut-item">
-                            <span class="shortcut-key">Click copy button</span>
-                            <span class="shortcut-desc">Copy code block to clipboard</span>
+                            <span class="shortcut-key">Ctrl+/</span>
+                            <span class="shortcut-desc">Toggle split view</span>
                         </div>
                         <div class="shortcut-item">
-                            <span class="shortcut-key">Click collapse button</span>
-                            <span class="shortcut-desc">Expand/collapse code block</span>
+                            <span class="shortcut-key">Click split button</span>
+                            <span class="shortcut-desc">Toggle split view</span>
                         </div>
                         <div class="shortcut-item">
-                            <span class="shortcut-key">Settings → Code</span>
-                            <span class="shortcut-desc">Toggle line numbers globally</span>
+                            <span class="shortcut-key">Drag divider</span>
+                            <span class="shortcut-desc">Resize split panes</span>
                         </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Drag note to pane</span>
+                            <span class="shortcut-desc">Open note in specific pane</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Click in pane</span>
+                            <span class="shortcut-desc">Set active pane for navigation</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Pin split tab</span>
+                            <span class="shortcut-desc">Lock split view content</span>
+                        </div>
+                    </div>
+                    
+                    <div class="shortcuts-section">
+                        <h3>🖱️ Mouse & Context Menus</h3>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Right-click note</span>
+                            <span class="shortcut-desc">Note context menu</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Ctrl+Click link</span>
+                            <span class="shortcut-desc">Open in new tab</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Middle-click link</span>
+                            <span class="shortcut-desc">Open in new tab</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Double-click folder</span>
+                            <span class="shortcut-desc">Expand/collapse all subfolders</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Click breadcrumb</span>
+                            <span class="shortcut-desc">Navigate to parent folder</span>
+                        </div>
+                    </div>
+                    
+                    <div class="shortcuts-section">
+                        <h3>📝 Quick Notes & Features</h3>
                         <div class="shortcut-item">
                             <span class="shortcut-key">Ctrl+Shift+S</span>
-                            <span class="shortcut-desc">Toggle quick notes panel</span>
+                            <span class="shortcut-desc">Toggle Quick Notes panel</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Escape</span>
+                            <span class="shortcut-desc">Close any modal/overlay</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Copy button</span>
+                            <span class="shortcut-desc">Copy code block</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Collapse button</span>
+                            <span class="shortcut-desc">Toggle code block</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">⏱️ Timer</span>
+                            <span class="shortcut-desc">Click to start/pause</span>
                         </div>
                     </div>
-                    
-                    <div class="shortcuts-section">
-                        <h3>🖱️ Mouse Actions</h3>
-                        <div class="shortcut-item">
-                            <span class="shortcut-key">Ctrl+Click</span>
-                            <span class="shortcut-desc">Open link in new tab</span>
+                </div>
+                
+                <div class="shortcuts-features">
+                    <h3>🎨 Additional Features</h3>
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <strong>150+ Themes:</strong> Organized in 11 categories including Material, Nature, Cyberpunk, and the complete Bearded collection
                         </div>
-                        <div class="shortcut-item">
-                            <span class="shortcut-key">Middle-click</span>
-                            <span class="shortcut-desc">Open link in new tab</span>
+                        <div class="feature-item">
+                            <strong>Auto Theme:</strong> Automatically switches between light/dark themes based on system preference
                         </div>
-                        <div class="shortcut-item">
-                            <span class="shortcut-key">Drag tab</span>
-                            <span class="shortcut-desc">Reorder tabs</span>
+                        <div class="feature-item">
+                            <strong>Typography:</strong> Customize font size (Small to Extra Large) and font family (System, Sans-serif, Serif, Monospace, Code)
                         </div>
-                        <div class="shortcut-item">
-                            <span class="shortcut-key">Middle-click tab</span>
-                            <span class="shortcut-desc">Close tab</span>
+                        <div class="feature-item">
+                            <strong>Custom CSS:</strong> Add your own styles in Settings → Advanced for complete customization
                         </div>
-                    </div>
-                    
-                    <div class="shortcuts-section">
-                        <h3>⏱️ Timer Controls</h3>
-                        <div class="shortcut-item">
-                            <span class="shortcut-key">Click ▶/⏸</span>
-                            <span class="shortcut-desc">Start/pause timer</span>
+                        <div class="feature-item">
+                            <strong>Tag Filtering:</strong> Visual tag selection with include/exclude options (Ctrl+F)
                         </div>
-                        <div class="shortcut-item">
-                            <span class="shortcut-key">Long-press ⏹</span>
-                            <span class="shortcut-desc">Reset timer (3 seconds)</span>
+                        <div class="feature-item">
+                            <strong>External Links:</strong> Configure how external links open (new tab, warnings) in Settings
+                        </div>
+                        <div class="feature-item">
+                            <strong>Print Mode:</strong> Optimized layout for printing or PDF export (Ctrl+P)
+                        </div>
+                        <div class="feature-item">
+                            <strong>Pinned Tabs:</strong> Pin important tabs to prevent accidental closure and content changes
+                        </div>
+                        <div class="feature-item">
+                            <strong>Confirmation Dialogs:</strong> Optional confirmations when closing tabs or notes (enabled by default)
                         </div>
                     </div>
                 </div>

@@ -1540,6 +1540,13 @@ class NotesWiki {
                     return;
                 }
                 
+                // Toggle split view with Ctrl+/
+                if ((e.ctrlKey || e.metaKey) && e.key === '/') {
+                    e.preventDefault();
+                    this.toggleSplitView();
+                    return;
+                }
+                
                 // Check custom shortcuts
                 const pressedCombo = this.getKeyCombo(e);
                 

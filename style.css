@@ -4147,6 +4147,41 @@ select.dropdown:focus {
     margin-left: var(--spacing-md);
 }
 
+/* Additional Features Section */
+.shortcuts-features {
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background-color: var(--bg-secondary);
+    border-radius: 8px;
+}
+
+.shortcuts-features h3 {
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+    font-size: 1.1rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.feature-item {
+    padding: var(--spacing-sm);
+    background-color: var(--bg-primary);
+    border-radius: 4px;
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    border: 1px solid var(--border-primary);
+}
+
+.feature-item strong {
+    color: var(--accent-primary);
+    display: inline-block;
+    margin-right: 0.25rem;
+}
+
 .shortcuts-footer {
     background-color: var(--bg-secondary);
     border-top: 1px solid var(--border-primary);
