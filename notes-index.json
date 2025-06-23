@@ -960,13 +960,13 @@
     "platforms": 1
   },
   "authors": [
+    "Wiki Team",
     "Test Author",
-    "Wiki Admin",
-    "Wiki Team"
+    "Wiki Admin"
   ],
   "categories": [
-    "tutorial",
-    "testing"
+    "testing",
+    "tutorial"
   ],
   "contexts": [
     {
@@ -980,6 +980,6 @@
       "noteCount": 1
     }
   ],
-  "generated": "2025-06-23T17:06:00.005034",
+  "generated": "2025-06-23T17:16:09.521749",
   "totalNotes": 32
 }
