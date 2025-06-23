@@ -12510,8 +12510,27 @@ class NotesWiki {
     disableSplitView() {
         const splitViewTabId = 'split-view-tab';
         
-        // Remove the split view tab without triggering recursion
-        if (this.tabs.has(splitViewTabId)) {
+        // Check if the split view tab exists and is pinned
+        const tabData = this.tabs.get(splitViewTabId);
+        if (tabData && tabData.isPinned) {
+            // Don't remove pinned split view tab, just switch to another tab
+            console.log('[Split View] Split view tab is pinned, keeping it open');
+            
+            // Return to previous tab if available
+            if (this.tabBeforeSplitView && this.tabs.has(this.tabBeforeSplitView)) {
+                this.switchToTab(this.tabBeforeSplitView);
+            } else {
+                // Find first non-split-view tab
+                const remainingTabs = Array.from(this.tabs.keys()).filter(id => id !== splitViewTabId);
+                if (remainingTabs.length > 0) {
+                    this.switchToTab(remainingTabs[0]);
+                } else {
+                    // Create a new regular tab if only split view tab exists
+                    this.createNewTab();
+                }
+            }
+        } else if (this.tabs.has(splitViewTabId)) {
+            // Remove the split view tab without triggering recursion
             // Remove from DOM
             document.getElementById(splitViewTabId)?.remove();
             
