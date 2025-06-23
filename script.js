@@ -5259,9 +5259,9 @@ class NotesWiki {
             },
             'github-light': {
                 bg: '#ffffff',
-                border: '#e1e4e8',
-                accent: '#0366d6',
-                text: '#24292e',
+                border: '#d0d7de',
+                accent: '#0969da',
+                text: '#24292f',
                 textMuted: '#6a737d'
             },
             'github-dark': {

@@ -188,7 +188,7 @@ Themes are organized into 11 categories in the settings modal:
 10. **Special Effects** - Themes with unique visual effects
 11. **Bearded Collection** - Complete 76-theme Bearded Theme collection with unique decorative elements
 
-### Recent Major Features (v3.1.0 - v3.4.0)
+### Recent Major Features (v3.1.0 - v3.6.0)
 
 1. **Quick Notes Panel** - Slide-out panel from right side (replaced floating sticky notes)
 2. **Split View Implementation** - Side-by-side note viewing with draggable pane resizing
