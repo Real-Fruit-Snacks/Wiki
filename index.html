@@ -551,7 +551,7 @@
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                     <path fill-rule="evenodd" d="M8 14A6 6 0 108 2a6 6 0 000 12zm1-8a1 1 0 10-2 0v2.586l-1.293 1.293a1 1 0 101.414 1.414l2-2A1 1 0 009 8V6z" clip-rule="evenodd"/>
                                 </svg>
-                                <span>Files & History</span>
+                                <span>Notes & History</span>
                             </button>
                         </nav>
                     </div>
@@ -565,21 +565,8 @@
                             
                             <div class="setting-item">
                                 <div class="setting-info">
-                                    <div class="setting-name">Auto theme</div>
-                                    <div class="setting-description">Automatically switch between light and dark themes based on system preference</div>
-                                </div>
-                                <div class="setting-control">
-                                    <label class="toggle">
-                                        <input type="checkbox" id="auto-theme">
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            
-                            <div class="setting-item">
-                                <div class="setting-info">
-                                    <div class="setting-name">Track recently viewed files</div>
-                                    <div class="setting-description">Keep a history of files you've opened for quick access</div>
+                                    <div class="setting-name">Track recently opened notes</div>
+                                    <div class="setting-description">Keep a history of notes you've opened for quick access in the recent files dropdown</div>
                                 </div>
                                 <div class="setting-control">
                                     <label class="toggle">
@@ -591,25 +578,12 @@
                             
                             <div class="setting-item">
                                 <div class="setting-info">
-                                    <div class="setting-name">Keep search query</div>
-                                    <div class="setting-description">Preserve search queries when navigating between notes</div>
+                                    <div class="setting-name">Preserve search when switching notes</div>
+                                    <div class="setting-description">Keep your search query and results when opening notes from search results</div>
                                 </div>
                                 <div class="setting-control">
                                     <label class="toggle">
                                         <input type="checkbox" id="sticky-search-setting">
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            
-                            <div class="setting-item">
-                                <div class="setting-info">
-                                    <div class="setting-name">Confirm on close</div>
-                                    <div class="setting-description">Show confirmation dialog when closing tabs or sticky notes</div>
-                                </div>
-                                <div class="setting-control">
-                                    <label class="toggle">
-                                        <input type="checkbox" id="confirm-on-close">
                                         <span class="toggle-slider"></span>
                                     </label>
                                 </div>
@@ -636,8 +610,8 @@
                             
                             <div class="setting-item">
                                 <div class="setting-info">
-                                    <div class="setting-name">Word wrap</div>
-                                    <div class="setting-description">Wrap long lines in code blocks instead of horizontal scrolling</div>
+                                    <div class="setting-name">Wrap long code lines</div>
+                                    <div class="setting-description">Wrap long lines in code blocks to fit the screen instead of showing horizontal scrollbars</div>
                                 </div>
                                 <div class="setting-control">
                                     <label class="toggle">
@@ -652,6 +626,19 @@
                         <div class="settings-section" id="settings-section-appearance">
                             <h3 class="settings-heading">Appearance</h3>
                             <p class="settings-description">Customize the look and feel of your wiki</p>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Auto theme</div>
+                                    <div class="setting-description">Automatically switch between light and dark themes based on your system preference</div>
+                                </div>
+                                <div class="setting-control">
+                                    <label class="toggle">
+                                        <input type="checkbox" id="auto-theme">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
                             
                             <div class="setting-item">
                                 <div class="setting-info">
@@ -690,13 +677,13 @@
                         
                         <!-- Files & History section -->
                         <div class="settings-section" id="settings-section-history">
-                            <h3 class="settings-heading">Files & History</h3>
-                            <p class="settings-description">Configure file tracking and history settings</p>
+                            <h3 class="settings-heading">Notes & History</h3>
+                            <p class="settings-description">Configure note tracking and history settings</p>
                             
                             <div class="setting-item">
                                 <div class="setting-info">
-                                    <div class="setting-name">Maximum recent files</div>
-                                    <div class="setting-description">Number of files to keep in recent history</div>
+                                    <div class="setting-name">Maximum recent notes</div>
+                                    <div class="setting-description">Number of notes to keep in recent history dropdown</div>
                                 </div>
                                 <div class="setting-control">
                                     <div class="option-pills" id="recent-limit-options">
@@ -710,11 +697,11 @@
                             
                             <div class="setting-item">
                                 <div class="setting-info">
-                                    <div class="setting-name">Clear recent files</div>
-                                    <div class="setting-description">Remove all files from recent history</div>
+                                    <div class="setting-name">Clear recent notes</div>
+                                    <div class="setting-description">Remove all notes from recent history dropdown</div>
                                 </div>
                                 <div class="setting-control">
-                                    <button class="button button-danger" onclick="notesWiki.clearRecentFiles(); this.textContent = 'Cleared!'; setTimeout(() => this.textContent = 'Clear history', 2000)">Clear history</button>
+                                    <button class="button button-danger" onclick="notesWiki.clearRecentFiles(); this.textContent = 'Cleared!'; setTimeout(() => this.textContent = 'Clear recent notes', 2000)">Clear recent notes</button>
                                 </div>
                             </div>
                             
@@ -736,8 +723,8 @@
                             
                             <div class="setting-item">
                                 <div class="setting-info">
-                                    <div class="setting-name">Default home page</div>
-                                    <div class="setting-description">Choose what loads when you open the wiki</div>
+                                    <div class="setting-name">Startup page</div>
+                                    <div class="setting-description">Choose what page loads when you first open the wiki</div>
                                 </div>
                                 <div class="setting-control">
                                     <select class="select-control" id="default-home-page">
@@ -745,7 +732,7 @@
                                         <option value="last-viewed">Last viewed note</option>
                                         <option value="specific">Specific note</option>
                                     </select>
-                                    <input type="text" class="input-control" id="specific-home-note" placeholder="e.g., notes/index" style="display: none; margin-top: 8px;">
+                                    <input type="text" class="input-control" id="specific-home-note" placeholder="e.g., notes/index.md or notes/getting-started.md" style="display: none; margin-top: 8px;">
                                 </div>
                             </div>
                             
@@ -757,6 +744,19 @@
                                 <div class="setting-control">
                                     <label class="toggle">
                                         <input type="checkbox" id="external-links-new-tab" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Confirm before closing</div>
+                                    <div class="setting-description">Show confirmation dialog when closing tabs or quick notes to prevent accidental loss</div>
+                                </div>
+                                <div class="setting-control">
+                                    <label class="toggle">
+                                        <input type="checkbox" id="confirm-on-close">
                                         <span class="toggle-slider"></span>
                                     </label>
                                 </div>
@@ -807,6 +807,19 @@
                                 <div class="setting-control">
                                     <label class="toggle">
                                         <input type="checkbox" id="show-table-of-contents" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Focus Mode</div>
+                                    <div class="setting-description">Hide sidebar and use wide layout for distraction-free reading</div>
+                                </div>
+                                <div class="setting-control">
+                                    <label class="toggle">
+                                        <input type="checkbox" id="focus-mode">
                                         <span class="toggle-slider"></span>
                                     </label>
                                 </div>

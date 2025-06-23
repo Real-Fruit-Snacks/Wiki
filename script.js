@@ -260,7 +260,7 @@ class NotesWiki {
             autoTheme: false, // Enable automatic theme switching based on system preferences
             activeContext: null,  // Store active context in settings
             stickySearch: false,  // Keep search query when reopening search
-            contentWidth: 'narrow',  // Default to narrow width
+            contentWidth: 'normal',  // Default to normal width
             focusMode: false, // Focus mode state
             showTableOfContents: false, // Show/hide table of contents for notes with multiple headings
             splitViewEnabled: false, // Split view state
@@ -269,7 +269,7 @@ class NotesWiki {
             specificHomeNote: '', // Path to specific note
             externalLinksNewTab: true,
             fontSize: 'normal', // 'small', 'normal', 'large', 'extra-large'
-            fontFamily: 'monospace', // 'system', 'sans-serif', 'serif', 'monospace', 'jetbrains-mono'
+            fontFamily: 'system', // 'system', 'sans-serif', 'serif', 'monospace', 'jetbrains-mono'
             defaultCodeLanguage: 'bash',
             customCSS: '',
             keyboardShortcuts: {
@@ -1105,6 +1105,13 @@ class NotesWiki {
                     existingToc.remove();
                 }
             }
+        });
+
+        document.getElementById('focus-mode').addEventListener('change', (e) => {
+            this.settings.focusMode = e.target.checked;
+            this.saveSettings();
+            // Apply or remove focus mode immediately
+            this.applyFocusMode();
         });
         
         // Recent limit option pills
@@ -4448,6 +4455,7 @@ class NotesWiki {
         document.getElementById('show-line-numbers').checked = this.settings.showLineNumbers;
         document.getElementById('enable-word-wrap').checked = this.settings.enableWordWrap;
         document.getElementById('show-table-of-contents').checked = this.settings.showTableOfContents;
+        document.getElementById('focus-mode').checked = this.settings.focusMode;
         // Update recent limit option pills
         const recentLimitOptions = document.getElementById('recent-limit-options');
         if (recentLimitOptions) {
