@@ -30,11 +30,11 @@ download_file() {
 
 echo "Downloading JetBrains Mono fonts..."
 # JetBrains Mono is available from their GitHub releases
-# Latest version as of writing: 3.0.0
-JETBRAINS_VERSION="v3.0.0"
+# Latest version: 2.304
+JETBRAINS_VERSION="v2.304"
 JETBRAINS_BASE="https://github.com/JetBrains/JetBrainsMono/releases/download/${JETBRAINS_VERSION}"
 
-download_file "${JETBRAINS_BASE}/JetBrainsMono-3.0.0.zip" "JetBrainsMono.zip"
+download_file "${JETBRAINS_BASE}/JetBrainsMono-2.304.zip" "JetBrainsMono.zip"
 
 echo ""
 echo "Downloading Inter fonts..."
@@ -61,6 +61,8 @@ if command -v unzip &> /dev/null; then
     unzip -q Inter.zip
     # Copy only the web fonts we need
     cp -f web/Inter-Regular.woff2 ./
+    cp -f web/Inter-Medium.woff2 ./
+    cp -f web/Inter-SemiBold.woff2 ./
     cp -f web/Inter-Bold.woff2 ./
     cp -f web/Inter-Italic.woff2 ./
     cp -f web/Inter-BoldItalic.woff2 ./
