@@ -1,69 +1,216 @@
-/* Bearded Theme - High Contrast - Midnight Void */
-.theme-bearded-hc-midnight-void {
-    /* High Contrast - Midnight Void - Deep space darkness with electric blue */
-    --primary-bg: #0a0a0f;
-    --secondary-bg: #151520;
-    --accent-bg: #202030;
+/* Bearded Theme - Hc Midnight Void */
+:root[data-theme="bearded-hc-midnight-void"] {
+    /* Background Colors */
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #151520;
+    --bg-sidebar: #1a1f29;
+    --bg-code: #0f0f1a;
+    --bg-selection: #ffaa0033;
+    --bg-dropdown: #151520;
+    --bg-hover: #202030;
+    --bg-tag: #1a1a2a;
+    
+    /* Additional Background Colors */
+    --bg-modal: rgba(31, 36, 48, 0.93);
+    --bg-tooltip: #1a1f29;
+    --bg-input: #232834;
+    --bg-highlight: #ffaa0033;
+    --text-link: #5ccfe6;
+    --text-code: #f28779;
+    --text-inverse: #ffffff;
+    --button-text: #cbccc6;
+    
+    /* Text Colors */
     --text-primary: #ffffff;
     --text-secondary: #e0e0ff;
-    --accent-color: #00ccff;
+    --text-muted: #707a8c;
+    --text-heading: #ffc68d;
+    
+    /* Accent Colors */
+    --accent-primary: #00ccff;
     --accent-secondary: #0099cc;
+    --accent-warning: #ffff00;
+    --accent-error: #ff4040;
+    --accent-danger: #f28779;
+    --accent-info: #00ccff;
+    --accent-success: #00ff80;
+    
+    /* Border Colors */
+    --border-primary: #404060;
+    --border-secondary: #343a46;
+    --border-accent: #5ccfe6;
+    
+    /* Link Colors */
     --link-color: #00ccff;
     --link-hover: #33ddff;
-    --border-color: #404060;
-    --shadow-color: rgba(0, 204, 255, 0.3);
+    --link-visited: #dfbfff;
     
-    /* Bearded High Contrast Syntax Colors */
+    /* Button Colors */
+    --btn-primary-bg: #5ccfe6;
+    --btn-primary-color: #1f2430;
+    --btn-primary-hover: #73d0ff;
+    --btn-secondary-bg: #202030;
+    --btn-secondary-color: #cbccc6;
+    --btn-secondary-hover: #303050;
+    
+    /* Form Colors */
+    --input-bg: #151520;
+    --input-border: #404060;
+    --input-focus: #5ccfe6;
+    --input-color: #cbccc6;
+    --input-placeholder: #707a8c;
+    
+    /* Badge Colors */
+    --badge-bg: #5ccfe6;
+    --badge-text: #0a0a0f;
+    
+    /* Tag Colors */
+    --tag-bg: #202030;
+    --tag-color: #00ccff;
+    --tag-border: rgba(92, 207, 230, 0.3);
+    
+    /* Code Block Colors */
+    --code-bg: #232834;
+    --code-border: #2a2f3a;
+    --code-color: #cbccc6;
+    --line-number-bg: #1a1f29;
+    --line-number-color: #707a8c;
+    --line-number-border: #2a2f3a;
+    
+    /* Syntax Highlighting Colors */
+    --syntax-comment: #8080ff;
     --syntax-keyword: #00ccff;
     --syntax-string: #00ff80;
     --syntax-number: #ffff00;
     --syntax-function: #ff00ff;
-    --syntax-comment: #8080ff;
-    --syntax-class: #ff8080;
     --syntax-variable: #ffffff;
+    --syntax-type: #ff8080;
+    --syntax-constant: #f29e74;
     --syntax-operator: #00ccff;
     --syntax-punctuation: #e0e0ff;
+    --syntax-tag: #f28779;
+    --syntax-attribute: #ffc68d;
+    --syntax-value: #d5ff80;
+    --syntax-regex: #95e6cb;
+    --syntax-important: #f28779;
+    --syntax-bold: #ffc68d;
+    --syntax-italic: #5ccfe6;
     
-    /* UI Elements */
-    --button-bg: #202030;
-    --button-hover: #303050;
-    --input-bg: #151520;
-    --input-border: #404060;
-    --dropdown-bg: #151520;
-    --dropdown-hover: #202030;
-    --modal-overlay: rgba(10, 10, 15, 0.95);
+    /* Callout Colors */
+    --callout-note: #5ccfe6;
+    --callout-tip: #d5ff80;
+    --callout-warning: #ffcc66;
+    --callout-danger: #f28779;
+    --callout-info: #73d0ff;
     
-    /* Feature Colors */
-    --success-color: #00ff80;
-    --warning-color: #ffff00;
-    --error-color: #ff4040;
-    --info-color: #00ccff;
+    /* Tab Colors */
+    --tab-bg: #232834;
+    --tab-active-bg: #1f2430;
+    --tab-hover-bg: #2a2f3a;
+    --tab-border: #2a2f3a;
+    --tab-active-border: #5ccfe6;
     
-    /* Bearded Signature */
-    --beard-gradient: linear-gradient(135deg, #00ccff 0%, #0099cc 100%);
-    --beard-shadow: 0 0 40px rgba(0, 204, 255, 0.5);
-    --code-bg: #0f0f1a;
-    --inline-code-bg: #1a1a2a;
-    --scrollbar-bg: #0a0a0f;
-    --scrollbar-thumb: #404060;
-    --scrollbar-hover: #6060a0;
+    /* Sidebar Colors */
+    --sidebar-bg: #1a1f29;
+    --sidebar-border: #2a2f3a;
+    --sidebar-item-hover: #202030;
+    --sidebar-item-active: #2a2f3a;
+    
+    /* Search Colors */
     --search-bg: #151520;
     --search-border: #404060;
-    --search-focus-border: #00ccff;
-    --tag-bg: #202030;
-    --tag-text: #00ccff;
-    --tag-hover: #303050;
+    --search-focus: #00ccff;
+    --search-result-hover: #2a2f3a;
+    --search-highlight: #ffcc66;
     
-    /* Midnight Void HC Special */
+    /* Scrollbar Colors */
+    --scrollbar-track: #0a0a0f;
+    --scrollbar-thumb: #404060;
+    --scrollbar-thumb-hover: #6060a0;
+    
+    /* Modal Colors */
+    --modal-bg: #1f2430;
+    --modal-border: #2a2f3a;
+    --modal-overlay: rgba(10, 10, 15, 0.95);
+    
+    /* Table Colors */
+    --table-border: #2a2f3a;
+    --table-stripe: #232834;
+    --table-hover: #303050;
+    --table-header-bg: #232834;
+    
+    /* Progress Colors */
+    --progress-bg: #232834;
+    --progress-fill: #5ccfe6;
+    
+    /* Status Colors */
+    --status-online: #d5ff80;
+    --status-away: #ffcc66;
+    --status-busy: #f28779;
+    --status-offline: #707a8c;
+    
+    /* Shadow Colors */
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(0, 204, 255, 0.3);
+    --shadow-heavy: rgba(0, 0, 0, 0.4);
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    
+    /* Typography */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --font-size-4xl: 2.25rem;
+    
+    /* Line Heights */
+    --line-height-tight: 1.25;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+    
+    /* Border Radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --transition-slow: 350ms ease;
+    
+    /* Z-Index Scale */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+    /* Theme Special Variables */
+    --beard-gradient: linear-gradient(135deg, #00ccff 0%, #0099cc 100%);
+    --beard-shadow: 0 0 40px rgba(0, 204, 255, 0.5);
     --void-glow: 0 0 35px rgba(0, 204, 255, 0.6);
     --void-accent: #00ccff;
-    --void-electric: #33ddff;
-    --void-pulse: 0 0 50px rgba(51, 221, 255, 0.4);
-    --badge-text: #0a0a0f;
 }
 
-/* Midnight Void HC Decorative Elements */
-.theme-bearded-hc-midnight-void .note-content h1::before {
+/* Theme-specific component styles */
+[data-theme="bearded-hc-midnight-void"] {
+    color-scheme: dark;
+}
+
+[data-theme="bearded-hc-midnight-void"] .note-content h1::before {
     content: "★";
     display: inline-block;
     margin-right: 0.5rem;
@@ -73,25 +220,7 @@
     animation: voidPulse 3s ease-in-out infinite;
 }
 
-@keyframes voidPulse {
-    0%, 100% { 
-        opacity: 0.7;
-        transform: scale(1) rotate(0deg);
-        filter: drop-shadow(0 0 20px rgba(0, 204, 255, 0.6));
-    }
-    33% { 
-        opacity: 1;
-        transform: scale(1.3) rotate(120deg);
-        filter: drop-shadow(0 0 40px rgba(51, 221, 255, 0.8));
-    }
-    66% { 
-        opacity: 0.9;
-        transform: scale(1.1) rotate(240deg);
-        filter: drop-shadow(0 0 30px rgba(0, 153, 204, 0.7));
-    }
-}
-
-.theme-bearded-hc-midnight-void .tab.active {
+[data-theme="bearded-hc-midnight-void"] .tab.active {
     background: var(--accent-bg);
     border-top: 3px solid var(--void-accent);
     box-shadow: inset 0 3px 20px rgba(0, 204, 255, 0.15),
@@ -101,7 +230,7 @@
     position: relative;
 }
 
-.theme-bearded-hc-midnight-void .tab.active::after {
+[data-theme="bearded-hc-midnight-void"] .tab.active::after {
     content: "";
     position: absolute;
     top: -3px;
@@ -112,19 +241,14 @@
     animation: voidFlow 2s linear infinite;
 }
 
-@keyframes voidFlow {
-    0% { background-position: -100% 0; }
-    100% { background-position: 100% 0; }
-}
-
-.theme-bearded-hc-midnight-void .search-container input {
+[data-theme="bearded-hc-midnight-void"] .search-container input {
     border: 2px solid var(--border-color);
     background: var(--input-bg);
     color: var(--text-primary);
     font-weight: bold;
 }
 
-.theme-bearded-hc-midnight-void .search-container input:focus {
+[data-theme="bearded-hc-midnight-void"] .search-container input:focus {
     border-color: var(--void-accent);
     box-shadow: 0 0 0 4px rgba(0, 204, 255, 0.3),
                 var(--void-glow);
@@ -132,13 +256,13 @@
     color: var(--void-electric);
 }
 
-.theme-bearded-hc-midnight-void .note-item {
+[data-theme="bearded-hc-midnight-void"] .note-item {
     border: 1px solid transparent;
     color: var(--text-primary);
     transition: all 0.3s ease;
 }
 
-.theme-bearded-hc-midnight-void .note-item:hover {
+[data-theme="bearded-hc-midnight-void"] .note-item:hover {
     border: 2px solid var(--void-accent);
     padding-left: calc(1rem - 2px);
     background: linear-gradient(90deg, rgba(0, 204, 255, 0.1) 0%, rgba(51, 221, 255, 0.05) 100%);
@@ -147,7 +271,7 @@
     box-shadow: 0 0 15px rgba(0, 204, 255, 0.2);
 }
 
-.theme-bearded-hc-midnight-void pre code {
+[data-theme="bearded-hc-midnight-void"] pre code {
     background: var(--code-bg);
     border: 2px solid var(--border-color);
     box-shadow: inset 0 0 25px rgba(0, 204, 255, 0.1),
@@ -158,7 +282,7 @@
     overflow: hidden;
 }
 
-.theme-bearded-hc-midnight-void pre code::before {
+[data-theme="bearded-hc-midnight-void"] pre code::before {
     content: "";
     position: absolute;
     top: 0;
@@ -169,12 +293,7 @@
     animation: voidCodeScan 4s linear infinite;
 }
 
-@keyframes voidCodeScan {
-    0% { left: -100%; }
-    100% { left: 100%; }
-}
-
-.theme-bearded-hc-midnight-void blockquote {
+[data-theme="bearded-hc-midnight-void"] blockquote {
     border-left: 5px solid var(--void-accent);
     background: linear-gradient(90deg, rgba(0, 204, 255, 0.15) 0%, transparent 100%);
     color: var(--void-electric);
@@ -185,7 +304,7 @@
     overflow: hidden;
 }
 
-.theme-bearded-hc-midnight-void blockquote::before {
+[data-theme="bearded-hc-midnight-void"] blockquote::before {
     content: "";
     position: absolute;
     top: 0;
@@ -196,7 +315,7 @@
     pointer-events: none;
 }
 
-.theme-bearded-hc-midnight-void .btn-primary {
+[data-theme="bearded-hc-midnight-void"] .btn-primary {
     background: linear-gradient(135deg, var(--void-accent) 0%, var(--void-electric) 100%);
     color: var(--primary-bg);
     border: 2px solid var(--void-accent);
@@ -209,7 +328,7 @@
     overflow: hidden;
 }
 
-.theme-bearded-hc-midnight-void .btn-primary::before {
+[data-theme="bearded-hc-midnight-void"] .btn-primary::before {
     content: "";
     position: absolute;
     top: 0;
@@ -220,11 +339,11 @@
     transition: left 0.6s;
 }
 
-.theme-bearded-hc-midnight-void .btn-primary:hover::before {
+[data-theme="bearded-hc-midnight-void"] .btn-primary:hover::before {
     left: 100%;
 }
 
-.theme-bearded-hc-midnight-void .btn-primary:hover {
+[data-theme="bearded-hc-midnight-void"] .btn-primary:hover {
     background: var(--primary-bg);
     color: var(--void-electric);
     border: 2px solid var(--void-electric);
@@ -233,19 +352,19 @@
     transform: translateY(-2px);
 }
 
-.theme-bearded-hc-midnight-void ::-webkit-scrollbar-thumb {
+[data-theme="bearded-hc-midnight-void"] ::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, var(--scrollbar-thumb) 0%, var(--void-accent) 100%);
     border: 2px solid var(--primary-bg);
     border-radius: 6px;
     box-shadow: 0 0 10px rgba(0, 204, 255, 0.3);
 }
 
-.theme-bearded-hc-midnight-void ::-webkit-scrollbar-thumb:hover {
+[data-theme="bearded-hc-midnight-void"] ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, var(--void-accent) 0%, var(--void-electric) 100%);
     box-shadow: 0 0 15px rgba(51, 221, 255, 0.5);
 }
 
-.theme-bearded-hc-midnight-void .settings-modal {
+[data-theme="bearded-hc-midnight-void"] .settings-modal {
     background: rgba(10, 10, 15, 0.98);
     border: 3px solid var(--void-accent);
     box-shadow: 0 0 50px rgba(0, 204, 255, 0.4),
@@ -253,7 +372,7 @@
     backdrop-filter: blur(10px);
 }
 
-.theme-bearded-hc-midnight-void .settings-modal h2 {
+[data-theme="bearded-hc-midnight-void"] .settings-modal h2 {
     color: var(--void-accent);
     text-shadow: var(--void-glow);
     font-weight: bold;
@@ -262,7 +381,7 @@
     position: relative;
 }
 
-.theme-bearded-hc-midnight-void .settings-modal h2::before {
+[data-theme="bearded-hc-midnight-void"] .settings-modal h2::before {
     content: "★";
     position: absolute;
     left: -45px;
@@ -271,23 +390,22 @@
     animation: voidPulse 3s ease-in-out infinite;
 }
 
-/* High contrast accessibility enhancements */
-.theme-bearded-hc-midnight-void * {
+[data-theme="bearded-hc-midnight-void"] * {
     text-shadow: 0 0 1px rgba(0, 204, 255, 0.3);
 }
 
-.theme-bearded-hc-midnight-void .note-content h1,
-.theme-bearded-hc-midnight-void .note-content h2,
-.theme-bearded-hc-midnight-void .note-content h3,
-.theme-bearded-hc-midnight-void .note-content h4,
-.theme-bearded-hc-midnight-void .note-content h5,
-.theme-bearded-hc-midnight-void .note-content h6 {
+[data-theme="bearded-hc-midnight-void"] .note-content h1,
+[data-theme="bearded-hc-midnight-void"] .note-content h2,
+[data-theme="bearded-hc-midnight-void"] .note-content h3,
+[data-theme="bearded-hc-midnight-void"] .note-content h4,
+[data-theme="bearded-hc-midnight-void"] .note-content h5,
+[data-theme="bearded-hc-midnight-void"] .note-content h6 {
     color: var(--void-electric);
     font-weight: bold;
     text-shadow: 0 0 3px rgba(0, 204, 255, 0.8);
 }
 
-.theme-bearded-hc-midnight-void .note-content a {
+[data-theme="bearded-hc-midnight-void"] .note-content a {
     color: var(--void-accent);
     font-weight: bold;
     text-decoration: underline;
@@ -295,16 +413,32 @@
     text-decoration-thickness: 2px;
 }
 
-.theme-bearded-hc-midnight-void .note-content a:hover {
+[data-theme="bearded-hc-midnight-void"] .note-content a:hover {
     color: var(--void-electric);
     text-shadow: 0 0 5px rgba(51, 221, 255, 0.8);
 }
 
-.theme-bearded-hc-midnight-void .note-content code {
+[data-theme="bearded-hc-midnight-void"] .note-content code {
     background: var(--inline-code-bg);
     color: var(--void-accent);
     font-weight: bold;
     border: 1px solid var(--border-color);
     padding: 3px 6px;
     box-shadow: 0 0 5px rgba(0, 204, 255, 0.2);
+}
+
+@keyframes voidPulse {
+    0%, 100% { 
+        opacity: 0.7;
+        transform: scale(1) rotate(0deg);
+        filter: drop-shadow(0 0 20px rgba(0, 204, 255, 0.6));
+    }
+
+@keyframes voidFlow {
+    0% { background-position: -100% 0; }
+
+@keyframes voidCodeScan {
+    0% { left: -100%; }
+}
+}
 }

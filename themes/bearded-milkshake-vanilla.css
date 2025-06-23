@@ -1,59 +1,211 @@
-/* Bearded Theme - Milkshake Vanilla
-   Pure vanilla milkshake theme with cream colors and vanilla bean speckles */
-
-:root {
-    --primary-bg: #fefdf8;
-    --secondary-bg: #fdfcf5;
-    --accent: #d4b896;
+/* Bearded Theme - Milkshake Vanilla */
+:root[data-theme="bearded-milkshake-vanilla"] {
+    /* Background Colors */
+    --bg-primary: #fefdf8;
+    --bg-secondary: #fdfcf5;
+    --bg-sidebar: #fefdf8;
+    --bg-code: #fdfcf5;
+    --bg-selection: rgba(212, 184, 150, 0.2);
+    --bg-dropdown: #fdfcf5;
+    --bg-hover: #fbf8f0;
+    --bg-tag: #fbf8f0;
+    
+    /* Additional Background Colors */
+    --bg-modal: rgba(254, 253, 248, 0.95);
+    --bg-tooltip: #d4b896;
+    --bg-input: #fdfcf5;
+    --bg-highlight: rgba(212, 184, 150, 0.2);
+    --text-link: #b5a085;
+    --text-code: #d4b896;
+    --text-inverse: #fefdf8;
+    --button-text: #fefdf8;
+    
+    /* Text Colors */
     --text-primary: #3e3b32;
     --text-secondary: #68634f;
     --text-muted: #8b8671;
-    --border-color: #efeace;
-    --shadow-color: rgba(212, 184, 150, 0.1);
-    --hover-bg: #fbf8f0;
-    --active-bg: #f7f2e7;
-    --selection-bg: rgba(212, 184, 150, 0.2);
+    --text-heading: #3e3b32;
+    
+    /* Accent Colors */
+    --accent-primary: #d4b896;
+    --accent-secondary: #d4b896;
+    --accent-warning: #d4a55a;
+    --accent-error: #c97064;
+    --accent-danger: #c97064;
+    --accent-info: #7ba5c9;
+    --accent-success: #8db359;
+    
+    /* Border Colors */
+    --border-primary: #efeace;
+    --border-secondary: #e0e0e0;
+    --border-accent: #d4b896;
+    
+    /* Link Colors */
     --link-color: #b5a085;
     --link-hover: #d4b896;
-    --success-color: #8db359;
-    --warning-color: #d4a55a;
-    --error-color: #c97064;
-    --info-color: #7ba5c9;
-    --scrollbar-bg: #fdfcf5;
-    --scrollbar-thumb: #d4b896;
-    --scrollbar-thumb-hover: #b5a085;
-    --tooltip-bg: #d4b896;
-    --tooltip-text: #fefdf8;
-    --modal-overlay: rgba(62, 59, 50, 0.6);
+    --link-visited: #6f42c1;
+    
+    /* Button Colors */
+    --btn-primary-bg: #d4b896;
+    --btn-primary-color: #ffffff;
+    --btn-primary-hover: #d4b896;
+    --btn-secondary-bg: #e0e0e0;
+    --btn-secondary-color: #3e3b32;
+    --btn-secondary-hover: #d0d0d0;
+    
+    /* Form Colors */
     --input-bg: #fdfcf5;
     --input-border: #efeace;
-    --input-focus-border: #d4b896;
-    --dropdown-hover: #fbf8f0;
+    --input-focus: #d4b896;
+    --input-color: #3e3b32;
+    --input-placeholder: #8b8671;
+    
+    /* Badge Colors */
     --badge-bg: rgba(212, 184, 150, 0.15);
     --badge-text: #b5a085;
-    --table-header-bg: #fbf8f0;
-    --table-border: #efeace;
-    --table-row-hover: #fdfcf5;
     
-    /* Syntax highlighting */
+    /* Tag Colors */
+    --tag-bg: rgba(92, 207, 230, 0.15);
+    --tag-color: #d4b896;
+    --tag-border: rgba(212, 184, 150, 0.3);
+    
+    /* Code Block Colors */
+    --code-bg: #232834;
+    --code-border: #efeace;
+    --code-color: #3e3b32;
+    --line-number-bg: #fdfcf5;
+    --line-number-color: #8b8671;
+    --line-number-border: #efeace;
+    
+    /* Syntax Highlighting Colors */
     --syntax-comment: #8b8671;
     --syntax-keyword: #d4b896;
     --syntax-string: #8db359;
     --syntax-number: #d4a55a;
     --syntax-function: #7ba5c9;
     --syntax-variable: #c97064;
+    --syntax-type: #666666;
     --syntax-constant: #a68cb8;
+    --syntax-operator: #68634f;
+    --syntax-punctuation: #8b8671;
     --syntax-tag: #b5a085;
     --syntax-attribute: #d4906a;
     --syntax-value: #8db359;
-    --syntax-unit: #d4a55a;
-    --syntax-pseudo: #a68cb8;
     --syntax-regex: #6bb6b8;
     --syntax-important: #c97064;
-    --syntax-operator: #68634f;
-    --syntax-punctuation: #8b8671;
+    --syntax-bold: #666666;
+    --syntax-italic: #666666;
     
-    /* Vanilla theme-specific additions */
+    /* Callout Colors */
+    --callout-note: #0066cc;
+    --callout-tip: #28a745;
+    --callout-warning: #ffc107;
+    --callout-danger: #dc3545;
+    --callout-info: #0066cc;
+    
+    /* Tab Colors */
+    --tab-bg: #fdfcf5;
+    --tab-active-bg: #fefdf8;
+    --tab-hover-bg: #fbf8f0;
+    --tab-border: #efeace;
+    --tab-active-border: #d4b896;
+    
+    /* Sidebar Colors */
+    --sidebar-bg: #fefdf8;
+    --sidebar-border: #efeace;
+    --sidebar-item-hover: #fbf8f0;
+    --sidebar-item-active: #f7f2e7;
+    
+    /* Search Colors */
+    --search-bg: #fdfcf5;
+    --search-border: #efeace;
+    --search-focus: #d4b896;
+    --search-result-hover: #fbf8f0;
+    --search-highlight: #ffeb3b;
+    
+    /* Scrollbar Colors */
+    --scrollbar-track: #fdfcf5;
+    --scrollbar-thumb: #d4b896;
+    --scrollbar-thumb-hover: #b5a085;
+    
+    /* Modal Colors */
+    --modal-bg: #fefdf8;
+    --modal-border: #efeace;
+    --modal-overlay: rgba(62, 59, 50, 0.6);
+    
+    /* Table Colors */
+    --table-border: #efeace;
+    --table-stripe: #fdfcf5;
+    --table-hover: #fdfcf5;
+    --table-header-bg: #fbf8f0;
+    
+    /* Progress Colors */
+    --progress-bg: #fdfcf5;
+    --progress-fill: #d4b896;
+    
+    /* Status Colors */
+    --status-online: #28a745;
+    --status-away: #ffc107;
+    --status-busy: #dc3545;
+    --status-offline: #6c757d;
+    
+    /* Shadow Colors */
+    --shadow-light: rgba(0, 0, 0, 0.05);
+    --shadow-medium: rgba(212, 184, 150, 0.1);
+    --shadow-heavy: rgba(0, 0, 0, 0.15);
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    
+    /* Typography */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --font-size-4xl: 2.25rem;
+    
+    /* Line Heights */
+    --line-height-tight: 1.25;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+    
+    /* Border Radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --transition-slow: 350ms ease;
+    
+    /* Z-Index Scale */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+    /* Theme Special Variables */
+    --border-color: #efeace;
+    --shadow-color: rgba(212, 184, 150, 0.1);
+    --success-color: #8db359;
+    --warning-color: #d4a55a;
+    --error-color: #c97064;
+    --info-color: #7ba5c9;
+    --tooltip-text: #fefdf8;
     --vanilla-cream: #fefdf8;
     --vanilla-bean: #3e3b32;
     --vanilla-extract: #d4b896;
@@ -61,8 +213,13 @@
     --bean-speckle: radial-gradient(circle at 20% 20%, rgba(62, 59, 50, 0.1) 1px, transparent 1px);
 }
 
+/* Theme-specific component styles */
+[data-theme="bearded-milkshake-vanilla"] {
+    color-scheme: light;
+}
+
 /* Vanilla bean speckle pattern */
-body::before {
+[data-theme="bearded-milkshake-vanilla"] body::before {
     content: '';
     position: fixed;
     top: 0;
@@ -80,16 +237,16 @@ body::before {
 }
 
 /* Creamy background gradients */
-.header,
-.settings-modal,
-.confirmation-modal {
+[data-theme="bearded-milkshake-vanilla"] .header,
+[data-theme="bearded-milkshake-vanilla"] .settings-modal,
+[data-theme="bearded-milkshake-vanilla"] .confirmation-modal {
     background: var(--cream-gradient);
 }
 
 /* Vanilla cream text shadows */
-.note-content h1,
-.note-content h2,
-.note-content h3 {
+[data-theme="bearded-milkshake-vanilla"] .note-content h1,
+[data-theme="bearded-milkshake-vanilla"] .note-content h2,
+[data-theme="bearded-milkshake-vanilla"] .note-content h3 {
     text-shadow: 0 1px 2px rgba(212, 184, 150, 0.1);
 }
 
@@ -99,20 +256,20 @@ body::before {
 }
 
 /* Milkshake bubble effect on hover */
-.tab:hover {
+[data-theme="bearded-milkshake-vanilla"] .tab:hover {
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(212, 184, 150, 0.15);
 }
 
 /* Vanilla cream code blocks */
-.code-block {
+[data-theme="bearded-milkshake-vanilla"] .code-block {
     background: linear-gradient(135deg, var(--vanilla-cream) 0%, var(--secondary-bg) 100%);
     border-left: 3px solid var(--vanilla-extract);
     border-radius: 8px;
     position: relative;
 }
 
-.code-block::before {
+[data-theme="bearded-milkshake-vanilla"] .code-block::before {
     content: '';
     position: absolute;
     top: 0;
@@ -123,15 +280,15 @@ body::before {
     border-radius: 0 8px 0 0;
 }
 
-/* Creamy blockquotes */
-blockquote {
+/* Creamy [data-theme="bearded-milkshake-vanilla"] blockquotes */
+[data-theme="bearded-milkshake-vanilla"] blockquote {
     background: linear-gradient(90deg, rgba(212, 184, 150, 0.1), var(--vanilla-cream));
     border-left: 4px solid var(--vanilla-extract);
     border-radius: 0 8px 8px 0;
 }
 
 /* Vanilla bean badges */
-.badge {
+[data-theme="bearded-milkshake-vanilla"] .badge {
     background: linear-gradient(135deg, rgba(212, 184, 150, 0.15), rgba(212, 184, 150, 0.25));
     border-radius: 16px;
     padding: 4px 12px;
@@ -139,7 +296,7 @@ blockquote {
     overflow: hidden;
 }
 
-.badge::after {
+[data-theme="bearded-milkshake-vanilla"] .badge::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -152,8 +309,8 @@ blockquote {
     opacity: 0.1;
 }
 
-/* Creamy table styling */
-table {
+/* Creamy [data-theme="bearded-milkshake-vanilla"] table styling */
+[data-theme="bearded-milkshake-vanilla"] table {
     background: var(--cream-gradient);
     border-radius: 8px;
     overflow: hidden;
@@ -161,34 +318,34 @@ table {
 }
 
 /* Smooth vanilla scrollbar */
-::-webkit-scrollbar-thumb {
+[data-theme="bearded-milkshake-vanilla"] ::-webkit-scrollbar-thumb {
     background: linear-gradient(var(--scrollbar-thumb), var(--vanilla-extract));
     border-radius: 6px;
 }
 
 /* Vanilla selection */
-::selection {
+[data-theme="bearded-milkshake-vanilla"] ::selection {
     background: linear-gradient(135deg, rgba(212, 184, 150, 0.2), rgba(212, 184, 150, 0.3));
     color: var(--text-primary);
 }
 
 /* Subtle vanilla glow on focus */
-input:focus,
-textarea:focus,
-.search-box:focus {
+[data-theme="bearded-milkshake-vanilla"] input:focus,
+[data-theme="bearded-milkshake-vanilla"] textarea:focus,
+[data-theme="bearded-milkshake-vanilla"] .search-box:focus {
     box-shadow: 0 0 0 3px rgba(212, 184, 150, 0.2);
     border-color: var(--vanilla-extract);
 }
 
 /* Vanilla cream buttons */
-.btn-primary {
+[data-theme="bearded-milkshake-vanilla"] .btn-primary {
     background: linear-gradient(135deg, var(--vanilla-extract), #b5a085);
     border: none;
     color: var(--vanilla-cream);
     box-shadow: 0 2px 4px rgba(212, 184, 150, 0.2);
 }
 
-.btn-primary:hover {
+[data-theme="bearded-milkshake-vanilla"] .btn-primary:hover {
     background: linear-gradient(135deg, #b5a085, var(--vanilla-extract));
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(212, 184, 150, 0.3);
@@ -201,18 +358,18 @@ textarea:focus,
     100% { transform: rotate(360deg) scale(1); }
 }
 
-.logo:hover {
+[data-theme="bearded-milkshake-vanilla"] .logo:hover {
     animation: vanillaSwirl 2s ease-in-out;
 }
 
 /* Vanilla cream lists */
-.note-content ul li::marker,
-.note-content ol li::marker {
+[data-theme="bearded-milkshake-vanilla"] .note-content ul li::marker,
+[data-theme="bearded-milkshake-vanilla"] .note-content ol li::marker {
     color: var(--vanilla-extract);
 }
 
 /* Smooth vanilla fade-in */
-body {
+[data-theme="bearded-milkshake-vanilla"] body {
     animation: vanillaFadeIn 0.6s ease-out;
 }
 
@@ -228,20 +385,20 @@ body {
 }
 
 /* Enhanced vanilla tooltips */
-.tooltip {
+[data-theme="bearded-milkshake-vanilla"] .tooltip {
     background: linear-gradient(135deg, var(--vanilla-extract), #b5a085);
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(212, 184, 150, 0.2);
 }
 
 /* Vanilla speckled images */
-.note-content img {
+[data-theme="bearded-milkshake-vanilla"] .note-content img {
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(212, 184, 150, 0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.note-content img:hover {
+[data-theme="bearded-milkshake-vanilla"] .note-content img:hover {
     transform: scale(1.02);
     box-shadow: 0 4px 16px rgba(212, 184, 150, 0.25);
 }

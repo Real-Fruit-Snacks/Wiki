@@ -1,105 +1,432 @@
-/* Bearded Theme - Featured - Will */
-.theme-bearded-feat-will {
-    /* Featured - Will - Deep twilight with warm accents */
-    --primary-bg: #1a1825;
-    --secondary-bg: #242130;
-    --accent-bg: #2d2a3a;
+/* Bearded Theme - Featured - Will
+   Deep twilight theme with warm golden accents and electrical energy */
+
+:root[data-theme="bearded-feat-will"] {
+    /* Background Colors */
+    --bg-primary: #1a1825;
+    --bg-secondary: #242130;
+    --bg-sidebar: #1a1825;
+    --bg-code: #201e2a;
+    --bg-selection: rgba(227, 156, 69, 0.25);
+    --bg-dropdown: #242130;
+    --bg-hover: #2d2a3a;
+    --bg-tag: #2d2a3a;
+    
+    /* Additional Background Colors */
+    --bg-modal: rgba(26, 24, 37, 0.95);
+    --bg-tooltip: #2d2a3a;
+    --bg-input: #242130;
+    --bg-highlight: rgba(227, 156, 69, 0.25);
+    --text-link: #7bb3db;
+    --text-code: #e39c45;
+    --text-inverse: #1a1825;
+    --button-text: #1a1825;
+    
+    /* Text Colors */
     --text-primary: #d3cdd7;
     --text-secondary: #968fa3;
-    --accent-color: #e39c45;
+    --text-muted: #6b5e73;
+    --text-heading: #e8e2ed;
+    
+    /* Accent Colors */
+    --accent-primary: #e39c45;
     --accent-secondary: #9c7fd6;
+    --accent-warning: #f99157;
+    --accent-error: #ec5f67;
+    --accent-danger: #ec5f67;
+    --accent-info: #6699cc;
+    --accent-success: #7ec16e;
+    
+    /* Border Colors */
+    --border-primary: #3a364a;
+    --border-secondary: #4a465a;
+    --border-accent: #e39c45;
+    
+    /* Link Colors */
     --link-color: #7bb3db;
     --link-hover: #a5caeb;
-    --border-color: #3a364a;
-    --shadow-color: rgba(227, 156, 69, 0.15);
+    --link-visited: #9c7fd6;
     
-    /* Bearded Featured Syntax Colors */
+    /* Button Colors */
+    --btn-primary-bg: #e39c45;
+    --btn-primary-color: #1a1825;
+    --btn-primary-hover: #f0a956;
+    --btn-secondary-bg: #2d2a3a;
+    --btn-secondary-color: #d3cdd7;
+    --btn-secondary-hover: #3a364a;
+    
+    /* Form Colors */
+    --input-bg: #242130;
+    --input-border: #3a364a;
+    --input-focus: #e39c45;
+    --input-color: #d3cdd7;
+    --input-placeholder: #6b5e73;
+    
+    /* Badge Colors */
+    --badge-bg: #e39c45;
+    --badge-text: #1a1825;
+    
+    /* Tag Colors */
+    --tag-bg: rgba(227, 156, 69, 0.15);
+    --tag-color: #e39c45;
+    --tag-border: rgba(227, 156, 69, 0.3);
+    
+    /* Code Block Colors */
+    --code-bg: #201e2a;
+    --code-border: #3a364a;
+    --code-color: #d3cdd7;
+    --line-number-bg: #1a1825;
+    --line-number-color: #6b5e73;
+    --line-number-border: #3a364a;
+    
+    /* Syntax Highlighting Colors */
+    --syntax-comment: #5c6370;
     --syntax-keyword: #c586c0;
     --syntax-string: #98c379;
     --syntax-number: #e5c07b;
     --syntax-function: #61afef;
-    --syntax-comment: #5c6370;
-    --syntax-class: #e06c75;
     --syntax-variable: #dcdcaa;
+    --syntax-type: #4ec9b0;
+    --syntax-constant: #d19a66;
     --syntax-operator: #56b6c2;
     --syntax-punctuation: #abb2bf;
+    --syntax-tag: #e06c75;
+    --syntax-attribute: #f0a956;
+    --syntax-value: #98c379;
+    --syntax-regex: #56b6c2;
+    --syntax-important: #ec5f67;
+    --syntax-bold: #e8e2ed;
+    --syntax-italic: #c586c0;
     
-    /* UI Elements */
-    --button-bg: #2d2a3a;
-    --button-hover: #3a364a;
-    --input-bg: #242130;
-    --input-border: #3a364a;
-    --dropdown-bg: #242130;
-    --dropdown-hover: #2d2a3a;
-    --modal-overlay: rgba(26, 24, 37, 0.85);
+    /* Callout Colors */
+    --callout-note: #6699cc;
+    --callout-tip: #7ec16e;
+    --callout-warning: #f99157;
+    --callout-danger: #ec5f67;
+    --callout-info: #6699cc;
     
-    /* Feature Colors */
-    --success-color: #7ec16e;
-    --warning-color: #f99157;
-    --error-color: #ec5f67;
-    --info-color: #6699cc;
+    /* Tab Colors */
+    --tab-bg: #242130;
+    --tab-active-bg: #1a1825;
+    --tab-hover-bg: #2d2a3a;
+    --tab-border: #3a364a;
+    --tab-active-border: #e39c45;
     
-    /* Bearded Signature */
-    --beard-gradient: linear-gradient(135deg, #e39c45 0%, #9c7fd6 100%);
-    --beard-shadow: 0 0 30px rgba(227, 156, 69, 0.3);
-    --code-bg: #201e2a;
-    --inline-code-bg: #2a2736;
-    --scrollbar-bg: #1a1825;
-    --scrollbar-thumb: #3a364a;
-    --scrollbar-hover: #4a465a;
+    /* Sidebar Colors */
+    --sidebar-bg: #1a1825;
+    --sidebar-border: #3a364a;
+    --sidebar-item-hover: #242130;
+    --sidebar-item-active: #2d2a3a;
+    
+    /* Search Colors */
     --search-bg: #242130;
     --search-border: #3a364a;
-    --search-focus-border: #e39c45;
-    --tag-bg: #2d2a3a;
-    --tag-text: #e39c45;
-    --tag-hover: #3a364a;
+    --search-focus: #e39c45;
+    --search-result-hover: #2d2a3a;
+    --search-highlight: #e5c07b;
     
-    /* Featured Will Special */
+    /* Scrollbar Colors */
+    --scrollbar-track: #1a1825;
+    --scrollbar-thumb: #3a364a;
+    --scrollbar-thumb-hover: #4a465a;
+    
+    /* Modal Colors */
+    --modal-bg: #1a1825;
+    --modal-border: #3a364a;
+    --modal-overlay: rgba(26, 24, 37, 0.85);
+    
+    /* Table Colors */
+    --table-border: #3a364a;
+    --table-stripe: #242130;
+    --table-hover: #2d2a3a;
+    --table-header-bg: #242130;
+    
+    /* Progress Colors */
+    --progress-bg: #242130;
+    --progress-fill: #e39c45;
+    
+    /* Status Colors */
+    --status-online: #7ec16e;
+    --status-away: #f99157;
+    --status-busy: #ec5f67;
+    --status-offline: #6b5e73;
+    
+    /* Shadow Colors */
+    --shadow-light: rgba(227, 156, 69, 0.1);
+    --shadow-medium: rgba(227, 156, 69, 0.2);
+    --shadow-heavy: rgba(227, 156, 69, 0.4);
+    
+    /* Spacing (inherited from base) */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    
+    /* Typography (inherited from base) */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --font-size-4xl: 2.25rem;
+    
+    /* Line Heights */
+    --line-height-tight: 1.25;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+    
+    /* Border Radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --transition-slow: 350ms ease;
+    
+    /* Z-Index Scale */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+    
+    /* Will Special Variables */
     --will-glow: 0 0 20px rgba(227, 156, 69, 0.4);
     --will-accent: #e39c45;
-    --badge-text: #1a1825;
+    --will-gradient: linear-gradient(135deg, #e39c45 0%, #9c7fd6 100%);
+}
+
+/* Theme-specific component styles */
+[data-theme="bearded-feat-will"] {
+    color-scheme: dark;
+}
+
+/* Custom scrollbar for Bearded Featured Will */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    [data-theme="bearded-feat-will"] ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    [data-theme="bearded-feat-will"] ::-webkit-scrollbar-track {
+        background: var(--scrollbar-track);
+        border-radius: var(--radius-sm);
+    }
+
+    [data-theme="bearded-feat-will"] ::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, var(--scrollbar-thumb) 0%, var(--will-accent) 100%);
+        border-radius: var(--radius-sm);
+        transition: background-color var(--transition-fast);
+    }
+
+    [data-theme="bearded-feat-will"] ::-webkit-scrollbar-thumb:hover {
+        background: var(--will-accent);
+    }
+}
+
+/* Selection color */
+[data-theme="bearded-feat-will"] ::selection {
+    background: var(--bg-selection);
+    color: var(--text-primary);
+}
+
+/* Focus styles */
+[data-theme="bearded-feat-will"] :focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(227, 156, 69, 0.2);
+}
+
+/* Enhanced syntax highlighting for Bearded Featured Will */
+[data-theme="bearded-feat-will"] .token.comment,
+[data-theme="bearded-feat-will"] .token.prolog,
+[data-theme="bearded-feat-will"] .token.doctype,
+[data-theme="bearded-feat-will"] .token.cdata {
+    color: var(--syntax-comment);
+    font-style: italic;
+}
+
+[data-theme="bearded-feat-will"] .token.punctuation {
+    color: var(--syntax-punctuation);
+}
+
+[data-theme="bearded-feat-will"] .token.property,
+[data-theme="bearded-feat-will"] .token.tag,
+[data-theme="bearded-feat-will"] .token.boolean,
+[data-theme="bearded-feat-will"] .token.number,
+[data-theme="bearded-feat-will"] .token.constant,
+[data-theme="bearded-feat-will"] .token.symbol,
+[data-theme="bearded-feat-will"] .token.deleted {
+    color: var(--syntax-number);
+}
+
+[data-theme="bearded-feat-will"] .token.selector,
+[data-theme="bearded-feat-will"] .token.attr-name,
+[data-theme="bearded-feat-will"] .token.string,
+[data-theme="bearded-feat-will"] .token.char,
+[data-theme="bearded-feat-will"] .token.builtin,
+[data-theme="bearded-feat-will"] .token.inserted {
+    color: var(--syntax-string);
+}
+
+[data-theme="bearded-feat-will"] .token.operator,
+[data-theme="bearded-feat-will"] .token.entity,
+[data-theme="bearded-feat-will"] .token.url,
+[data-theme="bearded-feat-will"] .language-css .token.string,
+[data-theme="bearded-feat-will"] .style .token.string {
+    color: var(--syntax-operator);
+}
+
+[data-theme="bearded-feat-will"] .token.atrule,
+[data-theme="bearded-feat-will"] .token.attr-value,
+[data-theme="bearded-feat-will"] .token.keyword {
+    color: var(--syntax-keyword);
+}
+
+[data-theme="bearded-feat-will"] .token.function,
+[data-theme="bearded-feat-will"] .token.class-name {
+    color: var(--syntax-function);
+}
+
+[data-theme="bearded-feat-will"] .token.regex,
+[data-theme="bearded-feat-will"] .token.important,
+[data-theme="bearded-feat-will"] .token.variable {
+    color: var(--syntax-regex);
+}
+
+[data-theme="bearded-feat-will"] .token.important,
+[data-theme="bearded-feat-will"] .token.bold {
+    font-weight: bold;
+    color: var(--syntax-important);
+}
+
+[data-theme="bearded-feat-will"] .token.italic {
+    font-style: italic;
+    color: var(--syntax-italic);
+}
+
+[data-theme="bearded-feat-will"] .token.entity {
+    cursor: help;
+}
+
+/* Enhanced callout styles for Bearded Featured Will */
+[data-theme="bearded-feat-will"] .callout {
+    border-left-width: 4px;
+    border-left-style: solid;
+    margin: var(--spacing-md) 0;
+    padding: var(--spacing-md);
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: var(--radius-md);
+}
+
+[data-theme="bearded-feat-will"] .callout.note {
+    border-left-color: var(--callout-note);
+    background: rgba(102, 153, 204, 0.05);
+}
+
+[data-theme="bearded-feat-will"] .callout.tip {
+    border-left-color: var(--callout-tip);
+    background: rgba(126, 193, 110, 0.05);
+}
+
+[data-theme="bearded-feat-will"] .callout.warning {
+    border-left-color: var(--callout-warning);
+    background: rgba(249, 145, 87, 0.05);
+}
+
+[data-theme="bearded-feat-will"] .callout.danger {
+    border-left-color: var(--callout-danger);
+    background: rgba(236, 95, 103, 0.05);
+}
+
+[data-theme="bearded-feat-will"] .callout.info {
+    border-left-color: var(--callout-info);
+    background: rgba(102, 153, 204, 0.05);
 }
 
 /* Featured Will Decorative Elements */
-.theme-bearded-feat-will .note-content h1::before {
+[data-theme="bearded-feat-will"] .note-content h1::before {
     content: "⚡";
     display: inline-block;
     margin-right: 0.5rem;
     color: var(--will-accent);
     filter: drop-shadow(var(--will-glow));
+    animation: willSpark 3s ease-in-out infinite;
 }
 
-.theme-bearded-feat-will .tab.active {
-    background: var(--accent-bg);
+@keyframes willSpark {
+    0%, 100% { 
+        opacity: 0.8;
+        filter: drop-shadow(var(--will-glow)) hue-rotate(0deg);
+    }
+    50% { 
+        opacity: 1;
+        filter: drop-shadow(var(--will-glow)) hue-rotate(15deg);
+    }
+}
+
+/* Enhanced twilight styling */
+[data-theme="bearded-feat-will"] .tab.active {
+    background: var(--bg-hover);
     border-top: 2px solid var(--will-accent);
     box-shadow: inset 0 2px 10px rgba(227, 156, 69, 0.1);
+    position: relative;
+    overflow: hidden;
 }
 
-.theme-bearded-feat-will .search-container input:focus {
+[data-theme="bearded-feat-will"] .tab.active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--will-gradient);
+}
+
+[data-theme="bearded-feat-will"] .search-container input:focus {
     border-color: var(--will-accent);
     box-shadow: 0 0 0 3px rgba(227, 156, 69, 0.2),
                 var(--will-glow);
 }
 
-.theme-bearded-feat-will .note-item:hover {
+[data-theme="bearded-feat-will"] .note-item:hover {
     border-left: 3px solid var(--will-accent);
-    padding-left: calc(1rem - 3px);
     background: linear-gradient(90deg, rgba(227, 156, 69, 0.05) 0%, transparent 100%);
+    position: relative;
 }
 
-.theme-bearded-feat-will pre code {
-    background: var(--code-bg);
-    box-shadow: inset 0 0 30px rgba(227, 156, 69, 0.05);
+[data-theme="bearded-feat-will"] .note-item:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at left, rgba(227, 156, 69, 0.1) 0%, transparent 50%);
+    pointer-events: none;
 }
 
-.theme-bearded-feat-will blockquote {
+[data-theme="bearded-feat-will"] blockquote {
     border-left: 4px solid var(--will-accent);
     background: linear-gradient(90deg, rgba(227, 156, 69, 0.1) 0%, transparent 100%);
     position: relative;
     overflow: hidden;
+    border-radius: var(--radius-md);
 }
 
-.theme-bearded-feat-will blockquote::before {
+[data-theme="bearded-feat-will"] blockquote::before {
     content: "";
     position: absolute;
     top: 0;
@@ -110,23 +437,70 @@
     pointer-events: none;
 }
 
-.theme-bearded-feat-will .btn-primary {
+[data-theme="bearded-feat-will"] .btn-primary {
     background: var(--will-accent);
-    color: var(--primary-bg);
+    color: var(--bg-primary);
     box-shadow: 0 4px 15px rgba(227, 156, 69, 0.3);
+    border: none;
+    position: relative;
+    overflow: hidden;
 }
 
-.theme-bearded-feat-will .btn-primary:hover {
+[data-theme="bearded-feat-will"] .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+[data-theme="bearded-feat-will"] .btn-primary:hover {
     background: #f0a956;
     box-shadow: 0 6px 20px rgba(227, 156, 69, 0.4);
     transform: translateY(-1px);
 }
 
-.theme-bearded-feat-will ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, var(--scrollbar-thumb) 0%, var(--will-accent) 100%);
+[data-theme="bearded-feat-will"] .btn-primary:hover::before {
+    left: 100%;
 }
 
-.theme-bearded-feat-will .settings-modal h2 {
+[data-theme="bearded-feat-will"] .settings-modal h2 {
     color: var(--will-accent);
     text-shadow: var(--will-glow);
+    position: relative;
+}
+
+[data-theme="bearded-feat-will"] .settings-modal h2::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--will-gradient);
+    border-radius: 1px;
+}
+
+/* Electrical energy effects */
+[data-theme="bearded-feat-will"] .note-content code {
+    background: var(--bg-input);
+    color: var(--will-accent);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-sm);
+    position: relative;
+}
+
+[data-theme="bearded-feat-will"] .note-content code::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 48%, rgba(227, 156, 69, 0.1) 50%, transparent 52%);
+    pointer-events: none;
+    border-radius: var(--radius-sm);
 }

@@ -5721,10 +5721,10 @@ class NotesWiki {
             },
             // Bearded Collection
             'bearded-arc': {
-                bg: '#1e2128',
+                bg: '#1a1a26',
                 border: '#2a2e39',
-                accent: '#73ade9',
-                text: '#bac2cf',
+                accent: '#8abdf7',
+                text: '#e5e5eb',
                 textMuted: '#6b717d'
             },
             'bearded-arc-blueberry': {
@@ -5826,10 +5826,10 @@ class NotesWiki {
                 textMuted: '#aaaaaa'
             },
             'bearded-vivid-purple': {
-                bg: '#120b1e',
+                bg: '#1a0f1f',
                 border: '#231a35',
-                accent: '#bb60ff',
-                text: '#e0d5ff',
+                accent: '#b366ff',
+                text: '#f5e6ff',
                 textMuted: '#9b8db3'
             },
             'bearded-oled': {

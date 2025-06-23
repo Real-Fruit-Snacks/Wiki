@@ -1,69 +1,215 @@
-/* Bearded Theme - Featured - Mintshake D. Raynh */
-.theme-bearded-feat-mintshake-d-raynh {
-    /* Featured - Mintshake D. Raynh - Cool minty freshness */
-    --primary-bg: #0d1b17;
-    --secondary-bg: #152420;
-    --accent-bg: #1e2d28;
+/* Bearded Theme - Feat Mintshake D Raynh */
+:root[data-theme="bearded-feat-mintshake-d-raynh"] {
+    /* Background Colors */
+    --bg-primary: #0d1b17;
+    --bg-secondary: #152420;
+    --bg-sidebar: #1a1f29;
+    --bg-code: #111f1b;
+    --bg-selection: #ffaa0033;
+    --bg-dropdown: #152420;
+    --bg-hover: #1e2d28;
+    --bg-tag: #1a2823;
+    
+    /* Additional Background Colors */
+    --bg-modal: rgba(31, 36, 48, 0.93);
+    --bg-tooltip: #1a1f29;
+    --bg-input: #232834;
+    --bg-highlight: #ffaa0033;
+    --text-link: #5ccfe6;
+    --text-code: #f28779;
+    --text-inverse: #ffffff;
+    --button-text: #cbccc6;
+    
+    /* Text Colors */
     --text-primary: #d0f0e4;
     --text-secondary: #8fb8a5;
-    --accent-color: #4ecdc4;
+    --text-muted: #707a8c;
+    --text-heading: #ffc68d;
+    
+    /* Accent Colors */
+    --accent-primary: #4ecdc4;
     --accent-secondary: #26a69a;
+    --accent-warning: #ffca28;
+    --accent-error: #ef5350;
+    --accent-danger: #f28779;
+    --accent-info: #42a5f5;
+    --accent-success: #66bb6a;
+    
+    /* Border Colors */
+    --border-primary: #2e4e42;
+    --border-secondary: #343a46;
+    --border-accent: #5ccfe6;
+    
+    /* Link Colors */
     --link-color: #80cbc4;
     --link-hover: #a7ffeb;
-    --border-color: #2e4e42;
-    --shadow-color: rgba(78, 205, 196, 0.2);
+    --link-visited: #dfbfff;
     
-    /* Bearded Featured Syntax Colors */
+    /* Button Colors */
+    --btn-primary-bg: #5ccfe6;
+    --btn-primary-color: #1f2430;
+    --btn-primary-hover: #73d0ff;
+    --btn-secondary-bg: #1e2d28;
+    --btn-secondary-color: #cbccc6;
+    --btn-secondary-hover: #2e4e42;
+    
+    /* Form Colors */
+    --input-bg: #152420;
+    --input-border: #2e4e42;
+    --input-focus: #5ccfe6;
+    --input-color: #cbccc6;
+    --input-placeholder: #707a8c;
+    
+    /* Badge Colors */
+    --badge-bg: #5ccfe6;
+    --badge-text: #0d1b17;
+    
+    /* Tag Colors */
+    --tag-bg: #1e2d28;
+    --tag-color: #4ecdc4;
+    --tag-border: rgba(92, 207, 230, 0.3);
+    
+    /* Code Block Colors */
+    --code-bg: #232834;
+    --code-border: #2a2f3a;
+    --code-color: #cbccc6;
+    --line-number-bg: #1a1f29;
+    --line-number-color: #707a8c;
+    --line-number-border: #2a2f3a;
+    
+    /* Syntax Highlighting Colors */
+    --syntax-comment: #607d69;
     --syntax-keyword: #4ecdc4;
     --syntax-string: #81c784;
     --syntax-number: #ffb74d;
     --syntax-function: #4fc3f7;
-    --syntax-comment: #607d69;
-    --syntax-class: #f48fb1;
     --syntax-variable: #dcedc8;
+    --syntax-type: #f48fb1;
+    --syntax-constant: #f29e74;
     --syntax-operator: #4db6ac;
     --syntax-punctuation: #a8c8bc;
+    --syntax-tag: #f28779;
+    --syntax-attribute: #ffc68d;
+    --syntax-value: #d5ff80;
+    --syntax-regex: #95e6cb;
+    --syntax-important: #f28779;
+    --syntax-bold: #ffc68d;
+    --syntax-italic: #5ccfe6;
     
-    /* UI Elements */
-    --button-bg: #1e2d28;
-    --button-hover: #2e4e42;
-    --input-bg: #152420;
-    --input-border: #2e4e42;
-    --dropdown-bg: #152420;
-    --dropdown-hover: #1e2d28;
-    --modal-overlay: rgba(13, 27, 23, 0.9);
+    /* Callout Colors */
+    --callout-note: #5ccfe6;
+    --callout-tip: #d5ff80;
+    --callout-warning: #ffcc66;
+    --callout-danger: #f28779;
+    --callout-info: #73d0ff;
     
-    /* Feature Colors */
-    --success-color: #66bb6a;
-    --warning-color: #ffca28;
-    --error-color: #ef5350;
-    --info-color: #42a5f5;
+    /* Tab Colors */
+    --tab-bg: #232834;
+    --tab-active-bg: #1f2430;
+    --tab-hover-bg: #2a2f3a;
+    --tab-border: #2a2f3a;
+    --tab-active-border: #5ccfe6;
     
-    /* Bearded Signature */
-    --beard-gradient: linear-gradient(135deg, #4ecdc4 0%, #26a69a 100%);
-    --beard-shadow: 0 0 35px rgba(78, 205, 196, 0.4);
-    --code-bg: #111f1b;
-    --inline-code-bg: #1a2823;
-    --scrollbar-bg: #0d1b17;
-    --scrollbar-thumb: #2e4e42;
-    --scrollbar-hover: #3e6052;
+    /* Sidebar Colors */
+    --sidebar-bg: #1a1f29;
+    --sidebar-border: #2a2f3a;
+    --sidebar-item-hover: #1e2d28;
+    --sidebar-item-active: #2a2f3a;
+    
+    /* Search Colors */
     --search-bg: #152420;
     --search-border: #2e4e42;
-    --search-focus-border: #4ecdc4;
-    --tag-bg: #1e2d28;
-    --tag-text: #4ecdc4;
-    --tag-hover: #2e4e42;
+    --search-focus: #4ecdc4;
+    --search-result-hover: #2a2f3a;
+    --search-highlight: #ffcc66;
     
-    /* Mintshake D. Raynh Special */
-    --mint-bubble: 0 0 30px rgba(78, 205, 196, 0.5);
+    /* Scrollbar Colors */
+    --scrollbar-track: #0d1b17;
+    --scrollbar-thumb: #2e4e42;
+    --scrollbar-thumb-hover: #3e6052;
+    
+    /* Modal Colors */
+    --modal-bg: #1f2430;
+    --modal-border: #2a2f3a;
+    --modal-overlay: rgba(13, 27, 23, 0.9);
+    
+    /* Table Colors */
+    --table-border: #2a2f3a;
+    --table-stripe: #232834;
+    --table-hover: #2e4e42;
+    --table-header-bg: #232834;
+    
+    /* Progress Colors */
+    --progress-bg: #232834;
+    --progress-fill: #5ccfe6;
+    
+    /* Status Colors */
+    --status-online: #d5ff80;
+    --status-away: #ffcc66;
+    --status-busy: #f28779;
+    --status-offline: #707a8c;
+    
+    /* Shadow Colors */
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(78, 205, 196, 0.2);
+    --shadow-heavy: rgba(0, 0, 0, 0.4);
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    
+    /* Typography */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --font-size-4xl: 2.25rem;
+    
+    /* Line Heights */
+    --line-height-tight: 1.25;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+    
+    /* Border Radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --transition-slow: 350ms ease;
+    
+    /* Z-Index Scale */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+    /* Theme Special Variables */
+    --beard-gradient: linear-gradient(135deg, #4ecdc4 0%, #26a69a 100%);
+    --beard-shadow: 0 0 35px rgba(78, 205, 196, 0.4);
     --mint-accent: #4ecdc4;
-    --mint-fresh: #a7ffeb;
-    --mint-cool: 0 0 20px rgba(167, 255, 235, 0.3);
-    --badge-text: #0d1b17;
 }
 
-/* Mintshake D. Raynh Decorative Elements */
-.theme-bearded-feat-mintshake-d-raynh .note-content h1::before {
+/* Theme-specific component styles */
+[data-theme="bearded-feat-mintshake-d-raynh"] {
+    color-scheme: dark;
+}
+
+[data-theme="bearded-feat-mintshake-d-raynh"] .note-content h1::before {
     content: "❄️";
     display: inline-block;
     margin-right: 0.5rem;
@@ -72,29 +218,14 @@
     animation: mintFloat 3s ease-in-out infinite;
 }
 
-@keyframes mintFloat {
-    0%, 100% { 
-        transform: translateY(0px) rotate(0deg);
-        filter: drop-shadow(0 0 20px rgba(78, 205, 196, 0.5));
-    }
-    33% { 
-        transform: translateY(-3px) rotate(2deg);
-        filter: drop-shadow(0 0 30px rgba(167, 255, 235, 0.6));
-    }
-    66% { 
-        transform: translateY(3px) rotate(-2deg);
-        filter: drop-shadow(0 0 25px rgba(78, 205, 196, 0.4));
-    }
-}
-
-.theme-bearded-feat-mintshake-d-raynh .tab.active {
+[data-theme="bearded-feat-mintshake-d-raynh"] .tab.active {
     background: var(--accent-bg);
     border-top: 2px solid var(--mint-accent);
     box-shadow: inset 0 2px 15px rgba(78, 205, 196, 0.1);
     position: relative;
 }
 
-.theme-bearded-feat-mintshake-d-raynh .tab.active::after {
+[data-theme="bearded-feat-mintshake-d-raynh"] .tab.active::after {
     content: "";
     position: absolute;
     top: -2px;
@@ -106,32 +237,21 @@
     animation: mintFlow 2s ease-in-out infinite;
 }
 
-@keyframes mintFlow {
-    0%, 100% { 
-        opacity: 0.6;
-        transform: scaleX(0.8);
-    }
-    50% { 
-        opacity: 1;
-        transform: scaleX(1.2);
-    }
-}
-
-.theme-bearded-feat-mintshake-d-raynh .search-container input:focus {
+[data-theme="bearded-feat-mintshake-d-raynh"] .search-container input:focus {
     border-color: var(--mint-accent);
     box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.25),
                 var(--mint-bubble);
     background: rgba(78, 205, 196, 0.02);
 }
 
-.theme-bearded-feat-mintshake-d-raynh .note-item:hover {
+[data-theme="bearded-feat-mintshake-d-raynh"] .note-item:hover {
     border-left: 3px solid var(--mint-accent);
     padding-left: calc(1rem - 3px);
     background: linear-gradient(90deg, rgba(78, 205, 196, 0.08) 0%, rgba(167, 255, 235, 0.02) 100%);
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.theme-bearded-feat-mintshake-d-raynh pre code {
+[data-theme="bearded-feat-mintshake-d-raynh"] pre code {
     background: var(--code-bg);
     box-shadow: inset 0 0 30px rgba(78, 205, 196, 0.06);
     border: 1px solid rgba(78, 205, 196, 0.1);
@@ -140,7 +260,7 @@
     overflow: hidden;
 }
 
-.theme-bearded-feat-mintshake-d-raynh pre code::before {
+[data-theme="bearded-feat-mintshake-d-raynh"] pre code::before {
     content: "";
     position: absolute;
     top: 0;
@@ -151,12 +271,7 @@
     animation: mintCodeFlow 4s linear infinite;
 }
 
-@keyframes mintCodeFlow {
-    0% { left: -100%; }
-    100% { left: 100%; }
-}
-
-.theme-bearded-feat-mintshake-d-raynh blockquote {
+[data-theme="bearded-feat-mintshake-d-raynh"] blockquote {
     border-left: 4px solid var(--mint-accent);
     background: linear-gradient(90deg, rgba(78, 205, 196, 0.08) 0%, transparent 100%);
     position: relative;
@@ -164,7 +279,7 @@
     overflow: hidden;
 }
 
-.theme-bearded-feat-mintshake-d-raynh blockquote::before {
+[data-theme="bearded-feat-mintshake-d-raynh"] blockquote::before {
     content: "";
     position: absolute;
     top: 0;
@@ -175,7 +290,7 @@
     pointer-events: none;
 }
 
-.theme-bearded-feat-mintshake-d-raynh blockquote::after {
+[data-theme="bearded-feat-mintshake-d-raynh"] blockquote::after {
     content: "❄️";
     position: absolute;
     top: 10px;
@@ -185,7 +300,7 @@
     animation: mintFloat 3s ease-in-out infinite;
 }
 
-.theme-bearded-feat-mintshake-d-raynh .btn-primary {
+[data-theme="bearded-feat-mintshake-d-raynh"] .btn-primary {
     background: linear-gradient(135deg, var(--mint-accent) 0%, var(--mint-fresh) 100%);
     color: var(--primary-bg);
     box-shadow: 0 5px 20px rgba(78, 205, 196, 0.3);
@@ -195,7 +310,7 @@
     border: none;
 }
 
-.theme-bearded-feat-mintshake-d-raynh .btn-primary::before {
+[data-theme="bearded-feat-mintshake-d-raynh"] .btn-primary::before {
     content: "";
     position: absolute;
     top: 0;
@@ -206,33 +321,33 @@
     transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.theme-bearded-feat-mintshake-d-raynh .btn-primary:hover::before {
+[data-theme="bearded-feat-mintshake-d-raynh"] .btn-primary:hover::before {
     left: 100%;
 }
 
-.theme-bearded-feat-mintshake-d-raynh .btn-primary:hover {
+[data-theme="bearded-feat-mintshake-d-raynh"] .btn-primary:hover {
     background: linear-gradient(135deg, var(--mint-fresh) 0%, #b3ffcc 100%);
     box-shadow: 0 7px 25px rgba(78, 205, 196, 0.4);
     transform: translateY(-3px);
 }
 
-.theme-bearded-feat-mintshake-d-raynh ::-webkit-scrollbar-thumb {
+[data-theme="bearded-feat-mintshake-d-raynh"] ::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, var(--scrollbar-thumb) 0%, var(--mint-accent) 100%);
     border-radius: 12px;
     border: 2px solid var(--primary-bg);
 }
 
-.theme-bearded-feat-mintshake-d-raynh ::-webkit-scrollbar-thumb:hover {
+[data-theme="bearded-feat-mintshake-d-raynh"] ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, var(--mint-accent) 0%, var(--mint-fresh) 100%);
 }
 
-.theme-bearded-feat-mintshake-d-raynh .settings-modal h2 {
+[data-theme="bearded-feat-mintshake-d-raynh"] .settings-modal h2 {
     color: var(--mint-accent);
     text-shadow: var(--mint-bubble);
     position: relative;
 }
 
-.theme-bearded-feat-mintshake-d-raynh .settings-modal h2::before {
+[data-theme="bearded-feat-mintshake-d-raynh"] .settings-modal h2::before {
     content: "❄️";
     position: absolute;
     left: -40px;
@@ -241,7 +356,7 @@
     animation: mintFloat 3s ease-in-out infinite;
 }
 
-.theme-bearded-feat-mintshake-d-raynh .settings-modal h2::after {
+[data-theme="bearded-feat-mintshake-d-raynh"] .settings-modal h2::after {
     content: "";
     position: absolute;
     bottom: -10px;
@@ -253,8 +368,7 @@
     animation: mintFlow 2s ease-in-out infinite;
 }
 
-/* Special floating mint particles effect */
-.theme-bearded-feat-mintshake-d-raynh .note-content::before {
+[data-theme="bearded-feat-mintshake-d-raynh"] .note-content::before {
     content: "";
     position: fixed;
     top: 0;
@@ -272,7 +386,24 @@
     z-index: -1;
 }
 
+@keyframes mintFloat {
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg);
+        filter: drop-shadow(0 0 20px rgba(78, 205, 196, 0.5));
+    }
+
+@keyframes mintFlow {
+    0%, 100% { 
+        opacity: 0.6;
+        transform: scaleX(0.8);
+    }
+
+@keyframes mintCodeFlow {
+    0% { left: -100%; }
+
 @keyframes mintParticles {
     0% { transform: translate(0, 0); }
-    100% { transform: translate(-150px, -150px); }
+}
+}
+}
 }

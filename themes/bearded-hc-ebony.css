@@ -1,68 +1,364 @@
-/* Bearded Theme - High Contrast - Ebony */
-.theme-bearded-hc-ebony {
-    /* High Contrast - Ebony - Deep black with high contrast */
-    --primary-bg: #000000;
-    --secondary-bg: #0f0f0f;
-    --accent-bg: #1a1a1a;
+/* Bearded Theme - High Contrast - Ebony
+   Deep black with high contrast orange accents for accessibility */
+
+:root[data-theme="bearded-hc-ebony"] {
+    /* Background Colors */
+    --bg-primary: #000000;
+    --bg-secondary: #0f0f0f;
+    --bg-sidebar: #000000;
+    --bg-code: #0a0a0a;
+    --bg-selection: rgba(255, 107, 53, 0.3);
+    --bg-dropdown: #0f0f0f;
+    --bg-hover: #1a1a1a;
+    --bg-tag: #1a1a1a;
+    
+    /* Additional Background Colors */
+    --bg-modal: rgba(0, 0, 0, 0.98);
+    --bg-tooltip: #1a1a1a;
+    --bg-input: #0f0f0f;
+    --bg-highlight: rgba(255, 107, 53, 0.3);
+    --text-link: #ff6b35;
+    --text-code: #ff6b35;
+    --text-inverse: #000000;
+    --button-text: #000000;
+    
+    /* Text Colors */
     --text-primary: #ffffff;
     --text-secondary: #cccccc;
-    --accent-color: #ff6b35;
+    --text-muted: #808080;
+    --text-heading: #ffffff;
+    
+    /* Accent Colors */
+    --accent-primary: #ff6b35;
     --accent-secondary: #ffa500;
+    --accent-warning: #ffff00;
+    --accent-error: #ff0000;
+    --accent-danger: #ff0000;
+    --accent-info: #00ffff;
+    --accent-success: #00ff00;
+    
+    /* Border Colors */
+    --border-primary: #333333;
+    --border-secondary: #555555;
+    --border-accent: #ff6b35;
+    
+    /* Link Colors */
     --link-color: #ff6b35;
     --link-hover: #ff8c5a;
-    --border-color: #333333;
-    --shadow-color: rgba(255, 107, 53, 0.3);
+    --link-visited: #ffa500;
     
-    /* Bearded High Contrast Syntax Colors */
+    /* Button Colors */
+    --btn-primary-bg: #ff6b35;
+    --btn-primary-color: #000000;
+    --btn-primary-hover: #ff8c5a;
+    --btn-secondary-bg: #1a1a1a;
+    --btn-secondary-color: #ffffff;
+    --btn-secondary-hover: #333333;
+    
+    /* Form Colors */
+    --input-bg: #0f0f0f;
+    --input-border: #333333;
+    --input-focus: #ff6b35;
+    --input-color: #ffffff;
+    --input-placeholder: #808080;
+    
+    /* Badge Colors */
+    --badge-bg: #ff6b35;
+    --badge-text: #000000;
+    
+    /* Tag Colors */
+    --tag-bg: rgba(255, 107, 53, 0.15);
+    --tag-color: #ff6b35;
+    --tag-border: rgba(255, 107, 53, 0.3);
+    
+    /* Code Block Colors */
+    --code-bg: #0a0a0a;
+    --code-border: #333333;
+    --code-color: #ffffff;
+    --line-number-bg: #000000;
+    --line-number-color: #808080;
+    --line-number-border: #333333;
+    
+    /* Syntax Highlighting Colors */
+    --syntax-comment: #808080;
     --syntax-keyword: #ff6b35;
     --syntax-string: #00ff00;
     --syntax-number: #ffff00;
     --syntax-function: #00ffff;
-    --syntax-comment: #808080;
-    --syntax-class: #ff00ff;
     --syntax-variable: #ffffff;
+    --syntax-type: #ff00ff;
+    --syntax-constant: #ffa500;
     --syntax-operator: #ff6b35;
     --syntax-punctuation: #cccccc;
+    --syntax-tag: #ff6b35;
+    --syntax-attribute: #ffa500;
+    --syntax-value: #00ff00;
+    --syntax-regex: #00ffff;
+    --syntax-important: #ff0000;
+    --syntax-bold: #ffffff;
+    --syntax-italic: #ff6b35;
     
-    /* UI Elements */
-    --button-bg: #1a1a1a;
-    --button-hover: #333333;
-    --input-bg: #0f0f0f;
-    --input-border: #333333;
-    --dropdown-bg: #0f0f0f;
-    --dropdown-hover: #1a1a1a;
-    --modal-overlay: rgba(0, 0, 0, 0.95);
+    /* Callout Colors */
+    --callout-note: #00ffff;
+    --callout-tip: #00ff00;
+    --callout-warning: #ffff00;
+    --callout-danger: #ff0000;
+    --callout-info: #00ffff;
     
-    /* Feature Colors */
-    --success-color: #00ff00;
-    --warning-color: #ffff00;
-    --error-color: #ff0000;
-    --info-color: #00ffff;
+    /* Tab Colors */
+    --tab-bg: #0f0f0f;
+    --tab-active-bg: #000000;
+    --tab-hover-bg: #1a1a1a;
+    --tab-border: #333333;
+    --tab-active-border: #ff6b35;
     
-    /* Bearded Signature */
-    --beard-gradient: linear-gradient(135deg, #ff6b35 0%, #ffa500 100%);
-    --beard-shadow: 0 0 40px rgba(255, 107, 53, 0.5);
-    --code-bg: #0a0a0a;
-    --inline-code-bg: #1a1a1a;
-    --scrollbar-bg: #000000;
-    --scrollbar-thumb: #333333;
-    --scrollbar-hover: #555555;
+    /* Sidebar Colors */
+    --sidebar-bg: #000000;
+    --sidebar-border: #333333;
+    --sidebar-item-hover: #0f0f0f;
+    --sidebar-item-active: #1a1a1a;
+    
+    /* Search Colors */
     --search-bg: #0f0f0f;
     --search-border: #333333;
-    --search-focus-border: #ff6b35;
-    --tag-bg: #1a1a1a;
-    --tag-text: #ff6b35;
-    --tag-hover: #333333;
+    --search-focus: #ff6b35;
+    --search-result-hover: #1a1a1a;
+    --search-highlight: #ffff00;
     
-    /* Ebony HC Special */
+    /* Scrollbar Colors */
+    --scrollbar-track: #000000;
+    --scrollbar-thumb: #333333;
+    --scrollbar-thumb-hover: #555555;
+    
+    /* Modal Colors */
+    --modal-bg: #000000;
+    --modal-border: #333333;
+    --modal-overlay: rgba(0, 0, 0, 0.95);
+    
+    /* Table Colors */
+    --table-border: #333333;
+    --table-stripe: #0f0f0f;
+    --table-hover: #1a1a1a;
+    --table-header-bg: #0f0f0f;
+    
+    /* Progress Colors */
+    --progress-bg: #0f0f0f;
+    --progress-fill: #ff6b35;
+    
+    /* Status Colors */
+    --status-online: #00ff00;
+    --status-away: #ffff00;
+    --status-busy: #ff0000;
+    --status-offline: #808080;
+    
+    /* Shadow Colors */
+    --shadow-light: rgba(255, 107, 53, 0.1);
+    --shadow-medium: rgba(255, 107, 53, 0.3);
+    --shadow-heavy: rgba(255, 107, 53, 0.5);
+    
+    /* Spacing (inherited from base) */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    
+    /* Typography (inherited from base) */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --font-size-4xl: 2.25rem;
+    
+    /* Line Heights */
+    --line-height-tight: 1.25;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+    
+    /* Border Radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --transition-slow: 350ms ease;
+    
+    /* Z-Index Scale */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+    
+    /* Ebony HC Special Variables */
     --ebony-glow: 0 0 30px rgba(255, 107, 53, 0.6);
     --ebony-accent: #ff6b35;
     --ebony-contrast: #ffffff;
-    --badge-text: #000000;
+}
+
+/* Theme-specific component styles */
+[data-theme="bearded-hc-ebony"] {
+    color-scheme: dark;
+}
+
+/* Custom scrollbar for Bearded HC Ebony */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    [data-theme="bearded-hc-ebony"] ::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+
+    [data-theme="bearded-hc-ebony"] ::-webkit-scrollbar-track {
+        background: var(--scrollbar-track);
+        border-radius: var(--radius-sm);
+    }
+
+    [data-theme="bearded-hc-ebony"] ::-webkit-scrollbar-thumb {
+        background: var(--ebony-accent);
+        border: 2px solid var(--bg-primary);
+        border-radius: var(--radius-sm);
+        transition: background-color var(--transition-fast);
+    }
+
+    [data-theme="bearded-hc-ebony"] ::-webkit-scrollbar-thumb:hover {
+        background: #ff8c5a;
+    }
+}
+
+/* Selection color */
+[data-theme="bearded-hc-ebony"] ::selection {
+    background: var(--bg-selection);
+    color: var(--text-primary);
+}
+
+/* Focus styles */
+[data-theme="bearded-hc-ebony"] :focus-visible {
+    outline: 3px solid var(--accent-primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 6px rgba(255, 107, 53, 0.3);
+}
+
+/* Enhanced syntax highlighting for Bearded HC Ebony */
+[data-theme="bearded-hc-ebony"] .token.comment,
+[data-theme="bearded-hc-ebony"] .token.prolog,
+[data-theme="bearded-hc-ebony"] .token.doctype,
+[data-theme="bearded-hc-ebony"] .token.cdata {
+    color: var(--syntax-comment);
+    font-style: italic;
+}
+
+[data-theme="bearded-hc-ebony"] .token.punctuation {
+    color: var(--syntax-punctuation);
+}
+
+[data-theme="bearded-hc-ebony"] .token.property,
+[data-theme="bearded-hc-ebony"] .token.tag,
+[data-theme="bearded-hc-ebony"] .token.boolean,
+[data-theme="bearded-hc-ebony"] .token.number,
+[data-theme="bearded-hc-ebony"] .token.constant,
+[data-theme="bearded-hc-ebony"] .token.symbol,
+[data-theme="bearded-hc-ebony"] .token.deleted {
+    color: var(--syntax-number);
+}
+
+[data-theme="bearded-hc-ebony"] .token.selector,
+[data-theme="bearded-hc-ebony"] .token.attr-name,
+[data-theme="bearded-hc-ebony"] .token.string,
+[data-theme="bearded-hc-ebony"] .token.char,
+[data-theme="bearded-hc-ebony"] .token.builtin,
+[data-theme="bearded-hc-ebony"] .token.inserted {
+    color: var(--syntax-string);
+}
+
+[data-theme="bearded-hc-ebony"] .token.operator,
+[data-theme="bearded-hc-ebony"] .token.entity,
+[data-theme="bearded-hc-ebony"] .token.url,
+[data-theme="bearded-hc-ebony"] .language-css .token.string,
+[data-theme="bearded-hc-ebony"] .style .token.string {
+    color: var(--syntax-operator);
+}
+
+[data-theme="bearded-hc-ebony"] .token.atrule,
+[data-theme="bearded-hc-ebony"] .token.attr-value,
+[data-theme="bearded-hc-ebony"] .token.keyword {
+    color: var(--syntax-keyword);
+}
+
+[data-theme="bearded-hc-ebony"] .token.function,
+[data-theme="bearded-hc-ebony"] .token.class-name {
+    color: var(--syntax-function);
+}
+
+[data-theme="bearded-hc-ebony"] .token.regex,
+[data-theme="bearded-hc-ebony"] .token.important,
+[data-theme="bearded-hc-ebony"] .token.variable {
+    color: var(--syntax-regex);
+}
+
+[data-theme="bearded-hc-ebony"] .token.important,
+[data-theme="bearded-hc-ebony"] .token.bold {
+    font-weight: bold;
+    color: var(--syntax-important);
+}
+
+[data-theme="bearded-hc-ebony"] .token.italic {
+    font-style: italic;
+    color: var(--syntax-italic);
+}
+
+[data-theme="bearded-hc-ebony"] .token.entity {
+    cursor: help;
+}
+
+/* Enhanced callout styles for Bearded HC Ebony */
+[data-theme="bearded-hc-ebony"] .callout {
+    border-left-width: 5px;
+    border-left-style: solid;
+    margin: var(--spacing-md) 0;
+    padding: var(--spacing-md);
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: var(--radius-md);
+    font-weight: bold;
+}
+
+[data-theme="bearded-hc-ebony"] .callout.note {
+    border-left-color: var(--callout-note);
+    background: rgba(0, 255, 255, 0.05);
+}
+
+[data-theme="bearded-hc-ebony"] .callout.tip {
+    border-left-color: var(--callout-tip);
+    background: rgba(0, 255, 0, 0.05);
+}
+
+[data-theme="bearded-hc-ebony"] .callout.warning {
+    border-left-color: var(--callout-warning);
+    background: rgba(255, 255, 0, 0.05);
+}
+
+[data-theme="bearded-hc-ebony"] .callout.danger {
+    border-left-color: var(--callout-danger);
+    background: rgba(255, 0, 0, 0.05);
+}
+
+[data-theme="bearded-hc-ebony"] .callout.info {
+    border-left-color: var(--callout-info);
+    background: rgba(0, 255, 255, 0.05);
 }
 
 /* Ebony HC Decorative Elements */
-.theme-bearded-hc-ebony .note-content h1::before {
+[data-theme="bearded-hc-ebony"] .note-content h1::before {
     content: "◆";
     display: inline-block;
     margin-right: 0.5rem;
@@ -83,126 +379,23 @@
     }
 }
 
-.theme-bearded-hc-ebony .tab.active {
-    background: var(--accent-bg);
-    border-top: 3px solid var(--ebony-accent);
-    box-shadow: inset 0 3px 15px rgba(255, 107, 53, 0.2);
-    border-left: 2px solid rgba(255, 107, 53, 0.5);
-    border-right: 2px solid rgba(255, 107, 53, 0.5);
-}
-
-.theme-bearded-hc-ebony .search-container input {
-    border: 2px solid var(--border-color);
-    background: var(--input-bg);
-    color: var(--text-primary);
-    font-weight: bold;
-}
-
-.theme-bearded-hc-ebony .search-container input:focus {
-    border-color: var(--ebony-accent);
-    box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.3),
-                var(--ebony-glow);
-    background: var(--primary-bg);
-}
-
-.theme-bearded-hc-ebony .note-item {
-    border: 1px solid transparent;
-    color: var(--text-primary);
-}
-
-.theme-bearded-hc-ebony .note-item:hover {
-    border: 2px solid var(--ebony-accent);
-    padding-left: calc(1rem - 2px);
-    background: linear-gradient(90deg, rgba(255, 107, 53, 0.1) 0%, transparent 100%);
-    color: var(--ebony-contrast);
-    font-weight: bold;
-}
-
-.theme-bearded-hc-ebony pre code {
-    background: var(--code-bg);
-    border: 2px solid var(--border-color);
-    box-shadow: inset 0 0 20px rgba(255, 107, 53, 0.1);
-    color: var(--text-primary);
-    font-weight: bold;
-}
-
-.theme-bearded-hc-ebony blockquote {
-    border-left: 5px solid var(--ebony-accent);
-    background: linear-gradient(90deg, rgba(255, 107, 53, 0.15) 0%, transparent 100%);
-    color: var(--ebony-contrast);
-    font-weight: bold;
-    border-top: 1px solid rgba(255, 107, 53, 0.3);
-    border-bottom: 1px solid rgba(255, 107, 53, 0.3);
-}
-
-.theme-bearded-hc-ebony .btn-primary {
-    background: var(--ebony-accent);
-    color: var(--primary-bg);
-    border: 2px solid var(--ebony-accent);
-    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.theme-bearded-hc-ebony .btn-primary:hover {
-    background: var(--primary-bg);
-    color: var(--ebony-accent);
-    border: 2px solid var(--ebony-accent);
-    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.5);
-    transform: translateY(-2px);
-}
-
-.theme-bearded-hc-ebony ::-webkit-scrollbar-thumb {
-    background: var(--ebony-accent);
-    border: 2px solid var(--primary-bg);
-    border-radius: 4px;
-}
-
-.theme-bearded-hc-ebony ::-webkit-scrollbar-thumb:hover {
-    background: #ff8c5a;
-}
-
-.theme-bearded-hc-ebony .settings-modal {
-    background: rgba(0, 0, 0, 0.98);
-    border: 3px solid var(--ebony-accent);
-    box-shadow: 0 0 50px rgba(255, 107, 53, 0.4);
-}
-
-.theme-bearded-hc-ebony .settings-modal h2 {
-    color: var(--ebony-accent);
-    text-shadow: var(--ebony-glow);
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.theme-bearded-hc-ebony .settings-modal h2::before {
-    content: "◆";
-    position: absolute;
-    left: -40px;
-    top: 50%;
-    transform: translateY(-50%);
-    animation: ebonyPulse 2s ease-in-out infinite;
-}
-
 /* High contrast accessibility enhancements */
-.theme-bearded-hc-ebony * {
-    text-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+[data-theme="bearded-hc-ebony"] * {
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
 }
 
-.theme-bearded-hc-ebony .note-content h1,
-.theme-bearded-hc-ebony .note-content h2,
-.theme-bearded-hc-ebony .note-content h3,
-.theme-bearded-hc-ebony .note-content h4,
-.theme-bearded-hc-ebony .note-content h5,
-.theme-bearded-hc-ebony .note-content h6 {
+[data-theme="bearded-hc-ebony"] .note-content h1,
+[data-theme="bearded-hc-ebony"] .note-content h2,
+[data-theme="bearded-hc-ebony"] .note-content h3,
+[data-theme="bearded-hc-ebony"] .note-content h4,
+[data-theme="bearded-hc-ebony"] .note-content h5,
+[data-theme="bearded-hc-ebony"] .note-content h6 {
     color: var(--ebony-contrast);
     font-weight: bold;
     text-shadow: 0 0 2px rgba(255, 107, 53, 0.8);
 }
 
-.theme-bearded-hc-ebony .note-content a {
+[data-theme="bearded-hc-ebony"] .note-content a {
     color: var(--ebony-accent);
     font-weight: bold;
     text-decoration: underline;
@@ -210,15 +403,91 @@
     text-decoration-thickness: 2px;
 }
 
-.theme-bearded-hc-ebony .note-content a:hover {
+[data-theme="bearded-hc-ebony"] .note-content a:hover {
     color: #ff8c5a;
     text-shadow: 0 0 5px rgba(255, 107, 53, 0.8);
 }
 
-.theme-bearded-hc-ebony .note-content code {
-    background: var(--inline-code-bg);
+[data-theme="bearded-hc-ebony"] .note-content code {
+    background: var(--bg-input);
     color: var(--ebony-accent);
     font-weight: bold;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-primary);
     padding: 3px 6px;
+    border-radius: var(--radius-sm);
+}
+
+/* Enhanced contrast for UI elements */
+[data-theme="bearded-hc-ebony"] .tab.active {
+    background: var(--bg-hover);
+    border-top: 3px solid var(--ebony-accent);
+    box-shadow: inset 0 3px 15px rgba(255, 107, 53, 0.2);
+    border-left: 2px solid rgba(255, 107, 53, 0.5);
+    border-right: 2px solid rgba(255, 107, 53, 0.5);
+}
+
+[data-theme="bearded-hc-ebony"] .search-container input:focus {
+    border-color: var(--ebony-accent);
+    box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.3),
+                var(--ebony-glow);
+    background: var(--bg-primary);
+}
+
+[data-theme="bearded-hc-ebony"] .note-item:hover {
+    border: 2px solid var(--ebony-accent);
+    background: linear-gradient(90deg, rgba(255, 107, 53, 0.1) 0%, transparent 100%);
+    color: var(--ebony-contrast);
+    font-weight: bold;
+}
+
+[data-theme="bearded-hc-ebony"] blockquote {
+    border-left: 5px solid var(--ebony-accent);
+    background: linear-gradient(90deg, rgba(255, 107, 53, 0.15) 0%, transparent 100%);
+    color: var(--ebony-contrast);
+    font-weight: bold;
+    border-top: 1px solid rgba(255, 107, 53, 0.3);
+    border-bottom: 1px solid rgba(255, 107, 53, 0.3);
+    border-radius: var(--radius-md);
+}
+
+[data-theme="bearded-hc-ebony"] .btn-primary {
+    background: var(--ebony-accent);
+    color: var(--bg-primary);
+    border: 2px solid var(--ebony-accent);
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+[data-theme="bearded-hc-ebony"] .btn-primary:hover {
+    background: var(--bg-primary);
+    color: var(--ebony-accent);
+    border: 2px solid var(--ebony-accent);
+    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.5);
+    transform: translateY(-2px);
+}
+
+[data-theme="bearded-hc-ebony"] .settings-modal {
+    background: rgba(0, 0, 0, 0.98);
+    border: 3px solid var(--ebony-accent);
+    box-shadow: 0 0 50px rgba(255, 107, 53, 0.4);
+}
+
+[data-theme="bearded-hc-ebony"] .settings-modal h2 {
+    color: var(--ebony-accent);
+    text-shadow: var(--ebony-glow);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+[data-theme="bearded-hc-ebony"] .settings-modal h2::before {
+    content: "◆";
+    position: absolute;
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: ebonyPulse 2s ease-in-out infinite;
 }
