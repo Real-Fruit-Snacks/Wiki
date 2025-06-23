@@ -774,6 +774,101 @@ body.custom-fonts-loaded {
     display: block;
 }
 
+/* Sidebar context menu */
+.sidebar-context-menu {
+    position: fixed;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 10000;
+    min-width: 200px;
+    padding: var(--spacing-xs);
+    display: none;
+    opacity: 1;
+    backdrop-filter: none;
+}
+
+.sidebar-context-menu.show {
+    display: block;
+}
+
+/* Sidebar toggle context menu */
+.sidebar-toggle-context-menu {
+    position: fixed;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 10000;
+    min-width: 180px;
+    padding: var(--spacing-xs);
+    display: none;
+    opacity: 1;
+    backdrop-filter: none;
+}
+
+.sidebar-toggle-context-menu.show {
+    display: block;
+}
+
+/* Timer context menu */
+.timer-context-menu {
+    position: fixed;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 10000;
+    min-width: 200px;
+    padding: var(--spacing-xs);
+    display: none;
+    opacity: 1;
+    backdrop-filter: none;
+}
+
+.timer-context-menu.show {
+    display: block;
+}
+
+/* Tab bar context menu */
+.tab-bar-context-menu {
+    position: fixed;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 10000;
+    min-width: 200px;
+    padding: var(--spacing-xs);
+    display: none;
+    opacity: 1;
+    backdrop-filter: none;
+}
+
+.tab-bar-context-menu.show {
+    display: block;
+}
+
+/* Close all button context menu */
+.close-all-button-context-menu {
+    position: fixed;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 10000;
+    min-width: 200px;
+    padding: var(--spacing-xs);
+    display: none;
+    opacity: 1;
+    backdrop-filter: none;
+}
+
+.close-all-button-context-menu.show {
+    display: block;
+}
+
 /* Main layout */
 .main-layout {
     display: flex;

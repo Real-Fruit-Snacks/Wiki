@@ -833,6 +833,18 @@ class NotesWiki {
             }
         });
         
+        // Sidebar right-click menu
+        document.getElementById('sidebar').addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            this.showSidebarContextMenu(e);
+        });
+        
+        // Sidebar toggle button right-click menu
+        document.getElementById('sidebar-toggle').addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            this.showSidebarToggleContextMenu(e);
+        });
+        
         // Folder expand/collapse all buttons
         document.getElementById('expand-all-folders').addEventListener('click', () => {
             this.expandAllFolders();
@@ -1732,11 +1744,33 @@ class NotesWiki {
             this.endResetPress();
         });
         
-        // Prevent context menu on long press
+        // Timer reset button context menu (also handles long press prevention)
         resetButton.addEventListener('contextmenu', (e) => {
-            if (this.resetPressed) {
-                e.preventDefault();
+            e.preventDefault();
+            if (!this.resetPressed) {
+                this.showTimerContextMenu(e);
             }
+        });
+        
+        // Timer widget context menu
+        document.getElementById('timer-widget-main').addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            this.showTimerContextMenu(e);
+        });
+        
+        // Tab bar context menu (empty area of tab bar)
+        document.getElementById('tabs-container').addEventListener('contextmenu', (e) => {
+            // Only show menu if clicking on empty space, not on tabs
+            if (e.target === e.currentTarget || e.target.classList.contains('tabs-container')) {
+                e.preventDefault();
+                this.showTabBarContextMenu(e);
+            }
+        });
+        
+        // Close all tabs button context menu
+        document.getElementById('tab-close-all-button').addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            this.showCloseAllButtonContextMenu(e);
         });
     }
     
@@ -14186,6 +14220,503 @@ class NotesWiki {
             mobileBookmarksCount.textContent = bookmarksCount.textContent;
             mobileBookmarksCount.style.display = bookmarksCount.style.display;
         }
+    }
+    
+    showSidebarContextMenu(event) {
+        // Create context menu container
+        const contextMenu = document.createElement('div');
+        contextMenu.className = 'sidebar-context-menu';
+        contextMenu.style.position = 'fixed';
+        contextMenu.style.left = `${event.clientX}px`;
+        contextMenu.style.top = `${event.clientY}px`;
+        contextMenu.style.zIndex = '10000';
+        
+        const sidebar = document.getElementById('sidebar');
+        const isOpen = sidebar.classList.contains('open');
+        const isInFocusMode = this.settings.focusMode;
+        
+        // Create menu items
+        const menuItems = [
+            {
+                label: isOpen ? 'Collapse Sidebar' : 'Expand Sidebar',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="${isOpen ? 'M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z' : 'M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z'}" clip-rule="evenodd"/></svg>`,
+                action: () => this.toggleSidebar(),
+                disabled: isInFocusMode
+            },
+            {
+                label: 'Expand All Folders',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`,
+                action: () => this.expandAllFolders()
+            },
+            {
+                label: 'Collapse All Folders',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd"/></svg>`,
+                action: () => this.collapseAllFolders()
+            },
+            {
+                label: 'Refresh File Tree',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/></svg>`,
+                action: () => this.refreshFileTree()
+            }
+        ];
+        
+        if (isInFocusMode) {
+            menuItems.unshift({
+                label: 'Exit Focus Mode',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>`,
+                action: () => this.toggleFocusMode()
+            });
+        }
+        
+        // Build menu
+        menuItems.forEach(item => {
+            const menuItem = document.createElement('div');
+            menuItem.className = `context-menu-item${item.className ? ' ' + item.className : ''}`;
+            
+            if (item.disabled) {
+                menuItem.classList.add('disabled');
+                menuItem.style.opacity = '0.5';
+                menuItem.style.cursor = 'not-allowed';
+            }
+            
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'context-menu-icon';
+            iconSpan.innerHTML = item.icon;
+            
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'context-menu-label';
+            labelSpan.textContent = item.label;
+            
+            menuItem.appendChild(iconSpan);
+            menuItem.appendChild(labelSpan);
+            
+            // Add click handler
+            if (!item.disabled) {
+                menuItem.addEventListener('click', () => {
+                    item.action();
+                    contextMenu.remove();
+                });
+            }
+            
+            contextMenu.appendChild(menuItem);
+        });
+        
+        this.showContextMenu(contextMenu, event);
+    }
+    
+    showSidebarToggleContextMenu(event) {
+        // Create context menu container
+        const contextMenu = document.createElement('div');
+        contextMenu.className = 'sidebar-toggle-context-menu';
+        contextMenu.style.position = 'fixed';
+        contextMenu.style.left = `${event.clientX}px`;
+        contextMenu.style.top = `${event.clientY}px`;
+        contextMenu.style.zIndex = '10000';
+        
+        const sidebar = document.getElementById('sidebar');
+        const isOpen = sidebar.classList.contains('open');
+        
+        // Create menu items
+        const menuItems = [
+            {
+                label: isOpen ? 'Hide Sidebar' : 'Show Sidebar',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/></svg>`,
+                action: () => this.toggleSidebar()
+            },
+            {
+                label: 'Focus Mode',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>`,
+                action: () => this.toggleFocusMode()
+            },
+            {
+                label: 'Sidebar Settings',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>`,
+                action: () => this.showSettings()
+            }
+        ];
+        
+        // Build menu
+        menuItems.forEach(item => {
+            const menuItem = document.createElement('div');
+            menuItem.className = `context-menu-item${item.className ? ' ' + item.className : ''}`;
+            
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'context-menu-icon';
+            iconSpan.innerHTML = item.icon;
+            
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'context-menu-label';
+            labelSpan.textContent = item.label;
+            
+            menuItem.appendChild(iconSpan);
+            menuItem.appendChild(labelSpan);
+            
+            // Add click handler
+            menuItem.addEventListener('click', () => {
+                item.action();
+                contextMenu.remove();
+            });
+            
+            contextMenu.appendChild(menuItem);
+        });
+        
+        this.showContextMenu(contextMenu, event);
+    }
+    
+    showTimerContextMenu(event) {
+        // Create context menu container
+        const contextMenu = document.createElement('div');
+        contextMenu.className = 'timer-context-menu';
+        contextMenu.style.position = 'fixed';
+        contextMenu.style.left = `${event.clientX}px`;
+        contextMenu.style.top = `${event.clientY}px`;
+        contextMenu.style.zIndex = '10000';
+        
+        const isRunning = this.timerRunning;
+        const isPomodoroEnabled = this.settings.pomodoroEnabled;
+        
+        // Create menu items
+        const menuItems = [
+            {
+                label: isRunning ? 'Pause Timer' : 'Start Timer',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">${isRunning ? '<rect x="6" y="4" width="4" height="12"/><rect x="10" y="4" width="4" height="12"/>' : '<path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>'}</svg>`,
+                action: () => this.toggleTimer()
+            },
+            {
+                label: 'Reset Timer',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/></svg>`,
+                action: () => this.resetTimer()
+            },
+            {
+                label: isPomodoroEnabled ? 'Disable Pomodoro' : 'Enable Pomodoro',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"/></svg>`,
+                action: () => this.togglePomodoro()
+            }
+        ];
+        
+        if (isPomodoroEnabled) {
+            menuItems.push({
+                label: 'Pomodoro Settings',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>`,
+                action: () => this.showPomodoroSettings()
+            });
+        }
+        
+        menuItems.push({
+            label: 'Timer Settings',
+            icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>`,
+            action: () => this.showTimerSettings()
+        });
+        
+        // Build menu
+        menuItems.forEach(item => {
+            const menuItem = document.createElement('div');
+            menuItem.className = `context-menu-item${item.className ? ' ' + item.className : ''}`;
+            
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'context-menu-icon';
+            iconSpan.innerHTML = item.icon;
+            
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'context-menu-label';
+            labelSpan.textContent = item.label;
+            
+            menuItem.appendChild(iconSpan);
+            menuItem.appendChild(labelSpan);
+            
+            // Add click handler
+            menuItem.addEventListener('click', () => {
+                item.action();
+                contextMenu.remove();
+            });
+            
+            contextMenu.appendChild(menuItem);
+        });
+        
+        this.showContextMenu(contextMenu, event);
+    }
+    
+    showTabBarContextMenu(event) {
+        // Create context menu container
+        const contextMenu = document.createElement('div');
+        contextMenu.className = 'tab-bar-context-menu';
+        contextMenu.style.position = 'fixed';
+        contextMenu.style.left = `${event.clientX}px`;
+        contextMenu.style.top = `${event.clientY}px`;
+        contextMenu.style.zIndex = '10000';
+        
+        const hasAnyTabs = this.tabs.size > 0;
+        const hasMultipleTabs = this.tabs.size > 1;
+        
+        // Create menu items
+        const menuItems = [
+            {
+                label: 'New Tab',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/></svg>`,
+                action: () => this.createNewTab()
+            },
+            {
+                label: 'Close All Tabs',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>`,
+                action: () => this.closeAllTabs(),
+                disabled: !hasAnyTabs,
+                className: 'danger'
+            },
+            {
+                label: 'Pin All Tabs',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a2 2 0 00-2 2v10H4a2 2 0 01-2-2V6a2 2 0 012-2h4zm2 0h6a2 2 0 012 2v8a2 2 0 01-2 2h-2V6a2 2 0 00-2-2z" clip-rule="evenodd"/></svg>`,
+                action: () => this.pinAllTabs(),
+                disabled: !hasAnyTabs
+            },
+            {
+                label: 'Unpin All Tabs',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 100 2h4a1 1 0 100-2H8zm0-3a1 1 0 100 2h4a1 1 0 100-2H8z" clip-rule="evenodd"/></svg>`,
+                action: () => this.unpinAllTabs(),
+                disabled: !hasAnyTabs
+            },
+            {
+                label: 'Toggle Split View',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/></svg>`,
+                action: () => this.toggleSplitView(),
+                disabled: !hasMultipleTabs
+            }
+        ];
+        
+        // Build menu
+        menuItems.forEach(item => {
+            const menuItem = document.createElement('div');
+            menuItem.className = `context-menu-item${item.className ? ' ' + item.className : ''}`;
+            
+            if (item.disabled) {
+                menuItem.classList.add('disabled');
+                menuItem.style.opacity = '0.5';
+                menuItem.style.cursor = 'not-allowed';
+            }
+            
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'context-menu-icon';
+            iconSpan.innerHTML = item.icon;
+            
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'context-menu-label';
+            labelSpan.textContent = item.label;
+            
+            menuItem.appendChild(iconSpan);
+            menuItem.appendChild(labelSpan);
+            
+            // Add click handler
+            if (!item.disabled) {
+                menuItem.addEventListener('click', () => {
+                    item.action();
+                    contextMenu.remove();
+                });
+            }
+            
+            contextMenu.appendChild(menuItem);
+        });
+        
+        this.showContextMenu(contextMenu, event);
+    }
+    
+    showCloseAllButtonContextMenu(event) {
+        // Create context menu container
+        const contextMenu = document.createElement('div');
+        contextMenu.className = 'close-all-button-context-menu';
+        contextMenu.style.position = 'fixed';
+        contextMenu.style.left = `${event.clientX}px`;
+        contextMenu.style.top = `${event.clientY}px`;
+        contextMenu.style.zIndex = '10000';
+        
+        const hasAnyTabs = this.tabs.size > 0;
+        const hasPinnedTabs = Array.from(this.tabs.values()).some(tab => tab.isPinned);
+        
+        // Create menu items
+        const menuItems = [
+            {
+                label: 'Close All Tabs',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>`,
+                action: () => this.closeAllTabs(),
+                disabled: !hasAnyTabs,
+                className: 'danger'
+            },
+            {
+                label: 'Close Non-Pinned Tabs',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"/><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1" fill="none" opacity="0.3"/></svg>`,
+                action: () => this.closeNonPinnedTabs(),
+                disabled: !hasAnyTabs || !hasPinnedTabs,
+                className: 'danger'
+            },
+            {
+                label: 'Pin All Tabs',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a2 2 0 00-2 2v10H4a2 2 0 01-2-2V6a2 2 0 012-2h4zm2 0h6a2 2 0 012 2v8a2 2 0 01-2 2h-2V6a2 2 0 00-2-2z" clip-rule="evenodd"/></svg>`,
+                action: () => this.pinAllTabs(),
+                disabled: !hasAnyTabs
+            },
+            {
+                label: 'Show Tab Overview',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/></svg>`,
+                action: () => this.showTabOverview(),
+                disabled: !hasAnyTabs
+            }
+        ];
+        
+        // Build menu
+        menuItems.forEach(item => {
+            const menuItem = document.createElement('div');
+            menuItem.className = `context-menu-item${item.className ? ' ' + item.className : ''}`;
+            
+            if (item.disabled) {
+                menuItem.classList.add('disabled');
+                menuItem.style.opacity = '0.5';
+                menuItem.style.cursor = 'not-allowed';
+            }
+            
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'context-menu-icon';
+            iconSpan.innerHTML = item.icon;
+            
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'context-menu-label';
+            labelSpan.textContent = item.label;
+            
+            menuItem.appendChild(iconSpan);
+            menuItem.appendChild(labelSpan);
+            
+            // Add click handler
+            if (!item.disabled) {
+                menuItem.addEventListener('click', () => {
+                    item.action();
+                    contextMenu.remove();
+                });
+            }
+            
+            contextMenu.appendChild(menuItem);
+        });
+        
+        this.showContextMenu(contextMenu, event);
+    }
+    
+    // Shared context menu display logic
+    showContextMenu(contextMenu, event) {
+        // Close menu when clicking outside
+        const closeMenu = (e) => {
+            if (!contextMenu.contains(e.target)) {
+                contextMenu.remove();
+                document.removeEventListener('click', closeMenu);
+                document.removeEventListener('contextmenu', closeMenu);
+            }
+        };
+        
+        // Delay adding the close listener to prevent immediate closure
+        setTimeout(() => {
+            document.addEventListener('click', closeMenu);
+            document.addEventListener('contextmenu', closeMenu);
+        }, 0);
+        
+        // Add to document
+        document.body.appendChild(contextMenu);
+        
+        // Show the menu
+        contextMenu.classList.add('show');
+        
+        // Adjust position if menu goes off-screen
+        const rect = contextMenu.getBoundingClientRect();
+        if (rect.right > window.innerWidth) {
+            contextMenu.style.left = `${window.innerWidth - rect.width - 5}px`;
+        }
+        if (rect.bottom > window.innerHeight) {
+            contextMenu.style.top = `${window.innerHeight - rect.height - 5}px`;
+        }
+    }
+    
+    // Helper methods for new context menu actions
+    toggleSidebar() {
+        document.getElementById('sidebar-toggle').click();
+    }
+    
+    toggleFocusMode() {
+        const focusModeToggle = document.getElementById('focus-mode');
+        if (focusModeToggle) {
+            focusModeToggle.click();
+        }
+    }
+    
+    refreshFileTree() {
+        // Force reload the file tree
+        this.buildFileTree();
+        this.showToast('File tree refreshed', 'info');
+    }
+    
+    togglePomodoro() {
+        // Toggle Pomodoro mode
+        this.settings.pomodoroEnabled = !this.settings.pomodoroEnabled;
+        this.saveSettings();
+        this.updateTimerUI();
+        this.showToast(this.settings.pomodoroEnabled ? 'Pomodoro enabled' : 'Pomodoro disabled', 'info');
+    }
+    
+    showPomodoroSettings() {
+        // Show settings and navigate to timer section
+        this.showSettings();
+        // Focus on timer settings section
+        setTimeout(() => {
+            const timerSection = document.querySelector('[data-section="timer"]');
+            if (timerSection) timerSection.click();
+        }, 100);
+        this.showToast('Opening Pomodoro settings...', 'info');
+    }
+    
+    showTimerSettings() {
+        // Show settings and navigate to timer section
+        this.showSettings();
+        setTimeout(() => {
+            const timerSection = document.querySelector('[data-section="timer"]');
+            if (timerSection) timerSection.click();
+        }, 100);
+        this.showToast('Opening timer settings...', 'info');
+    }
+    
+    pinAllTabs() {
+        let pinnedCount = 0;
+        for (const [tabId, tab] of this.tabs) {
+            if (!tab.isPinned) {
+                this.togglePinTab(tabId);
+                pinnedCount++;
+            }
+        }
+        this.showToast(`Pinned ${pinnedCount} tabs`, 'success');
+    }
+    
+    unpinAllTabs() {
+        let unpinnedCount = 0;
+        for (const [tabId, tab] of this.tabs) {
+            if (tab.isPinned) {
+                this.togglePinTab(tabId);
+                unpinnedCount++;
+            }
+        }
+        this.showToast(`Unpinned ${unpinnedCount} tabs`, 'success');
+    }
+    
+    closeNonPinnedTabs() {
+        const nonPinnedTabs = Array.from(this.tabs.entries()).filter(([id, tab]) => !tab.isPinned);
+        let closedCount = 0;
+        
+        for (const [tabId] of nonPinnedTabs) {
+            this.closeTab(tabId);
+            closedCount++;
+        }
+        
+        this.showToast(`Closed ${closedCount} non-pinned tabs`, 'info');
+    }
+    
+    showTabOverview() {
+        const tabList = Array.from(this.tabs.values())
+            .map((tab, i) => `${i + 1}. ${tab.title}${tab.isPinned ? ' 📌' : ''}`)
+            .join('\n');
+        
+        const message = `Open Tabs (${this.tabs.size}):\n\n${tabList}`;
+        alert(message);
     }
     
     setupCleanupHandlers() {
