@@ -208,6 +208,21 @@ class NotesWiki {
                     { id: 'bearded-vivid-light', name: 'Vivid Light', description: 'Bright vivid light theme with saturated colors and dynamic patterns' },
                     { id: 'bearded-oled', name: 'OLED', description: 'Pure black optimized for OLED displays' },
                     { id: 'bearded-void', name: 'Void', description: 'Minimal dark theme with subtle accent colors' },
+                    // Aquarelle Series
+                    { id: 'bearded-aquarelle-cymbidium', name: 'Aquarelle Cymbidium', description: 'Artistic watercolor theme with cymbidium orchid inspiration and flowing gradients' },
+                    { id: 'bearded-aquarelle-hydrangea', name: 'Aquarelle Hydrangea', description: 'Artistic watercolor theme with hydrangea flower inspiration and blue-pink blends' },
+                    { id: 'bearded-aquarelle-lilac', name: 'Aquarelle Lilac', description: 'Artistic watercolor theme with lilac flower inspiration and purple washes' },
+                    // Black & Series (Ampersand Compatibility)
+                    { id: 'bearded-black-&-amethyst', name: 'Black & Amethyst', description: 'Pure black with amethyst crystal accents - VS Code compatible naming' },
+                    { id: 'bearded-black-&-amethyst-soft', name: 'Black & Amethyst Soft', description: 'Softer black with muted amethyst tones - VS Code compatible naming' },
+                    { id: 'bearded-black-&-diamond', name: 'Black & Diamond', description: 'Deep black with diamond-like brilliance - VS Code compatible naming' },
+                    { id: 'bearded-black-&-diamond-soft', name: 'Black & Diamond Soft', description: 'Gentle black with soft diamond sparkle - VS Code compatible naming' },
+                    { id: 'bearded-black-&-emerald', name: 'Black & Emerald', description: 'Pure black with emerald gemstone vibrancy - VS Code compatible naming' },
+                    { id: 'bearded-black-&-emerald-soft', name: 'Black & Emerald Soft', description: 'Subtle black with soft emerald glow - VS Code compatible naming' },
+                    { id: 'bearded-black-&-gold', name: 'Black & Gold', description: 'Elegant black with luxurious gold accents - VS Code compatible naming' },
+                    { id: 'bearded-black-&-gold-soft', name: 'Black & Gold Soft', description: 'Refined black with gentle gold highlights - VS Code compatible naming' },
+                    { id: 'bearded-black-&-ruby', name: 'Black & Ruby', description: 'Rich black with ruby gemstone intensity - VS Code compatible naming' },
+                    { id: 'bearded-black-&-ruby-soft', name: 'Black & Ruby Soft', description: 'Smooth black with soft ruby warmth - VS Code compatible naming' },
                     // Featured Collection
                     { id: 'bearded-feat-will', name: 'Featured - Will', description: 'Deep twilight theme with warm energy accents and electric glow effects' },
                     { id: 'bearded-feat-gold-d-raynh', name: 'Featured - Gold D. Raynh', description: 'Luxurious golden warmth with shimmer effects and flowing animations' },
@@ -224,7 +239,10 @@ class NotesWiki {
                     { id: 'bearded-hc-chocolate-espresso', name: 'HC - Chocolate Espresso', description: 'Rich chocolate brown high contrast with warm espresso steam effects' },
                     { id: 'bearded-hc-flurry', name: 'HC - Flurry', description: 'Cool blue high contrast with swirling snow effects and icy animations' },
                     // Special Collection
-                    { id: 'bearded-themanopia', name: 'Themanopia', description: 'Unique artistic vision with creative pink accents and painter-inspired effects' }
+                    { id: 'bearded-themanopia', name: 'Themanopia', description: 'Unique artistic vision with creative pink accents and painter-inspired effects' },
+                    // Final Featured and Milkshake Variants
+                    { id: 'bearded-feat-gold-d-raynh-light', name: 'Featured - Gold D. Raynh Light', description: 'Light version of the luxurious golden warmth with bright background and golden accents' },
+                    { id: 'bearded-milkshake-vanilla', name: 'Milkshake Vanilla', description: 'Pure vanilla milkshake theme with cream colors and vanilla bean speckles' }
                 ]
             }
         ];
@@ -5828,6 +5846,99 @@ class NotesWiki {
                 text: '#c0caf5',
                 textMuted: '#565f89'
             },
+            // Aquarelle Series
+            'bearded-aquarelle-cymbidium': {
+                bg: '#1a1b27',
+                border: '#30323e',
+                accent: '#d4a5ff',
+                text: '#e6e8f0',
+                textMuted: '#a3a5b3'
+            },
+            'bearded-aquarelle-hydrangea': {
+                bg: '#1b1e29',
+                border: '#313441',
+                accent: '#6bb6ff',
+                text: '#e4e7f0',
+                textMuted: '#a1a4b3'
+            },
+            'bearded-aquarelle-lilac': {
+                bg: '#1d1a27',
+                border: '#332f3e',
+                accent: '#c49aff',
+                text: '#e6e4f0',
+                textMuted: '#a3a1b3'
+            },
+            // Black & Series (Ampersand Compatibility)
+            'bearded-black-&-amethyst': {
+                bg: '#0a0a0a',
+                border: '#2a2a2a',
+                accent: '#c678dd',
+                text: '#e6e6e6',
+                textMuted: '#999999'
+            },
+            'bearded-black-&-amethyst-soft': {
+                bg: '#0a0a0a',
+                border: '#2a2a2a',
+                accent: '#c678dd',
+                text: '#e6e6e6',
+                textMuted: '#999999'
+            },
+            'bearded-black-&-diamond': {
+                bg: '#0a0a0a',
+                border: '#2a2a2a',
+                accent: '#ffffff',
+                text: '#e6e6e6',
+                textMuted: '#999999'
+            },
+            'bearded-black-&-diamond-soft': {
+                bg: '#0a0a0a',
+                border: '#2a2a2a',
+                accent: '#ffffff',
+                text: '#e6e6e6',
+                textMuted: '#999999'
+            },
+            'bearded-black-&-emerald': {
+                bg: '#0a0a0a',
+                border: '#2a2a2a',
+                accent: '#50fa7b',
+                text: '#f8f8f2',
+                textMuted: '#6272a4'
+            },
+            'bearded-black-&-emerald-soft': {
+                bg: '#0a0a0a',
+                border: '#2a2a2a',
+                accent: '#50fa7b',
+                text: '#f8f8f2',
+                textMuted: '#6272a4'
+            },
+            'bearded-black-&-gold': {
+                bg: '#0a0a0a',
+                border: '#2a2a2a',
+                accent: '#ffd700',
+                text: '#e6e6e6',
+                textMuted: '#999999'
+            },
+            'bearded-black-&-gold-soft': {
+                bg: '#0a0a0a',
+                border: '#2a2a2a',
+                accent: '#ffd700',
+                text: '#e6e6e6',
+                textMuted: '#999999'
+            },
+            'bearded-black-&-ruby': {
+                bg: '#0a0a0a',
+                border: '#2a2a2a',
+                accent: '#ff5555',
+                text: '#f8f8f2',
+                textMuted: '#6272a4'
+            },
+            'bearded-black-&-ruby-soft': {
+                bg: '#0a0a0a',
+                border: '#2a2a2a',
+                accent: '#ff5555',
+                text: '#f8f8f2',
+                textMuted: '#6272a4'
+            },
             // New Bearded Themes
             'bearded-oceanic-reversed': {
                 bg: '#f7f8f9',
@@ -6031,6 +6142,21 @@ class NotesWiki {
                 accent: '#268bd2',
                 text: '#657b83',
                 textMuted: '#93a1a1'
+            },
+            // Final Featured and Milkshake Variants
+            'bearded-feat-gold-d-raynh-light': {
+                bg: '#fdf6e3',
+                border: '#e8ddc7',
+                accent: '#d4a520',
+                text: '#2e3440',
+                textMuted: '#7c8390'
+            },
+            'bearded-milkshake-vanilla': {
+                bg: '#fefdf8',
+                border: '#efeace',
+                accent: '#d4b896',
+                text: '#3e3b32',
+                textMuted: '#8b8671'
             }
         };
         
@@ -6685,6 +6811,99 @@ class NotesWiki {
                 comment: '#565f89',
                 number: '#ff9e64'
             },
+            // Aquarelle Series
+            'bearded-aquarelle-cymbidium': {
+                keyword: '#b8a3ff',
+                function: '#f5a3d9',
+                string: '#78ffa6',
+                comment: '#686b78',
+                number: '#ffd966'
+            },
+            'bearded-aquarelle-hydrangea': {
+                keyword: '#a394ff',
+                function: '#ff9ec7',
+                string: '#7aff9e',
+                comment: '#6a6d7a',
+                number: '#ffcc66'
+            },
+            'bearded-aquarelle-lilac': {
+                keyword: '#b091ff',
+                function: '#ff9ed1',
+                string: '#8aff9e',
+                comment: '#6c6a78',
+                number: '#ffd470'
+            },
+            // Black & Series (Ampersand Compatibility)
+            'bearded-black-&-amethyst': {
+                keyword: '#c678dd',
+                function: '#61afef',
+                string: '#98c379',
+                comment: '#5c6370',
+                number: '#d19a66'
+            },
+            'bearded-black-&-amethyst-soft': {
+                keyword: '#c678dd',
+                function: '#61afef',
+                string: '#98c379',
+                comment: '#5c6370',
+                number: '#d19a66'
+            },
+            'bearded-black-&-diamond': {
+                keyword: '#ffffff',
+                function: '#61afef',
+                string: '#98c379',
+                comment: '#5c6370',
+                number: '#d19a66'
+            },
+            'bearded-black-&-diamond-soft': {
+                keyword: '#ffffff',
+                function: '#61afef',
+                string: '#98c379',
+                comment: '#5c6370',
+                number: '#d19a66'
+            },
+            'bearded-black-&-emerald': {
+                keyword: '#bd93f9',
+                function: '#8be9fd',
+                string: '#50fa7b',
+                comment: '#6272a4',
+                number: '#ffb86c'
+            },
+            'bearded-black-&-emerald-soft': {
+                keyword: '#bd93f9',
+                function: '#8be9fd',
+                string: '#50fa7b',
+                comment: '#6272a4',
+                number: '#ffb86c'
+            },
+            'bearded-black-&-gold': {
+                keyword: '#ffd700',
+                function: '#61afef',
+                string: '#98c379',
+                comment: '#5c6370',
+                number: '#d19a66'
+            },
+            'bearded-black-&-gold-soft': {
+                keyword: '#ffd700',
+                function: '#61afef',
+                string: '#98c379',
+                comment: '#5c6370',
+                number: '#d19a66'
+            },
+            'bearded-black-&-ruby': {
+                keyword: '#ff79c6',
+                function: '#8be9fd',
+                string: '#50fa7b',
+                comment: '#6272a4',
+                number: '#ffb86c'
+            },
+            'bearded-black-&-ruby-soft': {
+                keyword: '#ff79c6',
+                function: '#8be9fd',
+                string: '#50fa7b',
+                comment: '#6272a4',
+                number: '#ffb86c'
+            },
             // New Bearded Themes Syntax Colors
             'bearded-oceanic-reversed': {
                 keyword: '#0066cc',
@@ -6888,6 +7107,21 @@ class NotesWiki {
                 string: '#2aa198',
                 comment: '#93a1a1',
                 number: '#d33682'
+            },
+            // Final Featured and Milkshake Variants
+            'bearded-feat-gold-d-raynh-light': {
+                keyword: '#c79310',
+                function: '#d4a520',
+                string: '#7cb342',
+                comment: '#93a1a1',
+                number: '#ffa726'
+            },
+            'bearded-milkshake-vanilla': {
+                keyword: '#d4b896',
+                function: '#b5a085',
+                string: '#8db359',
+                comment: '#8b8671',
+                number: '#d4a55a'
             }
         };
         
@@ -8539,6 +8773,215 @@ class NotesWiki {
                     animation: breathe 6s ease-in-out infinite;
                 "></div>
             `,
+            // Aquarelle Series Decorations
+            'bearded-aquarelle-cymbidium': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 100%;
+                    background: linear-gradient(135deg, 
+                        transparent 0%, 
+                        rgba(212, 165, 255, 0.05) 40%, 
+                        transparent 80%
+                    );
+                    pointer-events: none;
+                "></div>
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    right: 10px;
+                    font-size: 18px;
+                    opacity: 0.4;
+                ">🌸</div>
+            `,
+            'bearded-aquarelle-hydrangea': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 100%;
+                    background: linear-gradient(135deg, 
+                        transparent 0%, 
+                        rgba(107, 182, 255, 0.04) 30%, 
+                        rgba(255, 158, 199, 0.03) 70%, 
+                        transparent 100%
+                    );
+                    pointer-events: none;
+                "></div>
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    right: 10px;
+                    font-size: 18px;
+                    opacity: 0.4;
+                ">💙</div>
+            `,
+            'bearded-aquarelle-lilac': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 100%;
+                    background: linear-gradient(135deg, 
+                        transparent 0%, 
+                        rgba(196, 154, 255, 0.06) 50%, 
+                        transparent 100%
+                    );
+                    pointer-events: none;
+                "></div>
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    right: 10px;
+                    font-size: 18px;
+                    opacity: 0.4;
+                ">💜</div>
+            `,
+            // Black & Series Decorations (Ampersand Compatibility)
+            'bearded-black-&-amethyst': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 2px;
+                    background: linear-gradient(90deg, 
+                        transparent 0%, 
+                        rgba(198, 120, 221, 0.5) 50%, 
+                        transparent 100%
+                    );
+                "></div>
+            `,
+            'bearded-black-&-amethyst-soft': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 2px;
+                    background: linear-gradient(90deg, 
+                        transparent 0%, 
+                        rgba(198, 120, 221, 0.3) 50%, 
+                        transparent 100%
+                    );
+                "></div>
+            `,
+            'bearded-black-&-diamond': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 2px;
+                    background: linear-gradient(90deg, 
+                        transparent 0%, 
+                        rgba(255, 255, 255, 0.4) 50%, 
+                        transparent 100%
+                    );
+                "></div>
+            `,
+            'bearded-black-&-diamond-soft': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 2px;
+                    background: linear-gradient(90deg, 
+                        transparent 0%, 
+                        rgba(255, 255, 255, 0.2) 50%, 
+                        transparent 100%
+                    );
+                "></div>
+            `,
+            'bearded-black-&-emerald': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 2px;
+                    background: linear-gradient(90deg, 
+                        transparent 0%, 
+                        rgba(80, 250, 123, 0.5) 50%, 
+                        transparent 100%
+                    );
+                "></div>
+            `,
+            'bearded-black-&-emerald-soft': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 2px;
+                    background: linear-gradient(90deg, 
+                        transparent 0%, 
+                        rgba(80, 250, 123, 0.3) 50%, 
+                        transparent 100%
+                    );
+                "></div>
+            `,
+            'bearded-black-&-gold': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 2px;
+                    background: linear-gradient(90deg, 
+                        transparent 0%, 
+                        rgba(255, 215, 0, 0.5) 50%, 
+                        transparent 100%
+                    );
+                "></div>
+            `,
+            'bearded-black-&-gold-soft': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 2px;
+                    background: linear-gradient(90deg, 
+                        transparent 0%, 
+                        rgba(255, 215, 0, 0.3) 50%, 
+                        transparent 100%
+                    );
+                "></div>
+            `,
+            'bearded-black-&-ruby': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 2px;
+                    background: linear-gradient(90deg, 
+                        transparent 0%, 
+                        rgba(255, 85, 85, 0.5) 50%, 
+                        transparent 100%
+                    );
+                "></div>
+            `,
+            'bearded-black-&-ruby-soft': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 2px;
+                    background: linear-gradient(90deg, 
+                        transparent 0%, 
+                        rgba(255, 85, 85, 0.3) 50%, 
+                        transparent 100%
+                    );
+                "></div>
+            `,
             // New Bearded Themes Decorations
             'bearded-oceanic-reversed': `
                 <div style="
@@ -8729,6 +9172,79 @@ class NotesWiki {
                     font-size: 16px;
                     opacity: 0.5;
                 ">🍌</div>
+            `,
+            // Final Featured and Milkshake Variants
+            'bearded-feat-gold-d-raynh-light': `
+                <div style="
+                    position: absolute;
+                    inset: 0;
+                    background: linear-gradient(135deg, 
+                        transparent 30%, 
+                        rgba(212, 165, 32, 0.08) 50%, 
+                        transparent 70%
+                    );
+                    animation: goldShimmer 3s ease-in-out infinite;
+                    pointer-events: none;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    width: 20px;
+                    height: 20px;
+                    background: radial-gradient(circle, rgba(212, 165, 32, 0.3), transparent 70%);
+                    border-radius: 50%;
+                    animation: goldPulse 2s ease-in-out infinite;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 8px;
+                    right: 8px;
+                    font-size: 16px;
+                    opacity: 0.4;
+                ">✨</div>
+            `,
+            'bearded-milkshake-vanilla': `
+                <div style="
+                    position: absolute;
+                    top: 4px;
+                    right: 4px;
+                    width: 6px;
+                    height: 6px;
+                    background: #d4b896;
+                    border-radius: 50%;
+                    animation: vanilla-float 5s ease-in-out infinite;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 6px;
+                    right: 12px;
+                    width: 4px;
+                    height: 4px;
+                    background: #3e3b32;
+                    border-radius: 50%;
+                    opacity: 0.3;
+                    animation: vanilla-bean-float 4s ease-in-out infinite;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 12px;
+                    right: 6px;
+                    width: 3px;
+                    height: 3px;
+                    background: #3e3b32;
+                    border-radius: 50%;
+                    opacity: 0.2;
+                    animation: vanilla-bean-float 4s ease-in-out infinite;
+                    animation-delay: -2s;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 8px;
+                    right: 8px;
+                    font-size: 16px;
+                    opacity: 0.4;
+                ">🍦</div>
             `
         };
         
@@ -8788,6 +9304,21 @@ class NotesWiki {
                     'bearded-vivid-purple': `0 0 30px rgba(187, 96, 255, 0.5)`,
                     'bearded-oled': `0 0 25px rgba(0, 153, 255, 0.5)`,
                     'bearded-void': `0 0 20px rgba(122, 162, 247, 0.3)`,
+                    // Aquarelle Series Glow Effects
+                    'bearded-aquarelle-cymbidium': `0 0 25px rgba(212, 165, 255, 0.4), 0 0 40px rgba(212, 165, 255, 0.2)`,
+                    'bearded-aquarelle-hydrangea': `0 0 25px rgba(107, 182, 255, 0.4), 0 0 40px rgba(255, 158, 199, 0.2)`,
+                    'bearded-aquarelle-lilac': `0 0 25px rgba(196, 154, 255, 0.4), 0 0 40px rgba(196, 154, 255, 0.2)`,
+                    // Black & Series Glow Effects (Ampersand Compatibility)
+                    'bearded-black-&-amethyst': `0 0 25px rgba(198, 120, 221, 0.4)`,
+                    'bearded-black-&-amethyst-soft': `0 0 20px rgba(198, 120, 221, 0.3)`,
+                    'bearded-black-&-diamond': `0 0 25px rgba(255, 255, 255, 0.3)`,
+                    'bearded-black-&-diamond-soft': `0 0 20px rgba(255, 255, 255, 0.2)`,
+                    'bearded-black-&-emerald': `0 0 25px rgba(80, 250, 123, 0.4)`,
+                    'bearded-black-&-emerald-soft': `0 0 20px rgba(80, 250, 123, 0.3)`,
+                    'bearded-black-&-gold': `0 0 25px rgba(255, 215, 0, 0.4)`,
+                    'bearded-black-&-gold-soft': `0 0 20px rgba(255, 215, 0, 0.3)`,
+                    'bearded-black-&-ruby': `0 0 25px rgba(255, 85, 85, 0.4)`,
+                    'bearded-black-&-ruby-soft': `0 0 20px rgba(255, 85, 85, 0.3)`,
                     // New Bearded Themes Glow Effects
                     'bearded-oceanic-reversed': `0 0 25px rgba(30, 124, 232, 0.4)`,
                     'bearded-stained-purple': `0 0 30px rgba(157, 78, 221, 0.5), 0 0 50px rgba(199, 125, 255, 0.3)`,
@@ -8819,7 +9350,10 @@ class NotesWiki {
                     'bearded-hc-chocolate-espresso': `0 0 35px rgba(210, 105, 30, 0.6), 0 0 60px rgba(218, 165, 32, 0.4)`,
                     'bearded-hc-flurry': `0 0 35px rgba(0, 191, 255, 0.6), 0 0 60px rgba(135, 206, 235, 0.4)`,
                     // Special Bearded Collection Glow Effects
-                    'bearded-themanopia': `0 0 30px rgba(255, 107, 157, 0.5), 0 0 50px rgba(196, 69, 105, 0.3)`
+                    'bearded-themanopia': `0 0 30px rgba(255, 107, 157, 0.5), 0 0 50px rgba(196, 69, 105, 0.3)`,
+                    // Final Featured and Milkshake Variants Glow Effects
+                    'bearded-feat-gold-d-raynh-light': `0 0 25px rgba(212, 165, 32, 0.4), 0 0 40px rgba(199, 147, 16, 0.2)`,
+                    'bearded-milkshake-vanilla': `0 0 25px rgba(212, 184, 150, 0.4), 0 0 40px rgba(181, 160, 133, 0.2)`
                 };
                 
                 card.style.boxShadow = hoverShadows[themeId] || `0 4px 12px ${colors.accent}30`;

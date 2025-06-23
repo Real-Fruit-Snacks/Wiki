@@ -1,0 +1,151 @@
+/* Bearded Black & Diamond Soft Theme Variables */
+:root[data-theme="bearded-black-&-diamond-soft"] {
+    /* Background Colors - Softer black with gray undertones */
+    --bg-primary: #0a0a0c;
+    --bg-secondary: #121216;
+    --bg-sidebar: #0e0e11;
+    --bg-code: #121216;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.03);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #0a0a0cee;
+    --bg-tooltip: #121216;
+    --bg-input: #121216;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #cce9f5;
+    --text-code: #a3d4e5;
+    --text-inverse: #000000;
+    --button-text: #e5e5ea;
+    
+    /* Text Colors */
+    --text-primary: #e5e5ea;
+    --text-secondary: #d0d0d8;
+    --text-muted: #808090;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors - Soft diamond (muted crystal blue) */
+    --accent-primary: #cce9f5;
+    --accent-secondary: #ddf2fa;
+    --accent-warning: #f5d4a3;
+    --accent-error: #f5a3a3;
+    --accent-info: var(--accent-primary);
+    --accent-success: #a3f5b8;
+    
+    /* Border Colors */
+    --border-primary: #1a1a20;
+    --border-secondary: #15151a;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #000000;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.6);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.7), 0 2px 4px -1px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.8), 0 4px 6px -2px rgba(0, 0, 0, 0.7);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(204, 233, 245, 0.1);
+    --bg-code-block: #121216;
+}
+
+/* Syntax Highlighting - Bearded Black & Diamond Soft Theme */
+:root[data-theme="bearded-black-&-diamond-soft"] .token.comment,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.prolog,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.doctype,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.cdata {
+    color: #606080;
+}
+
+:root[data-theme="bearded-black-&-diamond-soft"] .token.punctuation {
+    color: #d0d0d8;
+}
+
+:root[data-theme="bearded-black-&-diamond-soft"] .token.property,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.tag,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.boolean,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.number,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.constant,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.symbol,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.deleted {
+    color: #f5d4a3;
+}
+
+:root[data-theme="bearded-black-&-diamond-soft"] .token.selector,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.attr-name,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.string,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.char,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.builtin,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.inserted {
+    color: #a3f5b8;
+}
+
+:root[data-theme="bearded-black-&-diamond-soft"] .token.operator,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.entity,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.url,
+:root[data-theme="bearded-black-&-diamond-soft"] .language-css .token.string,
+:root[data-theme="bearded-black-&-diamond-soft"] .style .token.string {
+    color: #cce9f5;
+    background: transparent;
+}
+
+:root[data-theme="bearded-black-&-diamond-soft"] .token.atrule,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.attr-value,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.keyword {
+    color: #a3d4e5;
+}
+
+:root[data-theme="bearded-black-&-diamond-soft"] .token.function,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.class-name {
+    color: #f5a3a3;
+}
+
+:root[data-theme="bearded-black-&-diamond-soft"] .token.regex,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.important,
+:root[data-theme="bearded-black-&-diamond-soft"] .token.variable {
+    color: #f5d4a3;
+}
+
+/* Scrollbar Bearded Black & Diamond Soft Theme */
+:root[data-theme="bearded-black-&-diamond-soft"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-black-&-diamond-soft"] ::-webkit-scrollbar-thumb {
+    background: #1a1a20;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-black-&-diamond-soft"] ::-webkit-scrollbar-thumb:hover {
+    background: #cce9f5;
+}
+
+/* Firefox Scrollbar Bearded Black & Diamond Soft Theme */
+:root[data-theme="bearded-black-&-diamond-soft"] * {
+    scrollbar-color: #1a1a20 var(--bg-primary);
+}
+
+/* Soft diamond glow effects */
+:root[data-theme="bearded-black-&-diamond-soft"] .tab.active {
+    border-bottom: 2px solid #cce9f5;
+    box-shadow: 0 2px 8px rgba(204, 233, 245, 0.15);
+}
+
+:root[data-theme="bearded-black-&-diamond-soft"] button:hover,
+:root[data-theme="bearded-black-&-diamond-soft"] .button:hover {
+    box-shadow: 0 0 12px rgba(204, 233, 245, 0.2);
+}
+
+:root[data-theme="bearded-black-&-diamond-soft"] .note-link:hover {
+    border-color: #cce9f5;
+    background: rgba(204, 233, 245, 0.05);
+}

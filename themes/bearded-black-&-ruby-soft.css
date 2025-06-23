@@ -1,0 +1,151 @@
+/* Bearded Black & Ruby Soft Theme Variables */
+:root[data-theme="bearded-black-&-ruby-soft"] {
+    /* Background Colors - Softer black with warm undertones */
+    --bg-primary: #0c0a0a;
+    --bg-secondary: #161212;
+    --bg-sidebar: #100e0e;
+    --bg-code: #161212;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.03);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #0c0a0aee;
+    --bg-tooltip: #161212;
+    --bg-input: #161212;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #e57285;
+    --text-code: #f596a3;
+    --text-inverse: #000000;
+    --button-text: #eae0e0;
+    
+    /* Text Colors */
+    --text-primary: #eae0e0;
+    --text-secondary: #d8c8c8;
+    --text-muted: #907070;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors - Soft ruby red */
+    --accent-primary: #e57285;
+    --accent-secondary: #f596a3;
+    --accent-warning: #e5a872;
+    --accent-error: #f55872;
+    --accent-info: var(--accent-primary);
+    --accent-success: #72c872;
+    
+    /* Border Colors */
+    --border-primary: #201414;
+    --border-secondary: #1a1010;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.6);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.7), 0 2px 4px -1px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.8), 0 4px 6px -2px rgba(0, 0, 0, 0.7);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(229, 114, 133, 0.1);
+    --bg-code-block: #161212;
+}
+
+/* Syntax Highlighting - Bearded Black & Ruby Soft Theme */
+:root[data-theme="bearded-black-&-ruby-soft"] .token.comment,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.prolog,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.doctype,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.cdata {
+    color: #705050;
+}
+
+:root[data-theme="bearded-black-&-ruby-soft"] .token.punctuation {
+    color: #d8c8c8;
+}
+
+:root[data-theme="bearded-black-&-ruby-soft"] .token.property,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.tag,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.boolean,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.number,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.constant,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.symbol,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.deleted {
+    color: #e5a872;
+}
+
+:root[data-theme="bearded-black-&-ruby-soft"] .token.selector,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.attr-name,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.string,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.char,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.builtin,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.inserted {
+    color: #72c872;
+}
+
+:root[data-theme="bearded-black-&-ruby-soft"] .token.operator,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.entity,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.url,
+:root[data-theme="bearded-black-&-ruby-soft"] .language-css .token.string,
+:root[data-theme="bearded-black-&-ruby-soft"] .style .token.string {
+    color: #e57285;
+    background: transparent;
+}
+
+:root[data-theme="bearded-black-&-ruby-soft"] .token.atrule,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.attr-value,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.keyword {
+    color: #f596a3;
+}
+
+:root[data-theme="bearded-black-&-ruby-soft"] .token.function,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.class-name {
+    color: #f55872;
+}
+
+:root[data-theme="bearded-black-&-ruby-soft"] .token.regex,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.important,
+:root[data-theme="bearded-black-&-ruby-soft"] .token.variable {
+    color: #e5a872;
+}
+
+/* Scrollbar Bearded Black & Ruby Soft Theme */
+:root[data-theme="bearded-black-&-ruby-soft"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-black-&-ruby-soft"] ::-webkit-scrollbar-thumb {
+    background: #201414;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-black-&-ruby-soft"] ::-webkit-scrollbar-thumb:hover {
+    background: #e57285;
+}
+
+/* Firefox Scrollbar Bearded Black & Ruby Soft Theme */
+:root[data-theme="bearded-black-&-ruby-soft"] * {
+    scrollbar-color: #201414 var(--bg-primary);
+}
+
+/* Soft ruby glow effects */
+:root[data-theme="bearded-black-&-ruby-soft"] .tab.active {
+    border-bottom: 2px solid #e57285;
+    box-shadow: 0 2px 8px rgba(229, 114, 133, 0.2);
+}
+
+:root[data-theme="bearded-black-&-ruby-soft"] button:hover,
+:root[data-theme="bearded-black-&-ruby-soft"] .button:hover {
+    box-shadow: 0 0 12px rgba(229, 114, 133, 0.25);
+}
+
+:root[data-theme="bearded-black-&-ruby-soft"] .note-link:hover {
+    border-color: #e57285;
+    background: rgba(229, 114, 133, 0.05);
+}

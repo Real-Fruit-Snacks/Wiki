@@ -1,0 +1,151 @@
+/* Bearded Black & Emerald Soft Theme Variables */
+:root[data-theme="bearded-black-&-emerald-soft"] {
+    /* Background Colors - Softer black with gray undertones */
+    --bg-primary: #0a0c0a;
+    --bg-secondary: #121612;
+    --bg-sidebar: #0e110e;
+    --bg-code: #121612;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.03);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #0a0c0aee;
+    --bg-tooltip: #121612;
+    --bg-input: #121612;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #a3e5cc;
+    --text-code: #b3f5d4;
+    --text-inverse: #000000;
+    --button-text: #e5eae5;
+    
+    /* Text Colors */
+    --text-primary: #e5eae5;
+    --text-secondary: #d0d8d0;
+    --text-muted: #809080;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors - Soft emerald green */
+    --accent-primary: #a3e5cc;
+    --accent-secondary: #b3f5d4;
+    --accent-warning: #f5e5a3;
+    --accent-error: #f5a3b3;
+    --accent-info: var(--accent-primary);
+    --accent-success: #c3f5a3;
+    
+    /* Border Colors */
+    --border-primary: #1a201a;
+    --border-secondary: #151a15;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #000000;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.6);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.7), 0 2px 4px -1px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.8), 0 4px 6px -2px rgba(0, 0, 0, 0.7);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(163, 229, 204, 0.1);
+    --bg-code-block: #121612;
+}
+
+/* Syntax Highlighting - Bearded Black & Emerald Soft Theme */
+:root[data-theme="bearded-black-&-emerald-soft"] .token.comment,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.prolog,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.doctype,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.cdata {
+    color: #608060;
+}
+
+:root[data-theme="bearded-black-&-emerald-soft"] .token.punctuation {
+    color: #d0d8d0;
+}
+
+:root[data-theme="bearded-black-&-emerald-soft"] .token.property,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.tag,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.boolean,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.number,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.constant,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.symbol,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.deleted {
+    color: #f5e5a3;
+}
+
+:root[data-theme="bearded-black-&-emerald-soft"] .token.selector,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.attr-name,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.string,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.char,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.builtin,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.inserted {
+    color: #c3f5a3;
+}
+
+:root[data-theme="bearded-black-&-emerald-soft"] .token.operator,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.entity,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.url,
+:root[data-theme="bearded-black-&-emerald-soft"] .language-css .token.string,
+:root[data-theme="bearded-black-&-emerald-soft"] .style .token.string {
+    color: #a3e5cc;
+    background: transparent;
+}
+
+:root[data-theme="bearded-black-&-emerald-soft"] .token.atrule,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.attr-value,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.keyword {
+    color: #b3f5d4;
+}
+
+:root[data-theme="bearded-black-&-emerald-soft"] .token.function,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.class-name {
+    color: #f5a3b3;
+}
+
+:root[data-theme="bearded-black-&-emerald-soft"] .token.regex,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.important,
+:root[data-theme="bearded-black-&-emerald-soft"] .token.variable {
+    color: #f5e5a3;
+}
+
+/* Scrollbar Bearded Black & Emerald Soft Theme */
+:root[data-theme="bearded-black-&-emerald-soft"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-black-&-emerald-soft"] ::-webkit-scrollbar-thumb {
+    background: #1a201a;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-black-&-emerald-soft"] ::-webkit-scrollbar-thumb:hover {
+    background: #a3e5cc;
+}
+
+/* Firefox Scrollbar Bearded Black & Emerald Soft Theme */
+:root[data-theme="bearded-black-&-emerald-soft"] * {
+    scrollbar-color: #1a201a var(--bg-primary);
+}
+
+/* Soft emerald glow effects */
+:root[data-theme="bearded-black-&-emerald-soft"] .tab.active {
+    border-bottom: 2px solid #a3e5cc;
+    box-shadow: 0 2px 8px rgba(163, 229, 204, 0.15);
+}
+
+:root[data-theme="bearded-black-&-emerald-soft"] button:hover,
+:root[data-theme="bearded-black-&-emerald-soft"] .button:hover {
+    box-shadow: 0 0 12px rgba(163, 229, 204, 0.2);
+}
+
+:root[data-theme="bearded-black-&-emerald-soft"] .note-link:hover {
+    border-color: #a3e5cc;
+    background: rgba(163, 229, 204, 0.05);
+}

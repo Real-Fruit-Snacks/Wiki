@@ -1,0 +1,158 @@
+/* Bearded Aquarelle Cymbidium Theme Variables */
+:root[data-theme="bearded-aquarelle-cymbidium"] {
+    /* Background Colors */
+    --bg-primary: #1a1b27;
+    --bg-secondary: #252633;
+    --bg-sidebar: #1e1f2b;
+    --bg-code: #252633;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #1a1b27ee;
+    --bg-tooltip: #252633;
+    --bg-input: #252633;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #d4a5ff;
+    --text-code: #f5a3d9;
+    --text-inverse: #000000;
+    --button-text: #e6e8f0;
+    
+    /* Text Colors */
+    --text-primary: #e6e8f0;
+    --text-secondary: #d2d4dc;
+    --text-muted: #a3a5b3;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors - Cymbidium orchid inspired */
+    --accent-primary: #d4a5ff;
+    --accent-secondary: #e6c7ff;
+    --accent-warning: #ffd966;
+    --accent-error: #ff7878;
+    --accent-info: var(--accent-primary);
+    --accent-success: #78ffa6;
+    
+    /* Border Colors */
+    --border-primary: #30323e;
+    --border-secondary: #292a36;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #1a1b27;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(212, 165, 255, 0.1);
+    --bg-code-block: #252633;
+}
+
+/* Syntax Highlighting - Bearded Aquarelle Cymbidium Theme */
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.comment,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.prolog,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.doctype,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.cdata {
+    color: #686b78;
+}
+
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.punctuation {
+    color: #d2d4dc;
+}
+
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.property,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.tag,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.boolean,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.number,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.constant,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.symbol,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.deleted {
+    color: #ffd966;
+}
+
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.selector,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.attr-name,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.string,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.char,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.builtin,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.inserted {
+    color: #78ffa6;
+}
+
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.operator,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.entity,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.url,
+:root[data-theme="bearded-aquarelle-cymbidium"] .language-css .token.string,
+:root[data-theme="bearded-aquarelle-cymbidium"] .style .token.string {
+    color: #d4a5ff;
+    background: transparent;
+}
+
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.atrule,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.attr-value,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.keyword {
+    color: #b8a3ff;
+}
+
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.function,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.class-name {
+    color: #f5a3d9;
+}
+
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.regex,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.important,
+:root[data-theme="bearded-aquarelle-cymbidium"] .token.variable {
+    color: #ffd966;
+}
+
+/* Scrollbar Bearded Aquarelle Cymbidium Theme */
+:root[data-theme="bearded-aquarelle-cymbidium"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-aquarelle-cymbidium"] ::-webkit-scrollbar-thumb {
+    background: #30323e;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-aquarelle-cymbidium"] ::-webkit-scrollbar-thumb:hover {
+    background: #d4a5ff;
+}
+
+/* Firefox Scrollbar Bearded Aquarelle Cymbidium Theme */
+:root[data-theme="bearded-aquarelle-cymbidium"] * {
+    scrollbar-color: #30323e var(--bg-primary);
+}
+
+/* Aquarelle watercolor effects - Cymbidium orchid style */
+:root[data-theme="bearded-aquarelle-cymbidium"] .note-header {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(212, 165, 255, 0.1) 50%, transparent 100%);
+}
+
+:root[data-theme="bearded-aquarelle-cymbidium"] .tab.active {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(212, 165, 255, 0.05) 100%);
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+:root[data-theme="bearded-aquarelle-cymbidium"] .code-block-header {
+    background: linear-gradient(90deg, var(--bg-secondary) 0%, rgba(212, 165, 255, 0.08) 50%, transparent 100%);
+}
+
+/* Watercolor splash effects */
+:root[data-theme="bearded-aquarelle-cymbidium"] .sidebar {
+    background: linear-gradient(180deg, var(--bg-sidebar) 0%, rgba(212, 165, 255, 0.03) 100%);
+}
+
+:root[data-theme="bearded-aquarelle-cymbidium"] .search-input:focus {
+    box-shadow: 0 0 0 2px rgba(212, 165, 255, 0.3), 0 0 20px rgba(212, 165, 255, 0.1);
+}

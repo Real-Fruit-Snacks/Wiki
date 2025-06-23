@@ -1,0 +1,172 @@
+/* Bearded Aquarelle Hydrangea Theme Variables */
+:root[data-theme="bearded-aquarelle-hydrangea"] {
+    /* Background Colors */
+    --bg-primary: #1b1e29;
+    --bg-secondary: #252836;
+    --bg-sidebar: #1f222d;
+    --bg-code: #252836;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #1b1e29ee;
+    --bg-tooltip: #252836;
+    --bg-input: #252836;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #6bb6ff;
+    --text-code: #ff9ec7;
+    --text-inverse: #000000;
+    --button-text: #e4e7f0;
+    
+    /* Text Colors */
+    --text-primary: #e4e7f0;
+    --text-secondary: #d0d3dc;
+    --text-muted: #a1a4b3;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors - Hydrangea blue-pink inspired */
+    --accent-primary: #6bb6ff;
+    --accent-secondary: #9dd0ff;
+    --accent-warning: #ffcc66;
+    --accent-error: #ff7a8a;
+    --accent-info: var(--accent-primary);
+    --accent-success: #7aff9e;
+    
+    /* Border Colors */
+    --border-primary: #313441;
+    --border-secondary: #2a2d39;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #1b1e29;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(107, 182, 255, 0.1);
+    --bg-code-block: #252836;
+}
+
+/* Syntax Highlighting - Bearded Aquarelle Hydrangea Theme */
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.comment,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.prolog,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.doctype,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.cdata {
+    color: #6a6d7a;
+}
+
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.punctuation {
+    color: #d0d3dc;
+}
+
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.property,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.tag,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.boolean,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.number,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.constant,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.symbol,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.deleted {
+    color: #ffcc66;
+}
+
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.selector,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.attr-name,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.string,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.char,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.builtin,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.inserted {
+    color: #7aff9e;
+}
+
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.operator,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.entity,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.url,
+:root[data-theme="bearded-aquarelle-hydrangea"] .language-css .token.string,
+:root[data-theme="bearded-aquarelle-hydrangea"] .style .token.string {
+    color: #6bb6ff;
+    background: transparent;
+}
+
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.atrule,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.attr-value,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.keyword {
+    color: #a394ff;
+}
+
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.function,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.class-name {
+    color: #ff9ec7;
+}
+
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.regex,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.important,
+:root[data-theme="bearded-aquarelle-hydrangea"] .token.variable {
+    color: #ffcc66;
+}
+
+/* Scrollbar Bearded Aquarelle Hydrangea Theme */
+:root[data-theme="bearded-aquarelle-hydrangea"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-aquarelle-hydrangea"] ::-webkit-scrollbar-thumb {
+    background: #313441;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-aquarelle-hydrangea"] ::-webkit-scrollbar-thumb:hover {
+    background: #6bb6ff;
+}
+
+/* Firefox Scrollbar Bearded Aquarelle Hydrangea Theme */
+:root[data-theme="bearded-aquarelle-hydrangea"] * {
+    scrollbar-color: #313441 var(--bg-primary);
+}
+
+/* Aquarelle watercolor effects - Hydrangea blue-pink style */
+:root[data-theme="bearded-aquarelle-hydrangea"] .note-header {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(107, 182, 255, 0.1) 40%, rgba(255, 158, 199, 0.05) 70%, transparent 100%);
+}
+
+:root[data-theme="bearded-aquarelle-hydrangea"] .tab.active {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(107, 182, 255, 0.06) 100%);
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+:root[data-theme="bearded-aquarelle-hydrangea"] .code-block-header {
+    background: linear-gradient(90deg, var(--bg-secondary) 0%, rgba(107, 182, 255, 0.08) 30%, rgba(255, 158, 199, 0.04) 70%, transparent 100%);
+}
+
+/* Watercolor splash effects with hydrangea colors */
+:root[data-theme="bearded-aquarelle-hydrangea"] .sidebar {
+    background: linear-gradient(180deg, var(--bg-sidebar) 0%, rgba(107, 182, 255, 0.03) 50%, rgba(255, 158, 199, 0.02) 100%);
+}
+
+:root[data-theme="bearded-aquarelle-hydrangea"] .search-input:focus {
+    box-shadow: 0 0 0 2px rgba(107, 182, 255, 0.3), 0 0 20px rgba(107, 182, 255, 0.1);
+}
+
+/* Subtle hydrangea petal pattern overlay */
+:root[data-theme="bearded-aquarelle-hydrangea"] .note-content::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 20% 30%, rgba(107, 182, 255, 0.02) 0%, transparent 40%), 
+                radial-gradient(circle at 80% 70%, rgba(255, 158, 199, 0.015) 0%, transparent 40%);
+    z-index: -1;
+}

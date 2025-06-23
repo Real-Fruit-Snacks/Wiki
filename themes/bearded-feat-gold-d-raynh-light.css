@@ -1,0 +1,196 @@
+/* Bearded Theme - Featured Gold D Raynh Light
+   Light version with bright background and golden accents */
+
+:root {
+    --primary-bg: #fdf6e3;
+    --secondary-bg: #fefbf4;
+    --accent: #d4a520;
+    --text-primary: #2e3440;
+    --text-secondary: #5c6370;
+    --text-muted: #7c8390;
+    --border-color: #e8ddc7;
+    --shadow-color: rgba(212, 165, 32, 0.1);
+    --hover-bg: #f9f2df;
+    --active-bg: #f4e9cc;
+    --selection-bg: rgba(212, 165, 32, 0.2);
+    --link-color: #c79310;
+    --link-hover: #d4a520;
+    --success-color: #7cb342;
+    --warning-color: #ffa726;
+    --error-color: #e53935;
+    --info-color: #42a5f5;
+    --scrollbar-bg: #fefbf4;
+    --scrollbar-thumb: #d4a520;
+    --scrollbar-thumb-hover: #c79310;
+    --tooltip-bg: #d4a520;
+    --tooltip-text: #fdf6e3;
+    --modal-overlay: rgba(46, 52, 64, 0.6);
+    --input-bg: #fefbf4;
+    --input-border: #e8ddc7;
+    --input-focus-border: #d4a520;
+    --dropdown-hover: #f9f2df;
+    --badge-bg: rgba(212, 165, 32, 0.15);
+    --badge-text: #c79310;
+    --table-header-bg: #f9f2df;
+    --table-border: #e8ddc7;
+    --table-row-hover: #fefbf4;
+    
+    /* Syntax highlighting */
+    --syntax-comment: #93a1a1;
+    --syntax-keyword: #d4a520;
+    --syntax-string: #7cb342;
+    --syntax-number: #ffa726;
+    --syntax-function: #42a5f5;
+    --syntax-variable: #e53935;
+    --syntax-constant: #ab47bc;
+    --syntax-tag: #c79310;
+    --syntax-attribute: #ff7043;
+    --syntax-value: #7cb342;
+    --syntax-unit: #ffa726;
+    --syntax-pseudo: #ab47bc;
+    --syntax-regex: #00acc1;
+    --syntax-important: #e53935;
+    --syntax-operator: #5c6370;
+    --syntax-punctuation: #7c8390;
+    
+    /* Theme-specific additions */
+    --glow-color: rgba(212, 165, 32, 0.4);
+    --shine-gradient: linear-gradient(135deg, rgba(212, 165, 32, 0.1), transparent);
+    --gold-reflection: linear-gradient(90deg, transparent, rgba(212, 165, 32, 0.2), transparent);
+}
+
+/* Golden shine effect on headers */
+.note-content h1::before,
+.note-content h2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--gold-reflection);
+    animation: goldShine 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes goldShine {
+    0% { left: -100%; }
+    50%, 100% { left: 100%; }
+}
+
+/* Golden glow on focused elements */
+input:focus,
+textarea:focus,
+.search-box:focus {
+    box-shadow: 0 0 0 3px var(--glow-color);
+}
+
+/* Subtle gold sparkle effect */
+.header {
+    position: relative;
+    overflow: hidden;
+}
+
+.header::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(212, 165, 32, 0.1) 0%, transparent 70%);
+    animation: sparkle 20s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes sparkle {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Enhanced code blocks with golden border */
+.code-block {
+    border-left: 3px solid var(--accent);
+    background: linear-gradient(135deg, var(--secondary-bg), var(--primary-bg));
+}
+
+/* Golden accent on blockquotes */
+blockquote {
+    border-left: 4px solid var(--accent);
+    background: var(--shine-gradient);
+}
+
+/* Enhanced badges with golden shine */
+.badge {
+    position: relative;
+    overflow: hidden;
+}
+
+.badge::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: rotate(45deg);
+    animation: badgeShine 3s ease-in-out infinite;
+}
+
+@keyframes badgeShine {
+    0%, 100% { transform: translateX(-100%) rotate(45deg); }
+    50% { transform: translateX(200%) rotate(45deg); }
+}
+
+/* Golden hour lighting effect on images */
+.note-content img {
+    filter: brightness(1.05) contrast(0.95) sepia(0.1);
+    transition: filter 0.3s ease;
+}
+
+.note-content img:hover {
+    filter: brightness(1.1) contrast(1) sepia(0);
+}
+
+/* Luxurious table styling */
+table {
+    background: var(--shine-gradient);
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+/* Golden accent on selected text */
+::selection {
+    background: var(--selection-bg);
+    color: var(--text-primary);
+}
+
+/* Enhanced scrollbar with golden touch */
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--scrollbar-thumb), var(--link-color));
+}
+
+/* Golden pill-shaped tags */
+.tag {
+    background: linear-gradient(135deg, rgba(212, 165, 32, 0.1), rgba(212, 165, 32, 0.2));
+    border: 1px solid rgba(212, 165, 32, 0.3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    color: var(--link-color);
+}
+
+/* Subtle animation on theme load */
+body {
+    animation: goldFadeIn 0.5s ease-out;
+}
+
+@keyframes goldFadeIn {
+    from {
+        opacity: 0.8;
+        filter: brightness(1.2);
+    }
+    to {
+        opacity: 1;
+        filter: brightness(1);
+    }
+}
