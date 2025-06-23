@@ -51,7 +51,7 @@ This is a **single-page application (SPA)** built with vanilla JavaScript - no f
 ### Critical Architecture Issues
 
 ⚠️ **MONOLITHIC DESIGN WARNING**: The application currently suffers from severe architectural debt:
-- **11,376+ lines** in a single `script.js` file
+- **13,600+ lines** in a single `script.js` file
 - **200+ methods** in one `NotesWiki` class
 - **Difficult to maintain, test, and extend**
 
@@ -75,7 +75,7 @@ When making significant changes, consider the modular refactoring plan:
 2. **Main Application**: `script.js` - Contains the monolithic `NotesWiki` class that handles:
    - Tab management with drag-and-drop and pinning
    - Advanced search with operators (`tag:`, `author:`, `"phrase"`, `-exclude`, etc.)
-   - Theme switching (70 themes organized in 10 categories)
+   - Theme switching (150 themes organized in 11 categories including complete Bearded Collection)
    - Settings persistence via localStorage
    - Pomodoro timer, keyboard shortcuts, responsive context filtering
    - Quick Notes panel (slide-out from right side for temporary notes)
@@ -175,7 +175,7 @@ element.innerHTML = userInput; // Only for trusted SVG/static content
 
 ### Theme Categories Structure
 
-Themes are organized into 10 categories in the settings modal:
+Themes are organized into 11 categories in the settings modal:
 1. **Classic Dark** - Traditional dark themes
 2. **Classic Light** - Traditional light themes
 3. **Material Design** - Material design inspired themes
@@ -186,6 +186,7 @@ Themes are organized into 10 categories in the settings modal:
 8. **Elegant & Pastel** - Soft, muted colors
 9. **Professional** - Business-appropriate themes
 10. **Special Effects** - Themes with unique visual effects
+11. **Bearded Collection** - Complete 76-theme Bearded Theme collection with unique decorative elements
 
 ### Recent Major Features (v3.1.0 - v3.4.0)
 
@@ -283,6 +284,32 @@ When making changes to this codebase:
 - `setupCleanupHandlers()` - Sets up page lifecycle cleanup
 - `clearAllTimers()` - Cleans up all intervals/timeouts
 - `removeAllEventListeners()` - Removes stored event listeners
+
+### Font System
+
+The application includes a self-contained font loading system in `/fonts/`:
+- **Inter** - Sans-serif font for UI text
+- **JetBrains Mono** - Monospace font for code 
+- **Download script**: `./fonts/download-fonts.sh` to get open-source fonts
+- **Font options**: System, Sans-serif, Serif, Monospace, Code (JetBrains Mono)
+- **Auto-loading**: Fonts load automatically with fallback to system fonts
+- **Path detection**: Works with GitHub/GitLab Pages deployment
+
+### Theme Development
+
+**Creating New Themes**:
+1. Create CSS file in `/themes/` directory with complete color variables
+2. Add theme to appropriate category in `script.js` theme configuration
+3. Add preview colors in `getThemePreviewColors()` function
+4. Add syntax colors in `getThemeSyntaxColors()` function  
+5. Add decorative elements in `getThemeDecoration()` function
+6. Ensure `--badge-text` color provides good contrast for sidebar selected notes
+
+**Theme Card System**: Each theme has unique preview cards with:
+- Custom color palettes and syntax highlighting samples
+- Decorative elements (gradients, animations, emojis, effects)
+- Hover effects matching theme characteristics
+- Selection feedback with theme-appropriate messaging
 
 ### Release Process
 1. Update version in `package.json`
