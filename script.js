@@ -836,12 +836,15 @@ class NotesWiki {
         // Sidebar right-click menu
         document.getElementById('sidebar').addEventListener('contextmenu', (e) => {
             e.preventDefault();
+            this.dismissAllContextMenus(); // Dismiss any existing menus
             this.showSidebarContextMenu(e);
         });
         
         // Sidebar toggle button right-click menu
         document.getElementById('sidebar-toggle').addEventListener('contextmenu', (e) => {
             e.preventDefault();
+            e.stopPropagation(); // Prevent event bubbling
+            this.dismissAllContextMenus(); // Dismiss any existing menus
             this.showSidebarToggleContextMenu(e);
         });
         
@@ -879,6 +882,8 @@ class NotesWiki {
             // Only show our custom menu if there's no text selection
             if (e.target.selectionStart === e.target.selectionEnd) {
                 e.preventDefault();
+                e.stopPropagation(); // Prevent event bubbling
+                this.dismissAllContextMenus(); // Dismiss any existing menus
                 this.showSearchInputContextMenu(e);
             }
         });
@@ -1020,6 +1025,8 @@ class NotesWiki {
         // Settings button right-click menu
         document.getElementById('settings-toggle').addEventListener('contextmenu', (e) => {
             e.preventDefault();
+            e.stopPropagation(); // Prevent event bubbling
+            this.dismissAllContextMenus(); // Dismiss any existing menus
             this.showSettingsButtonContextMenu(e);
         });
         
@@ -1036,6 +1043,8 @@ class NotesWiki {
         // Tags button right-click menu
         document.getElementById('tags-button').addEventListener('contextmenu', (e) => {
             e.preventDefault();
+            e.stopPropagation(); // Prevent event bubbling to sidebar
+            this.dismissAllContextMenus(); // Dismiss any existing menus
             this.showTagsButtonContextMenu(e);
         });
         
@@ -1755,6 +1764,8 @@ class NotesWiki {
         // Timer widget context menu
         document.getElementById('timer-widget-main').addEventListener('contextmenu', (e) => {
             e.preventDefault();
+            e.stopPropagation(); // Prevent event bubbling to sidebar
+            this.dismissAllContextMenus(); // Dismiss any existing menus
             this.showTimerContextMenu(e);
         });
         
@@ -1763,6 +1774,8 @@ class NotesWiki {
             // Only show menu if clicking on empty space, not on tabs
             if (e.target === e.currentTarget || e.target.classList.contains('tabs-container')) {
                 e.preventDefault();
+                e.stopPropagation(); // Prevent event bubbling
+                this.dismissAllContextMenus(); // Dismiss any existing menus
                 this.showTabBarContextMenu(e);
             }
         });
@@ -1770,8 +1783,19 @@ class NotesWiki {
         // Close all tabs button context menu
         document.getElementById('tab-close-all-button').addEventListener('contextmenu', (e) => {
             e.preventDefault();
+            e.stopPropagation(); // Prevent event bubbling
+            this.dismissAllContextMenus(); // Dismiss any existing menus
             this.showCloseAllButtonContextMenu(e);
         });
+        
+        // Site title link click handler - navigate to index/home
+        const siteTitleLink = document.querySelector('.site-title-link');
+        if (siteTitleLink) {
+            siteTitleLink.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent default link behavior
+                this.navigateToHome();
+            });
+        }
     }
     
     handleRoute() {
@@ -2925,6 +2949,119 @@ class NotesWiki {
             
             // Show success message with a toast notification
             this.showToast('Link copied to clipboard!');
+        });
+    }
+    
+    navigateToHome() {
+        // Clear current note and show home state
+        this.currentNote = null;
+        this.currentNotePath = null;
+        
+        // Update URL to home
+        window.history.pushState(null, null, '#/');
+        
+        // Clear main content and show the notes index
+        const contentDiv = document.getElementById('content');
+        if (contentDiv) {
+            contentDiv.innerHTML = '';
+        }
+        
+        // Clear active note highlighting in sidebar
+        const sidebarItems = document.querySelectorAll('.sidebar-item.active');
+        sidebarItems.forEach(item => item.classList.remove('active'));
+        
+        // Show index/welcome message
+        this.showIndexContent();
+        
+        // Update tab if there's an active tab
+        if (this.activeTabId && this.tabs.has(this.activeTabId)) {
+            const tab = this.tabs.get(this.activeTabId);
+            if (!tab.isPinned) {
+                // Update tab to show home
+                tab.title = 'Home';
+                tab.path = '/';
+                this.updateTabDisplay(this.activeTabId);
+            }
+        }
+        
+        // Show toast message
+        this.showToast('Navigated to home', 'info');
+    }
+    
+    showIndexContent() {
+        const contentDiv = document.getElementById('content');
+        if (!contentDiv) return;
+        
+        // Create welcome content
+        const welcomeHTML = `
+            <div class="welcome-content" style="
+                padding: 2rem;
+                text-align: center;
+                max-width: 600px;
+                margin: 0 auto;
+            ">
+                <h1 style="color: var(--text-primary); margin-bottom: 1rem;">
+                    Welcome to Notes Wiki
+                </h1>
+                <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">
+                    Select a note from the sidebar to begin reading, or use the search function to find specific content.
+                </p>
+                <div style="
+                    display: flex;
+                    gap: 1rem;
+                    justify-content: center;
+                    flex-wrap: wrap;
+                ">
+                    <button onclick="document.getElementById('search-input').focus()" style="
+                        background: var(--accent-primary);
+                        color: var(--bg-primary);
+                        border: none;
+                        padding: 0.75rem 1.5rem;
+                        border-radius: var(--radius-md);
+                        cursor: pointer;
+                        font-weight: 500;
+                        transition: all var(--transition-fast);
+                    " onmouseenter="this.style.opacity='0.9'" onmouseleave="this.style.opacity='1'">
+                        Start Searching
+                    </button>
+                    <button onclick="document.querySelector('.sidebar-item')?.click()" style="
+                        background: var(--bg-secondary);
+                        color: var(--text-primary);
+                        border: 1px solid var(--border-primary);
+                        padding: 0.75rem 1.5rem;
+                        border-radius: var(--radius-md);
+                        cursor: pointer;
+                        font-weight: 500;
+                        transition: all var(--transition-fast);
+                    " onmouseenter="this.style.backgroundColor='var(--bg-hover)'" onmouseleave="this.style.backgroundColor='var(--bg-secondary)'">
+                        Browse Notes
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        contentDiv.innerHTML = welcomeHTML;
+    }
+    
+    dismissAllContextMenus() {
+        // Remove all existing context menus
+        const existingMenus = document.querySelectorAll([
+            '.sidebar-context-menu',
+            '.sidebar-toggle-context-menu', 
+            '.timer-context-menu',
+            '.tab-bar-context-menu',
+            '.close-all-context-menu',
+            '.filter-context-menu',
+            '.search-input-context-menu',
+            '.settings-context-menu',
+            '.note-context-menu',
+            '.tab-context-menu'
+        ].join(', '));
+        
+        existingMenus.forEach(menu => {
+            if (menu && menu.parentNode) {
+                menu.remove();
+            }
         });
     }
     
@@ -5077,14 +5214,14 @@ class NotesWiki {
                 <div class="theme-card-main-content" style="position: relative; z-index: 10;">
                     <button class="theme-favorite-btn" data-theme-id="${theme.id}" title="${isFavorited ? 'Remove from favorites' : 'Add to favorites'}" style="
                         position: absolute;
-                        top: 8px;
+                        bottom: 8px;
                         right: 8px;
-                        background: ${isFavorited ? previewColors.accent : 'rgba(0,0,0,0.5)'};
+                        background: ${isFavorited ? previewColors.accent : 'rgba(0,0,0,0.6)'};
                         color: ${isFavorited ? previewColors.bg : '#ffffff'};
                         border: none;
                         border-radius: 50%;
-                        width: 24px;
-                        height: 24px;
+                        width: 26px;
+                        height: 26px;
                         cursor: pointer;
                         display: flex;
                         align-items: center;
@@ -5092,6 +5229,7 @@ class NotesWiki {
                         z-index: 20;
                         transition: all 0.2s ease;
                         backdrop-filter: blur(4px);
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
                     ">
                         <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
