@@ -14395,6 +14395,66 @@ class NotesWiki {
         ];
         
         if (isPomodoroEnabled) {
+            // Add separator for pomodoro presets
+            menuItems.push({
+                label: '── Quick Presets ──',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"/></svg>`,
+                action: () => {},
+                isSeparator: true
+            });
+            
+            // Get current preset name
+            const currentPresetName = this.getCurrentPresetName();
+            
+            // Add preset options
+            const presets = [
+                {
+                    name: 'Classic',
+                    work: 25,
+                    shortBreak: 5,
+                    longBreak: 15,
+                    description: '25/5/15 min'
+                },
+                {
+                    name: 'Extended',
+                    work: 50,
+                    shortBreak: 10,
+                    longBreak: 20,
+                    description: '50/10/20 min'
+                },
+                {
+                    name: 'Short Focus',
+                    work: 15,
+                    shortBreak: 5,
+                    longBreak: 15,
+                    description: '15/5/15 min'
+                },
+                {
+                    name: 'Long Focus',
+                    work: 45,
+                    shortBreak: 15,
+                    longBreak: 30,
+                    description: '45/15/30 min'
+                },
+                {
+                    name: 'Deep Work',
+                    work: 90,
+                    shortBreak: 20,
+                    longBreak: 30,
+                    description: '90/20/30 min'
+                }
+            ];
+            
+            presets.forEach(preset => {
+                const isCurrentPreset = currentPresetName === preset.name;
+                menuItems.push({
+                    label: `${preset.name} (${preset.description})`,
+                    icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">${isCurrentPreset ? '<path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>' : '<circle cx="10" cy="10" r="6" stroke="currentColor" stroke-width="2" fill="none"/>'}</svg>`,
+                    action: () => this.applyPomodoroPreset(preset),
+                    className: isCurrentPreset ? 'active' : ''
+                });
+            });
+            
             menuItems.push({
                 label: 'Pomodoro Settings',
                 icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>`,
@@ -14411,24 +14471,30 @@ class NotesWiki {
         // Build menu
         menuItems.forEach(item => {
             const menuItem = document.createElement('div');
-            menuItem.className = `context-menu-item${item.className ? ' ' + item.className : ''}`;
             
-            const iconSpan = document.createElement('span');
-            iconSpan.className = 'context-menu-icon';
-            iconSpan.innerHTML = item.icon;
-            
-            const labelSpan = document.createElement('span');
-            labelSpan.className = 'context-menu-label';
-            labelSpan.textContent = item.label;
-            
-            menuItem.appendChild(iconSpan);
-            menuItem.appendChild(labelSpan);
-            
-            // Add click handler
-            menuItem.addEventListener('click', () => {
-                item.action();
-                contextMenu.remove();
-            });
+            if (item.isSeparator) {
+                menuItem.className = 'context-menu-separator';
+                menuItem.textContent = item.label;
+            } else {
+                menuItem.className = `context-menu-item${item.className ? ' ' + item.className : ''}`;
+                
+                const iconSpan = document.createElement('span');
+                iconSpan.className = 'context-menu-icon';
+                iconSpan.innerHTML = item.icon;
+                
+                const labelSpan = document.createElement('span');
+                labelSpan.className = 'context-menu-label';
+                labelSpan.textContent = item.label;
+                
+                menuItem.appendChild(iconSpan);
+                menuItem.appendChild(labelSpan);
+                
+                // Add click handler
+                menuItem.addEventListener('click', () => {
+                    item.action();
+                    contextMenu.remove();
+                });
+            }
             
             contextMenu.appendChild(menuItem);
         });
@@ -14717,6 +14783,71 @@ class NotesWiki {
         
         const message = `Open Tabs (${this.tabs.size}):\n\n${tabList}`;
         alert(message);
+    }
+    
+    getCurrentPresetName() {
+        // Define preset configurations
+        const presets = [
+            { name: 'Classic', work: 25, shortBreak: 5, longBreak: 15 },
+            { name: 'Extended', work: 50, shortBreak: 10, longBreak: 20 },
+            { name: 'Short Focus', work: 15, shortBreak: 5, longBreak: 15 },
+            { name: 'Long Focus', work: 45, shortBreak: 15, longBreak: 30 },
+            { name: 'Deep Work', work: 90, shortBreak: 20, longBreak: 30 }
+        ];
+        
+        // Check if current settings match any preset
+        const currentSettings = {
+            work: this.settings.pomodoroWorkMinutes,
+            shortBreak: this.settings.pomodoroShortBreakMinutes,
+            longBreak: this.settings.pomodoroLongBreakMinutes
+        };
+        
+        const matchingPreset = presets.find(preset => 
+            preset.work === currentSettings.work &&
+            preset.shortBreak === currentSettings.shortBreak &&
+            preset.longBreak === currentSettings.longBreak
+        );
+        
+        return matchingPreset ? matchingPreset.name : 'Custom';
+    }
+    
+    applyPomodoroPreset(preset) {
+        // Stop timer if running
+        if (this.timerRunning) {
+            this.toggleTimer();
+        }
+        
+        // Reset timer
+        this.resetTimer();
+        
+        // Apply preset values
+        this.settings.pomodoroWorkMinutes = preset.work;
+        this.settings.pomodoroShortBreakMinutes = preset.shortBreak;
+        this.settings.pomodoroLongBreakMinutes = preset.longBreak;
+        
+        // Save settings
+        this.saveSettings();
+        
+        // Update settings UI if it's open
+        const workMinutesInput = document.getElementById('pomodoro-work-minutes');
+        const shortBreakInput = document.getElementById('pomodoro-short-break-minutes');
+        const longBreakInput = document.getElementById('pomodoro-long-break-minutes');
+        
+        if (workMinutesInput) workMinutesInput.value = preset.work;
+        if (shortBreakInput) shortBreakInput.value = preset.shortBreak;
+        if (longBreakInput) longBreakInput.value = preset.longBreak;
+        
+        // Reset pomodoro mode to work
+        this.pomodoroMode = 'work';
+        this.pomodoroSessionCount = 0;
+        
+        // Update timer target and UI
+        this.setPomodoroTarget();
+        this.updateTimerUI();
+        this.updateTimerDisplay();
+        
+        // Show confirmation
+        this.showToast(`Applied ${preset.name} preset (${preset.description})`, 'success');
     }
     
     setupCleanupHandlers() {
