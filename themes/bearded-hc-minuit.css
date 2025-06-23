@@ -1,0 +1,142 @@
+/* Bearded Theme - High Contrast - Minuit */
+.theme-bearded-hc-minuit {
+    /* High Contrast - Minuit - Midnight French elegance */
+    --primary-bg: #0d0d1a;
+    --secondary-bg: #1a1a33;
+    --accent-bg: #26264d;
+    --text-primary: #ffffff;
+    --text-secondary: #e6e6ff;
+    --accent-color: #6366f1;
+    --accent-secondary: #4f46e5;
+    --link-color: #818cf8;
+    --link-hover: #a5b4fc;
+    --border-color: #404080;
+    --shadow-color: rgba(99, 102, 241, 0.3);
+    
+    /* Bearded High Contrast Syntax Colors */
+    --syntax-keyword: #6366f1;
+    --syntax-string: #10b981;
+    --syntax-number: #f59e0b;
+    --syntax-function: #06b6d4;
+    --syntax-comment: #6b7280;
+    --syntax-class: #ec4899;
+    --syntax-variable: #ffffff;
+    --syntax-operator: #8b5cf6;
+    --syntax-punctuation: #e6e6ff;
+    
+    /* UI Elements */
+    --button-bg: #26264d;
+    --button-hover: #404080;
+    --input-bg: #1a1a33;
+    --input-border: #404080;
+    --dropdown-bg: #1a1a33;
+    --dropdown-hover: #26264d;
+    --modal-overlay: rgba(13, 13, 26, 0.95);
+    
+    /* Feature Colors */
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --error-color: #ef4444;
+    --info-color: #3b82f6;
+    
+    /* Bearded Signature */
+    --beard-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    --beard-shadow: 0 0 40px rgba(99, 102, 241, 0.5);
+    --code-bg: #111122;
+    --inline-code-bg: #1e1e3f;
+    --scrollbar-bg: #0d0d1a;
+    --scrollbar-thumb: #404080;
+    --scrollbar-hover: #6060c0;
+    --search-bg: #1a1a33;
+    --search-border: #404080;
+    --search-focus-border: #6366f1;
+    --tag-bg: #26264d;
+    --tag-text: #6366f1;
+    --tag-hover: #404080;
+    
+    /* Minuit HC Special */
+    --minuit-glow: 0 0 35px rgba(99, 102, 241, 0.6);
+    --minuit-accent: #6366f1;
+    --minuit-elegance: #8b5cf6;
+    --minuit-french: 0 0 50px rgba(139, 92, 246, 0.4);
+    --badge-text: #0d0d1a;
+}
+
+/* French elegance effects */
+.theme-bearded-hc-minuit .note-content h1::before {
+    content: "❖";
+    display: inline-block;
+    margin-right: 0.5rem;
+    color: var(--minuit-accent);
+    filter: drop-shadow(var(--minuit-glow));
+    animation: minuitElegance 3s ease-in-out infinite;
+}
+
+@keyframes minuitElegance {
+    0%, 100% { 
+        opacity: 0.8;
+        transform: scale(1) rotate(0deg);
+        filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.6));
+    }
+    50% { 
+        opacity: 1;
+        transform: scale(1.2) rotate(180deg);
+        filter: drop-shadow(0 0 40px rgba(139, 92, 246, 0.8));
+    }
+}
+
+.theme-bearded-hc-minuit .tab.active {
+    background: var(--accent-bg);
+    border-top: 3px solid var(--minuit-accent);
+    box-shadow: inset 0 3px 20px rgba(99, 102, 241, 0.15);
+    border-left: 2px solid rgba(139, 92, 246, 0.5);
+    border-right: 2px solid rgba(139, 92, 246, 0.5);
+}
+
+.theme-bearded-hc-minuit .search-container input:focus {
+    border-color: var(--minuit-accent);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.3),
+                var(--minuit-glow);
+    background: var(--primary-bg);
+}
+
+.theme-bearded-hc-minuit .note-item:hover {
+    border: 2px solid var(--minuit-accent);
+    padding-left: calc(1rem - 2px);
+    background: linear-gradient(90deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
+    color: #ffffff;
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+}
+
+.theme-bearded-hc-minuit .btn-primary {
+    background: linear-gradient(135deg, var(--minuit-accent) 0%, var(--minuit-elegance) 100%);
+    color: var(--primary-bg);
+    border: 2px solid var(--minuit-accent);
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.theme-bearded-hc-minuit .btn-primary:hover {
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+    transform: translateY(-2px);
+}
+
+.theme-bearded-hc-minuit .settings-modal h2 {
+    color: var(--minuit-accent);
+    text-shadow: var(--minuit-glow);
+    font-weight: bold;
+    font-style: italic;
+    letter-spacing: 1px;
+}
+
+.theme-bearded-hc-minuit .settings-modal h2::before {
+    content: "❖";
+    position: absolute;
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: minuitElegance 3s ease-in-out infinite;
+}

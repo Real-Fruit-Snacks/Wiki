@@ -1,0 +1,165 @@
+/* Bearded Black & Diamond Theme Variables */
+:root[data-theme="bearded-black-diamond"] {
+    /* Background Colors - Pure black with diamond brilliance */
+    --bg-primary: #000000;
+    --bg-secondary: #0a0a0a;
+    --bg-sidebar: #050505;
+    --bg-code: #0a0a0a;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #000000ee;
+    --bg-tooltip: #0a0a0a;
+    --bg-input: #0a0a0a;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #e0f7ff;
+    --text-code: #b3e5ff;
+    --text-inverse: #000000;
+    --button-text: #f0f0f0;
+    
+    /* Text Colors */
+    --text-primary: #f0f0f0;
+    --text-secondary: #e0e0e0;
+    --text-muted: #a0a0a0;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors - Diamond brilliance (crystal blue-white) */
+    --accent-primary: #e0f7ff;
+    --accent-secondary: #f0fbff;
+    --accent-warning: #ffe0b3;
+    --accent-error: #ffb3b3;
+    --accent-info: var(--accent-primary);
+    --accent-success: #b3ffcc;
+    
+    /* Border Colors */
+    --border-primary: #1a1a1a;
+    --border-secondary: #0f0f0f;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #000000;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.8);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.9), 0 2px 4px -1px rgba(0, 0, 0, 0.8);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 1), 0 4px 6px -2px rgba(0, 0, 0, 0.9);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(224, 247, 255, 0.1);
+    --bg-code-block: #0a0a0a;
+}
+
+/* Syntax Highlighting - Bearded Black & Diamond Theme */
+:root[data-theme="bearded-black-diamond"] .token.comment,
+:root[data-theme="bearded-black-diamond"] .token.prolog,
+:root[data-theme="bearded-black-diamond"] .token.doctype,
+:root[data-theme="bearded-black-diamond"] .token.cdata {
+    color: #666680;
+}
+
+:root[data-theme="bearded-black-diamond"] .token.punctuation {
+    color: #e0e0e0;
+}
+
+:root[data-theme="bearded-black-diamond"] .token.property,
+:root[data-theme="bearded-black-diamond"] .token.tag,
+:root[data-theme="bearded-black-diamond"] .token.boolean,
+:root[data-theme="bearded-black-diamond"] .token.number,
+:root[data-theme="bearded-black-diamond"] .token.constant,
+:root[data-theme="bearded-black-diamond"] .token.symbol,
+:root[data-theme="bearded-black-diamond"] .token.deleted {
+    color: #ffe0b3;
+}
+
+:root[data-theme="bearded-black-diamond"] .token.selector,
+:root[data-theme="bearded-black-diamond"] .token.attr-name,
+:root[data-theme="bearded-black-diamond"] .token.string,
+:root[data-theme="bearded-black-diamond"] .token.char,
+:root[data-theme="bearded-black-diamond"] .token.builtin,
+:root[data-theme="bearded-black-diamond"] .token.inserted {
+    color: #b3ffcc;
+}
+
+:root[data-theme="bearded-black-diamond"] .token.operator,
+:root[data-theme="bearded-black-diamond"] .token.entity,
+:root[data-theme="bearded-black-diamond"] .token.url,
+:root[data-theme="bearded-black-diamond"] .language-css .token.string,
+:root[data-theme="bearded-black-diamond"] .style .token.string {
+    color: #e0f7ff;
+    background: transparent;
+}
+
+:root[data-theme="bearded-black-diamond"] .token.atrule,
+:root[data-theme="bearded-black-diamond"] .token.attr-value,
+:root[data-theme="bearded-black-diamond"] .token.keyword {
+    color: #b3e5ff;
+}
+
+:root[data-theme="bearded-black-diamond"] .token.function,
+:root[data-theme="bearded-black-diamond"] .token.class-name {
+    color: #ffb3b3;
+}
+
+:root[data-theme="bearded-black-diamond"] .token.regex,
+:root[data-theme="bearded-black-diamond"] .token.important,
+:root[data-theme="bearded-black-diamond"] .token.variable {
+    color: #ffe0b3;
+}
+
+/* Scrollbar Bearded Black & Diamond Theme */
+:root[data-theme="bearded-black-diamond"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-black-diamond"] ::-webkit-scrollbar-thumb {
+    background: #1a1a1a;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-black-diamond"] ::-webkit-scrollbar-thumb:hover {
+    background: #e0f7ff;
+}
+
+/* Firefox Scrollbar Bearded Black & Diamond Theme */
+:root[data-theme="bearded-black-diamond"] * {
+    scrollbar-color: #1a1a1a var(--bg-primary);
+}
+
+/* Special diamond sparkle effects */
+:root[data-theme="bearded-black-diamond"] .tab.active {
+    position: relative;
+    border-bottom: 2px solid #e0f7ff;
+}
+
+:root[data-theme="bearded-black-diamond"] .tab.active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    background: #f0fbff;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 8px #e0f7ff, 0 0 16px rgba(224, 247, 255, 0.5);
+    animation: diamond-sparkle 2s ease-in-out infinite;
+}
+
+@keyframes diamond-sparkle {
+    0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+    50% { opacity: 1; transform: translateX(-50%) scale(1.2); }
+}
+
+:root[data-theme="bearded-black-diamond"] .accent-primary,
+:root[data-theme="bearded-black-diamond"] .note-link:hover {
+    text-shadow: 0 0 8px rgba(224, 247, 255, 0.5);
+}

@@ -1,0 +1,151 @@
+/* Bearded Black & Amethyst Soft Theme Variables */
+:root[data-theme="bearded-black-amethyst-soft"] {
+    /* Background Colors - Softer black with gray tones */
+    --bg-primary: #0a0a0d;
+    --bg-secondary: #12121a;
+    --bg-sidebar: #0e0e14;
+    --bg-code: #12121a;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.03);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #0a0a0dee;
+    --bg-tooltip: #12121a;
+    --bg-input: #12121a;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #d4b5ff;
+    --text-code: #e5ccff;
+    --text-inverse: #000000;
+    --button-text: #e5e5eb;
+    
+    /* Text Colors */
+    --text-primary: #e5e5eb;
+    --text-secondary: #d0d0db;
+    --text-muted: #8080a0;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors - Soft Amethyst purple */
+    --accent-primary: #d4b5ff;
+    --accent-secondary: #e5ccff;
+    --accent-warning: #ffd4a3;
+    --accent-error: #ffb3d9;
+    --accent-info: var(--accent-primary);
+    --accent-success: #b3ffb3;
+    
+    /* Border Colors */
+    --border-primary: #1a1a24;
+    --border-secondary: #151520;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #000000;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.6);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.7), 0 2px 4px -1px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.8), 0 4px 6px -2px rgba(0, 0, 0, 0.7);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(212, 181, 255, 0.1);
+    --bg-code-block: #12121a;
+}
+
+/* Syntax Highlighting - Bearded Black & Amethyst Soft Theme */
+:root[data-theme="bearded-black-amethyst-soft"] .token.comment,
+:root[data-theme="bearded-black-amethyst-soft"] .token.prolog,
+:root[data-theme="bearded-black-amethyst-soft"] .token.doctype,
+:root[data-theme="bearded-black-amethyst-soft"] .token.cdata {
+    color: #6060a0;
+}
+
+:root[data-theme="bearded-black-amethyst-soft"] .token.punctuation {
+    color: #d0d0db;
+}
+
+:root[data-theme="bearded-black-amethyst-soft"] .token.property,
+:root[data-theme="bearded-black-amethyst-soft"] .token.tag,
+:root[data-theme="bearded-black-amethyst-soft"] .token.boolean,
+:root[data-theme="bearded-black-amethyst-soft"] .token.number,
+:root[data-theme="bearded-black-amethyst-soft"] .token.constant,
+:root[data-theme="bearded-black-amethyst-soft"] .token.symbol,
+:root[data-theme="bearded-black-amethyst-soft"] .token.deleted {
+    color: #ffd4a3;
+}
+
+:root[data-theme="bearded-black-amethyst-soft"] .token.selector,
+:root[data-theme="bearded-black-amethyst-soft"] .token.attr-name,
+:root[data-theme="bearded-black-amethyst-soft"] .token.string,
+:root[data-theme="bearded-black-amethyst-soft"] .token.char,
+:root[data-theme="bearded-black-amethyst-soft"] .token.builtin,
+:root[data-theme="bearded-black-amethyst-soft"] .token.inserted {
+    color: #b3ffb3;
+}
+
+:root[data-theme="bearded-black-amethyst-soft"] .token.operator,
+:root[data-theme="bearded-black-amethyst-soft"] .token.entity,
+:root[data-theme="bearded-black-amethyst-soft"] .token.url,
+:root[data-theme="bearded-black-amethyst-soft"] .language-css .token.string,
+:root[data-theme="bearded-black-amethyst-soft"] .style .token.string {
+    color: #d4b5ff;
+    background: transparent;
+}
+
+:root[data-theme="bearded-black-amethyst-soft"] .token.atrule,
+:root[data-theme="bearded-black-amethyst-soft"] .token.attr-value,
+:root[data-theme="bearded-black-amethyst-soft"] .token.keyword {
+    color: #e5ccff;
+}
+
+:root[data-theme="bearded-black-amethyst-soft"] .token.function,
+:root[data-theme="bearded-black-amethyst-soft"] .token.class-name {
+    color: #ffb3d9;
+}
+
+:root[data-theme="bearded-black-amethyst-soft"] .token.regex,
+:root[data-theme="bearded-black-amethyst-soft"] .token.important,
+:root[data-theme="bearded-black-amethyst-soft"] .token.variable {
+    color: #ffd4a3;
+}
+
+/* Scrollbar Bearded Black & Amethyst Soft Theme */
+:root[data-theme="bearded-black-amethyst-soft"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-black-amethyst-soft"] ::-webkit-scrollbar-thumb {
+    background: #1a1a24;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-black-amethyst-soft"] ::-webkit-scrollbar-thumb:hover {
+    background: #d4b5ff;
+}
+
+/* Firefox Scrollbar Bearded Black & Amethyst Soft Theme */
+:root[data-theme="bearded-black-amethyst-soft"] * {
+    scrollbar-color: #1a1a24 var(--bg-primary);
+}
+
+/* Special soft amethyst glow effects */
+:root[data-theme="bearded-black-amethyst-soft"] .tab.active {
+    border-bottom: 2px solid #d4b5ff;
+    box-shadow: 0 2px 8px rgba(212, 181, 255, 0.2);
+}
+
+:root[data-theme="bearded-black-amethyst-soft"] button:hover,
+:root[data-theme="bearded-black-amethyst-soft"] .button:hover {
+    box-shadow: 0 0 12px rgba(212, 181, 255, 0.3);
+}
+
+:root[data-theme="bearded-black-amethyst-soft"] .note-link:hover {
+    border-color: #d4b5ff;
+    box-shadow: 0 0 8px rgba(212, 181, 255, 0.2);
+}

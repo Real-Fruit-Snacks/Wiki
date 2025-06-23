@@ -1,0 +1,212 @@
+/* Bearded Altica Theme */
+:root[data-theme="bearded-altica"] {
+    /* Base colors - Altica color scheme */
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --bg-tertiary: #1f2937;
+    --bg-hover: #374151;
+    
+    /* Text colors */
+    --text-primary: #f8fafc;
+    --text-secondary: #e2e8f0;
+    --text-muted: #94a3b8;
+    --text-link: #60a5fa;
+    --text-link-hover: #3b82f6;
+    
+    /* Accent colors - Altica blue palette */
+    --accent-primary: #3b82f6;
+    --accent-secondary: #60a5fa;
+    --accent-tertiary: #93c5fd;
+    
+    /* UI elements */
+    --border-color: #374151;
+    --border-hover: #4b5563;
+    --shadow-color: rgba(59, 130, 246, 0.15);
+    
+    /* Header */
+    --header-bg: #0f172a;
+    --header-text: #f8fafc;
+    --header-text-muted: #e2e8f0;
+    
+    /* Tabs */
+    --tab-bg: #1f2937;
+    --tab-active-bg: #374151;
+    --tab-hover-bg: #374151;
+    --tab-text: #e2e8f0;
+    --tab-active-text: #f8fafc;
+    --tab-border: #374151;
+    
+    /* Sidebar */
+    --sidebar-bg: #111827;
+    --sidebar-hover-bg: #1f2937;
+    --sidebar-active-bg: #374151;
+    --sidebar-text: #e2e8f0;
+    --sidebar-icon: #94a3b8;
+    
+    /* Content area */
+    --content-bg: #0d1117;
+    --code-bg: #0f172a;
+    --code-border: #374151;
+    --blockquote-bg: #1e293b;
+    --blockquote-border: #3b82f6;
+    
+    /* Search */
+    --search-bg: #161b22;
+    --search-border: #374151;
+    --search-focus-border: #3b82f6;
+    
+    /* Scrollbar */
+    --scrollbar-bg: #161b22;
+    --scrollbar-thumb: #4b5563;
+    --scrollbar-thumb-hover: #6b7280;
+    
+    /* Status indicators */
+    --status-info: #3b82f6;
+    --status-success: #10b981;
+    --status-warning: #f59e0b;
+    --status-error: #ef4444;
+    
+    /* Badges */
+    --badge-bg: #3b82f6;
+    --badge-text: #ffffff;
+    
+    /* Syntax highlighting */
+    --syntax-comment: #6b7280;
+    --syntax-string: #34d399;
+    --syntax-number: #fbbf24;
+    --syntax-keyword: #3b82f6;
+    --syntax-function: #60a5fa;
+    --syntax-variable: #a78bfa;
+    --syntax-constant: #f87171;
+    --syntax-class: #fb7185;
+    --syntax-operator: #94a3b8;
+    --syntax-punctuation: #e2e8f0;
+    
+    /* Altica decorative elements */
+    --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+    --gradient-secondary: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    --gradient-accent: radial-gradient(circle, #60a5fa 0%, #3b82f6 70%);
+}
+
+/* Altica-specific styling */
+:root[data-theme="bearded-altica"] .tab-item.active {
+    background: #374151;
+    border-bottom: 2px solid var(--accent-primary);
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+}
+
+/* Header Altica glow */
+:root[data-theme="bearded-altica"] .header {
+    background: var(--header-bg);
+    border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+}
+
+/* Altica button styling */
+:root[data-theme="bearded-altica"] button {
+    background: var(--gradient-primary);
+    color: #ffffff;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="bearded-altica"] button:hover {
+    background: var(--gradient-secondary);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    transform: translateY(-1px);
+}
+
+/* Code block Altica styling */
+:root[data-theme="bearded-altica"] pre {
+    background: var(--code-bg);
+    border: 1px solid #374151;
+    border-left: 4px solid var(--accent-primary);
+    box-shadow: inset 0 0 10px rgba(59, 130, 246, 0.05);
+}
+
+/* Altica link effects */
+:root[data-theme="bearded-altica"] a {
+    color: var(--accent-secondary);
+    text-decoration: none;
+    position: relative;
+}
+
+:root[data-theme="bearded-altica"] a::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--gradient-primary);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+:root[data-theme="bearded-altica"] a:hover::after {
+    transform: scaleX(1);
+}
+
+/* Search input Altica styling */
+:root[data-theme="bearded-altica"] #searchInput {
+    background: var(--search-bg);
+    border: 1px solid #374151;
+    color: var(--text-primary);
+}
+
+:root[data-theme="bearded-altica"] #searchInput:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.2);
+}
+
+/* Altica hover effects */
+:root[data-theme="bearded-altica"] .note-item:hover {
+    background: rgba(59, 130, 246, 0.05);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+}
+
+/* Scrollbar Altica styling */
+:root[data-theme="bearded-altica"] ::-webkit-scrollbar-thumb {
+    background: var(--gradient-primary);
+    border-radius: 4px;
+}
+
+:root[data-theme="bearded-altica"] ::-webkit-scrollbar-thumb:hover {
+    background: var(--gradient-secondary);
+}
+
+/* Altica selection styling */
+:root[data-theme="bearded-altica"] ::selection {
+    background: rgba(59, 130, 246, 0.3);
+    color: #f8fafc;
+}
+
+/* Headers with Altica styling */
+:root[data-theme="bearded-altica"] h1,
+:root[data-theme="bearded-altica"] h2,
+:root[data-theme="bearded-altica"] h3 {
+    color: var(--text-primary);
+    position: relative;
+}
+
+:root[data-theme="bearded-altica"] h1::after,
+:root[data-theme="bearded-altica"] h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    margin-top: 8px;
+    background: var(--gradient-primary);
+    border-radius: 2px;
+}
+
+/* Altica glow animation */
+@keyframes altica-glow {
+    0%, 100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.2); }
+    50% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+}
+
+:root[data-theme="bearded-altica"] .tab-item.active {
+    animation: altica-glow 3s ease-in-out infinite;
+}

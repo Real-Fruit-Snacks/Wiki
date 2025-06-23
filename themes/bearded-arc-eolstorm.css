@@ -1,0 +1,167 @@
+/* Bearded Arc EolStorm Theme Variables */
+:root[data-theme="bearded-arc-eolstorm"] {
+    /* Background Colors */
+    --bg-primary: #15151e;
+    --bg-secondary: #1c1c28;
+    --bg-sidebar: #181823;
+    --bg-code: #1c1c28;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #15151eee;
+    --bg-tooltip: #1c1c28;
+    --bg-input: #1c1c28;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #66c3ff;
+    --text-code: #ff6ac1;
+    --text-inverse: #000000;
+    --button-text: #e0e0e6;
+    
+    /* Text Colors */
+    --text-primary: #e0e0e6;
+    --text-secondary: #c5c5d2;
+    --text-muted: #8a8aa3;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors - Electric Storm theme */
+    --accent-primary: #66c3ff;
+    --accent-secondary: #80d0ff;
+    --accent-warning: #ffcc66;
+    --accent-error: #ff6ac1;
+    --accent-info: var(--accent-primary);
+    --accent-success: #95e06d;
+    
+    /* Border Colors */
+    --border-primary: #262636;
+    --border-secondary: #202030;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -1px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7), 0 4px 6px -2px rgba(0, 0, 0, 0.6);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(102, 195, 255, 0.1);
+    --bg-code-block: #1c1c28;
+}
+
+/* Syntax Highlighting - Bearded Arc EolStorm Theme */
+:root[data-theme="bearded-arc-eolstorm"] .token.comment,
+:root[data-theme="bearded-arc-eolstorm"] .token.prolog,
+:root[data-theme="bearded-arc-eolstorm"] .token.doctype,
+:root[data-theme="bearded-arc-eolstorm"] .token.cdata {
+    color: #5a5a7a;
+}
+
+:root[data-theme="bearded-arc-eolstorm"] .token.punctuation {
+    color: #c5c5d2;
+}
+
+:root[data-theme="bearded-arc-eolstorm"] .token.property,
+:root[data-theme="bearded-arc-eolstorm"] .token.tag,
+:root[data-theme="bearded-arc-eolstorm"] .token.boolean,
+:root[data-theme="bearded-arc-eolstorm"] .token.number,
+:root[data-theme="bearded-arc-eolstorm"] .token.constant,
+:root[data-theme="bearded-arc-eolstorm"] .token.symbol,
+:root[data-theme="bearded-arc-eolstorm"] .token.deleted {
+    color: #ffcc66;
+}
+
+:root[data-theme="bearded-arc-eolstorm"] .token.selector,
+:root[data-theme="bearded-arc-eolstorm"] .token.attr-name,
+:root[data-theme="bearded-arc-eolstorm"] .token.string,
+:root[data-theme="bearded-arc-eolstorm"] .token.char,
+:root[data-theme="bearded-arc-eolstorm"] .token.builtin,
+:root[data-theme="bearded-arc-eolstorm"] .token.inserted {
+    color: #95e06d;
+}
+
+:root[data-theme="bearded-arc-eolstorm"] .token.operator,
+:root[data-theme="bearded-arc-eolstorm"] .token.entity,
+:root[data-theme="bearded-arc-eolstorm"] .token.url,
+:root[data-theme="bearded-arc-eolstorm"] .language-css .token.string,
+:root[data-theme="bearded-arc-eolstorm"] .style .token.string {
+    color: #66c3ff;
+    background: transparent;
+}
+
+:root[data-theme="bearded-arc-eolstorm"] .token.atrule,
+:root[data-theme="bearded-arc-eolstorm"] .token.attr-value,
+:root[data-theme="bearded-arc-eolstorm"] .token.keyword {
+    color: #b77ee0;
+}
+
+:root[data-theme="bearded-arc-eolstorm"] .token.function,
+:root[data-theme="bearded-arc-eolstorm"] .token.class-name {
+    color: #ff6ac1;
+}
+
+:root[data-theme="bearded-arc-eolstorm"] .token.regex,
+:root[data-theme="bearded-arc-eolstorm"] .token.important,
+:root[data-theme="bearded-arc-eolstorm"] .token.variable {
+    color: #ffcc66;
+}
+
+/* Scrollbar Bearded Arc EolStorm Theme */
+:root[data-theme="bearded-arc-eolstorm"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-arc-eolstorm"] ::-webkit-scrollbar-thumb {
+    background: #262636;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-arc-eolstorm"] ::-webkit-scrollbar-thumb:hover {
+    background: #66c3ff;
+}
+
+/* Firefox Scrollbar Bearded Arc EolStorm Theme */
+:root[data-theme="bearded-arc-eolstorm"] * {
+    scrollbar-color: #262636 var(--bg-primary);
+}
+
+/* Special Arc EolStorm-style decorative gradients with electric feel */
+:root[data-theme="bearded-arc-eolstorm"] .note-header {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, transparent 100%);
+    position: relative;
+}
+
+:root[data-theme="bearded-arc-eolstorm"] .note-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, #66c3ff 50%, transparent 100%);
+    animation: eolstorm-lightning 3s ease-in-out infinite;
+}
+
+:root[data-theme="bearded-arc-eolstorm"] .tab.active {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+    border-top: 2px solid #66c3ff;
+}
+
+:root[data-theme="bearded-arc-eolstorm"] .code-block-header {
+    background: linear-gradient(90deg, var(--bg-secondary) 0%, transparent 100%);
+}
+
+/* EolStorm special animation */
+@keyframes eolstorm-lightning {
+    0%, 100% { opacity: 0.3; transform: translateX(0); }
+    50% { opacity: 1; transform: translateX(10px); }
+}

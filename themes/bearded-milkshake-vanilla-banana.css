@@ -1,0 +1,310 @@
+/* Bearded Milkshake Vanilla Banana Theme */
+:root[data-theme="bearded-milkshake-vanilla-banana"] {
+    /* Base colors - creamy vanilla banana milkshake palette */
+    --bg-primary: #2a281e;
+    --bg-secondary: #3a3628;
+    --bg-tertiary: #4a4532;
+    --bg-hover: #5a543c;
+    
+    /* Text colors */
+    --text-primary: #ede8e0;
+    --text-secondary: #ddd5cc;
+    --text-muted: #bdb5a8;
+    --text-link: #d4c47a;
+    --text-link-hover: #ddd190;
+    
+    /* Accent colors - vanilla banana milkshake palette */
+    --accent-primary: #d4c47a;
+    --accent-secondary: #ddd190;
+    --accent-tertiary: #e6dea6;
+    
+    /* UI elements */
+    --border-color: #5a543c;
+    --border-hover: #6a6346;
+    --shadow-color: rgba(212, 196, 122, 0.15);
+    
+    /* Header */
+    --header-bg: #25231a;
+    --header-text: #ede8e0;
+    --header-text-muted: #ddd5cc;
+    
+    /* Tabs */
+    --tab-bg: #4a4532;
+    --tab-active-bg: #5a543c;
+    --tab-hover-bg: #5a543c;
+    --tab-text: #ddd5cc;
+    --tab-active-text: #ede8e0;
+    --tab-border: #5a543c;
+    
+    /* Sidebar */
+    --sidebar-bg: #2f2d23;
+    --sidebar-hover-bg: #4a4532;
+    --sidebar-active-bg: #5a543c;
+    --sidebar-text: #ddd5cc;
+    --sidebar-icon: #bdb5a8;
+    
+    /* Content area */
+    --content-bg: #2a281e;
+    --code-bg: #25231a;
+    --code-border: #5a543c;
+    --blockquote-bg: #3a3628;
+    --blockquote-border: #d4c47a;
+    
+    /* Search */
+    --search-bg: #3a3628;
+    --search-border: #5a543c;
+    --search-focus-border: #d4c47a;
+    
+    /* Scrollbar */
+    --scrollbar-bg: #3a3628;
+    --scrollbar-thumb: #6a6346;
+    --scrollbar-thumb-hover: #7a7450;
+    
+    /* Status indicators */
+    --status-info: #d4c47a;
+    --status-success: #8eb069;
+    --status-warning: #e6dea6;
+    --status-error: #d47a7a;
+    
+    /* Badges */
+    --badge-bg: #d4c47a;
+    --badge-text: #2a281e;
+    
+    /* Syntax highlighting */
+    --syntax-comment: #b8a678;
+    --syntax-string: #e6dea6;
+    --syntax-number: #8eb069;
+    --syntax-keyword: #d4c47a;
+    --syntax-function: #ddd190;
+    --syntax-variable: #f0e8bc;
+    --syntax-constant: #d47a7a;
+    --syntax-class: #8eb069;
+    --syntax-operator: #bdb5a8;
+    --syntax-punctuation: #ddd5cc;
+    
+    /* Vanilla banana decorative elements */
+    --gradient-primary: linear-gradient(135deg, #d4c47a 0%, #ddd190 50%, #e6dea6 100%);
+    --gradient-secondary: linear-gradient(135deg, #c4b46a 0%, #d4c47a 100%);
+    --gradient-accent: radial-gradient(circle, #e6dea6 0%, #d4c47a 70%);
+    --milkshake-pattern: 
+        radial-gradient(circle at 20% 40%, rgba(212, 196, 122, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 60%, rgba(221, 209, 144, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 50% 20%, rgba(230, 222, 166, 0.08) 0%, transparent 50%);
+}
+
+/* Creamy vanilla banana background */
+:root[data-theme="bearded-milkshake-vanilla-banana"] body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--milkshake-pattern);
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.5;
+}
+
+/* Smooth vanilla hover effects */
+:root[data-theme="bearded-milkshake-vanilla-banana"] .note-item:hover {
+    background: rgba(212, 196, 122, 0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 196, 122, 0.2);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Tab creamy vanilla styling */
+:root[data-theme="bearded-milkshake-vanilla-banana"] .tab-item.active {
+    background: var(--gradient-primary);
+    color: #2a281e;
+    box-shadow: 0 4px 15px rgba(212, 196, 122, 0.3);
+    border-radius: 8px 8px 0 0;
+    font-weight: 600;
+}
+
+/* Vanilla foam headers */
+:root[data-theme="bearded-milkshake-vanilla-banana"] h1,
+:root[data-theme="bearded-milkshake-vanilla-banana"] h2,
+:root[data-theme="bearded-milkshake-vanilla-banana"] h3 {
+    background: var(--gradient-primary);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+}
+
+:root[data-theme="bearded-milkshake-vanilla-banana"] h1::after,
+:root[data-theme="bearded-milkshake-vanilla-banana"] h2::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    margin-top: 8px;
+    background: var(--gradient-primary);
+    border-radius: 2px;
+    opacity: 0.8;
+}
+
+/* Creamy button effects */
+:root[data-theme="bearded-milkshake-vanilla-banana"] button {
+    background: var(--gradient-primary);
+    color: #2a281e;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+:root[data-theme="bearded-milkshake-vanilla-banana"] button:hover {
+    background: var(--gradient-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 196, 122, 0.3);
+}
+
+/* Code block vanilla banana styling */
+:root[data-theme="bearded-milkshake-vanilla-banana"] pre {
+    background: var(--code-bg);
+    border: 1px solid rgba(212, 196, 122, 0.2);
+    border-left: 4px solid var(--accent-primary);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(212, 196, 122, 0.1);
+}
+
+/* Smooth link effects */
+:root[data-theme="bearded-milkshake-vanilla-banana"] a {
+    color: var(--accent-secondary);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+:root[data-theme="bearded-milkshake-vanilla-banana"] a::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--gradient-primary);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+:root[data-theme="bearded-milkshake-vanilla-banana"] a:hover::after {
+    transform: scaleX(1);
+}
+
+/* Search input creamy styling */
+:root[data-theme="bearded-milkshake-vanilla-banana"] #searchInput {
+    background: var(--search-bg);
+    border: 1px solid rgba(212, 196, 122, 0.2);
+    border-radius: 8px;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="bearded-milkshake-vanilla-banana"] #searchInput:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 15px rgba(212, 196, 122, 0.2);
+}
+
+/* Scrollbar vanilla styling */
+:root[data-theme="bearded-milkshake-vanilla-banana"] ::-webkit-scrollbar-thumb {
+    background: var(--gradient-primary);
+    border-radius: 4px;
+}
+
+:root[data-theme="bearded-milkshake-vanilla-banana"] ::-webkit-scrollbar-thumb:hover {
+    background: var(--gradient-secondary);
+}
+
+/* Selection vanilla styling */
+:root[data-theme="bearded-milkshake-vanilla-banana"] ::selection {
+    background: rgba(212, 196, 122, 0.3);
+    color: #2a281e;
+}
+
+/* Sidebar creamy effects */
+:root[data-theme="bearded-milkshake-vanilla-banana"] .sidebar-item.active {
+    background: rgba(212, 196, 122, 0.15);
+    color: var(--accent-primary);
+    border-left: 3px solid var(--accent-primary);
+    font-weight: 600;
+}
+
+/* Banana decoration */
+:root[data-theme="bearded-milkshake-vanilla-banana"] h1::before {
+    content: '🍌';
+    position: absolute;
+    left: -30px;
+    top: 0;
+    font-size: 0.8em;
+    opacity: 0.6;
+}
+
+/* Modal vanilla styling */
+:root[data-theme="bearded-milkshake-vanilla-banana"] .modal {
+    background: var(--bg-secondary);
+    border: 1px solid rgba(212, 196, 122, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(212, 196, 122, 0.2);
+}
+
+/* Creamy card effects */
+:root[data-theme="bearded-milkshake-vanilla-banana"] .note-item {
+    background: var(--bg-primary);
+    border: 1px solid rgba(212, 196, 122, 0.1);
+    border-radius: 8px;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Vanilla swirl animation */
+@keyframes vanilla-swirl {
+    0% { transform: rotate(0deg); opacity: 0.3; }
+    50% { transform: rotate(180deg); opacity: 0.6; }
+    100% { transform: rotate(360deg); opacity: 0.3; }
+}
+
+:root[data-theme="bearded-milkshake-vanilla-banana"] .tab-item.active::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 8px;
+    height: 8px;
+    background: #e6dea6;
+    border-radius: 50%;
+    animation: vanilla-swirl 4s linear infinite;
+}
+
+/* Creamy gradient border effect */
+:root[data-theme="bearded-milkshake-vanilla-banana"] .note-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--gradient-primary);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+:root[data-theme="bearded-milkshake-vanilla-banana"] .note-item:hover::before {
+    opacity: 0.6;
+}
+
+/* Warm vanilla glow effect for interactive elements */
+:root[data-theme="bearded-milkshake-vanilla-banana"] button:active,
+:root[data-theme="bearded-milkshake-vanilla-banana"] .tab-item:active {
+    box-shadow: inset 0 0 20px rgba(212, 196, 122, 0.3);
+}
+
+/* Special vanilla cream text effect */
+:root[data-theme="bearded-milkshake-vanilla-banana"] .badge {
+    background: var(--gradient-primary);
+    color: #2a281e;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(42, 40, 30, 0.3);
+}

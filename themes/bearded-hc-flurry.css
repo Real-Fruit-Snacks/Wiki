@@ -1,0 +1,43 @@
+/* Bearded Theme - High Contrast - Flurry */
+.theme-bearded-hc-flurry {
+    --primary-bg: #0f0f1f;
+    --secondary-bg: #1f1f3f;
+    --accent-bg: #2f2f5f;
+    --text-primary: #ffffff;
+    --text-secondary: #e6e6ff;
+    --accent-color: #00bfff;
+    --accent-secondary: #87ceeb;
+    --link-color: #87cefa;
+    --link-hover: #b0e0e6;
+    --border-color: #4f4f8f;
+    --shadow-color: rgba(0, 191, 255, 0.3);
+    
+    --syntax-keyword: #00bfff;
+    --syntax-string: #98fb98;
+    --syntax-number: #fff8dc;
+    --syntax-function: #ffd700;
+    --syntax-comment: #778899;
+    --syntax-class: #ffa07a;
+    --syntax-variable: #ffffff;
+    --syntax-operator: #87ceeb;
+    --syntax-punctuation: #e6e6ff;
+    
+    --flurry-glow: 0 0 35px rgba(0, 191, 255, 0.6);
+    --flurry-accent: #00bfff;
+    --badge-text: #0f0f1f;
+}
+
+.theme-bearded-hc-flurry .note-content h1::before {
+    content: "❄️";
+    display: inline-block;
+    margin-right: 0.5rem;
+    color: var(--flurry-accent);
+    filter: drop-shadow(var(--flurry-glow));
+    animation: flurryDance 3s ease-in-out infinite;
+}
+
+@keyframes flurryDance {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    33% { transform: rotate(120deg) scale(1.1); }
+    66% { transform: rotate(240deg) scale(0.9); }
+}

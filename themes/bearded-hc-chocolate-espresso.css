@@ -1,0 +1,110 @@
+/* Bearded Theme - High Contrast - Chocolate Espresso */
+.theme-bearded-hc-chocolate-espresso {
+    --primary-bg: #1a0f0a;
+    --secondary-bg: #2d1f17;
+    --accent-bg: #3d2f24;
+    --text-primary: #ffffff;
+    --text-secondary: #f0e6d6;
+    --accent-color: #d2691e;
+    --accent-secondary: #cd853f;
+    --link-color: #daa520;
+    --link-hover: #f4a460;
+    --border-color: #5d4e41;
+    --shadow-color: rgba(210, 105, 30, 0.3);
+    
+    --syntax-keyword: #d2691e;
+    --syntax-string: #32cd32;
+    --syntax-number: #ffd700;
+    --syntax-function: #87ceeb;
+    --syntax-comment: #a0522d;
+    --syntax-class: #ff6347;
+    --syntax-variable: #ffffff;
+    --syntax-operator: #daa520;
+    --syntax-punctuation: #f0e6d6;
+    
+    --button-bg: #3d2f24;
+    --button-hover: #5d4e41;
+    --input-bg: #2d1f17;
+    --input-border: #5d4e41;
+    --dropdown-bg: #2d1f17;
+    --dropdown-hover: #3d2f24;
+    --modal-overlay: rgba(26, 15, 10, 0.95);
+    
+    --success-color: #32cd32;
+    --warning-color: #ffd700;
+    --error-color: #ff4500;
+    --info-color: #87ceeb;
+    
+    --beard-gradient: linear-gradient(135deg, #d2691e 0%, #cd853f 100%);
+    --beard-shadow: 0 0 40px rgba(210, 105, 30, 0.5);
+    --code-bg: #1f1409;
+    --inline-code-bg: #2a1f14;
+    --scrollbar-bg: #1a0f0a;
+    --scrollbar-thumb: #5d4e41;
+    --scrollbar-hover: #8b7355;
+    --search-bg: #2d1f17;
+    --search-border: #5d4e41;
+    --search-focus-border: #d2691e;
+    --tag-bg: #3d2f24;
+    --tag-text: #d2691e;
+    --tag-hover: #5d4e41;
+    
+    --espresso-glow: 0 0 35px rgba(210, 105, 30, 0.6);
+    --espresso-accent: #d2691e;
+    --badge-text: #1a0f0a;
+}
+
+.theme-bearded-hc-chocolate-espresso .note-content h1::before {
+    content: "☕";
+    display: inline-block;
+    margin-right: 0.5rem;
+    color: var(--espresso-accent);
+    filter: drop-shadow(var(--espresso-glow));
+    animation: espressoSteam 2s ease-in-out infinite;
+}
+
+@keyframes espressoSteam {
+    0%, 100% { opacity: 0.8; transform: translateY(0px); }
+    50% { opacity: 1; transform: translateY(-3px); }
+}
+
+.theme-bearded-hc-chocolate-espresso .tab.active {
+    background: var(--accent-bg);
+    border-top: 3px solid var(--espresso-accent);
+    box-shadow: inset 0 3px 20px rgba(210, 105, 30, 0.15);
+}
+
+.theme-bearded-hc-chocolate-espresso .search-container input:focus {
+    border-color: var(--espresso-accent);
+    box-shadow: 0 0 0 4px rgba(210, 105, 30, 0.3), var(--espresso-glow);
+}
+
+.theme-bearded-hc-chocolate-espresso .note-item:hover {
+    border: 2px solid var(--espresso-accent);
+    background: linear-gradient(90deg, rgba(210, 105, 30, 0.1) 0%, transparent 100%);
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.theme-bearded-hc-chocolate-espresso .btn-primary {
+    background: var(--espresso-accent);
+    color: var(--primary-bg);
+    border: 2px solid var(--espresso-accent);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.theme-bearded-hc-chocolate-espresso .settings-modal h2 {
+    color: var(--espresso-accent);
+    text-shadow: var(--espresso-glow);
+    font-weight: bold;
+}
+
+.theme-bearded-hc-chocolate-espresso .settings-modal h2::before {
+    content: "☕";
+    position: absolute;
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: espressoSteam 2s ease-in-out infinite;
+}

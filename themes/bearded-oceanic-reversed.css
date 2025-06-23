@@ -1,0 +1,186 @@
+/* Bearded Oceanic Reversed Theme */
+:root[data-theme="bearded-oceanic-reversed"] {
+    /* Base colors - inverted oceanic palette */
+    --bg-primary: #f7f8f9;
+    --bg-secondary: #e8eaec;
+    --bg-tertiary: #dfe2e5;
+    --bg-hover: #d5d9dd;
+    
+    /* Text colors */
+    --text-primary: #1e2227;
+    --text-secondary: #3a4047;
+    --text-muted: #5a6270;
+    --text-link: #0066cc;
+    --text-link-hover: #0052a3;
+    
+    /* Accent colors - oceanic palette */
+    --accent-primary: #1e7ce8;
+    --accent-secondary: #00bfb3;
+    --accent-tertiary: #e85d44;
+    
+    /* UI elements */
+    --border-color: #c5cbd3;
+    --border-hover: #a8b0ba;
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    
+    /* Header */
+    --header-bg: #263238;
+    --header-text: #eceff1;
+    --header-text-muted: #b0bec5;
+    
+    /* Tabs */
+    --tab-bg: #e0e3e6;
+    --tab-active-bg: #ffffff;
+    --tab-hover-bg: #d5d9dd;
+    --tab-text: #455a64;
+    --tab-active-text: #1e2227;
+    --tab-border: #b8bfc7;
+    
+    /* Sidebar */
+    --sidebar-bg: #f0f2f4;
+    --sidebar-hover-bg: #e0e3e6;
+    --sidebar-active-bg: #d5d9dd;
+    --sidebar-text: #37474f;
+    --sidebar-icon: #546e7a;
+    
+    /* Content area */
+    --content-bg: #ffffff;
+    --code-bg: #f5f7f9;
+    --code-border: #d5dae0;
+    --blockquote-bg: #e8f0f8;
+    --blockquote-border: #1e7ce8;
+    
+    /* Search */
+    --search-bg: #ffffff;
+    --search-border: #b8bfc7;
+    --search-focus-border: #1e7ce8;
+    
+    /* Scrollbar */
+    --scrollbar-bg: #e8eaec;
+    --scrollbar-thumb: #90a4ae;
+    --scrollbar-thumb-hover: #607d8b;
+    
+    /* Status indicators */
+    --status-info: #1e7ce8;
+    --status-success: #00bfb3;
+    --status-warning: #ffa726;
+    --status-error: #e85d44;
+    
+    /* Badges */
+    --badge-bg: #1e7ce8;
+    --badge-text: #ffffff;
+    
+    /* Syntax highlighting */
+    --syntax-comment: #78909c;
+    --syntax-string: #00897b;
+    --syntax-number: #e85d44;
+    --syntax-keyword: #1e7ce8;
+    --syntax-function: #00bfb3;
+    --syntax-variable: #7c4dff;
+    --syntax-constant: #ff5722;
+    --syntax-class: #ffa726;
+    --syntax-operator: #546e7a;
+    --syntax-punctuation: #455a64;
+    
+    /* Oceanic decorative elements */
+    --gradient-primary: linear-gradient(135deg, #e3f2fd 0%, #e0f7fa 100%);
+    --gradient-secondary: linear-gradient(135deg, #f3e5f5 0%, #e8f5e9 100%);
+    --gradient-accent: linear-gradient(135deg, #1e7ce8 0%, #00bfb3 100%);
+}
+
+/* Oceanic-inspired animations */
+:root[data-theme="bearded-oceanic-reversed"] .tab-item::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-accent);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+:root[data-theme="bearded-oceanic-reversed"] .tab-item.active::before {
+    transform: scaleX(1);
+}
+
+/* Wave pattern for headers */
+:root[data-theme="bearded-oceanic-reversed"] h1::after,
+:root[data-theme="bearded-oceanic-reversed"] h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    margin-top: 10px;
+    background: var(--gradient-accent);
+    border-radius: 2px;
+}
+
+/* Oceanic hover effects */
+:root[data-theme="bearded-oceanic-reversed"] .note-item:hover {
+    background: var(--gradient-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+/* Water ripple effect for buttons */
+:root[data-theme="bearded-oceanic-reversed"] button {
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="bearded-oceanic-reversed"] button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(30, 124, 232, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+:root[data-theme="bearded-oceanic-reversed"] button:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* Custom scrollbar styling */
+:root[data-theme="bearded-oceanic-reversed"] ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #90a4ae 0%, #607d8b 100%);
+}
+
+/* Code block enhancements */
+:root[data-theme="bearded-oceanic-reversed"] pre {
+    background: var(--code-bg);
+    border-left: 4px solid var(--accent-primary);
+    box-shadow: inset 0 0 20px rgba(30, 124, 232, 0.05);
+}
+
+/* Oceanic link styling */
+:root[data-theme="bearded-oceanic-reversed"] a {
+    text-decoration: none;
+    background-image: linear-gradient(90deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
+    background-size: 0 2px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.3s ease;
+}
+
+:root[data-theme="bearded-oceanic-reversed"] a:hover {
+    background-size: 100% 2px;
+}
+
+/* Search input wave border */
+:root[data-theme="bearded-oceanic-reversed"] #searchInput:focus {
+    box-shadow: 0 0 0 3px rgba(30, 124, 232, 0.15);
+    animation: wave-border 2s ease-in-out infinite;
+}
+
+@keyframes wave-border {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(30, 124, 232, 0.15); }
+    50% { box-shadow: 0 0 0 6px rgba(0, 191, 179, 0.1); }
+}

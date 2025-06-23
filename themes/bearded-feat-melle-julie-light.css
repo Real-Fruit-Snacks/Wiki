@@ -1,0 +1,241 @@
+/* Bearded Theme - Featured - Melle Julie Light */
+.theme-bearded-feat-melle-julie-light {
+    /* Featured - Melle Julie Light - Elegant light purple sophistication */
+    --primary-bg: #faf9fc;
+    --secondary-bg: #f3f0f8;
+    --accent-bg: #ede7f6;
+    --text-primary: #2d1b3d;
+    --text-secondary: #5a4570;
+    --accent-color: #8b5fbf;
+    --accent-secondary: #ab7df8;
+    --link-color: #7c4dff;
+    --link-hover: #651fff;
+    --border-color: #d1c4e9;
+    --shadow-color: rgba(139, 95, 191, 0.15);
+    
+    /* Bearded Featured Syntax Colors */
+    --syntax-keyword: #8b5fbf;
+    --syntax-string: #2e7d32;
+    --syntax-number: #f57c00;
+    --syntax-function: #1976d2;
+    --syntax-comment: #9575cd;
+    --syntax-class: #d32f2f;
+    --syntax-variable: #795548;
+    --syntax-operator: #00695c;
+    --syntax-punctuation: #5a4570;
+    
+    /* UI Elements */
+    --button-bg: #ede7f6;
+    --button-hover: #d1c4e9;
+    --input-bg: #f3f0f8;
+    --input-border: #d1c4e9;
+    --dropdown-bg: #f3f0f8;
+    --dropdown-hover: #ede7f6;
+    --modal-overlay: rgba(45, 27, 61, 0.75);
+    
+    /* Feature Colors */
+    --success-color: #4caf50;
+    --warning-color: #ff9800;
+    --error-color: #f44336;
+    --info-color: #2196f3;
+    
+    /* Bearded Signature */
+    --beard-gradient: linear-gradient(135deg, #8b5fbf 0%, #ab7df8 100%);
+    --beard-shadow: 0 0 25px rgba(139, 95, 191, 0.3);
+    --code-bg: #f8f5ff;
+    --inline-code-bg: #f0ebff;
+    --scrollbar-bg: #faf9fc;
+    --scrollbar-thumb: #d1c4e9;
+    --scrollbar-hover: #b39ddb;
+    --search-bg: #f3f0f8;
+    --search-border: #d1c4e9;
+    --search-focus-border: #8b5fbf;
+    --tag-bg: #ede7f6;
+    --tag-text: #8b5fbf;
+    --tag-hover: #d1c4e9;
+    
+    /* Melle Julie Light Special */
+    --julie-light-glow: 0 0 20px rgba(139, 95, 191, 0.4);
+    --julie-light-accent: #8b5fbf;
+    --julie-light-shimmer: 0 0 30px rgba(171, 125, 248, 0.2);
+    --badge-text: #ffffff;
+}
+
+/* Melle Julie Light Decorative Elements */
+.theme-bearded-feat-melle-julie-light .note-content h1::before {
+    content: "✨";
+    display: inline-block;
+    margin-right: 0.5rem;
+    color: var(--julie-light-accent);
+    filter: drop-shadow(var(--julie-light-glow));
+    animation: julieLightSparkle 2.5s ease-in-out infinite;
+}
+
+@keyframes julieLightSparkle {
+    0%, 100% { 
+        opacity: 0.7;
+        transform: scale(1) rotate(0deg);
+    }
+    50% { 
+        opacity: 1;
+        transform: scale(1.15) rotate(-5deg);
+    }
+}
+
+.theme-bearded-feat-melle-julie-light .tab.active {
+    background: var(--accent-bg);
+    border-top: 3px solid var(--julie-light-accent);
+    box-shadow: inset 0 3px 15px rgba(139, 95, 191, 0.08);
+    position: relative;
+}
+
+.theme-bearded-feat-melle-julie-light .tab.active::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(139, 95, 191, 0.3) 0%, var(--julie-light-accent) 50%, rgba(139, 95, 191, 0.3) 100%);
+    filter: blur(0.5px);
+}
+
+.theme-bearded-feat-melle-julie-light .search-container input:focus {
+    border-color: var(--julie-light-accent);
+    box-shadow: 0 0 0 3px rgba(139, 95, 191, 0.2),
+                var(--julie-light-glow);
+    background: #ffffff;
+}
+
+.theme-bearded-feat-melle-julie-light .note-item:hover {
+    border-left: 4px solid var(--julie-light-accent);
+    padding-left: calc(1rem - 4px);
+    background: linear-gradient(90deg, rgba(139, 95, 191, 0.04) 0%, transparent 100%);
+    box-shadow: 0 2px 8px rgba(139, 95, 191, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-bearded-feat-melle-julie-light pre code {
+    background: var(--code-bg);
+    box-shadow: inset 0 0 20px rgba(139, 95, 191, 0.05);
+    border: 1px solid rgba(139, 95, 191, 0.1);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-bearded-feat-melle-julie-light pre code::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, rgba(139, 95, 191, 0.08) 50%, transparent 100%);
+    animation: julieLightCodeGlow 4s ease-in-out infinite;
+}
+
+@keyframes julieLightCodeGlow {
+    0% { left: -100%; }
+    50% { left: 100%; }
+    100% { left: -100%; }
+}
+
+.theme-bearded-feat-melle-julie-light blockquote {
+    border-left: 5px solid var(--julie-light-accent);
+    background: linear-gradient(90deg, rgba(139, 95, 191, 0.06) 0%, transparent 100%);
+    position: relative;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 2px 10px rgba(139, 95, 191, 0.08);
+}
+
+.theme-bearded-feat-melle-julie-light blockquote::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--julie-light-accent) 0%, rgba(139, 95, 191, 0.3) 100%);
+    filter: blur(1px);
+}
+
+.theme-bearded-feat-melle-julie-light blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 15px;
+    font-size: 3rem;
+    color: rgba(139, 95, 191, 0.2);
+    line-height: 1;
+    font-family: serif;
+}
+
+.theme-bearded-feat-melle-julie-light .btn-primary {
+    background: linear-gradient(135deg, var(--julie-light-accent) 0%, #ab7df8 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(139, 95, 191, 0.25);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    border: none;
+}
+
+.theme-bearded-feat-melle-julie-light .btn-primary::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+    transition: left 0.6s;
+}
+
+.theme-bearded-feat-melle-julie-light .btn-primary:hover::before {
+    left: 100%;
+}
+
+.theme-bearded-feat-melle-julie-light .btn-primary:hover {
+    background: linear-gradient(135deg, #ab7df8 0%, #c49bff 100%);
+    box-shadow: 0 6px 20px rgba(139, 95, 191, 0.35);
+    transform: translateY(-2px);
+}
+
+.theme-bearded-feat-melle-julie-light ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--scrollbar-thumb) 0%, var(--julie-light-accent) 100%);
+    border-radius: 10px;
+    border: 2px solid var(--primary-bg);
+}
+
+.theme-bearded-feat-melle-julie-light .settings-modal {
+    background: rgba(250, 249, 252, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(139, 95, 191, 0.2);
+}
+
+.theme-bearded-feat-melle-julie-light .settings-modal h2 {
+    color: var(--julie-light-accent);
+    text-shadow: var(--julie-light-glow);
+    position: relative;
+}
+
+.theme-bearded-feat-melle-julie-light .settings-modal h2::before {
+    content: "✨";
+    position: absolute;
+    left: -35px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: julieLightSparkle 2.5s ease-in-out infinite;
+}
+
+.theme-bearded-feat-melle-julie-light .settings-modal h2::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--julie-light-accent) 30%, var(--julie-light-accent) 70%, transparent 100%);
+    border-radius: 2px;
+}

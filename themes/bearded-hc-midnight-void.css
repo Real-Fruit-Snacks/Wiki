@@ -1,0 +1,310 @@
+/* Bearded Theme - High Contrast - Midnight Void */
+.theme-bearded-hc-midnight-void {
+    /* High Contrast - Midnight Void - Deep space darkness with electric blue */
+    --primary-bg: #0a0a0f;
+    --secondary-bg: #151520;
+    --accent-bg: #202030;
+    --text-primary: #ffffff;
+    --text-secondary: #e0e0ff;
+    --accent-color: #00ccff;
+    --accent-secondary: #0099cc;
+    --link-color: #00ccff;
+    --link-hover: #33ddff;
+    --border-color: #404060;
+    --shadow-color: rgba(0, 204, 255, 0.3);
+    
+    /* Bearded High Contrast Syntax Colors */
+    --syntax-keyword: #00ccff;
+    --syntax-string: #00ff80;
+    --syntax-number: #ffff00;
+    --syntax-function: #ff00ff;
+    --syntax-comment: #8080ff;
+    --syntax-class: #ff8080;
+    --syntax-variable: #ffffff;
+    --syntax-operator: #00ccff;
+    --syntax-punctuation: #e0e0ff;
+    
+    /* UI Elements */
+    --button-bg: #202030;
+    --button-hover: #303050;
+    --input-bg: #151520;
+    --input-border: #404060;
+    --dropdown-bg: #151520;
+    --dropdown-hover: #202030;
+    --modal-overlay: rgba(10, 10, 15, 0.95);
+    
+    /* Feature Colors */
+    --success-color: #00ff80;
+    --warning-color: #ffff00;
+    --error-color: #ff4040;
+    --info-color: #00ccff;
+    
+    /* Bearded Signature */
+    --beard-gradient: linear-gradient(135deg, #00ccff 0%, #0099cc 100%);
+    --beard-shadow: 0 0 40px rgba(0, 204, 255, 0.5);
+    --code-bg: #0f0f1a;
+    --inline-code-bg: #1a1a2a;
+    --scrollbar-bg: #0a0a0f;
+    --scrollbar-thumb: #404060;
+    --scrollbar-hover: #6060a0;
+    --search-bg: #151520;
+    --search-border: #404060;
+    --search-focus-border: #00ccff;
+    --tag-bg: #202030;
+    --tag-text: #00ccff;
+    --tag-hover: #303050;
+    
+    /* Midnight Void HC Special */
+    --void-glow: 0 0 35px rgba(0, 204, 255, 0.6);
+    --void-accent: #00ccff;
+    --void-electric: #33ddff;
+    --void-pulse: 0 0 50px rgba(51, 221, 255, 0.4);
+    --badge-text: #0a0a0f;
+}
+
+/* Midnight Void HC Decorative Elements */
+.theme-bearded-hc-midnight-void .note-content h1::before {
+    content: "★";
+    display: inline-block;
+    margin-right: 0.5rem;
+    color: var(--void-accent);
+    font-weight: bold;
+    filter: drop-shadow(var(--void-glow));
+    animation: voidPulse 3s ease-in-out infinite;
+}
+
+@keyframes voidPulse {
+    0%, 100% { 
+        opacity: 0.7;
+        transform: scale(1) rotate(0deg);
+        filter: drop-shadow(0 0 20px rgba(0, 204, 255, 0.6));
+    }
+    33% { 
+        opacity: 1;
+        transform: scale(1.3) rotate(120deg);
+        filter: drop-shadow(0 0 40px rgba(51, 221, 255, 0.8));
+    }
+    66% { 
+        opacity: 0.9;
+        transform: scale(1.1) rotate(240deg);
+        filter: drop-shadow(0 0 30px rgba(0, 153, 204, 0.7));
+    }
+}
+
+.theme-bearded-hc-midnight-void .tab.active {
+    background: var(--accent-bg);
+    border-top: 3px solid var(--void-accent);
+    box-shadow: inset 0 3px 20px rgba(0, 204, 255, 0.15),
+                0 0 20px rgba(0, 204, 255, 0.3);
+    border-left: 2px solid rgba(51, 221, 255, 0.5);
+    border-right: 2px solid rgba(51, 221, 255, 0.5);
+    position: relative;
+}
+
+.theme-bearded-hc-midnight-void .tab.active::after {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--void-accent) 0%, var(--void-electric) 50%, var(--void-accent) 100%);
+    animation: voidFlow 2s linear infinite;
+}
+
+@keyframes voidFlow {
+    0% { background-position: -100% 0; }
+    100% { background-position: 100% 0; }
+}
+
+.theme-bearded-hc-midnight-void .search-container input {
+    border: 2px solid var(--border-color);
+    background: var(--input-bg);
+    color: var(--text-primary);
+    font-weight: bold;
+}
+
+.theme-bearded-hc-midnight-void .search-container input:focus {
+    border-color: var(--void-accent);
+    box-shadow: 0 0 0 4px rgba(0, 204, 255, 0.3),
+                var(--void-glow);
+    background: var(--primary-bg);
+    color: var(--void-electric);
+}
+
+.theme-bearded-hc-midnight-void .note-item {
+    border: 1px solid transparent;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+.theme-bearded-hc-midnight-void .note-item:hover {
+    border: 2px solid var(--void-accent);
+    padding-left: calc(1rem - 2px);
+    background: linear-gradient(90deg, rgba(0, 204, 255, 0.1) 0%, rgba(51, 221, 255, 0.05) 100%);
+    color: var(--void-electric);
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(0, 204, 255, 0.2);
+}
+
+.theme-bearded-hc-midnight-void pre code {
+    background: var(--code-bg);
+    border: 2px solid var(--border-color);
+    box-shadow: inset 0 0 25px rgba(0, 204, 255, 0.1),
+                0 0 20px rgba(0, 204, 255, 0.1);
+    color: var(--text-primary);
+    font-weight: bold;
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-bearded-hc-midnight-void pre code::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, rgba(0, 204, 255, 0.1) 50%, transparent 100%);
+    animation: voidCodeScan 4s linear infinite;
+}
+
+@keyframes voidCodeScan {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.theme-bearded-hc-midnight-void blockquote {
+    border-left: 5px solid var(--void-accent);
+    background: linear-gradient(90deg, rgba(0, 204, 255, 0.15) 0%, transparent 100%);
+    color: var(--void-electric);
+    font-weight: bold;
+    border-top: 1px solid rgba(0, 204, 255, 0.3);
+    border-bottom: 1px solid rgba(0, 204, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-bearded-hc-midnight-void blockquote::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top left, rgba(0, 204, 255, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.theme-bearded-hc-midnight-void .btn-primary {
+    background: linear-gradient(135deg, var(--void-accent) 0%, var(--void-electric) 100%);
+    color: var(--primary-bg);
+    border: 2px solid var(--void-accent);
+    box-shadow: 0 4px 15px rgba(0, 204, 255, 0.4),
+                0 0 20px rgba(0, 204, 255, 0.2);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-bearded-hc-midnight-void .btn-primary::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+    transition: left 0.6s;
+}
+
+.theme-bearded-hc-midnight-void .btn-primary:hover::before {
+    left: 100%;
+}
+
+.theme-bearded-hc-midnight-void .btn-primary:hover {
+    background: var(--primary-bg);
+    color: var(--void-electric);
+    border: 2px solid var(--void-electric);
+    box-shadow: 0 6px 20px rgba(51, 221, 255, 0.5),
+                0 0 30px rgba(51, 221, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.theme-bearded-hc-midnight-void ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--scrollbar-thumb) 0%, var(--void-accent) 100%);
+    border: 2px solid var(--primary-bg);
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 204, 255, 0.3);
+}
+
+.theme-bearded-hc-midnight-void ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--void-accent) 0%, var(--void-electric) 100%);
+    box-shadow: 0 0 15px rgba(51, 221, 255, 0.5);
+}
+
+.theme-bearded-hc-midnight-void .settings-modal {
+    background: rgba(10, 10, 15, 0.98);
+    border: 3px solid var(--void-accent);
+    box-shadow: 0 0 50px rgba(0, 204, 255, 0.4),
+                inset 0 0 50px rgba(0, 204, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.theme-bearded-hc-midnight-void .settings-modal h2 {
+    color: var(--void-accent);
+    text-shadow: var(--void-glow);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.theme-bearded-hc-midnight-void .settings-modal h2::before {
+    content: "★";
+    position: absolute;
+    left: -45px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: voidPulse 3s ease-in-out infinite;
+}
+
+/* High contrast accessibility enhancements */
+.theme-bearded-hc-midnight-void * {
+    text-shadow: 0 0 1px rgba(0, 204, 255, 0.3);
+}
+
+.theme-bearded-hc-midnight-void .note-content h1,
+.theme-bearded-hc-midnight-void .note-content h2,
+.theme-bearded-hc-midnight-void .note-content h3,
+.theme-bearded-hc-midnight-void .note-content h4,
+.theme-bearded-hc-midnight-void .note-content h5,
+.theme-bearded-hc-midnight-void .note-content h6 {
+    color: var(--void-electric);
+    font-weight: bold;
+    text-shadow: 0 0 3px rgba(0, 204, 255, 0.8);
+}
+
+.theme-bearded-hc-midnight-void .note-content a {
+    color: var(--void-accent);
+    font-weight: bold;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 2px;
+}
+
+.theme-bearded-hc-midnight-void .note-content a:hover {
+    color: var(--void-electric);
+    text-shadow: 0 0 5px rgba(51, 221, 255, 0.8);
+}
+
+.theme-bearded-hc-midnight-void .note-content code {
+    background: var(--inline-code-bg);
+    color: var(--void-accent);
+    font-weight: bold;
+    border: 1px solid var(--border-color);
+    padding: 3px 6px;
+    box-shadow: 0 0 5px rgba(0, 204, 255, 0.2);
+}

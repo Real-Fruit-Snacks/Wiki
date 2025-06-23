@@ -1,0 +1,154 @@
+/* Bearded Monokai Metallian Theme Variables */
+:root[data-theme="bearded-monokai-metallian"] {
+    /* Background Colors - Metallic Monokai with chrome accents */
+    --bg-primary: #1a1a1e;
+    --bg-secondary: #222228;
+    --bg-sidebar: #1e1e24;
+    --bg-code: #222228;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #1a1a1eee;
+    --bg-tooltip: #222228;
+    --bg-input: #222228;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #c9c9d6;
+    --text-code: #f8f8f2;
+    --text-inverse: #000000;
+    --button-text: #f8f8f2;
+    
+    /* Text Colors */
+    --text-primary: #f8f8f2;
+    --text-secondary: #e8e8e0;
+    --text-muted: #969696;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors - Metallic/Chrome tones */
+    --accent-primary: #c9c9d6;
+    --accent-secondary: #d9d9e6;
+    --accent-warning: #e6db74;
+    --accent-error: #f92672;
+    --accent-info: var(--accent-primary);
+    --accent-success: #a6e22e;
+    
+    /* Border Colors */
+    --border-primary: #2a2a30;
+    --border-secondary: #26262c;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #000000;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -1px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7), 0 4px 6px -2px rgba(0, 0, 0, 0.6);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(201, 201, 214, 0.1);
+    --bg-code-block: #222228;
+}
+
+/* Syntax Highlighting - Bearded Monokai Metallian Theme */
+:root[data-theme="bearded-monokai-metallian"] .token.comment,
+:root[data-theme="bearded-monokai-metallian"] .token.prolog,
+:root[data-theme="bearded-monokai-metallian"] .token.doctype,
+:root[data-theme="bearded-monokai-metallian"] .token.cdata {
+    color: #75715e;
+}
+
+:root[data-theme="bearded-monokai-metallian"] .token.punctuation {
+    color: #f8f8f2;
+}
+
+:root[data-theme="bearded-monokai-metallian"] .token.property,
+:root[data-theme="bearded-monokai-metallian"] .token.tag,
+:root[data-theme="bearded-monokai-metallian"] .token.boolean,
+:root[data-theme="bearded-monokai-metallian"] .token.number,
+:root[data-theme="bearded-monokai-metallian"] .token.constant,
+:root[data-theme="bearded-monokai-metallian"] .token.symbol,
+:root[data-theme="bearded-monokai-metallian"] .token.deleted {
+    color: #ae81ff;
+}
+
+:root[data-theme="bearded-monokai-metallian"] .token.selector,
+:root[data-theme="bearded-monokai-metallian"] .token.attr-name,
+:root[data-theme="bearded-monokai-metallian"] .token.string,
+:root[data-theme="bearded-monokai-metallian"] .token.char,
+:root[data-theme="bearded-monokai-metallian"] .token.builtin,
+:root[data-theme="bearded-monokai-metallian"] .token.inserted {
+    color: #e6db74;
+}
+
+:root[data-theme="bearded-monokai-metallian"] .token.operator,
+:root[data-theme="bearded-monokai-metallian"] .token.entity,
+:root[data-theme="bearded-monokai-metallian"] .token.url,
+:root[data-theme="bearded-monokai-metallian"] .language-css .token.string,
+:root[data-theme="bearded-monokai-metallian"] .style .token.string {
+    color: #66d9ef;
+    background: transparent;
+}
+
+:root[data-theme="bearded-monokai-metallian"] .token.atrule,
+:root[data-theme="bearded-monokai-metallian"] .token.attr-value,
+:root[data-theme="bearded-monokai-metallian"] .token.keyword {
+    color: #f92672;
+}
+
+:root[data-theme="bearded-monokai-metallian"] .token.function,
+:root[data-theme="bearded-monokai-metallian"] .token.class-name {
+    color: #a6e22e;
+}
+
+:root[data-theme="bearded-monokai-metallian"] .token.regex,
+:root[data-theme="bearded-monokai-metallian"] .token.important,
+:root[data-theme="bearded-monokai-metallian"] .token.variable {
+    color: #fd971f;
+}
+
+/* Scrollbar Bearded Monokai Metallian Theme */
+:root[data-theme="bearded-monokai-metallian"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-monokai-metallian"] ::-webkit-scrollbar-thumb {
+    background: #2a2a30;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-monokai-metallian"] ::-webkit-scrollbar-thumb:hover {
+    background: #c9c9d6;
+}
+
+/* Firefox Scrollbar Bearded Monokai Metallian Theme */
+:root[data-theme="bearded-monokai-metallian"] * {
+    scrollbar-color: #2a2a30 var(--bg-primary);
+}
+
+/* Metallic chrome effects */
+:root[data-theme="bearded-monokai-metallian"] .tab.active {
+    background: linear-gradient(135deg, #2a2a30 0%, #222228 100%);
+    border-bottom: 2px solid #c9c9d6;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+:root[data-theme="bearded-monokai-metallian"] button,
+:root[data-theme="bearded-monokai-metallian"] .button {
+    background: linear-gradient(135deg, #2a2a30 0%, #222228 100%);
+    border: 1px solid #3a3a40;
+}
+
+:root[data-theme="bearded-monokai-metallian"] button:hover,
+:root[data-theme="bearded-monokai-metallian"] .button:hover {
+    background: linear-gradient(135deg, #3a3a40 0%, #2a2a30 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}

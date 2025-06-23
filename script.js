@@ -164,21 +164,67 @@ class NotesWiki {
                     { id: 'bearded-arc', name: 'Arc', description: 'Sophisticated dark theme with smooth gradients and blue accents' },
                     { id: 'bearded-arc-blueberry', name: 'Arc Blueberry', description: 'Deep blue variant with blueberry tones and elegant styling' },
                     { id: 'bearded-arc-eggplant', name: 'Arc Eggplant', description: 'Rich purple variant with eggplant hues and warm accents' },
+                    { id: 'bearded-arc-eolstorm', name: 'Arc EolStorm', description: 'Electric storm variant with lightning effects and blue accents' },
+                    { id: 'bearded-arc-reversed', name: 'Arc Reversed', description: 'Light variant of Arc with professional clean aesthetics' },
                     { id: 'bearded-black-amethyst', name: 'Black & Amethyst', description: 'Pure black with vibrant amethyst purple accents' },
+                    { id: 'bearded-black-amethyst-soft', name: 'Black & Amethyst Soft', description: 'Softer black with gentle amethyst purple glow effects' },
+                    { id: 'bearded-black-diamond', name: 'Black & Diamond', description: 'Pure black with brilliant diamond crystal accents' },
+                    { id: 'bearded-black-diamond-soft', name: 'Black & Diamond Soft', description: 'Softer black with muted diamond sparkle effects' },
                     { id: 'bearded-black-emerald', name: 'Black & Emerald', description: 'Pure black with brilliant emerald green accents' },
+                    { id: 'bearded-black-emerald-soft', name: 'Black & Emerald Soft', description: 'Softer black with gentle emerald green glow' },
+                    { id: 'bearded-black-gold', name: 'Black & Gold', description: 'Pure black with luxurious gold accents and shimmer effects' },
+                    { id: 'bearded-black-gold-soft', name: 'Black & Gold Soft', description: 'Softer black with warm gold tones and subtle warmth' },
                     { id: 'bearded-black-ruby', name: 'Black & Ruby', description: 'Pure black with striking ruby red accents' },
+                    { id: 'bearded-black-ruby-soft', name: 'Black & Ruby Soft', description: 'Softer black with gentle ruby red glow effects' },
                     { id: 'bearded-coffee', name: 'Coffee', description: 'Warm brown theme with coffee-inspired earth tones' },
                     { id: 'bearded-coffee-reversed', name: 'Coffee Reversed', description: 'Light coffee theme with vintage paper aesthetics' },
+                    { id: 'bearded-coffee-cream', name: 'Coffee Cream', description: 'Warm cream coffee theme with cozy bean patterns and smooth textures' },
                     { id: 'bearded-earth', name: 'Earth', description: 'Natural earth tones with organic green accents' },
+                    { id: 'bearded-altica', name: 'Altica', description: 'Sophisticated dark theme with blue accents and metallic shine effects' },
+                    { id: 'bearded-anthracite', name: 'Anthracite', description: 'Industrial dark theme with metallic textures and blue highlights' },
+                    { id: 'bearded-light', name: 'Light', description: 'Clean bright theme with modern design and smooth gradients' },
                     { id: 'bearded-milkshake-raspberry', name: 'Milkshake Raspberry', description: 'Creamy dark theme with sweet raspberry pink accents' },
                     { id: 'bearded-milkshake-mint', name: 'Milkshake Mint', description: 'Fresh dark theme with cool mint green accents' },
+                    { id: 'bearded-milkshake-blueberry', name: 'Milkshake Blueberry', description: 'Smooth blueberry milkshake theme with creamy textures and berry swirls' },
+                    { id: 'bearded-milkshake-mango', name: 'Milkshake Mango', description: 'Tropical mango milkshake theme with warm golden tones and creamy gradients' },
+                    { id: 'bearded-milkshake-vanilla-banana', name: 'Milkshake Vanilla Banana', description: 'Rich vanilla banana milkshake with creamy textures and warm fruit accents' },
                     { id: 'bearded-monokai-stone', name: 'Monokai Stone', description: 'Classic Monokai with stone gray backgrounds' },
                     { id: 'bearded-monokai-terra', name: 'Monokai Terra', description: 'Monokai variant with terracotta earth tones' },
+                    { id: 'bearded-monokai-metallian', name: 'Monokai Metallian', description: 'Metallic Monokai with chrome accents and gradient effects' },
+                    { id: 'bearded-monokai-black', name: 'Monokai Black', description: 'Pure black Monokai with classic color syntax' },
+                    { id: 'bearded-monokai-reversed', name: 'Monokai Reversed', description: 'Light version of Monokai with inverted color palette' },
                     { id: 'bearded-oceanic', name: 'Oceanic', description: 'Deep ocean blues with aquatic color palette' },
+                    { id: 'bearded-oceanic-reversed', name: 'Oceanic Reversed', description: 'Light oceanic theme with inverted palette and wave effects' },
+                    { id: 'bearded-solarized', name: 'Solarized', description: 'Classic Solarized dark with precise color science' },
+                    { id: 'bearded-solarized-reversed', name: 'Solarized Reversed', description: 'Medium gray Solarized with balanced contrast' },
+                    { id: 'bearded-solarized-light', name: 'Solarized Light', description: 'Light Solarized with warm cream background' },
+                    { id: 'bearded-stained-purple', name: 'Stained Purple', description: 'Rich purple stained glass theme with translucent effects and shimmer' },
+                    { id: 'bearded-stained-blue', name: 'Stained Blue', description: 'Deep blue stained glass theme with crystalline patterns and light effects' },
+                    { id: 'bearded-surprising-eggplant', name: 'Surprising Eggplant', description: 'Deep eggplant theme with surprising color bursts and dynamic effects' },
+                    { id: 'bearded-surprising-blueberry', name: 'Surprising Blueberry', description: 'Rich blueberry theme with explosive color effects and juice-like animations' },
+                    { id: 'bearded-surprising-watermelon', name: 'Surprising Watermelon', description: 'Fresh watermelon theme with vibrant pink-green contrasts and seed patterns' },
                     { id: 'bearded-vivid-black', name: 'Vivid Black', description: 'High contrast black with vivid neon accents' },
                     { id: 'bearded-vivid-purple', name: 'Vivid Purple', description: 'Deep purple with intense neon highlights' },
+                    { id: 'bearded-vivid-light', name: 'Vivid Light', description: 'Bright vivid light theme with saturated colors and dynamic patterns' },
                     { id: 'bearded-oled', name: 'OLED', description: 'Pure black optimized for OLED displays' },
-                    { id: 'bearded-void', name: 'Void', description: 'Minimal dark theme with subtle accent colors' }
+                    { id: 'bearded-void', name: 'Void', description: 'Minimal dark theme with subtle accent colors' },
+                    // Featured Collection
+                    { id: 'bearded-feat-will', name: 'Featured - Will', description: 'Deep twilight theme with warm energy accents and electric glow effects' },
+                    { id: 'bearded-feat-gold-d-raynh', name: 'Featured - Gold D. Raynh', description: 'Luxurious golden warmth with shimmer effects and flowing animations' },
+                    { id: 'bearded-feat-melle-julie', name: 'Featured - Melle Julie', description: 'Elegant purple sophistication with sparkling effects and smooth transitions' },
+                    { id: 'bearded-feat-melle-julie-light', name: 'Featured - Melle Julie Light', description: 'Light elegant purple theme with sophisticated styling and smooth animations' },
+                    { id: 'bearded-feat-mintshake-d-raynh', name: 'Featured - Mintshake D. Raynh', description: 'Cool minty freshness with floating particles and smooth bubble effects' },
+                    { id: 'bearded-feat-webdevcody', name: 'Featured - WebDevCody', description: 'Developer-focused terminal theme with command-line aesthetics and cursor animations' },
+                    // High Contrast Collection
+                    { id: 'bearded-hc-ebony', name: 'HC - Ebony', description: 'Deep black high contrast with bright orange accents for maximum accessibility' },
+                    { id: 'bearded-hc-midnight-void', name: 'HC - Midnight Void', description: 'Deep space darkness with electric blue high contrast styling and flowing effects' },
+                    { id: 'bearded-hc-wonderland-wood', name: 'HC - Wonderland Wood', description: 'Forest green high contrast with magical woodland effects and growing animations' },
+                    { id: 'bearded-hc-brewing-storm', name: 'HC - Brewing Storm', description: 'Stormy grays with electric purple high contrast and lightning strike effects' },
+                    { id: 'bearded-hc-minuit', name: 'HC - Minuit', description: 'Midnight French elegance with high contrast blue accents and sophisticated animations' },
+                    { id: 'bearded-hc-chocolate-espresso', name: 'HC - Chocolate Espresso', description: 'Rich chocolate brown high contrast with warm espresso steam effects' },
+                    { id: 'bearded-hc-flurry', name: 'HC - Flurry', description: 'Cool blue high contrast with swirling snow effects and icy animations' },
+                    // Special Collection
+                    { id: 'bearded-themanopia', name: 'Themanopia', description: 'Unique artistic vision with creative pink accents and painter-inspired effects' }
                 ]
             }
         ];
@@ -5781,6 +5827,210 @@ class NotesWiki {
                 accent: '#7aa2f7',
                 text: '#c0caf5',
                 textMuted: '#565f89'
+            },
+            // New Bearded Themes
+            'bearded-oceanic-reversed': {
+                bg: '#f7f8f9',
+                border: '#c5cbd3',
+                accent: '#1e7ce8',
+                text: '#1e2227',
+                textMuted: '#5a6270'
+            },
+            'bearded-stained-purple': {
+                bg: '#1a0e1f',
+                border: '#46344a',
+                accent: '#9d4edd',
+                text: '#e4d4e8',
+                textMuted: '#a089a8'
+            },
+            'bearded-stained-blue': {
+                bg: '#0f1419',
+                border: '#344453',
+                accent: '#0ea5e9',
+                text: '#d4e4f0',
+                textMuted: '#8fa8b8'
+            },
+            'bearded-vivid-light': {
+                bg: '#fafafa',
+                border: '#d1d1d6',
+                accent: '#ff6b35',
+                text: '#1a1a1a',
+                textMuted: '#525252'
+            },
+            'bearded-coffee-cream': {
+                bg: '#faf8f5',
+                border: '#d4c4b0',
+                accent: '#8b4513',
+                text: '#3c2f28',
+                textMuted: '#7a6b5d'
+            },
+            'bearded-altica': {
+                bg: '#0d1117',
+                border: '#374151',
+                accent: '#3b82f6',
+                text: '#f8fafc',
+                textMuted: '#94a3b8'
+            },
+            'bearded-anthracite': {
+                bg: '#1c1c1c',
+                border: '#404040',
+                accent: '#58a6ff',
+                text: '#e8e8e8',
+                textMuted: '#a0a0a0'
+            },
+            'bearded-light': {
+                bg: '#ffffff',
+                border: '#dadce0',
+                accent: '#1a73e8',
+                text: '#202124',
+                textMuted: '#5f6368'
+            },
+            'bearded-surprising-eggplant': {
+                bg: '#2d1b2e',
+                border: '#543668',
+                accent: '#8b5fbf',
+                text: '#f4e8f5',
+                textMuted: '#c7a8cb'
+            },
+            'bearded-surprising-blueberry': {
+                bg: '#1a1f3a',
+                border: '#384474',
+                accent: '#4c6ef5',
+                text: '#e8ebf5',
+                textMuted: '#a8b2cb'
+            },
+            'bearded-surprising-watermelon': {
+                bg: '#1f2e1f',
+                border: '#435c43',
+                accent: '#ff477e',
+                text: '#f0f5f0',
+                textMuted: '#b8c8b8'
+            },
+            'bearded-milkshake-blueberry': {
+                bg: '#1a1c2e',
+                border: '#383c64',
+                accent: '#6c7ce8',
+                text: '#e6e8f0',
+                textMuted: '#a5aac0'
+            },
+            'bearded-milkshake-mango': {
+                bg: '#2e2a1a',
+                border: '#645d38',
+                accent: '#e89f47',
+                text: '#f0ece6',
+                textMuted: '#c0b5a5'
+            },
+            'bearded-milkshake-vanilla-banana': {
+                bg: '#2a281e',
+                border: '#5a543c',
+                accent: '#d4c47a',
+                text: '#ede8e0',
+                textMuted: '#bdb5a8'
+            },
+            'bearded-arc-eolstorm': {
+                bg: '#15151e',
+                border: '#262636',
+                accent: '#66c3ff',
+                text: '#e0e0e6',
+                textMuted: '#8a8aa3'
+            },
+            'bearded-arc-reversed': {
+                bg: '#f5f5f7',
+                border: '#e5e5ea',
+                accent: '#2980d1',
+                text: '#2a2a3e',
+                textMuted: '#6a6a7e'
+            },
+            'bearded-black-amethyst-soft': {
+                bg: '#0a0a0d',
+                border: '#1a1a24',
+                accent: '#d4b5ff',
+                text: '#e5e5eb',
+                textMuted: '#8080a0'
+            },
+            'bearded-black-diamond': {
+                bg: '#000000',
+                border: '#1a1a1a',
+                accent: '#e0f7ff',
+                text: '#f0f0f0',
+                textMuted: '#a0a0a0'
+            },
+            'bearded-black-diamond-soft': {
+                bg: '#0a0a0c',
+                border: '#1a1a20',
+                accent: '#cce9f5',
+                text: '#e5e5ea',
+                textMuted: '#808090'
+            },
+            'bearded-black-emerald-soft': {
+                bg: '#0a0c0a',
+                border: '#1a201a',
+                accent: '#a3e5cc',
+                text: '#e5eae5',
+                textMuted: '#809080'
+            },
+            'bearded-black-gold': {
+                bg: '#000000',
+                border: '#1a1a1a',
+                accent: '#ffd700',
+                text: '#f0f0f0',
+                textMuted: '#a0a0a0'
+            },
+            'bearded-black-gold-soft': {
+                bg: '#0c0a08',
+                border: '#201a14',
+                accent: '#e5c872',
+                text: '#eae5e0',
+                textMuted: '#908070'
+            },
+            'bearded-black-ruby-soft': {
+                bg: '#0c0a0a',
+                border: '#201414',
+                accent: '#e57285',
+                text: '#eae0e0',
+                textMuted: '#907070'
+            },
+            'bearded-monokai-metallian': {
+                bg: '#1a1a1e',
+                border: '#2a2a30',
+                accent: '#c9c9d6',
+                text: '#f8f8f2',
+                textMuted: '#969696'
+            },
+            'bearded-monokai-black': {
+                bg: '#000000',
+                border: '#1a1a1a',
+                accent: '#66d9ef',
+                text: '#f8f8f2',
+                textMuted: '#888888'
+            },
+            'bearded-monokai-reversed': {
+                bg: '#f8f8f2',
+                border: '#e0e0e0',
+                accent: '#2d8db8',
+                text: '#272822',
+                textMuted: '#6a6a6a'
+            },
+            'bearded-solarized': {
+                bg: '#002b36',
+                border: '#073642',
+                accent: '#268bd2',
+                text: '#839496',
+                textMuted: '#586e75'
+            },
+            'bearded-solarized-reversed': {
+                bg: '#657b83',
+                border: '#586e75',
+                accent: '#268bd2',
+                text: '#fdf6e3',
+                textMuted: '#93a1a1'
+            },
+            'bearded-solarized-light': {
+                bg: '#fdf6e3',
+                border: '#e4dcc6',
+                accent: '#268bd2',
+                text: '#657b83',
+                textMuted: '#93a1a1'
             }
         };
         
@@ -6434,6 +6684,210 @@ class NotesWiki {
                 string: '#9ece6a',
                 comment: '#565f89',
                 number: '#ff9e64'
+            },
+            // New Bearded Themes Syntax Colors
+            'bearded-oceanic-reversed': {
+                keyword: '#0066cc',
+                function: '#00bfb3',
+                string: '#00897b',
+                comment: '#78909c',
+                number: '#e85d44'
+            },
+            'bearded-stained-purple': {
+                keyword: '#9d4edd',
+                function: '#c77dff',
+                string: '#da70d6',
+                comment: '#7b68ee',
+                number: '#ff6b9d'
+            },
+            'bearded-stained-blue': {
+                keyword: '#0ea5e9',
+                function: '#38bdf8',
+                string: '#06b6d4',
+                comment: '#6366f1',
+                number: '#f97316'
+            },
+            'bearded-vivid-light': {
+                keyword: '#0066cc',
+                function: '#00cec9',
+                string: '#00b894',
+                comment: '#8e8e93',
+                number: '#ff6b35'
+            },
+            'bearded-coffee-cream': {
+                keyword: '#8b4513',
+                function: '#b8860b',
+                string: '#6b8e23',
+                comment: '#8fbc8f',
+                number: '#cd853f'
+            },
+            'bearded-altica': {
+                keyword: '#3b82f6',
+                function: '#60a5fa',
+                string: '#34d399',
+                comment: '#6b7280',
+                number: '#fbbf24'
+            },
+            'bearded-anthracite': {
+                keyword: '#58a6ff',
+                function: '#d2a8ff',
+                string: '#a5d6ff',
+                comment: '#7c7c7c',
+                number: '#f1e05a'
+            },
+            'bearded-light': {
+                keyword: '#1a73e8',
+                function: '#1967d2',
+                string: '#137333',
+                comment: '#9aa0a6',
+                number: '#f9ab00'
+            },
+            'bearded-surprising-eggplant': {
+                keyword: '#8b5fbf',
+                function: '#c77dff',
+                string: '#bf86d9',
+                comment: '#a472cc',
+                number: '#e6a85c'
+            },
+            'bearded-surprising-blueberry': {
+                keyword: '#4c6ef5',
+                function: '#7aa3ff',
+                string: '#91a7ff',
+                comment: '#748ffc',
+                number: '#ffd43b'
+            },
+            'bearded-surprising-watermelon': {
+                keyword: '#ff477e',
+                function: '#ff6b9d',
+                string: '#51cf66',
+                comment: '#8cc8c',
+                number: '#ffd43b'
+            },
+            'bearded-milkshake-blueberry': {
+                keyword: '#6c7ce8',
+                function: '#7d8de8',
+                string: '#9aa8eb',
+                comment: '#8a94c7',
+                number: '#ffd43b'
+            },
+            'bearded-milkshake-mango': {
+                keyword: '#e89f47',
+                function: '#edb366',
+                string: '#f2c785',
+                comment: '#c7a669',
+                number: '#7eb069'
+            },
+            'bearded-milkshake-vanilla-banana': {
+                keyword: '#d4c47a',
+                function: '#ddd190',
+                string: '#e6dea6',
+                comment: '#b8a678',
+                number: '#8eb069'
+            },
+            'bearded-arc-eolstorm': {
+                keyword: '#b77ee0',
+                function: '#ff6ac1',
+                string: '#95e06d',
+                comment: '#5a5a7a',
+                number: '#ffcc66'
+            },
+            'bearded-arc-reversed': {
+                keyword: '#8e44ad',
+                function: '#d6336c',
+                string: '#27ae60',
+                comment: '#8a8a9e',
+                number: '#d19a00'
+            },
+            'bearded-black-amethyst-soft': {
+                keyword: '#e5ccff',
+                function: '#ffb3d9',
+                string: '#b3ffb3',
+                comment: '#6060a0',
+                number: '#ffd4a3'
+            },
+            'bearded-black-diamond': {
+                keyword: '#b3e5ff',
+                function: '#ffb3b3',
+                string: '#b3ffcc',
+                comment: '#666680',
+                number: '#ffe0b3'
+            },
+            'bearded-black-diamond-soft': {
+                keyword: '#a3d4e5',
+                function: '#f5a3a3',
+                string: '#a3f5b8',
+                comment: '#606080',
+                number: '#f5d4a3'
+            },
+            'bearded-black-emerald-soft': {
+                keyword: '#b3f5d4',
+                function: '#f5a3b3',
+                string: '#c3f5a3',
+                comment: '#608060',
+                number: '#f5e5a3'
+            },
+            'bearded-black-gold': {
+                keyword: '#ffeb3b',
+                function: '#ff6b6b',
+                string: '#4ecdc4',
+                comment: '#808080',
+                number: '#ffa500'
+            },
+            'bearded-black-gold-soft': {
+                keyword: '#f5d896',
+                function: '#e57272',
+                string: '#72c8b8',
+                comment: '#706050',
+                number: '#e5a852'
+            },
+            'bearded-black-ruby-soft': {
+                keyword: '#f596a3',
+                function: '#f55872',
+                string: '#72c872',
+                comment: '#705050',
+                number: '#e5a872'
+            },
+            'bearded-monokai-metallian': {
+                keyword: '#f92672',
+                function: '#a6e22e',
+                string: '#e6db74',
+                comment: '#75715e',
+                number: '#ae81ff'
+            },
+            'bearded-monokai-black': {
+                keyword: '#f92672',
+                function: '#a6e22e',
+                string: '#e6db74',
+                comment: '#75715e',
+                number: '#ae81ff'
+            },
+            'bearded-monokai-reversed': {
+                keyword: '#d92672',
+                function: '#86c22e',
+                string: '#cc8400',
+                comment: '#8a8a8a',
+                number: '#8e51ff'
+            },
+            'bearded-solarized': {
+                keyword: '#859900',
+                function: '#b58900',
+                string: '#2aa198',
+                comment: '#586e75',
+                number: '#d33682'
+            },
+            'bearded-solarized-reversed': {
+                keyword: '#859900',
+                function: '#b58900',
+                string: '#2aa198',
+                comment: '#93a1a1',
+                number: '#d33682'
+            },
+            'bearded-solarized-light': {
+                keyword: '#859900',
+                function: '#b58900',
+                string: '#2aa198',
+                comment: '#93a1a1',
+                number: '#d33682'
             }
         };
         
@@ -8084,6 +8538,197 @@ class NotesWiki {
                     border-radius: 50%;
                     animation: breathe 6s ease-in-out infinite;
                 "></div>
+            `,
+            // New Bearded Themes Decorations
+            'bearded-oceanic-reversed': `
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 3px;
+                    background: linear-gradient(90deg, #1e7ce8, #00bfb3);
+                    opacity: 0.6;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    font-size: 20px;
+                    opacity: 0.4;
+                ">🌊</div>
+            `,
+            'bearded-stained-purple': `
+                <div style="
+                    position: absolute;
+                    inset: 0;
+                    background: radial-gradient(circle at 30% 30%, rgba(157, 78, 221, 0.1), transparent 60%);
+                    opacity: 0.8;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    font-size: 18px;
+                    opacity: 0.5;
+                ">🔮</div>
+            `,
+            'bearded-stained-blue': `
+                <div style="
+                    position: absolute;
+                    inset: 0;
+                    background: radial-gradient(circle at 70% 20%, rgba(14, 165, 233, 0.1), transparent 60%);
+                    opacity: 0.8;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    font-size: 18px;
+                    opacity: 0.5;
+                ">💎</div>
+            `,
+            'bearded-vivid-light': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 2px;
+                    background: linear-gradient(90deg, #ff6b35, #f7931e, #ffb627);
+                    opacity: 0.7;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 8px;
+                    right: 8px;
+                    font-size: 16px;
+                    opacity: 0.6;
+                ">✨</div>
+            `,
+            'bearded-coffee-cream': `
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    width: 20px;
+                    height: 20px;
+                    border: 2px solid rgba(139, 69, 19, 0.2);
+                    border-radius: 50%;
+                    opacity: 0.6;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 8px;
+                    right: 8px;
+                    font-size: 16px;
+                    opacity: 0.5;
+                ">☕</div>
+            `,
+            'bearded-surprising-eggplant': `
+                <div style="
+                    position: absolute;
+                    inset: 0;
+                    background: radial-gradient(circle at 80% 20%, rgba(139, 95, 191, 0.15), transparent 50%);
+                    animation: surprise-glow 3s ease-in-out infinite;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    font-size: 18px;
+                    opacity: 0.6;
+                ">🍆</div>
+            `,
+            'bearded-surprising-blueberry': `
+                <div style="
+                    position: absolute;
+                    inset: 0;
+                    background: radial-gradient(circle at 20% 80%, rgba(76, 110, 245, 0.15), transparent 50%);
+                    animation: blueberry-burst 2s ease-in-out infinite;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    font-size: 18px;
+                    opacity: 0.6;
+                ">🫐</div>
+            `,
+            'bearded-surprising-watermelon': `
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 4px;
+                    background: linear-gradient(90deg, #ff477e, #51cf66);
+                    opacity: 0.8;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    font-size: 18px;
+                    opacity: 0.6;
+                ">🍉</div>
+            `,
+            'bearded-milkshake-blueberry': `
+                <div style="
+                    position: absolute;
+                    top: 4px;
+                    right: 4px;
+                    width: 8px;
+                    height: 8px;
+                    background: #9aa8eb;
+                    border-radius: 50%;
+                    animation: vanilla-swirl 4s linear infinite;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 8px;
+                    right: 8px;
+                    font-size: 16px;
+                    opacity: 0.5;
+                ">🫐</div>
+            `,
+            'bearded-milkshake-mango': `
+                <div style="
+                    position: absolute;
+                    top: 4px;
+                    right: 4px;
+                    width: 8px;
+                    height: 8px;
+                    background: #f2c785;
+                    border-radius: 50%;
+                    animation: mango-swirl 4s linear infinite;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 8px;
+                    right: 8px;
+                    font-size: 16px;
+                    opacity: 0.5;
+                ">🥭</div>
+            `,
+            'bearded-milkshake-vanilla-banana': `
+                <div style="
+                    position: absolute;
+                    top: 4px;
+                    right: 4px;
+                    width: 8px;
+                    height: 8px;
+                    background: #e6dea6;
+                    border-radius: 50%;
+                    animation: vanilla-swirl 4s linear infinite;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 8px;
+                    right: 8px;
+                    font-size: 16px;
+                    opacity: 0.5;
+                ">🍌</div>
             `
         };
         
@@ -8142,7 +8787,39 @@ class NotesWiki {
                     'bearded-vivid-black': `0 0 30px rgba(0, 255, 255, 0.5), 0 0 40px rgba(255, 0, 255, 0.3)`,
                     'bearded-vivid-purple': `0 0 30px rgba(187, 96, 255, 0.5)`,
                     'bearded-oled': `0 0 25px rgba(0, 153, 255, 0.5)`,
-                    'bearded-void': `0 0 20px rgba(122, 162, 247, 0.3)`
+                    'bearded-void': `0 0 20px rgba(122, 162, 247, 0.3)`,
+                    // New Bearded Themes Glow Effects
+                    'bearded-oceanic-reversed': `0 0 25px rgba(30, 124, 232, 0.4)`,
+                    'bearded-stained-purple': `0 0 30px rgba(157, 78, 221, 0.5), 0 0 50px rgba(199, 125, 255, 0.3)`,
+                    'bearded-stained-blue': `0 0 30px rgba(14, 165, 233, 0.5), 0 0 50px rgba(56, 189, 248, 0.3)`,
+                    'bearded-vivid-light': `0 0 25px rgba(255, 107, 53, 0.4), 0 0 40px rgba(247, 147, 30, 0.2)`,
+                    'bearded-coffee-cream': `0 0 20px rgba(139, 69, 19, 0.4)`,
+                    'bearded-altica': `0 0 25px rgba(59, 130, 246, 0.4)`,
+                    'bearded-anthracite': `0 0 25px rgba(88, 166, 255, 0.4)`,
+                    'bearded-light': `0 0 20px rgba(26, 115, 232, 0.3)`,
+                    'bearded-surprising-eggplant': `0 0 30px rgba(139, 95, 191, 0.5), 0 0 50px rgba(164, 114, 204, 0.3)`,
+                    'bearded-surprising-blueberry': `0 0 30px rgba(76, 110, 245, 0.5), 0 0 50px rgba(116, 143, 252, 0.3)`,
+                    'bearded-surprising-watermelon': `0 0 30px rgba(255, 71, 126, 0.5), 0 0 50px rgba(81, 207, 102, 0.3)`,
+                    'bearded-milkshake-blueberry': `0 0 25px rgba(108, 124, 232, 0.4)`,
+                    'bearded-milkshake-mango': `0 0 25px rgba(232, 159, 71, 0.4)`,
+                    'bearded-milkshake-vanilla-banana': `0 0 25px rgba(212, 196, 122, 0.4)`,
+                    // Featured Bearded Collection Glow Effects
+                    'bearded-feat-will': `0 0 30px rgba(227, 156, 69, 0.5), 0 0 50px rgba(156, 127, 214, 0.3)`,
+                    'bearded-feat-gold-d-raynh': `0 0 35px rgba(212, 175, 55, 0.6), 0 0 60px rgba(255, 223, 74, 0.4)`,
+                    'bearded-feat-melle-julie': `0 0 30px rgba(171, 125, 248, 0.5), 0 0 50px rgba(181, 148, 246, 0.3)`,
+                    'bearded-feat-melle-julie-light': `0 0 25px rgba(139, 95, 191, 0.4), 0 0 40px rgba(171, 125, 248, 0.2)`,
+                    'bearded-feat-mintshake-d-raynh': `0 0 35px rgba(78, 205, 196, 0.6), 0 0 60px rgba(167, 255, 235, 0.4)`,
+                    'bearded-feat-webdevcody': `0 0 30px rgba(0, 212, 170, 0.5), 0 0 50px rgba(0, 255, 204, 0.3)`,
+                    // High Contrast Bearded Collection Glow Effects
+                    'bearded-hc-ebony': `0 0 35px rgba(255, 107, 53, 0.7), 0 0 60px rgba(255, 140, 90, 0.4)`,
+                    'bearded-hc-midnight-void': `0 0 40px rgba(0, 204, 255, 0.7), 0 0 70px rgba(51, 221, 255, 0.5)`,
+                    'bearded-hc-wonderland-wood': `0 0 35px rgba(0, 255, 64, 0.7), 0 0 60px rgba(128, 255, 128, 0.4)`,
+                    'bearded-hc-brewing-storm': `0 0 35px rgba(187, 134, 252, 0.6), 0 0 60px rgba(207, 102, 121, 0.4)`,
+                    'bearded-hc-minuit': `0 0 35px rgba(99, 102, 241, 0.6), 0 0 60px rgba(139, 92, 246, 0.4)`,
+                    'bearded-hc-chocolate-espresso': `0 0 35px rgba(210, 105, 30, 0.6), 0 0 60px rgba(218, 165, 32, 0.4)`,
+                    'bearded-hc-flurry': `0 0 35px rgba(0, 191, 255, 0.6), 0 0 60px rgba(135, 206, 235, 0.4)`,
+                    // Special Bearded Collection Glow Effects
+                    'bearded-themanopia': `0 0 30px rgba(255, 107, 157, 0.5), 0 0 50px rgba(196, 69, 105, 0.3)`
                 };
                 
                 card.style.boxShadow = hoverShadows[themeId] || `0 4px 12px ${colors.accent}30`;

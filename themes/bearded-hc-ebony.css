@@ -1,0 +1,224 @@
+/* Bearded Theme - High Contrast - Ebony */
+.theme-bearded-hc-ebony {
+    /* High Contrast - Ebony - Deep black with high contrast */
+    --primary-bg: #000000;
+    --secondary-bg: #0f0f0f;
+    --accent-bg: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --accent-color: #ff6b35;
+    --accent-secondary: #ffa500;
+    --link-color: #ff6b35;
+    --link-hover: #ff8c5a;
+    --border-color: #333333;
+    --shadow-color: rgba(255, 107, 53, 0.3);
+    
+    /* Bearded High Contrast Syntax Colors */
+    --syntax-keyword: #ff6b35;
+    --syntax-string: #00ff00;
+    --syntax-number: #ffff00;
+    --syntax-function: #00ffff;
+    --syntax-comment: #808080;
+    --syntax-class: #ff00ff;
+    --syntax-variable: #ffffff;
+    --syntax-operator: #ff6b35;
+    --syntax-punctuation: #cccccc;
+    
+    /* UI Elements */
+    --button-bg: #1a1a1a;
+    --button-hover: #333333;
+    --input-bg: #0f0f0f;
+    --input-border: #333333;
+    --dropdown-bg: #0f0f0f;
+    --dropdown-hover: #1a1a1a;
+    --modal-overlay: rgba(0, 0, 0, 0.95);
+    
+    /* Feature Colors */
+    --success-color: #00ff00;
+    --warning-color: #ffff00;
+    --error-color: #ff0000;
+    --info-color: #00ffff;
+    
+    /* Bearded Signature */
+    --beard-gradient: linear-gradient(135deg, #ff6b35 0%, #ffa500 100%);
+    --beard-shadow: 0 0 40px rgba(255, 107, 53, 0.5);
+    --code-bg: #0a0a0a;
+    --inline-code-bg: #1a1a1a;
+    --scrollbar-bg: #000000;
+    --scrollbar-thumb: #333333;
+    --scrollbar-hover: #555555;
+    --search-bg: #0f0f0f;
+    --search-border: #333333;
+    --search-focus-border: #ff6b35;
+    --tag-bg: #1a1a1a;
+    --tag-text: #ff6b35;
+    --tag-hover: #333333;
+    
+    /* Ebony HC Special */
+    --ebony-glow: 0 0 30px rgba(255, 107, 53, 0.6);
+    --ebony-accent: #ff6b35;
+    --ebony-contrast: #ffffff;
+    --badge-text: #000000;
+}
+
+/* Ebony HC Decorative Elements */
+.theme-bearded-hc-ebony .note-content h1::before {
+    content: "◆";
+    display: inline-block;
+    margin-right: 0.5rem;
+    color: var(--ebony-accent);
+    font-weight: bold;
+    filter: drop-shadow(var(--ebony-glow));
+    animation: ebonyPulse 2s ease-in-out infinite;
+}
+
+@keyframes ebonyPulse {
+    0%, 100% { 
+        opacity: 0.8;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+.theme-bearded-hc-ebony .tab.active {
+    background: var(--accent-bg);
+    border-top: 3px solid var(--ebony-accent);
+    box-shadow: inset 0 3px 15px rgba(255, 107, 53, 0.2);
+    border-left: 2px solid rgba(255, 107, 53, 0.5);
+    border-right: 2px solid rgba(255, 107, 53, 0.5);
+}
+
+.theme-bearded-hc-ebony .search-container input {
+    border: 2px solid var(--border-color);
+    background: var(--input-bg);
+    color: var(--text-primary);
+    font-weight: bold;
+}
+
+.theme-bearded-hc-ebony .search-container input:focus {
+    border-color: var(--ebony-accent);
+    box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.3),
+                var(--ebony-glow);
+    background: var(--primary-bg);
+}
+
+.theme-bearded-hc-ebony .note-item {
+    border: 1px solid transparent;
+    color: var(--text-primary);
+}
+
+.theme-bearded-hc-ebony .note-item:hover {
+    border: 2px solid var(--ebony-accent);
+    padding-left: calc(1rem - 2px);
+    background: linear-gradient(90deg, rgba(255, 107, 53, 0.1) 0%, transparent 100%);
+    color: var(--ebony-contrast);
+    font-weight: bold;
+}
+
+.theme-bearded-hc-ebony pre code {
+    background: var(--code-bg);
+    border: 2px solid var(--border-color);
+    box-shadow: inset 0 0 20px rgba(255, 107, 53, 0.1);
+    color: var(--text-primary);
+    font-weight: bold;
+}
+
+.theme-bearded-hc-ebony blockquote {
+    border-left: 5px solid var(--ebony-accent);
+    background: linear-gradient(90deg, rgba(255, 107, 53, 0.15) 0%, transparent 100%);
+    color: var(--ebony-contrast);
+    font-weight: bold;
+    border-top: 1px solid rgba(255, 107, 53, 0.3);
+    border-bottom: 1px solid rgba(255, 107, 53, 0.3);
+}
+
+.theme-bearded-hc-ebony .btn-primary {
+    background: var(--ebony-accent);
+    color: var(--primary-bg);
+    border: 2px solid var(--ebony-accent);
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.theme-bearded-hc-ebony .btn-primary:hover {
+    background: var(--primary-bg);
+    color: var(--ebony-accent);
+    border: 2px solid var(--ebony-accent);
+    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.5);
+    transform: translateY(-2px);
+}
+
+.theme-bearded-hc-ebony ::-webkit-scrollbar-thumb {
+    background: var(--ebony-accent);
+    border: 2px solid var(--primary-bg);
+    border-radius: 4px;
+}
+
+.theme-bearded-hc-ebony ::-webkit-scrollbar-thumb:hover {
+    background: #ff8c5a;
+}
+
+.theme-bearded-hc-ebony .settings-modal {
+    background: rgba(0, 0, 0, 0.98);
+    border: 3px solid var(--ebony-accent);
+    box-shadow: 0 0 50px rgba(255, 107, 53, 0.4);
+}
+
+.theme-bearded-hc-ebony .settings-modal h2 {
+    color: var(--ebony-accent);
+    text-shadow: var(--ebony-glow);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.theme-bearded-hc-ebony .settings-modal h2::before {
+    content: "◆";
+    position: absolute;
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: ebonyPulse 2s ease-in-out infinite;
+}
+
+/* High contrast accessibility enhancements */
+.theme-bearded-hc-ebony * {
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.theme-bearded-hc-ebony .note-content h1,
+.theme-bearded-hc-ebony .note-content h2,
+.theme-bearded-hc-ebony .note-content h3,
+.theme-bearded-hc-ebony .note-content h4,
+.theme-bearded-hc-ebony .note-content h5,
+.theme-bearded-hc-ebony .note-content h6 {
+    color: var(--ebony-contrast);
+    font-weight: bold;
+    text-shadow: 0 0 2px rgba(255, 107, 53, 0.8);
+}
+
+.theme-bearded-hc-ebony .note-content a {
+    color: var(--ebony-accent);
+    font-weight: bold;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 2px;
+}
+
+.theme-bearded-hc-ebony .note-content a:hover {
+    color: #ff8c5a;
+    text-shadow: 0 0 5px rgba(255, 107, 53, 0.8);
+}
+
+.theme-bearded-hc-ebony .note-content code {
+    background: var(--inline-code-bg);
+    color: var(--ebony-accent);
+    font-weight: bold;
+    border: 1px solid var(--border-color);
+    padding: 3px 6px;
+}

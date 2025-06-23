@@ -1,0 +1,256 @@
+/* Bearded Anthracite Theme */
+:root[data-theme="bearded-anthracite"] {
+    /* Base colors - dark anthracite palette */
+    --bg-primary: #1c1c1c;
+    --bg-secondary: #242424;
+    --bg-tertiary: #2d2d2d;
+    --bg-hover: #363636;
+    
+    /* Text colors */
+    --text-primary: #e8e8e8;
+    --text-secondary: #d0d0d0;
+    --text-muted: #a0a0a0;
+    --text-link: #79b8ff;
+    --text-link-hover: #58a6ff;
+    
+    /* Accent colors - anthracite blue accents */
+    --accent-primary: #58a6ff;
+    --accent-secondary: #79b8ff;
+    --accent-tertiary: #a5d6ff;
+    
+    /* UI elements */
+    --border-color: #404040;
+    --border-hover: #4a4a4a;
+    --shadow-color: rgba(88, 166, 255, 0.15);
+    
+    /* Header */
+    --header-bg: #181818;
+    --header-text: #e8e8e8;
+    --header-text-muted: #d0d0d0;
+    
+    /* Tabs */
+    --tab-bg: #2d2d2d;
+    --tab-active-bg: #363636;
+    --tab-hover-bg: #363636;
+    --tab-text: #d0d0d0;
+    --tab-active-text: #e8e8e8;
+    --tab-border: #404040;
+    
+    /* Sidebar */
+    --sidebar-bg: #1f1f1f;
+    --sidebar-hover-bg: #2d2d2d;
+    --sidebar-active-bg: #363636;
+    --sidebar-text: #d0d0d0;
+    --sidebar-icon: #a0a0a0;
+    
+    /* Content area */
+    --content-bg: #1c1c1c;
+    --code-bg: #181818;
+    --code-border: #404040;
+    --blockquote-bg: #252525;
+    --blockquote-border: #58a6ff;
+    
+    /* Search */
+    --search-bg: #242424;
+    --search-border: #404040;
+    --search-focus-border: #58a6ff;
+    
+    /* Scrollbar */
+    --scrollbar-bg: #242424;
+    --scrollbar-thumb: #4a4a4a;
+    --scrollbar-thumb-hover: #565656;
+    
+    /* Status indicators */
+    --status-info: #58a6ff;
+    --status-success: #56d364;
+    --status-warning: #f1e05a;
+    --status-error: #f85149;
+    
+    /* Badges */
+    --badge-bg: #58a6ff;
+    --badge-text: #ffffff;
+    
+    /* Syntax highlighting */
+    --syntax-comment: #7c7c7c;
+    --syntax-string: #a5d6ff;
+    --syntax-number: #f1e05a;
+    --syntax-keyword: #58a6ff;
+    --syntax-function: #d2a8ff;
+    --syntax-variable: #ffa657;
+    --syntax-constant: #ff7b72;
+    --syntax-class: #7ee787;
+    --syntax-operator: #a0a0a0;
+    --syntax-punctuation: #d0d0d0;
+    
+    /* Anthracite decorative elements */
+    --gradient-primary: linear-gradient(135deg, #58a6ff 0%, #79b8ff 100%);
+    --gradient-secondary: linear-gradient(135deg, #1f6feb 0%, #58a6ff 100%);
+    --gradient-accent: radial-gradient(circle, #79b8ff 0%, #58a6ff 70%);
+}
+
+/* Anthracite metallic effects */
+:root[data-theme="bearded-anthracite"] body {
+    background: linear-gradient(135deg, #1c1c1c 0%, #1a1a1a 50%, #1e1e1e 100%);
+}
+
+/* Metallic tab styling */
+:root[data-theme="bearded-anthracite"] .tab-item {
+    background: linear-gradient(135deg, #2d2d2d 0%, #2a2a2a 50%, #303030 100%);
+    border: 1px solid #404040;
+    position: relative;
+}
+
+:root[data-theme="bearded-anthracite"] .tab-item.active {
+    background: linear-gradient(135deg, #363636 0%, #333333 50%, #393939 100%);
+    border-bottom: 2px solid var(--accent-primary);
+    box-shadow: 0 0 15px rgba(88, 166, 255, 0.2);
+}
+
+/* Anthracite metallic shine effect */
+:root[data-theme="bearded-anthracite"] .tab-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+:root[data-theme="bearded-anthracite"] .tab-item:hover::before {
+    left: 100%;
+}
+
+/* Anthracite button effects */
+:root[data-theme="bearded-anthracite"] button {
+    background: linear-gradient(135deg, #58a6ff 0%, #4596ea 100%);
+    border: 1px solid rgba(88, 166, 255, 0.3);
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="bearded-anthracite"] button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.3s ease;
+}
+
+:root[data-theme="bearded-anthracite"] button:hover::before {
+    left: 100%;
+}
+
+:root[data-theme="bearded-anthracite"] button:hover {
+    background: linear-gradient(135deg, #79b8ff 0%, #58a6ff 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3);
+}
+
+/* Code block anthracite styling */
+:root[data-theme="bearded-anthracite"] pre {
+    background: linear-gradient(135deg, #181818 0%, #161616 50%, #1a1a1a 100%);
+    border: 1px solid #404040;
+    border-left: 4px solid var(--accent-primary);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Anthracite link effects */
+:root[data-theme="bearded-anthracite"] a {
+    color: var(--accent-secondary);
+    text-decoration: none;
+    position: relative;
+}
+
+:root[data-theme="bearded-anthracite"] a::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--gradient-primary);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+:root[data-theme="bearded-anthracite"] a:hover::after {
+    transform: scaleX(1);
+}
+
+/* Search input anthracite styling */
+:root[data-theme="bearded-anthracite"] #searchInput {
+    background: linear-gradient(135deg, #242424 0%, #222222 50%, #262626 100%);
+    border: 1px solid #404040;
+    color: var(--text-primary);
+}
+
+:root[data-theme="bearded-anthracite"] #searchInput:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 12px rgba(88, 166, 255, 0.2);
+}
+
+/* Note item anthracite hover */
+:root[data-theme="bearded-anthracite"] .note-item:hover {
+    background: linear-gradient(135deg, rgba(88, 166, 255, 0.05) 0%, rgba(88, 166, 255, 0.02) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(88, 166, 255, 0.1);
+}
+
+/* Scrollbar anthracite styling */
+:root[data-theme="bearded-anthracite"] ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #58a6ff 0%, #4596ea 100%);
+    border-radius: 4px;
+}
+
+:root[data-theme="bearded-anthracite"] ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #79b8ff 0%, #58a6ff 100%);
+}
+
+/* Headers with anthracite styling */
+:root[data-theme="bearded-anthracite"] h1,
+:root[data-theme="bearded-anthracite"] h2,
+:root[data-theme="bearded-anthracite"] h3 {
+    color: var(--text-primary);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+:root[data-theme="bearded-anthracite"] h1::after,
+:root[data-theme="bearded-anthracite"] h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    margin-top: 8px;
+    background: var(--gradient-primary);
+    border-radius: 2px;
+    box-shadow: 0 0 5px rgba(88, 166, 255, 0.3);
+}
+
+/* Anthracite selection styling */
+:root[data-theme="bearded-anthracite"] ::selection {
+    background: rgba(88, 166, 255, 0.3);
+    color: #ffffff;
+}
+
+/* Sidebar anthracite effects */
+:root[data-theme="bearded-anthracite"] .sidebar-item.active {
+    background: linear-gradient(90deg, rgba(88, 166, 255, 0.1) 0%, transparent 100%);
+    border-left: 3px solid var(--accent-primary);
+    box-shadow: inset 0 0 10px rgba(88, 166, 255, 0.1);
+}
+
+/* Anthracite glow animation */
+@keyframes anthracite-pulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(88, 166, 255, 0.2); }
+    50% { box-shadow: 0 0 20px rgba(88, 166, 255, 0.4); }
+}
+
+:root[data-theme="bearded-anthracite"] .tab-item.active {
+    animation: anthracite-pulse 4s ease-in-out infinite;
+}

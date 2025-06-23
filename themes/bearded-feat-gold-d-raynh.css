@@ -1,0 +1,171 @@
+/* Bearded Theme - Featured - Gold D. Raynh */
+.theme-bearded-feat-gold-d-raynh {
+    /* Featured - Gold D. Raynh - Luxurious golden warmth */
+    --primary-bg: #1f1b15;
+    --secondary-bg: #2a2419;
+    --accent-bg: #332d1f;
+    --text-primary: #e6d8c5;
+    --text-secondary: #b8a992;
+    --accent-color: #d4af37;
+    --accent-secondary: #b8860b;
+    --link-color: #daa520;
+    --link-hover: #ffdf4a;
+    --border-color: #463f2d;
+    --shadow-color: rgba(212, 175, 55, 0.2);
+    
+    /* Bearded Featured Syntax Colors */
+    --syntax-keyword: #ffd700;
+    --syntax-string: #98c379;
+    --syntax-number: #e5c07b;
+    --syntax-function: #61afef;
+    --syntax-comment: #6b6340;
+    --syntax-class: #ff6b6b;
+    --syntax-variable: #f4e18c;
+    --syntax-operator: #daa520;
+    --syntax-punctuation: #c9b037;
+    
+    /* UI Elements */
+    --button-bg: #332d1f;
+    --button-hover: #463f2d;
+    --input-bg: #2a2419;
+    --input-border: #463f2d;
+    --dropdown-bg: #2a2419;
+    --dropdown-hover: #332d1f;
+    --modal-overlay: rgba(31, 27, 21, 0.9);
+    
+    /* Feature Colors */
+    --success-color: #9acd32;
+    --warning-color: #ff8c00;
+    --error-color: #dc143c;
+    --info-color: #4682b4;
+    
+    /* Bearded Signature */
+    --beard-gradient: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+    --beard-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
+    --code-bg: #252015;
+    --inline-code-bg: #2f2a1c;
+    --scrollbar-bg: #1f1b15;
+    --scrollbar-thumb: #463f2d;
+    --scrollbar-hover: #5a5239;
+    --search-bg: #2a2419;
+    --search-border: #463f2d;
+    --search-focus-border: #d4af37;
+    --tag-bg: #332d1f;
+    --tag-text: #d4af37;
+    --tag-hover: #463f2d;
+    
+    /* Gold D. Raynh Special */
+    --gold-shimmer: 0 0 30px rgba(212, 175, 55, 0.6);
+    --gold-accent: #d4af37;
+    --gold-light: #ffdf4a;
+    --badge-text: #1f1b15;
+}
+
+/* Gold D. Raynh Decorative Elements */
+.theme-bearded-feat-gold-d-raynh .note-content h1::before {
+    content: "★";
+    display: inline-block;
+    margin-right: 0.5rem;
+    color: var(--gold-accent);
+    filter: drop-shadow(var(--gold-shimmer));
+    animation: goldGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes goldGlow {
+    0% { filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.6)); }
+    100% { filter: drop-shadow(0 0 30px rgba(255, 223, 74, 0.8)); }
+}
+
+.theme-bearded-feat-gold-d-raynh .tab.active {
+    background: var(--accent-bg);
+    border-top: 3px solid var(--gold-accent);
+    box-shadow: inset 0 3px 15px rgba(212, 175, 55, 0.15);
+    position: relative;
+}
+
+.theme-bearded-feat-gold-d-raynh .tab.active::after {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #d4af37 0%, #ffdf4a 50%, #d4af37 100%);
+    animation: goldFlow 2s linear infinite;
+}
+
+@keyframes goldFlow {
+    0% { background-position: -100% 0; }
+    100% { background-position: 100% 0; }
+}
+
+.theme-bearded-feat-gold-d-raynh .search-container input:focus {
+    border-color: var(--gold-accent);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3),
+                var(--gold-shimmer);
+}
+
+.theme-bearded-feat-gold-d-raynh .note-item:hover {
+    border-left: 4px solid var(--gold-accent);
+    padding-left: calc(1rem - 4px);
+    background: linear-gradient(90deg, rgba(212, 175, 55, 0.08) 0%, transparent 100%);
+    box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.05);
+}
+
+.theme-bearded-feat-gold-d-raynh pre code {
+    background: var(--code-bg);
+    box-shadow: inset 0 0 40px rgba(212, 175, 55, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.theme-bearded-feat-gold-d-raynh blockquote {
+    border-left: 5px solid var(--gold-accent);
+    background: linear-gradient(90deg, rgba(212, 175, 55, 0.12) 0%, transparent 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-bearded-feat-gold-d-raynh blockquote::before {
+    content: "\201C";
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    font-size: 4rem;
+    color: rgba(212, 175, 55, 0.3);
+    line-height: 1;
+    font-family: serif;
+}
+
+.theme-bearded-feat-gold-d-raynh .btn-primary {
+    background: linear-gradient(135deg, var(--gold-accent) 0%, var(--gold-light) 100%);
+    color: var(--primary-bg);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.theme-bearded-feat-gold-d-raynh .btn-primary:hover {
+    background: linear-gradient(135deg, var(--gold-light) 0%, #ffe55c 100%);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+    transform: translateY(-2px);
+}
+
+.theme-bearded-feat-gold-d-raynh ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--scrollbar-thumb) 0%, var(--gold-accent) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.theme-bearded-feat-gold-d-raynh .settings-modal h2 {
+    color: var(--gold-accent);
+    text-shadow: var(--gold-shimmer);
+    position: relative;
+}
+
+.theme-bearded-feat-gold-d-raynh .settings-modal h2::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--gold-accent) 50%, transparent 100%);
+}

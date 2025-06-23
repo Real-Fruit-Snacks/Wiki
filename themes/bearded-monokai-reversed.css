@@ -1,0 +1,151 @@
+/* Bearded Monokai Reversed Theme Variables */
+:root[data-theme="bearded-monokai-reversed"] {
+    /* Background Colors - Light version of Monokai */
+    --bg-primary: #f8f8f2;
+    --bg-secondary: #ffffff;
+    --bg-sidebar: #fafafa;
+    --bg-code: #ffffff;
+    --bg-selection: var(--accent-primary)22;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(0, 0, 0, 0.03);
+    --bg-tag: #f0f0f0;
+    
+    /* Additional Background Colors */
+    --bg-modal: #f8f8f2ee;
+    --bg-tooltip: #ffffff;
+    --bg-input: #ffffff;
+    --bg-highlight: var(--accent-primary)22;
+    --text-link: #2d8db8;
+    --text-code: #272822;
+    --text-inverse: #ffffff;
+    --button-text: #272822;
+    
+    /* Text Colors */
+    --text-primary: #272822;
+    --text-secondary: #3a3a3a;
+    --text-muted: #6a6a6a;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors - Inverted Monokai colors */
+    --accent-primary: #2d8db8;
+    --accent-secondary: #4da3c8;
+    --accent-warning: #cc8400;
+    --accent-error: #d92672;
+    --accent-info: var(--accent-primary);
+    --accent-success: #86c22e;
+    
+    /* Border Colors */
+    --border-primary: #e0e0e0;
+    --border-secondary: #f0f0f0;
+    
+    /* Button Colors */
+    --button-bg: #f0f0f0;
+    --button-hover: #e8e8e8;
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-error);
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(45, 141, 184, 0.08);
+    --bg-code-block: #ffffff;
+}
+
+/* Syntax Highlighting - Bearded Monokai Reversed Theme */
+:root[data-theme="bearded-monokai-reversed"] .token.comment,
+:root[data-theme="bearded-monokai-reversed"] .token.prolog,
+:root[data-theme="bearded-monokai-reversed"] .token.doctype,
+:root[data-theme="bearded-monokai-reversed"] .token.cdata {
+    color: #8a8a8a;
+}
+
+:root[data-theme="bearded-monokai-reversed"] .token.punctuation {
+    color: #272822;
+}
+
+:root[data-theme="bearded-monokai-reversed"] .token.property,
+:root[data-theme="bearded-monokai-reversed"] .token.tag,
+:root[data-theme="bearded-monokai-reversed"] .token.boolean,
+:root[data-theme="bearded-monokai-reversed"] .token.number,
+:root[data-theme="bearded-monokai-reversed"] .token.constant,
+:root[data-theme="bearded-monokai-reversed"] .token.symbol,
+:root[data-theme="bearded-monokai-reversed"] .token.deleted {
+    color: #8e51ff;
+}
+
+:root[data-theme="bearded-monokai-reversed"] .token.selector,
+:root[data-theme="bearded-monokai-reversed"] .token.attr-name,
+:root[data-theme="bearded-monokai-reversed"] .token.string,
+:root[data-theme="bearded-monokai-reversed"] .token.char,
+:root[data-theme="bearded-monokai-reversed"] .token.builtin,
+:root[data-theme="bearded-monokai-reversed"] .token.inserted {
+    color: #cc8400;
+}
+
+:root[data-theme="bearded-monokai-reversed"] .token.operator,
+:root[data-theme="bearded-monokai-reversed"] .token.entity,
+:root[data-theme="bearded-monokai-reversed"] .token.url,
+:root[data-theme="bearded-monokai-reversed"] .language-css .token.string,
+:root[data-theme="bearded-monokai-reversed"] .style .token.string {
+    color: #2d8db8;
+    background: transparent;
+}
+
+:root[data-theme="bearded-monokai-reversed"] .token.atrule,
+:root[data-theme="bearded-monokai-reversed"] .token.attr-value,
+:root[data-theme="bearded-monokai-reversed"] .token.keyword {
+    color: #d92672;
+}
+
+:root[data-theme="bearded-monokai-reversed"] .token.function,
+:root[data-theme="bearded-monokai-reversed"] .token.class-name {
+    color: #86c22e;
+}
+
+:root[data-theme="bearded-monokai-reversed"] .token.regex,
+:root[data-theme="bearded-monokai-reversed"] .token.important,
+:root[data-theme="bearded-monokai-reversed"] .token.variable {
+    color: #dd6f1f;
+}
+
+/* Scrollbar Bearded Monokai Reversed Theme */
+:root[data-theme="bearded-monokai-reversed"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-monokai-reversed"] ::-webkit-scrollbar-thumb {
+    background: #e0e0e0;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-monokai-reversed"] ::-webkit-scrollbar-thumb:hover {
+    background: #2d8db8;
+}
+
+/* Firefox Scrollbar Bearded Monokai Reversed Theme */
+:root[data-theme="bearded-monokai-reversed"] * {
+    scrollbar-color: #e0e0e0 var(--bg-primary);
+}
+
+/* Light Monokai styling */
+:root[data-theme="bearded-monokai-reversed"] .tab.active {
+    border-bottom: 2px solid #2d8db8;
+    background: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+:root[data-theme="bearded-monokai-reversed"] .note-header {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+:root[data-theme="bearded-monokai-reversed"] .code-block {
+    border: 1px solid #e0e0e0;
+    background: #fafafa;
+}

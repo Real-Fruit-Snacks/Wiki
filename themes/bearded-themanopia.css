@@ -1,0 +1,197 @@
+/* Bearded Theme - Themanopia */
+.theme-bearded-themanopia {
+    /* Special - Themanopia - Unique artistic vision */
+    --primary-bg: #1c1c28;
+    --secondary-bg: #28283c;
+    --accent-bg: #34344a;
+    --text-primary: #f0f0ff;
+    --text-secondary: #c0c0d0;
+    --accent-color: #ff6b9d;
+    --accent-secondary: #c44569;
+    --link-color: #ff6b9d;
+    --link-hover: #ff8fb3;
+    --border-color: #4a4a64;
+    --shadow-color: rgba(255, 107, 157, 0.2);
+    
+    /* Bearded Special Syntax Colors */
+    --syntax-keyword: #ff6b9d;
+    --syntax-string: #4ecdc4;
+    --syntax-number: #f9ca24;
+    --syntax-function: #6c5ce7;
+    --syntax-comment: #74b9ff;
+    --syntax-class: #fd79a8;
+    --syntax-variable: #ddd;
+    --syntax-operator: #ff7675;
+    --syntax-punctuation: #c0c0d0;
+    
+    /* UI Elements */
+    --button-bg: #34344a;
+    --button-hover: #4a4a64;
+    --input-bg: #28283c;
+    --input-border: #4a4a64;
+    --dropdown-bg: #28283c;
+    --dropdown-hover: #34344a;
+    --modal-overlay: rgba(28, 28, 40, 0.9);
+    
+    /* Feature Colors */
+    --success-color: #00b894;
+    --warning-color: #fdcb6e;
+    --error-color: #e17055;
+    --info-color: #74b9ff;
+    
+    /* Bearded Signature */
+    --beard-gradient: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+    --beard-shadow: 0 0 30px rgba(255, 107, 157, 0.4);
+    --code-bg: #222230;
+    --inline-code-bg: #2a2a3a;
+    --scrollbar-bg: #1c1c28;
+    --scrollbar-thumb: #4a4a64;
+    --scrollbar-hover: #5a5a7a;
+    --search-bg: #28283c;
+    --search-border: #4a4a64;
+    --search-focus-border: #ff6b9d;
+    --tag-bg: #34344a;
+    --tag-text: #ff6b9d;
+    --tag-hover: #4a4a64;
+    
+    /* Themanopia Special */
+    --themanopia-glow: 0 0 30px rgba(255, 107, 157, 0.5);
+    --themanopia-accent: #ff6b9d;
+    --themanopia-artistic: #c44569;
+    --badge-text: #1c1c28;
+}
+
+/* Themanopia Artistic Elements */
+.theme-bearded-themanopia .note-content h1::before {
+    content: "🎨";
+    display: inline-block;
+    margin-right: 0.5rem;
+    color: var(--themanopia-accent);
+    filter: drop-shadow(var(--themanopia-glow));
+    animation: themanopiaArt 4s ease-in-out infinite;
+}
+
+@keyframes themanopiaArt {
+    0%, 100% { 
+        transform: rotate(0deg) scale(1);
+        filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.5));
+    }
+    25% { 
+        transform: rotate(-5deg) scale(1.05);
+        filter: drop-shadow(0 0 25px rgba(196, 69, 105, 0.6));
+    }
+    50% { 
+        transform: rotate(0deg) scale(1.1);
+        filter: drop-shadow(0 0 30px rgba(255, 107, 157, 0.7));
+    }
+    75% { 
+        transform: rotate(5deg) scale(1.05);
+        filter: drop-shadow(0 0 25px rgba(196, 69, 105, 0.6));
+    }
+}
+
+.theme-bearded-themanopia .tab.active {
+    background: var(--accent-bg);
+    border-top: 2px solid var(--themanopia-accent);
+    box-shadow: inset 0 2px 15px rgba(255, 107, 157, 0.1);
+    position: relative;
+}
+
+.theme-bearded-themanopia .tab.active::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--themanopia-accent) 0%, var(--themanopia-artistic) 50%, var(--themanopia-accent) 100%);
+    animation: themanopiaFlow 3s ease-in-out infinite;
+}
+
+@keyframes themanopiaFlow {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+.theme-bearded-themanopia .search-container input:focus {
+    border-color: var(--themanopia-accent);
+    box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.25), var(--themanopia-glow);
+}
+
+.theme-bearded-themanopia .note-item:hover {
+    border-left: 3px solid var(--themanopia-accent);
+    padding-left: calc(1rem - 3px);
+    background: linear-gradient(90deg, rgba(255, 107, 157, 0.06) 0%, transparent 100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-bearded-themanopia pre code {
+    background: var(--code-bg);
+    box-shadow: inset 0 0 20px rgba(255, 107, 157, 0.05);
+    border-left: 3px solid rgba(255, 107, 157, 0.3);
+}
+
+.theme-bearded-themanopia blockquote {
+    border-left: 4px solid var(--themanopia-accent);
+    background: linear-gradient(90deg, rgba(255, 107, 157, 0.08) 0%, transparent 100%);
+    position: relative;
+}
+
+.theme-bearded-themanopia blockquote::before {
+    content: "🎨";
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.2rem;
+    opacity: 0.3;
+    animation: themanopiaArt 4s ease-in-out infinite;
+}
+
+.theme-bearded-themanopia .btn-primary {
+    background: linear-gradient(135deg, var(--themanopia-accent) 0%, var(--themanopia-artistic) 100%);
+    color: var(--primary-bg);
+    box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-bearded-themanopia .btn-primary::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+    transition: left 0.6s;
+}
+
+.theme-bearded-themanopia .btn-primary:hover::before {
+    left: 100%;
+}
+
+.theme-bearded-themanopia .btn-primary:hover {
+    background: linear-gradient(135deg, var(--themanopia-artistic) 0%, #ff8fb3 100%);
+    box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+    transform: translateY(-2px);
+}
+
+.theme-bearded-themanopia .settings-modal h2 {
+    color: var(--themanopia-accent);
+    text-shadow: var(--themanopia-glow);
+    position: relative;
+}
+
+.theme-bearded-themanopia .settings-modal h2::before {
+    content: "🎨";
+    position: absolute;
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: themanopiaArt 4s ease-in-out infinite;
+}
+
+.theme-bearded-themanopia ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--scrollbar-thumb) 0%, var(--themanopia-accent) 100%);
+    border-radius: 8px;
+}

@@ -1,0 +1,307 @@
+/* Bearded Coffee Cream Theme */
+:root[data-theme="bearded-coffee-cream"] {
+    /* Base colors - warm cream coffee palette */
+    --bg-primary: #faf8f5;
+    --bg-secondary: #f4f0ea;
+    --bg-tertiary: #ede7dd;
+    --bg-hover: #e6ddd0;
+    
+    /* Text colors */
+    --text-primary: #3c2f28;
+    --text-secondary: #5a4c42;
+    --text-muted: #7a6b5d;
+    --text-link: #8b4513;
+    --text-link-hover: #a0522d;
+    
+    /* Accent colors - coffee and cream palette */
+    --accent-primary: #8b4513;
+    --accent-secondary: #cd853f;
+    --accent-tertiary: #daa520;
+    
+    /* UI elements */
+    --border-color: #d4c4b0;
+    --border-hover: #c4b09c;
+    --shadow-color: rgba(139, 69, 19, 0.1);
+    
+    /* Header */
+    --header-bg: #f0ebe2;
+    --header-text: #3c2f28;
+    --header-text-muted: #5a4c42;
+    
+    /* Tabs */
+    --tab-bg: #ede7dd;
+    --tab-active-bg: #faf8f5;
+    --tab-hover-bg: #e6ddd0;
+    --tab-text: #5a4c42;
+    --tab-active-text: #3c2f28;
+    --tab-border: #d4c4b0;
+    
+    /* Sidebar */
+    --sidebar-bg: #f4f0ea;
+    --sidebar-hover-bg: #ede7dd;
+    --sidebar-active-bg: #e6ddd0;
+    --sidebar-text: #3c2f28;
+    --sidebar-icon: #7a6b5d;
+    
+    /* Content area */
+    --content-bg: #faf8f5;
+    --code-bg: #f0ebe2;
+    --code-border: #d4c4b0;
+    --blockquote-bg: #f7f3ec;
+    --blockquote-border: #8b4513;
+    
+    /* Search */
+    --search-bg: #faf8f5;
+    --search-border: #d4c4b0;
+    --search-focus-border: #8b4513;
+    
+    /* Scrollbar */
+    --scrollbar-bg: #f4f0ea;
+    --scrollbar-thumb: #c4b09c;
+    --scrollbar-thumb-hover: #b8a188;
+    
+    /* Status indicators */
+    --status-info: #8b4513;
+    --status-success: #6b8e23;
+    --status-warning: #daa520;
+    --status-error: #b22222;
+    
+    /* Badges */
+    --badge-bg: #8b4513;
+    --badge-text: #ffffff;
+    
+    /* Syntax highlighting */
+    --syntax-comment: #8fbc8f;
+    --syntax-string: #6b8e23;
+    --syntax-number: #cd853f;
+    --syntax-keyword: #8b4513;
+    --syntax-function: #b8860b;
+    --syntax-variable: #9370db;
+    --syntax-constant: #b22222;
+    --syntax-class: #daa520;
+    --syntax-operator: #5a4c42;
+    --syntax-punctuation: #3c2f28;
+    
+    /* Coffee decorative elements */
+    --gradient-primary: linear-gradient(135deg, #8b4513 0%, #cd853f 50%, #daa520 100%);
+    --gradient-secondary: linear-gradient(135deg, #a0522d 0%, #8b4513 100%);
+    --gradient-accent: radial-gradient(circle, #daa520 0%, #cd853f 70%);
+    --coffee-pattern: 
+        radial-gradient(circle at 20% 20%, rgba(139, 69, 19, 0.1) 0%, transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(205, 133, 63, 0.08) 0%, transparent 30%),
+        radial-gradient(circle at 40% 60%, rgba(218, 165, 32, 0.06) 0%, transparent 30%);
+}
+
+/* Coffee bean pattern background */
+:root[data-theme="bearded-coffee-cream"] body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--coffee-pattern);
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.4;
+}
+
+/* Warm hover effects */
+:root[data-theme="bearded-coffee-cream"] .note-item:hover {
+    background: linear-gradient(135deg, rgba(139, 69, 19, 0.05) 0%, rgba(205, 133, 63, 0.03) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 69, 19, 0.1);
+}
+
+/* Tab coffee styling */
+:root[data-theme="bearded-coffee-cream"] .tab-item {
+    background: #ede7dd;
+    border-radius: 8px 8px 0 0;
+    border: 1px solid #d4c4b0;
+}
+
+:root[data-theme="bearded-coffee-cream"] .tab-item.active {
+    background: #faf8f5;
+    box-shadow: 0 -2px 8px rgba(139, 69, 19, 0.1);
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+/* Coffee-themed headers */
+:root[data-theme="bearded-coffee-cream"] h1,
+:root[data-theme="bearded-coffee-cream"] h2,
+:root[data-theme="bearded-coffee-cream"] h3 {
+    color: #3c2f28;
+    position: relative;
+}
+
+:root[data-theme="bearded-coffee-cream"] h1::after,
+:root[data-theme="bearded-coffee-cream"] h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    margin-top: 8px;
+    background: var(--gradient-primary);
+    border-radius: 2px;
+}
+
+/* Coffee bean decorations */
+:root[data-theme="bearded-coffee-cream"] h1::before {
+    content: '☕';
+    position: absolute;
+    left: -30px;
+    top: 0;
+    font-size: 0.8em;
+    opacity: 0.6;
+}
+
+/* Code block coffee styling */
+:root[data-theme="bearded-coffee-cream"] pre {
+    background: #f0ebe2;
+    border: 1px solid #d4c4b0;
+    border-left: 4px solid var(--accent-primary);
+    box-shadow: inset 0 0 10px rgba(139, 69, 19, 0.05);
+}
+
+/* Warm button effects */
+:root[data-theme="bearded-coffee-cream"] button {
+    background: var(--gradient-primary);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="bearded-coffee-cream"] button:hover {
+    background: var(--gradient-secondary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(139, 69, 19, 0.2);
+}
+
+/* Search input coffee styling */
+:root[data-theme="bearded-coffee-cream"] #searchInput {
+    background: #faf8f5;
+    border: 2px solid #d4c4b0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="bearded-coffee-cream"] #searchInput:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 8px rgba(139, 69, 19, 0.15);
+}
+
+/* Coffee link styling */
+:root[data-theme="bearded-coffee-cream"] a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    position: relative;
+    font-weight: 500;
+}
+
+:root[data-theme="bearded-coffee-cream"] a::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--gradient-primary);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+:root[data-theme="bearded-coffee-cream"] a:hover::after {
+    transform: scaleX(1);
+}
+
+/* Scrollbar coffee styling */
+:root[data-theme="bearded-coffee-cream"] ::-webkit-scrollbar-thumb {
+    background: var(--gradient-primary);
+    border-radius: 4px;
+}
+
+:root[data-theme="bearded-coffee-cream"] ::-webkit-scrollbar-thumb:hover {
+    background: var(--gradient-secondary);
+}
+
+/* Coffee steam animation */
+@keyframes coffee-steam {
+    0%, 100% { opacity: 0.3; transform: translateY(0) rotate(0deg); }
+    50% { opacity: 0.7; transform: translateY(-10px) rotate(5deg); }
+}
+
+:root[data-theme="bearded-coffee-cream"] .tab-item.active::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 8px;
+    background: linear-gradient(180deg, transparent 0%, rgba(139, 69, 19, 0.3) 100%);
+    border-radius: 2px;
+    animation: coffee-steam 2s ease-in-out infinite;
+}
+
+/* Warm selection effects */
+:root[data-theme="bearded-coffee-cream"] ::selection {
+    background: rgba(139, 69, 19, 0.2);
+    color: #3c2f28;
+}
+
+/* Coffee cup icons for navigation */
+:root[data-theme="bearded-coffee-cream"] .sidebar-item::before {
+    content: '•';
+    color: var(--accent-primary);
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+:root[data-theme="bearded-coffee-cream"] .sidebar-item.active::before {
+    content: '☕';
+}
+
+/* Note cards with coffee styling */
+:root[data-theme="bearded-coffee-cream"] .note-item {
+    background: #faf8f5;
+    border: 1px solid #d4c4b0;
+    border-radius: 8px;
+    padding: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Coffee ring stains effect */
+:root[data-theme="bearded-coffee-cream"] .note-item::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(139, 69, 19, 0.1);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+:root[data-theme="bearded-coffee-cream"] .note-item:hover::before {
+    opacity: 1;
+}
+
+/* Enhanced coffee shadows */
+:root[data-theme="bearded-coffee-cream"] .modal,
+:root[data-theme="bearded-coffee-cream"] .dropdown {
+    box-shadow: 0 12px 24px rgba(139, 69, 19, 0.1), 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Coffee badge styling */
+:root[data-theme="bearded-coffee-cream"] .badge {
+    background: var(--gradient-primary);
+    color: #ffffff;
+    border-radius: 12px;
+    padding: 4px 8px;
+    font-size: 0.8em;
+    font-weight: 600;
+}

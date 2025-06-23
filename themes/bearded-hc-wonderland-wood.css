@@ -1,0 +1,234 @@
+/* Bearded Theme - High Contrast - Wonderland Wood */
+.theme-bearded-hc-wonderland-wood {
+    /* High Contrast - Wonderland Wood - Forest green with high contrast */
+    --primary-bg: #0a150a;
+    --secondary-bg: #1a2a1a;
+    --accent-bg: #2a3f2a;
+    --text-primary: #ffffff;
+    --text-secondary: #e0ffe0;
+    --accent-color: #00ff40;
+    --accent-secondary: #40ff80;
+    --link-color: #00ff60;
+    --link-hover: #80ff80;
+    --border-color: #405040;
+    --shadow-color: rgba(0, 255, 64, 0.3);
+    
+    /* Bearded High Contrast Syntax Colors */
+    --syntax-keyword: #00ff40;
+    --syntax-string: #80ff80;
+    --syntax-number: #ffff80;
+    --syntax-function: #80ffff;
+    --syntax-comment: #80a080;
+    --syntax-class: #ff8080;
+    --syntax-variable: #ffffff;
+    --syntax-operator: #00ff60;
+    --syntax-punctuation: #e0ffe0;
+    
+    /* UI Elements */
+    --button-bg: #2a3f2a;
+    --button-hover: #405040;
+    --input-bg: #1a2a1a;
+    --input-border: #405040;
+    --dropdown-bg: #1a2a1a;
+    --dropdown-hover: #2a3f2a;
+    --modal-overlay: rgba(10, 21, 10, 0.95);
+    
+    /* Feature Colors */
+    --success-color: #00ff40;
+    --warning-color: #ffff00;
+    --error-color: #ff4040;
+    --info-color: #40ffff;
+    
+    /* Bearded Signature */
+    --beard-gradient: linear-gradient(135deg, #00ff40 0%, #40ff80 100%);
+    --beard-shadow: 0 0 40px rgba(0, 255, 64, 0.5);
+    --code-bg: #0f200f;
+    --inline-code-bg: #1f351f;
+    --scrollbar-bg: #0a150a;
+    --scrollbar-thumb: #405040;
+    --scrollbar-hover: #608060;
+    --search-bg: #1a2a1a;
+    --search-border: #405040;
+    --search-focus-border: #00ff40;
+    --tag-bg: #2a3f2a;
+    --tag-text: #00ff40;
+    --tag-hover: #405040;
+    
+    /* Wonderland Wood HC Special */
+    --wood-glow: 0 0 35px rgba(0, 255, 64, 0.6);
+    --wood-accent: #00ff40;
+    --wood-magic: #80ff80;
+    --wood-enchant: 0 0 50px rgba(128, 255, 128, 0.4);
+    --badge-text: #0a150a;
+}
+
+/* Wonderland Wood HC Decorative Elements */
+.theme-bearded-hc-wonderland-wood .note-content h1::before {
+    content: "🌳";
+    display: inline-block;
+    margin-right: 0.5rem;
+    filter: drop-shadow(var(--wood-glow));
+    animation: woodGrow 4s ease-in-out infinite;
+}
+
+@keyframes woodGrow {
+    0%, 100% { 
+        transform: scale(1) rotate(0deg);
+        filter: drop-shadow(0 0 20px rgba(0, 255, 64, 0.6));
+    }
+    25% { 
+        transform: scale(1.1) rotate(-2deg);
+        filter: drop-shadow(0 0 30px rgba(128, 255, 128, 0.8));
+    }
+    50% { 
+        transform: scale(1.2) rotate(0deg);
+        filter: drop-shadow(0 0 40px rgba(0, 255, 64, 0.9));
+    }
+    75% { 
+        transform: scale(1.1) rotate(2deg);
+        filter: drop-shadow(0 0 30px rgba(128, 255, 128, 0.7));
+    }
+}
+
+.theme-bearded-hc-wonderland-wood .tab.active {
+    background: var(--accent-bg);
+    border-top: 3px solid var(--wood-accent);
+    box-shadow: inset 0 3px 20px rgba(0, 255, 64, 0.15),
+                0 0 25px rgba(0, 255, 64, 0.3);
+    border-left: 2px solid rgba(128, 255, 128, 0.5);
+    border-right: 2px solid rgba(128, 255, 128, 0.5);
+}
+
+.theme-bearded-hc-wonderland-wood .search-container input {
+    border: 2px solid var(--border-color);
+    background: var(--input-bg);
+    color: var(--text-primary);
+    font-weight: bold;
+}
+
+.theme-bearded-hc-wonderland-wood .search-container input:focus {
+    border-color: var(--wood-accent);
+    box-shadow: 0 0 0 4px rgba(0, 255, 64, 0.3),
+                var(--wood-glow);
+    background: var(--primary-bg);
+    color: var(--wood-magic);
+}
+
+.theme-bearded-hc-wonderland-wood .note-item {
+    border: 1px solid transparent;
+    color: var(--text-primary);
+}
+
+.theme-bearded-hc-wonderland-wood .note-item:hover {
+    border: 2px solid var(--wood-accent);
+    padding-left: calc(1rem - 2px);
+    background: linear-gradient(90deg, rgba(0, 255, 64, 0.1) 0%, rgba(128, 255, 128, 0.05) 100%);
+    color: var(--wood-magic);
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(0, 255, 64, 0.2);
+}
+
+.theme-bearded-hc-wonderland-wood pre code {
+    background: var(--code-bg);
+    border: 2px solid var(--border-color);
+    box-shadow: inset 0 0 25px rgba(0, 255, 64, 0.1);
+    color: var(--text-primary);
+    font-weight: bold;
+}
+
+.theme-bearded-hc-wonderland-wood blockquote {
+    border-left: 5px solid var(--wood-accent);
+    background: linear-gradient(90deg, rgba(0, 255, 64, 0.15) 0%, transparent 100%);
+    color: var(--wood-magic);
+    font-weight: bold;
+    border-top: 1px solid rgba(0, 255, 64, 0.3);
+    border-bottom: 1px solid rgba(0, 255, 64, 0.3);
+    position: relative;
+}
+
+.theme-bearded-hc-wonderland-wood blockquote::after {
+    content: "🍃";
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    opacity: 0.4;
+    animation: woodGrow 4s ease-in-out infinite;
+}
+
+.theme-bearded-hc-wonderland-wood .btn-primary {
+    background: var(--wood-accent);
+    color: var(--primary-bg);
+    border: 2px solid var(--wood-accent);
+    box-shadow: 0 4px 15px rgba(0, 255, 64, 0.4);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.theme-bearded-hc-wonderland-wood .btn-primary:hover {
+    background: var(--primary-bg);
+    color: var(--wood-magic);
+    border: 2px solid var(--wood-magic);
+    box-shadow: 0 6px 20px rgba(128, 255, 128, 0.5);
+    transform: translateY(-2px);
+}
+
+.theme-bearded-hc-wonderland-wood ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--scrollbar-thumb) 0%, var(--wood-accent) 100%);
+    border: 2px solid var(--primary-bg);
+    border-radius: 6px;
+}
+
+.theme-bearded-hc-wonderland-wood .settings-modal {
+    background: rgba(10, 21, 10, 0.98);
+    border: 3px solid var(--wood-accent);
+    box-shadow: 0 0 50px rgba(0, 255, 64, 0.4);
+}
+
+.theme-bearded-hc-wonderland-wood .settings-modal h2 {
+    color: var(--wood-accent);
+    text-shadow: var(--wood-glow);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.theme-bearded-hc-wonderland-wood .settings-modal h2::before {
+    content: "🌳";
+    position: absolute;
+    left: -45px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: woodGrow 4s ease-in-out infinite;
+}
+
+/* High contrast forest effects */
+.theme-bearded-hc-wonderland-wood .note-content h1,
+.theme-bearded-hc-wonderland-wood .note-content h2,
+.theme-bearded-hc-wonderland-wood .note-content h3 {
+    color: var(--wood-magic);
+    font-weight: bold;
+    text-shadow: 0 0 3px rgba(0, 255, 64, 0.8);
+}
+
+.theme-bearded-hc-wonderland-wood .note-content a {
+    color: var(--wood-accent);
+    font-weight: bold;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 2px;
+}
+
+.theme-bearded-hc-wonderland-wood .note-content a:hover {
+    color: var(--wood-magic);
+    text-shadow: 0 0 5px rgba(128, 255, 128, 0.8);
+}
+
+.theme-bearded-hc-wonderland-wood .note-content code {
+    background: var(--inline-code-bg);
+    color: var(--wood-accent);
+    font-weight: bold;
+    border: 1px solid var(--border-color);
+    padding: 3px 6px;
+}

@@ -1,0 +1,278 @@
+/* Bearded Theme - Featured - Mintshake D. Raynh */
+.theme-bearded-feat-mintshake-d-raynh {
+    /* Featured - Mintshake D. Raynh - Cool minty freshness */
+    --primary-bg: #0d1b17;
+    --secondary-bg: #152420;
+    --accent-bg: #1e2d28;
+    --text-primary: #d0f0e4;
+    --text-secondary: #8fb8a5;
+    --accent-color: #4ecdc4;
+    --accent-secondary: #26a69a;
+    --link-color: #80cbc4;
+    --link-hover: #a7ffeb;
+    --border-color: #2e4e42;
+    --shadow-color: rgba(78, 205, 196, 0.2);
+    
+    /* Bearded Featured Syntax Colors */
+    --syntax-keyword: #4ecdc4;
+    --syntax-string: #81c784;
+    --syntax-number: #ffb74d;
+    --syntax-function: #4fc3f7;
+    --syntax-comment: #607d69;
+    --syntax-class: #f48fb1;
+    --syntax-variable: #dcedc8;
+    --syntax-operator: #4db6ac;
+    --syntax-punctuation: #a8c8bc;
+    
+    /* UI Elements */
+    --button-bg: #1e2d28;
+    --button-hover: #2e4e42;
+    --input-bg: #152420;
+    --input-border: #2e4e42;
+    --dropdown-bg: #152420;
+    --dropdown-hover: #1e2d28;
+    --modal-overlay: rgba(13, 27, 23, 0.9);
+    
+    /* Feature Colors */
+    --success-color: #66bb6a;
+    --warning-color: #ffca28;
+    --error-color: #ef5350;
+    --info-color: #42a5f5;
+    
+    /* Bearded Signature */
+    --beard-gradient: linear-gradient(135deg, #4ecdc4 0%, #26a69a 100%);
+    --beard-shadow: 0 0 35px rgba(78, 205, 196, 0.4);
+    --code-bg: #111f1b;
+    --inline-code-bg: #1a2823;
+    --scrollbar-bg: #0d1b17;
+    --scrollbar-thumb: #2e4e42;
+    --scrollbar-hover: #3e6052;
+    --search-bg: #152420;
+    --search-border: #2e4e42;
+    --search-focus-border: #4ecdc4;
+    --tag-bg: #1e2d28;
+    --tag-text: #4ecdc4;
+    --tag-hover: #2e4e42;
+    
+    /* Mintshake D. Raynh Special */
+    --mint-bubble: 0 0 30px rgba(78, 205, 196, 0.5);
+    --mint-accent: #4ecdc4;
+    --mint-fresh: #a7ffeb;
+    --mint-cool: 0 0 20px rgba(167, 255, 235, 0.3);
+    --badge-text: #0d1b17;
+}
+
+/* Mintshake D. Raynh Decorative Elements */
+.theme-bearded-feat-mintshake-d-raynh .note-content h1::before {
+    content: "❄️";
+    display: inline-block;
+    margin-right: 0.5rem;
+    color: var(--mint-accent);
+    filter: drop-shadow(var(--mint-bubble));
+    animation: mintFloat 3s ease-in-out infinite;
+}
+
+@keyframes mintFloat {
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg);
+        filter: drop-shadow(0 0 20px rgba(78, 205, 196, 0.5));
+    }
+    33% { 
+        transform: translateY(-3px) rotate(2deg);
+        filter: drop-shadow(0 0 30px rgba(167, 255, 235, 0.6));
+    }
+    66% { 
+        transform: translateY(3px) rotate(-2deg);
+        filter: drop-shadow(0 0 25px rgba(78, 205, 196, 0.4));
+    }
+}
+
+.theme-bearded-feat-mintshake-d-raynh .tab.active {
+    background: var(--accent-bg);
+    border-top: 2px solid var(--mint-accent);
+    box-shadow: inset 0 2px 15px rgba(78, 205, 196, 0.1);
+    position: relative;
+}
+
+.theme-bearded-feat-mintshake-d-raynh .tab.active::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--mint-fresh) 50%, transparent 100%);
+    border-radius: 2px;
+    animation: mintFlow 2s ease-in-out infinite;
+}
+
+@keyframes mintFlow {
+    0%, 100% { 
+        opacity: 0.6;
+        transform: scaleX(0.8);
+    }
+    50% { 
+        opacity: 1;
+        transform: scaleX(1.2);
+    }
+}
+
+.theme-bearded-feat-mintshake-d-raynh .search-container input:focus {
+    border-color: var(--mint-accent);
+    box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.25),
+                var(--mint-bubble);
+    background: rgba(78, 205, 196, 0.02);
+}
+
+.theme-bearded-feat-mintshake-d-raynh .note-item:hover {
+    border-left: 3px solid var(--mint-accent);
+    padding-left: calc(1rem - 3px);
+    background: linear-gradient(90deg, rgba(78, 205, 196, 0.08) 0%, rgba(167, 255, 235, 0.02) 100%);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.theme-bearded-feat-mintshake-d-raynh pre code {
+    background: var(--code-bg);
+    box-shadow: inset 0 0 30px rgba(78, 205, 196, 0.06);
+    border: 1px solid rgba(78, 205, 196, 0.1);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-bearded-feat-mintshake-d-raynh pre code::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--mint-fresh) 50%, transparent 100%);
+    animation: mintCodeFlow 4s linear infinite;
+}
+
+@keyframes mintCodeFlow {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.theme-bearded-feat-mintshake-d-raynh blockquote {
+    border-left: 4px solid var(--mint-accent);
+    background: linear-gradient(90deg, rgba(78, 205, 196, 0.08) 0%, transparent 100%);
+    position: relative;
+    border-radius: 0 10px 10px 0;
+    overflow: hidden;
+}
+
+.theme-bearded-feat-mintshake-d-raynh blockquote::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top left, rgba(78, 205, 196, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.theme-bearded-feat-mintshake-d-raynh blockquote::after {
+    content: "❄️";
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    opacity: 0.3;
+    animation: mintFloat 3s ease-in-out infinite;
+}
+
+.theme-bearded-feat-mintshake-d-raynh .btn-primary {
+    background: linear-gradient(135deg, var(--mint-accent) 0%, var(--mint-fresh) 100%);
+    color: var(--primary-bg);
+    box-shadow: 0 5px 20px rgba(78, 205, 196, 0.3);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    border: none;
+}
+
+.theme-bearded-feat-mintshake-d-raynh .btn-primary::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.25) 50%, transparent 100%);
+    transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.theme-bearded-feat-mintshake-d-raynh .btn-primary:hover::before {
+    left: 100%;
+}
+
+.theme-bearded-feat-mintshake-d-raynh .btn-primary:hover {
+    background: linear-gradient(135deg, var(--mint-fresh) 0%, #b3ffcc 100%);
+    box-shadow: 0 7px 25px rgba(78, 205, 196, 0.4);
+    transform: translateY(-3px);
+}
+
+.theme-bearded-feat-mintshake-d-raynh ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--scrollbar-thumb) 0%, var(--mint-accent) 100%);
+    border-radius: 12px;
+    border: 2px solid var(--primary-bg);
+}
+
+.theme-bearded-feat-mintshake-d-raynh ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--mint-accent) 0%, var(--mint-fresh) 100%);
+}
+
+.theme-bearded-feat-mintshake-d-raynh .settings-modal h2 {
+    color: var(--mint-accent);
+    text-shadow: var(--mint-bubble);
+    position: relative;
+}
+
+.theme-bearded-feat-mintshake-d-raynh .settings-modal h2::before {
+    content: "❄️";
+    position: absolute;
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: mintFloat 3s ease-in-out infinite;
+}
+
+.theme-bearded-feat-mintshake-d-raynh .settings-modal h2::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, var(--mint-accent) 20%, var(--mint-fresh) 50%, var(--mint-accent) 80%, transparent 100%);
+    border-radius: 3px;
+    animation: mintFlow 2s ease-in-out infinite;
+}
+
+/* Special floating mint particles effect */
+.theme-bearded-feat-mintshake-d-raynh .note-content::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(2px 2px at 20px 30px, rgba(78, 205, 196, 0.1), transparent),
+                      radial-gradient(2px 2px at 40px 70px, rgba(167, 255, 235, 0.1), transparent),
+                      radial-gradient(1px 1px at 90px 40px, rgba(78, 205, 196, 0.1), transparent),
+                      radial-gradient(1px 1px at 130px 80px, rgba(167, 255, 235, 0.1), transparent);
+    background-repeat: repeat;
+    background-size: 150px 150px;
+    animation: mintParticles 20s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes mintParticles {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-150px, -150px); }
+}

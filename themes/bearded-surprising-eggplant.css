@@ -1,0 +1,289 @@
+/* Bearded Surprising Eggplant Theme */
+:root[data-theme="bearded-surprising-eggplant"] {
+    /* Base colors - deep eggplant surprise palette */
+    --bg-primary: #2d1b2e;
+    --bg-secondary: #3a2440;
+    --bg-tertiary: #472d54;
+    --bg-hover: #543668;
+    
+    /* Text colors */
+    --text-primary: #f4e8f5;
+    --text-secondary: #e1d0e3;
+    --text-muted: #c7a8cb;
+    --text-link: #d896ff;
+    --text-link-hover: #e4b3ff;
+    
+    /* Accent colors - surprising eggplant palette */
+    --accent-primary: #8b5fbf;
+    --accent-secondary: #a472cc;
+    --accent-tertiary: #bf86d9;
+    
+    /* UI elements */
+    --border-color: #543668;
+    --border-hover: #61407c;
+    --shadow-color: rgba(139, 95, 191, 0.2);
+    
+    /* Header */
+    --header-bg: #231526;
+    --header-text: #f4e8f5;
+    --header-text-muted: #e1d0e3;
+    
+    /* Tabs */
+    --tab-bg: #472d54;
+    --tab-active-bg: #543668;
+    --tab-hover-bg: #543668;
+    --tab-text: #e1d0e3;
+    --tab-active-text: #f4e8f5;
+    --tab-border: #543668;
+    
+    /* Sidebar */
+    --sidebar-bg: #342040;
+    --sidebar-hover-bg: #472d54;
+    --sidebar-active-bg: #543668;
+    --sidebar-text: #e1d0e3;
+    --sidebar-icon: #c7a8cb;
+    
+    /* Content area */
+    --content-bg: #2d1b2e;
+    --code-bg: #231526;
+    --code-border: #543668;
+    --blockquote-bg: #3a2440;
+    --blockquote-border: #8b5fbf;
+    
+    /* Search */
+    --search-bg: #3a2440;
+    --search-border: #543668;
+    --search-focus-border: #8b5fbf;
+    
+    /* Scrollbar */
+    --scrollbar-bg: #3a2440;
+    --scrollbar-thumb: #61407c;
+    --scrollbar-thumb-hover: #6f4a90;
+    
+    /* Status indicators */
+    --status-info: #8b5fbf;
+    --status-success: #7b6abf;
+    --status-warning: #e6a85c;
+    --status-error: #e65c7c;
+    
+    /* Badges */
+    --badge-bg: #8b5fbf;
+    --badge-text: #ffffff;
+    
+    /* Syntax highlighting */
+    --syntax-comment: #a472cc;
+    --syntax-string: #bf86d9;
+    --syntax-number: #e6a85c;
+    --syntax-keyword: #8b5fbf;
+    --syntax-function: #d896ff;
+    --syntax-variable: #e4b3ff;
+    --syntax-constant: #e65c7c;
+    --syntax-class: #c7a8cb;
+    --syntax-operator: #c7a8cb;
+    --syntax-punctuation: #e1d0e3;
+    
+    /* Surprising decorative elements */
+    --gradient-primary: linear-gradient(135deg, #8b5fbf 0%, #a472cc 50%, #bf86d9 100%);
+    --gradient-secondary: linear-gradient(135deg, #7b54a6 0%, #8b5fbf 100%);
+    --gradient-accent: radial-gradient(circle, #d896ff 0%, #8b5fbf 70%);
+    --surprise-pattern: 
+        radial-gradient(circle at 30% 30%, rgba(139, 95, 191, 0.2) 0%, transparent 40%),
+        radial-gradient(circle at 70% 70%, rgba(164, 114, 204, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 50% 20%, rgba(191, 134, 217, 0.1) 0%, transparent 40%);
+}
+
+/* Surprising background pattern */
+:root[data-theme="bearded-surprising-eggplant"] body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--surprise-pattern);
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.6;
+}
+
+/* Eggplant surprise hover effects */
+:root[data-theme="bearded-surprising-eggplant"] .note-item:hover {
+    background: rgba(139, 95, 191, 0.1);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(139, 95, 191, 0.3);
+    border: 1px solid rgba(164, 114, 204, 0.4);
+}
+
+/* Tab surprise styling */
+:root[data-theme="bearded-surprising-eggplant"] .tab-item.active {
+    background: var(--gradient-primary);
+    color: #ffffff;
+    box-shadow: 0 0 20px rgba(139, 95, 191, 0.4);
+    animation: eggplant-pulse 2s ease-in-out infinite alternate;
+}
+
+/* Surprising headers */
+:root[data-theme="bearded-surprising-eggplant"] h1,
+:root[data-theme="bearded-surprising-eggplant"] h2,
+:root[data-theme="bearded-surprising-eggplant"] h3 {
+    background: var(--gradient-primary);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+}
+
+:root[data-theme="bearded-surprising-eggplant"] h1::after,
+:root[data-theme="bearded-surprising-eggplant"] h2::after {
+    content: '';
+    display: block;
+    width: 90px;
+    height: 4px;
+    margin-top: 10px;
+    background: var(--gradient-primary);
+    border-radius: 2px;
+    animation: surprise-glow 3s ease-in-out infinite;
+}
+
+/* Surprise button effects */
+:root[data-theme="bearded-surprising-eggplant"] button {
+    background: var(--gradient-primary);
+    color: #ffffff;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+:root[data-theme="bearded-surprising-eggplant"] button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+:root[data-theme="bearded-surprising-eggplant"] button:hover::before {
+    left: 100%;
+}
+
+:root[data-theme="bearded-surprising-eggplant"] button:hover {
+    background: var(--gradient-secondary);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(139, 95, 191, 0.4);
+}
+
+/* Code block surprising styling */
+:root[data-theme="bearded-surprising-eggplant"] pre {
+    background: var(--code-bg);
+    border: 2px solid rgba(139, 95, 191, 0.3);
+    border-radius: 12px;
+    box-shadow: inset 0 0 20px rgba(139, 95, 191, 0.1);
+    position: relative;
+}
+
+:root[data-theme="bearded-surprising-eggplant"] pre::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-primary);
+    border-radius: 12px 12px 0 0;
+}
+
+/* Surprising link effects */
+:root[data-theme="bearded-surprising-eggplant"] a {
+    background: var(--gradient-primary);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+    position: relative;
+}
+
+:root[data-theme="bearded-surprising-eggplant"] a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+:root[data-theme="bearded-surprising-eggplant"] a:hover::after {
+    transform: scaleX(1);
+}
+
+/* Search input surprise styling */
+:root[data-theme="bearded-surprising-eggplant"] #searchInput {
+    background: var(--search-bg);
+    border: 2px solid rgba(139, 95, 191, 0.3);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+:root[data-theme="bearded-surprising-eggplant"] #searchInput:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 20px rgba(139, 95, 191, 0.3);
+    transform: scale(1.02);
+}
+
+/* Scrollbar surprise styling */
+:root[data-theme="bearded-surprising-eggplant"] ::-webkit-scrollbar-thumb {
+    background: var(--gradient-primary);
+    border-radius: 6px;
+}
+
+:root[data-theme="bearded-surprising-eggplant"] ::-webkit-scrollbar-thumb:hover {
+    background: var(--gradient-secondary);
+    box-shadow: 0 0 10px rgba(139, 95, 191, 0.5);
+}
+
+/* Surprise animations */
+@keyframes eggplant-pulse {
+    from { box-shadow: 0 0 20px rgba(139, 95, 191, 0.4); }
+    to { box-shadow: 0 0 30px rgba(164, 114, 204, 0.6); }
+}
+
+@keyframes surprise-glow {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; box-shadow: 0 0 15px rgba(139, 95, 191, 0.5); }
+}
+
+/* Selection surprise styling */
+:root[data-theme="bearded-surprising-eggplant"] ::selection {
+    background: rgba(139, 95, 191, 0.4);
+    color: #ffffff;
+}
+
+/* Sidebar surprise effects */
+:root[data-theme="bearded-surprising-eggplant"] .sidebar-item.active {
+    background: var(--gradient-primary);
+    color: #ffffff;
+    border-left: 4px solid #bf86d9;
+    transform: translateX(5px);
+    box-shadow: 5px 0 15px rgba(139, 95, 191, 0.3);
+}
+
+/* Surprise modal effects */
+:root[data-theme="bearded-surprising-eggplant"] .modal {
+    background: var(--bg-secondary);
+    border: 2px solid rgba(139, 95, 191, 0.3);
+    box-shadow: 0 20px 40px rgba(139, 95, 191, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+/* Dynamic surprise borders */
+:root[data-theme="bearded-surprising-eggplant"] .note-item {
+    border: 1px solid transparent;
+    background: linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
+                var(--gradient-primary) border-box;
+    transition: all 0.3s ease;
+}

@@ -1,0 +1,208 @@
+/* Bearded Theme - Featured - Melle Julie */
+.theme-bearded-feat-melle-julie {
+    /* Featured - Melle Julie - Elegant purple sophistication */
+    --primary-bg: #1e1a2e;
+    --secondary-bg: #282040;
+    --accent-bg: #322855;
+    --text-primary: #e4dff7;
+    --text-secondary: #b8a9d9;
+    --accent-color: #ab7df8;
+    --accent-secondary: #8b5fbf;
+    --link-color: #b794f6;
+    --link-hover: #d1b3ff;
+    --border-color: #4a3f72;
+    --shadow-color: rgba(171, 125, 248, 0.2);
+    
+    /* Bearded Featured Syntax Colors */
+    --syntax-keyword: #ab7df8;
+    --syntax-string: #68d391;
+    --syntax-number: #f6d55c;
+    --syntax-function: #5bb3f0;
+    --syntax-comment: #7c6bad;
+    --syntax-class: #ff8a8a;
+    --syntax-variable: #f7df1e;
+    --syntax-operator: #4fd1c7;
+    --syntax-punctuation: #c0b7e8;
+    
+    /* UI Elements */
+    --button-bg: #322855;
+    --button-hover: #4a3f72;
+    --input-bg: #282040;
+    --input-border: #4a3f72;
+    --dropdown-bg: #282040;
+    --dropdown-hover: #322855;
+    --modal-overlay: rgba(30, 26, 46, 0.9);
+    
+    /* Feature Colors */
+    --success-color: #68d391;
+    --warning-color: #f6ad55;
+    --error-color: #fc8181;
+    --info-color: #63b3ed;
+    
+    /* Bearded Signature */
+    --beard-gradient: linear-gradient(135deg, #ab7df8 0%, #8b5fbf 100%);
+    --beard-shadow: 0 0 35px rgba(171, 125, 248, 0.4);
+    --code-bg: #241f35;
+    --inline-code-bg: #2e2442;
+    --scrollbar-bg: #1e1a2e;
+    --scrollbar-thumb: #4a3f72;
+    --scrollbar-hover: #6155a6;
+    --search-bg: #282040;
+    --search-border: #4a3f72;
+    --search-focus-border: #ab7df8;
+    --tag-bg: #322855;
+    --tag-text: #ab7df8;
+    --tag-hover: #4a3f72;
+    
+    /* Melle Julie Special */
+    --julie-glow: 0 0 25px rgba(171, 125, 248, 0.5);
+    --julie-accent: #ab7df8;
+    --julie-shimmer: 0 0 40px rgba(181, 148, 246, 0.3);
+    --badge-text: #1e1a2e;
+}
+
+/* Melle Julie Decorative Elements */
+.theme-bearded-feat-melle-julie .note-content h1::before {
+    content: "✨";
+    display: inline-block;
+    margin-right: 0.5rem;
+    color: var(--julie-accent);
+    filter: drop-shadow(var(--julie-glow));
+    animation: julieSparkle 2s ease-in-out infinite;
+}
+
+@keyframes julieSparkle {
+    0%, 100% { 
+        opacity: 0.8;
+        transform: scale(1) rotate(0deg);
+    }
+    50% { 
+        opacity: 1;
+        transform: scale(1.1) rotate(5deg);
+    }
+}
+
+.theme-bearded-feat-melle-julie .tab.active {
+    background: var(--accent-bg);
+    border-top: 2px solid var(--julie-accent);
+    box-shadow: inset 0 2px 12px rgba(171, 125, 248, 0.12);
+    position: relative;
+}
+
+.theme-bearded-feat-melle-julie .tab.active::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--julie-accent) 20%, var(--julie-accent) 80%, transparent 100%);
+    filter: blur(0.5px);
+}
+
+.theme-bearded-feat-melle-julie .search-container input:focus {
+    border-color: var(--julie-accent);
+    box-shadow: 0 0 0 3px rgba(171, 125, 248, 0.25),
+                var(--julie-glow);
+}
+
+.theme-bearded-feat-melle-julie .note-item:hover {
+    border-left: 3px solid var(--julie-accent);
+    padding-left: calc(1rem - 3px);
+    background: linear-gradient(90deg, rgba(171, 125, 248, 0.06) 0%, transparent 100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-bearded-feat-melle-julie pre code {
+    background: var(--code-bg);
+    box-shadow: inset 0 0 25px rgba(171, 125, 248, 0.08);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-bearded-feat-melle-julie pre code::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, rgba(171, 125, 248, 0.1) 50%, transparent 100%);
+    animation: julieCodeGlow 3s ease-in-out infinite;
+}
+
+@keyframes julieCodeGlow {
+    0% { left: -100%; }
+    50% { left: 100%; }
+    100% { left: -100%; }
+}
+
+.theme-bearded-feat-melle-julie blockquote {
+    border-left: 4px solid var(--julie-accent);
+    background: linear-gradient(90deg, rgba(171, 125, 248, 0.1) 0%, transparent 100%);
+    position: relative;
+    border-radius: 0 8px 8px 0;
+}
+
+.theme-bearded-feat-melle-julie blockquote::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--julie-accent) 0%, rgba(171, 125, 248, 0.5) 100%);
+    filter: blur(1px);
+}
+
+.theme-bearded-feat-melle-julie .btn-primary {
+    background: linear-gradient(135deg, var(--julie-accent) 0%, #c49bff 100%);
+    color: var(--primary-bg);
+    box-shadow: 0 4px 15px rgba(171, 125, 248, 0.35);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-bearded-feat-melle-julie .btn-primary::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+    transition: left 0.6s;
+}
+
+.theme-bearded-feat-melle-julie .btn-primary:hover::before {
+    left: 100%;
+}
+
+.theme-bearded-feat-melle-julie .btn-primary:hover {
+    background: linear-gradient(135deg, #c49bff 0%, #d1b3ff 100%);
+    box-shadow: 0 6px 20px rgba(171, 125, 248, 0.45);
+    transform: translateY(-2px);
+}
+
+.theme-bearded-feat-melle-julie ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--scrollbar-thumb) 0%, var(--julie-accent) 100%);
+    border-radius: 10px;
+    border: 2px solid var(--primary-bg);
+}
+
+.theme-bearded-feat-melle-julie .settings-modal h2 {
+    color: var(--julie-accent);
+    text-shadow: var(--julie-glow);
+    position: relative;
+}
+
+.theme-bearded-feat-melle-julie .settings-modal h2::before {
+    content: "✨";
+    position: absolute;
+    left: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: julieSparkle 2s ease-in-out infinite;
+}

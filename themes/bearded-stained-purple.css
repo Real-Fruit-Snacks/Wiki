@@ -1,0 +1,245 @@
+/* Bearded Stained Purple Theme */
+:root[data-theme="bearded-stained-purple"] {
+    /* Base colors - rich purple stained glass */
+    --bg-primary: #1a0e1f;
+    --bg-secondary: #241728;
+    --bg-tertiary: #2e1f32;
+    --bg-hover: #36243b;
+    
+    /* Text colors */
+    --text-primary: #e4d4e8;
+    --text-secondary: #c7b3cc;
+    --text-muted: #a089a8;
+    --text-link: #c77dff;
+    --text-link-hover: #d896ff;
+    
+    /* Accent colors - purple stained glass palette */
+    --accent-primary: #9d4edd;
+    --accent-secondary: #c77dff;
+    --accent-tertiary: #e0aaff;
+    
+    /* UI elements */
+    --border-color: #46344a;
+    --border-hover: #564258;
+    --shadow-color: rgba(157, 78, 221, 0.15);
+    
+    /* Header */
+    --header-bg: #0f0812;
+    --header-text: #e4d4e8;
+    --header-text-muted: #c7b3cc;
+    
+    /* Tabs */
+    --tab-bg: #2e1f32;
+    --tab-active-bg: #3d2740;
+    --tab-hover-bg: #36243b;
+    --tab-text: #c7b3cc;
+    --tab-active-text: #e4d4e8;
+    --tab-border: #46344a;
+    
+    /* Sidebar */
+    --sidebar-bg: #241728;
+    --sidebar-hover-bg: #2e1f32;
+    --sidebar-active-bg: #36243b;
+    --sidebar-text: #c7b3cc;
+    --sidebar-icon: #a089a8;
+    
+    /* Content area */
+    --content-bg: #1a0e1f;
+    --code-bg: #0f0812;
+    --code-border: #46344a;
+    --blockquote-bg: #241427;
+    --blockquote-border: #9d4edd;
+    
+    /* Search */
+    --search-bg: #241728;
+    --search-border: #46344a;
+    --search-focus-border: #9d4edd;
+    
+    /* Scrollbar */
+    --scrollbar-bg: #241728;
+    --scrollbar-thumb: #564258;
+    --scrollbar-thumb-hover: #6b4f6f;
+    
+    /* Status indicators */
+    --status-info: #9d4edd;
+    --status-success: #7209b7;
+    --status-warning: #f72585;
+    --status-error: #e85d44;
+    
+    /* Badges */
+    --badge-bg: #9d4edd;
+    --badge-text: #ffffff;
+    
+    /* Syntax highlighting */
+    --syntax-comment: #7b68ee;
+    --syntax-string: #da70d6;
+    --syntax-number: #ff6b9d;
+    --syntax-keyword: #9d4edd;
+    --syntax-function: #c77dff;
+    --syntax-variable: #e0aaff;
+    --syntax-constant: #f72585;
+    --syntax-class: #d896ff;
+    --syntax-operator: #a089a8;
+    --syntax-punctuation: #c7b3cc;
+    
+    /* Stained glass decorative elements */
+    --gradient-primary: linear-gradient(135deg, #9d4edd 0%, #c77dff 50%, #e0aaff 100%);
+    --gradient-secondary: linear-gradient(135deg, #7209b7 0%, #9d4edd 100%);
+    --gradient-accent: radial-gradient(circle, #c77dff 0%, #9d4edd 70%);
+    --stained-glass-pattern: 
+        radial-gradient(circle at 20% 50%, rgba(157, 78, 221, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(199, 125, 255, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(224, 170, 255, 0.1) 0%, transparent 50%);
+}
+
+/* Stained glass light effects */
+:root[data-theme="bearded-stained-purple"] body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--stained-glass-pattern);
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.3;
+}
+
+/* Glass panel effects */
+:root[data-theme="bearded-stained-purple"] .note-item {
+    background: rgba(157, 78, 221, 0.05);
+    border: 1px solid rgba(199, 125, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+:root[data-theme="bearded-stained-purple"] .note-item:hover {
+    background: rgba(157, 78, 221, 0.1);
+    border-color: rgba(199, 125, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(157, 78, 221, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Tab glass effects */
+:root[data-theme="bearded-stained-purple"] .tab-item {
+    background: rgba(46, 31, 50, 0.8);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(199, 125, 255, 0.1);
+}
+
+:root[data-theme="bearded-stained-purple"] .tab-item.active {
+    background: rgba(61, 39, 64, 0.9);
+    box-shadow: 0 0 20px rgba(157, 78, 221, 0.3);
+}
+
+/* Stained glass borders for headers */
+:root[data-theme="bearded-stained-purple"] h1,
+:root[data-theme="bearded-stained-purple"] h2,
+:root[data-theme="bearded-stained-purple"] h3 {
+    position: relative;
+    background: var(--gradient-primary);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+:root[data-theme="bearded-stained-purple"] h1::after,
+:root[data-theme="bearded-stained-purple"] h2::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    margin-top: 8px;
+    background: var(--gradient-primary);
+    border-radius: 2px;
+    opacity: 0.7;
+}
+
+/* Code block stained glass effect */
+:root[data-theme="bearded-stained-purple"] pre {
+    background: rgba(15, 8, 18, 0.8);
+    border: 1px solid rgba(157, 78, 221, 0.3);
+    backdrop-filter: blur(5px);
+    box-shadow: inset 0 0 20px rgba(157, 78, 221, 0.1);
+}
+
+/* Button glass effects */
+:root[data-theme="bearded-stained-purple"] button {
+    background: rgba(157, 78, 221, 0.2);
+    border: 1px solid rgba(199, 125, 255, 0.3);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:root[data-theme="bearded-stained-purple"] button:hover {
+    background: rgba(157, 78, 221, 0.3);
+    border-color: rgba(199, 125, 255, 0.5);
+    box-shadow: 0 8px 25px rgba(157, 78, 221, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Search input glass effect */
+:root[data-theme="bearded-stained-purple"] #searchInput {
+    background: rgba(36, 23, 40, 0.8);
+    border: 1px solid rgba(199, 125, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+:root[data-theme="bearded-stained-purple"] #searchInput:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 20px rgba(157, 78, 221, 0.3);
+}
+
+/* Scrollbar stained glass styling */
+:root[data-theme="bearded-stained-purple"] ::-webkit-scrollbar-thumb {
+    background: var(--gradient-secondary);
+    border: 1px solid rgba(199, 125, 255, 0.2);
+}
+
+:root[data-theme="bearded-stained-purple"] ::-webkit-scrollbar-thumb:hover {
+    background: var(--gradient-primary);
+    box-shadow: 0 0 10px rgba(157, 78, 221, 0.5);
+}
+
+/* Link glass effects */
+:root[data-theme="bearded-stained-purple"] a {
+    background: var(--gradient-primary);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+}
+
+:root[data-theme="bearded-stained-purple"] a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--gradient-primary);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+:root[data-theme="bearded-stained-purple"] a:hover::after {
+    transform: scaleX(1);
+}
+
+/* Stained glass shimmer animation */
+@keyframes stained-shimmer {
+    0% { opacity: 0.3; transform: translateX(-100%); }
+    50% { opacity: 0.8; }
+    100% { opacity: 0.3; transform: translateX(100%); }
+}
+
+:root[data-theme="bearded-stained-purple"] .tab-item.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(199, 125, 255, 0.2), transparent);
+    animation: stained-shimmer 3s ease-in-out infinite;
+}

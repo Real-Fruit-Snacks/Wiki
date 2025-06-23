@@ -1,0 +1,145 @@
+/* Bearded Solarized Reversed Theme Variables */
+:root[data-theme="bearded-solarized-reversed"] {
+    /* Background Colors - Reversed Solarized (medium gray) */
+    --bg-primary: #657b83;
+    --bg-secondary: #586e75;
+    --bg-sidebar: #657b83;
+    --bg-code: #586e75;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.1);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #657b83ee;
+    --bg-tooltip: #586e75;
+    --bg-input: #586e75;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #268bd2;
+    --text-code: #fdf6e3;
+    --text-inverse: #657b83;
+    --button-text: #fdf6e3;
+    
+    /* Text Colors */
+    --text-primary: #fdf6e3;
+    --text-secondary: #eee8d5;
+    --text-muted: #93a1a1;
+    --text-heading: #fdf6e3;
+    
+    /* Accent Colors - Solarized palette */
+    --accent-primary: #268bd2;
+    --accent-secondary: #2aa198;
+    --accent-warning: #b58900;
+    --accent-error: #dc322f;
+    --accent-info: var(--accent-primary);
+    --accent-success: #859900;
+    
+    /* Border Colors */
+    --border-primary: #586e75;
+    --border-secondary: #4a6066;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(38, 139, 210, 0.1);
+    --bg-code-block: #586e75;
+}
+
+/* Syntax Highlighting - Bearded Solarized Reversed Theme */
+:root[data-theme="bearded-solarized-reversed"] .token.comment,
+:root[data-theme="bearded-solarized-reversed"] .token.prolog,
+:root[data-theme="bearded-solarized-reversed"] .token.doctype,
+:root[data-theme="bearded-solarized-reversed"] .token.cdata {
+    color: #93a1a1;
+}
+
+:root[data-theme="bearded-solarized-reversed"] .token.punctuation {
+    color: #fdf6e3;
+}
+
+:root[data-theme="bearded-solarized-reversed"] .token.property,
+:root[data-theme="bearded-solarized-reversed"] .token.tag,
+:root[data-theme="bearded-solarized-reversed"] .token.boolean,
+:root[data-theme="bearded-solarized-reversed"] .token.number,
+:root[data-theme="bearded-solarized-reversed"] .token.constant,
+:root[data-theme="bearded-solarized-reversed"] .token.symbol,
+:root[data-theme="bearded-solarized-reversed"] .token.deleted {
+    color: #d33682;
+}
+
+:root[data-theme="bearded-solarized-reversed"] .token.selector,
+:root[data-theme="bearded-solarized-reversed"] .token.attr-name,
+:root[data-theme="bearded-solarized-reversed"] .token.string,
+:root[data-theme="bearded-solarized-reversed"] .token.char,
+:root[data-theme="bearded-solarized-reversed"] .token.builtin,
+:root[data-theme="bearded-solarized-reversed"] .token.inserted {
+    color: #2aa198;
+}
+
+:root[data-theme="bearded-solarized-reversed"] .token.operator,
+:root[data-theme="bearded-solarized-reversed"] .token.entity,
+:root[data-theme="bearded-solarized-reversed"] .token.url,
+:root[data-theme="bearded-solarized-reversed"] .language-css .token.string,
+:root[data-theme="bearded-solarized-reversed"] .style .token.string {
+    color: #268bd2;
+    background: transparent;
+}
+
+:root[data-theme="bearded-solarized-reversed"] .token.atrule,
+:root[data-theme="bearded-solarized-reversed"] .token.attr-value,
+:root[data-theme="bearded-solarized-reversed"] .token.keyword {
+    color: #859900;
+}
+
+:root[data-theme="bearded-solarized-reversed"] .token.function,
+:root[data-theme="bearded-solarized-reversed"] .token.class-name {
+    color: #b58900;
+}
+
+:root[data-theme="bearded-solarized-reversed"] .token.regex,
+:root[data-theme="bearded-solarized-reversed"] .token.important,
+:root[data-theme="bearded-solarized-reversed"] .token.variable {
+    color: #cb4b16;
+}
+
+/* Scrollbar Bearded Solarized Reversed Theme */
+:root[data-theme="bearded-solarized-reversed"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-solarized-reversed"] ::-webkit-scrollbar-thumb {
+    background: #586e75;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-solarized-reversed"] ::-webkit-scrollbar-thumb:hover {
+    background: #268bd2;
+}
+
+/* Firefox Scrollbar Bearded Solarized Reversed Theme */
+:root[data-theme="bearded-solarized-reversed"] * {
+    scrollbar-color: #586e75 var(--bg-primary);
+}
+
+/* Solarized Reversed styling */
+:root[data-theme="bearded-solarized-reversed"] .tab.active {
+    border-bottom: 2px solid #268bd2;
+    background: linear-gradient(135deg, #586e75 0%, #657b83 100%);
+}
+
+:root[data-theme="bearded-solarized-reversed"] .note-header {
+    background: linear-gradient(135deg, #586e75 0%, transparent 100%);
+}

@@ -1,0 +1,151 @@
+/* Bearded Solarized Light Theme Variables */
+:root[data-theme="bearded-solarized-light"] {
+    /* Background Colors - Solarized Light base */
+    --bg-primary: #fdf6e3;
+    --bg-secondary: #eee8d5;
+    --bg-sidebar: #fdf6e3;
+    --bg-code: #eee8d5;
+    --bg-selection: var(--accent-primary)22;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(0, 0, 0, 0.03);
+    --bg-tag: #e4dcc6;
+    
+    /* Additional Background Colors */
+    --bg-modal: #fdf6e3ee;
+    --bg-tooltip: #eee8d5;
+    --bg-input: #eee8d5;
+    --bg-highlight: var(--accent-primary)22;
+    --text-link: #268bd2;
+    --text-code: #657b83;
+    --text-inverse: #fdf6e3;
+    --button-text: #657b83;
+    
+    /* Text Colors */
+    --text-primary: #657b83;
+    --text-secondary: #586e75;
+    --text-muted: #93a1a1;
+    --text-heading: #586e75;
+    
+    /* Accent Colors - Solarized palette */
+    --accent-primary: #268bd2;
+    --accent-secondary: #2aa198;
+    --accent-warning: #b58900;
+    --accent-error: #dc322f;
+    --accent-info: var(--accent-primary);
+    --accent-success: #859900;
+    
+    /* Border Colors */
+    --border-primary: #e4dcc6;
+    --border-secondary: #f2ead7;
+    
+    /* Button Colors */
+    --button-bg: #e4dcc6;
+    --button-hover: #d9d0b3;
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-error);
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(38, 139, 210, 0.08);
+    --bg-code-block: #eee8d5;
+}
+
+/* Syntax Highlighting - Bearded Solarized Light Theme */
+:root[data-theme="bearded-solarized-light"] .token.comment,
+:root[data-theme="bearded-solarized-light"] .token.prolog,
+:root[data-theme="bearded-solarized-light"] .token.doctype,
+:root[data-theme="bearded-solarized-light"] .token.cdata {
+    color: #93a1a1;
+}
+
+:root[data-theme="bearded-solarized-light"] .token.punctuation {
+    color: #657b83;
+}
+
+:root[data-theme="bearded-solarized-light"] .token.property,
+:root[data-theme="bearded-solarized-light"] .token.tag,
+:root[data-theme="bearded-solarized-light"] .token.boolean,
+:root[data-theme="bearded-solarized-light"] .token.number,
+:root[data-theme="bearded-solarized-light"] .token.constant,
+:root[data-theme="bearded-solarized-light"] .token.symbol,
+:root[data-theme="bearded-solarized-light"] .token.deleted {
+    color: #d33682;
+}
+
+:root[data-theme="bearded-solarized-light"] .token.selector,
+:root[data-theme="bearded-solarized-light"] .token.attr-name,
+:root[data-theme="bearded-solarized-light"] .token.string,
+:root[data-theme="bearded-solarized-light"] .token.char,
+:root[data-theme="bearded-solarized-light"] .token.builtin,
+:root[data-theme="bearded-solarized-light"] .token.inserted {
+    color: #2aa198;
+}
+
+:root[data-theme="bearded-solarized-light"] .token.operator,
+:root[data-theme="bearded-solarized-light"] .token.entity,
+:root[data-theme="bearded-solarized-light"] .token.url,
+:root[data-theme="bearded-solarized-light"] .language-css .token.string,
+:root[data-theme="bearded-solarized-light"] .style .token.string {
+    color: #268bd2;
+    background: transparent;
+}
+
+:root[data-theme="bearded-solarized-light"] .token.atrule,
+:root[data-theme="bearded-solarized-light"] .token.attr-value,
+:root[data-theme="bearded-solarized-light"] .token.keyword {
+    color: #859900;
+}
+
+:root[data-theme="bearded-solarized-light"] .token.function,
+:root[data-theme="bearded-solarized-light"] .token.class-name {
+    color: #b58900;
+}
+
+:root[data-theme="bearded-solarized-light"] .token.regex,
+:root[data-theme="bearded-solarized-light"] .token.important,
+:root[data-theme="bearded-solarized-light"] .token.variable {
+    color: #cb4b16;
+}
+
+/* Scrollbar Bearded Solarized Light Theme */
+:root[data-theme="bearded-solarized-light"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-solarized-light"] ::-webkit-scrollbar-thumb {
+    background: #e4dcc6;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-solarized-light"] ::-webkit-scrollbar-thumb:hover {
+    background: #268bd2;
+}
+
+/* Firefox Scrollbar Bearded Solarized Light Theme */
+:root[data-theme="bearded-solarized-light"] * {
+    scrollbar-color: #e4dcc6 var(--bg-primary);
+}
+
+/* Solarized Light styling */
+:root[data-theme="bearded-solarized-light"] .tab.active {
+    border-bottom: 2px solid #268bd2;
+    background: #eee8d5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+:root[data-theme="bearded-solarized-light"] .note-header {
+    background: linear-gradient(135deg, #eee8d5 0%, transparent 100%);
+    border-bottom: 1px solid #e4dcc6;
+}
+
+:root[data-theme="bearded-solarized-light"] .code-block {
+    border: 1px solid #e4dcc6;
+}
