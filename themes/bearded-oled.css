@@ -1,0 +1,169 @@
+/* Bearded OLED Theme Variables */
+:root[data-theme="bearded-oled"] {
+    /* Background Colors */
+    --bg-primary: #000000;
+    --bg-secondary: #0a0a0a;
+    --bg-sidebar: #050505;
+    --bg-code: #0a0a0a;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #000000ee;
+    --bg-tooltip: #0a0a0a;
+    --bg-input: #0a0a0a;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #2979ff;
+    --text-code: #ff1744;
+    --text-inverse: #ffffff;
+    --button-text: #ffffff;
+    
+    /* Text Colors */
+    --text-primary: #ffffff;
+    --text-secondary: #e0e0e0;
+    --text-muted: #9e9e9e;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors */
+    --accent-primary: #2979ff;
+    --accent-secondary: #448aff;
+    --accent-warning: #ffc107;
+    --accent-error: #ff1744;
+    --accent-info: var(--accent-primary);
+    --accent-success: #00e676;
+    
+    /* Border Colors */
+    --border-primary: #1a1a1a;
+    --border-secondary: #111111;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-error);
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 1), 0 2px 4px -1px rgba(0, 0, 0, 1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 1), 0 4px 6px -2px rgba(0, 0, 0, 1);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(41, 121, 255, 0.1);
+    --bg-code-block: #0a0a0a;
+}
+
+/* Syntax Highlighting - Bearded OLED Theme */
+:root[data-theme="bearded-oled"] .token.comment,
+:root[data-theme="bearded-oled"] .token.prolog,
+:root[data-theme="bearded-oled"] .token.doctype,
+:root[data-theme="bearded-oled"] .token.cdata {
+    color: #616161;
+}
+
+:root[data-theme="bearded-oled"] .token.punctuation {
+    color: #e0e0e0;
+}
+
+:root[data-theme="bearded-oled"] .token.property,
+:root[data-theme="bearded-oled"] .token.tag,
+:root[data-theme="bearded-oled"] .token.boolean,
+:root[data-theme="bearded-oled"] .token.number,
+:root[data-theme="bearded-oled"] .token.constant,
+:root[data-theme="bearded-oled"] .token.symbol,
+:root[data-theme="bearded-oled"] .token.deleted {
+    color: #ff6f00;
+}
+
+:root[data-theme="bearded-oled"] .token.selector,
+:root[data-theme="bearded-oled"] .token.attr-name,
+:root[data-theme="bearded-oled"] .token.string,
+:root[data-theme="bearded-oled"] .token.char,
+:root[data-theme="bearded-oled"] .token.builtin,
+:root[data-theme="bearded-oled"] .token.inserted {
+    color: #00e676;
+}
+
+:root[data-theme="bearded-oled"] .token.operator,
+:root[data-theme="bearded-oled"] .token.entity,
+:root[data-theme="bearded-oled"] .token.url,
+:root[data-theme="bearded-oled"] .language-css .token.string,
+:root[data-theme="bearded-oled"] .style .token.string {
+    color: #00bcd4;
+    background: transparent;
+}
+
+:root[data-theme="bearded-oled"] .token.atrule,
+:root[data-theme="bearded-oled"] .token.attr-value,
+:root[data-theme="bearded-oled"] .token.keyword {
+    color: #e91e63;
+}
+
+:root[data-theme="bearded-oled"] .token.function,
+:root[data-theme="bearded-oled"] .token.class-name {
+    color: #2979ff;
+}
+
+:root[data-theme="bearded-oled"] .token.regex,
+:root[data-theme="bearded-oled"] .token.important,
+:root[data-theme="bearded-oled"] .token.variable {
+    color: #ffc107;
+}
+
+/* Scrollbar Bearded OLED Theme */
+:root[data-theme="bearded-oled"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-oled"] ::-webkit-scrollbar-thumb {
+    background: #1a1a1a;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-oled"] ::-webkit-scrollbar-thumb:hover {
+    background: #2979ff;
+}
+
+/* Firefox Scrollbar Bearded OLED Theme */
+:root[data-theme="bearded-oled"] * {
+    scrollbar-color: #1a1a1a var(--bg-primary);
+}
+
+/* OLED optimization - pure black backgrounds */
+:root[data-theme="bearded-oled"] .sidebar,
+:root[data-theme="bearded-oled"] .main-container,
+:root[data-theme="bearded-oled"] .content-view {
+    background: #000000;
+}
+
+/* Thin accent lines for OLED */
+:root[data-theme="bearded-oled"] .note-header {
+    border-bottom: 1px solid rgba(41, 121, 255, 0.2);
+}
+
+:root[data-theme="bearded-oled"] .tab.active {
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--accent-primary);
+}
+
+:root[data-theme="bearded-oled"] .code-block-header {
+    border-bottom: 1px solid rgba(41, 121, 255, 0.15);
+}
+
+/* Minimal glow for OLED efficiency */
+:root[data-theme="bearded-oled"] input:focus,
+:root[data-theme="bearded-oled"] textarea:focus,
+:root[data-theme="bearded-oled"] select:focus {
+    box-shadow: 0 0 0 1px rgba(41, 121, 255, 0.5);
+}
+
+/* High contrast selection */
+:root[data-theme="bearded-oled"] ::selection {
+    background: rgba(41, 121, 255, 0.5);
+    color: var(--text-primary);
+}

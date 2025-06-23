@@ -1,0 +1,163 @@
+/* Bearded Milkshake Raspberry Theme Variables */
+:root[data-theme="bearded-milkshake-raspberry"] {
+    /* Background Colors */
+    --bg-primary: #1e1825;
+    --bg-secondary: #271e2e;
+    --bg-sidebar: #211a28;
+    --bg-code: #271e2e;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #1e1825ee;
+    --bg-tooltip: #271e2e;
+    --bg-input: #271e2e;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #ff79c6;
+    --text-code: #ff6bcb;
+    --text-inverse: #000000;
+    --button-text: #f8e8ff;
+    
+    /* Text Colors */
+    --text-primary: #f8e8ff;
+    --text-secondary: #e8d8f5;
+    --text-muted: #b8a8c5;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors */
+    --accent-primary: #ff79c6;
+    --accent-secondary: #ff92d0;
+    --accent-warning: #f1fa8c;
+    --accent-error: #ff5555;
+    --accent-info: var(--accent-primary);
+    --accent-success: #8aff80;
+    
+    /* Border Colors */
+    --border-primary: #3a2e45;
+    --border-secondary: #312638;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(255, 121, 198, 0.1);
+    --bg-code-block: #271e2e;
+}
+
+/* Syntax Highlighting - Bearded Milkshake Raspberry Theme */
+:root[data-theme="bearded-milkshake-raspberry"] .token.comment,
+:root[data-theme="bearded-milkshake-raspberry"] .token.prolog,
+:root[data-theme="bearded-milkshake-raspberry"] .token.doctype,
+:root[data-theme="bearded-milkshake-raspberry"] .token.cdata {
+    color: #6272a4;
+}
+
+:root[data-theme="bearded-milkshake-raspberry"] .token.punctuation {
+    color: #e8d8f5;
+}
+
+:root[data-theme="bearded-milkshake-raspberry"] .token.property,
+:root[data-theme="bearded-milkshake-raspberry"] .token.tag,
+:root[data-theme="bearded-milkshake-raspberry"] .token.boolean,
+:root[data-theme="bearded-milkshake-raspberry"] .token.number,
+:root[data-theme="bearded-milkshake-raspberry"] .token.constant,
+:root[data-theme="bearded-milkshake-raspberry"] .token.symbol,
+:root[data-theme="bearded-milkshake-raspberry"] .token.deleted {
+    color: #ffb86c;
+}
+
+:root[data-theme="bearded-milkshake-raspberry"] .token.selector,
+:root[data-theme="bearded-milkshake-raspberry"] .token.attr-name,
+:root[data-theme="bearded-milkshake-raspberry"] .token.string,
+:root[data-theme="bearded-milkshake-raspberry"] .token.char,
+:root[data-theme="bearded-milkshake-raspberry"] .token.builtin,
+:root[data-theme="bearded-milkshake-raspberry"] .token.inserted {
+    color: #8aff80;
+}
+
+:root[data-theme="bearded-milkshake-raspberry"] .token.operator,
+:root[data-theme="bearded-milkshake-raspberry"] .token.entity,
+:root[data-theme="bearded-milkshake-raspberry"] .token.url,
+:root[data-theme="bearded-milkshake-raspberry"] .language-css .token.string,
+:root[data-theme="bearded-milkshake-raspberry"] .style .token.string {
+    color: #8be9fd;
+    background: transparent;
+}
+
+:root[data-theme="bearded-milkshake-raspberry"] .token.atrule,
+:root[data-theme="bearded-milkshake-raspberry"] .token.attr-value,
+:root[data-theme="bearded-milkshake-raspberry"] .token.keyword {
+    color: #ff79c6;
+}
+
+:root[data-theme="bearded-milkshake-raspberry"] .token.function,
+:root[data-theme="bearded-milkshake-raspberry"] .token.class-name {
+    color: #bd93f9;
+}
+
+:root[data-theme="bearded-milkshake-raspberry"] .token.regex,
+:root[data-theme="bearded-milkshake-raspberry"] .token.important,
+:root[data-theme="bearded-milkshake-raspberry"] .token.variable {
+    color: #f1fa8c;
+}
+
+/* Scrollbar Bearded Milkshake Raspberry Theme */
+:root[data-theme="bearded-milkshake-raspberry"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-milkshake-raspberry"] ::-webkit-scrollbar-thumb {
+    background: #3a2e45;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-milkshake-raspberry"] ::-webkit-scrollbar-thumb:hover {
+    background: #ff79c6;
+}
+
+/* Firefox Scrollbar Bearded Milkshake Raspberry Theme */
+:root[data-theme="bearded-milkshake-raspberry"] * {
+    scrollbar-color: #3a2e45 var(--bg-primary);
+}
+
+/* Milkshake-style creamy effects */
+:root[data-theme="bearded-milkshake-raspberry"] .note-header {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(255, 121, 198, 0.08) 100%);
+}
+
+:root[data-theme="bearded-milkshake-raspberry"] .tab.active {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(255, 121, 198, 0.05) 100%);
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+:root[data-theme="bearded-milkshake-raspberry"] .code-block-header {
+    background: linear-gradient(90deg, rgba(255, 121, 198, 0.15) 0%, transparent 100%);
+}
+
+/* Milkshake bubble effect */
+:root[data-theme="bearded-milkshake-raspberry"] .sidebar::before {
+    content: "";
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255, 121, 198, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+}

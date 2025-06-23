@@ -1,0 +1,164 @@
+/* Bearded Vivid Purple Theme Variables */
+:root[data-theme="bearded-vivid-purple"] {
+    /* Background Colors */
+    --bg-primary: #1a0f1f;
+    --bg-secondary: #221428;
+    --bg-sidebar: #1c1023;
+    --bg-code: #221428;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #1a0f1fee;
+    --bg-tooltip: #221428;
+    --bg-input: #221428;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #b366ff;
+    --text-code: #ff1a8c;
+    --text-inverse: #000000;
+    --button-text: #f5e6ff;
+    
+    /* Text Colors */
+    --text-primary: #f5e6ff;
+    --text-secondary: #e5d6f5;
+    --text-muted: #b5a6c5;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors */
+    --accent-primary: #b366ff;
+    --accent-secondary: #cc80ff;
+    --accent-warning: #ffcc00;
+    --accent-error: #ff1a8c;
+    --accent-info: var(--accent-primary);
+    --accent-success: #00ff88;
+    
+    /* Border Colors */
+    --border-primary: #362145;
+    --border-secondary: #2c1938;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -1px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7), 0 4px 6px -2px rgba(0, 0, 0, 0.6);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(179, 102, 255, 0.1);
+    --bg-code-block: #221428;
+}
+
+/* Syntax Highlighting - Bearded Vivid Purple Theme */
+:root[data-theme="bearded-vivid-purple"] .token.comment,
+:root[data-theme="bearded-vivid-purple"] .token.prolog,
+:root[data-theme="bearded-vivid-purple"] .token.doctype,
+:root[data-theme="bearded-vivid-purple"] .token.cdata {
+    color: #7456a3;
+}
+
+:root[data-theme="bearded-vivid-purple"] .token.punctuation {
+    color: #e5d6f5;
+}
+
+:root[data-theme="bearded-vivid-purple"] .token.property,
+:root[data-theme="bearded-vivid-purple"] .token.tag,
+:root[data-theme="bearded-vivid-purple"] .token.boolean,
+:root[data-theme="bearded-vivid-purple"] .token.number,
+:root[data-theme="bearded-vivid-purple"] .token.constant,
+:root[data-theme="bearded-vivid-purple"] .token.symbol,
+:root[data-theme="bearded-vivid-purple"] .token.deleted {
+    color: #ff9933;
+}
+
+:root[data-theme="bearded-vivid-purple"] .token.selector,
+:root[data-theme="bearded-vivid-purple"] .token.attr-name,
+:root[data-theme="bearded-vivid-purple"] .token.string,
+:root[data-theme="bearded-vivid-purple"] .token.char,
+:root[data-theme="bearded-vivid-purple"] .token.builtin,
+:root[data-theme="bearded-vivid-purple"] .token.inserted {
+    color: #00ff88;
+}
+
+:root[data-theme="bearded-vivid-purple"] .token.operator,
+:root[data-theme="bearded-vivid-purple"] .token.entity,
+:root[data-theme="bearded-vivid-purple"] .token.url,
+:root[data-theme="bearded-vivid-purple"] .language-css .token.string,
+:root[data-theme="bearded-vivid-purple"] .style .token.string {
+    color: #00ccff;
+    background: transparent;
+}
+
+:root[data-theme="bearded-vivid-purple"] .token.atrule,
+:root[data-theme="bearded-vivid-purple"] .token.attr-value,
+:root[data-theme="bearded-vivid-purple"] .token.keyword {
+    color: #ff1a8c;
+}
+
+:root[data-theme="bearded-vivid-purple"] .token.function,
+:root[data-theme="bearded-vivid-purple"] .token.class-name {
+    color: #b366ff;
+}
+
+:root[data-theme="bearded-vivid-purple"] .token.regex,
+:root[data-theme="bearded-vivid-purple"] .token.important,
+:root[data-theme="bearded-vivid-purple"] .token.variable {
+    color: #ffcc00;
+}
+
+/* Scrollbar Bearded Vivid Purple Theme */
+:root[data-theme="bearded-vivid-purple"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-vivid-purple"] ::-webkit-scrollbar-thumb {
+    background: #362145;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-vivid-purple"] ::-webkit-scrollbar-thumb:hover {
+    background: #b366ff;
+}
+
+/* Firefox Scrollbar Bearded Vivid Purple Theme */
+:root[data-theme="bearded-vivid-purple"] * {
+    scrollbar-color: #362145 var(--bg-primary);
+}
+
+/* Vivid purple neon effects */
+:root[data-theme="bearded-vivid-purple"] .note-header {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(179, 102, 255, 0.1) 100%);
+    border-bottom: 1px solid rgba(179, 102, 255, 0.3);
+}
+
+:root[data-theme="bearded-vivid-purple"] .tab.active {
+    background: var(--bg-secondary);
+    border-bottom: 2px solid var(--accent-primary);
+    box-shadow: 0 2px 12px rgba(179, 102, 255, 0.4);
+}
+
+:root[data-theme="bearded-vivid-purple"] .code-block-header {
+    background: linear-gradient(90deg, rgba(179, 102, 255, 0.2) 0%, transparent 100%);
+}
+
+/* Vivid purple glow effects */
+:root[data-theme="bearded-vivid-purple"] input:focus,
+:root[data-theme="bearded-vivid-purple"] textarea:focus,
+:root[data-theme="bearded-vivid-purple"] select:focus {
+    box-shadow: 0 0 0 2px rgba(179, 102, 255, 0.5), 0 0 20px rgba(179, 102, 255, 0.3);
+}
+
+/* Purple neon highlight */
+:root[data-theme="bearded-vivid-purple"] ::selection {
+    background: rgba(179, 102, 255, 0.4);
+    color: var(--text-primary);
+}

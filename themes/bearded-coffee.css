@@ -1,0 +1,154 @@
+/* Bearded Coffee Theme Variables */
+:root[data-theme="bearded-coffee"] {
+    /* Background Colors */
+    --bg-primary: #2a2420;
+    --bg-secondary: #342e29;
+    --bg-sidebar: #262019;
+    --bg-code: #342e29;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #2a2420ee;
+    --bg-tooltip: #342e29;
+    --bg-input: #342e29;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #d4a574;
+    --text-code: #e78a4e;
+    --text-inverse: #000000;
+    --button-text: #d4be98;
+    
+    /* Text Colors */
+    --text-primary: #d4be98;
+    --text-secondary: #c8b390;
+    --text-muted: #a89984;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors */
+    --accent-primary: #d4a574;
+    --accent-secondary: #e4bb8a;
+    --accent-warning: #d8a657;
+    --accent-error: #ea6962;
+    --accent-info: var(--accent-primary);
+    --accent-success: #a9b665;
+    
+    /* Border Colors */
+    --border-primary: #453f38;
+    --border-secondary: #3a342e;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(212, 165, 116, 0.1);
+    --bg-code-block: #342e29;
+}
+
+/* Syntax Highlighting - Bearded Coffee Theme */
+:root[data-theme="bearded-coffee"] .token.comment,
+:root[data-theme="bearded-coffee"] .token.prolog,
+:root[data-theme="bearded-coffee"] .token.doctype,
+:root[data-theme="bearded-coffee"] .token.cdata {
+    color: #7c6f64;
+}
+
+:root[data-theme="bearded-coffee"] .token.punctuation {
+    color: #bdae93;
+}
+
+:root[data-theme="bearded-coffee"] .token.property,
+:root[data-theme="bearded-coffee"] .token.tag,
+:root[data-theme="bearded-coffee"] .token.boolean,
+:root[data-theme="bearded-coffee"] .token.number,
+:root[data-theme="bearded-coffee"] .token.constant,
+:root[data-theme="bearded-coffee"] .token.symbol,
+:root[data-theme="bearded-coffee"] .token.deleted {
+    color: #e78a4e;
+}
+
+:root[data-theme="bearded-coffee"] .token.selector,
+:root[data-theme="bearded-coffee"] .token.attr-name,
+:root[data-theme="bearded-coffee"] .token.string,
+:root[data-theme="bearded-coffee"] .token.char,
+:root[data-theme="bearded-coffee"] .token.builtin,
+:root[data-theme="bearded-coffee"] .token.inserted {
+    color: #a9b665;
+}
+
+:root[data-theme="bearded-coffee"] .token.operator,
+:root[data-theme="bearded-coffee"] .token.entity,
+:root[data-theme="bearded-coffee"] .token.url,
+:root[data-theme="bearded-coffee"] .language-css .token.string,
+:root[data-theme="bearded-coffee"] .style .token.string {
+    color: #89b482;
+    background: transparent;
+}
+
+:root[data-theme="bearded-coffee"] .token.atrule,
+:root[data-theme="bearded-coffee"] .token.attr-value,
+:root[data-theme="bearded-coffee"] .token.keyword {
+    color: #ea6962;
+}
+
+:root[data-theme="bearded-coffee"] .token.function,
+:root[data-theme="bearded-coffee"] .token.class-name {
+    color: #d4a574;
+}
+
+:root[data-theme="bearded-coffee"] .token.regex,
+:root[data-theme="bearded-coffee"] .token.important,
+:root[data-theme="bearded-coffee"] .token.variable {
+    color: #d8a657;
+}
+
+/* Scrollbar Bearded Coffee Theme */
+:root[data-theme="bearded-coffee"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-coffee"] ::-webkit-scrollbar-thumb {
+    background: #453f38;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-coffee"] ::-webkit-scrollbar-thumb:hover {
+    background: #d4a574;
+}
+
+/* Firefox Scrollbar Bearded Coffee Theme */
+:root[data-theme="bearded-coffee"] * {
+    scrollbar-color: #453f38 var(--bg-primary);
+}
+
+/* Coffee-style warm effects */
+:root[data-theme="bearded-coffee"] .note-header {
+    background: linear-gradient(180deg, transparent 0%, rgba(212, 165, 116, 0.05) 100%);
+}
+
+:root[data-theme="bearded-coffee"] .tab.active {
+    background: var(--bg-secondary);
+    box-shadow: inset 0 -2px 0 var(--accent-primary);
+}
+
+:root[data-theme="bearded-coffee"] .code-block-header {
+    background: linear-gradient(90deg, rgba(212, 165, 116, 0.1) 0%, transparent 100%);
+}
+
+/* Warm coffee-stained paper effect */
+:root[data-theme="bearded-coffee"] .content-view {
+    background-image: radial-gradient(ellipse at top right, rgba(212, 165, 116, 0.02) 0%, transparent 70%);
+}

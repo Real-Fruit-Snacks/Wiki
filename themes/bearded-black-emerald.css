@@ -1,0 +1,156 @@
+/* Bearded Black & Emerald Theme Variables */
+:root[data-theme="bearded-black-emerald"] {
+    /* Background Colors */
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #141414;
+    --bg-sidebar: #0f0f0f;
+    --bg-code: #141414;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #0a0a0aee;
+    --bg-tooltip: #141414;
+    --bg-input: #141414;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #50fa7b;
+    --text-code: #ff79c6;
+    --text-inverse: #000000;
+    --button-text: #e6e6e6;
+    
+    /* Text Colors */
+    --text-primary: #e6e6e6;
+    --text-secondary: #cccccc;
+    --text-muted: #999999;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors */
+    --accent-primary: #50fa7b;
+    --accent-secondary: #6bff94;
+    --accent-warning: #f1fa8c;
+    --accent-error: #ff5555;
+    --accent-info: var(--accent-primary);
+    --accent-success: #50fa7b;
+    
+    /* Border Colors */
+    --border-primary: #2a2a2a;
+    --border-secondary: #1f1f1f;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #000000;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.8);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.9), 0 2px 4px -1px rgba(0, 0, 0, 0.8);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 1), 0 4px 6px -2px rgba(0, 0, 0, 0.9);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(80, 250, 123, 0.1);
+    --bg-code-block: #141414;
+}
+
+/* Syntax Highlighting - Bearded Black & Emerald Theme */
+:root[data-theme="bearded-black-emerald"] .token.comment,
+:root[data-theme="bearded-black-emerald"] .token.prolog,
+:root[data-theme="bearded-black-emerald"] .token.doctype,
+:root[data-theme="bearded-black-emerald"] .token.cdata {
+    color: #6272a4;
+}
+
+:root[data-theme="bearded-black-emerald"] .token.punctuation {
+    color: #f8f8f2;
+}
+
+:root[data-theme="bearded-black-emerald"] .token.property,
+:root[data-theme="bearded-black-emerald"] .token.tag,
+:root[data-theme="bearded-black-emerald"] .token.boolean,
+:root[data-theme="bearded-black-emerald"] .token.number,
+:root[data-theme="bearded-black-emerald"] .token.constant,
+:root[data-theme="bearded-black-emerald"] .token.symbol,
+:root[data-theme="bearded-black-emerald"] .token.deleted {
+    color: #ffb86c;
+}
+
+:root[data-theme="bearded-black-emerald"] .token.selector,
+:root[data-theme="bearded-black-emerald"] .token.attr-name,
+:root[data-theme="bearded-black-emerald"] .token.string,
+:root[data-theme="bearded-black-emerald"] .token.char,
+:root[data-theme="bearded-black-emerald"] .token.builtin,
+:root[data-theme="bearded-black-emerald"] .token.inserted {
+    color: #50fa7b;
+}
+
+:root[data-theme="bearded-black-emerald"] .token.operator,
+:root[data-theme="bearded-black-emerald"] .token.entity,
+:root[data-theme="bearded-black-emerald"] .token.url,
+:root[data-theme="bearded-black-emerald"] .language-css .token.string,
+:root[data-theme="bearded-black-emerald"] .style .token.string {
+    color: #8be9fd;
+    background: transparent;
+}
+
+:root[data-theme="bearded-black-emerald"] .token.atrule,
+:root[data-theme="bearded-black-emerald"] .token.attr-value,
+:root[data-theme="bearded-black-emerald"] .token.keyword {
+    color: #ff79c6;
+}
+
+:root[data-theme="bearded-black-emerald"] .token.function,
+:root[data-theme="bearded-black-emerald"] .token.class-name {
+    color: #bd93f9;
+}
+
+:root[data-theme="bearded-black-emerald"] .token.regex,
+:root[data-theme="bearded-black-emerald"] .token.important,
+:root[data-theme="bearded-black-emerald"] .token.variable {
+    color: #f1fa8c;
+}
+
+/* Scrollbar Bearded Black & Emerald Theme */
+:root[data-theme="bearded-black-emerald"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-black-emerald"] ::-webkit-scrollbar-thumb {
+    background: #2a2a2a;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-black-emerald"] ::-webkit-scrollbar-thumb:hover {
+    background: #50fa7b;
+}
+
+/* Firefox Scrollbar Bearded Black & Emerald Theme */
+:root[data-theme="bearded-black-emerald"] * {
+    scrollbar-color: #2a2a2a var(--bg-primary);
+}
+
+/* Emerald accent effects on pure black */
+:root[data-theme="bearded-black-emerald"] .note-header {
+    border-bottom: 1px solid rgba(80, 250, 123, 0.2);
+}
+
+:root[data-theme="bearded-black-emerald"] .tab.active {
+    background: var(--bg-secondary);
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+:root[data-theme="bearded-black-emerald"] .code-block-header {
+    border-bottom: 1px solid rgba(80, 250, 123, 0.15);
+}
+
+/* Emerald glow on focus */
+:root[data-theme="bearded-black-emerald"] input:focus,
+:root[data-theme="bearded-black-emerald"] textarea:focus,
+:root[data-theme="bearded-black-emerald"] select:focus {
+    box-shadow: 0 0 0 2px rgba(80, 250, 123, 0.3);
+}

@@ -1,0 +1,156 @@
+/* Bearded Black & Ruby Theme Variables */
+:root[data-theme="bearded-black-ruby"] {
+    /* Background Colors */
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #141414;
+    --bg-sidebar: #0f0f0f;
+    --bg-code: #141414;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #0a0a0aee;
+    --bg-tooltip: #141414;
+    --bg-input: #141414;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #e92741;
+    --text-code: #ff6188;
+    --text-inverse: #000000;
+    --button-text: #e6e6e6;
+    
+    /* Text Colors */
+    --text-primary: #e6e6e6;
+    --text-secondary: #cccccc;
+    --text-muted: #999999;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors */
+    --accent-primary: #e92741;
+    --accent-secondary: #ff4b68;
+    --accent-warning: #ffd866;
+    --accent-error: #ff6188;
+    --accent-info: var(--accent-primary);
+    --accent-success: #a9dc76;
+    
+    /* Border Colors */
+    --border-primary: #2a2a2a;
+    --border-secondary: #1f1f1f;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-primary);
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.8);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.9), 0 2px 4px -1px rgba(0, 0, 0, 0.8);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 1), 0 4px 6px -2px rgba(0, 0, 0, 0.9);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(233, 39, 65, 0.1);
+    --bg-code-block: #141414;
+}
+
+/* Syntax Highlighting - Bearded Black & Ruby Theme */
+:root[data-theme="bearded-black-ruby"] .token.comment,
+:root[data-theme="bearded-black-ruby"] .token.prolog,
+:root[data-theme="bearded-black-ruby"] .token.doctype,
+:root[data-theme="bearded-black-ruby"] .token.cdata {
+    color: #757575;
+}
+
+:root[data-theme="bearded-black-ruby"] .token.punctuation {
+    color: #c9d1d9;
+}
+
+:root[data-theme="bearded-black-ruby"] .token.property,
+:root[data-theme="bearded-black-ruby"] .token.tag,
+:root[data-theme="bearded-black-ruby"] .token.boolean,
+:root[data-theme="bearded-black-ruby"] .token.number,
+:root[data-theme="bearded-black-ruby"] .token.constant,
+:root[data-theme="bearded-black-ruby"] .token.symbol,
+:root[data-theme="bearded-black-ruby"] .token.deleted {
+    color: #fc9867;
+}
+
+:root[data-theme="bearded-black-ruby"] .token.selector,
+:root[data-theme="bearded-black-ruby"] .token.attr-name,
+:root[data-theme="bearded-black-ruby"] .token.string,
+:root[data-theme="bearded-black-ruby"] .token.char,
+:root[data-theme="bearded-black-ruby"] .token.builtin,
+:root[data-theme="bearded-black-ruby"] .token.inserted {
+    color: #a9dc76;
+}
+
+:root[data-theme="bearded-black-ruby"] .token.operator,
+:root[data-theme="bearded-black-ruby"] .token.entity,
+:root[data-theme="bearded-black-ruby"] .token.url,
+:root[data-theme="bearded-black-ruby"] .language-css .token.string,
+:root[data-theme="bearded-black-ruby"] .style .token.string {
+    color: #78dce8;
+    background: transparent;
+}
+
+:root[data-theme="bearded-black-ruby"] .token.atrule,
+:root[data-theme="bearded-black-ruby"] .token.attr-value,
+:root[data-theme="bearded-black-ruby"] .token.keyword {
+    color: #ff6188;
+}
+
+:root[data-theme="bearded-black-ruby"] .token.function,
+:root[data-theme="bearded-black-ruby"] .token.class-name {
+    color: #ab9df2;
+}
+
+:root[data-theme="bearded-black-ruby"] .token.regex,
+:root[data-theme="bearded-black-ruby"] .token.important,
+:root[data-theme="bearded-black-ruby"] .token.variable {
+    color: #ffd866;
+}
+
+/* Scrollbar Bearded Black & Ruby Theme */
+:root[data-theme="bearded-black-ruby"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-black-ruby"] ::-webkit-scrollbar-thumb {
+    background: #2a2a2a;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-black-ruby"] ::-webkit-scrollbar-thumb:hover {
+    background: #e92741;
+}
+
+/* Firefox Scrollbar Bearded Black & Ruby Theme */
+:root[data-theme="bearded-black-ruby"] * {
+    scrollbar-color: #2a2a2a var(--bg-primary);
+}
+
+/* Ruby accent effects on pure black */
+:root[data-theme="bearded-black-ruby"] .note-header {
+    border-bottom: 1px solid rgba(233, 39, 65, 0.2);
+}
+
+:root[data-theme="bearded-black-ruby"] .tab.active {
+    background: var(--bg-secondary);
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+:root[data-theme="bearded-black-ruby"] .code-block-header {
+    border-bottom: 1px solid rgba(233, 39, 65, 0.15);
+}
+
+/* Ruby glow on focus */
+:root[data-theme="bearded-black-ruby"] input:focus,
+:root[data-theme="bearded-black-ruby"] textarea:focus,
+:root[data-theme="bearded-black-ruby"] select:focus {
+    box-shadow: 0 0 0 2px rgba(233, 39, 65, 0.3);
+}

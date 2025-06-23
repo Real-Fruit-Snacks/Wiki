@@ -1,0 +1,161 @@
+/* Bearded Void Theme Variables */
+:root[data-theme="bearded-void"] {
+    /* Background Colors */
+    --bg-primary: #0e0e0e;
+    --bg-secondary: #161616;
+    --bg-sidebar: #121212;
+    --bg-code: #161616;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #0e0e0eee;
+    --bg-tooltip: #161616;
+    --bg-input: #161616;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #7c8fd8;
+    --text-code: #ff6b9d;
+    --text-inverse: #000000;
+    --button-text: #dadada;
+    
+    /* Text Colors */
+    --text-primary: #dadada;
+    --text-secondary: #c0c0c0;
+    --text-muted: #888888;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors */
+    --accent-primary: #7c8fd8;
+    --accent-secondary: #9ca9dc;
+    --accent-warning: #feca57;
+    --accent-error: #ff6b9d;
+    --accent-info: var(--accent-primary);
+    --accent-success: #69d372;
+    
+    /* Border Colors */
+    --border-primary: #252525;
+    --border-secondary: #1d1d1d;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-error);
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.6);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.7), 0 2px 4px -1px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.8), 0 4px 6px -2px rgba(0, 0, 0, 0.7);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(124, 143, 216, 0.1);
+    --bg-code-block: #161616;
+}
+
+/* Syntax Highlighting - Bearded Void Theme */
+:root[data-theme="bearded-void"] .token.comment,
+:root[data-theme="bearded-void"] .token.prolog,
+:root[data-theme="bearded-void"] .token.doctype,
+:root[data-theme="bearded-void"] .token.cdata {
+    color: #5c5c5c;
+}
+
+:root[data-theme="bearded-void"] .token.punctuation {
+    color: #c0c0c0;
+}
+
+:root[data-theme="bearded-void"] .token.property,
+:root[data-theme="bearded-void"] .token.tag,
+:root[data-theme="bearded-void"] .token.boolean,
+:root[data-theme="bearded-void"] .token.number,
+:root[data-theme="bearded-void"] .token.constant,
+:root[data-theme="bearded-void"] .token.symbol,
+:root[data-theme="bearded-void"] .token.deleted {
+    color: #ff9f43;
+}
+
+:root[data-theme="bearded-void"] .token.selector,
+:root[data-theme="bearded-void"] .token.attr-name,
+:root[data-theme="bearded-void"] .token.string,
+:root[data-theme="bearded-void"] .token.char,
+:root[data-theme="bearded-void"] .token.builtin,
+:root[data-theme="bearded-void"] .token.inserted {
+    color: #69d372;
+}
+
+:root[data-theme="bearded-void"] .token.operator,
+:root[data-theme="bearded-void"] .token.entity,
+:root[data-theme="bearded-void"] .token.url,
+:root[data-theme="bearded-void"] .language-css .token.string,
+:root[data-theme="bearded-void"] .style .token.string {
+    color: #48dbfb;
+    background: transparent;
+}
+
+:root[data-theme="bearded-void"] .token.atrule,
+:root[data-theme="bearded-void"] .token.attr-value,
+:root[data-theme="bearded-void"] .token.keyword {
+    color: #ee5a6f;
+}
+
+:root[data-theme="bearded-void"] .token.function,
+:root[data-theme="bearded-void"] .token.class-name {
+    color: #7c8fd8;
+}
+
+:root[data-theme="bearded-void"] .token.regex,
+:root[data-theme="bearded-void"] .token.important,
+:root[data-theme="bearded-void"] .token.variable {
+    color: #feca57;
+}
+
+/* Scrollbar Bearded Void Theme */
+:root[data-theme="bearded-void"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-void"] ::-webkit-scrollbar-thumb {
+    background: #252525;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-void"] ::-webkit-scrollbar-thumb:hover {
+    background: #7c8fd8;
+}
+
+/* Firefox Scrollbar Bearded Void Theme */
+:root[data-theme="bearded-void"] * {
+    scrollbar-color: #252525 var(--bg-primary);
+}
+
+/* Void-like minimal effects */
+:root[data-theme="bearded-void"] .note-header {
+    background: linear-gradient(180deg, transparent 0%, rgba(124, 143, 216, 0.03) 100%);
+}
+
+:root[data-theme="bearded-void"] .tab.active {
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--accent-primary);
+}
+
+:root[data-theme="bearded-void"] .code-block-header {
+    background: linear-gradient(90deg, rgba(124, 143, 216, 0.08) 0%, transparent 100%);
+}
+
+/* Void depth shadow */
+:root[data-theme="bearded-void"] .sidebar {
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Subtle void glow */
+:root[data-theme="bearded-void"] input:focus,
+:root[data-theme="bearded-void"] textarea:focus,
+:root[data-theme="bearded-void"] select:focus {
+    box-shadow: 0 0 0 1px rgba(124, 143, 216, 0.4);
+}

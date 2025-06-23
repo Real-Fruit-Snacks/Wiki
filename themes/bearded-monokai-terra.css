@@ -1,0 +1,156 @@
+/* Bearded Monokai Terra Theme Variables */
+:root[data-theme="bearded-monokai-terra"] {
+    /* Background Colors */
+    --bg-primary: #232320;
+    --bg-secondary: #2b2b27;
+    --bg-sidebar: #1f1f1c;
+    --bg-code: #2b2b27;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #232320ee;
+    --bg-tooltip: #2b2b27;
+    --bg-input: #2b2b27;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #66cccc;
+    --text-code: #ff6188;
+    --text-inverse: #000000;
+    --button-text: #f2ecdc;
+    
+    /* Text Colors */
+    --text-primary: #f2ecdc;
+    --text-secondary: #e2dcc;
+    --text-muted: #a29c8c;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors */
+    --accent-primary: #66cccc;
+    --accent-secondary: #99cc99;
+    --accent-warning: #ffcc66;
+    --accent-error: #ff6188;
+    --accent-info: var(--accent-primary);
+    --accent-success: #99cc99;
+    
+    /* Border Colors */
+    --border-primary: #3a3a36;
+    --border-secondary: #31312d;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-error);
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(102, 204, 204, 0.1);
+    --bg-code-block: #2b2b27;
+}
+
+/* Syntax Highlighting - Bearded Monokai Terra Theme */
+:root[data-theme="bearded-monokai-terra"] .token.comment,
+:root[data-theme="bearded-monokai-terra"] .token.prolog,
+:root[data-theme="bearded-monokai-terra"] .token.doctype,
+:root[data-theme="bearded-monokai-terra"] .token.cdata {
+    color: #6d6d6d;
+}
+
+:root[data-theme="bearded-monokai-terra"] .token.punctuation {
+    color: #cccccc;
+}
+
+:root[data-theme="bearded-monokai-terra"] .token.property,
+:root[data-theme="bearded-monokai-terra"] .token.tag,
+:root[data-theme="bearded-monokai-terra"] .token.boolean,
+:root[data-theme="bearded-monokai-terra"] .token.number,
+:root[data-theme="bearded-monokai-terra"] .token.constant,
+:root[data-theme="bearded-monokai-terra"] .token.symbol,
+:root[data-theme="bearded-monokai-terra"] .token.deleted {
+    color: #cc99cc;
+}
+
+:root[data-theme="bearded-monokai-terra"] .token.selector,
+:root[data-theme="bearded-monokai-terra"] .token.attr-name,
+:root[data-theme="bearded-monokai-terra"] .token.string,
+:root[data-theme="bearded-monokai-terra"] .token.char,
+:root[data-theme="bearded-monokai-terra"] .token.builtin,
+:root[data-theme="bearded-monokai-terra"] .token.inserted {
+    color: #99cc99;
+}
+
+:root[data-theme="bearded-monokai-terra"] .token.operator,
+:root[data-theme="bearded-monokai-terra"] .token.entity,
+:root[data-theme="bearded-monokai-terra"] .token.url,
+:root[data-theme="bearded-monokai-terra"] .language-css .token.string,
+:root[data-theme="bearded-monokai-terra"] .style .token.string {
+    color: #ff9966;
+    background: transparent;
+}
+
+:root[data-theme="bearded-monokai-terra"] .token.atrule,
+:root[data-theme="bearded-monokai-terra"] .token.attr-value,
+:root[data-theme="bearded-monokai-terra"] .token.keyword {
+    color: #ff6188;
+}
+
+:root[data-theme="bearded-monokai-terra"] .token.function,
+:root[data-theme="bearded-monokai-terra"] .token.class-name {
+    color: #66cccc;
+}
+
+:root[data-theme="bearded-monokai-terra"] .token.regex,
+:root[data-theme="bearded-monokai-terra"] .token.important,
+:root[data-theme="bearded-monokai-terra"] .token.variable {
+    color: #ffcc66;
+}
+
+/* Scrollbar Bearded Monokai Terra Theme */
+:root[data-theme="bearded-monokai-terra"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-monokai-terra"] ::-webkit-scrollbar-thumb {
+    background: #3a3a36;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-monokai-terra"] ::-webkit-scrollbar-thumb:hover {
+    background: #66cccc;
+}
+
+/* Firefox Scrollbar Bearded Monokai Terra Theme */
+:root[data-theme="bearded-monokai-terra"] * {
+    scrollbar-color: #3a3a36 var(--bg-primary);
+}
+
+/* Terra earth-tone effects */
+:root[data-theme="bearded-monokai-terra"] .note-header {
+    background: linear-gradient(180deg, transparent 0%, rgba(153, 204, 153, 0.05) 100%);
+}
+
+:root[data-theme="bearded-monokai-terra"] .tab.active {
+    background: var(--bg-secondary);
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+:root[data-theme="bearded-monokai-terra"] .code-block-header {
+    background: linear-gradient(90deg, rgba(102, 204, 204, 0.1) 0%, transparent 100%);
+}
+
+/* Terracotta pattern overlay */
+:root[data-theme="bearded-monokai-terra"] .content-view {
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(153, 204, 153, 0.02) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 204, 102, 0.02) 0%, transparent 50%);
+}

@@ -1,0 +1,149 @@
+/* Bearded Arc Eggplant Theme Variables */
+:root[data-theme="bearded-arc-eggplant"] {
+    /* Background Colors */
+    --bg-primary: #1d1328;
+    --bg-secondary: #261933;
+    --bg-sidebar: #201528;
+    --bg-code: #261933;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #1d1328ee;
+    --bg-tooltip: #261933;
+    --bg-input: #261933;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #d89ff7;
+    --text-code: #ff80b0;
+    --text-inverse: #000000;
+    --button-text: #f0e5ff;
+    
+    /* Text Colors */
+    --text-primary: #f0e5ff;
+    --text-secondary: #e0d0f5;
+    --text-muted: #b099c7;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors */
+    --accent-primary: #d89ff7;
+    --accent-secondary: #e5b9ff;
+    --accent-warning: #ffcc80;
+    --accent-error: #ff80b0;
+    --accent-info: var(--accent-primary);
+    --accent-success: #80ff9e;
+    
+    /* Border Colors */
+    --border-primary: #3a2848;
+    --border-secondary: #301e3e;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-error);
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(216, 159, 247, 0.1);
+    --bg-code-block: #261933;
+}
+
+/* Syntax Highlighting - Bearded Arc Eggplant Theme */
+:root[data-theme="bearded-arc-eggplant"] .token.comment,
+:root[data-theme="bearded-arc-eggplant"] .token.prolog,
+:root[data-theme="bearded-arc-eggplant"] .token.doctype,
+:root[data-theme="bearded-arc-eggplant"] .token.cdata {
+    color: #6b5583;
+}
+
+:root[data-theme="bearded-arc-eggplant"] .token.punctuation {
+    color: #e0d0f5;
+}
+
+:root[data-theme="bearded-arc-eggplant"] .token.property,
+:root[data-theme="bearded-arc-eggplant"] .token.tag,
+:root[data-theme="bearded-arc-eggplant"] .token.boolean,
+:root[data-theme="bearded-arc-eggplant"] .token.number,
+:root[data-theme="bearded-arc-eggplant"] .token.constant,
+:root[data-theme="bearded-arc-eggplant"] .token.symbol,
+:root[data-theme="bearded-arc-eggplant"] .token.deleted {
+    color: #ffcc80;
+}
+
+:root[data-theme="bearded-arc-eggplant"] .token.selector,
+:root[data-theme="bearded-arc-eggplant"] .token.attr-name,
+:root[data-theme="bearded-arc-eggplant"] .token.string,
+:root[data-theme="bearded-arc-eggplant"] .token.char,
+:root[data-theme="bearded-arc-eggplant"] .token.builtin,
+:root[data-theme="bearded-arc-eggplant"] .token.inserted {
+    color: #80ff9e;
+}
+
+:root[data-theme="bearded-arc-eggplant"] .token.operator,
+:root[data-theme="bearded-arc-eggplant"] .token.entity,
+:root[data-theme="bearded-arc-eggplant"] .token.url,
+:root[data-theme="bearded-arc-eggplant"] .language-css .token.string,
+:root[data-theme="bearded-arc-eggplant"] .style .token.string {
+    color: #d89ff7;
+    background: transparent;
+}
+
+:root[data-theme="bearded-arc-eggplant"] .token.atrule,
+:root[data-theme="bearded-arc-eggplant"] .token.attr-value,
+:root[data-theme="bearded-arc-eggplant"] .token.keyword {
+    color: #c080ff;
+}
+
+:root[data-theme="bearded-arc-eggplant"] .token.function,
+:root[data-theme="bearded-arc-eggplant"] .token.class-name {
+    color: #ff80b0;
+}
+
+:root[data-theme="bearded-arc-eggplant"] .token.regex,
+:root[data-theme="bearded-arc-eggplant"] .token.important,
+:root[data-theme="bearded-arc-eggplant"] .token.variable {
+    color: #ffcc80;
+}
+
+/* Scrollbar Bearded Arc Eggplant Theme */
+:root[data-theme="bearded-arc-eggplant"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-arc-eggplant"] ::-webkit-scrollbar-thumb {
+    background: #3a2848;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-arc-eggplant"] ::-webkit-scrollbar-thumb:hover {
+    background: #d89ff7;
+}
+
+/* Firefox Scrollbar Bearded Arc Eggplant Theme */
+:root[data-theme="bearded-arc-eggplant"] * {
+    scrollbar-color: #3a2848 var(--bg-primary);
+}
+
+/* Eggplant-style decorative effects */
+:root[data-theme="bearded-arc-eggplant"] .note-header {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(216, 159, 247, 0.08) 100%);
+}
+
+:root[data-theme="bearded-arc-eggplant"] .tab.active {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+    box-shadow: inset 0 -2px 0 var(--accent-primary);
+}
+
+:root[data-theme="bearded-arc-eggplant"] .code-block-header {
+    background: linear-gradient(90deg, rgba(216, 159, 247, 0.15) 0%, transparent 100%);
+}

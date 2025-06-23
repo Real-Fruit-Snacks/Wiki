@@ -157,6 +157,29 @@ class NotesWiki {
                     { id: 'hotdog-stand', name: 'Hot Dog Stand', description: 'Windows 3.1 retro theme with pixel cursors' },
                     { id: 'panda', name: 'Panda', description: 'High contrast theme with distinctive green accents' }
                 ]
+            },
+            {
+                name: 'Bearded Collection',
+                themes: [
+                    { id: 'bearded-arc', name: 'Arc', description: 'Sophisticated dark theme with smooth gradients and blue accents' },
+                    { id: 'bearded-arc-blueberry', name: 'Arc Blueberry', description: 'Deep blue variant with blueberry tones and elegant styling' },
+                    { id: 'bearded-arc-eggplant', name: 'Arc Eggplant', description: 'Rich purple variant with eggplant hues and warm accents' },
+                    { id: 'bearded-black-amethyst', name: 'Black & Amethyst', description: 'Pure black with vibrant amethyst purple accents' },
+                    { id: 'bearded-black-emerald', name: 'Black & Emerald', description: 'Pure black with brilliant emerald green accents' },
+                    { id: 'bearded-black-ruby', name: 'Black & Ruby', description: 'Pure black with striking ruby red accents' },
+                    { id: 'bearded-coffee', name: 'Coffee', description: 'Warm brown theme with coffee-inspired earth tones' },
+                    { id: 'bearded-coffee-reversed', name: 'Coffee Reversed', description: 'Light coffee theme with vintage paper aesthetics' },
+                    { id: 'bearded-earth', name: 'Earth', description: 'Natural earth tones with organic green accents' },
+                    { id: 'bearded-milkshake-raspberry', name: 'Milkshake Raspberry', description: 'Creamy dark theme with sweet raspberry pink accents' },
+                    { id: 'bearded-milkshake-mint', name: 'Milkshake Mint', description: 'Fresh dark theme with cool mint green accents' },
+                    { id: 'bearded-monokai-stone', name: 'Monokai Stone', description: 'Classic Monokai with stone gray backgrounds' },
+                    { id: 'bearded-monokai-terra', name: 'Monokai Terra', description: 'Monokai variant with terracotta earth tones' },
+                    { id: 'bearded-oceanic', name: 'Oceanic', description: 'Deep ocean blues with aquatic color palette' },
+                    { id: 'bearded-vivid-black', name: 'Vivid Black', description: 'High contrast black with vivid neon accents' },
+                    { id: 'bearded-vivid-purple', name: 'Vivid Purple', description: 'Deep purple with intense neon highlights' },
+                    { id: 'bearded-oled', name: 'OLED', description: 'Pure black optimized for OLED displays' },
+                    { id: 'bearded-void', name: 'Void', description: 'Minimal dark theme with subtle accent colors' }
+                ]
             }
         ];
         
@@ -5631,6 +5654,133 @@ class NotesWiki {
                 accent: '#ff9900',
                 text: '#ff9900',
                 textMuted: '#cc7700'
+            },
+            // Bearded Collection
+            'bearded-arc': {
+                bg: '#1e2128',
+                border: '#2a2e39',
+                accent: '#73ade9',
+                text: '#bac2cf',
+                textMuted: '#6b717d'
+            },
+            'bearded-arc-blueberry': {
+                bg: '#1a1e2e',
+                border: '#252b42',
+                accent: '#5e7ce2',
+                text: '#b8c0d4',
+                textMuted: '#616b87'
+            },
+            'bearded-arc-eggplant': {
+                bg: '#261f2d',
+                border: '#362943',
+                accent: '#b77fc8',
+                text: '#c5b8cf',
+                textMuted: '#8b7d94'
+            },
+            'bearded-black-amethyst': {
+                bg: '#000000',
+                border: '#1a1a1a',
+                accent: '#c678dd',
+                text: '#abb2bf',
+                textMuted: '#5c6370'
+            },
+            'bearded-black-emerald': {
+                bg: '#000000',
+                border: '#1a1a1a',
+                accent: '#50fa7b',
+                text: '#f8f8f2',
+                textMuted: '#6272a4'
+            },
+            'bearded-black-ruby': {
+                bg: '#000000',
+                border: '#1a1a1a',
+                accent: '#ff5555',
+                text: '#f8f8f2',
+                textMuted: '#6272a4'
+            },
+            'bearded-coffee': {
+                bg: '#2a211c',
+                border: '#3e312a',
+                accent: '#d19a66',
+                text: '#c8b3a0',
+                textMuted: '#8b7260'
+            },
+            'bearded-coffee-reversed': {
+                bg: '#f4e9df',
+                border: '#e8ddd2',
+                accent: '#a0522d',
+                text: '#5c4033',
+                textMuted: '#8b7355'
+            },
+            'bearded-earth': {
+                bg: '#1e1e1e',
+                border: '#2d2d2d',
+                accent: '#87c38a',
+                text: '#d4d4d4',
+                textMuted: '#858585'
+            },
+            'bearded-milkshake-raspberry': {
+                bg: '#1f1d27',
+                border: '#2e2b37',
+                accent: '#ff6b9d',
+                text: '#e4dcec',
+                textMuted: '#9a92a8'
+            },
+            'bearded-milkshake-mint': {
+                bg: '#1d2426',
+                border: '#293437',
+                accent: '#66d9b8',
+                text: '#d9e5e8',
+                textMuted: '#8b9ea4'
+            },
+            'bearded-monokai-stone': {
+                bg: '#2d2a2e',
+                border: '#3e3b3f',
+                accent: '#66d9ef',
+                text: '#fcfcfa',
+                textMuted: '#939293'
+            },
+            'bearded-monokai-terra': {
+                bg: '#2c2416',
+                border: '#3d3224',
+                accent: '#fd971f',
+                text: '#f8f8f2',
+                textMuted: '#8b7c5c'
+            },
+            'bearded-oceanic': {
+                bg: '#1b2b34',
+                border: '#243e4a',
+                accent: '#5fb3b3',
+                text: '#cdd3de',
+                textMuted: '#65737e'
+            },
+            'bearded-vivid-black': {
+                bg: '#000000',
+                border: '#222222',
+                accent: '#00ffff',
+                text: '#ffffff',
+                textMuted: '#aaaaaa'
+            },
+            'bearded-vivid-purple': {
+                bg: '#120b1e',
+                border: '#231a35',
+                accent: '#bb60ff',
+                text: '#e0d5ff',
+                textMuted: '#9b8db3'
+            },
+            'bearded-oled': {
+                bg: '#000000',
+                border: '#111111',
+                accent: '#0099ff',
+                text: '#e0e0e0',
+                textMuted: '#808080'
+            },
+            'bearded-void': {
+                bg: '#0e0e0e',
+                border: '#1e1e1e',
+                accent: '#7aa2f7',
+                text: '#c0caf5',
+                textMuted: '#565f89'
             }
         };
         
@@ -6157,6 +6307,133 @@ class NotesWiki {
                 string: '#ffaa00',
                 comment: '#995500',
                 number: '#ffbb00'
+            },
+            // Bearded Collection
+            'bearded-arc': {
+                keyword: '#ff8ab7',
+                function: '#73ade9',
+                string: '#98c379',
+                comment: '#6b717d',
+                number: '#d19a66'
+            },
+            'bearded-arc-blueberry': {
+                keyword: '#a78cfa',
+                function: '#5e7ce2',
+                string: '#7fd962',
+                comment: '#616b87',
+                number: '#ff8360'
+            },
+            'bearded-arc-eggplant': {
+                keyword: '#ff79c6',
+                function: '#b77fc8',
+                string: '#e7de79',
+                comment: '#8b7d94',
+                number: '#bd93f9'
+            },
+            'bearded-black-amethyst': {
+                keyword: '#c678dd',
+                function: '#61afef',
+                string: '#98c379',
+                comment: '#5c6370',
+                number: '#d19a66'
+            },
+            'bearded-black-emerald': {
+                keyword: '#ff79c6',
+                function: '#50fa7b',
+                string: '#f1fa8c',
+                comment: '#6272a4',
+                number: '#bd93f9'
+            },
+            'bearded-black-ruby': {
+                keyword: '#ff5555',
+                function: '#ff79c6',
+                string: '#f1fa8c',
+                comment: '#6272a4',
+                number: '#bd93f9'
+            },
+            'bearded-coffee': {
+                keyword: '#e06c75',
+                function: '#d19a66',
+                string: '#98c379',
+                comment: '#8b7260',
+                number: '#e5c07b'
+            },
+            'bearded-coffee-reversed': {
+                keyword: '#d2691e',
+                function: '#a0522d',
+                string: '#228b22',
+                comment: '#8b7355',
+                number: '#cd853f'
+            },
+            'bearded-earth': {
+                keyword: '#c586c0',
+                function: '#dcdcaa',
+                string: '#87c38a',
+                comment: '#858585',
+                number: '#b5cea8'
+            },
+            'bearded-milkshake-raspberry': {
+                keyword: '#ff6b9d',
+                function: '#c9b1ff',
+                string: '#feca57',
+                comment: '#9a92a8',
+                number: '#ff9ff3'
+            },
+            'bearded-milkshake-mint': {
+                keyword: '#66d9b8',
+                function: '#82aaff',
+                string: '#ffcc66',
+                comment: '#8b9ea4',
+                number: '#ff6b9d'
+            },
+            'bearded-monokai-stone': {
+                keyword: '#f92672',
+                function: '#66d9ef',
+                string: '#e6db74',
+                comment: '#939293',
+                number: '#ae81ff'
+            },
+            'bearded-monokai-terra': {
+                keyword: '#f92672',
+                function: '#fd971f',
+                string: '#a6e22e',
+                comment: '#8b7c5c',
+                number: '#ae81ff'
+            },
+            'bearded-oceanic': {
+                keyword: '#c594c5',
+                function: '#5fb3b3',
+                string: '#99c794',
+                comment: '#65737e',
+                number: '#f99157'
+            },
+            'bearded-vivid-black': {
+                keyword: '#ff00ff',
+                function: '#00ffff',
+                string: '#00ff00',
+                comment: '#aaaaaa',
+                number: '#ffff00'
+            },
+            'bearded-vivid-purple': {
+                keyword: '#ff00ff',
+                function: '#bb60ff',
+                string: '#00ff88',
+                comment: '#9b8db3',
+                number: '#ff0080'
+            },
+            'bearded-oled': {
+                keyword: '#ff0099',
+                function: '#0099ff',
+                string: '#00ff99',
+                comment: '#808080',
+                number: '#ffcc00'
+            },
+            'bearded-void': {
+                keyword: '#bb9af7',
+                function: '#7aa2f7',
+                string: '#9ece6a',
+                comment: '#565f89',
+                number: '#ff9e64'
             }
         };
         
@@ -7385,6 +7662,428 @@ class NotesWiki {
                         background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.2) 100%);
                     "></div>
                 </div>
+            `,
+            // Bearded Collection
+            'bearded-arc': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 100%;
+                    background: linear-gradient(135deg, 
+                        transparent 30%, 
+                        rgba(115, 173, 233, 0.05) 50%, 
+                        transparent 70%
+                    );
+                    animation: shimmer 4s ease-in-out infinite;
+                    pointer-events: none;
+                "></div>
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 2px;
+                    background: linear-gradient(90deg, 
+                        transparent, 
+                        ${colors.accent}80, 
+                        transparent
+                    );
+                    animation: scan 3s linear infinite;
+                "></div>
+            `,
+            'bearded-arc-blueberry': `
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    width: 40px;
+                    height: 40px;
+                    background: radial-gradient(circle, 
+                        rgba(94, 124, 226, 0.3), 
+                        transparent 70%
+                    );
+                    filter: blur(10px);
+                    animation: pulse 3s ease-in-out infinite;
+                "></div>
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    left: 10px;
+                    font-size: 20px;
+                    opacity: 0.15;
+                    animation: float 4s ease-in-out infinite;
+                ">🫐</div>
+            `,
+            'bearded-arc-eggplant': `
+                <div style="
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 60px;
+                    height: 60px;
+                    background: radial-gradient(circle at 30% 30%, 
+                        rgba(183, 127, 200, 0.2), 
+                        transparent 70%
+                    );
+                    animation: breathe 4s ease-in-out infinite;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    font-size: 18px;
+                    opacity: 0.12;
+                    animation: sway 3s ease-in-out infinite;
+                ">🍆</div>
+            `,
+            'bearded-black-amethyst': `
+                <div style="
+                    position: absolute;
+                    inset: 0;
+                    background: radial-gradient(ellipse at top right, 
+                        rgba(198, 120, 221, 0.1), 
+                        transparent 50%
+                    );
+                    pointer-events: none;
+                "></div>
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    right: 10px;
+                    width: 30px;
+                    height: 30px;
+                    background: conic-gradient(
+                        from 0deg,
+                        transparent,
+                        rgba(198, 120, 221, 0.3),
+                        transparent
+                    );
+                    border-radius: 50%;
+                    animation: rotate 8s linear infinite;
+                "></div>
+            `,
+            'bearded-black-emerald': `
+                <div style="
+                    position: absolute;
+                    inset: 0;
+                    background: radial-gradient(ellipse at bottom left, 
+                        rgba(80, 250, 123, 0.08), 
+                        transparent 50%
+                    );
+                    pointer-events: none;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    font-size: 20px;
+                    opacity: 0.15;
+                    animation: sparkle 3s ease-in-out infinite;
+                ">💎</div>
+            `,
+            'bearded-black-ruby': `
+                <div style="
+                    position: absolute;
+                    inset: 0;
+                    background: radial-gradient(ellipse at center, 
+                        rgba(255, 85, 85, 0.05), 
+                        transparent 60%
+                    );
+                    pointer-events: none;
+                "></div>
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    font-size: 20px;
+                    opacity: 0.2;
+                    animation: glow 2s ease-in-out infinite;
+                ">💎</div>
+            `,
+            'bearded-coffee': `
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 40%;
+                    background: linear-gradient(180deg, 
+                        transparent, 
+                        rgba(209, 154, 102, 0.05)
+                    );
+                    pointer-events: none;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    font-size: 20px;
+                    opacity: 0.15;
+                    animation: steam 3s ease-in-out infinite;
+                ">☕</div>
+            `,
+            'bearded-coffee-reversed': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 100%;
+                    background: linear-gradient(180deg, 
+                        rgba(160, 82, 45, 0.03) 0%, 
+                        transparent 30%
+                    );
+                    pointer-events: none;
+                "></div>
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    left: 10px;
+                    width: 30px;
+                    height: 30px;
+                    background: radial-gradient(circle, 
+                        rgba(160, 82, 45, 0.2), 
+                        transparent
+                    );
+                    animation: pulse 3s ease-in-out infinite;
+                "></div>
+            `,
+            'bearded-earth': `
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 50px;
+                    background: linear-gradient(to top, 
+                        rgba(135, 195, 138, 0.1), 
+                        transparent
+                    );
+                    pointer-events: none;
+                "></div>
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    right: 10px;
+                    font-size: 24px;
+                    opacity: 0.15;
+                    animation: sway 4s ease-in-out infinite;
+                ">🌱</div>
+            `,
+            'bearded-milkshake-raspberry': `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 80px;
+                    height: 80px;
+                    background: radial-gradient(circle, 
+                        rgba(255, 107, 157, 0.15), 
+                        transparent
+                    );
+                    filter: blur(20px);
+                    animation: float 5s ease-in-out infinite;
+                "></div>
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    left: 10px;
+                    font-size: 18px;
+                    opacity: 0.2;
+                    animation: wiggle 2s ease-in-out infinite;
+                ">🍓</div>
+            `,
+            'bearded-milkshake-mint': `
+                <div style="
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 100px;
+                    height: 100px;
+                    background: radial-gradient(circle, 
+                        rgba(102, 217, 184, 0.1), 
+                        transparent 70%
+                    );
+                    animation: breathe 4s ease-in-out infinite;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    font-size: 16px;
+                    opacity: 0.15;
+                    animation: rotate 10s linear infinite;
+                ">🍃</div>
+            `,
+            'bearded-monokai-stone': `
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 3px;
+                    background: linear-gradient(90deg, 
+                        #f92672 0%, 
+                        #66d9ef 33%, 
+                        #a6e22e 66%, 
+                        #f92672 100%
+                    );
+                    opacity: 0.3;
+                    animation: slide 4s linear infinite;
+                "></div>
+            `,
+            'bearded-monokai-terra': `
+                <div style="
+                    position: absolute;
+                    inset: 0;
+                    background-image: repeating-linear-gradient(
+                        45deg,
+                        transparent,
+                        transparent 20px,
+                        rgba(253, 151, 31, 0.02) 20px,
+                        rgba(253, 151, 31, 0.02) 40px
+                    );
+                    pointer-events: none;
+                "></div>
+                <div style="
+                    position: absolute;
+                    bottom: 10px;
+                    right: 10px;
+                    font-size: 20px;
+                    opacity: 0.12;
+                    animation: float 3s ease-in-out infinite;
+                ">🏺</div>
+            `,
+            'bearded-oceanic': `
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 30px;
+                    overflow: hidden;
+                    pointer-events: none;
+                ">
+                    <div style="
+                        position: absolute;
+                        bottom: 0;
+                        left: -50%;
+                        width: 200%;
+                        height: 100%;
+                        background: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 20%22%3E%3Cpath d=%22M0,10 Q25,0 50,10 T100,10 L100,20 L0,20 Z%22 fill=%22%235fb3b3%22 opacity=%220.15%22/%3E%3C/svg%3E');
+                        background-size: 100px 20px;
+                        animation: waveMove 6s linear infinite;
+                    "></div>
+                </div>
+            `,
+            'bearded-vivid-black': `
+                <div style="
+                    position: absolute;
+                    inset: 0;
+                    pointer-events: none;
+                ">
+                    <div style="
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        height: 1px;
+                        background: linear-gradient(90deg, 
+                            transparent, 
+                            #00ffff, 
+                            transparent
+                        );
+                        animation: scan 2s linear infinite;
+                    "></div>
+                    <div style="
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        right: 0;
+                        height: 1px;
+                        background: linear-gradient(90deg, 
+                            transparent, 
+                            #ff00ff, 
+                            transparent
+                        );
+                        animation: scan 2s linear infinite;
+                        animation-delay: -1s;
+                    "></div>
+                </div>
+            `,
+            'bearded-vivid-purple': `
+                <div style="
+                    position: absolute;
+                    inset: 0;
+                    background: radial-gradient(ellipse at center, 
+                        rgba(187, 96, 255, 0.08), 
+                        transparent 60%
+                    );
+                    pointer-events: none;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 4px;
+                    height: 4px;
+                    background: #bb60ff;
+                    border-radius: 50%;
+                    box-shadow: 
+                        0 0 20px 10px rgba(187, 96, 255, 0.3),
+                        0 0 40px 20px rgba(187, 96, 255, 0.1);
+                    animation: pulse 3s ease-in-out infinite;
+                "></div>
+            `,
+            'bearded-oled': `
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    width: 8px;
+                    height: 8px;
+                    background: #0099ff;
+                    border-radius: 50%;
+                    opacity: 0.5;
+                    animation: blink 2s ease-in-out infinite;
+                "></div>
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 1px;
+                    background: #0099ff;
+                    opacity: 0.2;
+                "></div>
+            `,
+            'bearded-void': `
+                <div style="
+                    position: absolute;
+                    inset: 0;
+                    background: radial-gradient(circle at center, 
+                        transparent 30%, 
+                        rgba(122, 162, 247, 0.03) 100%
+                    );
+                    pointer-events: none;
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 60px;
+                    height: 60px;
+                    border: 1px solid rgba(122, 162, 247, 0.1);
+                    border-radius: 50%;
+                    animation: breathe 6s ease-in-out infinite;
+                "></div>
             `
         };
         
@@ -7424,7 +8123,26 @@ class NotesWiki {
                     'everforest-dark': `0 0 20px rgba(127, 187, 179, 0.3)`,
                     'rose-pine': `0 0 20px rgba(196, 167, 231, 0.4)`,
                     'hackthebox': `0 0 20px rgba(159, 239, 0, 0.4)`,
-                    '2077': `0 0 30px rgba(240, 229, 0, 0.4), 0 0 60px rgba(234, 0, 217, 0.2)`
+                    '2077': `0 0 30px rgba(240, 229, 0, 0.4), 0 0 60px rgba(234, 0, 217, 0.2)`,
+                    // Bearded Collection
+                    'bearded-arc': `0 0 25px rgba(115, 173, 233, 0.4)`,
+                    'bearded-arc-blueberry': `0 0 25px rgba(94, 124, 226, 0.4), 0 0 40px rgba(127, 217, 98, 0.2)`,
+                    'bearded-arc-eggplant': `0 0 25px rgba(183, 127, 200, 0.4), 0 0 40px rgba(231, 222, 121, 0.2)`,
+                    'bearded-black-amethyst': `0 0 30px rgba(198, 120, 221, 0.5)`,
+                    'bearded-black-emerald': `0 0 30px rgba(80, 250, 123, 0.5)`,
+                    'bearded-black-ruby': `0 0 30px rgba(255, 85, 85, 0.5)`,
+                    'bearded-coffee': `0 0 20px rgba(209, 154, 102, 0.4)`,
+                    'bearded-coffee-reversed': `0 0 20px rgba(160, 82, 45, 0.3)`,
+                    'bearded-earth': `0 0 20px rgba(135, 195, 138, 0.4)`,
+                    'bearded-milkshake-raspberry': `0 0 25px rgba(255, 107, 157, 0.4)`,
+                    'bearded-milkshake-mint': `0 0 25px rgba(102, 217, 184, 0.4)`,
+                    'bearded-monokai-stone': `0 0 25px rgba(102, 217, 239, 0.4)`,
+                    'bearded-monokai-terra': `0 0 25px rgba(253, 151, 31, 0.4)`,
+                    'bearded-oceanic': `0 0 20px rgba(95, 179, 179, 0.4)`,
+                    'bearded-vivid-black': `0 0 30px rgba(0, 255, 255, 0.5), 0 0 40px rgba(255, 0, 255, 0.3)`,
+                    'bearded-vivid-purple': `0 0 30px rgba(187, 96, 255, 0.5)`,
+                    'bearded-oled': `0 0 25px rgba(0, 153, 255, 0.5)`,
+                    'bearded-void': `0 0 20px rgba(122, 162, 247, 0.3)`
                 };
                 
                 card.style.boxShadow = hoverShadows[themeId] || `0 4px 12px ${colors.accent}30`;

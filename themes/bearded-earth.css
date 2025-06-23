@@ -1,0 +1,156 @@
+/* Bearded Earth Theme Variables */
+:root[data-theme="bearded-earth"] {
+    /* Background Colors */
+    --bg-primary: #1f1f1f;
+    --bg-secondary: #282828;
+    --bg-sidebar: #232323;
+    --bg-code: #282828;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #1f1f1fee;
+    --bg-tooltip: #282828;
+    --bg-input: #282828;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #83a598;
+    --text-code: #fb4934;
+    --text-inverse: #000000;
+    --button-text: #ebdbb2;
+    
+    /* Text Colors */
+    --text-primary: #ebdbb2;
+    --text-secondary: #d5c4a1;
+    --text-muted: #a89984;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors */
+    --accent-primary: #83a598;
+    --accent-secondary: #8ec07c;
+    --accent-warning: #fabd2f;
+    --accent-error: #fb4934;
+    --accent-info: var(--accent-primary);
+    --accent-success: #b8bb26;
+    
+    /* Border Colors */
+    --border-primary: #3c3836;
+    --border-secondary: #32302f;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-error);
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(131, 165, 152, 0.1);
+    --bg-code-block: #282828;
+}
+
+/* Syntax Highlighting - Bearded Earth Theme */
+:root[data-theme="bearded-earth"] .token.comment,
+:root[data-theme="bearded-earth"] .token.prolog,
+:root[data-theme="bearded-earth"] .token.doctype,
+:root[data-theme="bearded-earth"] .token.cdata {
+    color: #928374;
+}
+
+:root[data-theme="bearded-earth"] .token.punctuation {
+    color: #a89984;
+}
+
+:root[data-theme="bearded-earth"] .token.property,
+:root[data-theme="bearded-earth"] .token.tag,
+:root[data-theme="bearded-earth"] .token.boolean,
+:root[data-theme="bearded-earth"] .token.number,
+:root[data-theme="bearded-earth"] .token.constant,
+:root[data-theme="bearded-earth"] .token.symbol,
+:root[data-theme="bearded-earth"] .token.deleted {
+    color: #d3869b;
+}
+
+:root[data-theme="bearded-earth"] .token.selector,
+:root[data-theme="bearded-earth"] .token.attr-name,
+:root[data-theme="bearded-earth"] .token.string,
+:root[data-theme="bearded-earth"] .token.char,
+:root[data-theme="bearded-earth"] .token.builtin,
+:root[data-theme="bearded-earth"] .token.inserted {
+    color: #b8bb26;
+}
+
+:root[data-theme="bearded-earth"] .token.operator,
+:root[data-theme="bearded-earth"] .token.entity,
+:root[data-theme="bearded-earth"] .token.url,
+:root[data-theme="bearded-earth"] .language-css .token.string,
+:root[data-theme="bearded-earth"] .style .token.string {
+    color: #83a598;
+    background: transparent;
+}
+
+:root[data-theme="bearded-earth"] .token.atrule,
+:root[data-theme="bearded-earth"] .token.attr-value,
+:root[data-theme="bearded-earth"] .token.keyword {
+    color: #fb4934;
+}
+
+:root[data-theme="bearded-earth"] .token.function,
+:root[data-theme="bearded-earth"] .token.class-name {
+    color: #8ec07c;
+}
+
+:root[data-theme="bearded-earth"] .token.regex,
+:root[data-theme="bearded-earth"] .token.important,
+:root[data-theme="bearded-earth"] .token.variable {
+    color: #fabd2f;
+}
+
+/* Scrollbar Bearded Earth Theme */
+:root[data-theme="bearded-earth"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-earth"] ::-webkit-scrollbar-thumb {
+    background: #3c3836;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-earth"] ::-webkit-scrollbar-thumb:hover {
+    background: #83a598;
+}
+
+/* Firefox Scrollbar Bearded Earth Theme */
+:root[data-theme="bearded-earth"] * {
+    scrollbar-color: #3c3836 var(--bg-primary);
+}
+
+/* Earth-style natural effects */
+:root[data-theme="bearded-earth"] .note-header {
+    background: linear-gradient(180deg, transparent 0%, rgba(131, 165, 152, 0.05) 100%);
+}
+
+:root[data-theme="bearded-earth"] .tab.active {
+    background: var(--bg-secondary);
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+:root[data-theme="bearded-earth"] .code-block-header {
+    background: linear-gradient(90deg, rgba(131, 165, 152, 0.1) 0%, transparent 100%);
+}
+
+/* Organic texture overlay */
+:root[data-theme="bearded-earth"] .sidebar {
+    background-image: 
+        repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(131, 165, 152, 0.02) 35px, rgba(131, 165, 152, 0.02) 70px),
+        var(--bg-sidebar);
+}

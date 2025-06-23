@@ -1,0 +1,154 @@
+/* Bearded Oceanic Theme Variables */
+:root[data-theme="bearded-oceanic"] {
+    /* Background Colors */
+    --bg-primary: #1b2b34;
+    --bg-secondary: #243640;
+    --bg-sidebar: #1e2e37;
+    --bg-code: #243640;
+    --bg-selection: var(--accent-primary)33;
+    --bg-dropdown: var(--bg-secondary);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-tag: var(--bg-secondary);
+    
+    /* Additional Background Colors */
+    --bg-modal: #1b2b34ee;
+    --bg-tooltip: #243640;
+    --bg-input: #243640;
+    --bg-highlight: var(--accent-primary)33;
+    --text-link: #6699cc;
+    --text-code: #ec5f67;
+    --text-inverse: #000000;
+    --button-text: #d8dee9;
+    
+    /* Text Colors */
+    --text-primary: #d8dee9;
+    --text-secondary: #c0c5ce;
+    --text-muted: #a7adba;
+    --text-heading: var(--text-primary);
+    
+    /* Accent Colors */
+    --accent-primary: #6699cc;
+    --accent-secondary: #62b3b2;
+    --accent-warning: #fac863;
+    --accent-error: #ec5f67;
+    --accent-info: var(--accent-primary);
+    --accent-success: #99c794;
+    
+    /* Border Colors */
+    --border-primary: #343f4c;
+    --border-secondary: #2d3844;
+    
+    /* Button Colors */
+    --button-bg: var(--bg-secondary);
+    --button-hover: var(--bg-hover);
+    --button-active: var(--accent-primary);
+    
+    /* Badge Colors */
+    --badge-bg: var(--accent-error);
+    --badge-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+    --shadow-xl: var(--shadow-lg);
+    
+    /* Other */
+    --accent-color-alpha: rgba(102, 153, 204, 0.1);
+    --bg-code-block: #243640;
+}
+
+/* Syntax Highlighting - Bearded Oceanic Theme */
+:root[data-theme="bearded-oceanic"] .token.comment,
+:root[data-theme="bearded-oceanic"] .token.prolog,
+:root[data-theme="bearded-oceanic"] .token.doctype,
+:root[data-theme="bearded-oceanic"] .token.cdata {
+    color: #65737e;
+}
+
+:root[data-theme="bearded-oceanic"] .token.punctuation {
+    color: #c0c5ce;
+}
+
+:root[data-theme="bearded-oceanic"] .token.property,
+:root[data-theme="bearded-oceanic"] .token.tag,
+:root[data-theme="bearded-oceanic"] .token.boolean,
+:root[data-theme="bearded-oceanic"] .token.number,
+:root[data-theme="bearded-oceanic"] .token.constant,
+:root[data-theme="bearded-oceanic"] .token.symbol,
+:root[data-theme="bearded-oceanic"] .token.deleted {
+    color: #f99157;
+}
+
+:root[data-theme="bearded-oceanic"] .token.selector,
+:root[data-theme="bearded-oceanic"] .token.attr-name,
+:root[data-theme="bearded-oceanic"] .token.string,
+:root[data-theme="bearded-oceanic"] .token.char,
+:root[data-theme="bearded-oceanic"] .token.builtin,
+:root[data-theme="bearded-oceanic"] .token.inserted {
+    color: #99c794;
+}
+
+:root[data-theme="bearded-oceanic"] .token.operator,
+:root[data-theme="bearded-oceanic"] .token.entity,
+:root[data-theme="bearded-oceanic"] .token.url,
+:root[data-theme="bearded-oceanic"] .language-css .token.string,
+:root[data-theme="bearded-oceanic"] .style .token.string {
+    color: #5fb3b3;
+    background: transparent;
+}
+
+:root[data-theme="bearded-oceanic"] .token.atrule,
+:root[data-theme="bearded-oceanic"] .token.attr-value,
+:root[data-theme="bearded-oceanic"] .token.keyword {
+    color: #c594c5;
+}
+
+:root[data-theme="bearded-oceanic"] .token.function,
+:root[data-theme="bearded-oceanic"] .token.class-name {
+    color: #6699cc;
+}
+
+:root[data-theme="bearded-oceanic"] .token.regex,
+:root[data-theme="bearded-oceanic"] .token.important,
+:root[data-theme="bearded-oceanic"] .token.variable {
+    color: #fac863;
+}
+
+/* Scrollbar Bearded Oceanic Theme */
+:root[data-theme="bearded-oceanic"] ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+:root[data-theme="bearded-oceanic"] ::-webkit-scrollbar-thumb {
+    background: #343f4c;
+    border: 3px solid var(--bg-primary);
+}
+
+:root[data-theme="bearded-oceanic"] ::-webkit-scrollbar-thumb:hover {
+    background: #6699cc;
+}
+
+/* Firefox Scrollbar Bearded Oceanic Theme */
+:root[data-theme="bearded-oceanic"] * {
+    scrollbar-color: #343f4c var(--bg-primary);
+}
+
+/* Ocean wave effects */
+:root[data-theme="bearded-oceanic"] .note-header {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(102, 153, 204, 0.08) 100%);
+}
+
+:root[data-theme="bearded-oceanic"] .tab.active {
+    background: var(--bg-secondary);
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+:root[data-theme="bearded-oceanic"] .code-block-header {
+    background: linear-gradient(90deg, rgba(95, 179, 179, 0.1) 0%, transparent 100%);
+}
+
+/* Ocean depth gradient */
+:root[data-theme="bearded-oceanic"] .sidebar {
+    background: linear-gradient(180deg, var(--bg-sidebar) 0%, rgba(27, 43, 52, 0.95) 100%);
+}
