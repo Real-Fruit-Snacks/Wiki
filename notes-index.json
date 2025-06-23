@@ -351,6 +351,231 @@
       "code_blocks_count": 8
     },
     {
+      "path": "/notes/tutorials/features/pinned-tabs.md",
+      "context": "tutorials",
+      "metadata": {
+        "title": "Pinned Tabs",
+        "tags": [
+          "tabs",
+          "navigation",
+          "productivity"
+        ],
+        "created": "2025-01-23",
+        "author": "NotesWiki Team",
+        "description": "Learn how to use pinned tabs to keep important notes always accessible",
+        "updated": "2025-01-23",
+        "category": null,
+        "status": null,
+        "aliases": [],
+        "related": [],
+        "dependencies": [],
+        "keywords": [],
+        "tableOfContents": "auto",
+        "hideFromSearch": false
+      },
+      "content_preview": "Pinned tabs are a powerful feature that allows you to keep important notes always accessible and protected from accidental closure. When you pin a tab, it remains open and its content cannot be change...",
+      "searchable_content": "\nPinned Tabs\n\nPinned tabs are a powerful feature that allows you to keep important notes always accessible and protected from accidental closure. When you pin a tab, it remains open and its content cannot be changed, making it perfect for reference materials, frequently accessed notes, or important documentation.\n\nWhat are Pinned Tabs?\n\nPinned tabs are special tabs that:\n- Cannot be closed accidentally - Protected from closure via close button, keyboard shortcuts, or bulk close operations\n- Cannot have their content changed - The note loaded in a pinned tab stays locked\n- Cannot be dragged - Pinned tabs stay in their position\n- Persist across sessions - Pinned tabs remain pinned when you reload the application\n- Have visual indicators - Shows a pin icon and hides the close button\n\nHow to Pin a Tab\n\nThere are two ways to pin a tab:\n\n1. Using the Context Menu\n1. Right-click on any tab\n2. Select \"Pin Tab\" from the context menu\n3. The tab will now show a pin icon (\ud83d\udccc) instead of a close button\n\n2. Using Keyboard Shortcut\n- Press Alt + P while the tab is active\n- The tab will be instantly pinned\n\nHow to Unpin a Tab\n\nTo unpin a tab and return it to normal:\n\n1. Using the Context Menu\n1. Right-click on the pinned tab\n2. Select \"Unpin Tab\" from the context menu\n3. The close button will reappear\n\n2. Using Keyboard Shortcut\n- Press Alt + P while the pinned tab is active\n- The tab will be unpinned\n\nPinned Tab Protection\n\nPinned tabs are protected in several ways:\n\n1. Close Protection\n- Individual close - Clicking close button or middle-click shows a warning\n- Close All Tabs - Pinned tabs remain open\n- Close Other Tabs - Pinned tabs are not affected\n- Keyboard shortcuts - Protected from Ctrl+W or similar shortcuts\n\n2. Content Protection\n- Navigation blocked - Clicking links in the sidebar won't change pinned tab content\n- Search results - Opening search results won't affect pinned tabs\n- URL navigation - Direct URL changes are blocked for pinned tabs\n- Split view - Pinned split view tabs maintain their content\n\n3. Visual Protection\n- No close button - Prevents accidental clicks\n- Pin icon - Clear visual indicator\n- Drag disabled - Cannot be accidentally moved\n\nUse Cases for Pinned Tabs\n\n1. Reference Documentation\nPin important reference materials that you need to consult frequently:\n- API documentation\n- Style guides\n- Configuration references\n- Cheat sheets\n\n2. Task Lists\nKeep your daily todo list or project tasks always visible:\n- Daily agenda\n- Project milestones\n- Sprint backlogs\n- Meeting notes\n\n3. Quick Access Notes\nPin frequently accessed notes for instant access:\n- Contact lists\n- Important links\n- Credentials (if stored securely)\n- Template documents\n\n4. Split View Reference\nUse pinned tabs in split view for side-by-side reference:\n- Pin documentation on one side\n- Work on implementation on the other\n- Compare versions or translations\n- Review guidelines while writing\n\nBest Practices\n\n1. Pin sparingly - Only pin tabs you truly need to keep open\n2. Use descriptive titles - Make sure pinned tabs have clear, identifiable titles\n3. Organize pinned tabs - Keep pinned tabs grouped at the beginning\n4. Review regularly - Unpin tabs that are no longer needed\n5. Combine with split view - Pin reference material in split view for maximum productivity\n\nKeyboard Shortcuts Summary\n\n| Action | Shortcut |\n|--------|----------|\n| Pin/Unpin Tab | Alt + P |\n| Switch Between Tabs | Alt + 1-9 |\n| Navigate Tabs | Alt + PageUp/PageDown |\n\nTips and Tricks\n\n- Quick Reference: Pin your most important documentation or notes for instant access\n- Protected Workspace: Pin tabs containing work-in-progress to prevent accidental closure\n- Session Persistence: Pinned tabs survive browser refreshes and application restarts\n- Visual Organization: Pinned tabs always appear first, making them easy to locate\n- Split View Power: Combine pinned tabs with split view for a powerful reference setup\n\nRelated Features\n\n- [[Tab Management]] - Learn about all tab features\n- [[Split View]] - Use pinned tabs with split view\n- [[Keyboard Shortcuts]] - Master all keyboard shortcuts\n- [[Session Management|Session Persistence]] - Understand how tabs are saved\n\nTroubleshooting\n\nQ: I can't close a pinned tab\nA: That's by design! Unpin the tab first using Alt+P or the context menu.\n\nQ: My pinned tab content changed\nA: This shouldn't happen. If it does, please report it as a bug.\n\nQ: Can I pin the split view tab?\nA: Yes! This keeps your split view layout protected from accidental closure.\n\nQ: How many tabs can I pin?\nA: There's no limit, but for usability, we recommend pinning only essential tabs.",
+      "code_blocks_count": 0
+    },
+    {
+      "path": "/notes/tutorials/features/drag-and-drop.md",
+      "context": "tutorials",
+      "metadata": {
+        "title": "Drag and Drop",
+        "tags": [
+          "navigation",
+          "tabs",
+          "productivity",
+          "ui"
+        ],
+        "created": "2025-01-23",
+        "author": "NotesWiki Team",
+        "description": "Master drag and drop functionality for efficient tab and note management",
+        "updated": "2025-01-23",
+        "category": null,
+        "status": null,
+        "aliases": [],
+        "related": [],
+        "dependencies": [],
+        "keywords": [],
+        "tableOfContents": "auto",
+        "hideFromSearch": false
+      },
+      "content_preview": "NotesWiki includes intuitive drag and drop functionality that makes organizing your workspace effortless. You can reorder tabs, open notes in specific locations, and manage your workspace with simple ...",
+      "searchable_content": "\nDrag and Drop\n\nNotesWiki includes intuitive drag and drop functionality that makes organizing your workspace effortless. You can reorder tabs, open notes in specific locations, and manage your workspace with simple mouse gestures.\n\nTab Reordering\n\nThe most common use of drag and drop is reordering your tabs to organize your workspace.\n\nHow to Reorder Tabs\n\n1. Click and hold on any tab (except pinned tabs)\n2. Drag the tab left or right to your desired position\n3. Look for the visual indicator - a blue line shows where the tab will be placed\n4. Release the mouse button to drop the tab in its new position\n\nVisual Feedback\n\nWhen dragging tabs, you'll see:\n- Dragging state - The tab being dragged becomes slightly transparent\n- Drop indicator - A blue vertical line shows exactly where the tab will be placed\n- Hover effects - Other tabs respond as you drag over them\n\nTab Reordering Rules\n\n- Regular tabs can be freely reordered\n- Pinned tabs cannot be dragged (they stay in place)\n- Tabs maintain their state when reordered (content, scroll position, etc.)\n- Changes persist across sessions\n\nDrag and Drop from File Tree\n\nWhen split view is enabled, you can drag notes from the file tree directly into split panes.\n\nHow to Use Split View Drag and Drop\n\n1. Enable split view using the split view button or Ctrl + /\n2. Locate a note in the file tree\n3. Drag the note from the file tree\n4. Drop it onto either the left or right pane\n5. The note will open in that specific pane\n\nSplit View Rules\n\n- Only works when split view is active\n- Cannot drop onto pinned panes\n- Visual indicators show which pane will receive the note\n- Maintains existing pane content until drop is completed\n\nBest Practices\n\n1. Organize by Workflow\n- Keep related tabs together\n- Place frequently accessed tabs at the beginning\n- Group tabs by project or context\n\n2. Use with Pinned Tabs\n- Pin important tabs first\n- Organize regular tabs around pinned ones\n- Pinned tabs serve as anchors for your layout\n\n3. Combine with Keyboard Shortcuts\n- Use Alt + 1-9 to quickly jump to reordered tabs\n- Reorder tabs to match number key access patterns\n- Place most important tabs in positions 1-3\n\nAdvanced Tips\n\nQuick Reorganization\n1. Close unnecessary tabs first\n2. Pin reference tabs\n3. Drag remaining tabs into logical order\n4. Use split view for side-by-side work\n\nWorkflow Patterns\n\nResearch Pattern:\n- Pin main research topic\n- Arrange source tabs in reading order\n- Keep notes tab at the end\n\nDevelopment Pattern:\n- Pin documentation\n- Order: specs \u2192 implementation \u2192 tests\n- Keep reference materials together\n\nWriting Pattern:\n- Pin outline or structure\n- Arrange research tabs chronologically\n- Keep draft at a consistent position\n\nLimitations\n\nWhat You Cannot Drag\n- Pinned tabs - These are locked in position\n- System tabs - Special tabs like split view when pinned\n- Between windows - Drag and drop only works within the same window\n\nBrowser Compatibility\n- Works in all modern browsers\n- Touch devices may have limited support\n- Some browsers may show different visual feedback\n\nAccessibility\n\nKeyboard Alternatives\nIf you cannot use drag and drop:\n- Use the tab context menu to close and reopen tabs in desired order\n- Utilize numbered shortcuts (Alt + 1-9) for quick access\n- Pin important tabs to keep them accessible\n\nVisual Indicators\n- High contrast drop indicators\n- Clear hover states\n- Smooth animations for better tracking\n\nTroubleshooting\n\nQ: I can't drag a tab\nA: Check if the tab is pinned. Pinned tabs cannot be dragged.\n\nQ: Drag and drop isn't working\nA: Try refreshing the page. Ensure JavaScript is enabled.\n\nQ: The tab jumped to the wrong position\nA: Wait for the drop indicator to appear before releasing.\n\nQ: Can I drag multiple tabs?\nA: No, only one tab can be dragged at a time.\n\nRelated Features\n\n- [[Tab Management]] - Complete guide to working with tabs\n- [[Pinned Tabs]] - Learn about tab pinning\n- [[Split View]] - Use drag and drop with split view\n- [[Keyboard Shortcuts]] - Keyboard alternatives to drag and drop\n\nPro Tips\n\n1. Muscle Memory: Develop consistent tab arrangements for different workflows\n2. Visual Grouping: Use drag and drop to create visual separations between tab groups\n3. Quick Access: Place frequently used tabs in easy-to-reach positions\n4. Cleanup Sessions: Periodically reorganize tabs to maintain efficiency\n5. Split View Power: Master dragging notes to split panes for research workflows",
+      "code_blocks_count": 0
+    },
+    {
+      "path": "/notes/tutorials/features/typography-fonts.md",
+      "context": "tutorials",
+      "metadata": {
+        "title": "Typography and Fonts",
+        "tags": [
+          "customization",
+          "readability",
+          "accessibility",
+          "fonts"
+        ],
+        "created": "2025-01-23",
+        "author": "NotesWiki Team",
+        "description": "Customize typography and fonts for optimal reading experience",
+        "updated": "2025-01-23",
+        "category": null,
+        "status": null,
+        "aliases": [],
+        "related": [],
+        "dependencies": [],
+        "keywords": [],
+        "tableOfContents": "auto",
+        "hideFromSearch": false
+      },
+      "content_preview": "NotesWiki provides comprehensive typography controls to ensure a comfortable reading experience. Whether you prefer larger text for easier reading, specific font families for different content types, ...",
+      "searchable_content": "\nTypography and Fonts\n\nNotesWiki provides comprehensive typography controls to ensure a comfortable reading experience. Whether you prefer larger text for easier reading, specific font families for different content types, or custom styling for your workspace, you have complete control over how text appears.\n\nFont Size Options\n\nAdjust the overall text size to match your preferences and screen setup.\n\nAvailable Sizes\n\n1. Small - Compact text for maximum content density\n2. Normal - Default size, balanced for most users\n3. Large - Increased readability, comfortable for extended reading\n4. Extra Large - Maximum size for accessibility needs\n\nHow to Change Font Size\n\n1. Click the Settings button (\u2699\ufe0f) or press Ctrl + ,\n2. Navigate to the General tab\n3. Find the Font Size dropdown\n4. Select your preferred size\n5. Changes apply immediately\n\nFont Size Effects\n\nChanging font size affects:\n- Body text in notes\n- Navigation sidebar text\n- UI elements and buttons\n- Table content\n- List items\n- Note: Code blocks maintain separate sizing for consistency\n\nFont Family Selection\n\nChoose from multiple font families to match your reading preferences.\n\nAvailable Font Families\n\n1. System (Default)\n- Uses your operating system's default font\n- Windows: Segoe UI\n- macOS: SF Pro Display\n- Linux: System default (often Ubuntu or DejaVu)\n- Best for native feel and performance\n\n2. Sans-serif\n- Clean, modern fonts without decorative strokes\n- Excellent for screen reading\n- High legibility at all sizes\n- Recommended for general use\n\n3. Serif\n- Traditional fonts with decorative strokes\n- Better for long-form reading\n- Creates a more formal appearance\n- Good for documentation or articles\n\n4. Monospace\n- Fixed-width characters\n- Each character occupies the same width\n- Ideal for technical content\n- Makes tables and lists align perfectly\n\n5. Code (JetBrains Mono)\n- Premium monospace font designed for programming\n- Includes ligatures for common code symbols\n- Enhanced readability for technical content\n- Pre-installed with NotesWiki\n\nHow to Change Font Family\n\n1. Open Settings (\u2699\ufe0f)\n2. Go to General tab\n3. Select from the Font Family dropdown\n4. Preview changes in real-time\n5. Click Save to apply\n\nCode Block Typography\n\nCode blocks have separate typography controls for optimal syntax readability.\n\nCode-Specific Features\n\n- Independent font size - Code maintains readable size regardless of body text\n- JetBrains Mono - Professional coding font with ligatures\n- Line numbers - Optional, toggleable in settings\n- Word wrap - Enable/disable based on preference\n- Syntax highlighting - Color-coded for 100+ languages\n\nCode Typography Settings\n\nIn Settings \u2192 Editor:\n- Show Line Numbers - Toggle line numbers in code blocks\n- Enable Word Wrap - Wrap long lines vs. horizontal scroll\n- Default Language - Set default syntax highlighting\n\nAdvanced Typography\n\nContent Width\n\nControl how wide your content appears:\n\n1. Narrow (65 characters)\n   - Optimal line length for reading\n   - Reduces eye movement\n   - Best for articles and documentation\n\n2. Normal (80 characters)\n   - Balanced width\n   - Default setting\n   - Works well for most content\n\n3. Wide (100 characters)\n   - More content visible\n   - Good for technical documentation\n   - Reduces vertical scrolling\n\n4. Full\n   - Uses entire available width\n   - Best for tables and wide content\n   - Maximum information density\n\nLine Height and Spacing\n\nWhile not directly configurable, NotesWiki automatically adjusts:\n- Line height based on font size\n- Paragraph spacing for readability\n- Heading margins for clear hierarchy\n- List indentation for structure\n\nTypography Best Practices\n\nFor Reading\n\n1. Long articles: Use Serif font with Normal or Large size\n2. Quick reference: Sans-serif with Normal size\n3. Extended sessions: Large size with Narrow width\n4. Dark themes: Consider increasing font size slightly\n\nFor Different Content Types\n\nTechnical Documentation:\n- Font: Monospace or Code\n- Size: Normal\n- Width: Wide or Full\n\nPersonal Notes:\n- Font: Sans-serif\n- Size: Your preference\n- Width: Normal\n\nAcademic Writing:\n- Font: Serif\n- Size: Normal or Large\n- Width: Narrow\n\nCode-Heavy Content:\n- Font: Code (JetBrains Mono)\n- Size: Normal\n- Enable line numbers\n\nAccessibility Considerations\n\nFor Visual Comfort\n\n1. Low vision: Use Extra Large size\n2. Eye strain: Try Large size with Narrow width\n3. Dyslexia: Sans-serif fonts often help\n4. Light sensitivity: Combine with dark themes\n\nHigh Contrast Tips\n\n- Larger font sizes work better with high contrast themes\n- Sans-serif fonts provide clearer character shapes\n- Narrow width reduces line tracking difficulty\n\nTheme and Typography Interaction\n\nDifferent themes work better with different typography settings:\n\nDark Themes\n- Slightly larger font size improves readability\n- Sans-serif fonts reduce character blur\n- Consider increasing content width\n\nLight Themes\n- Normal font sizes work well\n- Both serif and sans-serif are readable\n- Narrow width enhances focus\n\nSpecial Effect Themes\n- May require font size adjustment\n- Test readability with your chosen settings\n- Some decorative themes work better with specific fonts\n\nTroubleshooting\n\nQ: Fonts look blurry\nA: Try switching to System font or adjusting your browser's zoom level\n\nQ: JetBrains Mono isn't loading\nA: The font loads automatically. Try refreshing the page.\n\nQ: Changes aren't applying\nA: Click Save in settings and refresh if needed\n\nQ: Text is too small/large after theme change\nA: Some themes may affect perceived size. Adjust font size to compensate.\n\nTips for Optimal Reading\n\n1. Test different combinations - Try various font/size/width combinations\n2. Consider your screen - Larger screens may benefit from larger fonts\n3. Time of day matters - Use larger fonts when tired\n4. Match your content - Technical content may need different settings\n5. Regular breaks - Even with perfect typography, take eye breaks\n\nRelated Features\n\n- [[Themes]] - Combine typography with theme selection\n- [[Settings Customization]] - Explore all customization options\n- [[Content Width|Focus Mode]] - Control content presentation\n- [[Custom CSS]] - Advanced typography customization\n- [[Accessibility|Visual Accessibility]] - More accessibility options",
+      "code_blocks_count": 0
+    },
+    {
+      "path": "/notes/tutorials/features/tag-filtering.md",
+      "context": "tutorials",
+      "metadata": {
+        "title": "Tag Filtering",
+        "tags": [
+          "search",
+          "organization",
+          "filtering",
+          "tags",
+          "navigation"
+        ],
+        "created": "2025-01-23",
+        "author": "NotesWiki Team",
+        "description": "Master the powerful tag filtering system to quickly find related content",
+        "updated": "2025-01-23",
+        "category": null,
+        "status": null,
+        "aliases": [],
+        "related": [],
+        "dependencies": [],
+        "keywords": [],
+        "tableOfContents": "auto",
+        "hideFromSearch": false
+      },
+      "content_preview": "Tag filtering is a powerful way to quickly narrow down your notes to specific topics or categories. Unlike text search, tag filtering lets you browse and combine tags visually, making it perfect for e...",
+      "searchable_content": "\nTag Filtering\n\nTag filtering is a powerful way to quickly narrow down your notes to specific topics or categories. Unlike text search, tag filtering lets you browse and combine tags visually, making it perfect for exploring related content or finding notes by category.\n\nOpening the Tag Filter\n\nAccess the tag filter in two ways:\n\n1. Keyboard Shortcut: Press Ctrl + F\n2. Tag Filter Button: Click the tag icon (\ud83c\udff7\ufe0f) in the header\n\nThis opens the visual tag filter modal showing all available tags.\n\nUnderstanding the Tag Filter Interface\n\nTag Display\n- Tag badges show each tag with its note count\n- Color coding indicates tag state:\n  - Normal (gray) - Available for selection\n  - Selected (blue) - Included in filter\n  - Excluded (red) - Explicitly excluded from results\n\nTag Search\n- Search box at the top to quickly find specific tags\n- Type to filter the tag list in real-time\n- Useful when you have many tags\n\nFilter Information\n- Active filter count shows number of selected tags\n- Results preview indicates how many notes match\n- Filter mode shows AND/OR logic (if applicable)\n\nBasic Tag Selection\n\nIncluding Tags (OR Logic)\n\n1. Click any tag to include it in your filter\n2. Tag turns blue indicating selection\n3. Results show notes with ANY of the selected tags\n4. Click additional tags to expand results\n\nExample: Selecting \"javascript\" and \"tutorial\" shows all notes tagged with either.\n\nExcluding Tags\n\n1. Right-click any tag to exclude it\n2. Tag turns red indicating exclusion\n3. Results hide notes with that tag\n4. Useful for filtering out unwanted content\n\nAlternative: Hold Ctrl while clicking to exclude\n\nExample: Select \"tutorial\" but exclude \"advanced\" to find beginner tutorials.\n\nAdvanced Filtering Techniques\n\nCombining Includes and Excludes\n\nCreate precise filters by combining both:\n\n1. Include tags for topics you want\n2. Exclude tags for content to avoid\n3. Results show included tags minus excluded ones\n\nExample Use Case:\n- Include: \"python\", \"tutorial\"\n- Exclude: \"deprecated\", \"draft\"\n- Result: Current Python tutorials only\n\nMulti-Tag Workflows\n\nResearch Workflow:\n1. Include all relevant topic tags\n2. Exclude \"archived\" or \"outdated\"\n3. Browse filtered results\n\nProject Organization:\n1. Include your project tag\n2. Include status tags like \"active\" or \"todo\"\n3. Exclude \"completed\" if focusing on current work\n\nTag Filter Controls\n\nClear Filters\n- Clear All button removes all tag selections\n- Resets to show all notes\n- Keyboard: Escape also clears and closes\n\nApply Filter\n- Apply button activates the filter\n- Updates the note list immediately\n- Filter remains active until cleared\n\nVisual Indicators\n- Badge numbers show note count per tag\n- Highlighted tags show current selection\n- Strikethrough on excluded tags (in some themes)\n\nSearch Operators vs Tag Filter\n\nWhen to Use Tag Filter\n\nUse tag filtering when you want to:\n- Browse by category without specific keywords\n- Combine multiple topics visually\n- Exclude categories of content\n- Explore available tags in your wiki\n\nWhen to Use Search\n\nUse text search (Ctrl + K) when you:\n- Know specific keywords\n- Need full-text search\n- Want to combine text and tag queries\n- Need advanced operators\n\nCombining Both\n\nPower user tip: Use search with tag operators:\n\ntag:javascript tag:tutorial -tag:advanced react\n\nThis searches for \"react\" in JavaScript tutorials, excluding advanced ones.\n\nPractical Examples\n\n1. Finding Learning Resources\n\nInclude: tutorial, guide, howto\nExclude: advanced, reference\n\n\n2. Project Management\n\nInclude: project-x, active\nExclude: completed, archived\n\n\n3. Knowledge Areas\n\nInclude: programming, web-dev\nExclude: deprecated, outdated\n\n\n4. Time-Based Filtering\n\nInclude: 2024, current\nExclude: archived, historical\n\n\nTag Organization Best Practices\n\nHierarchical Tagging\nConsider using prefixes for organization:\n- project-website\n- project-mobile\n- status-active\n- status-completed\n- type-tutorial\n- type-reference\n\nConsistent Naming\n- Use lowercase for consistency\n- Use hyphens for multi-word tags\n- Avoid special characters\n- Keep tags concise but descriptive\n\nTag Categories\nOrganize tags by purpose:\n- Topics: javascript, python, docker\n- Types: tutorial, reference, snippet\n- Status: draft, review, published\n- Projects: project-a, project-b\n- Dates: 2024, q1-2024\n\nPerformance Tips\n\nWith Many Tags\n- Use the search box to quickly find tags\n- Organize tags with consistent prefixes\n- Regular cleanup of unused tags\n- Consider tag hierarchies\n\nLarge Note Collections\n- Start with broad categories\n- Progressively narrow with excludes\n- Save common filter combinations\n- Use search for very specific queries\n\nKeyboard Shortcuts\n\n| Action | Shortcut |\n|--------|----------|\n| Open Tag Filter | Ctrl + F |\n| Clear and Close | Escape |\n| Toggle Tag | Click |\n| Exclude Tag | Right-click or Ctrl + Click |\n\nRelated Features\n\n- [[Search Guide]] - Full-text search and operators\n- [[Bookmarks]] - Save frequently accessed notes\n- [[Context Filtering]] - Filter by folders\n- [[Recent Files & Bookmarks|Recent Files]] - Quick access to recent work\n\nTips and Tricks\n\n1. Quick Exclude: Right-click is fastest for exclusions\n2. Bulk Select: Click multiple tags rapidly without waiting\n3. Preview Results: Watch the count update as you select\n4. Escape to Reset: Quick way to start over\n5. Combine Methods: Use both tag filter and search for precision\n\nCommon Issues\n\nQ: No tags appear in the filter\nA: Ensure your notes have tags in their frontmatter\n\nQ: Filter isn't applying\nA: Click the Apply button after making selections\n\nQ: Too many tags to browse\nA: Use the search box to filter the tag list\n\nQ: Can't see excluded tags clearly\nA: Some themes show exclusions better than others tag:javascript tag:tutorial -tag:advanced react Include: tutorial, guide, howto\nExclude: advanced, reference Include: project-x, active\nExclude: completed, archived Include: programming, web-dev\nExclude: deprecated, outdated Include: 2024, current\nExclude: archived, historical",
+      "code_blocks_count": 5
+    },
+    {
+      "path": "/notes/tutorials/features/custom-css.md",
+      "context": "tutorials",
+      "metadata": {
+        "title": "Custom CSS",
+        "tags": [
+          "customization",
+          "advanced",
+          "styling",
+          "css",
+          "themes"
+        ],
+        "created": "2025-01-23",
+        "author": "NotesWiki Team",
+        "description": "Customize NotesWiki's appearance with your own CSS styles",
+        "updated": "2025-01-23",
+        "category": null,
+        "status": null,
+        "aliases": [],
+        "related": [],
+        "dependencies": [],
+        "keywords": [],
+        "tableOfContents": "auto",
+        "hideFromSearch": false
+      },
+      "content_preview": "Custom CSS allows you to personalize NotesWiki beyond the built-in themes and settings. Whether you want to tweak a few colors, adjust spacing, or create an entirely unique look, custom CSS gives you ...",
+      "searchable_content": "\nCustom CSS\n\nCustom CSS allows you to personalize NotesWiki beyond the built-in themes and settings. Whether you want to tweak a few colors, adjust spacing, or create an entirely unique look, custom CSS gives you complete control over the visual appearance.\n\nAccessing Custom CSS\n\n1. Open Settings (\u2699\ufe0f) or press Ctrl + ,\n2. Navigate to the Advanced tab\n3. Find the Custom CSS section\n4. Enter your CSS in the text editor\n5. Click Save to apply changes\n\nChanges take effect immediately without needing to refresh.\n\nCSS Variables\n\nNotesWiki uses CSS custom properties (variables) for theming. You can override any of these:\n\nCore Color Variables\ncss\n:root {\n  / Backgrounds /\n  --bg-primary: #1a1a1a;\n  --bg-secondary: #252525;\n  --bg-sidebar: #1e1e1e;\n  \n  / Text Colors /\n  --text-primary: #ffffff;\n  --text-secondary: #cccccc;\n  --text-muted: #999999;\n  \n  / Accent Colors /\n  --accent-primary: #007acc;\n  --accent-secondary: #0098ff;\n  --accent-error: #ff6b6b;\n  --accent-warning: #ffa500;\n  --accent-success: #4caf50;\n}\n\n\nCommon Customizations\n\n1. Change Accent Color\ncss\n:root {\n  --accent-primary: #ff6b6b;\n  --accent-secondary: #ff8787;\n  --link-color: #ff6b6b;\n}\n\n\n2. Adjust Spacing\ncss\n:root {\n  --spacing-xs: 0.5rem;\n  --spacing-sm: 1rem;\n  --spacing-md: 1.5rem;\n  --spacing-lg: 2rem;\n}\n\n\n3. Modify Fonts\ncss\n:root {\n  --font-family: 'Georgia', serif;\n  --font-mono: 'Fira Code', monospace;\n}\n\n\nComponent Styling\n\nNavigation Sidebar\ncss\n/ Wider sidebar /\n.sidebar {\n  width: 300px !important;\n}\n\n/ Custom folder colors /\n.folder-name {\n  color: #ffa500;\n}\n\n/ Highlight active file /\n.tree-item.active {\n  background-color: rgba(255, 255, 255, 0.1);\n  font-weight: bold;\n}\n\n\nTabs\ncss\n/ Rounded tabs /\n.tab {\n  border-radius: 8px 8px 0 0;\n  margin: 0 2px;\n}\n\n/ Colorful pinned tabs /\n.tab.pinned {\n  background-color: #ff6b6b;\n}\n\n/ Tab hover effect /\n.tab:hover {\n  transform: translateY(-2px);\n  transition: transform 0.2s;\n}\n\n\nContent Area\ncss\n/ Custom heading styles /\n.content h1 {\n  border-bottom: 3px solid var(--accent-primary);\n  padding-bottom: 0.5rem;\n}\n\n/ Styled blockquotes /\nblockquote {\n  border-left: 4px solid #ffa500;\n  background-color: rgba(255, 165, 0, 0.1);\n  font-style: italic;\n}\n\n/ Code block enhancements /\npre {\n  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);\n  border-radius: 8px;\n}\n\n\nAdvanced Customizations\n\nCustom Callouts\ncss\n/ Create a custom callout type /\n.callout-custom {\n  background-color: #e3f2fd;\n  border-color: #2196f3;\n  color: #0d47a1;\n}\n\n.callout-custom .callout-icon::before {\n  content: \"\ud83d\udca1\";\n}\n\n\nAnimation Effects\ncss\n/ Smooth transitions /\n {\n  transition: background-color 0.3s ease;\n}\n\n/ Animated links /\na {\n  position: relative;\n  text-decoration: none;\n}\n\na::after {\n  content: '';\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 0;\n  height: 2px;\n  background-color: var(--accent-primary);\n  transition: width 0.3s;\n}\n\na:hover::after {\n  width: 100%;\n}\n\n\nFocus Mode Enhancements\ncss\n/ Ultra-focused reading mode /\nbody.focus-mode .content {\n  max-width: 650px;\n  font-size: 1.2em;\n  line-height: 1.8;\n}\n\nbody.focus-mode {\n  background-color: #fafafa;\n}\n\n\nTheme Overrides\n\nOverride specific theme elements while keeping the base theme:\n\ncss\n/ Override theme colors while keeping theme structure /\n[data-theme=\"ayu-mirage\"] {\n  --bg-primary: #1f2430;\n  --accent-primary: #ffcc66;\n}\n\n/ Conditional styling based on theme /\n[data-theme=\"dark\"] .content {\n  text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);\n}\n\n\nResponsive Customizations\n\ncss\n/ Mobile-specific styles /\n@media (max-width: 768px) {\n  .sidebar {\n    width: 100% !important;\n  }\n  \n  .content {\n    padding: 1rem !important;\n  }\n}\n\n/ Large screen optimizations /\n@media (min-width: 1400px) {\n  .content {\n    max-width: 1200px;\n  }\n}\n\n\nBest Practices\n\n1. Use CSS Variables\ncss\n/ Good - uses variables /\n.custom-element {\n  color: var(--text-primary);\n  background: var(--bg-secondary);\n}\n\n/ Avoid - hardcoded colors /\n.custom-element {\n  color: #ffffff;\n  background: #252525;\n}\n\n\n2. Maintain Specificity\ncss\n/ Use specific selectors /\n.sidebar .tree-item.active {\n  / styles /\n}\n\n/ Avoid !important when possible /\n.tree-item {\n  color: red !important; / Try to avoid /\n}\n\n\n3. Test Across Themes\nAlways test your custom CSS with multiple themes:\n- Light themes\n- Dark themes\n- High contrast themes\n\nCommon Use Cases\n\n1. Brand Colors\ncss\n:root {\n  --accent-primary: #your-brand-color;\n  --accent-secondary: #your-secondary-color;\n}\n\n\n2. Improved Readability\ncss\n.content {\n  font-size: 18px;\n  line-height: 1.7;\n  letter-spacing: 0.02em;\n}\n\n\n3. Custom Syntax Highlighting\ncss\n/ Override Prism.js theme colors /\n.token.keyword {\n  color: #ff79c6;\n}\n\n.token.string {\n  color: #f1fa8c;\n}\n\n\n4. Hide Elements\ncss\n/ Hide elements you don't use /\n.pomodoro-timer {\n  display: none;\n}\n\n/ Hide breadcrumbs /\n.breadcrumb {\n  display: none;\n}\n\n\nDebugging Tips\n\n1. Use Browser DevTools\n- Right-click \u2192 Inspect Element\n- Test CSS changes live\n- Copy working styles to custom CSS\n\n2. Check Specificity\nIf styles aren't applying:\ncss\n/ Increase specificity /\nbody .content h1 {\n  / styles /\n}\n\n/ Or use !important as last resort /\n.element {\n  color: red !important;\n}\n\n\n3. Validate CSS\nEnsure your CSS is valid:\n- No missing semicolons\n- Proper bracket matching\n- Valid property names\n\nSafety and Performance\n\nDo's\n- \u2705 Override CSS variables when possible\n- \u2705 Test with multiple themes\n- \u2705 Keep custom CSS organized\n- \u2705 Comment complex sections\n- \u2705 Back up your custom CSS\n\nDon'ts\n- \u274c Don't hide critical UI elements\n- \u274c Avoid breaking layouts with position changes\n- \u274c Don't use excessive animations\n- \u274c Avoid very large CSS files\n\nExamples Gallery\n\nMinimal Writer Theme\ncss\n/ Clean, distraction-free writing /\n:root {\n  --bg-primary: #fafafa;\n  --text-primary: #333;\n  --accent-primary: #333;\n}\n\n.sidebar { width: 200px; }\n.header { border-bottom: none; }\n.content { max-width: 650px; }\n\n\nNeon Glow Effect\ncss\n/ Cyberpunk-style glow /\n.tab.active {\n  box-shadow: 0 0 20px var(--accent-primary);\n}\n\nh1, h2 {\n  text-shadow: 0 0 10px currentColor;\n}\n\n\nPaper Notebook Style\ncss\n/ Lined paper effect /\n.content {\n  background-image: repeating-linear-gradient(\n    transparent,\n    transparent 1.5rem,\n    #e0e0e0 1.5rem,\n    #e0e0e0 calc(1.5rem + 1px)\n  );\n  line-height: 1.5rem;\n}\n\n\nRelated Features\n\n- [[Themes]] - Built-in theme system\n- [[Typography and Fonts|Typography]] - Font customization\n- [[Settings Customization]] - Other customization options\n- [[Focus Mode]] - Distraction-free writing\n- [[Print Mode|Print Styles]] - Custom print styling\n\nSharing Custom CSS\n\nShare your custom CSS with others:\n1. Copy your CSS from settings\n2. Save to a .css file\n3. Share via GitHub Gist or similar\n4. Others can paste into their custom CSS\n\nRemember: Custom CSS is stored locally and needs to be manually backed up! :root {\n  /* Backgrounds */\n  --bg-primary: #1a1a1a;\n  --bg-secondary: #252525;\n  --bg-sidebar: #1e1e1e;\n  \n  /* Text Colors */\n  --text-primary: #ffffff;\n  --text-secondary: #cccccc;\n  --text-muted: #999999;\n  \n  /* Accent Colors */\n  --accent-primary: #007acc;\n  --accent-secondary: #0098ff;\n  --accent-error: #ff6b6b;\n  --accent-warning: #ffa500;\n  --accent-success: #4caf50;\n} :root {\n  --accent-primary: #ff6b6b;\n  --accent-secondary: #ff8787;\n  --link-color: #ff6b6b;\n} :root {\n  --spacing-xs: 0.5rem;\n  --spacing-sm: 1rem;\n  --spacing-md: 1.5rem;\n  --spacing-lg: 2rem;\n} :root {\n  --font-family: 'Georgia', serif;\n  --font-mono: 'Fira Code', monospace;\n} /* Wider sidebar */\n.sidebar {\n  width: 300px !important;\n}\n\n/* Custom folder colors */\n.folder-name {\n  color: #ffa500;\n}\n\n/* Highlight active file */\n.tree-item.active {\n  background-color: rgba(255, 255, 255, 0.1);\n  font-weight: bold;\n} /* Rounded tabs */\n.tab {\n  border-radius: 8px 8px 0 0;\n  margin: 0 2px;\n}\n\n/* Colorful pinned tabs */\n.tab.pinned {\n  background-color: #ff6b6b;\n}\n\n/* Tab hover effect */\n.tab:hover {\n  transform: translateY(-2px);\n  transition: transform 0.2s;\n} /* Custom heading styles */\n.content h1 {\n  border-bottom: 3px solid var(--accent-primary);\n  padding-bottom: 0.5rem;\n}\n\n/* Styled blockquotes */\nblockquote {\n  border-left: 4px solid #ffa500;\n  background-color: rgba(255, 165, 0, 0.1);\n  font-style: italic;\n}\n\n/* Code block enhancements */\npre {\n  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);\n  border-radius: 8px;\n} /* Create a custom callout type */\n.callout-custom {\n  background-color: #e3f2fd;\n  border-color: #2196f3;\n  color: #0d47a1;\n}\n\n.callout-custom .callout-icon::before {\n  content: \"\ud83d\udca1\";\n} /* Smooth transitions */\n* {\n  transition: background-color 0.3s ease;\n}\n\n/* Animated links */\na {\n  position: relative;\n  text-decoration: none;\n}\n\na::after {\n  content: '';\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 0;\n  height: 2px;\n  background-color: var(--accent-primary);\n  transition: width 0.3s;\n}\n\na:hover::after {\n  width: 100%;\n} /* Ultra-focused reading mode */\nbody.focus-mode .content {\n  max-width: 650px;\n  font-size: 1.2em;\n  line-height: 1.8;\n}\n\nbody.focus-mode {\n  background-color: #fafafa;\n} /* Override theme colors while keeping theme structure */\n[data-theme=\"ayu-mirage\"] {\n  --bg-primary: #1f2430;\n  --accent-primary: #ffcc66;\n}\n\n/* Conditional styling based on theme */\n[data-theme*=\"dark\"] .content {\n  text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);\n} /* Mobile-specific styles */\n@media (max-width: 768px) {\n  .sidebar {\n    width: 100% !important;\n  }\n  \n  .content {\n    padding: 1rem !important;\n  }\n}\n\n/* Large screen optimizations */\n@media (min-width: 1400px) {\n  .content {\n    max-width: 1200px;\n  }\n} /* Good - uses variables */\n.custom-element {\n  color: var(--text-primary);\n  background: var(--bg-secondary);\n}\n\n/* Avoid - hardcoded colors */\n.custom-element {\n  color: #ffffff;\n  background: #252525;\n} /* Use specific selectors */\n.sidebar .tree-item.active {\n  /* styles */\n}\n\n/* Avoid !important when possible */\n.tree-item {\n  color: red !important; /* Try to avoid */\n} :root {\n  --accent-primary: #your-brand-color;\n  --accent-secondary: #your-secondary-color;\n} .content {\n  font-size: 18px;\n  line-height: 1.7;\n  letter-spacing: 0.02em;\n} /* Override Prism.js theme colors */\n.token.keyword {\n  color: #ff79c6;\n}\n\n.token.string {\n  color: #f1fa8c;\n} /* Hide elements you don't use */\n.pomodoro-timer {\n  display: none;\n}\n\n/* Hide breadcrumbs */\n.breadcrumb {\n  display: none;\n} /* Increase specificity */\nbody .content h1 {\n  /* styles */\n}\n\n/* Or use !important as last resort */\n.element {\n  color: red !important;\n} /* Clean, distraction-free writing */\n:root {\n  --bg-primary: #fafafa;\n  --text-primary: #333;\n  --accent-primary: #333;\n}\n\n.sidebar { width: 200px; }\n.header { border-bottom: none; }\n.content { max-width: 650px; } /* Cyberpunk-style glow */\n.tab.active {\n  box-shadow: 0 0 20px var(--accent-primary);\n}\n\nh1, h2 {\n  text-shadow: 0 0 10px currentColor;\n} /* Lined paper effect */\n.content {\n  background-image: repeating-linear-gradient(\n    transparent,\n    transparent 1.5rem,\n    #e0e0e0 1.5rem,\n    #e0e0e0 calc(1.5rem + 1px)\n  );\n  line-height: 1.5rem;\n}",
+      "code_blocks_count": 22
+    },
+    {
+      "path": "/notes/tutorials/features/auto-theme.md",
+      "context": "tutorials",
+      "metadata": {
+        "title": "Auto Theme Switching",
+        "tags": [
+          "themes",
+          "customization",
+          "accessibility",
+          "automation"
+        ],
+        "created": "2025-01-23",
+        "author": "NotesWiki Team",
+        "description": "Automatically switch themes based on your system's dark mode preference",
+        "updated": "2025-01-23",
+        "category": null,
+        "status": null,
+        "aliases": [],
+        "related": [],
+        "dependencies": [],
+        "keywords": [],
+        "tableOfContents": "auto",
+        "hideFromSearch": false
+      },
+      "content_preview": "Auto theme switching allows NotesWiki to automatically adapt its appearance based on your operating system's dark mode setting. This creates a seamless experience that matches your system-wide prefere...",
+      "searchable_content": "\nAuto Theme Switching\n\nAuto theme switching allows NotesWiki to automatically adapt its appearance based on your operating system's dark mode setting. This creates a seamless experience that matches your system-wide preference and can help reduce eye strain by using appropriate themes for different times of day.\n\nHow Auto Theme Works\n\nWhen enabled, auto theme:\n1. Detects your system preference - Checks if your OS is in light or dark mode\n2. Applies matching theme - Switches between your chosen light and dark themes\n3. Updates in real-time - Changes immediately when you toggle system dark mode\n4. Remembers your choices - Saves your preferred themes for each mode\n\nEnabling Auto Theme\n\nQuick Setup\n\n1. Open Settings (\u2699\ufe0f) or press Ctrl + ,\n2. Go to the General tab\n3. Toggle \"Auto Theme\" to ON\n4. NotesWiki immediately switches to match your system\n\nChoosing Auto Theme Pairs\n\nWhen auto theme is enabled:\n1. Light Mode Theme - Select your preferred theme for light mode\n2. Dark Mode Theme - Select your preferred theme for dark mode\n3. Both selections are saved automatically\n\nSetting Up Theme Pairs\n\nRecommended Combinations\n\nClassic Pairing:\n- Light: GitHub Light\n- Dark: GitHub Dark\n\nHigh Contrast:\n- Light: Light\n- Dark: Dracula\n\nSoft Colors:\n- Light: Soft Era\n- Dark: Tokyo Night\n\nMaterial Design:\n- Light: Material\n- Dark: Material Ocean\n\nSolarized:\n- Light: Solarized Light\n- Dark: Solarized Dark\n\nCreating Custom Pairs\n\nConsider these factors when pairing themes:\n1. Contrast levels - Similar contrast ratios for consistency\n2. Color temperature - Warm light with warm dark, etc.\n3. Style consistency - Matching design philosophies\n4. Personal preference - What feels comfortable to your eyes\n\nSystem Requirements\n\nSupported Operating Systems\n\nAuto theme works with:\n- Windows 10/11 - Uses system dark mode setting\n- macOS 10.14+ - Mojave and later with dark mode\n- Linux - Most desktop environments with dark mode\n- iOS/iPadOS - Follows system appearance\n- Android - Follows system theme (Android 10+)\n\nBrowser Support\n\nAll modern browsers support auto theme:\n- Chrome/Edge 76+\n- Firefox 67+\n- Safari 12.1+\n- Opera 63+\n\nManual Override\n\nTemporary Override\n\nWhile auto theme is enabled:\n1. Manually select any theme from the theme gallery\n2. This creates a temporary override\n3. Auto theme resumes when system preference changes\n\nDisable Auto Theme\n\nTo return to manual theme control:\n1. Open Settings\n2. Toggle \"Auto Theme\" to OFF\n3. Your current theme remains active\n4. Manual theme selection resumes\n\nAdvanced Configuration\n\nTime-Based Switching\n\nWhile NotesWiki doesn't directly support time-based switching, you can achieve this by:\n\n1. Using OS scheduling:\n   - Windows: Night Light settings\n   - macOS: Night Shift or shortcuts\n   - Linux: Redshift or similar tools\n\n2. Browser extensions:\n   - Dark Reader with scheduling\n   - Auto Dark Mode extensions\n\nMultiple Theme Rotation\n\nFor more than two themes:\n1. Set up OS automation to change dark mode multiple times\n2. Adjust auto theme pairs between changes\n3. Create a rotation schedule\n\nBenefits of Auto Theme\n\nEye Strain Reduction\n- Bright themes during day reduce squinting\n- Dark themes at night reduce blue light\n- Automatic switching prevents jarring transitions\n\nBattery Savings\n- Dark themes on OLED displays save battery\n- Automatic optimization based on time of day\n- No manual intervention needed\n\nConsistency\n- Matches your system-wide appearance\n- Unified experience across applications\n- Reduces cognitive load from mismatched themes\n\nTroubleshooting\n\nAuto Theme Not Working\n\nCheck system settings:\n1. Ensure OS dark mode is properly configured\n2. Try toggling system dark mode to test\n3. Check browser permissions for theme detection\n\nBrowser-specific fixes:\n- Chrome: Check chrome://flags/#enable-force-dark\n- Firefox: Verify ui.systemUsesDarkTheme in about:config\n- Safari: Ensure \"Use dark appearance\" is allowed for websites\n\nTheme Not Switching\n\n1. Refresh the page - Sometimes needed after enabling\n2. Check theme compatibility - Ensure both themes load properly\n3. Clear cache - Browser cache might interfere\n4. Check console - Look for error messages\n\nIncorrect Theme Applied\n\nIf the wrong theme appears:\n1. Toggle auto theme off and on\n2. Manually select correct themes for each mode\n3. Test by switching OS dark mode\n\nBest Practices\n\nChoosing Complementary Themes\n\nSimilar Style:\n- Keep visual consistency between modes\n- Example: Ayu Light \u2194 Ayu Mirage\n\nContrast Consideration:\n- Don't pair extreme light with extreme dark\n- Gradual transitions are easier on eyes\n\nColor Temperature:\n- Warm light themes with warm dark themes\n- Cool light themes with cool dark themes\n\nTesting Your Setup\n\n1. Toggle OS dark mode several times\n2. Check readability in both modes\n3. Test at different times of day\n4. Verify all UI elements remain visible\n\nIntegration with Other Features\n\nFocus Mode\n- Auto theme works seamlessly with focus mode\n- Each theme maintains its focus mode styling\n- Consistent experience across modes\n\nCustom CSS\n- Custom CSS applies to both themes\n- Use theme-specific selectors for different styles:\ncss\n[data-theme=\"github-light\"] {\n  / Light mode specific styles /\n}\n\n[data-theme=\"github-dark\"] {\n  / Dark mode specific styles /\n}\n\n\nTypography Settings\n- Font settings remain consistent\n- Consider slightly larger fonts for dark themes\n- Test readability in both modes\n\nTips and Tricks\n\n1. Schedule OS dark mode for sunrise/sunset\n2. Use high contrast pairs if you have vision concerns\n3. Test themes at different times before committing\n4. Create custom CSS for smooth transitions\n5. Match terminal themes for development work\n\nCommon Use Cases\n\nDaily Work Schedule\n- Light theme: 9 AM - 6 PM\n- Dark theme: 6 PM - 9 AM\n- Automatic switching via OS\n\nPresentation Mode\n- Temporarily disable for consistent appearance\n- Re-enable after presentation\n- Prevents unexpected theme changes\n\nShared Devices\n- Auto theme adapts to each user's preference\n- No manual switching needed\n- Consistent experience for all users\n\nRelated Features\n\n- [[Themes]] - Explore all available themes\n- [[Custom CSS]] - Customize themes further\n- [[Settings Customization]] - Other settings options\n- [[Typography and Fonts|Typography]] - Adjust for each theme\n- [[Focus Mode]] - Combine with auto theme\n\nFuture Possibilities\n\nWhile not currently available, potential enhancements could include:\n- Multiple theme schedules\n- Location-based switching\n- Custom switching conditions\n- Theme transition animations\n\nFor now, auto theme provides reliable, system-integrated theme switching that covers most use cases effectively. [data-theme=\"github-light\"] {\n  /* Light mode specific styles */\n}\n\n[data-theme=\"github-dark\"] {\n  /* Dark mode specific styles */\n}",
+      "code_blocks_count": 1
+    },
+    {
+      "path": "/notes/tutorials/features/external-links.md",
+      "context": "tutorials",
+      "metadata": {
+        "title": "External Links",
+        "tags": [
+          "navigation",
+          "links",
+          "settings",
+          "security"
+        ],
+        "created": "2025-01-23",
+        "author": "NotesWiki Team",
+        "description": "Control how external links behave in your wiki",
+        "updated": "2025-01-23",
+        "category": null,
+        "status": null,
+        "aliases": [],
+        "related": [],
+        "dependencies": [],
+        "keywords": [],
+        "tableOfContents": "auto",
+        "hideFromSearch": false
+      },
+      "content_preview": "External links in NotesWiki are handled intelligently to maintain your workflow while providing access to outside resources. You can control whether external links open in new tabs, display warnings, ...",
+      "searchable_content": "\nExternal Links\n\nExternal links in NotesWiki are handled intelligently to maintain your workflow while providing access to outside resources. You can control whether external links open in new tabs, display warnings, or follow other behaviors based on your preferences.\n\nWhat Are External Links?\n\nExternal links are any links that point outside your wiki:\n- Web URLs: https://example.com\n- Email links: mailto:user@example.com\n- Protocol links: ftp://, file://, etc.\n- Absolute URLs: Any link starting with http:// or https://\n\nInternal links include:\n- Wiki links: [[Page Name]]\n- Relative paths: ../notes/example.md\n- Hash links: #section-name\n\nDefault Behavior\n\nBy default, external links:\n1. Open in new tabs - Preserves your wiki context\n2. Show visual indicators - Small icon after the link\n3. Include security attributes - rel=\"noopener noreferrer\"\n4. Maintain your position - Wiki stays on current page\n\nConfiguring External Links\n\nSettings Options\n\nNavigate to Settings \u2192 Navigation to find:\n\n1. Open in New Tab\n   - Enabled (default): Links open in new browser tabs\n   - Disabled: Links replace current wiki tab\n\n2. Show External Link Icon\n   - Enabled: Shows \u2197\ufe0f icon after external links\n   - Disabled: No visual indicator\n\n3. Warn Before Opening\n   - Enabled: Shows confirmation before opening\n   - Disabled: Opens immediately on click\n\nLink Behavior Patterns\n\nStandard External Link\nmarkdown\nCheck out GitHub\n\n- Opens in new tab (if enabled)\n- Shows external icon\n- Maintains current wiki page\n\nEmail Links\nmarkdown\nContact us at support@example.com\n\n- Opens default email client\n- No new tab needed\n- Works with web-based email\n\nProtocol Links\nmarkdown\nDownload via FTP\n\n- Handled by browser/OS\n- May prompt for application\n\nSecurity Considerations\n\nAutomatic Security\n\nAll external links automatically include:\nhtml\n<a href=\"https://example.com\" \n   target=\"blank\" \n   rel=\"noopener noreferrer\">\n\n\n- noopener: Prevents window.opener access\n- noreferrer: Hides referrer information\n- target=\"blank\": Opens in new tab\n\nWhy This Matters\n\n1. Privacy: Referrer hiding protects your wiki URL\n2. Security: Prevents external sites from controlling your wiki\n3. Performance: New tabs don't affect wiki performance\n\nVisual Indicators\n\nExternal Link Icons\n\nDefault styling shows:\n- \u2197\ufe0f or \ud83d\udd17 icon after external links\n- Different color (often accent color)\n- Subtle animation on hover\n\nCustom Styling\n\nUse custom CSS to modify appearance:\ncss\n/ Change external link color /\na[target=\"blank\"] {\n  color: #0066cc;\n}\n\n/ Custom external link icon /\na[target=\"blank\"]::after {\n  content: \" \u2197\";\n  font-size: 0.8em;\n  vertical-align: super;\n}\n\n/ Remove external link indicators /\na[target=\"blank\"]::after {\n  display: none;\n}\n\n\nBest Practices\n\nLink Text\n\nGood: Descriptive link text\nmarkdown\nLearn more in the Python documentation\n\n\nAvoid: Generic link text\nmarkdown\nClick here for more info\n\n\nLink Organization\n\n1. Group related links in resource sections\n2. Use link lists for multiple external resources\n3. Add descriptions for context\n4. Check links regularly for validity\n\nPerformance Tips\n\n- Avoid too many external links per page\n- Consider creating dedicated reference pages\n- Use descriptive titles to reduce clicks\n\nCommon Use Cases\n\nDocumentation References\nmarkdown\nReferences\n- MDN Web Docs\n- Stack Overflow\n- Can I Use\n\n\nAttribution Links\nmarkdown\n> \"Quote from article\" - Source\n\n\nTool Integration\nmarkdown\nEdit this diagram in draw.io\n\n\nAdvanced Configuration\n\nPer-Link Behavior\n\nOverride default behavior inline:\nmarkdown\n<!-- Force same tab -->\n<a href=\"https://example.com\" target=\"self\">Same tab link</a>\n\n<!-- Force new tab -->\n<a href=\"https://example.com\" target=\"blank\">New tab link</a>\n\n\nJavaScript Handling\n\nFor dynamic links in custom scripts:\njavascript\n// Add external link attributes\ndocument.querySelectorAll('a[href^=\"http\"]').forEach(link => {\n  if (!link.hostname.includes(window.location.hostname)) {\n    link.target = 'blank';\n    link.rel = 'noopener noreferrer';\n  }\n});\n\n\nKeyboard Shortcuts\n\nWorking with external links via keyboard:\n\n| Action | Shortcut |\n|--------|----------|\n| Open link | Enter |\n| Open in new tab | Ctrl/Cmd + Enter |\n| Open in new window | Shift + Enter |\n| Copy link address | Right-click \u2192 Copy link |\n\nTroubleshooting\n\nLinks Not Opening\n\nCheck browser settings:\n- Pop-up blocker may interfere\n- Browser security settings\n- Extension conflicts\n\nSolutions:\n1. Whitelist your wiki domain\n2. Disable aggressive ad blockers\n3. Check browser console for errors\n\nIcon Not Showing\n\nIf external link icons are missing:\n1. Check theme compatibility\n2. Verify settings are enabled\n3. Clear browser cache\n4. Check custom CSS conflicts\n\nSecurity Warnings\n\nSome browsers warn about:\n- Mixed content (HTTP links on HTTPS wiki)\n- Suspicious domains\n- Invalid certificates\n\nBest practice: Use HTTPS links when possible\n\nMobile Considerations\n\nTouch Behavior\n\nOn mobile devices:\n- Tap: Opens based on settings\n- Long press: Shows link menu\n- Two-finger tap: May open in new tab\n\nMobile Settings\n\nConsider different settings for mobile:\n- New tab behavior may vary\n- External apps may intercept links\n- Data usage considerations\n\nIntegration with Other Features\n\nSearch Results\n- External links in search are clearly marked\n- Settings apply to search result links\n- Preview shows domain for external links\n\nBookmarks\n- External links can be bookmarked\n- Bookmark indicator shows link type\n- Quick access to external resources\n\nSplit View\n- External links respect split view context\n- Can open external sites in split panes\n- Maintains internal/external separation\n\nPrivacy Tips\n\nHiding Referrer\nmarkdown\n<!-- No referrer for specific link -->\n<a href=\"https://example.com\" rel=\"noreferrer\">Private link</a>\n\n\nURL Shortening\n- Consider privacy implications\n- Use trusted shorteners only\n- Document original URLs\n\nTracking Parameters\n- Remove unnecessary UTM parameters\n- Clean URLs before sharing\n- Consider user privacy\n\nRelated Features\n\n- [[Wiki Links]] - Internal linking system\n- [[Navigation|Link Navigation]] - General navigation\n- [[Keyboard Shortcuts]] - Link keyboard controls\n- [[Custom CSS]] - Styling external links\n- [[Security|Privacy & Security]] - Security considerations Check out [GitHub](https://github.com) Contact us at [support@example.com](mailto:support@example.com) Download via [FTP](ftp://files.example.com) <a href=\"https://example.com\" \n   target=\"_blank\" \n   rel=\"noopener noreferrer\"> /* Change external link color */\na[target=\"_blank\"] {\n  color: #0066cc;\n}\n\n/* Custom external link icon */\na[target=\"_blank\"]::after {\n  content: \" \u2197\";\n  font-size: 0.8em;\n  vertical-align: super;\n}\n\n/* Remove external link indicators */\na[target=\"_blank\"]::after {\n  display: none;\n} Learn more in the [Python documentation](https://docs.python.org) Click [here](https://docs.python.org) for more info ## References\n- [MDN Web Docs](https://developer.mozilla.org)\n- [Stack Overflow](https://stackoverflow.com)\n- [Can I Use](https://caniuse.com) > \"Quote from article\" - [Source](https://example.com/article) Edit this diagram in [draw.io](https://app.diagrams.net) <!-- Force same tab -->\n<a href=\"https://example.com\" target=\"_self\">Same tab link</a>\n\n<!-- Force new tab -->\n<a href=\"https://example.com\" target=\"_blank\">New tab link</a> // Add external link attributes\ndocument.querySelectorAll('a[href^=\"http\"]').forEach(link => {\n  if (!link.hostname.includes(window.location.hostname)) {\n    link.target = '_blank';\n    link.rel = 'noopener noreferrer';\n  }\n}); <!-- No referrer for specific link -->\n<a href=\"https://example.com\" rel=\"noreferrer\">Private link</a>",
+      "code_blocks_count": 13
+    },
+    {
+      "path": "/notes/tutorials/features/print-mode.md",
+      "context": "tutorials",
+      "metadata": {
+        "title": "Print Mode",
+        "tags": [
+          "export",
+          "printing",
+          "pdf",
+          "documentation"
+        ],
+        "created": "2025-01-23",
+        "author": "NotesWiki Team",
+        "description": "Print your notes with optimized formatting and layout",
+        "updated": "2025-01-23",
+        "category": null,
+        "status": null,
+        "aliases": [],
+        "related": [],
+        "dependencies": [],
+        "keywords": [],
+        "tableOfContents": "auto",
+        "hideFromSearch": false
+      },
+      "content_preview": "NotesWiki includes intelligent print styling that automatically optimizes your notes for printing or PDF export. When you print a note, unnecessary UI elements are hidden and the content is reformatte...",
+      "searchable_content": "\nPrint Mode\n\nNotesWiki includes intelligent print styling that automatically optimizes your notes for printing or PDF export. When you print a note, unnecessary UI elements are hidden and the content is reformatted for optimal readability on paper.\n\nHow to Print\n\nQuick Print\n1. Keyboard shortcut: Press Ctrl + P (Windows/Linux) or Cmd + P (Mac)\n2. Browser menu: File \u2192 Print\n3. Right-click menu: Right-click \u2192 Print\n\nWhat Gets Printed\n\nWhen printing, NotesWiki automatically:\n- Shows: Note content, headings, text, images, tables, code blocks\n- Hides: Navigation sidebar, header bar, tabs, buttons, tooltips\n- Optimizes: Layout, margins, font sizes, page breaks\n\nPrint Optimization Features\n\nAutomatic Adjustments\n\n1. Clean Layout\n   - Removes all UI chrome\n   - Centers content on page\n   - Applies appropriate margins\n   - Uses print-friendly fonts\n\n2. Smart Page Breaks\n   - Avoids breaking inside paragraphs\n   - Keeps headings with content\n   - Prevents orphaned lines\n   - Maintains table integrity\n\n3. Image Handling\n   - Scales large images to fit\n   - Maintains aspect ratios\n   - Ensures images don't break across pages\n   - Converts to grayscale if needed\n\n4. Code Block Formatting\n   - Preserves syntax highlighting\n   - Maintains line numbers\n   - Wraps long lines\n   - Uses monospace fonts\n\nPrint Settings\n\nBrowser Print Dialog\n\nConfigure in your browser's print dialog:\n\n1. Layout\n   - Portrait or Landscape\n   - Fit to page width\n   - Scale percentage\n\n2. Paper\n   - Size (Letter, A4, etc.)\n   - Margins (Normal, Narrow, Custom)\n   - Headers and footers\n\n3. Options\n   - Background graphics\n   - Selection only\n   - Pages to print\n\nRecommended Settings\n\nFor Documents:\n- Paper: Letter/A4\n- Margins: Normal\n- Scale: 100%\n- Background: Off\n\nFor Code:\n- Orientation: Landscape\n- Margins: Narrow\n- Scale: Fit to width\n- Background: On (for syntax colors)\n\nAdvanced Print Styling\n\nCustom Print CSS\n\nAdd print-specific styles via Custom CSS:\n\ncss\n@media print {\n  / Custom page margins /\n  @page {\n    margin: 1in;\n    size: letter;\n  }\n  \n  / Force page breaks /\n  h1 {\n    page-break-before: always;\n  }\n  \n  / Prevent breaks /\n  pre, table {\n    page-break-inside: avoid;\n  }\n  \n  / Hide specific elements /\n  .no-print {\n    display: none !important;\n  }\n  \n  / Custom header /\n  body::before {\n    content: \"Confidential Document\";\n    position: fixed;\n    top: 0;\n    right: 0;\n    font-size: 12px;\n    color: #999;\n  }\n}\n\n\nPrint-Specific Classes\n\nUse these classes in your notes:\n\nmarkdown\n<div class=\"page-break\"></div>\n<!-- Forces a page break -->\n\n<div class=\"no-print\">\nThis content won't appear in print\n</div>\n\n<div class=\"print-only\" style=\"display:none;\">\nThis only appears when printing\n</div>\n\n\nCreating PDFs\n\nBrowser PDF Export\n\nMost browsers can save as PDF:\n\n1. Press Ctrl/Cmd + P\n2. Select \"Save as PDF\" as destination\n3. Configure options:\n   - Paper size\n   - Margins\n   - Background graphics\n4. Click Save\n\nPDF Best Practices\n\n1. Check preview before saving\n2. Test links - they remain clickable in PDFs\n3. Embed fonts for consistency\n4. Include backgrounds for code highlighting\n5. Set appropriate margins for binding\n\nPrint Layouts\n\nSingle Note\n\nPrinting the current note:\n- Content fills the page width\n- Automatic pagination\n- Headers create outline structure\n- Images inline with text\n\nMultiple Notes\n\nTo print multiple notes:\n1. Open each in separate tabs\n2. Use browser's \"Print all tabs\" if available\n3. Or create a combined document first\n\nTable of Contents\n\nLong documents automatically generate:\n- Page numbers for headings\n- Hierarchical structure\n- Works with PDF bookmarks\n\nSpecial Content Types\n\nTables\n- Tables maintain borders and shading\n- Large tables may rotate to landscape\n- Column widths adjust for paper\n- Headers repeat on new pages\n\nCode Blocks\ncss\n/ Code maintains formatting /\n@media print {\n  pre {\n    font-size: 10pt;\n    line-height: 1.2;\n  }\n}\n\n- Syntax highlighting preserved\n- Line numbers optional\n- Background shading configurable\n\nImages\n- High resolution maintained\n- Captions print below images\n- Large images scale down\n- SVGs remain vector\n\nCallouts\n> [!note]\n> Callouts maintain their styling and icons in print\n\n- Icons convert to unicode\n- Backgrounds print in grayscale\n- Borders remain visible\n\nTroubleshooting\n\nContent Cut Off\n\nIf content is cut off:\n1. Try landscape orientation\n2. Reduce scale to 90% or \"Fit\"\n3. Adjust margins to \"Narrow\"\n4. Check custom CSS for conflicts\n\nMissing Elements\n\nIf elements don't print:\n1. Check browser print preview\n2. Enable \"Background graphics\"\n3. Verify no display: none in print CSS\n4. Try different browser\n\nPoor Quality\n\nFor better print quality:\n1. Use PDF export instead of direct print\n2. Increase browser zoom before printing\n3. Use high-quality paper settings\n4. Enable \"Print backgrounds\"\n\nTips for Print-Friendly Notes\n\nStructure\n1. Use clear heading hierarchy\n2. Keep paragraphs concise\n3. Use lists for easy scanning\n4. Add page breaks before major sections\n\nFormatting\n1. Avoid relying on color alone\n2. Ensure sufficient contrast\n3. Use standard fonts\n4. Keep line lengths reasonable\n\nImages\n1. Use high-resolution images\n2. Add descriptive captions\n3. Position images inline\n4. Avoid floating layouts\n\nPlatform-Specific Notes\n\nWindows\n- Use \"Microsoft Print to PDF\"\n- Check printer preferences\n- Adjust ClearType for printing\n\nmacOS\n- Use Preview for PDF adjustments\n- Check ColorSync profiles\n- Use \"Save as PDF\" in print dialog\n\nLinux\n- Install CUPS-PDF for PDF printing\n- Check ghostscript settings\n- Use print preview extensively\n\nCommon Use Cases\n\nMeeting Notes\n- Print for offline reference\n- Share physical copies\n- Archive important decisions\n\nDocumentation\n- Create user manuals\n- Generate reference guides\n- Produce training materials\n\nCode Reviews\n- Print code with comments\n- Annotate physical copies\n- Share in meetings\n\nStudy Materials\n- Create physical study guides\n- Print for offline learning\n- Make annotatable copies\n\nRelated Features\n\n- [[Export|Export Options]] - Other export formats\n- [[Custom CSS]] - Advanced print styling\n- [[Typography and Fonts|Typography]] - Font considerations\n- [[Themes]] - Theme impact on printing\n- [[PDF Export|Creating PDFs]] - Dedicated PDF features\n\nPro Tips\n\n1. Preview First: Always check print preview\n2. Save Settings: Browsers remember print settings\n3. Test Prints: Do a test page first\n4. PDF Archive: Save PDFs for consistent output\n5. Print Styles: Develop custom print CSS for your needs @media print {\n  /* Custom page margins */\n  @page {\n    margin: 1in;\n    size: letter;\n  }\n  \n  /* Force page breaks */\n  h1 {\n    page-break-before: always;\n  }\n  \n  /* Prevent breaks */\n  pre, table {\n    page-break-inside: avoid;\n  }\n  \n  /* Hide specific elements */\n  .no-print {\n    display: none !important;\n  }\n  \n  /* Custom header */\n  body::before {\n    content: \"Confidential Document\";\n    position: fixed;\n    top: 0;\n    right: 0;\n    font-size: 12px;\n    color: #999;\n  }\n} <div class=\"page-break\"></div>\n<!-- Forces a page break -->\n\n<div class=\"no-print\">\nThis content won't appear in print\n</div>\n\n<div class=\"print-only\" style=\"display:none;\">\nThis only appears when printing\n</div> /* Code maintains formatting */\n@media print {\n  pre {\n    font-size: 10pt;\n    line-height: 1.2;\n  }\n}",
+      "code_blocks_count": 3
+    },
+    {
       "path": "/notes/index.md",
       "context": null,
       "metadata": {
@@ -901,7 +1126,7 @@
   "tags": {
     "home": 1,
     "index": 1,
-    "documentation": 3,
+    "documentation": 4,
     "tutorial": 11,
     "getting-started": 4,
     "markdown": 2,
@@ -912,35 +1137,35 @@
     "support": 1,
     "fixes": 1,
     "demo": 8,
-    "search": 3,
+    "search": 4,
     "operators": 1,
-    "filtering": 1,
-    "productivity": 8,
+    "filtering": 2,
+    "productivity": 10,
     "pomodoro": 1,
     "focus": 2,
     "timer": 1,
     "recent-files": 1,
     "pinning": 1,
-    "organization": 3,
+    "organization": 4,
     "callouts": 1,
     "guide": 1,
     "images": 1,
-    "themes": 1,
+    "themes": 3,
     "showcase": 1,
-    "styling": 1,
-    "navigation": 10,
+    "styling": 2,
+    "navigation": 14,
     "toc": 1,
-    "links": 1,
+    "links": 2,
     "reading": 2,
     "code": 2,
     "syntax-highlighting": 1,
     "bookmarks": 1,
     "contexts": 1,
     "interface": 4,
-    "tabs": 2,
+    "tabs": 4,
     "shortcuts": 1,
-    "settings": 2,
-    "customization": 1,
+    "settings": 3,
+    "customization": 4,
     "configuration": 1,
     "quick-notes": 1,
     "quick-actions": 1,
@@ -952,17 +1177,28 @@
     "features": 2,
     "hidden": 1,
     "private": 1,
-    "advanced": 2,
-    "automation": 1,
+    "ui": 1,
+    "readability": 1,
+    "accessibility": 2,
+    "fonts": 1,
+    "tags": 1,
+    "advanced": 3,
+    "css": 1,
+    "automation": 2,
+    "security": 1,
+    "export": 1,
+    "printing": 1,
+    "pdf": 1,
     "build": 1,
     "reference": 1,
     "compatibility": 1,
     "platforms": 1
   },
   "authors": [
+    "NotesWiki Team",
+    "Wiki Admin",
     "Wiki Team",
-    "Test Author",
-    "Wiki Admin"
+    "Test Author"
   ],
   "categories": [
     "testing",
@@ -972,7 +1208,7 @@
     {
       "id": "tutorials",
       "name": "Tutorials",
-      "noteCount": 30
+      "noteCount": 38
     },
     {
       "id": "reference",
@@ -980,6 +1216,6 @@
       "noteCount": 1
     }
   ],
-  "generated": "2025-06-23T17:16:09.521749",
-  "totalNotes": 32
+  "generated": "2025-06-23T17:36:09.782749",
+  "totalNotes": 40
 }
