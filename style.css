@@ -848,8 +848,35 @@ body.custom-fonts-loaded {
 }
 
 .file-tree-link.active {
+    background-color: var(--sidebar-item-active, var(--bg-hover));
+    color: var(--text-primary);
+    font-weight: 600;
+    position: relative;
+}
+
+/* Active indicator bar instead of full background */
+.file-tree-link.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
     background-color: var(--accent-primary);
-    color: var(--badge-text);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+/* Ensure contrast for active sidebar items */
+.file-tree-link.active {
+    /* Add subtle text shadow for better readability */
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Additional contrast enhancement for file names */
+.file-tree-link.active .file-name {
+    /* Slightly increase opacity/brightness for active items */
+    opacity: 1;
+    filter: brightness(1.1);
 }
 
 .file-tree-folder {

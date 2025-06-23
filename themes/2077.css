@@ -46,7 +46,7 @@
     
     /* Badge Colors */
     --badge-bg: var(--accent-secondary);
-    --badge-text: #030d22;
+    --badge-text: #ffffff;
     
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 rgba(14, 243, 255, 0.2);

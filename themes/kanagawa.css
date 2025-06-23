@@ -48,7 +48,7 @@
     --button-active: var(--button-active-bg);
     
     --badge-bg: var(--accent-error);
-    --badge-text: var(--text-color);
+    --badge-text: #ffffff;
     
     /* Text colors */
     --text-color: #DCD7BA;
