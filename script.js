@@ -1836,6 +1836,15 @@ class NotesWiki {
             if (this.activeTabId) {
                 const tab = this.tabs.get(this.activeTabId);
                 if (tab) {
+                    // Check if tab is pinned before updating path
+                    if (tab.isPinned && tab.path && tab.path !== path) {
+                        console.warn('[LoadNote] Attempted to change content of pinned tab:', this.activeTabId);
+                        this.showToast('Cannot change the content of a pinned tab', 'warning');
+                        // Don't update the path for pinned tabs
+                        // Return early to prevent further processing
+                        document.getElementById('content').innerHTML = '';
+                        return;
+                    }
                     tab.path = path;
                 }
             }
@@ -10964,19 +10973,29 @@ class NotesWiki {
         if (tab.pendingLoad) {
             const pendingPath = tab.pendingLoad;
             delete tab.pendingLoad;
-            this.loadNote(pendingPath).then(() => {
-                // Update tab title after successful load
-                if (this.currentNote && this.currentNote.metadata.title) {
-                    tab.title = this.currentNote.metadata.title;
-                    const tabElement = document.getElementById(tabId);
-                    if (tabElement) {
-                        tabElement.querySelector('.tab-title').textContent = tab.title;
+            
+            // Check if tab is pinned before loading
+            if (tab.isPinned && tab.path && tab.path !== pendingPath) {
+                // Tab is pinned and trying to load a different note
+                console.log('[Tab] Cannot load pending path into pinned tab:', tabId);
+                this.showToast('Cannot change the content of a pinned tab', 'warning');
+                // Don't load the pending path
+            } else {
+                // Safe to load
+                this.loadNote(pendingPath).then(() => {
+                    // Update tab title after successful load
+                    if (this.currentNote && this.currentNote.metadata.title) {
+                        tab.title = this.currentNote.metadata.title;
+                        const tabElement = document.getElementById(tabId);
+                        if (tabElement) {
+                            tabElement.querySelector('.tab-title').textContent = tab.title;
+                        }
+                        this.saveTabState();
                     }
-                    this.saveTabState();
-                }
-            }).catch(() => {
-                // Load failed, keep the placeholder title
-            });
+                }).catch(() => {
+                    // Load failed, keep the placeholder title
+                });
+            }
         } else {
             // Check if this is a split view tab
             if (tab.isSplitView) {
