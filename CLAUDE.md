@@ -37,6 +37,10 @@ npm run validate-all
 
 # Validate search index generation
 python3 build.py  # Should output "Build complete!" with stats
+
+# Lint and typecheck commands
+# IMPORTANT: Currently no linting/typechecking commands are configured
+# If user asks about linting, suggest adding ESLint configuration
 ```
 
 ### Release Packaging
@@ -81,7 +85,7 @@ When making significant changes, consider the modular refactoring plan:
    - Pomodoro timer, keyboard shortcuts, responsive context filtering
    - Quick Notes panel (slide-out from right side for temporary notes)
    - Split view (side-by-side note viewing)
-   - Context menus (10+ different menus for all UI elements)
+   - Context menus (16 different menus for all UI elements)
    - Confirmation dialogs for closing tabs/sticky notes (enabled by default)
 
 3. **Build System**: `build.py` - Python script that:
@@ -97,6 +101,13 @@ When making significant changes, consider the modular refactoring plan:
    - `/themes/` - 150 CSS theme files
    - `/libs/` - Bundled dependencies (Marked.js, Prism.js, Mermaid.js)
    - `/fonts/` - Self-contained font system (Inter, JetBrains Mono)
+
+5. **Key Configuration Files**:
+   - `package.json` - NPM scripts and version info
+   - `validate-themes.js` - Theme validation script
+   - `create-release.js` - Release packaging script
+   - `.github/workflows/static.yml` - GitHub Pages deployment
+   - `.gitlab-ci.yml` - GitLab Pages deployment
 
 ### Deployment Configuration
 
@@ -202,6 +213,8 @@ The application features comprehensive right-click context menus:
 - **Recent files context menu**: View files, clear history, set limit
 - **Bookmarks context menu**: View bookmarks, clear all, export
 - **Quick notes context menu**: Toggle, import/export, clear all
+- **Site brand context menu**: Go to home, view all notes, random note, keyboard shortcuts, about
+- **Code block context menu**: Copy code, select all, view language, download file, toggle wrap
 
 ### Recent Major Features (v3.6.0+)
 
@@ -242,6 +255,8 @@ When making changes to this codebase:
 4. **Help updates**: Update help modal content in `index.html` when adding features
 5. **Memory management**: Implement proper event listener cleanup
 6. **Context menu conflicts**: Use `dismissAllContextMenus()` before showing new menus
+7. **Git commits**: When creating commits, use descriptive messages following conventional commit format (feat:, fix:, docs:, etc.)
+8. **Pull requests**: Use `gh pr create` with detailed summary and test plan
 
 ### Critical Implementation Notes
 
@@ -256,6 +271,17 @@ When making changes to this codebase:
 **Tab Context Menu**: Available actions are Pin/Unpin Tab, Close Tab, Close Other Tabs, and Close All Tabs. Duplicate Tab was removed in v3.4.0.
 
 **SVG Icon Patterns**: Use `fill="currentColor"` for theme compatibility. Ensure 16x16 viewbox and proper path definitions. Test in context menus specifically as they have different rendering behavior than header icons.
+
+**DOM Initialization**: The NotesWiki class must be instantiated after DOM is ready:
+```javascript
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        window.notesWiki = new NotesWiki();
+    });
+} else {
+    window.notesWiki = new NotesWiki();
+}
+```
 
 ### Key Methods to Know
 
@@ -332,3 +358,26 @@ When making changes to this codebase:
 2. Run `npm run package` to create release bundle
 3. Tag release in git with version number
 4. Create GitHub release with `gh release create`
+
+### Common Troubleshooting
+
+**Context Menus Not Working**:
+- Check DOM initialization timing
+- Verify event.preventDefault() and event.stopPropagation() are called
+- Ensure dismissAllContextMenus() is called before showing new menu
+- Check z-index layering for modal overlays
+
+**Theme Issues**:
+- Run `npm run validate-themes` to check all themes
+- Ensure CSS variables are defined for new features
+- Test theme switching in different contexts (main view, settings modal)
+
+**Search Index Problems**:
+- Run `python3 build.py` to regenerate index
+- Check for YAML frontmatter syntax errors in notes
+- Verify `/notes/` directory structure
+
+**Memory Leaks**:
+- Always store event handlers for cleanup
+- Use removeEventListener with the same handler reference
+- Check for intervals/timeouts that need clearing

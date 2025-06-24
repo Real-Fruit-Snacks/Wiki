@@ -811,6 +811,17 @@ class NotesWiki {
             this.showSidebarToggleContextMenu(e);
         });
         
+        // Site brand/logo right-click menu
+        const siteBrand = document.querySelector('.site-brand');
+        if (siteBrand) {
+            siteBrand.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.dismissAllContextMenus();
+                this.showSiteBrandContextMenu(e);
+            });
+        }
+        
         // Folder expand/collapse all buttons
         document.getElementById('expand-all-folders').addEventListener('click', () => {
             this.expandAllFolders();
@@ -2789,6 +2800,9 @@ class NotesWiki {
             this.generateCombinedCodeBlock(metadata);
         }
         
+        // Add context menus to code blocks
+        this.setupCodeBlockContextMenus();
+        
         // Scroll to top
         mainContent.scrollTop = 0;
         
@@ -3100,7 +3114,9 @@ class NotesWiki {
             '.settings-context-menu',
             '.note-context-menu',
             '.tab-context-menu',
-            '.theme-context-menu'
+            '.theme-context-menu',
+            '.site-brand-context-menu',
+            '.code-block-context-menu'
         ].join(', '));
         
         existingMenus.forEach(menu => {
@@ -16475,6 +16491,85 @@ class NotesWiki {
         this.showContextMenu(contextMenu, event);
     }
     
+    showSiteBrandContextMenu(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        // Create context menu container
+        const contextMenu = document.createElement('div');
+        contextMenu.className = 'site-brand-context-menu';
+        contextMenu.style.position = 'fixed';
+        contextMenu.style.left = `${event.clientX}px`;
+        contextMenu.style.top = `${event.clientY}px`;
+        contextMenu.style.zIndex = '10000';
+        
+        // Create menu items for navigation and app info
+        const menuItems = [
+            {
+                label: 'Go to Home',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>`,
+                action: () => {
+                    this.navigateToHome();
+                    this.showToast('Navigated to home', 'info');
+                }
+            },
+            {
+                label: 'View All Notes',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1a1 1 0 102 0V3a2 2 0 012 2v6h-1a2 2 0 100 4h1v1a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>`,
+                action: () => {
+                    this.setActiveContext(null);
+                    this.buildContextSwitcher();
+                    this.showToast('Showing all notes', 'info');
+                }
+            },
+            {
+                label: 'Random Note',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd"/></svg>`,
+                action: () => this.openRandomNote(),
+                disabled: !this.notesIndex || !this.notesIndex.notes.length
+            },
+            {
+                label: 'Show Keyboard Shortcuts',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>`,
+                action: () => this.showKeyboardShortcuts()
+            },
+            {
+                label: 'About Notes Wiki',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM8.94 6.94a.75.75 0 11-1.061-1.061 3 3 0 112.871 5.026 7.75 7.75 0 00-.486 1.05.75.75 0 01-1.43-.49c.063-.146.151-.292.263-.444A4.5 4.5 0 008.94 6.94zM10 15.25a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd"/></svg>`,
+                action: () => this.showAboutDialog()
+            }
+        ];
+        
+        // Build menu with proper SVG handling
+        menuItems.forEach(item => {
+            const menuItem = document.createElement('div');
+            menuItem.className = `context-menu-item${item.disabled ? ' disabled' : ''}`;
+            
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'context-menu-icon';
+            iconSpan.innerHTML = item.icon;
+            
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'context-menu-label';
+            labelSpan.textContent = item.label;
+            
+            menuItem.appendChild(iconSpan);
+            menuItem.appendChild(labelSpan);
+            
+            // Add click handler if not disabled
+            if (!item.disabled) {
+                menuItem.addEventListener('click', () => {
+                    item.action();
+                    contextMenu.remove();
+                });
+            }
+            
+            contextMenu.appendChild(menuItem);
+        });
+        
+        this.showContextMenu(contextMenu, event);
+    }
+    
     // Shared context menu display logic
     showContextMenu(contextMenu, event) {
         // Close menu when clicking outside
@@ -16575,6 +16670,332 @@ class NotesWiki {
             }
         }
         this.showToast(`Unpinned ${unpinnedCount} tabs`, 'success');
+    }
+    
+    // Site brand context menu helper methods
+    openRandomNote() {
+        if (!this.notesIndex || !this.notesIndex.notes.length) {
+            this.showToast('No notes available', 'warning');
+            return;
+        }
+        
+        const randomIndex = Math.floor(Math.random() * this.notesIndex.notes.length);
+        const randomNote = this.notesIndex.notes[randomIndex];
+        this.openInNewTab(randomNote.path);
+        this.showToast(`Opened random note: ${randomNote.metadata.title}`, 'success');
+    }
+    
+    showKeyboardShortcuts() {
+        // Create a modal dialog for keyboard shortcuts
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        modal.innerHTML = `
+            <div class="modal-container">
+                <div class="modal-header">
+                    <h2>Keyboard Shortcuts</h2>
+                    <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-content">
+                    <div class="shortcut-section">
+                        <h3>Navigation</h3>
+                        <div class="shortcut-grid">
+                            <div class="shortcut-item">
+                                <span class="shortcut-key">Ctrl+K</span>
+                                <span class="shortcut-desc">Open search</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <span class="shortcut-key">Ctrl+T</span>
+                                <span class="shortcut-desc">New tab</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <span class="shortcut-key">Ctrl+W</span>
+                                <span class="shortcut-desc">Close tab</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <span class="shortcut-key">Ctrl+Shift+W</span>
+                                <span class="shortcut-desc">Close all tabs</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shortcut-section">
+                        <h3>Features</h3>
+                        <div class="shortcut-grid">
+                            <div class="shortcut-item">
+                                <span class="shortcut-key">Ctrl+,</span>
+                                <span class="shortcut-desc">Settings</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <span class="shortcut-key">Ctrl+Shift+S</span>
+                                <span class="shortcut-desc">Quick Notes</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <span class="shortcut-key">Ctrl+B</span>
+                                <span class="shortcut-desc">Toggle sidebar</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <span class="shortcut-key">F11</span>
+                                <span class="shortcut-desc">Focus mode</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Close on click outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.remove();
+            }
+        });
+    }
+    
+    showAboutDialog() {
+        // Create a modal dialog for app information
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        modal.innerHTML = `
+            <div class="modal-container">
+                <div class="modal-header">
+                    <h2>About Notes Wiki</h2>
+                    <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-content">
+                    <div class="about-content">
+                        <div class="app-info">
+                            <div class="app-logo">
+                                <svg class="site-logo" width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+                                    <path d="M14 2v6h6"/>
+                                    <path fill="var(--bg-primary)" d="M10 12h4M10 16h4M8 12h.01M8 16h.01"/>
+                                </svg>
+                            </div>
+                            <h3>Notes Wiki v3.6.5</h3>
+                            <p>A powerful, offline-first personal knowledge management system</p>
+                        </div>
+                        <div class="feature-highlights">
+                            <h4>Key Features</h4>
+                            <ul>
+                                <li>🎨 150+ Professional Themes</li>
+                                <li>📱 Fully Responsive Design</li>
+                                <li>🔍 Advanced Search with Operators</li>
+                                <li>📑 Multi-tab Workspace</li>
+                                <li>🌐 Works Completely Offline</li>
+                                <li>🎯 Focus Mode & Pomodoro Timer</li>
+                                <li>🔖 Bookmarks & Quick Notes</li>
+                                <li>🎨 Context Menus Everywhere</li>
+                            </ul>
+                        </div>
+                        <div class="tech-info">
+                            <p><strong>Built with:</strong> Vanilla JavaScript, Zero Dependencies</p>
+                            <p><strong>Deployment:</strong> Static Site Generation</p>
+                            <p><strong>Storage:</strong> Browser LocalStorage</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Close on click outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.remove();
+            }
+        });
+    }
+    
+    // Code block context menu setup and handling
+    setupCodeBlockContextMenus() {
+        // Add context menu to all code blocks
+        document.querySelectorAll('.code-block-language-section').forEach((codeBlock, index) => {
+            // Store reference for cleanup
+            const handler = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.dismissAllContextMenus();
+                this.showCodeBlockContextMenu(e, codeBlock, index);
+            };
+            
+            codeBlock.addEventListener('contextmenu', handler);
+            
+            // Store handler for potential cleanup
+            if (!this.codeBlockHandlers) {
+                this.codeBlockHandlers = [];
+            }
+            this.codeBlockHandlers.push({ element: codeBlock, handler });
+        });
+    }
+    
+    showCodeBlockContextMenu(event, codeBlock, blockIndex) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        // Get the code element and its content
+        const codeElement = codeBlock.querySelector('code');
+        const language = codeElement ? codeElement.className.match(/language-(\w+)/)?.[1] || 'text' : 'text';
+        const codeContent = codeElement ? codeElement.textContent : '';
+        
+        // Create context menu container
+        const contextMenu = document.createElement('div');
+        contextMenu.className = 'code-block-context-menu';
+        contextMenu.style.position = 'fixed';
+        contextMenu.style.left = `${event.clientX}px`;
+        contextMenu.style.top = `${event.clientY}px`;
+        contextMenu.style.zIndex = '10000';
+        
+        // Create menu items for code block actions
+        const menuItems = [
+            {
+                label: 'Copy Code',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"/><path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"/></svg>`,
+                action: () => this.copyCodeToClipboard(codeContent),
+                disabled: !codeContent.trim()
+            },
+            {
+                label: 'Select All Code',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>`,
+                action: () => this.selectCodeBlock(codeElement)
+            },
+            {
+                label: `Language: ${language.toUpperCase()}`,
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`,
+                action: () => {
+                    // Just show the language info
+                    this.showToast(`Code block language: ${language}`, 'info');
+                },
+                className: 'info-item'
+            },
+            {
+                label: 'Download as File',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`,
+                action: () => this.downloadCodeAsFile(codeContent, language, blockIndex),
+                disabled: !codeContent.trim()
+            },
+            {
+                label: 'Wrap/Unwrap Lines',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>`,
+                action: () => this.toggleCodeBlockWrap(codeBlock)
+            }
+        ];
+        
+        // Build menu with proper SVG handling
+        menuItems.forEach(item => {
+            const menuItem = document.createElement('div');
+            menuItem.className = `context-menu-item${item.disabled ? ' disabled' : ''}${item.className ? ' ' + item.className : ''}`;
+            
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'context-menu-icon';
+            iconSpan.innerHTML = item.icon;
+            
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'context-menu-label';
+            labelSpan.textContent = item.label;
+            
+            menuItem.appendChild(iconSpan);
+            menuItem.appendChild(labelSpan);
+            
+            // Add click handler if not disabled
+            if (!item.disabled) {
+                menuItem.addEventListener('click', () => {
+                    item.action();
+                    contextMenu.remove();
+                });
+            }
+            
+            contextMenu.appendChild(menuItem);
+        });
+        
+        this.showContextMenu(contextMenu, event);
+    }
+    
+    // Code block helper methods
+    copyCodeToClipboard(codeContent) {
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(codeContent).then(() => {
+                this.showToast('Code copied to clipboard', 'success');
+            }).catch(() => {
+                this.fallbackCopyToClipboard(codeContent);
+            });
+        } else {
+            this.fallbackCopyToClipboard(codeContent);
+        }
+    }
+    
+    selectCodeBlock(codeElement) {
+        if (codeElement) {
+            const range = document.createRange();
+            range.selectNodeContents(codeElement);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            this.showToast('Code block selected', 'info');
+        }
+    }
+    
+    downloadCodeAsFile(codeContent, language, blockIndex) {
+        // Determine file extension based on language
+        const extensions = {
+            javascript: 'js',
+            typescript: 'ts',
+            python: 'py',
+            java: 'java',
+            cpp: 'cpp',
+            c: 'c',
+            html: 'html',
+            css: 'css',
+            php: 'php',
+            ruby: 'rb',
+            go: 'go',
+            rust: 'rs',
+            swift: 'swift',
+            kotlin: 'kt',
+            scala: 'scala',
+            shell: 'sh',
+            bash: 'sh',
+            powershell: 'ps1',
+            sql: 'sql',
+            json: 'json',
+            xml: 'xml',
+            yaml: 'yml',
+            markdown: 'md'
+        };
+        
+        const extension = extensions[language.toLowerCase()] || 'txt';
+        const filename = `code-block-${blockIndex + 1}.${extension}`;
+        
+        // Create and download file
+        const blob = new Blob([codeContent], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        this.showToast(`Downloaded as ${filename}`, 'success');
+    }
+    
+    toggleCodeBlockWrap(codeBlock) {
+        const pre = codeBlock.querySelector('pre');
+        if (pre) {
+            pre.classList.toggle('no-wrap');
+            const isWrapped = !pre.classList.contains('no-wrap');
+            this.showToast(`Line wrapping ${isWrapped ? 'enabled' : 'disabled'}`, 'info');
+        }
     }
     
     closeNonPinnedTabs() {
