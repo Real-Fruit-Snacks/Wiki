@@ -1195,10 +1195,10 @@
     "platforms": 1
   },
   "authors": [
-    "NotesWiki Team",
-    "Wiki Admin",
     "Wiki Team",
-    "Test Author"
+    "Test Author",
+    "Wiki Admin",
+    "NotesWiki Team"
   ],
   "categories": [
     "tutorial",
@@ -1216,6 +1216,6 @@
       "noteCount": 1
     }
   ],
-  "generated": "2025-06-24T10:13:16.004707",
+  "generated": "2025-06-24T10:44:06.616143",
   "totalNotes": 40
 }

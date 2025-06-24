@@ -17011,12 +17011,95 @@ class NotesWiki {
     }
     
     showTabOverview() {
-        const tabList = Array.from(this.tabs.values())
-            .map((tab, i) => `${i + 1}. ${tab.title}${tab.isPinned ? ' 📌' : ''}`)
-            .join('\n');
+        // Create a styled modal for tab overview
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
         
-        const message = `Open Tabs (${this.tabs.size}):\n\n${tabList}`;
-        alert(message);
+        // Build tab list HTML
+        const tabsHtml = Array.from(this.tabs.values())
+            .map((tab, i) => {
+                const truncatedTitle = tab.title.length > 50 ? 
+                    tab.title.substring(0, 50) + '...' : 
+                    tab.title;
+                
+                return `
+                    <div class="tab-overview-item${tab.isPinned ? ' pinned' : ''}" data-tab-id="${tab.id}">
+                        <div class="tab-overview-number">${i + 1}</div>
+                        <div class="tab-overview-content">
+                            <div class="tab-overview-title">${this.escapeHtml(truncatedTitle)}</div>
+                            <div class="tab-overview-path">${this.escapeHtml(tab.path || 'Untitled')}</div>
+                        </div>
+                        <div class="tab-overview-actions">
+                            ${tab.isPinned ? '<span class="tab-pin-indicator" title="Pinned">📌</span>' : ''}
+                            <button class="tab-overview-switch" data-tab-id="${tab.id}" title="Switch to tab">
+                                <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                            <button class="tab-overview-close" data-tab-id="${tab.id}" title="Close tab">
+                                <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            })
+            .join('');
+        
+        modal.innerHTML = `
+            <div class="modal-container tab-overview-modal">
+                <div class="modal-header">
+                    <h2>Tab Overview (${this.tabs.size} open)</h2>
+                    <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-content">
+                    <div class="tab-overview-list">
+                        ${tabsHtml || '<div class="no-tabs-message">No tabs open</div>'}
+                    </div>
+                    <div class="tab-overview-footer">
+                        <button class="button" onclick="window.notesWiki.closeAllTabs(); this.closest('.modal-overlay').remove();">
+                            Close All Tabs
+                        </button>
+                        <button class="button button-secondary" onclick="this.closest('.modal-overlay').remove();">
+                            Done
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Add event listeners for tab actions
+        modal.addEventListener('click', (e) => {
+            const switchBtn = e.target.closest('.tab-overview-switch');
+            const closeBtn = e.target.closest('.tab-overview-close');
+            
+            if (switchBtn) {
+                const tabId = switchBtn.dataset.tabId;
+                this.switchToTab(tabId);
+                modal.remove();
+            } else if (closeBtn) {
+                const tabId = closeBtn.dataset.tabId;
+                this.closeTab(tabId);
+                
+                // Update the modal content
+                if (this.tabs.size === 0) {
+                    modal.remove();
+                } else {
+                    // Regenerate the modal content
+                    modal.remove();
+                    this.showTabOverview();
+                }
+            } else if (e.target === modal) {
+                modal.remove();
+            }
+        });
+        
+        document.body.appendChild(modal);
     }
     
     getCurrentPresetName() {
