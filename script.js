@@ -16961,7 +16961,17 @@ class NotesWiki {
         // Get the code element and its content
         const codeElement = codeBlockDiv ? codeBlockDiv.querySelector('code') : codeBlock.querySelector('code');
         const language = codeElement ? codeElement.className.match(/language-(\w+)/)?.[1] || 'text' : 'text';
-        const codeContent = codeElement ? codeElement.textContent : '';
+        
+        // Get original code content from data attribute (preserves newlines) or fallback to textContent
+        let codeContent = '';
+        if (codeBlockDiv && codeBlockDiv.dataset.codeContent) {
+            // Decode HTML entities to get original content
+            const textArea = document.createElement('textarea');
+            textArea.innerHTML = codeBlockDiv.dataset.codeContent;
+            codeContent = textArea.value;
+        } else if (codeElement) {
+            codeContent = codeElement.textContent;
+        }
         
         // Get the code block title if it exists
         const titleElement = codeBlockDiv ? codeBlockDiv.querySelector('.code-block-title') : null;
