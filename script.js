@@ -4630,11 +4630,11 @@ class NotesWiki {
                 contextBookmarks.forEach(bookmark => {
                     html += `
                         <div class="bookmark-card">
-                            <a href="#${bookmark.path.startsWith('/') ? bookmark.path : '/' + bookmark.path}" class="bookmark-card-link" onclick="event.preventDefault(); notesWiki.navigateToBookmark('${bookmark.path.startsWith('/') ? bookmark.path : '/' + bookmark.path}')">
+                            <a href="#${bookmark.path.startsWith('/') ? bookmark.path : '/' + bookmark.path}" class="bookmark-card-link" data-bookmark-path="${bookmark.path.startsWith('/') ? bookmark.path : '/' + bookmark.path}">
                                 <h4>${this.escapeHtml(bookmark.title)}</h4>
                                 <p class="bookmark-date">Bookmarked ${this.formatDate(bookmark.bookmarkedAt)}</p>
                             </a>
-                            <button class="bookmark-card-remove" onclick="window.notesWiki.removeBookmark('${bookmark.path}')" title="Remove bookmark">
+                            <button class="bookmark-card-remove" data-bookmark-path="${bookmark.path}" title="Remove bookmark">
                                 <i class="icon">×</i>
                             </button>
                         </div>
@@ -4654,6 +4654,33 @@ class NotesWiki {
         `;
         
         mainContent.innerHTML = html;
+        
+        // Add event listeners for bookmark cards
+        const bookmarkLinks = mainContent.querySelectorAll('.bookmark-card-link');
+        bookmarkLinks.forEach(link => {
+            link.addEventListener('click', async (e) => {
+                e.preventDefault();
+                const path = link.dataset.bookmarkPath;
+                try {
+                    await this.navigateToBookmark(path);
+                } catch (error) {
+                    console.error('Bookmark navigation error:', error);
+                }
+            });
+        });
+        
+        // Add event listeners for remove buttons
+        const removeButtons = mainContent.querySelectorAll('.bookmark-card-remove');
+        removeButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const path = button.dataset.bookmarkPath;
+                const index = this.bookmarks.findIndex(b => b.path === path);
+                if (index !== -1) {
+                    this.removeBookmark(index);
+                }
+            });
+        });
         
         // Update page title
         document.title = 'Bookmarks - Notes Wiki';
@@ -10396,6 +10423,12 @@ class NotesWiki {
     }
     
     async navigateToBookmark(path) {
+        // Don't navigate if we don't have an active tab yet (during initialization)
+        if (!this.activeTabId || !this.tabs.has(this.activeTabId)) {
+            console.warn('Cannot navigate to bookmark - no active tab');
+            return;
+        }
+        
         // Close dropdown
         this.closeAllDropdowns();
         
