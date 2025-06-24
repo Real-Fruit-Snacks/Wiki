@@ -5230,8 +5230,8 @@ class NotesWiki {
                 <div class="theme-card-main-content" style="position: relative; z-index: 10;">
                     <button class="theme-favorite-btn" data-theme-id="${theme.id}" title="${isFavorited ? 'Remove from favorites' : 'Add to favorites'}" style="
                         position: absolute;
-                        bottom: 8px;
-                        right: 8px;
+                        top: 8px;
+                        left: 8px;
                         background: ${isFavorited ? previewColors.accent : 'rgba(0,0,0,0.6)'};
                         color: ${isFavorited ? previewColors.bg : '#ffffff'};
                         border: none;
