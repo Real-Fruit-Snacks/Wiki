@@ -24,8 +24,6 @@ Then navigate to `http://localhost:8000`
 ### Testing and Validation
 ```bash
 # Check JavaScript syntax
-node -c script.js
-# or use npm script:
 npm run validate
 
 # Validate all themes exist
@@ -33,6 +31,9 @@ npm run validate-themes
 
 # Run Puppeteer theme tests (requires npm install)
 npm run test
+
+# Validate both JS and themes
+npm run validate-all
 
 # Validate search index generation
 python3 build.py  # Should output "Build complete!" with stats
@@ -51,7 +52,7 @@ This is a **single-page application (SPA)** built with vanilla JavaScript - no f
 ### Critical Architecture Issues
 
 ⚠️ **MONOLITHIC DESIGN WARNING**: The application currently suffers from severe architectural debt:
-- **13,600+ lines** in a single `script.js` file
+- **16,000+ lines** in a single `script.js` file
 - **200+ methods** in one `NotesWiki` class
 - **Difficult to maintain, test, and extend**
 
@@ -80,7 +81,7 @@ When making significant changes, consider the modular refactoring plan:
    - Pomodoro timer, keyboard shortcuts, responsive context filtering
    - Quick Notes panel (slide-out from right side for temporary notes)
    - Split view (side-by-side note viewing)
-   - Context menus (tab and note right-click menus with SVG icons)
+   - Context menus (10+ different menus for all UI elements)
    - Confirmation dialogs for closing tabs/sticky notes (enabled by default)
 
 3. **Build System**: `build.py` - Python script that:
@@ -92,26 +93,23 @@ When making significant changes, consider the modular refactoring plan:
 
 4. **Content Structure**:
    - `/notes/` - All markdown content organized by context (top-level folders)
-   - `/images/` - Image assets organized by purpose:
-     - `/images/reference/` - Reference documentation images
-     - `/images/tutorials/` - Tutorial screenshots and diagrams
-   - Each context folder acts as a filterable category
-   - Markdown files support frontmatter with: title, tags, author, created, updated, description
+   - `/images/` - Image assets organized by purpose
+   - `/themes/` - 150 CSS theme files
+   - `/libs/` - Bundled dependencies (Marked.js, Prism.js, Mermaid.js)
+   - `/fonts/` - Self-contained font system (Inter, JetBrains Mono)
 
 ### Deployment Configuration
 
 - **GitHub Pages**: 
-  - Jekyll bypass configured in `_config.yml` and `.nojekyll`
-  - Custom 404 page (`404.html`) with theme support
   - GitHub Actions workflow in `.github/workflows/static.yml`
+  - Automatic deployment on push to main branch
+  - Jekyll bypass configured in `_config.yml` and `.nojekyll`
+  
 - **GitLab Pages**: 
   - Automatic deployment via `.gitlab-ci.yml`
   - Python 3.11-alpine image for builds
   - 30-day artifact retention for production
   - Preview environments for merge requests
-  - See `GITLAB-DEPLOYMENT.md` for detailed instructions
-- **General Deployment**: 
-  - See `DEPLOYMENT-GUIDE.md` for platform-agnostic instructions
 
 ### Key Design Principles
 
@@ -133,7 +131,7 @@ this.settings = {
     theme: 'ayu-mirage',
     autoTheme: false,
     confirmOnClose: true,  // Confirmation dialogs enabled by default
-    contentWidth: 'narrow',
+    contentWidth: 'normal',
     focusMode: false,
     // ... other settings
 };
@@ -173,9 +171,9 @@ element.textContent = userInput;
 element.innerHTML = userInput; // Only for trusted SVG/static content
 ```
 
-### Theme Categories Structure
+### Theme System Architecture
 
-Themes are organized into 11 categories in the settings modal:
+Themes are organized into 11 categories with 150 total themes:
 1. **Classic Dark** - Traditional dark themes
 2. **Classic Light** - Traditional light themes
 3. **Material Design** - Material design inspired themes
@@ -186,17 +184,30 @@ Themes are organized into 11 categories in the settings modal:
 8. **Elegant & Pastel** - Soft, muted colors
 9. **Professional** - Business-appropriate themes
 10. **Special Effects** - Themes with unique visual effects
-11. **Bearded Collection** - Complete 76-theme Bearded Theme collection with unique decorative elements
+11. **Bearded Collection** - Complete 76-theme Bearded Theme collection
 
-### Recent Major Features (v3.1.0 - v3.6.0)
+### Context Menu System
 
-1. **Quick Notes Panel** - Slide-out panel from right side (replaced floating sticky notes)
-2. **Split View Implementation** - Side-by-side note viewing with draggable pane resizing
-3. **Dynamic Path Detection** - Works with any project name on GitHub/GitLab Pages
-4. **Confirmation Dialogs** - Optional (now default) confirmations when closing tabs/sticky notes
-5. **Enhanced Error Logging** - Comprehensive logging for theme loading and other operations
-6. **Pinned Tabs** - Right-click tabs to pin them, preventing closure and navigation to different notes
-7. **Note Context Menus** - Right-click any note for quick actions with proper SVG icons
+The application features comprehensive right-click context menus:
+- **Note context menus**: Open in tab, bookmark, share
+- **Tab context menus**: Pin/unpin, close, close others
+- **Timer context menu**: Pomodoro presets
+- **Search context menu**: Clear, history, operators
+- **Settings context menu**: Theme actions, import/export
+- **Sidebar context menu**: Expand/collapse, refresh
+- **Filter context menu**: Clear filters, popular tags
+- **Tab bar context menu**: New tab, close all
+- **Close all button menu**: Force close pinned tabs
+
+### Recent Major Features (v3.6.0+)
+
+1. **Universal Context Menus** - Right-click functionality everywhere
+2. **Theme Favorites System** - Star themes for quick access
+3. **Settings Import/Export** - Full backup/restore functionality
+4. **Enhanced Badge Readability** - Improved contrast across all themes
+5. **Conflict-Free Menu System** - Prevents overlapping context menus
+6. **Quick Theme Switching** - Styled modal interface
+7. **Pomodoro Presets** - Quick timer configuration
 
 ### Combined Code Blocks Feature
 
@@ -218,14 +229,6 @@ combinedBlockOptions:
 ---
 ```
 
-### GitLab CI/CD Pipeline
-
-The `.gitlab-ci.yml` configuration provides:
-- **Build stage**: Python 3.11-alpine, installs PyYAML, builds search index
-- **Deploy stage**: Automatic deployment to GitLab Pages
-- **Preview environments**: Deploy previews for merge requests
-- **Artifacts**: 30-day retention for production, 1 week for previews
-
 ### Development Workflow
 
 When making changes to this codebase:
@@ -234,9 +237,13 @@ When making changes to this codebase:
 3. **Local testing**: `npm run serve` for manual verification
 4. **Help updates**: Update help modal content in `index.html` when adding features
 5. **Memory management**: Implement proper event listener cleanup
-6. **Deployment**: Push to main branch for automatic deployment
+6. **Context menu conflicts**: Use `dismissAllContextMenus()` before showing new menus
 
 ### Critical Implementation Notes
+
+**Badge Styling**: Badge elements use `--badge-bg` and `--badge-text` CSS variables with fallbacks for contrast. All themes define these variables for optimal readability.
+
+**Theme Favorite Stars**: Positioned at `top: 8px; left: 8px` with `!important` declarations to ensure consistent placement.
 
 **Context Menu Icons**: Always use semantic, action-specific SVG icons. Avoid duplicate icons across menu items. Test rendering across themes to ensure visibility.
 
@@ -254,20 +261,34 @@ When making changes to this codebase:
 - `switchToTab(tabId)` - Switches active tab
 - `togglePinTab(tabId)` - Toggles pin state for a tab
 - `closeOtherTabs(tabId)` - Closes all other non-pinned tabs
-- `showNoteContextMenu(event, notePath, noteTitle)` - Shows context menu for note actions
-- `toggleNoteBookmark(notePath, noteTitle)` - Adds/removes note from bookmarks
-- `shareNote(notePath, noteTitle)` - Copies note URL to clipboard
-- `loadNoteInSplitPane(path, paneId)` - Loads note into split view pane with pinned tab protection
+
+**Context Menu System**:
+- `dismissAllContextMenus()` - Closes all open context menus
+- `showNoteContextMenu(event, notePath, noteTitle)` - Note actions
+- `showTabContextMenu(event, tabId)` - Tab actions
+- `showTimerContextMenu(event)` - Timer presets
+- `showSettingsButtonContextMenu(event)` - Settings actions
 
 **Settings Management**:
 - `loadSettings()` - Loads from localStorage
 - `saveSettings()` - Persists to localStorage
 - `showSettings()` - Opens settings modal
+- `getDefaultSettings()` - Returns default settings object
+- `importSettings(file)` - Imports settings from JSON file
+- `exportSettings()` - Exports settings to JSON file
+
+**Theme Management**:
+- `applyTheme(themeId)` - Applies a theme
+- `showQuickThemeMenu()` - Shows theme switcher modal
+- `showThemeFavorites()` - Shows favorite themes modal
+- `toggleThemeFavorite(themeId)` - Adds/removes theme from favorites
+- `applyRandomTheme()` - Applies random theme from all 150 themes
 
 **Search & Navigation**:
 - `performSearch(query)` - Executes search with operator support
 - `loadNote(path)` - Loads markdown file into active tab/pane
 - `buildContextSwitcher()` - Creates responsive context filter
+- `navigateToHome()` - Returns to index/welcome page
 
 **UI Helpers**:
 - `showToast(message, type)` - Shows temporary notification
@@ -285,16 +306,6 @@ When making changes to this codebase:
 - `clearAllTimers()` - Cleans up all intervals/timeouts
 - `removeAllEventListeners()` - Removes stored event listeners
 
-### Font System
-
-The application includes a self-contained font loading system in `/fonts/`:
-- **Inter** - Sans-serif font for UI text
-- **JetBrains Mono** - Monospace font for code 
-- **Download script**: `./fonts/download-fonts.sh` to get open-source fonts
-- **Font options**: System, Sans-serif, Serif, Monospace, Code (JetBrains Mono)
-- **Auto-loading**: Fonts load automatically with fallback to system fonts
-- **Path detection**: Works with GitHub/GitLab Pages deployment
-
 ### Theme Development
 
 **Creating New Themes**:
@@ -303,13 +314,14 @@ The application includes a self-contained font loading system in `/fonts/`:
 3. Add preview colors in `getThemePreviewColors()` function
 4. Add syntax colors in `getThemeSyntaxColors()` function  
 5. Add decorative elements in `getThemeDecoration()` function
-6. Ensure `--badge-text` color provides good contrast for sidebar selected notes
+6. Ensure `--badge-text` and `--badge-bg` provide good contrast
 
-**Theme Card System**: Each theme has unique preview cards with:
-- Custom color palettes and syntax highlighting samples
-- Decorative elements (gradients, animations, emojis, effects)
-- Hover effects matching theme characteristics
-- Selection feedback with theme-appropriate messaging
+**Required CSS Variables**:
+- Background: `--bg-primary`, `--bg-secondary`, `--bg-sidebar`
+- Text: `--text-primary`, `--text-secondary`, `--text-muted`
+- Accent: `--accent-primary`, `--accent-secondary`
+- Badge: `--badge-bg`, `--badge-text`, `--badge-border`
+- Border: `--border-primary`, `--border-secondary`
 
 ### Release Process
 1. Update version in `package.json`
