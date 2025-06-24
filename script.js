@@ -13181,6 +13181,196 @@ class NotesWiki {
         this.showToast(`Switched to ${isDark ? 'light' : 'dark'} theme: ${newTheme}`, 'success');
     }
 
+    showQuickThemeMenu() {
+        const currentTheme = this.settings.theme;
+        
+        // Create modal overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        `;
+        
+        // Create modal content
+        const modal = document.createElement('div');
+        modal.className = 'quick-theme-modal';
+        modal.style.cssText = `
+            background: var(--bg-primary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: var(--spacing-lg);
+            min-width: 600px;
+            max-width: 90vw;
+            max-height: 80vh;
+            overflow-y: auto;
+        `;
+        
+        // Modal header
+        const header = document.createElement('div');
+        header.style.cssText = `
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid var(--border-primary);
+        `;
+        
+        const title = document.createElement('h3');
+        title.textContent = 'Quick Theme Switcher';
+        title.style.cssText = `
+            margin: 0;
+            color: var(--text-primary);
+            font-size: 1.125rem;
+            font-weight: 600;
+        `;
+        
+        const closeBtn = document.createElement('button');
+        closeBtn.innerHTML = '×';
+        closeBtn.style.cssText = `
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        `;
+        
+        header.appendChild(title);
+        header.appendChild(closeBtn);
+        
+        // Theme grid container
+        const gridContainer = document.createElement('div');
+        gridContainer.style.cssText = `
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1rem;
+            max-height: 60vh;
+            overflow-y: auto;
+        `;
+        
+        // Get all themes from all categories
+        const allThemes = [];
+        this.themeCategories.forEach(category => {
+            category.themes.forEach(theme => {
+                allThemes.push(theme);
+            });
+        });
+        
+        // Sort themes alphabetically
+        allThemes.sort((a, b) => a.name.localeCompare(b.name));
+        
+        // Create theme cards
+        allThemes.forEach(theme => {
+            const card = document.createElement('div');
+            card.className = 'quick-theme-card';
+            card.dataset.themeId = theme.id;
+            
+            // Get theme colors for preview
+            const previewColors = this.getThemePreviewColors(theme.id);
+            
+            // Apply theme-specific styles
+            card.style.cssText = `
+                background: ${previewColors.bg};
+                border: 2px solid ${theme.id === currentTheme ? previewColors.accent : previewColors.border};
+                border-radius: var(--radius-md);
+                padding: var(--spacing-sm);
+                cursor: pointer;
+                transition: all 0.2s ease;
+                min-height: 80px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                box-shadow: ${theme.id === currentTheme ? `0 0 0 2px ${previewColors.accent}` : 'none'};
+            `;
+            
+            // Theme name
+            const name = document.createElement('div');
+            name.textContent = theme.name;
+            name.style.cssText = `
+                color: ${previewColors.text};
+                font-weight: 500;
+                font-size: 0.875rem;
+                margin-bottom: 4px;
+            `;
+            
+            // Color preview bar
+            const colorBar = document.createElement('div');
+            colorBar.style.cssText = `
+                height: 4px;
+                border-radius: 2px;
+                background: linear-gradient(to right, ${previewColors.accent}, ${previewColors.text});
+                margin-top: auto;
+            `;
+            
+            card.appendChild(name);
+            card.appendChild(colorBar);
+            
+            // Click handler to apply theme
+            card.addEventListener('click', () => {
+                this.applyTheme(theme.id);
+                this.showToast(`Applied theme: ${theme.name}`, 'success');
+                document.body.removeChild(overlay);
+            });
+            
+            // Hover effect
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-2px)';
+                card.style.boxShadow = `0 4px 12px rgba(0, 0, 0, 0.15)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+                card.style.boxShadow = theme.id === currentTheme ? `0 0 0 2px ${previewColors.accent}` : 'none';
+            });
+            
+            gridContainer.appendChild(card);
+        });
+        
+        // Assemble modal
+        modal.appendChild(header);
+        modal.appendChild(gridContainer);
+        overlay.appendChild(modal);
+        
+        // Close handlers
+        const closeModal = () => {
+            document.body.removeChild(overlay);
+        };
+        
+        closeBtn.addEventListener('click', closeModal);
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeModal();
+        });
+        
+        // Escape key handler
+        const escHandler = (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                document.removeEventListener('keydown', escHandler);
+            }
+        };
+        document.addEventListener('keydown', escHandler);
+        
+        // Add to DOM
+        document.body.appendChild(overlay);
+    }
+
     showThemeFavorites() {
         const favorites = this.settings.themeFavorites || [];
         
