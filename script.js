@@ -12977,32 +12977,39 @@ class NotesWiki {
             const overlay = document.createElement('div');
         overlay.className = 'modal-overlay';
         overlay.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: rgba(0, 0, 0, 0.7) !important;
             backdrop-filter: blur(4px);
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            z-index: 20000 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            visibility: visible !important;
+            opacity: 1 !important;
         `;
         
         // Create modal content
         const modal = document.createElement('div');
         modal.className = 'quick-theme-modal';
         modal.style.cssText = `
-            background: var(--bg-primary);
-            border: 1px solid var(--border-primary);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            padding: var(--spacing-lg);
-            min-width: 600px;
-            max-width: 90vw;
-            max-height: 80vh;
-            overflow-y: auto;
+            background: var(--bg-primary) !important;
+            border: 1px solid var(--border-primary) !important;
+            border-radius: var(--radius-lg) !important;
+            box-shadow: var(--shadow-lg) !important;
+            padding: var(--spacing-lg) !important;
+            min-width: 600px !important;
+            max-width: 90vw !important;
+            max-height: 80vh !important;
+            overflow-y: auto !important;
+            position: relative !important;
+            z-index: 20001 !important;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
         `;
         
         // Modal header
@@ -13159,6 +13166,20 @@ class NotesWiki {
         // Add to DOM
         document.body.appendChild(overlay);
         console.log('[DEBUG] showQuickThemeMenu modal added to DOM successfully');
+        console.log('[DEBUG] Overlay element:', overlay);
+        console.log('[DEBUG] Modal element:', modal);
+        console.log('[DEBUG] Overlay computed styles:', window.getComputedStyle(overlay));
+        console.log('[DEBUG] Modal computed styles:', window.getComputedStyle(modal));
+        
+        // Force visibility
+        setTimeout(() => {
+            overlay.style.display = 'flex';
+            overlay.style.zIndex = '20000';
+            overlay.style.visibility = 'visible';
+            overlay.style.opacity = '1';
+            console.log('[DEBUG] Forced visibility styles applied');
+        }, 100);
+        
         } catch (error) {
             console.error('[ERROR] showQuickThemeMenu failed:', error);
         }
