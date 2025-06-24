@@ -47,7 +47,7 @@ python3 build.py  # Should output "Build complete!" with stats
 ```bash
 npm run package
 ```
-This creates a versioned zip file (`notes-wiki-v{version}-complete.zip`) with all necessary assets for offline deployment. Current version is 3.6.5.
+This creates a versioned zip file (`notes-wiki-v{version}-complete.zip`) with all necessary assets for offline deployment. Current version is 4.0.0.
 
 ## Architecture Overview
 
@@ -216,7 +216,7 @@ The application features comprehensive right-click context menus:
 - **Site brand context menu**: Go to home, view all notes, random note, keyboard shortcuts, about
 - **Code block context menu**: Copy code, select all, view language, download file, toggle wrap
 
-### Recent Major Features (v3.6.0+)
+### Recent Major Features (v4.0.0)
 
 1. **Universal Context Menus** - Right-click functionality everywhere
 2. **Theme Favorites System** - Right-click to favorite, stars only shown on favorited themes (top-left)
