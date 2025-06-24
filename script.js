@@ -5213,6 +5213,7 @@ class NotesWiki {
                 grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
                 gap: 1.2rem;
                 margin-bottom: 1rem;
+                overflow: visible;
             `;
             
             // Sort themes alphabetically within each category
@@ -5232,7 +5233,7 @@ class NotesWiki {
             card.style.backgroundColor = previewColors.bg;
             card.style.borderColor = previewColors.border;
             card.style.position = 'relative';
-            card.style.overflow = 'hidden';
+            card.style.overflow = 'visible';
             card.style.minHeight = '160px';
             card.style.setProperty('--theme-text-primary', previewColors.text);
             card.style.setProperty('--theme-text-secondary', previewColors.textMuted);
@@ -5254,32 +5255,31 @@ class NotesWiki {
             
             card.innerHTML = `
                 ${themeDecorations}
+                ${isFavorited ? `<button class="theme-favorite-btn" data-theme-id="${theme.id}" title="Remove from favorites" style="
+                    position: absolute !important;
+                    top: -4px !important;
+                    left: -4px !important;
+                    right: auto !important;
+                    bottom: auto !important;
+                    background: ${previewColors.accent};
+                    color: ${previewColors.bg};
+                    border: 2px solid var(--bg-primary);
+                    border-radius: 50%;
+                    width: 26px;
+                    height: 26px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 100;
+                    transition: all 0.2s ease;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+                ">
+                    <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    </svg>
+                </button>` : ''}
                 <div class="theme-card-main-content" style="position: relative; z-index: 10;">
-                    ${isFavorited ? `<button class="theme-favorite-btn" data-theme-id="${theme.id}" title="Remove from favorites" style="
-                        position: absolute !important;
-                        top: 8px !important;
-                        left: 8px !important;
-                        right: auto !important;
-                        bottom: auto !important;
-                        background: ${previewColors.accent};
-                        color: ${previewColors.bg};
-                        border: none;
-                        border-radius: 50%;
-                        width: 26px;
-                        height: 26px;
-                        cursor: pointer;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        z-index: 20;
-                        transition: all 0.2s ease;
-                        backdrop-filter: blur(4px);
-                        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-                    ">
-                        <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                    </button>` : ''}
                     <div class="theme-card-preview-full" style="
                         background: ${previewColors.bg};
                         border: 1px solid ${previewColors.border};
@@ -5352,7 +5352,9 @@ class NotesWiki {
             card.addEventListener('contextmenu', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                this.showThemeCardContextMenu(e, theme.id, theme.name, isFavorited);
+                // Get current favorite status
+                const currentlyFavorited = this.settings.themeFavorites && this.settings.themeFavorites.includes(theme.id);
+                this.showThemeCardContextMenu(e, theme.id, theme.name, currentlyFavorited);
             });
             
             // Handle theme selection
