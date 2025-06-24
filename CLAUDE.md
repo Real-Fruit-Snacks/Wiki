@@ -47,7 +47,7 @@ python3 build.py  # Should output "Build complete!" with stats
 ```bash
 npm run package
 ```
-This creates a versioned zip file (`notes-wiki-v{version}-complete.zip`) with all necessary assets for offline deployment. Current version is 4.0.0.
+This creates a versioned zip file (`notes-wiki-v{version}-complete.zip`) with all necessary assets for offline deployment.
 
 ## Architecture Overview
 
@@ -216,7 +216,7 @@ The application features comprehensive right-click context menus:
 - **Site brand context menu**: Go to home, view all notes, random note, keyboard shortcuts, about
 - **Code block context menu**: Copy code, select all, view language, download file, toggle wrap
 
-### Recent Major Features (v4.0.0)
+### Recent Major Features (v4.0.x)
 
 1. **Universal Context Menus** - Right-click functionality everywhere
 2. **Theme Favorites System** - Right-click to favorite, stars only shown on favorited themes (top-left)
@@ -225,6 +225,9 @@ The application features comprehensive right-click context menus:
 5. **Conflict-Free Menu System** - Prevents overlapping context menus
 6. **Quick Theme Switching** - Styled modal interface
 7. **Pomodoro Presets** - Quick timer configuration
+8. **Code Block Enhancements** - Dropdown menus, enhanced download functionality, line wrapping control
+9. **GitLab Pages Support** - Complete offline deployment for GitLab Pages hosting
+10. **Comprehensive Tutorial System** - Complete documentation for all features
 
 ### Combined Code Blocks Feature
 
@@ -381,3 +384,18 @@ if (document.readyState === 'loading') {
 - Always store event handlers for cleanup
 - Use removeEventListener with the same handler reference
 - Check for intervals/timeouts that need clearing
+
+### Tutorial System
+
+The application includes comprehensive tutorials covering all features:
+- **Getting Started** - Welcome guide and note creation
+- **Core Features** - Search, themes, tabs, code blocks, context menus
+- **Productivity Tools** - Quick Notes, Focus Mode, Pomodoro Timer, Settings
+- **Advanced Features** - Combined code blocks, search index management
+
+**Tutorial Locations**:
+- `/notes/tutorials/getting-started/` - Basic usage guides
+- `/notes/tutorials/features/` - Feature-specific documentation
+- `/notes/tutorials/advanced/` - Advanced configuration guides
+
+**After adding new features**: Create corresponding tutorial in appropriate directory and rebuild search index with `npm run build`.
