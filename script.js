@@ -4681,10 +4681,7 @@ class NotesWiki {
             button.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const path = button.dataset.bookmarkPath;
-                const index = this.bookmarks.findIndex(b => b.path === path);
-                if (index !== -1) {
-                    this.removeBookmark(index);
-                }
+                this.removeBookmark(path);
             });
         });
         
@@ -10467,11 +10464,8 @@ class NotesWiki {
                         'Remove Bookmark?',
                         `The note "${title}" no longer exists. Would you like to remove this bookmark?`,
                         () => {
-                            // Remove the bookmark
-                            const index = this.bookmarks.findIndex(b => b.path === path);
-                            if (index !== -1) {
-                                this.removeBookmark(index);
-                            }
+                            // Remove the bookmark by path
+                            this.removeBookmark(path);
                         }
                     );
                 } else {
