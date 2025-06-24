@@ -54,7 +54,8 @@ try {
     console.log('📋 Package contents:');
     console.log('  - Complete application (HTML, CSS, JS)');
     console.log('  - All libraries (marked, prism, js-yaml)');
-    console.log('  - 70 themes');
+    console.log('  - 150 professional themes in 11 categories');
+    console.log('  - Font files (Inter, JetBrains Mono)');
     console.log('  - All documentation and notes');
     console.log('  - Build tools and configuration');
     console.log('  - GitLab CI/CD configuration');

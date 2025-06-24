@@ -11,7 +11,7 @@
 <h3>🚀 The Self-Contained Knowledge Base That Works Everywhere</h3>
 
 <p align="center">
-  <strong>70 Themes • Zero Dependencies • Complete Offline • Lightning Fast</strong>
+  <strong>150 Themes • Zero Dependencies • Complete Offline • Lightning Fast</strong>
 </p>
 
 <p align="center">
@@ -24,7 +24,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-3.4.1-blue?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/Version-3.6.3-blue?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/Size-~30MB-green?style=flat-square" alt="Size">
   <img src="https://img.shields.io/badge/Load_Time-<100ms-orange?style=flat-square" alt="Performance">
   <img src="https://img.shields.io/badge/Works-Offline-red?style=flat-square" alt="Offline">
@@ -39,7 +39,7 @@
 ### 🎯 **One Wiki. Endless Possibilities.**
 
 **Deploy anywhere.** GitHub Pages, GitLab, Netlify, or your laptop.  
-**Theme everything.** 70 professional themes from VSCode to Cyberpunk.  
+**Theme everything.** 150 professional themes from VSCode to Cyberpunk.  
 **Work offline.** Air-gapped networks? No problem. Zero external requests.  
 **Stay organized.** Multi-tab interface, drag-and-drop, split view, and more.
 
@@ -53,13 +53,14 @@
 <tr>
 <td width="50%" valign="top">
 
-### 🎨 **70 Professional Themes**
-Not just dark and light. Choose from:
-- **Developer favorites**: VSCode, Dracula, Monokai
-- **Eye comfort**: Nord, Solarized, Tomorrow Night
-- **Creative**: Synthwave '84, Cyberpunk, Matrix
-- **Professional**: GitHub, Notion, Bear
-- **Special effects**: Neon glow, gradients, animations
+### 🎨 **150 Professional Themes**
+Not just dark and light. Choose from 11 categories:
+- **Developer favorites**: VSCode, Dracula, Monokai, One Dark Pro
+- **Eye comfort**: Nord, Solarized, Tomorrow Night, Kanagawa
+- **Creative**: Synthwave '84, Cyberpunk, Matrix, Neon themes
+- **Professional**: GitHub, Material Design, Clean variants
+- **Special effects**: Neon glow, gradients, animations, glass effects
+- **Theme favorites**: Star your favorites for quick access
 
 </td>
 <td width="50%" valign="top">
@@ -133,13 +134,15 @@ dependencies: [/notes/prerequisites.md]
 ---
 ```
 
-### 🎯 **Smart Context Menus**
-Right-click any note for instant actions:
-- **Open in new tab** - research without losing your place
-- **Bookmark instantly** - build your reading list
-- **Share note URL** - copy link with one click
-- **Professional SVG icons** - matches header design
-- **Works everywhere** - sidebar, search results, content links
+### 🎯 **Smart Context Menus** *(Enhanced in v3.6.3)*
+Right-click anywhere for power user actions:
+- **Notes**: Open in new tab, bookmark, share URL with professional SVG icons
+- **Timer**: Quick pomodoro presets, start/pause, reset functionality  
+- **Search**: Clear search, search history, quick tag/author searches
+- **Settings**: Quick theme switch, random theme, export/import settings
+- **Sidebar**: Expand/collapse, refresh file tree, folder operations
+- **Filter button**: Clear all filters, show popular tags, reset context
+- **Conflict-free**: Intelligent menu dismissal prevents overlapping menus
 
 ---
 
@@ -235,9 +238,9 @@ python3 -m http.server 8000
 <summary><strong>📥 Option 4: Download Release Package</strong></summary>
 
 1. [Download Latest Release](https://github.com/Real-Fruit-Snacks/Wiki/releases/latest)
-2. Extract `notes-wiki-v3.4.1-complete.zip`
+2. Extract `notes-wiki-v3.6.3-complete.zip`
 3. Upload to any web hosting or open `index.html` locally
-4. Complete offline package with all 70 themes included!
+4. Complete offline package with all 150 themes included!
 
 </details>
 
@@ -310,7 +313,7 @@ Retro neon vibes
 </table>
 
 <div align="center">
-  <strong>... and 66 more themes organized in 10 categories!</strong>
+  <strong>... and 146 more themes organized in 11 categories!</strong>
 </div>
 
 ---
@@ -326,10 +329,12 @@ Retro neon vibes
 - `Ctrl+Shift+S` - Toggle Quick Notes panel
 
 ### 🔧 **Customization**
-- **Custom CSS** - Make it truly yours
-- **Settings export/import** - Backup your preferences
+- **Custom CSS** - Make it truly yours with inline CSS editor
+- **Settings export/import** - Full backup/restore of all preferences and data
+- **Theme favorites** - Star themes for quick access and management
 - **Keyboard shortcut customization** - Your workflow, your keys
-- **Content width options** - Narrow, wide, or full
+- **Content width options** - Narrow, wide, or full width layouts
+- **Clickable home navigation** - Click Notes Wiki title to return home
 
 ### 📊 **Advanced Search Operators**
 - `"exact phrase"` - Find specific text
@@ -387,9 +392,10 @@ sensitive docs, privacy
 |--------|-------|---------------|
 | **Total Package** | ~30MB | Including all themes & features |
 | **Load Time** | <100ms | Instant on any device |
-| **Lines of Code** | 11,376+ | All features, zero dependencies |
-| **Themes** | 70 | More than most IDEs |
+| **Lines of Code** | 16,000+ | All features, zero dependencies |
+| **Themes** | 150 | More than most IDEs |
 | **Notes Indexed** | 32+ | Ready-to-use documentation |
+| **Context Menus** | 10+ | Right-click power everywhere |
 | **External Requests** | 0 | Complete privacy |
 | **Build Dependencies** | 0 | Just Python for search index |
 
@@ -397,25 +403,32 @@ sensitive docs, privacy
 
 ---
 
-## 🆕 **What's New in v3.4.0**
+## 🆕 **What's New in v3.6.3**
 
 ### ✨ **Major Features**
-- **Quick Notes Panel** - Replaced floating sticky notes with elegant slide-out panel
-- **Enhanced YAML Metadata** - Status, category, aliases, keywords, and more
-- **Professional Context Menus** - SVG icons matching header design
-- **Improved Search** - New operators for status, category, and metadata
+- **Universal Context Menus** - Right-click anywhere for contextual actions (timer, search, settings, sidebar, filters)
+- **Theme Favorites System** - Star themes for quick access with dedicated favorites modal
+- **Settings Import/Export** - Complete backup/restore of all preferences and data
+- **Conflict-Free UI** - Intelligent menu dismissal prevents overlapping context menus
+- **Clickable Home Navigation** - Click Notes Wiki title to return to welcome page
 
-### 🔧 **Improvements**
-- **Memory Management** - Comprehensive cleanup to prevent memory leaks
-- **Mobile UX** - Better touch interactions and responsive design
-- **Theme Loading** - Enhanced error handling and fallback themes
-- **Repository Cleanup** - Lean codebase with optimized .gitignore
+### 🎨 **Theme System Overhaul**
+- **150 Professional Themes** - Expanded from 70 to 150 themes across 11 categories
+- **Theme Quick Switch** - Styled modal replaces basic prompt for better UX
+- **Random Theme Fix** - Now properly selects from all 150 themes
+- **Better Positioning** - Theme favorite stars moved to intuitive bottom-right corner
 
-### 🐛 **Fixes**
-- Fixed SVG icon rendering in context menus
-- Improved textarea behavior in Quick Notes
-- Enhanced GitLab Pages compatibility
-- Better build artifact management
+### 🔧 **UX Improvements**
+- **Enhanced Context Menus** - Professional SVG icons with proper event handling
+- **Pomodoro Quick Presets** - Classic, Extended, Short Focus, Long Focus, Deep Work
+- **Reset Settings Modal** - Styled confirmation dialog with detailed information
+- **Memory Leak Prevention** - Comprehensive cleanup handlers for all UI interactions
+
+### 🐛 **Critical Fixes**
+- Fixed context menu conflicts showing multiple menus simultaneously
+- Resolved settings import errors with proper default settings validation
+- Enhanced theme loading with better error handling and fallback logic
+- Improved mobile touch interactions and responsive design
 
 ---
 
