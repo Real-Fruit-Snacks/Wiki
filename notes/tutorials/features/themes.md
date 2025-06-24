@@ -1,24 +1,56 @@
 ---
-title: Theme Showcase & Test
-tags: [themes, demo, showcase, styling]
+title: Theme System Guide
+tags: [themes, customization, styling, interface, preferences]
 created: 2025-01-06
 author: Wiki Admin
-description: Comprehensive showcase of all 70 professional themes with various code examples
-updated: 2025-06-13
+description: Complete guide to the 150+ professional themes, favorites system, and customization options
+updated: 2025-06-24
 ---
 
-# Theme Showcase & Test
+# Theme System Guide
 
-This page showcases all **70 professional themes** available in the Notes Wiki system. Each theme is carefully crafted to provide excellent readability and beautiful syntax highlighting.
+Master the Notes Wiki's powerful theme system with **150+ professional themes** organized in 11 categories, theme favorites, and advanced customization options.
 
-## How to Test Themes
+## 🎨 Theme Basics
 
-1. **Open Theme Picker** - Click the theme selector (🎨) in the header
-2. **Preview Themes** - Hover over any theme card to see a live preview
-3. **Apply Theme** - Click a theme card to apply it permanently
-4. **Auto Detection** - Enable auto light/dark theme detection in settings
+### Opening the Theme Picker
+1. **Click the theme button** (🎨) in the header
+2. **Use keyboard shortcut** - Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd>
+3. **Settings menu** - Go to Settings → Appearance → Themes
 
-## Complete Theme Collection (70 Themes)
+### Applying Themes
+- **Click any theme card** to apply it instantly
+- **Hover for preview** - See live preview without applying
+- **Right-click for options** - Access theme context menu
+
+## ⭐ Theme Favorites System
+
+### Adding to Favorites
+- **Right-click any theme** → "Add to Favorites"
+- **Click the star icon** (appears on favorited themes)
+- **Theme context menu** → "Add to Favorites"
+
+### Managing Favorites
+- **Favorite themes show a star** in the top-left corner
+- **Filter to favorites only** using the favorites button
+- **Remove from favorites** by right-clicking → "Remove from Favorites"
+
+### Benefits
+- **Quick access** to your preferred themes
+- **Organized workflow** for frequently used themes
+- **Persistent across sessions** - favorites are saved
+
+## 🎯 Theme Context Menu
+
+**Right-click any theme card** for these options:
+
+| Action | Description |
+|--------|-------------|
+| **Apply Theme** | Set as current theme immediately |
+| **Add/Remove Favorites** | Toggle favorite status with star indicator |
+| **Preview Theme** | Temporary preview with automatic revert |
+
+## 📱 Complete Theme Collection (150+ Themes)
 
 ### ✨ Classic Themes
 - **Light** - Clean, minimal light theme for daytime reading
@@ -903,16 +935,78 @@ When testing themes, pay attention to:
 7. **Selection Colors** - Text selection should be visible and pleasant
 8. **Scrollbars** - Custom scrollbar styling should match the theme
 
-## Theme Implementation Complete!
+### 🌿 Bearded Theme Collection
+- **Complete 76-theme Bearded Collection** including:
+  - Arc, Black & Color variants, Coffee, Earth, Milkshake series
+  - Monokai variants, Oceanic, Vivid series
+  - High contrast (HC) themes, Featured collaborations
+  - Light variants, Stained series, Surprising series
 
-All 70 professional themes have been successfully implemented with:
+## 🛠️ Theme Customization
 
-- ✅ Full CSS custom property definitions
-- ✅ Comprehensive syntax highlighting for all languages
-- ✅ Smooth theme preview on hover
-- ✅ System theme detection (auto light/dark)
-- ✅ Persistent theme selection
-- ✅ Responsive design with smart context filtering
-- ✅ Beautiful, consistent styling across all themes
+### Auto Theme Detection
+1. **Open Settings** → Appearance
+2. **Enable "Auto Theme"** to match system preference
+3. **Automatic switching** between light and dark themes
 
-Try switching between themes using the theme picker in the header to see the magic happen! 🎨
+### Theme Persistence
+- **Last used theme** is automatically saved
+- **Favorites are preserved** across browser sessions
+- **Settings sync** across devices when using the same browser
+
+## ⚙️ Advanced Features
+
+### Quick Theme Actions
+- **Random theme** - Apply a random theme from all 150+
+- **Category filtering** - Browse themes by category
+- **Search themes** - Find themes by name or description
+
+### Theme Integration
+- **Context menu support** - Right-click any UI element
+- **Keyboard shortcuts** - Quick access via hotkeys
+- **Toast notifications** - Confirmation when themes are applied
+
+## 💡 Tips & Best Practices
+
+### Choosing the Right Theme
+- **Light themes** for daytime work and bright environments
+- **Dark themes** for extended coding sessions and low light
+- **High contrast themes** for accessibility needs
+- **Colorful themes** for creative work and inspiration
+
+### Workflow Optimization
+1. **Add 3-5 favorite themes** for different contexts
+2. **Use auto-detection** to switch based on time of day
+3. **Preview themes** before applying to avoid disruption
+4. **Use theme context menu** for quick actions
+
+## 🎯 Theme Categories Overview
+
+The 150+ themes are organized into **11 main categories**:
+
+1. **Classic Dark** (8 themes) - Traditional dark themes
+2. **Classic Light** (5 themes) - Clean light themes  
+3. **Material Design** (3 themes) - Material-inspired themes
+4. **Nature & Earth** (8 themes) - Natural color palettes
+5. **Arctic & Winter** (4 themes) - Cool, icy themes
+6. **Ocean & Sky** (8 themes) - Blue and aqua themes
+7. **Cyberpunk & Neon** (4 themes) - Futuristic themes
+8. **Elegant & Pastel** (4 themes) - Soft, muted colors
+9. **Professional** (4 themes) - Business-appropriate themes
+10. **Special Effects** (4 themes) - Unique visual effects
+11. **Bearded Collection** (76 themes) - Complete Bearded series
+
+## Theme System Complete! ✨
+
+The Notes Wiki theme system provides:
+
+- ✅ **150+ professional themes** in 11 organized categories
+- ✅ **Theme favorites system** with star indicators
+- ✅ **Right-click context menus** for quick theme actions
+- ✅ **Live preview on hover** without disrupting workflow
+- ✅ **Auto theme detection** matching system preferences
+- ✅ **Complete Bearded Collection** (76 themes)
+- ✅ **Persistent favorites** and theme preferences
+- ✅ **Smooth transitions** and visual feedback
+
+**Start exploring**: Click the theme button (🎨) in the header and discover your perfect coding environment! 🚀

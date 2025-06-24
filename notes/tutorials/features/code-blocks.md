@@ -111,16 +111,41 @@ def long_function():
 
 ## 🔧 Code Block Actions
 
-### Copy Button
-Every code block has a copy button:
-- Hover over any code block
-- Click the 📋 copy icon
-- Code is copied to clipboard
+### Action Buttons
+Every code block has built-in action buttons:
 
-### Expand/Collapse
-For collapsible blocks:
-- Click the toggle button
-- State is preserved while viewing
+| Button | Function | Description |
+|--------|----------|-------------|
+| **📋 Copy** | Copy code to clipboard | Preserves formatting and newlines |
+| **⋯ More Options** | Open dropdown menu | Access all code block actions |
+| **▼/▲ Toggle** | Expand/collapse code | For collapsible blocks only |
+
+### Dropdown Menu (⋯ Button)
+**Click the three dots (⋯)** for these actions:
+
+- **Copy Code** - Copy to clipboard with preserved formatting
+- **Select All Code** - Select entire code block for manual copying
+- **Language Info** - Shows the programming language
+- **Download as File** - Save as structured markdown file
+- **Wrap/Unwrap Lines** - Toggle line wrapping for long lines
+
+### Right-Click Context Menu
+**Right-click anywhere on a code block** for quick access to the same dropdown options.
+
+### Enhanced Download Feature
+**Download as File** creates a structured markdown file with:
+- Note title as main heading
+- Code block title as subheading (if present)
+- Metadata (language, source note, export date)
+- Code wrapped in proper markdown fences
+- Smart filename based on code block title and date
+
+### Line Wrapping Control
+**Wrap/Unwrap Lines** feature:
+- **Enable wrapping** - Long lines wrap to fit container
+- **Disable wrapping** - Horizontal scroll for long lines
+- **Per-block control** - Each code block can have different settings
+- **Visual feedback** - Toast notification confirms the change
 
 ## 💡 Best Practices
 
