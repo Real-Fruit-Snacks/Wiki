@@ -47,7 +47,7 @@ python3 build.py  # Should output "Build complete!" with stats
 ```bash
 npm run package
 ```
-This creates a versioned zip file (`notes-wiki-v{version}-complete.zip`) with all necessary assets for offline deployment.
+This creates a versioned zip file (`notes-wiki-v{version}-complete.zip`) with all necessary assets for offline deployment. Current version is 3.6.5.
 
 ## Architecture Overview
 
