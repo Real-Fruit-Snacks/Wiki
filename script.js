@@ -10395,7 +10395,7 @@ class NotesWiki {
         this.showToast('All bookmarks cleared');
     }
     
-    navigateToBookmark(path) {
+    async navigateToBookmark(path) {
         // Close dropdown
         this.closeAllDropdowns();
         
@@ -10404,15 +10404,40 @@ class NotesWiki {
         if (existingTabId && existingTabId !== this.activeTabId) {
             this.switchToTab(existingTabId);
         } else {
-            // Check if current tab is pinned
-            const tab = this.tabs.get(this.activeTabId);
-            if (tab && tab.isPinned) {
-                // Open in new tab if current tab is pinned
-                this.openInNewTab(path);
-            } else if (tab) {
-                // Update current tab and load note
-                tab.path = path;
-                this.loadNote(path);
+            try {
+                // Check if current tab is pinned
+                const tab = this.tabs.get(this.activeTabId);
+                if (tab && tab.isPinned) {
+                    // Open in new tab if current tab is pinned
+                    await this.openInNewTab(path);
+                } else if (tab) {
+                    // Update current tab and load note
+                    tab.path = path;
+                    await this.loadNote(path);
+                }
+            } catch (error) {
+                // Handle missing bookmarked notes
+                if (error.message.includes('404')) {
+                    const bookmark = this.bookmarks.find(b => b.path === path);
+                    const title = bookmark ? bookmark.title : path;
+                    
+                    this.showToast(`Note "${title}" no longer exists`, 'error');
+                    
+                    // Ask user if they want to remove the bookmark
+                    this.showConfirmationDialog(
+                        'Remove Bookmark?',
+                        `The note "${title}" no longer exists. Would you like to remove this bookmark?`,
+                        () => {
+                            // Remove the bookmark
+                            const index = this.bookmarks.findIndex(b => b.path === path);
+                            if (index !== -1) {
+                                this.removeBookmark(index);
+                            }
+                        }
+                    );
+                } else {
+                    this.showToast(`Failed to load bookmark: ${error.message}`, 'error');
+                }
             }
         }
     }
@@ -10465,7 +10490,10 @@ class NotesWiki {
                     // Handle bookmark click
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
-                        this.navigateToBookmark(path);
+                        this.navigateToBookmark(path).catch(error => {
+                            // Error is already handled in navigateToBookmark
+                            console.error('Bookmark navigation error:', error);
+                        });
                     });
                     
                     // Handle right-click context menu
@@ -14337,6 +14365,9 @@ class NotesWiki {
                         this.saveTabState();
                     }
                 }
+            }).catch(error => {
+                console.error('Failed to load note in tab:', error);
+                // Don't show another toast here since loadNote already shows one
             });
         } else {
             // For background tabs, we need to load without affecting current view
