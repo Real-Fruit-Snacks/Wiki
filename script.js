@@ -16952,10 +16952,24 @@ class NotesWiki {
         event.preventDefault();
         event.stopPropagation();
         
+        // Find the actual code block div (might be passed different elements)
+        let codeBlockDiv = codeBlock;
+        if (!codeBlockDiv.classList.contains('code-block')) {
+            codeBlockDiv = codeBlockDiv.closest('.code-block');
+        }
+        
         // Get the code element and its content
-        const codeElement = codeBlock.querySelector('code');
+        const codeElement = codeBlockDiv ? codeBlockDiv.querySelector('code') : codeBlock.querySelector('code');
         const language = codeElement ? codeElement.className.match(/language-(\w+)/)?.[1] || 'text' : 'text';
         const codeContent = codeElement ? codeElement.textContent : '';
+        
+        // Get the code block title if it exists
+        const titleElement = codeBlockDiv ? codeBlockDiv.querySelector('.code-block-title') : null;
+        const codeBlockTitle = titleElement ? titleElement.textContent : '';
+        
+        // Get the current note title
+        const activeTab = this.tabs.get(this.activeTabId);
+        const noteTitle = activeTab ? activeTab.title : 'Untitled';
         
         // Create context menu container
         const contextMenu = document.createElement('div');
@@ -16990,13 +17004,13 @@ class NotesWiki {
             {
                 label: 'Download as File',
                 icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`,
-                action: () => this.downloadCodeAsFile(codeContent, language, blockIndex),
+                action: () => this.downloadCodeAsFile(codeContent, language, blockIndex, codeBlockTitle, noteTitle),
                 disabled: !codeContent.trim()
             },
             {
                 label: 'Wrap/Unwrap Lines',
                 icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>`,
-                action: () => this.toggleCodeBlockWrap(codeBlock)
+                action: () => this.toggleCodeBlockWrap(codeBlockDiv || codeBlock)
             }
         ];
         
@@ -17054,12 +17068,24 @@ class NotesWiki {
         }
     }
     
-    downloadCodeAsFile(codeContent, language, blockIndex) {
-        // Always save as markdown with code fence
-        const filename = `code-block-${blockIndex + 1}.md`;
+    downloadCodeAsFile(codeContent, language, blockIndex, codeBlockTitle, noteTitle) {
+        // Create filename based on code block title or fallback to generic name
+        const timestamp = new Date().toISOString().split('T')[0];
+        const sanitizedTitle = (codeBlockTitle || `code-block-${blockIndex + 1}`).replace(/[^a-z0-9]+/gi, '-').toLowerCase();
+        const filename = `${sanitizedTitle}-${timestamp}.md`;
         
-        // Create markdown content with proper code fence
-        const markdownContent = `\`\`\`${language}\n${codeContent}\n\`\`\``;
+        // Build structured markdown content
+        let markdownContent = `# ${noteTitle}\n\n`;
+        
+        if (codeBlockTitle) {
+            markdownContent += `## ${codeBlockTitle}\n\n`;
+        }
+        
+        markdownContent += `**Language:** ${language}\n`;
+        markdownContent += `**Source:** ${noteTitle}\n`;
+        markdownContent += `**Exported:** ${new Date().toLocaleString()}\n\n`;
+        markdownContent += `---\n\n`;
+        markdownContent += `\`\`\`${language}\n${codeContent}\n\`\`\``;
         
         // Create and download file
         const blob = new Blob([markdownContent], { type: 'text/markdown' });
