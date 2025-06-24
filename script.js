@@ -277,12 +277,12 @@ class NotesWiki {
         const pathname = window.location.pathname;
         const hostname = window.location.hostname;
         
-        console.log('[Path Detection] Current pathname:', pathname);
-        console.log('[Path Detection] Current hostname:', hostname);
+        // console.log('[Path Detection] Current pathname:', pathname);
+        // console.log('[Path Detection] Current hostname:', hostname);
         
         // Local development - no base path needed
         if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '') {
-            console.log('[Path Detection] Local development detected');
+            // console.log('[Path Detection] Local development detected');
             return '';
         }
         
@@ -292,7 +292,7 @@ class NotesWiki {
             const pathSegments = pathname.split('/').filter(segment => segment);
             if (pathSegments.length > 0) {
                 const basePath = '/' + pathSegments[0] + '/';
-                console.log('[Path Detection] GitHub Pages detected, base path:', basePath);
+                // console.log('[Path Detection] GitHub Pages detected, base path:', basePath);
                 return basePath;
             }
         }
@@ -309,18 +309,18 @@ class NotesWiki {
             
             if (pathSegments.length > 0 && !isFile) {
                 const basePath = '/' + pathSegments[0] + '/';
-                console.log('[Path Detection] GitLab Pages detected, base path:', basePath);
+                // console.log('[Path Detection] GitLab Pages detected, base path:', basePath);
                 return basePath;
             } else if (pathSegments.length > 1) {
                 // If we have a file, use the first segment
                 const basePath = '/' + pathSegments[0] + '/';
-                console.log('[Path Detection] GitLab Pages with file detected, base path:', basePath);
+                // console.log('[Path Detection] GitLab Pages with file detected, base path:', basePath);
                 return basePath;
             }
         }
         
         // Default: no base path
-        console.log('[Path Detection] No specific pattern detected, using root path');
+        // console.log('[Path Detection] No specific pattern detected, using root path');
         return '';
     }
     
@@ -1167,12 +1167,12 @@ class NotesWiki {
         const autoThemeCheckbox = document.getElementById('auto-theme');
         if (autoThemeCheckbox) {
             autoThemeCheckbox.addEventListener('change', (e) => {
-                console.log(`[Theme Auto] Auto-theme toggled: ${e.target.checked}`);
+                // console.log(`[Theme Auto] Auto-theme toggled: ${e.target.checked}`);
                 this.settings.autoTheme = e.target.checked;
                 this.saveSettings();
                 
                 // Reinitialize theme based on new setting
-                console.log('[Theme Auto] Reinitializing theme with auto-theme setting');
+                // console.log('[Theme Auto] Reinitializing theme with auto-theme setting');
                 this.initializeTheme();
                 
                 // Update theme cards state
@@ -1855,7 +1855,7 @@ class NotesWiki {
         
         // Prevent rapid successive loads of the same path
         if (this.currentLoadingPath === path) {
-            console.log('Already loading this path, skipping:', path);
+            // console.log('Already loading this path, skipping:', path);
             return;
         }
         this.currentLoadingPath = path;
@@ -1889,7 +1889,7 @@ class NotesWiki {
             
             // Log the fetch attempt for debugging
             const fetchPath = path.slice(1);
-            console.log('Loading note - Original path:', path, 'Fetch path:', fetchPath);
+            // console.log('Loading note - Original path:', path, 'Fetch path:', fetchPath);
             
             // Use base path for GitHub Pages compatibility
             const fullPath = this.basePath ? `${this.basePath}${fetchPath}` : fetchPath;
@@ -3168,7 +3168,7 @@ class NotesWiki {
         } catch (error) {
             console.error('Toast creation failed:', error);
             // Fallback to console log if toast system fails
-            console.log(`Toast message (${type}): ${message}`);
+            // console.log(`Toast message (${type}): ${message}`);
         }
     }
     
@@ -3398,7 +3398,7 @@ class NotesWiki {
             // Reset settings
             this.settings.focusMode = false;
             
-            console.log('Focus mode cleanup completed');
+            // console.log('Focus mode cleanup completed');
             
         } catch (error) {
             console.error('Focus mode cleanup failed:', error);
@@ -5356,11 +5356,11 @@ class NotesWiki {
             
             // Handle theme selection
             card.addEventListener('click', () => {
-                console.log(`[Theme UI] Theme card clicked: ${theme.id}`);
+                // console.log(`[Theme UI] Theme card clicked: ${theme.id}`);
                 
                 // If auto-theme is enabled, disable it when user selects a theme
                 if (this.settings.autoTheme) {
-                    console.log('[Theme UI] Disabling auto-theme due to manual selection');
+                    // console.log('[Theme UI] Disabling auto-theme due to manual selection');
                     this.settings.autoTheme = false;
                     this.saveSettings();
                     
@@ -5375,7 +5375,7 @@ class NotesWiki {
                 }
                 
                 // Apply the selected theme
-                console.log(`[Theme UI] Applying selected theme: ${theme.id}`);
+                // console.log(`[Theme UI] Applying selected theme: ${theme.id}`);
                 this.applyTheme(theme.id);
                 this.settings.theme = theme.id;
                 this.saveSettings();
@@ -9686,21 +9686,21 @@ class NotesWiki {
     }
     
     initializeTheme() {
-        console.log('[Theme] Initializing theme system');
-        console.log(`[Theme] Auto-theme enabled: ${this.settings.autoTheme}`);
+        // console.log('[Theme] Initializing theme system');
+        // console.log(`[Theme] Auto-theme enabled: ${this.settings.autoTheme}`);
         
         // Check if auto theme is enabled
         if (this.settings.autoTheme) {
             // Apply theme based on system preference
             const systemTheme = this.getSystemTheme();
-            console.log(`[Theme] System theme detected: ${systemTheme}`);
+            // console.log(`[Theme] System theme detected: ${systemTheme}`);
             this.applyTheme(systemTheme);
             
             // Set up listener for system theme changes
             this.setupSystemThemeListener();
         } else {
             // Apply saved theme
-            console.log(`[Theme] Applying saved theme: ${this.settings.theme}`);
+            // console.log(`[Theme] Applying saved theme: ${this.settings.theme}`);
             this.applyTheme(this.settings.theme);
         }
     }
@@ -9709,7 +9709,7 @@ class NotesWiki {
         // Check if the browser supports prefers-color-scheme
         if (window.matchMedia) {
             const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
-            console.log(`[Theme] System prefers-color-scheme: ${darkQuery.matches ? 'dark' : 'light'}`);
+            // console.log(`[Theme] System prefers-color-scheme: ${darkQuery.matches ? 'dark' : 'light'}`);
             
             if (darkQuery.matches) {
                 return 'dark';
@@ -9721,7 +9721,7 @@ class NotesWiki {
     }
     
     setupSystemThemeListener() {
-        console.log('[Theme] Setting up system theme change listener');
+        // console.log('[Theme] Setting up system theme change listener');
         
         // Listen for changes to system theme preference
         if (window.matchMedia) {
@@ -9730,10 +9730,10 @@ class NotesWiki {
             // Modern browsers
             if (darkModeQuery.addEventListener) {
                 darkModeQuery.addEventListener('change', (e) => {
-                    console.log(`[Theme] System theme changed to: ${e.matches ? 'dark' : 'light'}`);
+                    // console.log(`[Theme] System theme changed to: ${e.matches ? 'dark' : 'light'}`);
                     if (this.settings.autoTheme) {
                         const newTheme = e.matches ? 'dark' : 'light';
-                        console.log(`[Theme] Auto-applying system theme: ${newTheme}`);
+                        // console.log(`[Theme] Auto-applying system theme: ${newTheme}`);
                         this.applyTheme(newTheme);
                     }
                 });
@@ -9750,14 +9750,14 @@ class NotesWiki {
     }
     
     applyTheme(themeId) {
-        console.log(`[Theme] Applying theme: ${themeId}`);
+        // console.log(`[Theme] Applying theme: ${themeId}`);
         const startTime = performance.now();
         
         // Validate theme exists
         const themeExists = this.themes.find(t => t.id === themeId);
         if (!themeExists) {
             console.warn(`[Theme] Theme '${themeId}' not found in available themes:`, this.themes.map(t => t.id));
-            console.log(`[Theme] Falling back to default theme: ayu-mirage`);
+            // console.log(`[Theme] Falling back to default theme: ayu-mirage`);
             themeId = 'ayu-mirage'; // Default theme
         }
         
@@ -9769,24 +9769,24 @@ class NotesWiki {
         }
         
         const previousTheme = link.href;
-        console.log(`[Theme] Previous theme URL: ${previousTheme}`);
+        // console.log(`[Theme] Previous theme URL: ${previousTheme}`);
         
         // Set up error handling for CSS loading
         const handleThemeLoad = () => {
             const loadTime = performance.now() - startTime;
-            console.log(`[Theme] Successfully loaded theme: ${themeId} (${loadTime.toFixed(2)}ms)`);
+            // console.log(`[Theme] Successfully loaded theme: ${themeId} (${loadTime.toFixed(2)}ms)`);
             
             document.documentElement.setAttribute('data-theme', themeId);
-            console.log(`[Theme] Set data-theme attribute to: ${themeId}`);
+            // console.log(`[Theme] Set data-theme attribute to: ${themeId}`);
             
             // Update current theme in settings if not using auto theme
             if (!this.settings.autoTheme) {
                 this.settings.theme = themeId;
-                console.log(`[Theme] Updated settings.theme to: ${themeId}`);
+                // console.log(`[Theme] Updated settings.theme to: ${themeId}`);
                 // Also update the individual theme key for initial load consistency
                 try {
                     localStorage.setItem('notesWiki_theme', themeId);
-                    console.log(`[Theme] Synced theme to localStorage key: notesWiki_theme`);
+                    // console.log(`[Theme] Synced theme to localStorage key: notesWiki_theme`);
                 } catch (e) {
                     console.warn(`[Theme] Failed to sync theme to localStorage:`, e);
                 }
@@ -9796,7 +9796,7 @@ class NotesWiki {
             try {
                 const sheet = link.sheet;
                 if (sheet && sheet.cssRules) {
-                    console.log(`[Theme] CSS rules loaded: ${sheet.cssRules.length} rules`);
+                    // console.log(`[Theme] CSS rules loaded: ${sheet.cssRules.length} rules`);
                 } else {
                     console.warn(`[Theme] CSS sheet loaded but no rules found`);
                 }
@@ -9816,7 +9816,7 @@ class NotesWiki {
             this.showToast(`Failed to load theme: ${themeId}`, 'error');
             
             if (themeId !== 'ayu-mirage') {
-                console.log(`[Theme] Attempting fallback to default theme`);
+                // console.log(`[Theme] Attempting fallback to default theme`);
                 // Fallback to default theme
                 this.applyTheme('ayu-mirage');
             } else {
@@ -9830,8 +9830,8 @@ class NotesWiki {
         
         // Use base path for GitHub Pages compatibility
         const themePath = this.basePath ? `${this.basePath}themes/${themeId}.css` : `themes/${themeId}.css`;
-        console.log(`[Theme] Setting theme URL to: ${themePath}`);
-        console.log(`[Theme] Base path: ${this.basePath || '(none)'}`);
+        // console.log(`[Theme] Setting theme URL to: ${themePath}`);
+        // console.log(`[Theme] Base path: ${this.basePath || '(none)'}`);
         
         // Force theme reload by adding cache-busting query parameter
         const cacheBuster = `?t=${Date.now()}`;
@@ -10465,7 +10465,7 @@ class NotesWiki {
         } catch (error) {
             console.warn('Failed to load settings from localStorage:', error);
             // Continue with default settings
-            console.log('Using default settings due to localStorage error');
+            // console.log('Using default settings due to localStorage error');
         }
     }
     
@@ -11284,7 +11284,7 @@ class NotesWiki {
             // Check if tab is pinned before loading
             if (tab.isPinned && tab.path && tab.path !== pendingPath) {
                 // Tab is pinned and trying to load a different note
-                console.log('[Tab] Cannot load pending path into pinned tab:', tabId);
+                // console.log('[Tab] Cannot load pending path into pinned tab:', tabId);
                 this.showToast('Cannot change the content of a pinned tab', 'warning');
                 // Don't load the pending path
             } else {
@@ -11699,7 +11699,9 @@ class NotesWiki {
             `;
             menuItem.addEventListener('click', () => {
                 item.action();
-                document.body.removeChild(contextMenu);
+                if (contextMenu.parentNode) {
+                    contextMenu.parentNode.removeChild(contextMenu);
+                }
             });
             contextMenu.appendChild(menuItem);
         });
@@ -11707,7 +11709,9 @@ class NotesWiki {
         // Close menu on outside click
         const closeMenu = (e) => {
             if (!contextMenu.contains(e.target)) {
-                document.body.removeChild(contextMenu);
+                if (contextMenu.parentNode) {
+                    contextMenu.parentNode.removeChild(contextMenu);
+                }
                 document.removeEventListener('click', closeMenu);
                 document.removeEventListener('contextmenu', closeMenu);
             }
@@ -11803,7 +11807,9 @@ class NotesWiki {
             `;
             menuItem.addEventListener('click', () => {
                 item.action();
-                document.body.removeChild(contextMenu);
+                if (contextMenu.parentNode) {
+                    contextMenu.parentNode.removeChild(contextMenu);
+                }
             });
             contextMenu.appendChild(menuItem);
         });
@@ -11811,7 +11817,9 @@ class NotesWiki {
         // Close menu on outside click
         const closeMenu = (e) => {
             if (!contextMenu.contains(e.target)) {
-                document.body.removeChild(contextMenu);
+                if (contextMenu.parentNode) {
+                    contextMenu.parentNode.removeChild(contextMenu);
+                }
                 document.removeEventListener('click', closeMenu);
                 document.removeEventListener('contextmenu', closeMenu);
             }
@@ -11921,7 +11929,9 @@ class NotesWiki {
             `;
             menuItem.addEventListener('click', () => {
                 item.action();
-                document.body.removeChild(contextMenu);
+                if (contextMenu.parentNode) {
+                    contextMenu.parentNode.removeChild(contextMenu);
+                }
             });
             contextMenu.appendChild(menuItem);
         });
@@ -11929,7 +11939,9 @@ class NotesWiki {
         // Close menu on outside click
         const closeMenu = (e) => {
             if (!contextMenu.contains(e.target)) {
-                document.body.removeChild(contextMenu);
+                if (contextMenu.parentNode) {
+                    contextMenu.parentNode.removeChild(contextMenu);
+                }
                 document.removeEventListener('click', closeMenu);
                 document.removeEventListener('contextmenu', closeMenu);
             }
@@ -12078,7 +12090,9 @@ class NotesWiki {
             `;
             menuItem.addEventListener('click', () => {
                 item.action();
-                document.body.removeChild(contextMenu);
+                if (contextMenu.parentNode) {
+                    contextMenu.parentNode.removeChild(contextMenu);
+                }
             });
             contextMenu.appendChild(menuItem);
         });
@@ -12086,7 +12100,9 @@ class NotesWiki {
         // Close menu on outside click
         const closeMenu = (e) => {
             if (!contextMenu.contains(e.target)) {
-                document.body.removeChild(contextMenu);
+                if (contextMenu.parentNode) {
+                    contextMenu.parentNode.removeChild(contextMenu);
+                }
                 document.removeEventListener('click', closeMenu);
                 document.removeEventListener('contextmenu', closeMenu);
             }
@@ -14107,7 +14123,7 @@ class NotesWiki {
             const tabState = JSON.parse(savedState);
             if (!tabState.tabs || tabState.tabs.length === 0) return false;
             
-            console.log('Restoring tab state:', tabState);
+            // console.log('Restoring tab state:', tabState);
             
             // Clear existing tabs
             this.tabs.clear();
@@ -14125,7 +14141,7 @@ class NotesWiki {
             // Restore tabs
             let activeTabFound = false;
             tabState.tabs.forEach(tabData => {
-                console.log('Restoring tab:', tabData);
+                // console.log('Restoring tab:', tabData);
                 
                 // Validate tab data
                 if (!tabData.path || typeof tabData.path !== 'string') {
@@ -14149,7 +14165,7 @@ class NotesWiki {
             
             // If no tabs were successfully restored, return false
             if (this.tabs.size === 0) {
-                console.log('No valid tabs restored');
+                // console.log('No valid tabs restored');
                 return false;
             }
             
@@ -14160,7 +14176,7 @@ class NotesWiki {
             // Load content for active tab
             const activeTab = this.tabs.get(tabToActivate);
             if (activeTab && activeTab.path) {
-                console.log('Loading active tab content:', activeTab.path);
+                // console.log('Loading active tab content:', activeTab.path);
                 this.loadNoteInTab(activeTab.path, tabToActivate);
             }
             
@@ -14716,7 +14732,7 @@ class NotesWiki {
                 gainNode.disconnect();
             };
         } catch (error) {
-            console.log('Audio notification not available:', error);
+            // console.log('Audio notification not available:', error);
         }
     }
     
@@ -14948,7 +14964,7 @@ class NotesWiki {
         const tabData = this.tabs.get(splitViewTabId);
         if (tabData && tabData.isPinned) {
             // Don't remove pinned split view tab, just switch to another tab
-            console.log('[Split View] Split view tab is pinned, keeping it open');
+            // console.log('[Split View] Split view tab is pinned, keeping it open');
             
             // Return to previous tab if available
             if (this.tabBeforeSplitView && this.tabs.has(this.tabBeforeSplitView)) {
@@ -15268,7 +15284,7 @@ class NotesWiki {
             
             // Fetch note content  
             const fetchPath = path.slice(1);
-            console.log('Loading note - Original path:', path, 'Fetch path:', fetchPath);
+            // console.log('Loading note - Original path:', path, 'Fetch path:', fetchPath);
             
             const fullPath = this.basePath ? `${this.basePath}${fetchPath}` : fetchPath;
             const response = await fetch(fullPath);
@@ -15865,7 +15881,7 @@ class NotesWiki {
                             this.saveQuickNotes();
                             // Remove old sticky notes data
                             localStorage.removeItem('stickyNotes');
-                            console.log('Migrated', this.quickNotes.length, 'sticky notes to quick notes');
+                            // console.log('Migrated', this.quickNotes.length, 'sticky notes to quick notes');
                         }
                     } catch (e) {
                         console.warn('Failed to migrate sticky notes:', e);
@@ -16682,7 +16698,7 @@ class NotesWiki {
                     this.contextResizeObserver = null;
                 }
                 
-                console.log('Application cleanup completed');
+                // console.log('Application cleanup completed');
             } catch (error) {
                 console.warn('Error during cleanup:', error);
             }

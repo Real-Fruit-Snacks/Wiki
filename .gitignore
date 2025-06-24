@@ -182,6 +182,7 @@ temp/
 !fonts/README.md
 !fonts/font-loader.js
 !fonts/test-fonts.html
+!fonts/download-fonts.sh
 
 # Local development overrides
 local/
