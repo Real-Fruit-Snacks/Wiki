@@ -250,46 +250,8 @@ class NotesWiki {
         // Flatten themes for compatibility
         this.themes = this.themeCategories.flatMap(category => category.themes);
         
-        // Settings
-        this.settings = {
-            trackRecent: true,
-            showLineNumbers: true,
-            enableWordWrap: true,
-            recentLimit: 20,
-            theme: 'ayu-mirage',
-            autoTheme: false, // Enable automatic theme switching based on system preferences
-            activeContext: null,  // Store active context in settings
-            stickySearch: false,  // Keep search query when reopening search
-            contentWidth: 'normal',  // Default to normal width
-            focusMode: false, // Focus mode state
-            showTableOfContents: false, // Show/hide table of contents for notes with multiple headings
-            splitViewEnabled: false, // Split view state
-            // New settings
-            defaultHomePage: 'home', // 'home', 'last-viewed', 'specific'
-            specificHomeNote: '', // Path to specific note
-            externalLinksNewTab: true,
-            fontSize: 'normal', // 'small', 'normal', 'large', 'extra-large'
-            fontFamily: 'system', // 'system', 'sans-serif', 'serif', 'monospace', 'jetbrains-mono'
-            defaultCodeLanguage: 'bash',
-            customCSS: '',
-            keyboardShortcuts: {
-                'new-tab': 'Ctrl+T',
-                'search': 'Ctrl+K',
-                'settings': 'Ctrl+,',
-                'filter': 'Ctrl+F',
-                'bookmark': 'Ctrl+D'
-            },
-            // Pomodoro settings
-            pomodoroEnabled: true,
-            pomodoroWorkMinutes: 25,
-            pomodoroShortBreakMinutes: 5,
-            pomodoroLongBreakMinutes: 15,
-            pomodoroSessionsBeforeLongBreak: 4,
-            pomodoroAutoStartNext: false,
-            pomodoroPlaySounds: true,
-            // Confirm dialogs
-            confirmOnClose: true
-        };
+        // Settings - use default settings method for consistency
+        this.settings = this.getDefaultSettings();
         
         // Search state
         this.lastSearchQuery = '';
@@ -3041,6 +3003,60 @@ class NotesWiki {
         `;
         
         contentDiv.innerHTML = welcomeHTML;
+    }
+    
+    getDefaultSettings() {
+        return {
+            trackRecent: true,
+            showLineNumbers: true,
+            enableWordWrap: true,
+            recentLimit: 20,
+            theme: 'ayu-mirage',
+            autoTheme: false,
+            activeContext: null,
+            stickySearch: false,
+            contentWidth: 'normal',
+            focusMode: false,
+            showTableOfContents: false,
+            splitViewEnabled: false,
+            defaultHomePage: 'home',
+            specificHomeNote: '',
+            externalLinksNewTab: true,
+            fontSize: 'normal',
+            fontFamily: 'system',
+            defaultCodeLanguage: 'bash',
+            customCSS: '',
+            keyboardShortcuts: {
+                'new-tab': 'Ctrl+T',
+                'search': 'Ctrl+K',
+                'settings': 'Ctrl+,',
+                'filter': 'Ctrl+F',
+                'bookmark': 'Ctrl+D'
+            },
+            pomodoroEnabled: true,
+            pomodoroWorkMinutes: 25,
+            pomodoroShortBreakMinutes: 5,
+            pomodoroLongBreakMinutes: 15,
+            pomodoroSessionsBeforeLongBreak: 4,
+            pomodoroAutoStartNext: false,
+            pomodoroPlaySounds: true,
+            confirmOnClose: true,
+            themeFavorites: [],
+            // Additional settings referenced in updateSettingsUI
+            enableToc: false,
+            enableReadingProgress: false,
+            enableAnimations: true,
+            enableSound: true,
+            enableAutoComplete: true,
+            pomodoroAutoStartBreak: false,
+            pomodoroAutoStartWork: false,
+            pomodoroNotifications: true,
+            quickNotesPosition: 'right',
+            pomodoroWorkDuration: 25,
+            pomodoroBreakDuration: 5,
+            pomodoroLongBreakDuration: 15,
+            pomodoroCyclesBeforeLongBreak: 4
+        };
     }
     
     dismissAllContextMenus() {
