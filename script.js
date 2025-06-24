@@ -2984,7 +2984,7 @@ class NotesWiki {
                 // Update tab to show home
                 tab.title = 'Home';
                 tab.path = '/';
-                this.updateTabDisplay(this.activeTabId);
+                this.renderTab(this.activeTabId);
             }
         }
         
