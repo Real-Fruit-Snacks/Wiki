@@ -5154,6 +5154,8 @@ class NotesWiki {
             categorySection.style.cssText = `
                 margin-bottom: 2rem;
                 width: 100%;
+                padding: 8px;
+                overflow: visible;
             `;
             
             // Get category icon
