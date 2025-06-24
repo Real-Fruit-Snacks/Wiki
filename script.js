@@ -5057,65 +5057,6 @@ class NotesWiki {
         }
     }
     
-    showKeyboardShortcuts() {
-        const shortcuts = [
-            { keys: '/', description: 'Open search' },
-            { keys: '?', description: 'Show this help' },
-            { keys: 'Esc', description: 'Close all dialogs' },
-            { keys: 'Ctrl/⌘ + K', description: 'Quick search' },
-            { keys: 'Ctrl/⌘ + F', description: 'Find in notes' },
-            { keys: 'Ctrl/⌘ + W', description: 'Close current tab' },
-            { keys: 'Ctrl/⌘ + Tab', description: 'Next tab' },
-            { keys: 'Ctrl/⌘ + Shift + Tab', description: 'Previous tab' },
-            { keys: 'Alt + 1-9', description: 'Jump to specific tab' },
-            { keys: 'Ctrl/⌘ + S', description: 'Copy note link' },
-            { keys: 'Ctrl/⌘ + Click', description: 'Open link in new tab' },
-            { keys: 'Middle Click', description: 'Open link in new tab / Close tab' }
-        ];
-        
-        const modalHtml = `
-            <div class="modal" id="shortcuts-modal" style="display: flex;">
-                <div class="modal-content" style="max-width: 600px;">
-                    <div class="modal-header">
-                        <h2>Keyboard Shortcuts</h2>
-                        <button class="icon-button" onclick="document.getElementById('shortcuts-modal').remove()">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <table style="width: 100%; border-collapse: collapse;">
-                            ${shortcuts.map(s => `
-                                <tr style="border-bottom: 1px solid var(--border-primary);">
-                                    <td style="padding: 12px; font-family: var(--font-mono); font-size: 14px; color: var(--accent-primary);">
-                                        ${this.escapeHtml(s.keys)}
-                                    </td>
-                                    <td style="padding: 12px; color: var(--text-secondary);">
-                                        ${this.escapeHtml(s.description)}
-                                    </td>
-                                </tr>
-                            `).join('')}
-                        </table>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        // Add modal to body
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = modalHtml;
-        document.body.appendChild(tempDiv.firstElementChild);
-        
-        // Add event listener to close on Escape
-        const closeHandler = (e) => {
-            if (e.key === 'Escape') {
-                document.getElementById('shortcuts-modal')?.remove();
-                document.removeEventListener('keydown', closeHandler);
-            }
-        };
-        document.addEventListener('keydown', closeHandler);
-    }
     
     updateTagsUI() {
         // Update selected count
