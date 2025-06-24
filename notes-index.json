@@ -1195,10 +1195,10 @@
     "platforms": 1
   },
   "authors": [
-    "NotesWiki Team",
-    "Test Author",
     "Wiki Team",
-    "Wiki Admin"
+    "Wiki Admin",
+    "Test Author",
+    "NotesWiki Team"
   ],
   "categories": [
     "testing",
@@ -1216,6 +1216,6 @@
       "noteCount": 1
     }
   ],
-  "generated": "2025-06-23T21:29:46.689973",
+  "generated": "2025-06-24T07:06:05.826095",
   "totalNotes": 40
 }

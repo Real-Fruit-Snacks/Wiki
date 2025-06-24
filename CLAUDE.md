@@ -243,7 +243,7 @@ When making changes to this codebase:
 
 **Badge Styling**: Badge elements use `--badge-bg` and `--badge-text` CSS variables with fallbacks for contrast. All themes define these variables for optimal readability.
 
-**Theme Favorite Stars**: Positioned at `top: 8px; left: 8px` with `!important` declarations to ensure consistent placement.
+**Theme Favorite Stars**: Positioned at `bottom: 8px; left: 8px` with `!important` declarations to ensure consistent placement.
 
 **Context Menu Icons**: Always use semantic, action-specific SVG icons. Avoid duplicate icons across menu items. Test rendering across themes to ensure visibility.
 

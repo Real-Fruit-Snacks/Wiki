@@ -2576,7 +2576,7 @@ class NotesWiki {
             html += '<div class="code-block-actions">';
             
             // Always add toggle button
-            html += '<button class="code-block-button toggle-button" onclick="notesWiki.toggleCodeBlock(\'' + blockId + '\')" aria-label="Toggle code">';
+            html += '<button class="code-block-button toggle-button" onclick="window.notesWiki.toggleCodeBlock(\'' + blockId + '\')" aria-label="Toggle code">';
             html += '<svg class="toggle-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">';
             if (collapse) {
                 // Plus sign for collapsed state
@@ -2588,7 +2588,7 @@ class NotesWiki {
             html += '</svg>';
             html += '</button>';
             
-            html += '<button class="code-block-button copy-button" onclick="notesWiki.copyCode(\'' + blockId + '\')" aria-label="Copy code">';
+            html += '<button class="code-block-button copy-button" onclick="window.notesWiki.copyCode(\'' + blockId + '\')" aria-label="Copy code">';
             html += '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">';
             html += '<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"/>';
             html += '<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"/>';
@@ -2653,19 +2653,19 @@ class NotesWiki {
                         <h1 class="note-title">${this.escapeHtml(metadata.title || 'Untitled')}</h1>
                         <div class="note-actions">
                             <button class="note-action-btn bookmark-btn ${this.isBookmarked(this.currentNotePath) ? 'bookmarked' : ''}" 
-                                    onclick="notesWiki.toggleBookmark('${this.currentNotePath}', ${JSON.stringify(metadata).replace(/"/g, '&quot;')})" 
+                                    onclick="window.notesWiki.toggleBookmark('${this.currentNotePath}', ${JSON.stringify(metadata).replace(/"/g, '&quot;')})" 
                                     title="${this.isBookmarked(this.currentNotePath) ? 'Remove bookmark (Ctrl+D)' : 'Bookmark this note (Ctrl+D)'}"
                                     aria-label="${this.isBookmarked(this.currentNotePath) ? 'Remove bookmark' : 'Bookmark this note'}">
                                 <i class="icon">${this.isBookmarked(this.currentNotePath) ? '★' : '☆'}</i>
                             </button>
                             <button class="note-action-btn" 
-                                    onclick="notesWiki.copyLinkToNote()" 
+                                    onclick="window.notesWiki.copyLinkToNote()" 
                                     title="Copy link to this note"
                                     aria-label="Copy link">
                                 <i class="icon">🔗</i>
                             </button>
                             <button class="note-action-btn focus-mode-btn" 
-                                    onclick="notesWiki.toggleFocusMode()" 
+                                    onclick="window.notesWiki.toggleFocusMode()" 
                                     title="Toggle focus mode (F)"
                                     aria-label="Toggle focus mode">
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
@@ -2732,7 +2732,7 @@ class NotesWiki {
             </div>
             
             <!-- Floating share button -->
-            <button class="floating-share" onclick="notesWiki.shareNote()" aria-label="Share this note">
+            <button class="floating-share" onclick="window.notesWiki.shareNote()" aria-label="Share this note">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="18" cy="5" r="3"/>
                     <circle cx="6" cy="12" r="3"/>
@@ -4011,7 +4011,7 @@ class NotesWiki {
                             </div>
                         </div>
                         <div class="code-block-actions">
-                            <button class="code-block-button copy-button" onclick="notesWiki.copyCode('${blockId}')" aria-label="Copy code">
+                            <button class="code-block-button copy-button" onclick="window.notesWiki.copyCode('${blockId}')" aria-label="Copy code">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                     <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"/>
                                     <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"/>
@@ -4616,7 +4616,7 @@ class NotesWiki {
                                 <h4>${this.escapeHtml(bookmark.title)}</h4>
                                 <p class="bookmark-date">Bookmarked ${this.formatDate(bookmark.bookmarkedAt)}</p>
                             </a>
-                            <button class="bookmark-card-remove" onclick="notesWiki.removeBookmark('${bookmark.path}')" title="Remove bookmark">
+                            <button class="bookmark-card-remove" onclick="window.notesWiki.removeBookmark('${bookmark.path}')" title="Remove bookmark">
                                 <i class="icon">×</i>
                             </button>
                         </div>
@@ -15427,7 +15427,7 @@ class NotesWiki {
             html += '<div class="code-block-actions">';
             
             // Toggle button
-            html += '<button class="code-block-button toggle-button" onclick="notesWiki.toggleCodeBlock(\'' + blockId + '\')" aria-label="Toggle code">';
+            html += '<button class="code-block-button toggle-button" onclick="window.notesWiki.toggleCodeBlock(\'' + blockId + '\')" aria-label="Toggle code">';
             html += '<svg class="toggle-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">';
             if (collapse) {
                 html += '<path d="M8 2a.75.75 0 01.75.75v4.5h4.5a.75.75 0 010 1.5h-4.5v4.5a.75.75 0 01-1.5 0v-4.5h-4.5a.75.75 0 010-1.5h4.5v-4.5A.75.75 0 018 2z"/>';
@@ -15438,7 +15438,7 @@ class NotesWiki {
             html += '</button>';
             
             // Copy button
-            html += '<button class="code-block-button copy-button" onclick="notesWiki.copyCode(\'' + blockId + '\')" aria-label="Copy code">';
+            html += '<button class="code-block-button copy-button" onclick="window.notesWiki.copyCode(\'' + blockId + '\')" aria-label="Copy code">';
             html += '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">';
             html += '<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"/>';
             html += '<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"/>';
@@ -16714,5 +16714,12 @@ class NotesWiki {
     }
 }
 
-// Initialize the application
-const notesWiki = new NotesWiki();
+// Initialize the application when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        window.notesWiki = new NotesWiki();
+    });
+} else {
+    // DOM is already loaded
+    window.notesWiki = new NotesWiki();
+}
