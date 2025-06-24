@@ -12970,10 +12970,11 @@ class NotesWiki {
 
     showQuickThemeMenu() {
         console.log('[DEBUG] showQuickThemeMenu called');
-        const currentTheme = this.settings.theme;
-        
-        // Create modal overlay
-        const overlay = document.createElement('div');
+        try {
+            const currentTheme = this.settings.theme;
+            
+            // Create modal overlay
+            const overlay = document.createElement('div');
         overlay.className = 'modal-overlay';
         overlay.style.cssText = `
             position: fixed;
@@ -13157,6 +13158,10 @@ class NotesWiki {
         
         // Add to DOM
         document.body.appendChild(overlay);
+        console.log('[DEBUG] showQuickThemeMenu modal added to DOM successfully');
+        } catch (error) {
+            console.error('[ERROR] showQuickThemeMenu failed:', error);
+        }
     }
 
     showThemeFavorites() {
