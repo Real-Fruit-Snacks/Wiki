@@ -2,7 +2,7 @@
 
 A self-contained, offline-first personal knowledge management system built with vanilla JavaScript. Features 150+ themes, advanced search, and multi-tab interface with zero external dependencies.
 
-![Version](https://img.shields.io/badge/version-4.0.1-blue)
+![Version](https://img.shields.io/badge/version-4.0.2-blue)
 ![Size](https://img.shields.io/badge/size-~15MB-green)
 ![License](https://img.shields.io/badge/license-MIT-orange)
 
