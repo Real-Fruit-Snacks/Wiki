@@ -113,7 +113,6 @@ npm run package
 ## Documentation
 
 - [CLAUDE.md](CLAUDE.md) - Development guide and architecture details
-- [CUSTOMIZATION.md](CUSTOMIZATION.md) - Theming and customization guide
 
 ## Contributing
 

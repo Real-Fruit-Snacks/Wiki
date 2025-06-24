@@ -26,7 +26,6 @@ const includes = [
     'package.json',
     'README.md',
     'CLAUDE.md',
-    'CUSTOMIZATION.md',
     '_config.yml',
     '.nojekyll',  // Include Jekyll bypass file
     'notes-index.json'  // Include the built index

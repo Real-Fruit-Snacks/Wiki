@@ -7443,7 +7443,6 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
 }
 
 /* Context Menu Styles */
-.context-menu-item,
 .note-context-menu,
 .tab-context-menu,
 .theme-context-menu,
@@ -7460,7 +7459,8 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
 .close-all-button-context-menu,
 .site-brand-context-menu,
 .code-block-context-menu {
-    background: var(--bg-secondary);
+    background: var(--bg-secondary, rgba(30, 30, 30, 0.95));
+    background-color: var(--bg-secondary, rgba(30, 30, 30, 0.95));
     border: 1px solid var(--border-primary);
     border-radius: var(--radius-md);
     box-shadow: 
@@ -7475,9 +7475,9 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     transform: scale(0.95) translateY(-5px);
     transition: all var(--transition-fast);
     overflow: hidden;
+    color: var(--text-primary, #e0e0e0);
 }
 
-.context-menu-item:hover,
 .note-context-menu.show,
 .tab-context-menu.show,
 .theme-context-menu.show,
@@ -7508,7 +7508,7 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     transition: all var(--transition-fast);
     font-size: var(--text-sm);
     font-weight: 500;
-    color: var(--text-primary);
+    color: var(--text-primary, #e0e0e0);
     background: transparent;
     border: none;
     text-align: left;
@@ -7572,6 +7572,29 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: inherit;
+}
+
+/* Ensure context menu text is always visible */
+[class*="-context-menu"] .context-menu-item {
+    color: var(--text-primary, #e0e0e0);
+}
+
+[class*="-context-menu"] .context-menu-label {
+    color: inherit;
+}
+
+/* Fallback for themes with poor contrast */
+@media (prefers-color-scheme: dark) {
+    [class*="-context-menu"] .context-menu-item {
+        color: var(--text-primary, #e0e0e0);
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    [class*="-context-menu"] .context-menu-item {
+        color: var(--text-primary, #333333);
+    }
 }
 
 /* Modal Overlay Styles - Ensuring consistency */
