@@ -1195,9 +1195,9 @@
     "platforms": 1
   },
   "authors": [
-    "Wiki Admin",
-    "Test Author",
     "NotesWiki Team",
+    "Test Author",
+    "Wiki Admin",
     "Wiki Team"
   ],
   "categories": [
@@ -1216,6 +1216,6 @@
       "noteCount": 1
     }
   ],
-  "generated": "2025-06-24T07:52:09.635967",
+  "generated": "2025-06-24T08:05:07.993824",
   "totalNotes": 40
 }

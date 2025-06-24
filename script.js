@@ -798,6 +798,7 @@ class NotesWiki {
         // Sidebar right-click menu
         document.getElementById('sidebar').addEventListener('contextmenu', (e) => {
             e.preventDefault();
+            e.stopPropagation(); // Prevent event bubbling
             this.dismissAllContextMenus(); // Dismiss any existing menus
             this.showSidebarContextMenu(e);
         });
@@ -12397,7 +12398,7 @@ class NotesWiki {
         
         // Create context menu container
         const contextMenu = document.createElement('div');
-        contextMenu.className = 'search-context-menu';
+        contextMenu.className = 'search-input-context-menu';
         contextMenu.style.position = 'fixed';
         contextMenu.style.left = `${event.clientX}px`;
         contextMenu.style.top = `${event.clientY}px`;
