@@ -334,8 +334,10 @@ body.custom-fonts-loaded {
 }
 
 .context-button.active .context-count {
-    background-color: var(--accent-primary);
-    color: var(--badge-text);
+    background-color: var(--badge-bg, var(--accent-primary));
+    color: var(--badge-text, #ffffff);
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--badge-border, rgba(255, 255, 255, 0.2));
 }
 
 .header-nav {
@@ -395,12 +397,15 @@ body.custom-fonts-loaded {
     min-width: 18px;
     height: 18px;
     padding: 0 4px;
-    background-color: var(--accent-primary);
+    background-color: var(--badge-bg, var(--accent-primary));
+    border: 1px solid var(--badge-border, rgba(255, 255, 255, 0.2));
     border-radius: 9px;
-    color: var(--badge-text);
+    color: var(--badge-text, #ffffff);
     font-size: 11px;
     font-weight: 600;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    line-height: 1;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 /* Dropdown */
@@ -1804,8 +1809,10 @@ body.content-width-full .content-wrapper {
 }
 
 .note-tag:hover {
-    background-color: var(--accent-primary);
-    color: var(--badge-text);
+    background-color: var(--badge-bg, var(--accent-primary));
+    color: var(--badge-text, #ffffff);
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    border-color: var(--badge-border, rgba(255, 255, 255, 0.2));
 }
 
 /* Breadcrumb navigation */
@@ -6727,8 +6734,10 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
 }
 
 .quick-note-tab.active {
-    background: var(--accent-primary);
-    color: var(--badge-text);
+    background: var(--badge-bg, var(--accent-primary));
+    color: var(--badge-text, #ffffff);
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    border-color: var(--badge-border, rgba(255, 255, 255, 0.2));
 }
 
 .note-tab-content {
@@ -6814,8 +6823,10 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
 /* Button active state when panel is open */
 #sticky-note-btn.active,
 #mobile-sticky-note-btn.active {
-    background: var(--accent-primary);
-    color: var(--badge-text);
+    background: var(--badge-bg, var(--accent-primary));
+    color: var(--badge-text, #ffffff);
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    border-color: var(--badge-border, rgba(255, 255, 255, 0.2));
 }
 
 /* Mobile adjustments */
