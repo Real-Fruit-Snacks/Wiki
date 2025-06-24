@@ -198,11 +198,15 @@ The application features comprehensive right-click context menus:
 - **Filter context menu**: Clear filters, popular tags
 - **Tab bar context menu**: New tab, close all
 - **Close all button menu**: Force close pinned tabs
+- **Theme context menu**: Apply theme, add/remove favorites, preview
+- **Recent files context menu**: View files, clear history, set limit
+- **Bookmarks context menu**: View bookmarks, clear all, export
+- **Quick notes context menu**: Toggle, import/export, clear all
 
 ### Recent Major Features (v3.6.0+)
 
 1. **Universal Context Menus** - Right-click functionality everywhere
-2. **Theme Favorites System** - Star themes for quick access
+2. **Theme Favorites System** - Right-click to favorite, stars only shown on favorited themes (top-left)
 3. **Settings Import/Export** - Full backup/restore functionality
 4. **Enhanced Badge Readability** - Improved contrast across all themes
 5. **Conflict-Free Menu System** - Prevents overlapping context menus
@@ -243,7 +247,7 @@ When making changes to this codebase:
 
 **Badge Styling**: Badge elements use `--badge-bg` and `--badge-text` CSS variables with fallbacks for contrast. All themes define these variables for optimal readability.
 
-**Theme Favorite Stars**: Positioned at `bottom: 8px; left: 8px` with `!important` declarations to ensure consistent placement.
+**Theme Favorite Stars**: Only displayed on favorited themes. Positioned at `top: 8px; left: 8px` with `!important` declarations. Users can right-click any theme to add/remove from favorites.
 
 **Context Menu Icons**: Always use semantic, action-specific SVG icons. Avoid duplicate icons across menu items. Test rendering across themes to ensure visibility.
 

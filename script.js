@@ -5255,14 +5255,14 @@ class NotesWiki {
             card.innerHTML = `
                 ${themeDecorations}
                 <div class="theme-card-main-content" style="position: relative; z-index: 10;">
-                    <button class="theme-favorite-btn" data-theme-id="${theme.id}" title="${isFavorited ? 'Remove from favorites' : 'Add to favorites'}" style="
+                    ${isFavorited ? `<button class="theme-favorite-btn" data-theme-id="${theme.id}" title="Remove from favorites" style="
                         position: absolute !important;
-                        bottom: 8px !important;
+                        top: 8px !important;
                         left: 8px !important;
                         right: auto !important;
-                        top: auto !important;
-                        background: ${isFavorited ? previewColors.accent : 'rgba(0,0,0,0.6)'};
-                        color: ${isFavorited ? previewColors.bg : '#ffffff'};
+                        bottom: auto !important;
+                        background: ${previewColors.accent};
+                        color: ${previewColors.bg};
                         border: none;
                         border-radius: 50%;
                         width: 26px;
@@ -5279,7 +5279,7 @@ class NotesWiki {
                         <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                         </svg>
-                    </button>
+                    </button>` : ''}
                     <div class="theme-card-preview-full" style="
                         background: ${previewColors.bg};
                         border: 1px solid ${previewColors.border};
@@ -5325,27 +5325,28 @@ class NotesWiki {
             // Add theme-specific interactive effects
             this.addThemeCardEffects(card, theme.id, previewColors);
             
-            // Handle favorite button click
+            // Handle favorite button click (only exists on favorited themes)
             const favoriteBtn = card.querySelector('.theme-favorite-btn');
-            favoriteBtn.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent card click
-                
-                const themeId = favoriteBtn.dataset.themeId;
-                const wasAdded = this.toggleThemeFavorite(themeId);
-                
-                // Update button visual state
-                if (wasAdded) {
-                    favoriteBtn.style.background = previewColors.accent;
-                    favoriteBtn.style.color = previewColors.bg;
-                    favoriteBtn.title = 'Remove from favorites';
-                    this.showToast(`Added ${theme.name} to favorites`, 'success');
-                } else {
-                    favoriteBtn.style.background = 'rgba(0,0,0,0.5)';
-                    favoriteBtn.style.color = '#ffffff';
-                    favoriteBtn.title = 'Add to favorites';
-                    this.showToast(`Removed ${theme.name} from favorites`, 'info');
-                }
-            });
+            if (favoriteBtn) {
+                favoriteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent card click
+                    
+                    const themeId = favoriteBtn.dataset.themeId;
+                    const wasAdded = this.toggleThemeFavorite(themeId);
+                    
+                    // Show toast notification
+                    if (wasAdded) {
+                        this.showToast(`Added ${theme.name} to favorites`, 'success');
+                    } else {
+                        this.showToast(`Removed ${theme.name} from favorites`, 'info');
+                    }
+                    
+                    // Refresh theme cards to update display
+                    if (document.getElementById('theme-cards-grid')) {
+                        this.populateThemeCards();
+                    }
+                });
+            }
             
             // Handle theme right-click context menu
             card.addEventListener('contextmenu', (e) => {
