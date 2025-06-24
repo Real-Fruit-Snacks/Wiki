@@ -16617,7 +16617,7 @@ class NotesWiki {
     
     refreshFileTree() {
         // Force reload the file tree
-        this.buildFileTree();
+        this.buildNavigationTree();
         this.showToast('File tree refreshed', 'info');
     }
     
