@@ -2970,39 +2970,8 @@ class NotesWiki {
     }
     
     navigateToHome() {
-        // Clear current note and show home state
-        this.currentNote = null;
-        this.currentNotePath = null;
-        
-        // Update URL to home
-        window.history.pushState(null, null, '#/');
-        
-        // Clear main content and show the notes index
-        const contentDiv = document.getElementById('content');
-        if (contentDiv) {
-            contentDiv.innerHTML = '';
-        }
-        
-        // Clear active note highlighting in sidebar
-        const sidebarItems = document.querySelectorAll('.sidebar-item.active');
-        sidebarItems.forEach(item => item.classList.remove('active'));
-        
-        // Show index/welcome message
-        this.showIndexContent();
-        
-        // Update tab if there's an active tab
-        if (this.activeTabId && this.tabs.has(this.activeTabId)) {
-            const tab = this.tabs.get(this.activeTabId);
-            if (!tab.isPinned) {
-                // Update tab to show home
-                tab.title = 'Home';
-                tab.path = '/';
-                this.renderTab(this.activeTabId);
-            }
-        }
-        
-        // Show toast message
-        this.showToast('Navigated to home', 'info');
+        // Navigate to the actual index.md file instead of showing generic content
+        this.loadNote('/notes/index.md');
     }
     
     showIndexContent() {
