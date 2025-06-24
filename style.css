@@ -4570,10 +4570,32 @@ select.dropdown:focus {
     position: relative;
     /* Allow inline styles to override */
     isolation: isolate;
+    z-index: 1;
 }
 
 .theme-card:hover {
     transform: translateY(-2px);
+}
+
+/* Ensure theme card pseudo-elements don't block interactions */
+.theme-card::before,
+.theme-card::after,
+.theme-card > *::before,
+.theme-card > *::after {
+    pointer-events: none;
+}
+
+/* Ensure theme favorite button remains clickable */
+.theme-favorite-btn {
+    pointer-events: auto !important;
+    position: relative !important;
+    z-index: 1000 !important;
+}
+
+.theme-favorite-btn::before,
+.theme-favorite-btn::after,
+.theme-favorite-btn * {
+    pointer-events: none !important;
 }
 
 .theme-card.active {
@@ -4595,6 +4617,7 @@ select.dropdown:focus {
     justify-content: center;
     font-size: 12px;
     font-weight: bold;
+    pointer-events: none;
 }
 
 /* Old preview style - kept for backward compatibility */

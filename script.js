@@ -3099,7 +3099,8 @@ class NotesWiki {
             '.search-input-context-menu',
             '.settings-context-menu',
             '.note-context-menu',
-            '.tab-context-menu'
+            '.tab-context-menu',
+            '.theme-context-menu'
         ].join(', '));
         
         existingMenus.forEach(menu => {
@@ -4656,14 +4657,27 @@ class NotesWiki {
         
         // Add click-outside handler
         const clickOutsideHandler = (e) => {
+            // Check if clicking on the modal backdrop itself (not its contents)
             if (e.target === modal) {
                 this.hideSettings();
             }
         };
         modal.addEventListener('click', clickOutsideHandler);
         
-        // Store handler for cleanup
+        // Prevent modal from interfering with context menus
+        const contextMenuHandler = (e) => {
+            // Only prevent context menu on the modal backdrop itself
+            // Allow all context menus on child elements (including theme cards)
+            if (e.target === modal) {
+                e.preventDefault();
+            }
+            // Let all other context menu events through
+        };
+        modal.addEventListener('contextmenu', contextMenuHandler);
+        
+        // Store handlers for cleanup
         modal._clickOutsideHandler = clickOutsideHandler;
+        modal._contextMenuHandler = contextMenuHandler;
         
         // Update form values
         document.getElementById('track-recent').checked = this.settings.trackRecent;
@@ -4809,6 +4823,12 @@ class NotesWiki {
         if (modal._clickOutsideHandler) {
             modal.removeEventListener('click', modal._clickOutsideHandler);
             delete modal._clickOutsideHandler;
+        }
+        
+        // Remove context menu handler
+        if (modal._contextMenuHandler) {
+            modal.removeEventListener('contextmenu', modal._contextMenuHandler);
+            delete modal._contextMenuHandler;
         }
     }
     
@@ -5238,6 +5258,7 @@ class NotesWiki {
             card.style.position = 'relative';
             card.style.overflow = 'visible';
             card.style.minHeight = '160px';
+            card.style.zIndex = '1';
             card.style.setProperty('--theme-text-primary', previewColors.text);
             card.style.setProperty('--theme-text-secondary', previewColors.textMuted);
             card.style.setProperty('--theme-accent', previewColors.accent);
@@ -5257,7 +5278,9 @@ class NotesWiki {
             const isFavorited = this.settings.themeFavorites && this.settings.themeFavorites.includes(theme.id);
             
             card.innerHTML = `
-                ${themeDecorations}
+                <div style="position: absolute; inset: 0; pointer-events: none; overflow: hidden;">
+                    ${themeDecorations}
+                </div>
                 ${isFavorited ? `<button class="theme-favorite-btn" data-theme-id="${theme.id}" title="Remove from favorites" style="
                     position: absolute !important;
                     top: -4px !important;
@@ -5282,7 +5305,7 @@ class NotesWiki {
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                     </svg>
                 </button>` : ''}
-                <div class="theme-card-main-content" style="position: relative; z-index: 10;">
+                <div class="theme-card-main-content" style="position: relative;">
                     <div class="theme-card-preview-full" style="
                         background: ${previewColors.bg};
                         border: 1px solid ${previewColors.border};
@@ -5353,6 +5376,7 @@ class NotesWiki {
             
             // Handle theme right-click context menu
             card.addEventListener('contextmenu', (e) => {
+                console.log('[Theme Card] Context menu event triggered for:', theme.name);
                 e.preventDefault();
                 e.stopPropagation();
                 // Get current favorite status
@@ -5439,6 +5463,7 @@ class NotesWiki {
         if (this.settings.autoTheme) {
             themeCardsContainer.classList.add('auto-theme-enabled');
             autoThemeOverlay.style.display = 'flex';
+            autoThemeOverlay.style.pointerEvents = 'auto';
             
             // Add click handler to disable auto-theme
             autoThemeOverlay.onclick = () => {
@@ -5460,6 +5485,7 @@ class NotesWiki {
         } else {
             themeCardsContainer.classList.remove('auto-theme-enabled');
             autoThemeOverlay.style.display = 'none';
+            autoThemeOverlay.style.pointerEvents = 'none';
             autoThemeOverlay.onclick = null; // Remove event handler
         }
     }
@@ -11620,6 +11646,8 @@ class NotesWiki {
         event.preventDefault();
         event.stopPropagation();
         
+        console.log('[Theme Context Menu] Right-clicked on theme:', themeName, 'Theme ID:', themeId);
+        
         // Dismiss any existing context menus
         this.dismissAllContextMenus();
         
@@ -11630,7 +11658,7 @@ class NotesWiki {
             position: fixed;
             left: ${event.clientX}px;
             top: ${event.clientY}px;
-            z-index: 10001;
+            z-index: 100000;
             background: var(--bg-secondary);
             border: 1px solid var(--border-primary);
             border-radius: var(--radius-md);
@@ -11639,6 +11667,9 @@ class NotesWiki {
             min-width: 200px;
             opacity: 1;
             backdrop-filter: none;
+            display: block !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
         `;
         
         // Create menu items
@@ -11730,6 +11761,9 @@ class NotesWiki {
         
         // Add to document
         document.body.appendChild(contextMenu);
+        console.log('[Theme Context Menu] Menu created and appended to body');
+        console.log('[Theme Context Menu] Menu visibility:', window.getComputedStyle(contextMenu).display, 'opacity:', window.getComputedStyle(contextMenu).opacity);
+        console.log('[Theme Context Menu] Menu position:', contextMenu.style.left, contextMenu.style.top);
         
         // Adjust position if menu goes off-screen
         const rect = contextMenu.getBoundingClientRect();
