@@ -1907,7 +1907,10 @@ class NotesWiki {
             const fullPath = this.basePath ? `${this.basePath}${fetchPath}` : fetchPath;
             const response = await fetch(fullPath);
             if (!response.ok) {
-                console.error(`HTTP Error ${response.status} ${response.statusText} for path: ${fetchPath}`);
+                // Only log non-404 errors (404s are expected for deleted notes)
+                if (response.status !== 404) {
+                    console.error(`HTTP Error ${response.status} ${response.statusText} for path: ${fetchPath}`);
+                }
                 throw new Error(`Note not found: ${response.status} ${response.statusText}`);
             }
             
@@ -1961,7 +1964,10 @@ class NotesWiki {
             
             return true; // Return success
         } catch (error) {
-            console.error('Failed to load note:', error);
+            // Only log non-404 errors to console (404s are expected for deleted notes)
+            if (!error.message || !error.message.includes('404')) {
+                console.error('Failed to load note:', error);
+            }
             
             // Enhanced error reporting
             let errorMessage = 'The requested note could not be loaded.';
