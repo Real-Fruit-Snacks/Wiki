@@ -24,7 +24,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-3.6.3-blue?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/Version-3.6.4-blue?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/Size-~30MB-green?style=flat-square" alt="Size">
   <img src="https://img.shields.io/badge/Load_Time-<100ms-orange?style=flat-square" alt="Performance">
   <img src="https://img.shields.io/badge/Works-Offline-red?style=flat-square" alt="Offline">
@@ -134,7 +134,7 @@ dependencies: [/notes/prerequisites.md]
 ---
 ```
 
-### 🎯 **Smart Context Menus** *(Enhanced in v3.6.3)*
+### 🎯 **Smart Context Menus** *(Enhanced in v3.6.4)*
 Right-click anywhere for power user actions:
 - **Notes**: Open in new tab, bookmark, share URL with professional SVG icons
 - **Timer**: Quick pomodoro presets, start/pause, reset functionality  
@@ -238,7 +238,7 @@ python3 -m http.server 8000
 <summary><strong>📥 Option 4: Download Release Package</strong></summary>
 
 1. [Download Latest Release](https://github.com/Real-Fruit-Snacks/Wiki/releases/latest)
-2. Extract `notes-wiki-v3.6.3-complete.zip`
+2. Extract `notes-wiki-v3.6.4-complete.zip`
 3. Upload to any web hosting or open `index.html` locally
 4. Complete offline package with all 150 themes included!
 
@@ -403,7 +403,7 @@ sensitive docs, privacy
 
 ---
 
-## 🆕 **What's New in v3.6.3**
+## 🆕 **What's New in v3.6.4**
 
 ### ✨ **Major Features**
 - **Universal Context Menus** - Right-click anywhere for contextual actions (timer, search, settings, sidebar, filters)
