@@ -879,6 +879,14 @@ class NotesWiki {
             this.clearRecentFiles();
         });
         
+        // Recent files right-click menu
+        recentDropdown.querySelector('button').addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.dismissAllContextMenus();
+            this.showRecentFilesContextMenu(e);
+        });
+        
         // Bookmarks dropdown
         const bookmarksDropdown = document.getElementById('bookmarks-dropdown');
         bookmarksDropdown.querySelector('button').addEventListener('click', (e) => {
@@ -890,6 +898,14 @@ class NotesWiki {
                 }
             });
             bookmarksDropdown.classList.toggle('active');
+        });
+        
+        // Bookmarks right-click menu
+        bookmarksDropdown.querySelector('button').addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.dismissAllContextMenus();
+            this.showBookmarksContextMenu(e);
         });
         
         // Prevent scroll propagation in dropdown lists
@@ -995,6 +1011,17 @@ class NotesWiki {
         document.getElementById('close-settings').addEventListener('click', () => {
             this.hideSettings();
         });
+        
+        // Quick Notes (sticky note) button right-click menu
+        const stickyNoteBtn = document.getElementById('sticky-note-btn');
+        if (stickyNoteBtn) {
+            stickyNoteBtn.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.dismissAllContextMenus();
+                this.showQuickNotesContextMenu(e);
+            });
+        }
         
         // Tags modal
         document.getElementById('tags-button').addEventListener('click', () => {
@@ -5230,9 +5257,10 @@ class NotesWiki {
                 <div class="theme-card-main-content" style="position: relative; z-index: 10;">
                     <button class="theme-favorite-btn" data-theme-id="${theme.id}" title="${isFavorited ? 'Remove from favorites' : 'Add to favorites'}" style="
                         position: absolute !important;
-                        top: 8px !important;
+                        bottom: 8px !important;
                         left: 8px !important;
                         right: auto !important;
+                        top: auto !important;
                         background: ${isFavorited ? previewColors.accent : 'rgba(0,0,0,0.6)'};
                         color: ${isFavorited ? previewColors.bg : '#ffffff'};
                         border: none;
@@ -5317,6 +5345,13 @@ class NotesWiki {
                     favoriteBtn.title = 'Add to favorites';
                     this.showToast(`Removed ${theme.name} from favorites`, 'info');
                 }
+            });
+            
+            // Handle theme right-click context menu
+            card.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.showThemeCardContextMenu(e, theme.id, theme.name, isFavorited);
             });
             
             // Handle theme selection
@@ -11575,6 +11610,506 @@ class NotesWiki {
         }
     }
     
+    showThemeCardContextMenu(event, themeId, themeName, isFavorited) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        // Dismiss any existing context menus
+        this.dismissAllContextMenus();
+        
+        // Create context menu container
+        const contextMenu = document.createElement('div');
+        contextMenu.className = 'note-context-menu theme-context-menu';
+        contextMenu.style.cssText = `
+            position: fixed;
+            left: ${event.clientX}px;
+            top: ${event.clientY}px;
+            z-index: 10001;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            padding: var(--spacing-xs);
+            min-width: 200px;
+            opacity: 1;
+            backdrop-filter: none;
+        `;
+        
+        // Create menu items
+        const menuItems = [
+            {
+                label: 'Apply Theme',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/></svg>`,
+                action: () => {
+                    this.applyTheme(themeId);
+                    this.settings.theme = themeId;
+                    this.saveSettings();
+                    this.showToast(`${themeName} theme applied!`);
+                    // Update theme cards
+                    if (document.getElementById('theme-cards-grid')) {
+                        this.populateThemeCards();
+                    }
+                }
+            },
+            {
+                label: isFavorited ? 'Remove from Favorites' : 'Add to Favorites',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`,
+                action: () => {
+                    const wasAdded = this.toggleThemeFavorite(themeId);
+                    if (wasAdded) {
+                        this.showToast(`Added ${themeName} to favorites`, 'success');
+                    } else {
+                        this.showToast(`Removed ${themeName} from favorites`, 'info');
+                    }
+                    // Update theme cards
+                    if (document.getElementById('theme-cards-grid')) {
+                        this.populateThemeCards();
+                    }
+                }
+            },
+            {
+                label: 'Preview Theme',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>`,
+                action: () => {
+                    // Store current theme
+                    const currentTheme = this.settings.theme;
+                    
+                    // Apply preview theme temporarily
+                    this.applyTheme(themeId);
+                    this.showToast(`Previewing ${themeName} theme. Click elsewhere to restore.`, 'info');
+                    
+                    // Restore original theme after delay
+                    setTimeout(() => {
+                        if (this.settings.theme !== themeId) {
+                            // User didn't select this theme, restore original
+                            this.applyTheme(currentTheme);
+                        }
+                    }, 5000);
+                }
+            }
+        ];
+        
+        // Build menu
+        menuItems.forEach(item => {
+            const menuItem = document.createElement('div');
+            menuItem.className = 'context-menu-item';
+            menuItem.innerHTML = `
+                <span class="context-menu-icon">${item.icon}</span>
+                <span class="context-menu-label">${item.label}</span>
+            `;
+            menuItem.addEventListener('click', () => {
+                item.action();
+                document.body.removeChild(contextMenu);
+            });
+            contextMenu.appendChild(menuItem);
+        });
+        
+        // Close menu on outside click
+        const closeMenu = (e) => {
+            if (!contextMenu.contains(e.target)) {
+                document.body.removeChild(contextMenu);
+                document.removeEventListener('click', closeMenu);
+                document.removeEventListener('contextmenu', closeMenu);
+            }
+        };
+        
+        setTimeout(() => {
+            document.addEventListener('click', closeMenu);
+            document.addEventListener('contextmenu', closeMenu);
+        }, 0);
+        
+        // Add to document
+        document.body.appendChild(contextMenu);
+        
+        // Adjust position if menu goes off-screen
+        const rect = contextMenu.getBoundingClientRect();
+        if (rect.right > window.innerWidth) {
+            contextMenu.style.left = `${window.innerWidth - rect.width - 5}px`;
+        }
+        if (rect.bottom > window.innerHeight) {
+            contextMenu.style.top = `${window.innerHeight - rect.height - 5}px`;
+        }
+    }
+    
+    showRecentFilesContextMenu(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        // Dismiss any existing context menus
+        this.dismissAllContextMenus();
+        
+        // Create context menu container
+        const contextMenu = document.createElement('div');
+        contextMenu.className = 'note-context-menu recent-files-context-menu';
+        contextMenu.style.cssText = `
+            position: fixed;
+            left: ${event.clientX}px;
+            top: ${event.clientY}px;
+            z-index: 10001;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            padding: var(--spacing-xs);
+            min-width: 200px;
+            opacity: 1;
+            backdrop-filter: none;
+        `;
+        
+        // Create menu items
+        const menuItems = [
+            {
+                label: 'View Recent Files',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>`,
+                action: () => {
+                    const dropdown = document.getElementById('recent-dropdown');
+                    dropdown.classList.add('active');
+                }
+            },
+            {
+                label: 'Clear Recent Files',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>`,
+                action: () => {
+                    this.showConfirmationDialog(
+                        'Clear Recent Files?',
+                        'This will clear all recent file history. This action cannot be undone.',
+                        () => {
+                            this.clearRecentFiles();
+                            this.showToast('Recent files cleared', 'success');
+                        }
+                    );
+                }
+            },
+            {
+                label: `Limit: ${this.settings.recentLimit} files`,
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>`,
+                action: () => {
+                    this.showSettings();
+                    setTimeout(() => {
+                        const navTab = document.querySelector('[data-section="navigation"]');
+                        if (navTab) navTab.click();
+                    }, 100);
+                }
+            }
+        ];
+        
+        // Build menu
+        menuItems.forEach(item => {
+            const menuItem = document.createElement('div');
+            menuItem.className = 'context-menu-item';
+            menuItem.innerHTML = `
+                <span class="context-menu-icon">${item.icon}</span>
+                <span class="context-menu-label">${item.label}</span>
+            `;
+            menuItem.addEventListener('click', () => {
+                item.action();
+                document.body.removeChild(contextMenu);
+            });
+            contextMenu.appendChild(menuItem);
+        });
+        
+        // Close menu on outside click
+        const closeMenu = (e) => {
+            if (!contextMenu.contains(e.target)) {
+                document.body.removeChild(contextMenu);
+                document.removeEventListener('click', closeMenu);
+                document.removeEventListener('contextmenu', closeMenu);
+            }
+        };
+        
+        setTimeout(() => {
+            document.addEventListener('click', closeMenu);
+            document.addEventListener('contextmenu', closeMenu);
+        }, 0);
+        
+        // Add to document
+        document.body.appendChild(contextMenu);
+        
+        // Adjust position if menu goes off-screen
+        const rect = contextMenu.getBoundingClientRect();
+        if (rect.right > window.innerWidth) {
+            contextMenu.style.left = `${window.innerWidth - rect.width - 5}px`;
+        }
+        if (rect.bottom > window.innerHeight) {
+            contextMenu.style.top = `${window.innerHeight - rect.height - 5}px`;
+        }
+    }
+    
+    showBookmarksContextMenu(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        // Dismiss any existing context menus
+        this.dismissAllContextMenus();
+        
+        // Create context menu container
+        const contextMenu = document.createElement('div');
+        contextMenu.className = 'note-context-menu bookmarks-context-menu';
+        contextMenu.style.cssText = `
+            position: fixed;
+            left: ${event.clientX}px;
+            top: ${event.clientY}px;
+            z-index: 10001;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            padding: var(--spacing-xs);
+            min-width: 200px;
+            opacity: 1;
+            backdrop-filter: none;
+        `;
+        
+        // Create menu items
+        const menuItems = [
+            {
+                label: 'View Bookmarks',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`,
+                action: () => {
+                    const dropdown = document.getElementById('bookmarks-dropdown');
+                    dropdown.classList.add('active');
+                }
+            },
+            {
+                label: 'Clear All Bookmarks',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>`,
+                action: () => {
+                    if (this.bookmarks.length === 0) {
+                        this.showToast('No bookmarks to clear', 'info');
+                        return;
+                    }
+                    this.showConfirmationDialog(
+                        'Clear All Bookmarks?',
+                        `This will remove all ${this.bookmarks.length} bookmark${this.bookmarks.length === 1 ? '' : 's'}. This action cannot be undone.`,
+                        () => {
+                            this.bookmarks = [];
+                            this.saveBookmarks();
+                            this.updateBookmarksDropdown();
+                            this.showToast('All bookmarks cleared', 'success');
+                        }
+                    );
+                }
+            },
+            {
+                label: 'Export Bookmarks',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`,
+                action: () => {
+                    const data = {
+                        version: '1.0',
+                        exported: new Date().toISOString(),
+                        bookmarks: this.bookmarks
+                    };
+                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `noteswiki-bookmarks-${new Date().toISOString().split('T')[0]}.json`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    this.showToast(`Exported ${this.bookmarks.length} bookmark${this.bookmarks.length === 1 ? '' : 's'}`, 'success');
+                }
+            }
+        ];
+        
+        // Build menu
+        menuItems.forEach(item => {
+            const menuItem = document.createElement('div');
+            menuItem.className = 'context-menu-item';
+            menuItem.innerHTML = `
+                <span class="context-menu-icon">${item.icon}</span>
+                <span class="context-menu-label">${item.label}</span>
+            `;
+            menuItem.addEventListener('click', () => {
+                item.action();
+                document.body.removeChild(contextMenu);
+            });
+            contextMenu.appendChild(menuItem);
+        });
+        
+        // Close menu on outside click
+        const closeMenu = (e) => {
+            if (!contextMenu.contains(e.target)) {
+                document.body.removeChild(contextMenu);
+                document.removeEventListener('click', closeMenu);
+                document.removeEventListener('contextmenu', closeMenu);
+            }
+        };
+        
+        setTimeout(() => {
+            document.addEventListener('click', closeMenu);
+            document.addEventListener('contextmenu', closeMenu);
+        }, 0);
+        
+        // Add to document
+        document.body.appendChild(contextMenu);
+        
+        // Adjust position if menu goes off-screen
+        const rect = contextMenu.getBoundingClientRect();
+        if (rect.right > window.innerWidth) {
+            contextMenu.style.left = `${window.innerWidth - rect.width - 5}px`;
+        }
+        if (rect.bottom > window.innerHeight) {
+            contextMenu.style.top = `${window.innerHeight - rect.height - 5}px`;
+        }
+    }
+    
+    showQuickNotesContextMenu(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        // Dismiss any existing context menus
+        this.dismissAllContextMenus();
+        
+        // Create context menu container
+        const contextMenu = document.createElement('div');
+        contextMenu.className = 'note-context-menu quick-notes-context-menu';
+        contextMenu.style.cssText = `
+            position: fixed;
+            left: ${event.clientX}px;
+            top: ${event.clientY}px;
+            z-index: 10001;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            padding: var(--spacing-xs);
+            min-width: 200px;
+            opacity: 1;
+            backdrop-filter: none;
+        `;
+        
+        // Create menu items
+        const menuItems = [
+            {
+                label: 'Toggle Quick Notes',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 100 2h4a1 1 0 100-2H8zm0-3a1 1 0 100 2h4a1 1 0 100-2H8z"/><path d="M12 2.586V6a1 1 0 001 1h3.414L12 2.586z"/></svg>`,
+                action: () => this.toggleNotesPanel()
+            },
+            {
+                label: 'Export Quick Notes',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`,
+                action: () => {
+                    if (this.quickNotes.length === 0) {
+                        this.showToast('No quick notes to export', 'info');
+                        return;
+                    }
+                    const data = {
+                        version: '1.0',
+                        exported: new Date().toISOString(),
+                        quickNotes: this.quickNotes
+                    };
+                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `noteswiki-quicknotes-${new Date().toISOString().split('T')[0]}.json`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    this.showToast(`Exported ${this.quickNotes.length} quick note${this.quickNotes.length === 1 ? '' : 's'}`, 'success');
+                }
+            },
+            {
+                label: 'Import Quick Notes',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>`,
+                action: () => {
+                    const input = document.createElement('input');
+                    input.type = 'file';
+                    input.accept = '.json';
+                    input.onchange = async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        
+                        try {
+                            const text = await file.text();
+                            const data = JSON.parse(text);
+                            
+                            if (!data.quickNotes || !Array.isArray(data.quickNotes)) {
+                                throw new Error('Invalid quick notes file format');
+                            }
+                            
+                            this.showConfirmationDialog(
+                                'Import Quick Notes?',
+                                `This will add ${data.quickNotes.length} quick note${data.quickNotes.length === 1 ? '' : 's'} to your existing notes.`,
+                                () => {
+                                    this.quickNotes = [...this.quickNotes, ...data.quickNotes];
+                                    this.saveQuickNotes();
+                                    this.displayQuickNotes();
+                                    this.showToast(`Imported ${data.quickNotes.length} quick note${data.quickNotes.length === 1 ? '' : 's'}`, 'success');
+                                }
+                            );
+                        } catch (error) {
+                            console.error('Import error:', error);
+                            this.showToast('Error importing quick notes: ' + error.message, 'error');
+                        }
+                    };
+                    input.click();
+                }
+            },
+            {
+                label: 'Clear All Notes',
+                icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>`,
+                action: () => {
+                    if (this.quickNotes.length === 0) {
+                        this.showToast('No quick notes to clear', 'info');
+                        return;
+                    }
+                    this.showConfirmationDialog(
+                        'Clear All Quick Notes?',
+                        `This will permanently delete all ${this.quickNotes.length} quick note${this.quickNotes.length === 1 ? '' : 's'}. This action cannot be undone.`,
+                        () => {
+                            this.quickNotes = [];
+                            this.currentQuickNoteId = null;
+                            this.saveQuickNotes();
+                            this.displayQuickNotes();
+                            this.showToast('All quick notes cleared', 'success');
+                        }
+                    );
+                }
+            }
+        ];
+        
+        // Build menu
+        menuItems.forEach(item => {
+            const menuItem = document.createElement('div');
+            menuItem.className = 'context-menu-item';
+            menuItem.innerHTML = `
+                <span class="context-menu-icon">${item.icon}</span>
+                <span class="context-menu-label">${item.label}</span>
+            `;
+            menuItem.addEventListener('click', () => {
+                item.action();
+                document.body.removeChild(contextMenu);
+            });
+            contextMenu.appendChild(menuItem);
+        });
+        
+        // Close menu on outside click
+        const closeMenu = (e) => {
+            if (!contextMenu.contains(e.target)) {
+                document.body.removeChild(contextMenu);
+                document.removeEventListener('click', closeMenu);
+                document.removeEventListener('contextmenu', closeMenu);
+            }
+        };
+        
+        setTimeout(() => {
+            document.addEventListener('click', closeMenu);
+            document.addEventListener('contextmenu', closeMenu);
+        }, 0);
+        
+        // Add to document
+        document.body.appendChild(contextMenu);
+        
+        // Adjust position if menu goes off-screen
+        const rect = contextMenu.getBoundingClientRect();
+        if (rect.right > window.innerWidth) {
+            contextMenu.style.left = `${window.innerWidth - rect.width - 5}px`;
+        }
+        if (rect.bottom > window.innerHeight) {
+            contextMenu.style.top = `${window.innerHeight - rect.height - 5}px`;
+        }
+    }
+    
     toggleNoteBookmark(notePath, noteTitle) {
         const existingIndex = this.bookmarks.findIndex(bookmark => bookmark.path === notePath);
         
@@ -11963,8 +12498,223 @@ class NotesWiki {
             return;
         }
         
-        const historyText = this.searchHistory.slice(0, 10).map((query, i) => `${i + 1}. ${query}`).join('\n');
-        alert(`Recent searches:\n\n${historyText}\n\nClick on a search result to use it again.`);
+        // Create modal overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        `;
+        
+        // Create modal content
+        const modal = document.createElement('div');
+        modal.className = 'search-history-modal';
+        modal.style.cssText = `
+            background: var(--bg-primary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: var(--spacing-lg);
+            min-width: 400px;
+            max-width: 500px;
+            max-height: 70vh;
+            overflow-y: auto;
+        `;
+        
+        // Modal header
+        const header = document.createElement('div');
+        header.style.cssText = `
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--border-primary);
+        `;
+        
+        const title = document.createElement('h3');
+        title.innerHTML = `<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" style="margin-right: 8px; vertical-align: -3px;"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>Search History`;
+        title.style.cssText = `
+            margin: 0;
+            color: var(--text-primary);
+            font-size: var(--text-lg);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        `;
+        
+        const closeButton = document.createElement('button');
+        closeButton.innerHTML = `<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`;
+        closeButton.style.cssText = `
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: var(--spacing-xs);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        `;
+        closeButton.addEventListener('mouseenter', () => {
+            closeButton.style.backgroundColor = 'var(--bg-hover)';
+            closeButton.style.color = 'var(--text-primary)';
+        });
+        closeButton.addEventListener('mouseleave', () => {
+            closeButton.style.backgroundColor = 'transparent';
+            closeButton.style.color = 'var(--text-secondary)';
+        });
+        
+        header.appendChild(title);
+        header.appendChild(closeButton);
+        
+        // History list
+        const historyList = document.createElement('div');
+        historyList.style.cssText = `
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+        `;
+        
+        // Show last 20 searches
+        const recentSearches = this.searchHistory.slice(0, 20);
+        
+        recentSearches.forEach((query, index) => {
+            const historyItem = document.createElement('div');
+            historyItem.style.cssText = `
+                display: flex;
+                align-items: center;
+                padding: var(--spacing-md);
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-primary);
+                border-radius: var(--radius-md);
+                cursor: pointer;
+                transition: all var(--transition-fast);
+            `;
+            
+            const numberSpan = document.createElement('span');
+            numberSpan.textContent = `${index + 1}.`;
+            numberSpan.style.cssText = `
+                color: var(--text-muted);
+                font-size: var(--text-sm);
+                min-width: 30px;
+                font-weight: 500;
+            `;
+            
+            const querySpan = document.createElement('span');
+            querySpan.textContent = query;
+            querySpan.style.cssText = `
+                color: var(--text-primary);
+                flex: 1;
+                font-family: var(--font-mono);
+                font-size: var(--text-sm);
+            `;
+            
+            const searchIcon = document.createElement('span');
+            searchIcon.innerHTML = `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/></svg>`;
+            searchIcon.style.cssText = `
+                color: var(--text-secondary);
+                opacity: 0;
+                transition: opacity var(--transition-fast);
+            `;
+            
+            historyItem.appendChild(numberSpan);
+            historyItem.appendChild(querySpan);
+            historyItem.appendChild(searchIcon);
+            
+            // Hover effects
+            historyItem.addEventListener('mouseenter', () => {
+                historyItem.style.backgroundColor = 'var(--bg-hover)';
+                historyItem.style.borderColor = 'var(--accent-primary)';
+                searchIcon.style.opacity = '1';
+            });
+            
+            historyItem.addEventListener('mouseleave', () => {
+                historyItem.style.backgroundColor = 'var(--bg-secondary)';
+                historyItem.style.borderColor = 'var(--border-primary)';
+                searchIcon.style.opacity = '0';
+            });
+            
+            // Click to search
+            historyItem.addEventListener('click', () => {
+                const searchInput = document.getElementById('search-input');
+                searchInput.value = query;
+                this.performSearch(query);
+                document.body.removeChild(overlay);
+                searchInput.focus();
+            });
+            
+            historyList.appendChild(historyItem);
+        });
+        
+        // Clear history button
+        const clearButton = document.createElement('button');
+        clearButton.textContent = 'Clear Search History';
+        clearButton.style.cssText = `
+            margin-top: var(--spacing-md);
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--accent-error);
+            color: var(--text-inverse);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        `;
+        clearButton.addEventListener('mouseenter', () => {
+            clearButton.style.opacity = '0.9';
+        });
+        clearButton.addEventListener('mouseleave', () => {
+            clearButton.style.opacity = '1';
+        });
+        clearButton.addEventListener('click', () => {
+            this.showConfirmationDialog(
+                'Clear Search History?',
+                'This will permanently delete all search history. This action cannot be undone.',
+                () => {
+                    this.clearSearchHistory();
+                    document.body.removeChild(overlay);
+                }
+            );
+        });
+        
+        // Assemble modal
+        modal.appendChild(header);
+        modal.appendChild(historyList);
+        modal.appendChild(clearButton);
+        overlay.appendChild(modal);
+        
+        // Close handlers
+        const closeModal = () => {
+            document.body.removeChild(overlay);
+        };
+        
+        closeButton.addEventListener('click', closeModal);
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeModal();
+        });
+        
+        // Escape key to close
+        const escHandler = (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                document.removeEventListener('keydown', escHandler);
+            }
+        };
+        document.addEventListener('keydown', escHandler);
+        
+        // Add to document
+        document.body.appendChild(overlay);
     }
 
     quickSearchTag() {

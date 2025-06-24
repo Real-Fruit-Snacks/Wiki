@@ -6829,6 +6829,15 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     border-color: var(--badge-border, rgba(255, 255, 255, 0.2));
 }
 
+/* Additional context menu styling */
+.theme-context-menu,
+.recent-files-context-menu,
+.bookmarks-context-menu,
+.quick-notes-context-menu {
+    opacity: 1 !important;
+    backdrop-filter: none !important;
+}
+
 /* Mobile adjustments */
 @media (max-width: 768px) {
     .quick-notes-panel {
