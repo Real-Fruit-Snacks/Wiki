@@ -12795,6 +12795,7 @@ class NotesWiki {
     }
 
     showSettingsButtonContextMenu(event) {
+        console.log('[DEBUG] showSettingsButtonContextMenu called');
         // Create context menu container
         const contextMenu = document.createElement('div');
         contextMenu.className = 'settings-context-menu';
@@ -12812,7 +12813,10 @@ class NotesWiki {
             {
                 label: 'Quick Theme Switch',
                 icon: `<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/></svg>`,
-                action: () => this.showQuickThemeMenu()
+                action: () => {
+                    console.log('[DEBUG] Quick Theme Switch clicked');
+                    this.showQuickThemeMenu();
+                }
             },
             {
                 label: 'Random Theme',
@@ -12865,6 +12869,7 @@ class NotesWiki {
             
             // Add click handler
             menuItem.addEventListener('click', () => {
+                console.log('[DEBUG] Settings menu item clicked:', item.label);
                 item.action();
                 contextMenu.remove();
             });
@@ -12903,224 +12908,6 @@ class NotesWiki {
         }
     }
 
-    showQuickThemeMenu() {
-        const popularThemes = ['ayu-mirage', 'dracula', 'nord', 'one-dark-pro', 'gruvbox-dark', 'tokyo-night', 'ayu-light', 'github-light', 'solarized-light', 'material-palenight'];
-        const currentTheme = this.settings.theme;
-        
-        // Create modal overlay
-        const overlay = document.createElement('div');
-        overlay.className = 'modal-overlay';
-        overlay.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        `;
-        
-        // Create modal content
-        const modal = document.createElement('div');
-        modal.className = 'quick-theme-modal';
-        modal.style.cssText = `
-            background: var(--bg-primary);
-            border: 1px solid var(--border-primary);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            padding: var(--spacing-lg);
-            min-width: 400px;
-            max-width: 500px;
-            max-height: 80vh;
-            overflow-y: auto;
-        `;
-        
-        // Modal header
-        const header = document.createElement('div');
-        header.style.cssText = `
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--spacing-lg);
-            padding-bottom: var(--spacing-md);
-            border-bottom: 1px solid var(--border-primary);
-        `;
-        
-        const title = document.createElement('h3');
-        title.textContent = 'Quick Theme Switch';
-        title.style.cssText = `
-            margin: 0;
-            color: var(--text-primary);
-            font-size: var(--text-lg);
-            font-weight: 600;
-        `;
-        
-        const closeButton = document.createElement('button');
-        closeButton.innerHTML = `<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`;
-        closeButton.style.cssText = `
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            padding: var(--spacing-xs);
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        `;
-        closeButton.addEventListener('mouseenter', () => {
-            closeButton.style.backgroundColor = 'var(--bg-hover)';
-            closeButton.style.color = 'var(--text-primary)';
-        });
-        closeButton.addEventListener('mouseleave', () => {
-            closeButton.style.backgroundColor = 'transparent';
-            closeButton.style.color = 'var(--text-secondary)';
-        });
-        
-        header.appendChild(title);
-        header.appendChild(closeButton);
-        
-        // Theme list
-        const themeList = document.createElement('div');
-        themeList.style.cssText = `
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-xs);
-        `;
-        
-        popularThemes.forEach(theme => {
-            const themeItem = document.createElement('button');
-            const isCurrentTheme = theme === currentTheme;
-            
-            themeItem.style.cssText = `
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: var(--spacing-md);
-                background: ${isCurrentTheme ? 'var(--accent-primary)' : 'var(--bg-secondary)'};
-                color: ${isCurrentTheme ? 'var(--bg-primary)' : 'var(--text-primary)'};
-                border: 1px solid ${isCurrentTheme ? 'var(--accent-primary)' : 'var(--border-primary)'};
-                border-radius: var(--radius-md);
-                cursor: pointer;
-                text-align: left;
-                font-size: var(--text-base);
-                transition: all var(--transition-fast);
-            `;
-            
-            const themeName = document.createElement('span');
-            themeName.textContent = theme.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-            themeName.style.fontWeight = isCurrentTheme ? '600' : '500';
-            
-            const themeStatus = document.createElement('span');
-            themeStatus.textContent = isCurrentTheme ? 'Current' : '';
-            themeStatus.style.cssText = `
-                font-size: var(--text-sm);
-                opacity: 0.8;
-                font-weight: 500;
-            `;
-            
-            themeItem.appendChild(themeName);
-            themeItem.appendChild(themeStatus);
-            
-            if (!isCurrentTheme) {
-                themeItem.addEventListener('mouseenter', () => {
-                    themeItem.style.backgroundColor = 'var(--bg-hover)';
-                    themeItem.style.borderColor = 'var(--border-hover)';
-                });
-                themeItem.addEventListener('mouseleave', () => {
-                    themeItem.style.backgroundColor = 'var(--bg-secondary)';
-                    themeItem.style.borderColor = 'var(--border-primary)';
-                });
-            }
-            
-            themeItem.addEventListener('click', () => {
-                if (!isCurrentTheme) {
-                    this.applyTheme(theme);
-                    this.settings.theme = theme;
-                    this.saveSettings();
-                    this.showToast(`Applied theme: ${theme.replace(/-/g, ' ')}`, 'success');
-                }
-                document.body.removeChild(overlay);
-            });
-            
-            themeList.appendChild(themeItem);
-        });
-        
-        // Footer with full settings link
-        const footer = document.createElement('div');
-        footer.style.cssText = `
-            margin-top: var(--spacing-lg);
-            padding-top: var(--spacing-md);
-            border-top: 1px solid var(--border-primary);
-        `;
-        
-        const fullSettingsButton = document.createElement('button');
-        fullSettingsButton.textContent = 'Open Full Theme Settings';
-        fullSettingsButton.style.cssText = `
-            width: 100%;
-            padding: var(--spacing-md);
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-primary);
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            font-size: var(--text-base);
-            transition: all var(--transition-fast);
-        `;
-        fullSettingsButton.addEventListener('mouseenter', () => {
-            fullSettingsButton.style.backgroundColor = 'var(--bg-hover)';
-            fullSettingsButton.style.borderColor = 'var(--border-hover)';
-        });
-        fullSettingsButton.addEventListener('mouseleave', () => {
-            fullSettingsButton.style.backgroundColor = 'var(--bg-secondary)';
-            fullSettingsButton.style.borderColor = 'var(--border-primary)';
-        });
-        fullSettingsButton.addEventListener('click', () => {
-            document.body.removeChild(overlay);
-            this.showSettings();
-            // Switch to appearance tab
-            setTimeout(() => {
-                const appearanceTab = document.querySelector('[data-section="appearance"]');
-                if (appearanceTab) appearanceTab.click();
-            }, 100);
-        });
-        
-        footer.appendChild(fullSettingsButton);
-        
-        // Assemble modal
-        modal.appendChild(header);
-        modal.appendChild(themeList);
-        modal.appendChild(footer);
-        overlay.appendChild(modal);
-        
-        // Close handlers
-        const closeModal = () => {
-            if (document.body.contains(overlay)) {
-                document.body.removeChild(overlay);
-            }
-        };
-        
-        closeButton.addEventListener('click', closeModal);
-        overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) closeModal();
-        });
-        
-        // ESC key handler
-        const escHandler = (e) => {
-            if (e.key === 'Escape') {
-                closeModal();
-                document.removeEventListener('keydown', escHandler);
-            }
-        };
-        document.addEventListener('keydown', escHandler);
-        
-        // Show modal
-        document.body.appendChild(overlay);
-    }
 
     applyRandomTheme() {
         // Get all available themes from theme categories
@@ -13182,6 +12969,7 @@ class NotesWiki {
     }
 
     showQuickThemeMenu() {
+        console.log('[DEBUG] showQuickThemeMenu called');
         const currentTheme = this.settings.theme;
         
         // Create modal overlay
