@@ -7859,13 +7859,13 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
 }
 
 /* Code Block No-Wrap Utility */
-.code-block-language-section pre.no-wrap {
-    white-space: nowrap;
-    overflow-x: auto;
+.code-block pre.no-wrap {
+    white-space: nowrap !important;
+    overflow-x: auto !important;
 }
 
-.code-block-language-section pre.no-wrap code {
-    white-space: nowrap;
+.code-block pre.no-wrap code {
+    white-space: nowrap !important;
 }
 
 /* Tab Overview Modal Styles */

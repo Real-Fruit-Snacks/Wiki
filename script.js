@@ -17055,38 +17055,14 @@ class NotesWiki {
     }
     
     downloadCodeAsFile(codeContent, language, blockIndex) {
-        // Determine file extension based on language
-        const extensions = {
-            javascript: 'js',
-            typescript: 'ts',
-            python: 'py',
-            java: 'java',
-            cpp: 'cpp',
-            c: 'c',
-            html: 'html',
-            css: 'css',
-            php: 'php',
-            ruby: 'rb',
-            go: 'go',
-            rust: 'rs',
-            swift: 'swift',
-            kotlin: 'kt',
-            scala: 'scala',
-            shell: 'sh',
-            bash: 'sh',
-            powershell: 'ps1',
-            sql: 'sql',
-            json: 'json',
-            xml: 'xml',
-            yaml: 'yml',
-            markdown: 'md'
-        };
+        // Always save as markdown with code fence
+        const filename = `code-block-${blockIndex + 1}.md`;
         
-        const extension = extensions[language.toLowerCase()] || 'txt';
-        const filename = `code-block-${blockIndex + 1}.${extension}`;
+        // Create markdown content with proper code fence
+        const markdownContent = `\`\`\`${language}\n${codeContent}\n\`\`\``;
         
         // Create and download file
-        const blob = new Blob([codeContent], { type: 'text/plain' });
+        const blob = new Blob([markdownContent], { type: 'text/markdown' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -17100,11 +17076,19 @@ class NotesWiki {
     }
     
     toggleCodeBlockWrap(codeBlock) {
-        const pre = codeBlock.querySelector('pre');
-        if (pre) {
-            pre.classList.toggle('no-wrap');
-            const isWrapped = !pre.classList.contains('no-wrap');
-            this.showToast(`Line wrapping ${isWrapped ? 'enabled' : 'disabled'}`, 'info');
+        // Find the actual code block div (might be passed different elements)
+        let codeBlockDiv = codeBlock;
+        if (!codeBlockDiv.classList.contains('code-block')) {
+            codeBlockDiv = codeBlockDiv.closest('.code-block');
+        }
+        
+        if (codeBlockDiv) {
+            const pre = codeBlockDiv.querySelector('pre');
+            if (pre) {
+                pre.classList.toggle('no-wrap');
+                const isWrapped = !pre.classList.contains('no-wrap');
+                this.showToast(`Line wrapping ${isWrapped ? 'enabled' : 'disabled'}`, 'info');
+            }
         }
     }
     
