@@ -1,7 +1,7 @@
 {
   "name": "notes-wiki",
   "version": "3.6.5",
-  "description": "A comprehensive personal knowledge management system with advanced search and navigation",
+  "description": "Self-contained offline wiki with 150+ themes, multi-tab interface, and advanced search",
   "main": "script.js",
   "scripts": {
     "test": "node test-puppeteer.js",

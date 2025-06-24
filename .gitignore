@@ -1,225 +1,40 @@
-# Development and Build files
-*.log
-server.log
-*.lock
-*.pid
-nohup.out
+# Dependencies
+node_modules/
+package-lock.json
 
-# Release and Distribution files
-RELEASE-*.md
-notes-wiki-*.tar.gz
+# Build outputs
 notes-wiki-*.zip
-notes-wiki-*/
-releases/
-dist/
-build/
+notes-wiki-*.tar.gz
+public/
 
-# System and OS files
+# Development
+*.log
+*.tmp
+.env
+.env.*
+
+# OS files
 .DS_Store
 Thumbs.db
-Desktop.ini
-$RECYCLE.BIN/
-.Spotlight-V100
-.Trashes
-.fseventsd
-.AppleDouble
-.LSOverride
-._*
-*.tmp
-*.temp
 
-# Editor and IDE files
+# Editor files
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-*.sublime-*
-.history/
-*.code-workspace
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-.atom/
-*.kate-swp
 
-# Node.js and Package Management
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-lock.yaml
-yarn.lock
-package-lock.json
-.npm
-.yarn
-.pnp.*
-
-# Python Development
+# Python
 __pycache__/
 *.py[cod]
-*$py.class
-.Python
-develop-eggs/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-pip-wheel-metadata/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
 venv/
-ENV/
-env/
-.venv
-.python-version
-*.pyc
+.venv/
 
-# Environment and Configuration
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.envrc
+# GitLab files (maintained separately for releases)
+.gitlab-ci.yml
+GITLAB-DEPLOYMENT.md
+gitlab-files/
 
-# Development Tools
-.claude/
-.github/
-.gitlab/
-.git-hooks/
-.husky/
-
-# GitLab Pages and CI/CD
-public/
-.gitlab-ci-local/
-
-# Testing and QA - Be specific to avoid blocking legitimate docs
-test-*.html
-test-*.css
-test-*.js
-*.spec.js
-*.spec.ts
-*.test.js
-*.test.ts
-*.test.py
-*-test.py
-*-test.js
-*-test.ts
-coverage/
-.nyc_output
-.coverage
-.pytest_cache/
-.tox/
-screenshots/
-audit-results/
-test-outputs/
-.jest/
-cypress/
-playwright-report/
-
-# Release artifacts (should not be tracked)
-notes-wiki-*.zip
-notes-wiki-*.tar.gz
-*.release.zip
-
-# Local IDE and tool settings
-.claude/
-*.local.json
-
-# Documentation Build
-docs/_build/
-docs/.doctrees/
-site/
-
-# Security and Secrets
-*.pem
-*.key
-*.crt
-*.p12
-secrets/
-.secrets
-
-# Backup and Archive files
-*.bak
-*.backup
-*.orig
-*.rej
-*.swn
-*.swo
-
-# Cache and Temporary directories
-.cache/
-.tmp/
-.temp/
-tmp/
-temp/
-.sass-cache/
-.parcel-cache/
-.next/
-.nuxt/
-
-# Font files (keep configs but not actual font files)
-# COMMENTED OUT to allow committing fonts for self-contained deployment
-# fonts/*.woff
-# fonts/*.woff2
-# fonts/*.ttf
-# fonts/*.otf
-# fonts/*.eot
-# Keep font configuration files
-!fonts/fonts.css
-!fonts/README.md
-!fonts/font-loader.js
-!fonts/test-fonts.html
-!fonts/download-fonts.sh
-
-# Local development overrides
+# Local overrides
+*.local.*
 local/
-.local/
-override/
-
-# Performance and Profiling
-*.prof
-*.trace
-*.cpuprofile
-*.heapsnapshot
-
-# Database files (if any local DBs are used)
-*.db
-*.sqlite
-*.sqlite3
-
-# Webpack and Build Tools
-.webpack/
-webpack-stats.json
-stats.json
-
-# Keep Essential Offline Files - Override above exclusions
-!libs/*.js
-!libs/*.css
-!libs/*.min.js
-!libs/*.min.css
-!themes/*.css
-!notes-index.json
-!.gitlab-ci.yml
-!.github/workflows/*.yml
-
-# Keep Demo and Example Files
-!notes/*-demo.md
-!notes/examples/
-!images/examples/
-
-# Keep Documentation Assets
-!docs/assets/
-!docs/images/
