@@ -7670,7 +7670,7 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     align-items: center;
     justify-content: center;
     z-index: 9999;
-    opacity: 0;
+    /* opacity: 0; */
     animation: modalFadeIn var(--transition-normal) ease forwards;
     padding: var(--spacing-lg);
 }
