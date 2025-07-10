@@ -1611,9 +1611,6 @@ class NotesWiki {
                             case 'settings':
                                 this.showSettings();
                                 break;
-                            case 'filter':
-                                this.showTagsModal();
-                                break;
                             case 'bookmark':
                                 this.bookmarkCurrentNote();
                                 break;
@@ -8453,6 +8450,14 @@ class NotesWiki {
                 const parsedSettings = JSON.parse(stored);
                 this.settings = { ...this.settings, ...parsedSettings };
                 console.log(`[Settings] Loaded settings - Theme: ${this.settings.theme}`);
+                
+                // Clean up deprecated 'filter' keyboard shortcut (Control+F now uses browser native find)
+                if (this.settings.keyboardShortcuts && this.settings.keyboardShortcuts.filter) {
+                    delete this.settings.keyboardShortcuts.filter;
+                    console.log('[Settings] Removed deprecated filter shortcut to restore browser native find');
+                    // Save the cleaned up settings
+                    this.saveSettings();
+                }
                 
                 // Restore active context
                 this.activeContext = this.settings.activeContext;
