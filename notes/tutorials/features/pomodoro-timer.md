@@ -48,41 +48,61 @@ The Pomodoro timer is integrated into the Notes Wiki interface:
 ### Quick Start Options
 **Right-click the timer display** for instant presets:
 
-| Preset | Duration | Best For |
-|--------|----------|----------|
-| **25 Minutes** | Standard Pomodoro | Focused work sessions, reading, writing |
-| **15 Minutes** | Short session | Quick tasks, reviews, light reading |
-| **45 Minutes** | Extended session | Deep work, complex analysis, research |
-| **Custom Time** | User-defined | Flexible timing for specific needs |
+| Preset Name | Work Time | Short Break | Long Break | Description | Best For |
+|-------------|-----------|-------------|------------|-------------|----------|
+| **Classic** | 25 min | 5 min | 15 min | 25/5/15 min | Traditional Pomodoro, general productivity |
+| **Extended** | 50 min | 10 min | 20 min | 50/10/20 min | Longer focus sessions, complex tasks |
+| **Short Focus** | 15 min | 5 min | 15 min | 15/5/15 min | Quick tasks, email, light reading |
+| **Long Focus** | 45 min | 15 min | 30 min | 45/15/30 min | Deep work, research, analysis |
+| **Deep Work** | 90 min | 20 min | 30 min | 90/20/30 min | Extended concentration, complex projects |
+
+**Additional Options:**
+- **Timer Settings** - Access full timer configuration
+- **Pomodoro Settings** - Customize presets and behavior
 
 ### Preset Use Cases
 
-**25-Minute Standard:**
-- **Classic Pomodoro** - Original technique timing
-- **Focused reading** - Single document concentration
-- **Writing sessions** - Draft creation or editing
-- **Code review** - Examining implementations
-- **Research tasks** - Information gathering
+**Classic (25/5/15 min):**
+- **Traditional Pomodoro** - Original technique timing for general productivity
+- **Focused reading** - Single document concentration without interruption
+- **Writing sessions** - Draft creation, editing, and content development
+- **Code review** - Examining implementations and documentation
+- **Research tasks** - Information gathering and initial analysis
 
-**15-Minute Short:**
-- **Quick reviews** - Brief document scanning
-- **Email processing** - Inbox management
-- **Light editing** - Minor content updates
-- **Planning sessions** - Task organization
-- **Break activities** - Short learning sessions
+**Short Focus (15/5/15 min):**
+- **Quick tasks** - Email processing, brief reviews, administrative work
+- **Light reading** - Articles, short documents, quick research
+- **Planning sessions** - Task organization, daily planning, goal setting
+- **Break activities** - Short learning sessions, skill practice
+- **Transition periods** - Between major tasks or after meetings
 
-**45-Minute Extended:**
-- **Deep work** - Complex problem solving
-- **Comprehensive research** - Multi-source analysis
-- **Long-form writing** - Extended content creation
-- **Study sessions** - In-depth learning
-- **Project work** - Substantial task completion
+**Long Focus (45/15/30 min):**
+- **Deep work sessions** - Complex problem solving requiring sustained attention
+- **Comprehensive research** - Multi-source analysis, data gathering
+- **Creative work** - Design, writing, strategic planning
+- **Study sessions** - In-depth learning, exam preparation
+- **Technical tasks** - Programming, system administration, analysis
 
-**Custom Duration:**
-- **Meeting preparation** - Specific time allocations
-- **Presentation practice** - Rehearsal timing
-- **Break intervals** - Personal preference breaks
-- **Specialized workflows** - Unique timing needs
+**Extended (50/10/20 min):**
+- **Project work** - Substantial task completion requiring extended focus
+- **Long-form writing** - Articles, reports, documentation creation
+- **Complex analysis** - Data interpretation, research synthesis
+- **Learning sessions** - Tutorial completion, skill development
+- **Administrative blocks** - Batch processing of similar tasks
+
+**Deep Work (90/20/30 min):**
+- **Flow state activities** - Tasks requiring maximum concentration
+- **Creative projects** - Art, design, complex writing, strategic thinking
+- **Research deep dives** - Comprehensive literature reviews, analysis
+- **Complex programming** - Algorithm development, system design
+- **Intensive study** - Difficult material, certification preparation
+
+**Choosing the Right Preset:**
+- **Energy level** - Match session length to your current energy
+- **Task complexity** - Longer sessions for complex, shorter for simple tasks
+- **Time constraints** - Use available time blocks effectively
+- **Personal preference** - Experiment to find your optimal focus duration
+- **Context switching** - Shorter sessions when frequently interrupted
 
 ## ⚙️ Timer Features
 
@@ -133,11 +153,11 @@ Traditional technique implementation:
 
 ```
 1. Choose task or document
-2. Right-click timer → "25 Minutes"
-3. Work with full focus
+2. Right-click timer → "Classic (25/5/15 min)"
+3. Work with full focus for 25 minutes
 4. Take 5-minute break when timer ends
 5. Repeat for 4 cycles
-6. Take 15-30 minute long break
+6. Take 15-minute long break (as configured in Classic preset)
 ```
 
 **Break Activities:**
@@ -152,8 +172,11 @@ Optimized for content consumption:
 
 ```
 1. Open document or article
-2. Start 25-minute timer
-3. Read without distractions
+2. Choose appropriate preset:
+   - Classic (25 min) for standard reading
+   - Short Focus (15 min) for quick articles
+   - Long Focus (45 min) for complex material
+3. Read without distractions during work period
 4. Note key points during break
 5. Continue with next session
 ```
@@ -169,8 +192,12 @@ Enhanced for content creation:
 
 ```
 1. Open draft or create new document
-2. Start 25-45 minute timer (based on complexity)
-3. Write continuously without editing
+2. Select preset based on writing task:
+   - Classic (25 min) for general writing
+   - Long Focus (45 min) for complex content
+   - Extended (50 min) for flow state writing
+   - Deep Work (90 min) for major projects
+3. Write continuously without editing during work period
 4. Save and step away during break
 5. Review and edit in next session
 ```
