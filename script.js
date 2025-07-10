@@ -2645,6 +2645,17 @@ class NotesWiki {
                                 <span>Updated ${this.formatDate(metadata.updated)}</span>
                             </div>
                         ` : ''}
+                        
+                        ${metadata.combineCodeBlocks ? `
+                            <div class="note-metadata-item">
+                                <button class="combined-code-jump-button" onclick="window.notesWiki.jumpToCombinedCode()" title="Jump to combined code section">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <path d="M1.75 2.5a.25.25 0 00-.25.25v10.5c0 .138.112.25.25.25h.94l.94-2.94a.25.25 0 01.24-.19h7.64a.25.25 0 01.24.19l.94 2.94h.94a.25.25 0 00.25-.25V2.75a.25.25 0 00-.25-.25H1.75zM0 2.75C0 1.784.784 1 1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0114.25 15H9.586l-1-3H7.414l-1 3H1.75A1.75 1.75 0 010 13.25V2.75z"/>
+                                    </svg>
+                                    <span>Jump to Combined Code</span>
+                                </button>
+                            </div>
+                        ` : ''}
                     </div>
                     
                     ${metadata.description ? `
@@ -13408,6 +13419,17 @@ class NotesWiki {
                                 <span>Updated ${this.formatDate(metadata.updated)}</span>
                             </div>
                         ` : ''}
+                        
+                        ${metadata.combineCodeBlocks ? `
+                            <div class="note-metadata-item">
+                                <button class="combined-code-jump-button" onclick="window.notesWiki.jumpToCombinedCode('${container.id}')" title="Jump to combined code section">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <path d="M1.75 2.5a.25.25 0 00-.25.25v10.5c0 .138.112.25.25.25h.94l.94-2.94a.25.25 0 01.24-.19h7.64a.25.25 0 01.24.19l.94 2.94h.94a.25.25 0 00.25-.25V2.75a.25.25 0 00-.25-.25H1.75zM0 2.75C0 1.784.784 1 1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0114.25 15H9.586l-1-3H7.414l-1 3H1.75A1.75 1.75 0 010 13.25V2.75z"/>
+                                    </svg>
+                                    <span>Jump to Combined Code</span>
+                                </button>
+                            </div>
+                        ` : ''}
                     </div>
                     
                     ${metadata.description ? `
@@ -14594,7 +14616,7 @@ class NotesWiki {
                                 <svg class="site-logo" width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
                                     <path d="M14 2v6h6"/>
-                                    <path fill="var(--bg-primary)" d="M10 12h4M10 16h4M8 12h.01M8 16h.01"/>
+                                    <path d="M10 12h4M10 16h4M8 12h.01M8 16h.01"/>
                                 </svg>
                             </div>
                             <h3>Notes Wiki v3.6.5</h3>
@@ -15119,6 +15141,137 @@ class NotesWiki {
         
         // For single-page apps, cleanup on popstate
         window.addEventListener('popstate', cleanup);
+    }
+    
+    jumpToCombinedCode(containerId = null) {
+        // Find the combined code section
+        let combinedSection;
+        
+        if (containerId) {
+            // Split view - look within the specific container
+            const container = document.getElementById(containerId);
+            if (container) {
+                combinedSection = container.querySelector('.combined-code-section');
+            }
+        } else {
+            // Main view - look in the main content area
+            combinedSection = document.querySelector('.combined-code-section');
+        }
+        
+        if (combinedSection) {
+            // Smooth scroll to the combined code section
+            combinedSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+            
+            // Add a brief highlight effect
+            combinedSection.style.animation = 'highlightCombinedCode 1.5s ease-in-out';
+            
+            // Remove the animation after it completes
+            setTimeout(() => {
+                if (combinedSection) {
+                    combinedSection.style.animation = '';
+                }
+            }, 1500);
+        } else {
+            // Fallback: scroll to the bottom if combined section not found
+            const scrollContainer = containerId ? 
+                document.getElementById(containerId) : 
+                document.getElementById('main-content');
+            
+            if (scrollContainer) {
+                scrollContainer.scrollTo({
+                    top: scrollContainer.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    }
+    
+    initializeTheme() {
+        // Initialize theme system - apply saved theme or default
+        try {
+            const themeToApply = this.settings.theme || 'tokyo-night';
+            this.applyTheme(themeToApply);
+        } catch (error) {
+            console.error('Failed to initialize theme:', error);
+            // Fallback to default theme
+            this.applyTheme('tokyo-night');
+        }
+    }
+    
+    applyTheme(themeId) {
+        try {
+            // Get the theme stylesheet element
+            const themeStylesheet = document.getElementById('theme-stylesheet');
+            if (!themeStylesheet) {
+                console.error('Theme stylesheet element not found');
+                return;
+            }
+            
+            // Validate theme exists
+            const themeExists = this.themes.some(theme => theme.id === themeId);
+            if (!themeExists) {
+                console.warn(`Theme "${themeId}" not found, using default theme`);
+                themeId = 'tokyo-night';
+            }
+            
+            // Construct theme URL with base path support
+            const themeUrl = this.basePath ? 
+                `${this.basePath}themes/${themeId}.css` : 
+                `themes/${themeId}.css`;
+            
+            // Apply theme with error handling
+            const loadTheme = () => {
+                return new Promise((resolve, reject) => {
+                    const tempLink = document.createElement('link');
+                    tempLink.rel = 'stylesheet';
+                    tempLink.href = themeUrl;
+                    
+                    tempLink.onload = () => {
+                        // Successfully loaded, update main stylesheet
+                        themeStylesheet.href = themeUrl;
+                        document.documentElement.setAttribute('data-theme', themeId);
+                        
+                        // Update settings
+                        this.settings.theme = themeId;
+                        
+                        // Clean up temp element
+                        if (tempLink.parentNode) {
+                            tempLink.parentNode.removeChild(tempLink);
+                        }
+                        
+                        resolve();
+                    };
+                    
+                    tempLink.onerror = () => {
+                        console.error(`Failed to load theme: ${themeId}`);
+                        // Clean up temp element
+                        if (tempLink.parentNode) {
+                            tempLink.parentNode.removeChild(tempLink);
+                        }
+                        reject(new Error(`Theme file not found: ${themeUrl}`));
+                    };
+                    
+                    // Add to DOM to trigger loading
+                    document.head.appendChild(tempLink);
+                });
+            };
+            
+            // Load the theme
+            loadTheme().catch(error => {
+                console.error('Theme loading failed:', error);
+                // Don't try fallback if already using default
+                if (themeId !== 'tokyo-night') {
+                    console.log('Falling back to default theme');
+                    this.applyTheme('tokyo-night');
+                }
+            });
+            
+        } catch (error) {
+            console.error('Error in applyTheme:', error);
+        }
     }
 }
 
