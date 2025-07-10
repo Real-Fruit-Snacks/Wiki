@@ -8,7 +8,7 @@ const pkg = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
 const version = pkg.version;
 const releaseName = `notes-wiki-v${version}-complete`;
 
-console.log(`📦 Creating release package: ${releaseName}.zip`);
+console.log(`📦 Creating release package: ${releaseName}.tar.gz`);
 console.log('');
 
 // Files and folders to include
@@ -21,7 +21,6 @@ const includes = [
     'themes',
     'fonts',  // Include fonts directory
     'notes',
-    'images',
     'build.py',
     'package.json',
     'README.md',
@@ -54,21 +53,21 @@ try {
     console.error('❌ Error copying GitLab files:', error.message);
 }
 
-// Create zip command (now includes GitLab files)
+// Create archive command (now includes GitLab files)
 const allIncludes = [...includes, ...gitlabFiles];
-const zipCommand = `zip -r ${releaseName}.zip ${allIncludes.join(' ')}`;
+const archiveCommand = `tar -czf ${releaseName}.tar.gz ${allIncludes.join(' ')}`;
 
 try {
-    // Run the zip command
-    execSync(zipCommand, { stdio: 'inherit' });
+    // Run the archive command
+    execSync(archiveCommand, { stdio: 'inherit' });
     
     // Get file size
-    const stats = fs.statSync(`${releaseName}.zip`);
+    const stats = fs.statSync(`${releaseName}.tar.gz`);
     const fileSizeInMB = (stats.size / 1024 / 1024).toFixed(2);
     
     console.log('');
     console.log(`✅ Release package created successfully!`);
-    console.log(`📄 File: ${releaseName}.zip`);
+    console.log(`📄 File: ${releaseName}.tar.gz`);
     console.log(`📊 Size: ${fileSizeInMB} MB`);
     console.log('');
     console.log('📋 Package contents:');
