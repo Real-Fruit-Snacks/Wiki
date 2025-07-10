@@ -2,7 +2,7 @@
 
 A self-contained, offline-first personal knowledge management system built with vanilla JavaScript. Features 74 themes, advanced search, and multi-tab interface with zero external dependencies.
 
-![Version](https://img.shields.io/badge/version-4.0.2-blue)
+![Version](https://img.shields.io/badge/version-4.1.0-blue)
 ![Size](https://img.shields.io/badge/size-~15MB-green)
 ![License](https://img.shields.io/badge/license-MIT-orange)
 
@@ -90,24 +90,30 @@ npm run validate
 # Validate themes
 npm run validate-themes
 
-# Run tests
-npm run test
+# Run all validations
+npm run validate-all
 
 # Create release package
 npm run package
+
+# Serve locally
+npm run serve
 ```
 
 ### Project Structure
 
 ```
 ├── index.html          # Single-page application entry
-├── script.js           # Core application (16,000+ lines)
+├── script.js           # Core application (15,700+ lines)
 ├── style.css           # Base styles and theme system
 ├── build.py            # Search index generator
 ├── notes/              # Markdown content
 ├── themes/             # 74 CSS theme files
 ├── libs/               # Bundled dependencies
-└── fonts/              # Self-hosted web fonts
+├── fonts/              # Self-hosted web fonts
+├── _config.yml         # Jekyll configuration for GitHub Pages
+├── .nojekyll           # Disable Jekyll processing
+└── 404.html            # Custom 404 page
 ```
 
 ## Documentation
