@@ -11,7 +11,7 @@ dist/
 build/
 
 # Generated files
-notes-index.json
+# notes-index.json  # Needed for GitHub Pages deployment
 
 # Development and testing
 *.log
