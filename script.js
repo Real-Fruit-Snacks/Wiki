@@ -4170,10 +4170,19 @@ class NotesWiki {
             return;
         }
         
-        // Pagination settings
+        // Pagination settings with boundary checking
         const resultsPerPage = 20;
+        const maxPage = Math.max(0, Math.ceil(matches.length / resultsPerPage) - 1);
+        
+        // Ensure searchResultsPage is within valid bounds
+        if (this.searchResultsPage < 0) {
+            this.searchResultsPage = 0;
+        } else if (this.searchResultsPage > maxPage) {
+            this.searchResultsPage = maxPage;
+        }
+        
         const startIndex = this.searchResultsPage * resultsPerPage;
-        const endIndex = startIndex + resultsPerPage;
+        const endIndex = Math.min(startIndex + resultsPerPage, matches.length);
         const pageResults = matches.slice(startIndex, endIndex);
         
         // Render results
@@ -4273,8 +4282,12 @@ class NotesWiki {
                 loadMoreBtn.className = 'button button-small';
                 loadMoreBtn.textContent = 'Load more results';
                 loadMoreBtn.onclick = () => {
-                    this.searchResultsPage++;
-                    this.performSearch(query, true);
+                    // Additional safety check to prevent over-pagination
+                    const maxPageForResults = Math.max(0, Math.ceil(matches.length / resultsPerPage) - 1);
+                    if (this.searchResultsPage < maxPageForResults) {
+                        this.searchResultsPage++;
+                        this.performSearch(query, true);
+                    }
                 };
                 paginationDiv.appendChild(loadMoreBtn);
             }
@@ -4434,11 +4447,39 @@ class NotesWiki {
                 
                 if (e.key === 'ArrowDown') {
                     e.preventDefault();
-                    this.currentSearchResult = Math.min(this.currentSearchResult + 1, results.length - 1);
-                    this.highlightSearchResult(results);
+                    // Check if at last result and more pages available
+                    if (this.currentSearchResult === results.length - 1 && this.hasMoreSearchResults()) {
+                        // Load next page and move to first result of new page
+                        this.loadNextSearchPage().then(() => {
+                            this.currentSearchResult = results.length; // Will be first result of new page
+                            const newResults = document.querySelectorAll('.search-result');
+                            this.highlightSearchResult(newResults);
+                        });
+                    } else {
+                        this.currentSearchResult = Math.min(this.currentSearchResult + 1, results.length - 1);
+                        this.highlightSearchResult(results);
+                    }
                 } else if (e.key === 'ArrowUp') {
                     e.preventDefault();
                     this.currentSearchResult = Math.max(this.currentSearchResult - 1, 0);
+                    this.highlightSearchResult(results);
+                } else if (e.key === 'Home') {
+                    e.preventDefault();
+                    this.currentSearchResult = 0;
+                    this.highlightSearchResult(results);
+                } else if (e.key === 'End') {
+                    e.preventDefault();
+                    this.currentSearchResult = results.length - 1;
+                    this.highlightSearchResult(results);
+                } else if (e.key === 'PageDown') {
+                    e.preventDefault();
+                    // Jump down by 5 results or to end
+                    this.currentSearchResult = Math.min(this.currentSearchResult + 5, results.length - 1);
+                    this.highlightSearchResult(results);
+                } else if (e.key === 'PageUp') {
+                    e.preventDefault();
+                    // Jump up by 5 results or to beginning
+                    this.currentSearchResult = Math.max(this.currentSearchResult - 5, 0);
                     this.highlightSearchResult(results);
                 } else if (e.key === 'Enter' && this.currentSearchResult >= 0) {
                     e.preventDefault();
@@ -4451,6 +4492,13 @@ class NotesWiki {
                             current.click();
                         }
                     }
+                } else if (e.key === 'Escape') {
+                    e.preventDefault();
+                    // Clear selection and return focus to search input
+                    this.currentSearchResult = 0;
+                    const allResults = document.querySelectorAll('.search-result');
+                    allResults.forEach(result => result.classList.remove('search-result-active'));
+                    searchInput.focus();
                 }
             };
             searchInput.addEventListener('keydown', this.searchKeyHandler);
@@ -4466,6 +4514,25 @@ class NotesWiki {
                 result.classList.remove('search-result-active');
             }
         });
+    }
+    
+    hasMoreSearchResults() {
+        if (!this.searchResults || this.searchResults.length === 0) return false;
+        
+        const resultsPerPage = 20;
+        const currentlyShownResults = (this.searchResultsPage + 1) * resultsPerPage;
+        return this.searchResults.length > currentlyShownResults;
+    }
+    
+    async loadNextSearchPage() {
+        if (!this.hasMoreSearchResults()) return;
+        
+        const searchInput = document.getElementById('search-input');
+        const currentQuery = searchInput.value;
+        
+        // Increment page and load more results
+        this.searchResultsPage++;
+        this.performSearch(currentQuery, true); // append = true
     }
     
     initializeSearchHistory() {

@@ -145,6 +145,19 @@ Each result shows:
 - **Author** - Note author
 - **Preview** - Content snippet with search terms highlighted
 
+### Keyboard Navigation
+Enhanced navigation through search results:
+- **↑/↓ arrows** - Navigate between results
+- **Home/End** - Jump to first/last result
+- **Page Up/Down** - Jump 5 results up/down
+- **Enter** - Open selected result
+- **Ctrl+Enter** - Open selected result in new tab
+- **Escape** - Clear selection and return to search input
+
+**Cross-Page Navigation:**
+- Automatically loads next page when navigating past last result
+- Seamless keyboard navigation across paginated results
+
 ### Quick Actions
 From search results:
 - **Click title** - Open note in current tab

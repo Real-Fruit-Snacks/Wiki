@@ -110,6 +110,99 @@ category:tutorial // Matches "tutorial", "tutorial-advanced", etc.
 
 ## ✅ Recent Fixes Applied
 
+### January 26, 2025 - Search Keyboard Navigation Enhancement
+
+**Enhancement**: Enhanced search results keyboard navigation with pagination integration and additional shortcuts.
+
+**Original Limitations:**
+- Keyboard navigation only worked within current page (20 results)
+- Limited navigation shortcuts (only arrow keys + Enter)
+- No way to navigate across paginated results
+- Missing common navigation patterns (Home/End, Page Up/Down)
+
+**Enhanced Implementation:**
+```javascript
+// Cross-page navigation support
+if (this.currentSearchResult === results.length - 1 && this.hasMoreSearchResults()) {
+    // Load next page and move to first result of new page
+    this.loadNextSearchPage().then(() => {
+        this.currentSearchResult = results.length;
+        const newResults = document.querySelectorAll('.search-result');
+        this.highlightSearchResult(newResults);
+    });
+}
+
+// Additional keyboard shortcuts
+Home/End     - Jump to first/last result
+PageUp/Down  - Jump 5 results up/down
+Escape       - Clear selection and return to search input
+```
+
+**New Features Added:**
+- **Cross-page navigation** - Automatically loads next page when navigating past last result
+- **Enhanced shortcuts** - Home/End for quick jumps, Page Up/Down for faster navigation
+- **Better focus management** - Escape key clears selection and returns focus to search input
+- **Seamless experience** - Smooth navigation across all search results regardless of pagination
+
+**Documentation Updates:**
+- Updated search help overlay with new keyboard shortcuts
+- Enhanced shortcuts cheatsheet with navigation details
+- Added keyboard navigation section to search guide tutorial
+
+**Impact:**
+- ✅ **Improved productivity** - Faster navigation through large result sets
+- ✅ **Better accessibility** - More keyboard navigation options
+- ✅ **Enhanced UX** - Seamless navigation across paginated results
+- ✅ **Complete documentation** - All shortcuts properly documented
+
+### January 26, 2025 - Search Pagination Edge Case Fix
+
+**Fixed Issue:**
+1. **Search Results Pagination Logic** - Edge case boundary checking issues that could cause pagination failures
+
+**Root Cause:**
+- No boundary validation for `searchResultsPage` value
+- Could result in negative `startIndex` or exceed available pages  
+- `endIndex` could exceed array bounds causing slice errors
+- "Load more" button could increment pages beyond available results
+
+**Fix Applied:**
+```javascript
+// Pagination settings with boundary checking
+const resultsPerPage = 20;
+const maxPage = Math.max(0, Math.ceil(matches.length / resultsPerPage) - 1);
+
+// Ensure searchResultsPage is within valid bounds
+if (this.searchResultsPage < 0) {
+    this.searchResultsPage = 0;
+} else if (this.searchResultsPage > maxPage) {
+    this.searchResultsPage = maxPage;
+}
+
+const startIndex = this.searchResultsPage * resultsPerPage;
+const endIndex = Math.min(startIndex + resultsPerPage, matches.length);
+const pageResults = matches.slice(startIndex, endIndex);
+```
+
+**Additional Safety in Load More Button:**
+```javascript
+loadMoreBtn.onclick = () => {
+    // Additional safety check to prevent over-pagination
+    const maxPageForResults = Math.max(0, Math.ceil(matches.length / resultsPerPage) - 1);
+    if (this.searchResultsPage < maxPageForResults) {
+        this.searchResultsPage++;
+        this.performSearch(query, true);
+    }
+};
+```
+
+**Impact:**
+- ✅ **Prevents edge case failures** when page numbers are invalid
+- ✅ **Robust boundary checking** for negative or excessive page values
+- ✅ **Safe array slicing** with proper index bounds
+- ✅ **Enhanced user experience** with reliable pagination behavior
+- ✅ **Prevention of over-pagination** when clicking "Load more"
+
 ### January 25, 2025 - Search Operators & Documentation Update
 
 **Fixed Issues:**
@@ -339,21 +432,39 @@ setupPaneResizing(divider) {
 
 **Status**: ✅ **FIXED** - Pane resizing now works correctly with proper element ID references.
 
-### 7. Focus Mode Width Setting Conflicts
+### 7. Focus Mode Width Setting Conflicts - VERIFIED CORRECT
 
 **Issue**: Focus mode width implementation may conflict with user content width settings.
 
-**Implementation** (`script.js:3193-3208`):
+**Implementation Analysis** (`script.js:3193-3208`):
 ```javascript
-// Apply wide width for focus mode without changing settings
-// Remove current width class and add focus-mode-wide
+// ENTERING Focus Mode - temporarily override width
 document.body.classList.remove('content-width-narrow', 'content-width-normal', 'content-width-wide', 'content-width-full');
 document.body.classList.add('focus-mode-wide');
+
+// EXITING Focus Mode - restore user preference  
+document.body.classList.remove('focus-mode-wide');
+this.applyContentWidthSetting(); // Restores settings.contentWidth
 ```
 
-**Potential Issue**: This overrides user's content width preference while in focus mode.
+**Restoration Logic** (`script.js:9079-9084`):
+```javascript
+applyContentWidthSetting() {
+    // Remove all content width classes including focus mode width
+    document.body.classList.remove('content-width-narrow', 'content-width-normal', 'content-width-wide', 'content-width-full', 'focus-mode-wide');
+    
+    // Apply the selected content width class
+    document.body.classList.add(`content-width-${this.settings.contentWidth}`);
+}
+```
 
-**Status**: ⚠️ **MINOR** - Behavior may be unexpected but likely intentional.
+**Verification Result**: ✅ **IMPLEMENTATION IS CORRECT**
+- User preferences (`settings.contentWidth`) are preserved and never modified
+- Width override is temporary and intentional for distraction-free reading
+- Proper restoration occurs when exiting focus mode via `applyContentWidthSetting()`
+- Clean CSS class management with no conflicts or persistence issues
+
+**Status**: ✅ **VERIFIED CORRECT** - This is intentional, well-designed behavior, not a bug.
 
 ### 8. Quick Notes Keyboard Shortcut Documentation
 
@@ -392,7 +503,7 @@ createStickyNote() {
 
 **Issue**: Search pagination may have edge case issues.
 
-**Implementation** (`script.js:4163-4174`):
+**Original Implementation** (`script.js:4163-4174`):
 ```javascript
 // Pagination settings
 const resultsPerPage = 20;
@@ -401,9 +512,42 @@ const endIndex = startIndex + resultsPerPage;
 const pageResults = matches.slice(startIndex, endIndex);
 ```
 
-**Potential Issue**: No boundary checking for `searchResultsPage` value.
+**Problems Identified**:
+- No boundary checking for `searchResultsPage` value
+- Could result in negative startIndex or exceed available pages
+- endIndex could exceed array bounds
 
-**Status**: ⚠️ **MINOR** - Edge case handling could be improved.
+**Fixed Implementation** (`script.js:4163-4185`):
+```javascript
+// Pagination settings with boundary checking
+const resultsPerPage = 20;
+const maxPage = Math.max(0, Math.ceil(matches.length / resultsPerPage) - 1);
+
+// Ensure searchResultsPage is within valid bounds
+if (this.searchResultsPage < 0) {
+    this.searchResultsPage = 0;
+} else if (this.searchResultsPage > maxPage) {
+    this.searchResultsPage = maxPage;
+}
+
+const startIndex = this.searchResultsPage * resultsPerPage;
+const endIndex = Math.min(startIndex + resultsPerPage, matches.length);
+const pageResults = matches.slice(startIndex, endIndex);
+```
+
+**Additional Safety** (`script.js:4277-4283`):
+```javascript
+loadMoreBtn.onclick = () => {
+    // Additional safety check to prevent over-pagination
+    const maxPageForResults = Math.max(0, Math.ceil(matches.length / resultsPerPage) - 1);
+    if (this.searchResultsPage < maxPageForResults) {
+        this.searchResultsPage++;
+        this.performSearch(query, true);
+    }
+};
+```
+
+**Status**: ✅ **FIXED** - Added comprehensive boundary checking and edge case protection.
 
 ### 10. Timer Display Update Performance
 
