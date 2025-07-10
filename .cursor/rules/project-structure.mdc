@@ -1,7 +1,3 @@
----
-alwaysApply: true
----
-
 # Notes Wiki Project Structure
 
 This is a sophisticated static site generator for personal notes/wiki with 74 themes and advanced features.
@@ -11,6 +7,15 @@ This is a sophisticated static site generator for personal notes/wiki with 74 th
 - **[index.html](mdc:index.html)** - Main SPA entry point (1,372 lines) with complex theme loading and base path detection for GitHub/GitLab Pages
 - **[script.js](mdc:script.js)** - Core application logic (17,313 lines) containing the `NotesWiki` class with all functionality
 - **[style.css](mdc:style.css)** - Main stylesheet (8,140 lines) with base styles for all themes
+
+## Core Architecture
+
+The application follows a single-page application (SPA) pattern:
+- **NotesWiki class** in [script.js](mdc:script.js) is the main controller
+- **Multi-tab interface** with drag & drop support
+- **Theme system** with 74 themes and live preview
+- **Search functionality** with tag filtering and indexing
+- **Split view support** for side-by-side note viewing
 
 ## Build & Release System
 
@@ -45,3 +50,10 @@ This is a sophisticated static site generator for personal notes/wiki with 74 th
 - Self-contained offline operation
 - GitHub/GitLab Pages compatibility
 - Responsive design with mobile support
+
+## Development Guidelines
+
+- The application is designed to work offline and be self-contained
+- All core functionality is in [script.js](mdc:script.js) - be careful when editing this large file
+- Themes should maintain consistent structure and follow existing patterns
+- The build process regenerates [notes-index.json](mdc:notes-index.json) - don't edit manually

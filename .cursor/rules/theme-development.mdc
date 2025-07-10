@@ -1,65 +1,92 @@
----
-globs: "themes/*.css,style.css"
----
-
 # Theme Development Guidelines
 
-## Theme System Architecture
+## Theme System Overview
 
-The wiki supports 74 themes organized into 10 categories in **[themes/](mdc:themes/)**:
+The wiki supports 74 themes organized into categories in [themes/](mdc:themes/). Each theme is a standalone CSS file that overrides the base styles defined in [style.css](mdc:style.css).
 
-### Theme Categories
-1. **Classic Dark** - dark, dracula, halcyon, monokai, night-owl, one-dark-pro, tomorrow-night, zenburn
-2. **Classic Light** - atom-one-light, github-light, light, neon-light, solarized-light  
-3. **Material Design** - material-darker, material-ocean, material-palenight
-4. **Nature & Earth** - ayu-light, bear, everforest-dark, gruvbox-dark/light, kanagawa, rose-pine variants
-5. **Arctic & Winter** - nord, nordic, winter-is-coming variants
-6. **Ocean & Sky** - ayu variants, base16-ocean, bluloco variants, cobalt2, firefly, iceberg, noctis, oceanic-next, spacegray
-7. **Cyberpunk & Neon** - 2077, city-lights, cyberpunk, digital-rain, outrun, snazzy, synthwave-84, tokyo-night, vaporwave
-8. **Elegant & Pastel** - andromeda, catppuccin variants, horizon, lucario, moonlight, palenight, shades-of-purple, soft-era, witch-hazel
-9. **Professional** - apprentice, corporate-dystopia, flatland, github-dark, material, oxocarbon, protonmail, solarized-dark, thinkultra, vim, vscode-dark-plus
-10. **Special Effects** - amber-interface, hackthebox, holographic, hotdog-stand, panda
+## Theme Categories
 
+- **Classic Dark**: dark, dracula, halcyon, monokai, night-owl, one-dark-pro, tomorrow-night, zenburn
+- **Classic Light**: atom-one-light, github-light, light, neon-light, solarized-light  
+- **Material Design**: material-darker, material-ocean, material-palenight
+- **Nature & Earth**: ayu-light, bear, everforest-dark, gruvbox-dark/light, kanagawa, rose-pine variants
+- **Arctic & Winter**: nord, nordic, winter-is-coming variants
+- **Ocean & Sky**: ayu variants, base16-ocean, bluloco variants, cobalt2, firefly, iceberg, noctis, oceanic-next, spacegray
+- **Cyberpunk & Neon**: 2077, city-lights, cyberpunk, digital-rain, outrun, snazzy, synthwave-84, tokyo-night, vaporwave
+- **Elegant & Pastel**: andromeda, catppuccin variants, horizon, lucario, moonlight, palenight, shades-of-purple, soft-era, witch-hazel
+- **Professional**: apprentice, corporate-dystopia, flatland, github-dark, material, oxocarbon, protonmail, solarized-dark, thinkultra, vim, vscode-dark-plus
+- **Special Effects**: amber-interface, hackthebox, holographic, hotdog-stand, panda
 
-### Theme Development Rules
+## Theme Structure
 
-#### CSS Structure
-- Themes should override CSS custom properties defined in **[style.css](mdc:style.css)**
-- Use the established color variable naming convention:
-  ```css
-  :root {
-    --bg-primary: #color;
-    --bg-secondary: #color;
-    --text-primary: #color;
-    --text-secondary: #color;
-    --accent-primary: #color;
-    --accent-secondary: #color;
-    /* etc. */
-  }
-  ```
+Each theme file follows a consistent structure:
 
-#### Theme File Naming
-- Use kebab-case: `theme-name.css`
-- Special themes: use descriptive prefixes
-- Variants: use descriptive suffixes like `-light`, `-dark`, `-soft`
+1. **Root variables** - Define color palette using CSS custom properties
+2. **Base element styles** - Body, containers, typography
+3. **Component styles** - Buttons, inputs, modals, etc.
+4. **Layout styles** - Header, sidebar, content areas
+5. **Syntax highlighting** - Code block styling with Prism.js integration
 
-#### Special Effects Guidelines
-- Animations should be subtle and not interfere with readability
-- Use CSS transforms and transitions, avoid JavaScript-dependent effects
-- Consider users who prefer reduced motion (`prefers-reduced-motion`)
-- Special effects themes can include:
-  - CSS animations and transitions
-  - Gradient backgrounds
-  - Box shadows and glows
-  - Pseudo-element decorations
+## Required CSS Variables
 
-#### Testing New Themes
-- Use **[validate-themes.js](mdc:validate-themes.js)** to validate theme files
-- Test theme switching in the application
-- Verify readability in both light and dark modes
-- Check mobile responsiveness
+Every theme must define these core variables:
+```css
+:root {
+  --bg-primary: #color;          /* Main background */
+  --bg-secondary: #color;        /* Secondary background */
+  --text-primary: #color;        /* Primary text */
+  --text-secondary: #color;      /* Secondary text */
+  --accent-primary: #color;      /* Main accent color */
+  --accent-secondary: #color;    /* Secondary accent */
+  --border-color: #color;        /* Borders and dividers */
+  --hover-color: #color;         /* Hover states */
+}
+```
 
-#### Theme Loading
-- Themes are loaded dynamically by the JavaScript in [script.js](mdc:script.js)
+## Development Best Practices
+
+- **Validate themes** with [validate-themes.js](mdc:validate-themes.js) before committing
+- **Maintain readability** - ensure sufficient contrast ratios (WCAG guidelines)
+- **Use semantic naming** for CSS variables and classes
+- **Test responsiveness** across different screen sizes
+- **Consider accessibility** - support `prefers-reduced-motion` and high contrast modes
+- **Follow existing patterns** - refer to [themes/dark.css](mdc:themes/dark.css) or [themes/light.css](mdc:themes/light.css) as templates
+
+## Testing Process
+
+1. Run `npm run validate-themes` to check for syntax errors
+2. Test theme switching functionality in the application
+3. Verify rendering with different content types:
+   - Code blocks with syntax highlighting
+   - Tables and lists
+   - Images and media
+   - Search results and modals
+4. Check mobile responsiveness
+5. Test with accessibility tools
+
+## Theme Loading Architecture
+
+- Themes are loaded dynamically by [script.js](mdc:script.js)
 - Base path detection handles GitHub/GitLab Pages deployment
-- Theme persistence uses localStorage with fallback to `tokyo-night`
+- Theme persistence uses localStorage with `tokyo-night` as fallback
+- Live theme switching without page reload
+
+## Common CSS Selectors
+
+Key selectors to style in your theme:
+- `.wiki-container` - Main application container
+- `.header`, `.sidebar`, `.content` - Layout sections  
+- `.tab`, `.tab-content` - Multi-tab interface
+- `.note-content` - Rendered markdown content
+- `.search-results` - Search interface components
+- `.modal`, `.settings-panel` - Overlay components
+- `.code-block`, `.hljs-*` - Syntax highlighting (Prism.js classes)
+
+## Special Effects Themes
+
+For themes with special effects:
+- Keep animations subtle and purposeful
+- Use CSS transforms, gradients, and transitions
+- Avoid JavaScript-dependent effects
+- Respect `prefers-reduced-motion` media query
+- Test performance on slower devices

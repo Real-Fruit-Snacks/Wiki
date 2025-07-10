@@ -1254,7 +1254,7 @@ class NotesWiki {
                     'new-tab': 'Ctrl+T',
                     'search': 'Ctrl+K',
                     'settings': 'Ctrl+,',
-                    'filter': 'Ctrl+F'
+                    'bookmark': 'Ctrl+D'
                 };
                 this.saveSettings();
                 
@@ -1512,22 +1512,6 @@ class NotesWiki {
                 
                 // Check custom shortcuts
                 const pressedCombo = this.getKeyCombo(e);
-                
-                // Override Ctrl+F for in-note search
-                if (pressedCombo === 'Ctrl+F' || pressedCombo === 'Cmd+F') {
-                    e.preventDefault();
-                    // Don't open search if another modal is already open
-                    const hasOpenModal = document.querySelector('.settings-modal.active, .tags-modal.active, .shortcuts-modal.active');
-                    if (hasOpenModal) return;
-                    
-                    // If note is loaded, show in-note search; otherwise show global search
-                    if (this.currentNote) {
-                        this.showNoteSearch();
-                    } else {
-                        this.showSearch();
-                    }
-                    return;
-                }
                 
                 // Alternative tab management shortcuts (browser-compatible)
                 if (pressedCombo === 'Alt+W') {
@@ -2978,7 +2962,6 @@ class NotesWiki {
                 'new-tab': 'Ctrl+T',
                 'search': 'Ctrl+K',
                 'settings': 'Ctrl+,',
-                'filter': 'Ctrl+F',
                 'bookmark': 'Ctrl+D'
             },
             pomodoroEnabled: true,
@@ -12878,7 +12861,7 @@ class NotesWiki {
         // Update navigation shortcuts
         document.getElementById('shortcut-new-tab').textContent = shortcuts['new-tab'] || 'Ctrl+T';
         document.getElementById('shortcut-search').textContent = shortcuts['search'] || 'Ctrl+K';
-        document.getElementById('shortcut-filter').textContent = shortcuts['filter'] || 'Ctrl+F';
+        document.getElementById('shortcut-filter').textContent = shortcuts['filter'] || 'Not assigned';
         document.getElementById('shortcut-settings').textContent = shortcuts['settings'] || 'Ctrl+,';
         document.getElementById('shortcut-bookmark').textContent = shortcuts['bookmark'] || 'Ctrl+D';
     }

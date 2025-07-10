@@ -1,37 +1,185 @@
----
-globs: "*.js"
----
-
 # JavaScript Development Guidelines
 
-## Main Application Architecture
+## Core Application Architecture
 
-The core application is in **[script.js](mdc:script.js)** (17,313 lines) and follows a class-based architecture:
+The Notes Wiki is built as a single-page application (SPA) with all functionality contained in [script.js](mdc:script.js) (17,313 lines).
 
-### NotesWiki Class Structure
-- **Constructor**: Initializes all core properties (tabs, search, bookmarks, themes)
-- **Tab Management**: Multi-tab interface with drag & drop support
-- **Search System**: Advanced search with tag filtering and full-text search
-- **Theme System**: Dynamic theme loading with 10 categories and 74 themes
-- **Content Management**: Markdown parsing, note loading, and navigation
+### Main Class: NotesWiki
 
-### Key Methods to Understand
-- `loadNotesIndex()` - Loads the main notes index from [notes-index.json](mdc:notes-index.json)
-- `loadNote()` - Handles note loading and rendering with markdown processing
-- `handleSearch()` - Advanced search with tag filtering and context switching
-- `loadTheme()` - Dynamic theme loading with GitHub Pages path detection
-- `manageTabs()` - Multi-tab interface with state management
+The `NotesWiki` class is the central controller that manages:
+- **Application lifecycle** and initialization
+- **Theme system** with dynamic loading and switching
+- **Multi-tab interface** with drag & drop support
+- **Search functionality** with indexing and filtering
+- **Note rendering** using Marked.js for markdown
+- **Split view management** for side-by-side viewing
+- **Bookmark system** with persistence
+- **Settings management** with localStorage
 
-### Code Style & Patterns
-- Use ES6 class syntax and modern JavaScript features
-- Maintain backward compatibility for older browsers
-- Handle GitHub/GitLab Pages path detection carefully in `getBasePath()`
-- All themes are loaded dynamically to reduce initial bundle size
-- Search operations should be debounced for performance
-- Tab state must be preserved across navigation
+### Key Application Features
 
-### Important Implementation Notes
-- The app is self-contained - all dependencies are vendored in [libs/](mdc:libs/)
-- Theme loading includes complex base path detection for hosting platforms
-- Search index is pre-built by [build.py](mdc:build.py) for fast searching
-- Mobile responsive design requires careful touch event handling
+#### Multi-Tab Interface
+- Tab creation, switching, and management
+- Drag and drop reordering
+- Tab persistence across sessions
+- Context menus for tab operations
+
+#### Search System
+- Full-text search across all notes
+- Tag-based filtering and faceted search
+- Real-time search with debouncing
+- Search result highlighting
+- Advanced search operators
+
+#### Theme Management
+- 74 themes with live preview
+- Dynamic theme switching without reload
+- Theme persistence in localStorage
+- CSS custom property system
+- Base path detection for GitHub/GitLab Pages
+
+#### Content Rendering
+- Markdown parsing with Marked.js
+- Syntax highlighting with Prism.js
+- YAML frontmatter extraction
+- Link processing and validation
+- Image and media handling
+
+## Development Patterns
+
+### Code Organization
+The large [script.js](mdc:script.js) file is organized into logical sections:
+1. **Class definition** and constructor
+2. **Initialization methods** and setup
+3. **UI management** and event handling
+4. **Content processing** and rendering
+5. **Search functionality** and indexing
+6. **Theme system** and management
+7. **Utility functions** and helpers
+
+### Event Handling
+- Use event delegation for dynamic content
+- Debounce search and resize events
+- Handle keyboard shortcuts globally
+- Manage focus and tab navigation
+
+### State Management
+- Application state in class properties
+- Persistent state in localStorage
+- Session state for temporary data
+- URL hash for navigation state
+
+## Key Dependencies
+
+### External Libraries
+- **[libs/marked.min.js](mdc:libs/marked.min.js)** - Markdown parsing
+- **[libs/prism.min.js](mdc:libs/prism.min.js)** - Syntax highlighting
+- **[libs/js-yaml.min.js](mdc:libs/js-yaml.min.js)** - YAML frontmatter parsing
+
+### Self-Contained Design
+- No external CDN dependencies
+- All libraries bundled locally
+- Offline-first architecture
+- No build step required for core functionality
+
+## Performance Considerations
+
+### Large File Management
+The [script.js](mdc:script.js) file is large (17,313 lines):
+- **Careful editing** - changes can have wide impact
+- **Test thoroughly** - complex interdependencies
+- **Consider refactoring** - break into modules if needed
+- **Profile performance** - watch for memory leaks
+
+### Search Optimization
+- Index loading and caching
+- Debounced search input
+- Efficient DOM updates
+- Virtual scrolling for large result sets
+
+### Memory Management
+- Clean up event listeners
+- Manage DOM references
+- Clear unused data structures
+- Monitor memory usage in dev tools
+
+## Development Best Practices
+
+### Code Quality
+- Use consistent naming conventions
+- Add JSDoc comments for complex functions
+- Handle errors gracefully with try-catch
+- Validate user input and sanitize content
+
+### Browser Compatibility
+- Target modern browsers (ES6+)
+- Use progressive enhancement
+- Test across different devices
+- Handle mobile touch events
+
+### Security Considerations
+- Sanitize markdown content
+- Validate file paths and URLs
+- Escape user-generated content
+- Use CSP headers where possible
+
+## Testing Guidelines
+
+### Manual Testing
+- Test all major features after changes
+- Verify theme switching works correctly
+- Check mobile responsiveness
+- Test with different content types
+
+### Browser Testing
+- Chrome/Chromium (primary target)
+- Firefox for compatibility
+- Safari for WebKit differences
+- Mobile browsers for touch interface
+
+### Performance Testing
+- Monitor load times
+- Check memory usage
+- Test with large note collections
+- Profile search performance
+
+## Common Development Tasks
+
+### Adding New Features
+1. Plan integration with existing architecture
+2. Update the NotesWiki class methods
+3. Add necessary UI components
+4. Test across different themes
+5. Update relevant documentation
+
+### Theme System Integration
+- Ensure new features respect theme variables
+- Test with multiple themes
+- Update CSS selectors as needed
+- Maintain theme switching compatibility
+
+### Search System Updates
+- Update index structure if needed
+- Modify search algorithms carefully
+- Test with various search patterns
+- Maintain backward compatibility
+
+## Debugging Tips
+
+### Common Issues
+- Theme loading failures
+- Search index corruption
+- Memory leaks in event handlers
+- Mobile touch event problems
+
+### Debugging Tools
+- Browser developer tools
+- Console logging for state tracking
+- Performance profiler for bottlenecks
+- Network tab for resource loading
+
+### Error Handling
+- Graceful fallbacks for missing resources
+- User-friendly error messages
+- Console warnings for development
+- Recovery mechanisms for corrupted state

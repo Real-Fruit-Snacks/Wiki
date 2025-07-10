@@ -1,0 +1,149 @@
+# Notes & Content Guidelines
+
+## Content Structure
+
+The [notes/](mdc:notes/) directory contains hierarchically organized markdown files:
+
+### Directory Organization
+- **[notes/index.md](mdc:notes/index.md)** - Main landing page and navigation
+- **[notes/tutorials/](mdc:notes/tutorials/)** - Educational content organized by topic
+  - `getting-started/` - Welcome guides and basic concepts
+  - `features/` - Feature-specific tutorials and guides
+  - `advanced/` - Advanced usage patterns and techniques
+
+### Content Categories
+
+#### Getting Started ([notes/tutorials/getting-started/](mdc:notes/tutorials/getting-started/))
+- **[welcome.md](mdc:notes/tutorials/getting-started/welcome.md)** - Introduction to the wiki system
+- **[creating-notes.md](mdc:notes/tutorials/getting-started/creating-notes.md)** - Basic note creation guide
+
+#### Feature Guides ([notes/tutorials/features/](mdc:notes/tutorials/features/))
+- **[themes.md](mdc:notes/tutorials/features/themes.md)** - Theme system documentation
+- **[search-guide.md](mdc:notes/tutorials/features/search-guide.md)** - Advanced search features
+- **[tab-management.md](mdc:notes/tutorials/features/tab-management.md)** - Multi-tab interface
+- **[split-view.md](mdc:notes/tutorials/features/split-view.md)** - Side-by-side viewing
+- **[bookmarks.md](mdc:notes/tutorials/features/bookmarks.md)** - Bookmark management
+- **[keyboard-shortcuts.md](mdc:notes/tutorials/features/keyboard-shortcuts.md)** - Hotkey reference
+
+#### Advanced Topics ([notes/tutorials/advanced/](mdc:notes/tutorials/advanced/))
+- **[search-index-management.md](mdc:notes/tutorials/advanced/search-index-management.md)** - Index optimization
+- **[combined-code-blocks.md](mdc:notes/tutorials/advanced/combined-code-blocks.md)** - Advanced code formatting
+
+## Markdown Standards
+
+### Frontmatter Format
+Every note should include YAML frontmatter:
+```yaml
+---
+title: "Page Title"
+tags: ["tag1", "tag2", "category"]
+description: "Brief description for search results"
+date: "2024-01-01"
+author: "Author Name"
+---
+```
+
+### Required Frontmatter Fields
+- **title**: Display name for the note
+- **tags**: Array of searchable tags for filtering
+- **description**: Brief summary for search results
+
+### Optional Frontmatter Fields
+- **date**: Creation or last updated date
+- **author**: Content author
+- **category**: High-level grouping
+- **featured**: Boolean for highlighting important content
+
+## Content Guidelines
+
+### Writing Style
+- Use clear, concise language
+- Include practical examples and code samples
+- Add cross-references to related notes
+- Structure content with proper headings (H1-H6)
+
+### Code Blocks
+Use fenced code blocks with language specification:
+````markdown
+```javascript
+// JavaScript example
+const example = "syntax highlighting";
+```
+````
+
+### Internal Linking
+Link to other notes using relative paths:
+```markdown
+See also: [Theme System](../features/themes.md)
+```
+
+### Images and Media
+Place media files in appropriate subdirectories:
+```markdown
+![Example Screenshot](./images/screenshot.png)
+```
+
+## Search Optimization
+
+### Tag Strategy
+- Use descriptive, searchable tags
+- Include both specific and general terms
+- Consider user search patterns
+- Group related content with common tags
+
+### Content Structure
+- Start with clear introduction
+- Use descriptive headings and subheadings
+- Include relevant keywords naturally
+- Provide examples and use cases
+
+## Content Maintenance
+
+### Regular Updates
+- Keep tutorial content current with application features
+- Update screenshots and examples
+- Verify links and references
+- Check for outdated information
+
+### Quality Assurance
+- Proofread for clarity and accuracy
+- Test code examples and procedures
+- Validate internal links
+- Ensure consistent formatting
+
+## Build Integration
+
+### Index Generation
+Notes are automatically indexed by [build.py](mdc:build.py):
+- Frontmatter is parsed and included in search index
+- Full-text content is searchable
+- File metadata is preserved
+- Hierarchical structure is maintained
+
+### Search Features
+Content is optimized for the wiki's search system:
+- Tag-based filtering
+- Full-text search across all content
+- Hierarchical navigation
+- Related content suggestions
+
+## Best Practices
+
+### File Organization
+- Use descriptive filenames (kebab-case)
+- Group related content in logical directories
+- Maintain consistent directory structure
+- Keep file paths relatively short
+
+### Content Creation
+- Start with outline and structure
+- Include practical examples
+- Test procedures and code samples
+- Review for clarity and completeness
+
+### Maintenance Workflow
+1. Regular content audits
+2. Update outdated information
+3. Add new features and capabilities
+4. Improve existing documentation
+5. Rebuild search index after changes

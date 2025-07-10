@@ -1,0 +1,116 @@
+# Build & Release System
+
+## Build Process Overview
+
+The Notes Wiki uses a two-stage build process combining Python and Node.js:
+
+### Python Build ([build.py](mdc:build.py))
+- **Processes markdown files** in [notes/](mdc:notes/) directory
+- **Generates search index** [notes-index.json](mdc:notes-index.json) with metadata
+- **Extracts frontmatter** and content for indexing
+- **Creates hierarchical structure** for navigation
+
+### Node.js Release ([create-release.js](mdc:create-release.js))
+- **Creates release packages** for distribution
+- **Validates all components** before packaging
+- **Generates release artifacts** with version information
+- **Handles deployment preparation**
+
+## Key Build Files
+
+### [build.py](mdc:build.py) - Python Build Script
+- Scans [notes/](mdc:notes/) directory recursively
+- Parses YAML frontmatter from markdown files
+- Generates searchable index with full-text content
+- Creates metadata for navigation and filtering
+- **Output**: [notes-index.json](mdc:notes-index.json) (242KB, 633 lines)
+
+### [create-release.js](mdc:create-release.js) - Release Automation
+- Validates theme files and core components
+- Creates distributable packages
+- Handles version management
+- Prepares deployment artifacts
+
+### [package.json](mdc:package.json) - NPM Scripts
+Available scripts:
+- `npm run build` - Runs Python build script
+- `npm run validate-themes` - Validates all theme files
+- `npm run test` - Runs validation and tests
+- `npm run release` - Creates release package
+
+### [validate-themes.js](mdc:validate-themes.js) - Theme Validation
+- Checks CSS syntax in all [themes/](mdc:themes/) files
+- Validates required CSS variables
+- Ensures theme compatibility
+- Reports validation errors
+
+## Build Dependencies
+
+### Python Requirements
+- Python 3.x with standard library
+- PyYAML for frontmatter parsing
+- JSON for index generation
+
+### Node.js Requirements  
+- Node.js 14+ for build scripts
+- No external dependencies (self-contained)
+
+## Build Outputs
+
+### [notes-index.json](mdc:notes-index.json)
+Generated search index containing:
+- File paths and metadata
+- Full-text content for searching
+- Frontmatter data (tags, titles, etc.)
+- Hierarchical structure information
+- **Important**: Never edit manually - regenerated on each build
+
+## Development Workflow
+
+### Adding New Notes
+1. Create markdown file in [notes/](mdc:notes/) directory
+2. Add YAML frontmatter with title, tags, etc.
+3. Run `npm run build` to regenerate index
+4. Test search functionality
+
+### Theme Development
+1. Create new CSS file in [themes/](mdc:themes/)
+2. Run `npm run validate-themes` to check syntax
+3. Test theme switching in application
+4. Include in release package
+
+### Release Process
+1. Update version information
+2. Run full validation: `npm run test`
+3. Build search index: `npm run build`
+4. Create release: `npm run release`
+5. Deploy to GitHub/GitLab Pages
+
+## Deployment Considerations
+
+### GitHub Pages
+- Uses [_config.yml](mdc:_config.yml) for Jekyll configuration
+- Base path detection in [index.html](mdc:index.html)
+- Static file serving with proper MIME types
+
+### GitLab Pages
+- Configuration in [gitlab-files/](mdc:gitlab-files/) directory
+- CI/CD pipeline configuration
+- Custom domain support
+
+## Troubleshooting
+
+### Build Issues
+- Check Python version and dependencies
+- Verify markdown file syntax
+- Ensure proper frontmatter format
+
+### Theme Validation Errors
+- Run [validate-themes.js](mdc:validate-themes.js) for detailed errors
+- Check CSS syntax and required variables
+- Verify file naming conventions
+
+### Index Generation Problems
+- Check file permissions in [notes/](mdc:notes/) directory
+- Verify markdown frontmatter syntax
+- Ensure no circular references in note links
