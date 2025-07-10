@@ -85,7 +85,7 @@ Explore these tutorials to master Notes Wiki:
 
 - Press `?` anytime to see all keyboard shortcuts
 - Press `F` to enter focus mode for distraction-free reading
-- Use `Ctrl+F` to search within the current note
+- Use `Ctrl+F` to find text on the current page (browser's native find)
 - Drag and drop tabs to reorder them
 - Right-click tabs for more options
 
