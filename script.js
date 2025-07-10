@@ -7991,6 +7991,167 @@ class NotesWiki {
         this.showToast('Removed from recent files');
     }
     
+    loadRecentFiles() {
+        try {
+            const stored = localStorage.getItem('notesWiki_recentFiles');
+            if (stored) {
+                const parsed = JSON.parse(stored);
+                // Validate data structure
+                if (Array.isArray(parsed)) {
+                    this.recentFiles = parsed.filter(this.validateRecentFile.bind(this));
+                } else {
+                    console.warn('Invalid recent files data structure, resetting recent files');
+                    this.recentFiles = [];
+                }
+            } else {
+                this.recentFiles = [];
+            }
+        } catch (error) {
+            console.warn('Failed to load recent files:', error);
+            this.recentFiles = [];
+            // Clear corrupted data
+            try {
+                localStorage.removeItem('notesWiki_recentFiles');
+            } catch (removeError) {
+                console.warn('Failed to clear corrupted recent files data:', removeError);
+            }
+        }
+        this.updateRecentFilesUI();
+    }
+
+    validateRecentFile(file) {
+        return file && 
+               typeof file.path === 'string' && 
+               file.path.length > 0 &&
+               typeof file.title === 'string' && 
+               typeof file.lastViewed === 'string';
+    }
+
+    addToRecentFiles(path, metadata) {
+        try {
+            // Validate inputs
+            if (!path || typeof path !== 'string') {
+                console.warn('Invalid recent file path:', path);
+                return;
+            }
+
+            if (!metadata || typeof metadata !== 'object') {
+                console.warn('Invalid recent file metadata:', metadata);
+                return;
+            }
+
+            // Ensure path starts with /
+            const normalizedPath = path.startsWith('/') ? path : '/' + path;
+            
+            // Check if file already exists in recent files
+            const existingIndex = this.recentFiles.findIndex(f => f.path === normalizedPath);
+            
+            if (existingIndex >= 0) {
+                // Update existing entry
+                const existingFile = this.recentFiles[existingIndex];
+                existingFile.lastViewed = new Date().toISOString();
+                existingFile.viewCount = (existingFile.viewCount || 0) + 1;
+                existingFile.title = metadata.title || existingFile.title;
+                
+                // Move to front
+                this.recentFiles.splice(existingIndex, 1);
+                this.recentFiles.unshift(existingFile);
+            } else {
+                // Create new entry
+                const recentFile = {
+                    path: normalizedPath,
+                    title: metadata.title || 'Untitled',
+                    lastViewed: new Date().toISOString(),
+                    viewCount: 1,
+                    isPinned: false
+                };
+                
+                // Add to front
+                this.recentFiles.unshift(recentFile);
+            }
+
+            // Limit to recentLimit setting (default 20)
+            const limit = this.settings?.recentLimit || 20;
+            
+            // Keep pinned files and trim others
+            const pinnedFiles = this.recentFiles.filter(f => f.isPinned);
+            const unpinnedFiles = this.recentFiles.filter(f => !f.isPinned);
+            
+            // Limit unpinned files
+            const trimmedUnpinned = unpinnedFiles.slice(0, Math.max(0, limit - pinnedFiles.length));
+            
+            // Combine pinned and unpinned
+            this.recentFiles = [...pinnedFiles, ...trimmedUnpinned];
+
+            // Save to localStorage
+            localStorage.setItem('notesWiki_recentFiles', JSON.stringify(this.recentFiles));
+            this.updateRecentFilesUI();
+        } catch (error) {
+            console.error('Error adding to recent files:', error);
+        }
+    }
+
+    updateRecentFilesUI() {
+        const recentFilesList = document.getElementById('recent-files-list');
+        const recentCount = document.getElementById('recent-count');
+        
+        if (!recentFilesList) return;
+
+        // Clear existing content
+        recentFilesList.innerHTML = '';
+
+        if (this.recentFiles.length === 0) {
+            const emptyState = document.createElement('li');
+            emptyState.className = 'empty-state';
+            emptyState.textContent = 'No recent files';
+            recentFilesList.appendChild(emptyState);
+            
+            if (recentCount) {
+                recentCount.style.display = 'none';
+            }
+            return;
+        }
+
+        // Group files
+        const pinnedFiles = this.recentFiles.filter(f => f.isPinned);
+        const recentFiles = this.recentFiles.filter(f => !f.isPinned);
+
+        // Add pinned section
+        if (pinnedFiles.length > 0) {
+            const pinnedSection = this.createRecentFilesSection('Pinned', pinnedFiles, true);
+            recentFilesList.appendChild(pinnedSection);
+        }
+
+        // Add recent section
+        if (recentFiles.length > 0) {
+            const recentSection = this.createRecentFilesSection('Recent', recentFiles, true);
+            recentFilesList.appendChild(recentSection);
+        }
+
+        // Update count badge
+        if (recentCount) {
+            if (this.recentFiles.length > 0) {
+                recentCount.textContent = this.recentFiles.length;
+                recentCount.style.display = 'block';
+            } else {
+                recentCount.style.display = 'none';
+            }
+        }
+    }
+
+    saveRecentFiles() {
+        try {
+            localStorage.setItem('notesWiki_recentFiles', JSON.stringify(this.recentFiles));
+        } catch (error) {
+            console.warn('Failed to save recent files:', error);
+            if (error.name === 'QuotaExceededError') {
+                this.showToast('Could not save recent files - storage quota exceeded', 'error');
+            } else {
+                this.showToast('Could not save recent files - storage may be disabled', 'error');
+            }
+        }
+    }
+
     clearRecentFiles() {
         this.recentFiles = [];
         localStorage.removeItem('notesWiki_recentFiles');
