@@ -8464,15 +8464,24 @@ class NotesWiki {
     loadSettings() {
         try {
             const stored = localStorage.getItem('notesWiki_settings');
+            console.log('[Settings] Loading settings from localStorage...');
+            console.log('[Settings] Stored data:', stored);
+            
             if (stored) {
-                this.settings = { ...this.settings, ...JSON.parse(stored) };
+                const parsedSettings = JSON.parse(stored);
+                console.log('[Settings] Parsed settings:', parsedSettings);
+                this.settings = { ...this.settings, ...parsedSettings };
+                console.log('[Settings] Merged settings:', this.settings);
+                
                 // Restore active context
                 this.activeContext = this.settings.activeContext;
+            } else {
+                console.log('[Settings] No stored settings found, using defaults');
             }
         } catch (error) {
-            console.warn('Failed to load settings from localStorage:', error);
+            console.warn('[Settings] Failed to load settings from localStorage:', error);
             // Continue with default settings
-            // console.log('Using default settings due to localStorage error');
+            console.log('[Settings] Using default settings due to localStorage error');
         }
     }
     
@@ -15354,27 +15363,32 @@ class NotesWiki {
         // Initialize theme system - apply saved theme or default
         try {
             const themeToApply = this.settings.theme || 'tokyo-night';
+            console.log(`[Theme Init] Initializing with theme: ${themeToApply}`);
+            console.log(`[Theme Init] Current settings:`, this.settings);
             this.applyTheme(themeToApply);
         } catch (error) {
-            console.error('Failed to initialize theme:', error);
+            console.error('[Theme Init] Failed to initialize theme:', error);
             // Fallback to default theme
+            console.log('[Theme Init] Falling back to default theme');
             this.applyTheme('tokyo-night');
         }
     }
     
     applyTheme(themeId) {
         try {
+            console.log(`[Theme] Applying theme: ${themeId}`);
+            
             // Get the theme stylesheet element
             const themeStylesheet = document.getElementById('theme-stylesheet');
             if (!themeStylesheet) {
-                console.error('Theme stylesheet element not found');
+                console.error('[Theme] Theme stylesheet element not found');
                 return;
             }
             
             // Validate theme exists
             const themeExists = this.themes.some(theme => theme.id === themeId);
             if (!themeExists) {
-                console.warn(`Theme "${themeId}" not found, using default theme`);
+                console.warn(`[Theme] Theme "${themeId}" not found, using default theme`);
                 themeId = 'tokyo-night';
             }
             
@@ -15383,55 +15397,21 @@ class NotesWiki {
                 `${this.basePath}themes/${themeId}.css` : 
                 `themes/${themeId}.css`;
             
-            // Apply theme with error handling
-            const loadTheme = () => {
-                return new Promise((resolve, reject) => {
-                    const tempLink = document.createElement('link');
-                    tempLink.rel = 'stylesheet';
-                    tempLink.href = themeUrl;
-                    
-                    tempLink.onload = () => {
-                        // Successfully loaded, update main stylesheet
-                        themeStylesheet.href = themeUrl;
-                        document.documentElement.setAttribute('data-theme', themeId);
-                        
-                        // Update settings
-                        this.settings.theme = themeId;
-                        
-                        // Clean up temp element
-                        if (tempLink.parentNode) {
-                            tempLink.parentNode.removeChild(tempLink);
-                        }
-                        
-                        resolve();
-                    };
-                    
-                    tempLink.onerror = () => {
-                        console.error(`Failed to load theme: ${themeId}`);
-                        // Clean up temp element
-                        if (tempLink.parentNode) {
-                            tempLink.parentNode.removeChild(tempLink);
-                        }
-                        reject(new Error(`Theme file not found: ${themeUrl}`));
-                    };
-                    
-                    // Add to DOM to trigger loading
-                    document.head.appendChild(tempLink);
-                });
-            };
+            console.log(`[Theme] Loading theme URL: ${themeUrl}`);
             
-            // Load the theme
-            loadTheme().catch(error => {
-                console.error('Theme loading failed:', error);
-                // Don't try fallback if already using default
-                if (themeId !== 'tokyo-night') {
-                    console.log('Falling back to default theme');
-                    this.applyTheme('tokyo-night');
-                }
-            });
+            // Direct approach - update the stylesheet href immediately
+            themeStylesheet.href = themeUrl;
+            
+            // Set theme data attribute
+            document.documentElement.setAttribute('data-theme', themeId);
+            
+            // Update settings
+            this.settings.theme = themeId;
+            
+            console.log(`[Theme] Theme applied successfully: ${themeId}`);
             
         } catch (error) {
-            console.error('Error in applyTheme:', error);
+            console.error('[Theme] Error in applyTheme:', error);
         }
     }
 }
