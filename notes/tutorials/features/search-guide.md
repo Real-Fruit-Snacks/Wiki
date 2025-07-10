@@ -69,6 +69,34 @@ author:"John Doe"
 author:System
 ```
 
+### Code Content Filtering
+Use `code:` to find notes with code content:
+
+```
+code:javascript
+code:python
+code:css
+code:any
+```
+
+**Examples:**
+- `code:javascript` - Notes containing JavaScript code or mentioning JavaScript
+- `code:any` - Notes that contain any code blocks
+- `code:sql` - Notes with SQL code or database content
+
+### Status & Category Filtering
+Use `status:` and `category:` for organizational filtering:
+
+```
+status:draft
+status:published  
+status:review
+category:tutorial
+category:reference
+```
+
+**Note:** These operators work with notes that have populated `status` and `category` metadata fields.
+
 ### Combining Operators
 Create powerful queries by combining operators:
 
@@ -76,14 +104,16 @@ Create powerful queries by combining operators:
 tag:javascript "async await" -promise
 author:"Wiki Admin" tag:demo -test
 "code blocks" tag:tutorial -basic
+code:javascript tag:tutorial status:published
+code:any -tag:test category:guide
 ```
 
 ## 🏷️ Tag-Based Filtering
 
 ### Tag Filter Interface
-- Click **Filter** button or press <kbd>Ctrl</kbd>+<kbd>F</kbd>
+- Click the **Tags** button (🏷️) in the header
 - Select multiple tags for filtering
-- Choose between OR/AND logic
+- Choose between OR/AND logic using the mode toggle
 
 ### Tag Logic
 Tag filtering uses simple matching:
@@ -147,10 +177,12 @@ author:System "2025"
 Find programming content:
 
 ```
-"```javascript" tag:demo
-"code block" "line numbers"
+code:javascript tag:tutorial
+code:python "function"
+code:any tag:demo
 "syntax highlighting" -test
 tag:css "theme" "color"
+code:sql "database"
 ```
 
 ### Documentation Searches

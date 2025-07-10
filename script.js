@@ -4289,6 +4289,7 @@ class NotesWiki {
             author: null,
             status: null,
             category: null,
+            code: null,
             basic: []
         };
         
@@ -4334,6 +4335,13 @@ class NotesWiki {
             query = query.replace(/category:\S+/g, '');
         }
         
+        // Extract code filter
+        const codeMatch = query.match(/code:(\S+)/);
+        if (codeMatch) {
+            parsed.code = codeMatch[1].toLowerCase();
+            query = query.replace(/code:\S+/g, '');
+        }
+        
         // Remaining terms are basic search terms
         parsed.basic = query.trim().toLowerCase().split(/\s+/).filter(t => t);
         
@@ -4346,6 +4354,7 @@ class NotesWiki {
         const itemAuthor = item.author.toLowerCase();
         const itemStatus = (item.status || '').toLowerCase();
         const itemCategory = (item.category || '').toLowerCase();
+        const itemCodeBlocksCount = item.codeBlocksCount || 0;
         
         // Check excluded terms first
         for (const excluded of parsedQuery.excluded) {
@@ -4373,14 +4382,30 @@ class NotesWiki {
             return false;
         }
         
-        // Check status filter
-        if (parsedQuery.status && itemStatus !== parsedQuery.status) {
+        // Check status filter (improved to allow partial matches)
+        if (parsedQuery.status && !itemStatus.includes(parsedQuery.status)) {
             return false;
         }
         
-        // Check category filter
-        if (parsedQuery.category && itemCategory !== parsedQuery.category) {
+        // Check category filter (improved to allow partial matches)
+        if (parsedQuery.category && !itemCategory.includes(parsedQuery.category)) {
             return false;
+        }
+        
+        // Check code filter
+        if (parsedQuery.code) {
+            const codeQuery = parsedQuery.code;
+            // Check for specific code language or "any" for notes with code blocks
+            if (codeQuery === 'any') {
+                if (itemCodeBlocksCount === 0) {
+                    return false;
+                }
+            } else {
+                // Search for specific language or code-related terms in content
+                if (!searchText.includes(codeQuery) && itemCodeBlocksCount === 0) {
+                    return false;
+                }
+            }
         }
         
         // Check basic terms (all must match)

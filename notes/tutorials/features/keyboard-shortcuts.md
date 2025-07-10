@@ -23,8 +23,9 @@ The Notes Wiki includes keyboard shortcuts to boost your productivity. Press <kb
 | Shortcut | Action | Description |
 |----------|--------|-------------|
 | <kbd>Ctrl</kbd>+<kbd>K</kbd> | Search | Open global search (Mac: <kbd>⌘</kbd>+<kbd>K</kbd>) |
-| <kbd>Ctrl</kbd>+<kbd>F</kbd> | Filter by tags | Open tag filtering interface (Mac: <kbd>⌘</kbd>+<kbd>F</kbd>) |
 | <kbd>Ctrl</kbd>+<kbd>D</kbd> | Bookmark note | Bookmark the current note (Mac: <kbd>⌘</kbd>+<kbd>D</kbd>) |
+
+**Note**: <kbd>Ctrl</kbd>+<kbd>F</kbd> opens the browser's native find-in-page function. Tag filtering is accessed via the Tags button (🏷️) in the header.
 
 ## 📑 Tab Management
 

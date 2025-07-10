@@ -13,12 +13,11 @@ Tag filtering is a powerful way to quickly narrow down your notes to specific to
 
 ## Opening the Tag Filter
 
-Access the tag filter in two ways:
+Access the tag filter by:
 
-1. **Keyboard Shortcut**: Press `Ctrl + F`
-2. **Tag Filter Button**: Click the tag icon (🏷️) in the header
+1. **Tag Filter Button**: Click the tag icon (🏷️) in the header
 
-This opens the visual tag filter modal showing all available tags.
+This opens the visual tag filter modal showing all available tags with search and filtering options.
 
 ## Understanding the Tag Filter Interface
 
@@ -200,10 +199,11 @@ Organize tags by purpose:
 
 | Action | Shortcut |
 |--------|----------|
-| Open Tag Filter | `Ctrl + F` |
 | Clear and Close | `Escape` |
 | Toggle Tag | `Click` |
 | Exclude Tag | `Right-click` or `Ctrl + Click` |
+
+**Note**: Tag filtering is accessed via the tag button (🏷️) in the header - no keyboard shortcut is available.
 
 ## Related Features
 
