@@ -54,7 +54,7 @@ The Notes Wiki includes keyboard shortcuts to boost your productivity. Press <kb
 | Shortcut | Action | Description |
 |----------|--------|-------------|
 | <kbd>Ctrl</kbd>+<kbd>,</kbd> | Open settings | Access all application settings (Mac: <kbd>⌘</kbd>+<kbd>,</kbd>) |
-| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> | Create sticky note | Create a new floating sticky note (Mac: <kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd>) |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> | Toggle Quick Notes panel | Open/close the Quick Notes panel (Mac: <kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd>) |
 | <kbd>Ctrl</kbd>+<kbd>/</kbd> | Toggle split view | Enable/disable split view mode (Mac: <kbd>⌘</kbd>+<kbd>/</kbd>) |
 
 ## 💡 Tips

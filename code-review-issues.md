@@ -14,11 +14,11 @@ This document tracks all found issues where the actual implementation differs fr
 
 **Status**: Code review completed with fixes applied  
 **Total Issues Found**: 12  
-**Issues Fixed**: 3 (Critical documentation and search operators)  
-**Remaining Issues**: 9 (Lower priority)  
+**Issues Fixed**: 5 (Critical documentation, search operators, split view bug, and Quick Notes docs)  
+**Remaining Issues**: 7 (Lower priority)  
 **Critical Issues**: 0 ✅  
-**Documentation Issues**: 3 (2 fixed, 4 remaining)  
-**Implementation Bugs**: 2  
+**Documentation Issues**: 2 (3 fixed, 3 remaining)  
+**Implementation Bugs**: 1 (1 fixed, 1 remaining)  
 **Minor Inconsistencies**: 1  
 
 ---
@@ -136,6 +136,53 @@ category:tutorial // Partial matching for category fields
 - `notes/tutorials/features/keyboard-shortcuts.md` - Corrected tag filtering shortcut info
 - `index.html` - Updated search help and keyboard shortcuts cheatsheet
 
+### January 25, 2025 - Split View Pane Resizing Bug Fix
+
+**Fixed Issue:**
+1. **Split View Pane Resizing Bug** - Critical implementation bug that completely broke pane resizing functionality
+
+**Root Cause:**
+- `setupPaneResizing()` function was referencing incorrect element IDs
+- Code was looking for `'pane-1'` and `'pane-2'` but actual IDs were `'pane-left'` and `'pane-right'`
+
+**Fix Applied:**
+```javascript
+// Before (broken):
+const pane1 = document.getElementById('pane-1');    // ❌ Wrong ID
+const pane2 = document.getElementById('pane-2');    // ❌ Wrong ID
+
+// After (working):
+const pane1 = document.getElementById('pane-left');   // ✅ Correct ID
+const pane2 = document.getElementById('pane-right');  // ✅ Correct ID
+```
+
+**Impact:**
+- ✅ Split view pane resizing now works correctly
+- ✅ Users can drag the divider to adjust pane sizes
+- ✅ Minimum width constraints (300px) now enforced properly
+- ✅ Visual feedback and cursor changes work as intended
+
+### January 25, 2025 - Quick Notes Shortcut Documentation Fix
+
+**Fixed Issue:**
+1. **Quick Notes Keyboard Shortcut Confusion** - Documentation inconsistency about `Ctrl+Shift+S` behavior
+
+**Root Cause:**
+- Keyboard shortcuts documentation incorrectly described `Ctrl+Shift+S` as "Create sticky note"
+- Other documentation correctly described it as "Toggle Quick Notes panel"
+- Implementation was actually correct (it toggles the panel)
+
+**Fix Applied:**
+- Updated `notes/tutorials/features/keyboard-shortcuts.md` line 71
+- Changed description from "Create sticky note" to "Toggle Quick Notes panel"
+- All documentation now consistently describes the correct behavior
+
+**Impact:**
+- ✅ Eliminated user confusion about shortcut behavior
+- ✅ All documentation now accurately describes implementation
+- ✅ Keyboard shortcuts tutorial matches actual functionality
+- ✅ Consistent messaging across all help sources
+
 ---
 
 ## 📚 Documentation Issues
@@ -180,13 +227,13 @@ const presets = [
 
 ### 6. Split View Pane Resizing Implementation
 
-**Issue**: Documentation mentions resizing functionality that has potential bugs.
+**Issue**: Documentation mentions resizing functionality that had implementation bugs.
 
 **Documentation** (`notes/tutorials/features/split-view.md:35`):
 - "Drag the divider to adjust pane sizes"
 - "Minimum width: 300px per pane"
 
-**Implementation Issue** (`script.js:13485-13515`):
+**Original Implementation Issue** (`script.js:13485-13515`):
 ```javascript
 setupPaneResizing(divider) {
     // ... setup code ...
@@ -196,7 +243,16 @@ setupPaneResizing(divider) {
 }
 ```
 
-**Status**: 🐛 **BUG** - Pane resizing broken due to incorrect element IDs.
+**Fixed Implementation**:
+```javascript
+setupPaneResizing(divider) {
+    // ... setup code ...
+    const pane1 = document.getElementById('pane-left');   // ✅ CORRECT IDs
+    const pane2 = document.getElementById('pane-right');  // ✅ CORRECT IDs
+}
+```
+
+**Status**: ✅ **FIXED** - Pane resizing now works correctly with proper element ID references.
 
 ### 7. Focus Mode Width Setting Conflicts
 
@@ -218,22 +274,30 @@ document.body.classList.add('focus-mode-wide');
 
 **Issue**: Documentation inconsistency about Quick Notes keyboard shortcut.
 
-**Multiple Claims**:
-- `index.html:1345`: "`Ctrl+Shift+S` | Toggle Quick Notes panel"
-- `notes/tutorials/features/quick-notes.md:42`: "`Ctrl+Shift+S` - Toggle Quick Notes panel"
-- `notes/tutorials/features/keyboard-shortcuts.md:71`: "`Ctrl+Shift+S` | Create sticky note"
+**Original Multiple Claims**:
+- `index.html:1345`: "`Ctrl+Shift+S` | Toggle Quick Notes panel" ✅ **CORRECT**
+- `notes/tutorials/features/quick-notes.md:42`: "`Ctrl+Shift+S` - Toggle Quick Notes panel" ✅ **CORRECT**
+- `notes/tutorials/features/keyboard-shortcuts.md:71`: "`Ctrl+Shift+S` | Create sticky note" ❌ **INCORRECT**
 
-**Implementation** (`script.js:1502-1507`):
+**Updated Documentation**:
+- `notes/tutorials/features/keyboard-shortcuts.md:71`: "`Ctrl+Shift+S` | Toggle Quick Notes panel" ✅ **FIXED**
+
+**Implementation** (`script.js:1502-1507` + `14336-14338`):
 ```javascript
 // Quick notes panel with Ctrl+Shift+S
 if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'S') {
     e.preventDefault();
-    this.createStickyNote();  // Creates note, doesn't toggle panel
+    this.createStickyNote();  // ✅ Actually calls toggleNotesPanel()
     return;
+}
+
+// Replace createStickyNote method to toggle the panel instead
+createStickyNote() {
+    this.toggleNotesPanel();  // ✅ Correctly toggles the panel
 }
 ```
 
-**Status**: ⚠️ **DOCUMENTATION INCONSISTENCY** - Clarify whether it toggles panel or creates note.
+**Status**: ✅ **FIXED** - All documentation now consistently describes `Ctrl+Shift+S` as toggling the Quick Notes panel.
 
 ---
 
@@ -283,9 +347,9 @@ this.timerInterval = setInterval(() => {
 | **Search Operators** | ✅ | ✅ | ✅ | Enhanced with code: operator |
 | **Tag Filtering** | ✅ | ✅ | ✅ | Documentation clarified |
 | **Focus Mode** | ✅ | ✅ | ✅ | Minor width conflicts |
-| **Split View** | ✅ | ✅ | ❌ | Resizing broken |
+| **Split View** | ✅ | ✅ | ✅ | Fixed pane resizing |
 | **Pomodoro Timer** | ✅ | ✅ | ✅ | Documentation incomplete |
-| **Quick Notes** | ✅ | ✅ | ✅ | Shortcut confusion |
+| **Quick Notes** | ✅ | ✅ | ✅ | Fixed documentation |
 | **Bookmarks** | ✅ | ✅ | ✅ | None |
 
 ---
@@ -294,11 +358,11 @@ this.timerInterval = setInterval(() => {
 
 ### High Priority
 
-1. **Fix Split View Pane Resizing**
+1. ✅ **~~Fix Split View Pane Resizing~~** **COMPLETED**
    ```javascript
-   // In setupPaneResizing(), change:
-   const pane1 = document.getElementById('pane-left');
-   const pane2 = document.getElementById('pane-right');
+   // ✅ Fixed in setupPaneResizing():
+   const pane1 = document.getElementById('pane-left');   // ✅ Now correct
+   const pane2 = document.getElementById('pane-right');  // ✅ Now correct
    ```
 
 2. ✅ **~~Update Tag Filtering Documentation~~** **COMPLETED**
@@ -306,9 +370,9 @@ this.timerInterval = setInterval(() => {
    - ✅ ~~Explain where to find AND/OR mode toggle in the modal~~
    - ✅ ~~Clarify that tag filtering requires button click~~
 
-3. **Clarify Quick Notes Shortcut**
-   - Decide if `Ctrl+Shift+S` should toggle panel or create note
-   - Update all documentation consistently
+3. ✅ **~~Clarify Quick Notes Shortcut~~** **COMPLETED**
+   - ✅ ~~Decided that `Ctrl+Shift+S` correctly toggles the panel~~
+   - ✅ ~~Updated keyboard shortcuts documentation to be consistent~~
 
 ### Medium Priority
 

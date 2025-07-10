@@ -13524,8 +13524,8 @@ class NotesWiki {
             const deltaX = e.clientX - startX;
             const splitContainer = document.querySelector('.split-container');
             const containerWidth = splitContainer ? splitContainer.offsetWidth : 800;
-            const pane1 = document.getElementById('pane-1');
-            const pane2 = document.getElementById('pane-2');
+            const pane1 = document.getElementById('pane-left');
+            const pane2 = document.getElementById('pane-right');
             
             if (!pane1 || !pane2) return;
             
