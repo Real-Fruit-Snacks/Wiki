@@ -12866,7 +12866,6 @@ class NotesWiki {
         // Update navigation shortcuts
         document.getElementById('shortcut-new-tab').textContent = shortcuts['new-tab'] || 'Ctrl+T';
         document.getElementById('shortcut-search').textContent = shortcuts['search'] || 'Ctrl+K';
-        document.getElementById('shortcut-filter').textContent = shortcuts['filter'] || 'Not assigned';
         document.getElementById('shortcut-settings').textContent = shortcuts['settings'] || 'Ctrl+,';
         document.getElementById('shortcut-bookmark').textContent = shortcuts['bookmark'] || 'Ctrl+D';
     }
