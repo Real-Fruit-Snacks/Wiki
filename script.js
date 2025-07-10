@@ -1418,6 +1418,9 @@ class NotesWiki {
             this.saveSettings();
             this.showToast('Sound notifications ' + (e.target.checked ? 'enabled' : 'disabled'));
         });
+
+        // Banner settings event handlers
+        this.initializeBannerSettings();
         
         // Clear history button (if it exists in the HTML)
         const clearHistoryButton = document.getElementById('clear-history-button');
@@ -2565,8 +2568,10 @@ class NotesWiki {
         const html = marked.parse(content);
         
         // Build note HTML
+        const bannerHtml = this.renderBanner();
         mainContent.innerHTML = `
             <div class="content-wrapper content-view">
+                ${bannerHtml}
                 <header class="note-header">
                     <div class="note-title-row">
                         <h1 class="note-title">${this.escapeHtml(metadata.title || 'Untitled')}</h1>
@@ -2983,7 +2988,17 @@ class NotesWiki {
             pomodoroWorkDuration: 25,
             pomodoroBreakDuration: 5,
             pomodoroLongBreakDuration: 15,
-            pomodoroCyclesBeforeLongBreak: 4
+            pomodoroCyclesBeforeLongBreak: 4,
+            // Banner settings
+            bannerEnabled: false,
+            bannerText: 'Important Notice',
+            bannerBackgroundColor: '#ffeb3b',
+            bannerTextColor: '#000000',
+            bannerFontSize: 'normal',
+            bannerPadding: 'normal',
+            bannerBorderRadius: 'normal',
+            bannerPosition: 'top',
+            bannerStyle: 'solid'
         };
     }
     
@@ -11826,6 +11841,18 @@ class NotesWiki {
         updateCheckbox('pomodoro-auto-start-work', this.settings.pomodoroAutoStartWork);
         updateCheckbox('pomodoro-notifications', this.settings.pomodoroNotifications);
         
+        // Banner settings
+        updateCheckbox('banner-enabled', this.settings.bannerEnabled);
+        
+        const bannerTextInput = document.getElementById('banner-text');
+        if (bannerTextInput) bannerTextInput.value = this.settings.bannerText;
+        
+        const bannerBgColorInput = document.getElementById('banner-background-color');
+        if (bannerBgColorInput) bannerBgColorInput.value = this.settings.bannerBackgroundColor;
+        
+        const bannerTextColorInput = document.getElementById('banner-text-color');
+        if (bannerTextColorInput) bannerTextColorInput.value = this.settings.bannerTextColor;
+        
         updateSelect('content-width', this.settings.contentWidth);
         updateSelect('font-family', this.settings.fontFamily);
         updateSelect('quick-notes-position', this.settings.quickNotesPosition);
@@ -11835,6 +11862,13 @@ class NotesWiki {
         updateRange('pomodoro-break-duration', this.settings.pomodoroBreakDuration);
         updateRange('pomodoro-long-break-duration', this.settings.pomodoroLongBreakDuration);
         updateRange('pomodoro-cycles-before-long-break', this.settings.pomodoroCyclesBeforeLongBreak);
+        
+        // Update banner option pills
+        this.updateBannerOptionPills('banner-style-options', this.settings.bannerStyle);
+        this.updateBannerOptionPills('banner-font-size-options', this.settings.bannerFontSize);
+        this.updateBannerOptionPills('banner-padding-options', this.settings.bannerPadding);
+        this.updateBannerOptionPills('banner-border-radius-options', this.settings.bannerBorderRadius);
+        this.updateBannerOptionPills('banner-position-options', this.settings.bannerPosition);
         
         // Re-populate theme cards to reflect current theme
         this.populateThemeCards();
@@ -12868,6 +12902,243 @@ class NotesWiki {
         document.getElementById('shortcut-search').textContent = shortcuts['search'] || 'Ctrl+K';
         document.getElementById('shortcut-settings').textContent = shortcuts['settings'] || 'Ctrl+,';
         document.getElementById('shortcut-bookmark').textContent = shortcuts['bookmark'] || 'Ctrl+D';
+    }
+
+    renderBanner() {
+        if (!this.settings.bannerEnabled || !this.settings.bannerText.trim()) {
+            return '';
+        }
+
+        const {
+            bannerText,
+            bannerBackgroundColor,
+            bannerTextColor,
+            bannerFontSize,
+            bannerPadding,
+            bannerBorderRadius,
+            bannerPosition,
+            bannerStyle
+        } = this.settings;
+
+        // Generate CSS classes and styles
+        const classes = [
+            'note-banner',
+            `banner-${bannerStyle}`,
+            `banner-font-${bannerFontSize}`,
+            `banner-padding-${bannerPadding}`,
+            `banner-radius-${bannerBorderRadius}`,
+            `banner-position-${bannerPosition}`
+        ].join(' ');
+
+        // Build inline styles
+        let styles = `color: ${bannerTextColor};`;
+        
+        if (bannerStyle === 'solid') {
+            styles += `background-color: ${bannerBackgroundColor};`;
+        } else if (bannerStyle === 'gradient') {
+            const color = bannerBackgroundColor;
+            // Create a subtle gradient effect
+            styles += `background: linear-gradient(135deg, ${color}, ${this.adjustColorBrightness(color, -10)});`;
+        } else if (bannerStyle === 'outline') {
+            styles += `border: 2px solid ${bannerBackgroundColor}; background-color: transparent;`;
+        } else if (bannerStyle === 'minimal') {
+            styles += `background-color: ${this.adjustColorOpacity(bannerBackgroundColor, 0.1)}; border-left: 4px solid ${bannerBackgroundColor};`;
+        }
+
+        return `
+            <div class="${classes}" style="${styles}">
+                <div class="banner-content">
+                    <span class="banner-text">${this.escapeHtml(bannerText)}</span>
+                </div>
+            </div>
+        `;
+    }
+
+    adjustColorBrightness(color, amount) {
+        // Convert hex to RGB
+        const num = parseInt(color.replace('#', ''), 16);
+        const r = Math.max(0, Math.min(255, (num >> 16) + amount));
+        const g = Math.max(0, Math.min(255, (num >> 8 & 0x00FF) + amount));
+        const b = Math.max(0, Math.min(255, (num & 0x0000FF) + amount));
+        return `#${(r << 16 | g << 8 | b).toString(16).padStart(6, '0')}`;
+    }
+
+    adjustColorOpacity(color, opacity) {
+        // Convert hex to RGBA
+        const num = parseInt(color.replace('#', ''), 16);
+        const r = num >> 16;
+        const g = num >> 8 & 0x00FF;
+        const b = num & 0x0000FF;
+        return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+    }
+
+    initializeBannerSettings() {
+        // Banner enable/disable toggle
+        const bannerEnabledCheckbox = document.getElementById('banner-enabled');
+        if (bannerEnabledCheckbox) {
+            bannerEnabledCheckbox.addEventListener('change', (e) => {
+                this.settings.bannerEnabled = e.target.checked;
+                this.toggleBannerSettings(e.target.checked);
+                this.updateBannerPreview();
+                this.saveSettings();
+                this.renderCurrentNote(); // Re-render current note
+                this.showToast(e.target.checked ? 'Banner enabled' : 'Banner disabled');
+            });
+        }
+
+        // Banner text input
+        const bannerTextInput = document.getElementById('banner-text');
+        if (bannerTextInput) {
+            bannerTextInput.addEventListener('input', (e) => {
+                this.settings.bannerText = e.target.value;
+                this.updateBannerPreview();
+                this.saveSettings();
+                if (this.settings.bannerEnabled) {
+                    this.renderCurrentNote();
+                }
+            });
+        }
+
+        // Banner color inputs
+        const bannerBgColorInput = document.getElementById('banner-background-color');
+        if (bannerBgColorInput) {
+            bannerBgColorInput.addEventListener('change', (e) => {
+                this.settings.bannerBackgroundColor = e.target.value;
+                this.updateBannerPreview();
+                this.saveSettings();
+                if (this.settings.bannerEnabled) {
+                    this.renderCurrentNote();
+                }
+            });
+        }
+
+        const bannerTextColorInput = document.getElementById('banner-text-color');
+        if (bannerTextColorInput) {
+            bannerTextColorInput.addEventListener('change', (e) => {
+                this.settings.bannerTextColor = e.target.value;
+                this.updateBannerPreview();
+                this.saveSettings();
+                if (this.settings.bannerEnabled) {
+                    this.renderCurrentNote();
+                }
+            });
+        }
+
+        // Banner style options
+        this.initializeBannerOptionPills('banner-style-options', 'bannerStyle');
+        this.initializeBannerOptionPills('banner-font-size-options', 'bannerFontSize');
+        this.initializeBannerOptionPills('banner-padding-options', 'bannerPadding');
+        this.initializeBannerOptionPills('banner-border-radius-options', 'bannerBorderRadius');
+        this.initializeBannerOptionPills('banner-position-options', 'bannerPosition');
+
+        // Initialize visibility and preview
+        this.toggleBannerSettings(this.settings.bannerEnabled);
+        this.updateBannerPreview();
+    }
+
+    initializeBannerOptionPills(containerId, settingKey) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        const pills = container.querySelectorAll('.option-pill');
+        pills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                // Remove active class from siblings
+                pills.forEach(p => p.classList.remove('active'));
+                // Add active class to clicked pill
+                pill.classList.add('active');
+                
+                // Update setting
+                this.settings[settingKey] = pill.dataset.value;
+                this.updateBannerPreview();
+                this.saveSettings();
+                
+                if (this.settings.bannerEnabled) {
+                    this.renderCurrentNote();
+                }
+            });
+        });
+
+        // Set initial active state
+        const currentValue = this.settings[settingKey];
+        const activePill = container.querySelector(`[data-value="${currentValue}"]`);
+        if (activePill) {
+            pills.forEach(p => p.classList.remove('active'));
+            activePill.classList.add('active');
+        }
+    }
+
+    toggleBannerSettings(enabled) {
+        const bannerSettings = document.querySelectorAll('.banner-setting');
+        bannerSettings.forEach(setting => {
+            setting.style.display = enabled ? 'flex' : 'none';
+        });
+    }
+
+    updateBannerPreview() {
+        const preview = document.getElementById('banner-preview');
+        const previewText = document.querySelector('.banner-preview-text');
+        
+        if (!preview || !previewText) return;
+
+        const {
+            bannerText,
+            bannerBackgroundColor,
+            bannerTextColor,
+            bannerFontSize,
+            bannerPadding,
+            bannerBorderRadius,
+            bannerStyle
+        } = this.settings;
+
+        // Update preview text
+        previewText.textContent = bannerText || 'Important Notice';
+
+        // Reset classes
+        preview.className = 'banner-preview';
+        
+        // Add style classes
+        preview.classList.add(
+            `banner-${bannerStyle}`,
+            `banner-font-${bannerFontSize}`,
+            `banner-padding-${bannerPadding}`,
+            `banner-radius-${bannerBorderRadius}`
+        );
+
+        // Apply inline styles
+        let styles = `color: ${bannerTextColor};`;
+        
+        if (bannerStyle === 'solid') {
+            styles += `background-color: ${bannerBackgroundColor};`;
+        } else if (bannerStyle === 'gradient') {
+            styles += `background: linear-gradient(135deg, ${bannerBackgroundColor}, ${this.adjustColorBrightness(bannerBackgroundColor, -10)});`;
+        } else if (bannerStyle === 'outline') {
+            styles += `border: 2px solid ${bannerBackgroundColor}; background-color: transparent;`;
+        } else if (bannerStyle === 'minimal') {
+            styles += `background-color: ${this.adjustColorOpacity(bannerBackgroundColor, 0.1)}; border-left: 4px solid ${bannerBackgroundColor};`;
+        }
+
+        preview.style.cssText = styles;
+    }
+
+    renderCurrentNote() {
+        // Re-render the current note if one is loaded
+        if (this.currentNote) {
+            this.renderNote();
+        }
+    }
+
+    updateBannerOptionPills(containerId, currentValue) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        const pills = container.querySelectorAll('.option-pill');
+        pills.forEach(pill => {
+            pill.classList.remove('active');
+            if (pill.dataset.value === currentValue) {
+                pill.classList.add('active');
+            }
+        });
     }
     
     showConfirmation(title, message, onConfirm) {

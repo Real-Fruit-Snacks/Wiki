@@ -636,6 +636,131 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <!-- Banner Settings -->
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Note Banner</div>
+                                    <div class="setting-description">Display a customizable banner at the top of every note</div>
+                                </div>
+                                <div class="setting-control">
+                                    <label class="toggle">
+                                        <input type="checkbox" id="banner-enabled">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item banner-setting" id="banner-text-setting" style="display: none;">
+                                <div class="setting-info">
+                                    <div class="setting-name">Banner Text</div>
+                                    <div class="setting-description">The message to display in the banner</div>
+                                </div>
+                                <div class="setting-control">
+                                    <input type="text" class="input-control" id="banner-text" placeholder="Enter banner message..." maxlength="200">
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item banner-setting" id="banner-colors-setting" style="display: none;">
+                                <div class="setting-info">
+                                    <div class="setting-name">Banner Colors</div>
+                                    <div class="setting-description">Customize banner background and text colors</div>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="color-controls">
+                                        <div class="color-control">
+                                            <label for="banner-background-color">Background:</label>
+                                            <input type="color" id="banner-background-color" value="#ffeb3b">
+                                        </div>
+                                        <div class="color-control">
+                                            <label for="banner-text-color">Text:</label>
+                                            <input type="color" id="banner-text-color" value="#000000">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item banner-setting" id="banner-style-setting" style="display: none;">
+                                <div class="setting-info">
+                                    <div class="setting-name">Banner Style</div>
+                                    <div class="setting-description">Choose the visual style of the banner</div>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="option-pills" id="banner-style-options">
+                                        <button class="option-pill active" data-value="solid">Solid</button>
+                                        <button class="option-pill" data-value="gradient">Gradient</button>
+                                        <button class="option-pill" data-value="outline">Outline</button>
+                                        <button class="option-pill" data-value="minimal">Minimal</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item banner-setting" id="banner-size-setting" style="display: none;">
+                                <div class="setting-info">
+                                    <div class="setting-name">Banner Size</div>
+                                    <div class="setting-description">Adjust banner font size and padding</div>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="banner-size-controls">
+                                        <div class="size-control">
+                                            <label>Font Size:</label>
+                                            <div class="option-pills" id="banner-font-size-options">
+                                                <button class="option-pill" data-value="small">Small</button>
+                                                <button class="option-pill active" data-value="normal">Normal</button>
+                                                <button class="option-pill" data-value="large">Large</button>
+                                            </div>
+                                        </div>
+                                        <div class="size-control">
+                                            <label>Padding:</label>
+                                            <div class="option-pills" id="banner-padding-options">
+                                                <button class="option-pill" data-value="compact">Compact</button>
+                                                <button class="option-pill active" data-value="normal">Normal</button>
+                                                <button class="option-pill" data-value="spacious">Spacious</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item banner-setting" id="banner-shape-setting" style="display: none;">
+                                <div class="setting-info">
+                                    <div class="setting-name">Banner Shape</div>
+                                    <div class="setting-description">Corner radius and position options</div>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="banner-shape-controls">
+                                        <div class="shape-control">
+                                            <label>Corners:</label>
+                                            <div class="option-pills" id="banner-border-radius-options">
+                                                <button class="option-pill" data-value="sharp">Sharp</button>
+                                                <button class="option-pill active" data-value="normal">Normal</button>
+                                                <button class="option-pill" data-value="rounded">Rounded</button>
+                                            </div>
+                                        </div>
+                                        <div class="shape-control">
+                                            <label>Position:</label>
+                                            <div class="option-pills" id="banner-position-options">
+                                                <button class="option-pill active" data-value="top">Top</button>
+                                                <button class="option-pill" data-value="bottom">Bottom</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item banner-setting" id="banner-preview-setting" style="display: none;">
+                                <div class="setting-info">
+                                    <div class="setting-name">Banner Preview</div>
+                                    <div class="setting-description">Preview how your banner will look</div>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="banner-preview-container">
+                                        <div class="banner-preview" id="banner-preview">
+                                            <span class="banner-preview-text">Important Notice</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
                         <!-- Files & History section -->

@@ -8197,3 +8197,204 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
         justify-content: center;
     }
 }
+
+/* ===== BANNER STYLES ===== */
+
+/* Note Banner */
+.note-banner {
+    margin: 0 0 1.5rem 0;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.note-banner .banner-content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.note-banner .banner-text {
+    text-align: center;
+    line-height: 1.4;
+}
+
+/* Banner positions */
+.banner-position-bottom {
+    order: 10;
+    margin: 1.5rem 0 0 0;
+}
+
+/* Banner styles */
+.banner-solid {
+    /* Background set via inline styles */
+}
+
+.banner-gradient {
+    /* Background set via inline styles */
+}
+
+.banner-outline {
+    background-color: transparent;
+    /* Border set via inline styles */
+}
+
+.banner-minimal {
+    /* Background and border set via inline styles */
+    padding-left: 1.5rem;
+}
+
+/* Banner font sizes */
+.banner-font-small .banner-text {
+    font-size: 0.875rem;
+}
+
+.banner-font-normal .banner-text {
+    font-size: 1rem;
+}
+
+.banner-font-large .banner-text {
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+/* Banner padding */
+.banner-padding-compact {
+    padding: 0.5rem 1rem;
+}
+
+.banner-padding-normal {
+    padding: 1rem;
+}
+
+.banner-padding-spacious {
+    padding: 1.5rem;
+}
+
+/* Banner border radius */
+.banner-radius-sharp {
+    border-radius: 0;
+}
+
+.banner-radius-normal {
+    border-radius: 0.5rem;
+}
+
+.banner-radius-rounded {
+    border-radius: 1rem;
+}
+
+/* Banner Settings UI */
+.banner-setting {
+    display: none;
+}
+
+.color-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.color-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.color-control label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-color);
+    min-width: 4rem;
+}
+
+.color-control input[type="color"] {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    background: none;
+    padding: 0;
+}
+
+.color-control input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+    border-radius: 0.25rem;
+}
+
+.color-control input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 0.25rem;
+}
+
+.banner-size-controls,
+.banner-shape-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.size-control,
+.shape-control {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.size-control label,
+.shape-control label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+/* Banner Preview */
+.banner-preview-container {
+    width: 100%;
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+.banner-preview {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: #ffeb3b;
+    color: #000000;
+    text-align: center;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.banner-preview-text {
+    display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .color-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    
+    .note-banner {
+        margin: 0 0 1rem 0;
+    }
+    
+    .banner-position-bottom {
+        margin: 1rem 0 0 0;
+    }
+    
+    .banner-padding-spacious {
+        padding: 1rem;
+    }
+}
+
+/* ===== END BANNER STYLES ===== */
