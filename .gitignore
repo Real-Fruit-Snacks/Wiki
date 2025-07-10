@@ -10,6 +10,9 @@ public/
 dist/
 build/
 
+# Generated files
+notes-index.json
+
 # Development and testing
 *.log
 *.tmp
@@ -65,3 +68,7 @@ local/
 .cache/
 .temp/
 temp/
+
+# Development artifacts
+*.backup
+*.orig
