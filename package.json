@@ -6,8 +6,8 @@
   "scripts": {
     "test": "node test-puppeteer.js",
     "test:debug": "node test-puppeteer.js --debug",
-    "build": "python3 build.py",
-    "serve": "python3 -m http.server 8000",
+    "build": "python build.py",
+    "serve": "python -m http.server 8000",
     "validate": "node -c script.js",
     "validate-themes": "node validate-themes.js",
     "validate-all": "npm run validate && npm run validate-themes",
