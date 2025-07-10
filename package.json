@@ -1,7 +1,7 @@
 {
   "name": "notes-wiki",
   "version": "4.0.6",
-  "description": "Self-contained offline wiki with 150+ themes, multi-tab interface, and advanced search",
+  "description": "Self-contained offline wiki with 74 themes, multi-tab interface, and advanced search",
   "main": "script.js",
   "scripts": {
     "test": "node test-puppeteer.js",

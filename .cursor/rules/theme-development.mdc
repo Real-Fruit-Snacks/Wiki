@@ -1,0 +1,65 @@
+---
+globs: "themes/*.css,style.css"
+---
+
+# Theme Development Guidelines
+
+## Theme System Architecture
+
+The wiki supports 74 themes organized into 10 categories in **[themes/](mdc:themes/)**:
+
+### Theme Categories
+1. **Classic Dark** - dark, dracula, halcyon, monokai, night-owl, one-dark-pro, tomorrow-night, zenburn
+2. **Classic Light** - atom-one-light, github-light, light, neon-light, solarized-light  
+3. **Material Design** - material-darker, material-ocean, material-palenight
+4. **Nature & Earth** - ayu-light, bear, everforest-dark, gruvbox-dark/light, kanagawa, rose-pine variants
+5. **Arctic & Winter** - nord, nordic, winter-is-coming variants
+6. **Ocean & Sky** - ayu variants, base16-ocean, bluloco variants, cobalt2, firefly, iceberg, noctis, oceanic-next, spacegray
+7. **Cyberpunk & Neon** - 2077, city-lights, cyberpunk, digital-rain, outrun, snazzy, synthwave-84, tokyo-night, vaporwave
+8. **Elegant & Pastel** - andromeda, catppuccin variants, horizon, lucario, moonlight, palenight, shades-of-purple, soft-era, witch-hazel
+9. **Professional** - apprentice, corporate-dystopia, flatland, github-dark, material, oxocarbon, protonmail, solarized-dark, thinkultra, vim, vscode-dark-plus
+10. **Special Effects** - amber-interface, hackthebox, holographic, hotdog-stand, panda
+
+
+### Theme Development Rules
+
+#### CSS Structure
+- Themes should override CSS custom properties defined in **[style.css](mdc:style.css)**
+- Use the established color variable naming convention:
+  ```css
+  :root {
+    --bg-primary: #color;
+    --bg-secondary: #color;
+    --text-primary: #color;
+    --text-secondary: #color;
+    --accent-primary: #color;
+    --accent-secondary: #color;
+    /* etc. */
+  }
+  ```
+
+#### Theme File Naming
+- Use kebab-case: `theme-name.css`
+- Special themes: use descriptive prefixes
+- Variants: use descriptive suffixes like `-light`, `-dark`, `-soft`
+
+#### Special Effects Guidelines
+- Animations should be subtle and not interfere with readability
+- Use CSS transforms and transitions, avoid JavaScript-dependent effects
+- Consider users who prefer reduced motion (`prefers-reduced-motion`)
+- Special effects themes can include:
+  - CSS animations and transitions
+  - Gradient backgrounds
+  - Box shadows and glows
+  - Pseudo-element decorations
+
+#### Testing New Themes
+- Use **[validate-themes.js](mdc:validate-themes.js)** to validate theme files
+- Test theme switching in the application
+- Verify readability in both light and dark modes
+- Check mobile responsiveness
+
+#### Theme Loading
+- Themes are loaded dynamically by the JavaScript in [script.js](mdc:script.js)
+- Base path detection handles GitHub/GitLab Pages deployment
+- Theme persistence uses localStorage with fallback to `tokyo-night`

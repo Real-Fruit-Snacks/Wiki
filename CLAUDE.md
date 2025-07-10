@@ -80,7 +80,7 @@ When making significant changes, consider the modular refactoring plan:
 2. **Main Application**: `script.js` - Contains the monolithic `NotesWiki` class that handles:
    - Tab management with drag-and-drop and pinning
    - Advanced search with operators (`tag:`, `author:`, `"phrase"`, `-exclude`, etc.)
-   - Theme switching (150 themes organized in 11 categories including complete Bearded Collection)
+   - Theme switching (74 themes organized in 10 categories)
    - Settings persistence via localStorage
    - Pomodoro timer, keyboard shortcuts, responsive context filtering
    - Quick Notes panel (slide-out from right side for temporary notes)
@@ -98,7 +98,7 @@ When making significant changes, consider the modular refactoring plan:
 4. **Content Structure**:
    - `/notes/` - All markdown content organized by context (top-level folders)
    - `/images/` - Image assets organized by purpose
-   - `/themes/` - 150 CSS theme files
+   - `/themes/` - 74 CSS theme files
    - `/libs/` - Bundled dependencies (Marked.js, Prism.js, Mermaid.js)
    - `/fonts/` - Self-contained font system (Inter, JetBrains Mono)
 
@@ -184,7 +184,7 @@ element.innerHTML = userInput; // Only for trusted SVG/static content
 
 ### Theme System Architecture
 
-Themes are organized into 11 categories with 150 total themes:
+Themes are organized into 10 categories with 74 total themes:
 1. **Classic Dark** - Traditional dark themes
 2. **Classic Light** - Traditional light themes
 3. **Material Design** - Material design inspired themes
@@ -195,7 +195,7 @@ Themes are organized into 11 categories with 150 total themes:
 8. **Elegant & Pastel** - Soft, muted colors
 9. **Professional** - Business-appropriate themes
 10. **Special Effects** - Themes with unique visual effects
-11. **Bearded Collection** - Complete 76-theme Bearded Theme collection
+
 
 ### Context Menu System
 
@@ -315,7 +315,7 @@ if (document.readyState === 'loading') {
 - `showQuickThemeMenu()` - Shows theme switcher modal
 - `showThemeFavorites()` - Shows favorite themes modal
 - `toggleThemeFavorite(themeId)` - Adds/removes theme from favorites
-- `applyRandomTheme()` - Applies random theme from all 150 themes
+- `applyRandomTheme()` - Applies random theme from all 74 themes
 
 **Search & Navigation**:
 - `performSearch(query)` - Executes search with operator support

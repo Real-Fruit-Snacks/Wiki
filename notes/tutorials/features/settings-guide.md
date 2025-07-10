@@ -29,7 +29,7 @@ The Notes Wiki provides a **comprehensive settings system** to customize your ex
 ### Appearance Settings
 
 **Theme Configuration:**
-- **Theme selection** - Choose from 150+ professional themes
+- **Theme selection** - Choose from 74 professional themes
 - **Auto theme** - Match system light/dark preference
 - **Theme favorites** - Quick access to preferred themes
 - **Custom CSS** - Advanced styling options
@@ -115,7 +115,7 @@ appearance: {
 1. **Choose Your Theme:**
    ```
    Settings → Appearance → Theme
-   - Browse 150+ themes
+   - Browse 74 themes
    - Try different categories
    - Set favorites for quick access
    ```
@@ -224,7 +224,7 @@ Monthly: Archive settings with date stamps
 ### Appearance & Theming
 
 **Theme System:**
-- **150+ themes** across 11 categories
+- **74 themes** across 10 categories
 - **Real-time preview** - See changes instantly
 - **Theme favorites** - Star your preferred themes
 - **Auto theme switching** - Light/dark based on system

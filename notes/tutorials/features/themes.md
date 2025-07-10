@@ -3,13 +3,13 @@ title: Theme System Guide
 tags: [themes, customization, styling, interface, preferences]
 created: 2025-01-06
 author: Wiki Admin
-description: Complete guide to the 150+ professional themes, favorites system, and customization options
+description: Complete guide to the 74 professional themes, favorites system, and customization options
 updated: 2025-06-24
 ---
 
 # Theme System Guide
 
-Master the Notes Wiki's powerful theme system with **150+ professional themes** organized in 11 categories, theme favorites, and advanced customization options.
+Master the Notes Wiki's powerful theme system with **74 professional themes** organized in 10 categories, theme favorites, and advanced customization options.
 
 ## 🎨 Theme Basics
 
@@ -50,7 +50,7 @@ Master the Notes Wiki's powerful theme system with **150+ professional themes** 
 | **Add/Remove Favorites** | Toggle favorite status with star indicator |
 | **Preview Theme** | Temporary preview with automatic revert |
 
-## 📱 Complete Theme Collection (150+ Themes)
+## 📱 Complete Theme Collection (74 Themes)
 
 ### ✨ Classic Themes
 - **Light** - Clean, minimal light theme for daytime reading
@@ -935,12 +935,7 @@ When testing themes, pay attention to:
 7. **Selection Colors** - Text selection should be visible and pleasant
 8. **Scrollbars** - Custom scrollbar styling should match the theme
 
-### 🌿 Bearded Theme Collection
-- **Complete 76-theme Bearded Collection** including:
-  - Arc, Black & Color variants, Coffee, Earth, Milkshake series
-  - Monokai variants, Oceanic, Vivid series
-  - High contrast (HC) themes, Featured collaborations
-  - Light variants, Stained series, Surprising series
+
 
 ## 🛠️ Theme Customization
 
@@ -982,7 +977,7 @@ When testing themes, pay attention to:
 
 ## 🎯 Theme Categories Overview
 
-The 150+ themes are organized into **11 main categories**:
+The 74 themes are organized into **10 main categories**:
 
 1. **Classic Dark** (8 themes) - Traditional dark themes
 2. **Classic Light** (5 themes) - Clean light themes  
@@ -994,18 +989,18 @@ The 150+ themes are organized into **11 main categories**:
 8. **Elegant & Pastel** (4 themes) - Soft, muted colors
 9. **Professional** (4 themes) - Business-appropriate themes
 10. **Special Effects** (4 themes) - Unique visual effects
-11. **Bearded Collection** (76 themes) - Complete Bearded series
+
 
 ## Theme System Complete! ✨
 
 The Notes Wiki theme system provides:
 
-- ✅ **150+ professional themes** in 11 organized categories
+- ✅ **74 professional themes** in 10 organized categories
 - ✅ **Theme favorites system** with star indicators
 - ✅ **Right-click context menus** for quick theme actions
 - ✅ **Live preview on hover** without disrupting workflow
 - ✅ **Auto theme detection** matching system preferences
-- ✅ **Complete Bearded Collection** (76 themes)
+
 - ✅ **Persistent favorites** and theme preferences
 - ✅ **Smooth transitions** and visual feedback
 

@@ -1,0 +1,77 @@
+---
+globs: "build.py,create-release.js,package.json"
+---
+
+# Build and Release Guidelines
+
+## Build System Architecture
+
+### Python Build Script - [build.py](mdc:build.py)
+
+The main build process handles:
+- **Notes Indexing**: Scans all `.md` files in [notes/](mdc:notes/) and generates [notes-index.json](mdc:notes-index.json)
+- **Metadata Extraction**: Parses YAML frontmatter for titles, tags, descriptions
+- **Search Index Generation**: Creates full-text search index for client-side searching
+- **Tag Management**: Builds tag hierarchy and category mappings
+
+#### Running the Build
+```bash
+python3 build.py        # Basic build
+npm run build          # Via NPM script
+```
+
+### Release Script - [create-release.js](mdc:create-release.js)
+
+Handles packaging and release preparation:
+- **Validation**: Runs all validation checks before packaging
+- **Asset Optimization**: Prepares assets for distribution
+- **Version Management**: Updates version numbers consistently
+- **Release Packaging**: Creates distributable packages
+
+#### Release Process
+```bash
+npm run validate-all    # Validate JavaScript and themes
+npm run package        # Full build and package
+```
+
+### NPM Scripts - [package.json](mdc:package.json)
+
+Available commands:
+- `npm test` - Run Puppeteer-based testing
+- `npm run build` - Python build script
+- `npm run serve` - Local development server (port 8000)
+- `npm run validate` - JavaScript syntax validation
+- `npm run validate-themes` - Theme file validation
+- `npm run validate-all` - Complete validation suite
+- `npm run package` - Full build and release package
+
+### Development Workflow
+
+#### Local Development
+1. **Start Server**: `npm run serve` (opens http://localhost:8000)
+2. **Make Changes**: Edit code, themes, or content
+3. **Rebuild Index**: `npm run build` after content changes
+4. **Validate**: `npm run validate-all` before committing
+
+#### Adding New Content
+1. Create/edit `.md` files in [notes/](mdc:notes/)
+2. Run `npm run build` to regenerate search index
+3. Test locally with `npm run serve`
+4. Commit changes
+
+#### Theme Development
+1. Create new `.css` file in [themes/](mdc:themes/)
+2. Run `npm run validate-themes` to check syntax
+3. Test theme loading in browser
+4. Add theme to categories in [script.js](mdc:script.js) if needed
+
+#### Release Preparation
+1. Update version in [package.json](mdc:package.json)
+2. Run `npm run validate-all` to ensure everything works
+3. Run `npm run package` to create release
+4. Test the packaged version thoroughly
+
+### Build Dependencies
+- **Python 3**: Required for [build.py](mdc:build.py) script
+- **Node.js**: Required for validation and packaging scripts
+- **Puppeteer**: Used for automated testing (dev dependency)

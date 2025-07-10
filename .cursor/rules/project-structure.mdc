@@ -1,0 +1,47 @@
+---
+alwaysApply: true
+---
+
+# Notes Wiki Project Structure
+
+This is a sophisticated static site generator for personal notes/wiki with 74 themes and advanced features.
+
+## Main Entry Points
+
+- **[index.html](mdc:index.html)** - Main SPA entry point (1,372 lines) with complex theme loading and base path detection for GitHub/GitLab Pages
+- **[script.js](mdc:script.js)** - Core application logic (17,313 lines) containing the `NotesWiki` class with all functionality
+- **[style.css](mdc:style.css)** - Main stylesheet (8,140 lines) with base styles for all themes
+
+## Build & Release System
+
+- **[build.py](mdc:build.py)** - Python build script that processes notes and generates the search index
+- **[create-release.js](mdc:create-release.js)** - Node.js script for creating releases and packaging
+- **[package.json](mdc:package.json)** - NPM scripts for testing, building, and validation
+
+## Content Structure
+
+- **[notes/](mdc:notes/)** - Markdown notes organized hierarchically with tutorials and guides
+- **[notes-index.json](mdc:notes-index.json)** - Generated search index (633 lines, 242KB) containing all note metadata
+- **[_config.yml](mdc:_config.yml)** - Jekyll configuration for GitHub Pages hosting
+
+## Theme System
+
+- **[themes/](mdc:themes/)** - 74 CSS theme files organized by categories (Cyberpunk, Nature, Professional, etc.)
+- **[validate-themes.js](mdc:validate-themes.js)** - Theme validation script ensuring all themes work correctly
+
+## Dependencies & Assets
+
+- **[libs/](mdc:libs/)** - Third-party libraries (js-yaml, marked, prism) for markdown parsing and syntax highlighting
+- **[fonts/](mdc:fonts/)** - Custom web fonts (Inter, JetBrains Mono) with CSS loader
+- **[gitlab-files/](mdc:gitlab-files/)** - GitLab Pages specific configuration files
+
+## Key Features
+
+- Multi-tab interface with drag & drop
+- Advanced search with tag filtering
+- Split view support
+- Bookmark management
+- 74 themes with live preview
+- Self-contained offline operation
+- GitHub/GitLab Pages compatibility
+- Responsive design with mobile support

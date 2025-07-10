@@ -1,0 +1,74 @@
+# Deployment Guidelines
+
+## Hosting Platform Support
+
+The Notes Wiki is designed to work on multiple static hosting platforms with automatic base path detection.
+
+### GitHub Pages
+- **Configuration**: Uses [_config.yml](mdc:_config.yml) for Jekyll compatibility
+- **Base Path**: Automatically detected in [index.html](mdc:index.html) and [script.js](mdc:script.js)
+- **URL Pattern**: `username.github.io/repository-name/`
+- **Setup**: Enable GitHub Pages in repository settings, select source branch
+
+### GitLab Pages
+- **Configuration**: Uses [gitlab-files/](mdc:gitlab-files/) for CI/CD setup
+- **Base Path**: Auto-detected for GitLab.io hosting
+- **URL Pattern**: `username.gitlab.io/repository-name/`
+- **Setup**: GitLab CI automatically builds and deploys
+
+### Local/Self-Hosted
+- **Development**: `npm run serve` starts local server on port 8000
+- **Production**: Any static file server (nginx, Apache, etc.)
+- **Base Path**: Automatically uses root path for local hosting
+
+## Deployment Checklist
+
+### Pre-Deployment
+1. **Build Search Index**: Run `npm run build` to update [notes-index.json](mdc:notes-index.json)
+2. **Validate Everything**: Run `npm run validate-all` to check JavaScript and themes
+3. **Test Locally**: Use `npm run serve` to verify everything works
+4. **Check Links**: Ensure all internal links work correctly
+5. **Theme Validation**: Run `npm run validate-themes` to verify all 74 themes load
+
+### Platform-Specific Setup
+
+#### GitHub Pages Setup
+1. Push code to GitHub repository
+2. Go to repository Settings → Pages
+3. Select source (usually `main` branch)
+4. Wait for deployment (check Actions tab)
+5. Visit `username.github.io/repository-name`
+
+#### GitLab Pages Setup
+1. Ensure [gitlab-files/](mdc:gitlab-files/) contains proper CI configuration
+2. Push to GitLab repository
+3. CI/CD pipeline automatically builds and deploys
+4. Visit `username.gitlab.io/repository-name`
+
+### Post-Deployment Testing
+1. **Navigation**: Test tab management and note loading
+2. **Search**: Verify search functionality works with tags and full-text
+3. **Themes**: Test theme switching across different categories
+4. **Mobile**: Check responsive design on various screen sizes
+5. **Performance**: Verify fast loading with 74 themes and large search index
+
+### Troubleshooting Common Issues
+
+#### Base Path Problems
+- Check console for 404 errors on CSS/JS files
+- Verify base path detection logic in [index.html](mdc:index.html)
+- Test with different URL patterns (with/without trailing slash)
+
+#### Theme Loading Issues
+- Ensure all theme files exist in [themes/](mdc:themes/)
+- Check [validate-themes.js](mdc:validate-themes.js) output
+- Verify CSS file syntax and custom property usage
+
+#### Search Index Problems
+- Rebuild with `npm run build` if search isn't working
+- Check [notes-index.json](mdc:notes-index.json) was generated correctly
+- Verify all markdown files have proper frontmatter
+description:
+globs:
+alwaysApply: false
+---
