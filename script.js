@@ -7757,7 +7757,7 @@ class NotesWiki {
                     '2077': `0 0 30px rgba(240, 229, 0, 0.4), 0 0 60px rgba(234, 0, 217, 0.2)`
                 };
                 
-                card.style.boxShadow = hoverShadows[currentTheme] || `0 0 20px ${colors.accent}40`;
+                card.style.boxShadow = hoverShadows[this.settings.theme] || `0 0 20px ${colors.accent}40`;
             }
         });
         
