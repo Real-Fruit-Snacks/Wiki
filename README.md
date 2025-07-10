@@ -118,7 +118,10 @@ npm run serve
 
 ## Documentation
 
-- [CLAUDE.md](CLAUDE.md) - Development guide and architecture details
+Comprehensive documentation is available in the `/notes/` directory, including:
+- Getting started guides in `/notes/tutorials/getting-started/`
+- Feature guides in `/notes/tutorials/features/`
+- Advanced topics in `/notes/tutorials/advanced/`
 
 ## Contributing
 
