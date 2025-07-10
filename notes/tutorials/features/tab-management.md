@@ -16,7 +16,7 @@ The Notes Wiki includes a powerful tab system that enables efficient multi-docum
 
 **New Empty Tab:**
 - Click the **+** button in the tab bar
-- Press <kbd>Ctrl</kbd>+<kbd>T</kbd>
+- Press <kbd>Alt</kbd>+<kbd>T</kbd> (browser-safe) or <kbd>Ctrl</kbd>+<kbd>T</kbd>
 - Right-click tab bar → "New Tab"
 
 **Open Note in New Tab:**
@@ -32,9 +32,9 @@ The Notes Wiki includes a powerful tab system that enables efficient multi-docum
 ### Tab Navigation
 
 **Keyboard Shortcuts:**
-- <kbd>Ctrl</kbd>+<kbd>1</kbd>-<kbd>9</kbd> - Jump to tab by number
-- <kbd>Ctrl</kbd>+<kbd>Tab</kbd> - Next tab
-- <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Tab</kbd> - Previous tab
+- <kbd>Alt</kbd>+<kbd>1</kbd>-<kbd>9</kbd> - Jump to tab by number (browser-safe)
+- <kbd>Alt</kbd>+<kbd>PageUp</kbd>/<kbd>PageDown</kbd> - Navigate between tabs
+- <kbd>Ctrl</kbd>+<kbd>1</kbd>-<kbd>9</kbd> - Jump to tab by number (may conflict with browser)
 
 **Mouse Navigation:**
 - **Click tab** - Switch to tab
@@ -45,7 +45,7 @@ The Notes Wiki includes a powerful tab system that enables efficient multi-docum
 
 **Single Tab:**
 - Click the **×** button on tab
-- Press <kbd>Ctrl</kbd>+<kbd>W</kbd>
+- Press <kbd>Alt</kbd>+<kbd>W</kbd> (browser-safe) or <kbd>Ctrl</kbd>+<kbd>W</kbd>
 - Middle-click the tab
 
 **Multiple Tabs:**

@@ -28,25 +28,25 @@ The Notes Wiki includes keyboard shortcuts to boost your productivity. Press <kb
 
 ## 📑 Tab Management
 
-### Primary Shortcuts
+### Browser-Compatible Shortcuts (Recommended)
 | Shortcut | Action | Description |
 |----------|--------|-------------|
-| <kbd>Ctrl</kbd>+<kbd>T</kbd> | New tab | Open a new empty tab (Mac: <kbd>⌘</kbd>+<kbd>T</kbd>) |
-| <kbd>Ctrl</kbd>+<kbd>W</kbd> | Close tab | Close the current tab (Mac: <kbd>⌘</kbd>+<kbd>W</kbd>) |
+| <kbd>Alt</kbd>+<kbd>T</kbd> | New tab | Open a new empty tab (browser-safe) |
+| <kbd>Alt</kbd>+<kbd>W</kbd> | Close tab | Close the current tab (browser-safe) |
 | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd> | Close all tabs | Close all open tabs (Mac: <kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd>) |
-| <kbd>Ctrl</kbd>+<kbd>1</kbd>-<kbd>9</kbd> | Switch to tab | Jump to tab by number (1-9) (Mac: <kbd>⌘</kbd>+<kbd>1</kbd>-<kbd>9</kbd>) |
-| <kbd>Ctrl</kbd>+<kbd>PageUp</kbd> | Previous tab | Switch to the previous tab (Mac: <kbd>⌘</kbd>+<kbd>PageUp</kbd>) |
-| <kbd>Ctrl</kbd>+<kbd>PageDown</kbd> | Next tab | Switch to the next tab (Mac: <kbd>⌘</kbd>+<kbd>PageDown</kbd>) |
+| <kbd>Alt</kbd>+<kbd>1</kbd>-<kbd>9</kbd> | Switch to tab | Jump to tab by number (1-9) |
+| <kbd>Alt</kbd>+<kbd>PageUp</kbd> | Previous tab | Switch to the previous tab |
+| <kbd>Alt</kbd>+<kbd>PageDown</kbd> | Next tab | Switch to the next tab |
+| <kbd>Alt</kbd>+<kbd>P</kbd> | Pin/unpin tab | Toggle pin status of current tab |
 
-### Alternative Shortcuts
+### Legacy Shortcuts (May conflict with browser)
 | Shortcut | Action | Description |
 |----------|--------|-------------|
-| <kbd>Alt</kbd>+<kbd>T</kbd> | New tab | Alternative shortcut for new tab |
-| <kbd>Alt</kbd>+<kbd>W</kbd> | Close tab | Alternative shortcut for closing tab |
-| <kbd>Alt</kbd>+<kbd>P</kbd> | Pin/unpin tab | Toggle pin status of current tab |
-| <kbd>Alt</kbd>+<kbd>1</kbd>-<kbd>9</kbd> | Switch to tab | Alternative tab switching |
-| <kbd>Alt</kbd>+<kbd>PageUp</kbd> | Previous tab | Alternative previous tab shortcut |
-| <kbd>Alt</kbd>+<kbd>PageDown</kbd> | Next tab | Alternative next tab shortcut |
+| <kbd>Ctrl</kbd>+<kbd>T</kbd> | New tab | May conflict with browser (Mac: <kbd>⌘</kbd>+<kbd>T</kbd>) |
+| <kbd>Ctrl</kbd>+<kbd>W</kbd> | Close tab | May conflict with browser (Mac: <kbd>⌘</kbd>+<kbd>W</kbd>) |
+| <kbd>Ctrl</kbd>+<kbd>1</kbd>-<kbd>9</kbd> | Switch to tab | May conflict with browser (Mac: <kbd>⌘</kbd>+<kbd>1</kbd>-<kbd>9</kbd>) |
+| <kbd>Ctrl</kbd>+<kbd>PageUp</kbd> | Previous tab | May conflict with browser (Mac: <kbd>⌘</kbd>+<kbd>PageUp</kbd>) |
+| <kbd>Ctrl</kbd>+<kbd>PageDown</kbd> | Next tab | May conflict with browser (Mac: <kbd>⌘</kbd>+<kbd>PageDown</kbd>) |
 
 ## ⚙️ Settings & Features
 
@@ -54,6 +54,7 @@ The Notes Wiki includes keyboard shortcuts to boost your productivity. Press <kb
 |----------|--------|-------------|
 | <kbd>Ctrl</kbd>+<kbd>,</kbd> | Open settings | Access all application settings (Mac: <kbd>⌘</kbd>+<kbd>,</kbd>) |
 | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> | Create sticky note | Create a new floating sticky note (Mac: <kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd>) |
+| <kbd>Ctrl</kbd>+<kbd>/</kbd> | Toggle split view | Enable/disable split view mode (Mac: <kbd>⌘</kbd>+<kbd>/</kbd>) |
 
 ## 💡 Tips
 

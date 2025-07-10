@@ -17,8 +17,8 @@ There are several ways to enable split view:
 ### 🖱️ Button Click
 Click the split view icon (two rectangles) in the header navigation bar.
 
-### ⌨️ Future Shortcut
-A keyboard shortcut will be available in future updates.
+### ⌨️ Keyboard Shortcut
+Press `Ctrl+/` (Mac: `⌘+/`) to toggle split view on and off.
 
 ## How Split View Works
 
