@@ -239,10 +239,10 @@ class NotesWiki {
     
     async init() {
         try {
-            // Load settings from localStorage
+            // Load settings from localStorage FIRST
             this.loadSettings();
             
-            // Initialize theme
+            // Initialize theme IMMEDIATELY after settings to prevent flash
             this.initializeTheme();
             
             // Apply focus mode if it was enabled
@@ -8465,13 +8465,11 @@ class NotesWiki {
         try {
             const stored = localStorage.getItem('notesWiki_settings');
             console.log('[Settings] Loading settings from localStorage...');
-            console.log('[Settings] Stored data:', stored);
             
             if (stored) {
                 const parsedSettings = JSON.parse(stored);
-                console.log('[Settings] Parsed settings:', parsedSettings);
                 this.settings = { ...this.settings, ...parsedSettings };
-                console.log('[Settings] Merged settings:', this.settings);
+                console.log(`[Settings] Loaded settings - Theme: ${this.settings.theme}`);
                 
                 // Restore active context
                 this.activeContext = this.settings.activeContext;
@@ -8480,7 +8478,6 @@ class NotesWiki {
             }
         } catch (error) {
             console.warn('[Settings] Failed to load settings from localStorage:', error);
-            // Continue with default settings
             console.log('[Settings] Using default settings due to localStorage error');
         }
     }
@@ -15364,11 +15361,9 @@ class NotesWiki {
         try {
             const themeToApply = this.settings.theme || 'tokyo-night';
             console.log(`[Theme Init] Initializing with theme: ${themeToApply}`);
-            console.log(`[Theme Init] Current settings:`, this.settings);
             this.applyTheme(themeToApply);
         } catch (error) {
             console.error('[Theme Init] Failed to initialize theme:', error);
-            // Fallback to default theme
             console.log('[Theme Init] Falling back to default theme');
             this.applyTheme('tokyo-night');
         }
@@ -15405,8 +15400,9 @@ class NotesWiki {
             // Set theme data attribute
             document.documentElement.setAttribute('data-theme', themeId);
             
-            // Update settings
+            // Update settings and save
             this.settings.theme = themeId;
+            this.saveSettings();
             
             console.log(`[Theme] Theme applied successfully: ${themeId}`);
             

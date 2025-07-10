@@ -117,46 +117,9 @@
                 }
             }
             
-            // Set default theme
-            const defaultTheme = 'tokyo-night';
-            let savedTheme = defaultTheme;
-            
-            try {
-                savedTheme = localStorage.getItem('notesWiki_theme') || defaultTheme;
-                console.log('[Theme Init] Retrieved saved theme:', savedTheme);
-            } catch (e) {
-                console.error('[Theme Init] Failed to access localStorage:', e);
-                console.log('[Theme Init] Using default theme:', defaultTheme);
-            }
-            
-            const themeLink = document.getElementById('theme-stylesheet');
-            if (themeLink) {
-                const themeUrl = basePath ? `${basePath}themes/${savedTheme}.css` : `themes/${savedTheme}.css`;
-                console.log('[Theme Init] Setting initial theme URL:', themeUrl);
-                
-                // Add error handling for initial theme load
-                themeLink.onerror = function(error) {
-                    console.error('[Theme Init] Failed to load initial theme:', savedTheme);
-                    console.error('[Theme Init] Error:', error);
-                    console.error('[Theme Init] Attempted URL:', themeUrl);
-                    
-                    // Try fallback to default if not already default
-                    if (savedTheme !== defaultTheme) {
-                        console.log('[Theme Init] Attempting fallback to default theme');
-                        const fallbackUrl = basePath ? `${basePath}themes/${defaultTheme}.css` : `themes/${defaultTheme}.css`;
-                        themeLink.href = fallbackUrl;
-                    }
-                };
-                
-                themeLink.onload = function() {
-                    console.log('[Theme Init] Successfully loaded initial theme:', savedTheme);
-                    document.documentElement.setAttribute('data-theme', savedTheme);
-                };
-                
-                themeLink.href = themeUrl;
-            } else {
-                console.error('[Theme Init] Theme stylesheet element not found!');
-            }
+            // Theme loading will be handled by the main JavaScript application
+            // This ensures consistent theme loading from the proper settings storage
+            console.log('[Theme Init] Theme loading delegated to main application');
         })();
     </script>
     
