@@ -8763,6 +8763,22 @@ class NotesWiki {
     }
     
     formatDate(dateString) {
+        // Handle date strings properly to avoid timezone issues
+        if (!dateString) return '';
+        
+        // If the dateString is just a date (YYYY-MM-DD), treat it as local date
+        if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+            const [year, month, day] = dateString.split('-').map(Number);
+            // Create date in local timezone (month is 0-indexed in JavaScript)
+            const date = new Date(year, month - 1, day);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+        
+        // For full datetime strings, use normal parsing
         const date = new Date(dateString);
         return date.toLocaleDateString('en-US', {
             year: 'numeric',
