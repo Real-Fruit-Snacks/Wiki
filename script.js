@@ -12993,15 +12993,11 @@ class NotesWiki {
             });
         }
 
-        // Banner lock toggle
+        // Banner lock toggle - disabled for permanent lock
         const bannerLockedCheckbox = document.getElementById('banner-locked');
-        if (bannerLockedCheckbox) {
-            bannerLockedCheckbox.addEventListener('change', (e) => {
-                this.settings.bannerLocked = e.target.checked;
-                this.updateBannerLockState();
-                this.saveSettings();
-                this.showToast(e.target.checked ? 'Banner settings locked' : 'Banner settings unlocked');
-            });
+        if (bannerLockedCheckbox && this.settings.bannerLocked) {
+            bannerLockedCheckbox.disabled = true;
+            bannerLockedCheckbox.style.display = 'none';
         }
 
         // Banner text input
@@ -13110,7 +13106,12 @@ class NotesWiki {
     toggleBannerSettings(enabled) {
         const bannerSettings = document.querySelectorAll('.banner-setting');
         bannerSettings.forEach(setting => {
-            setting.style.display = enabled ? 'flex' : 'none';
+            // Hide the lock setting if banner is locked permanently
+            if (setting.id === 'banner-lock-setting' && this.settings.bannerLocked) {
+                setting.style.display = 'none';
+            } else {
+                setting.style.display = enabled ? 'flex' : 'none';
+            }
         });
     }
 
@@ -13222,20 +13223,7 @@ class NotesWiki {
         }
     }
 
-    showUnlockDialog() {
-        const unlockKey = prompt('Enter the unlock key to modify banner settings:');
-        
-        // Simple unlock mechanism - you can make this more sophisticated
-        if (unlockKey === 'admin123' || unlockKey === 'unlock') {
-            this.settings.bannerLocked = false;
-            this.saveSettings();
-            this.updateBannerLockState();
-            document.getElementById('banner-locked').checked = false;
-            this.showToast('Banner settings unlocked', 'success');
-        } else if (unlockKey !== null) { // null means cancelled
-            this.showToast('Invalid unlock key', 'error');
-        }
-    }
+
     
     showConfirmation(title, message, onConfirm) {
         const modal = document.getElementById('confirmation-modal');
