@@ -8293,6 +8293,36 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     display: none;
 }
 
+.banner-locked-notice {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+.banner-locked-notice .setting-name {
+    color: #ef4444;
+    font-weight: 600;
+}
+
+.banner-locked-notice .setting-description {
+    color: #dc2626;
+}
+
+.banner-setting input:disabled,
+.banner-setting button:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    pointer-events: none;
+}
+
+.banner-setting .option-pill:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    pointer-events: none;
+    background-color: var(--bg-tertiary) !important;
+}
+
 .color-controls {
     display: flex;
     gap: 1rem;

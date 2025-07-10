@@ -2998,7 +2998,8 @@ class NotesWiki {
             bannerPadding: 'normal',
             bannerBorderRadius: 'normal',
             bannerPosition: 'top',
-            bannerStyle: 'solid'
+            bannerStyle: 'solid',
+            bannerLocked: false
         };
     }
     
@@ -11843,6 +11844,7 @@ class NotesWiki {
         
         // Banner settings
         updateCheckbox('banner-enabled', this.settings.bannerEnabled);
+        updateCheckbox('banner-locked', this.settings.bannerLocked);
         
         const bannerTextInput = document.getElementById('banner-text');
         if (bannerTextInput) bannerTextInput.value = this.settings.bannerText;
@@ -12977,6 +12979,11 @@ class NotesWiki {
         const bannerEnabledCheckbox = document.getElementById('banner-enabled');
         if (bannerEnabledCheckbox) {
             bannerEnabledCheckbox.addEventListener('change', (e) => {
+                if (this.settings.bannerLocked) {
+                    e.target.checked = this.settings.bannerEnabled; // Reset to original state
+                    this.showToast('Banner settings are locked', 'warning');
+                    return;
+                }
                 this.settings.bannerEnabled = e.target.checked;
                 this.toggleBannerSettings(e.target.checked);
                 this.updateBannerPreview();
@@ -12986,10 +12993,26 @@ class NotesWiki {
             });
         }
 
+        // Banner lock toggle
+        const bannerLockedCheckbox = document.getElementById('banner-locked');
+        if (bannerLockedCheckbox) {
+            bannerLockedCheckbox.addEventListener('change', (e) => {
+                this.settings.bannerLocked = e.target.checked;
+                this.updateBannerLockState();
+                this.saveSettings();
+                this.showToast(e.target.checked ? 'Banner settings locked' : 'Banner settings unlocked');
+            });
+        }
+
         // Banner text input
         const bannerTextInput = document.getElementById('banner-text');
         if (bannerTextInput) {
             bannerTextInput.addEventListener('input', (e) => {
+                if (this.settings.bannerLocked) {
+                    e.target.value = this.settings.bannerText; // Reset to original value
+                    this.showToast('Banner settings are locked', 'warning');
+                    return;
+                }
                 this.settings.bannerText = e.target.value;
                 this.updateBannerPreview();
                 this.saveSettings();
@@ -13003,6 +13026,11 @@ class NotesWiki {
         const bannerBgColorInput = document.getElementById('banner-background-color');
         if (bannerBgColorInput) {
             bannerBgColorInput.addEventListener('change', (e) => {
+                if (this.settings.bannerLocked) {
+                    e.target.value = this.settings.bannerBackgroundColor; // Reset to original value
+                    this.showToast('Banner settings are locked', 'warning');
+                    return;
+                }
                 this.settings.bannerBackgroundColor = e.target.value;
                 this.updateBannerPreview();
                 this.saveSettings();
@@ -13015,6 +13043,11 @@ class NotesWiki {
         const bannerTextColorInput = document.getElementById('banner-text-color');
         if (bannerTextColorInput) {
             bannerTextColorInput.addEventListener('change', (e) => {
+                if (this.settings.bannerLocked) {
+                    e.target.value = this.settings.bannerTextColor; // Reset to original value
+                    this.showToast('Banner settings are locked', 'warning');
+                    return;
+                }
                 this.settings.bannerTextColor = e.target.value;
                 this.updateBannerPreview();
                 this.saveSettings();
@@ -13033,6 +13066,7 @@ class NotesWiki {
 
         // Initialize visibility and preview
         this.toggleBannerSettings(this.settings.bannerEnabled);
+        this.updateBannerLockState();
         this.updateBannerPreview();
     }
 
@@ -13043,6 +13077,11 @@ class NotesWiki {
         const pills = container.querySelectorAll('.option-pill');
         pills.forEach(pill => {
             pill.addEventListener('click', () => {
+                if (this.settings.bannerLocked) {
+                    this.showToast('Banner settings are locked', 'warning');
+                    return;
+                }
+                
                 // Remove active class from siblings
                 pills.forEach(p => p.classList.remove('active'));
                 // Add active class to clicked pill
@@ -13139,6 +13178,63 @@ class NotesWiki {
                 pill.classList.add('active');
             }
         });
+    }
+
+    updateBannerLockState() {
+        const isLocked = this.settings.bannerLocked;
+        const bannerSettings = document.querySelectorAll('.banner-setting:not(#banner-locked-notice)');
+        const bannerLockedNotice = document.getElementById('banner-locked-notice');
+        const bannerEnabledCheckbox = document.getElementById('banner-enabled');
+        
+        // Show/hide locked notice
+        if (bannerLockedNotice) {
+            bannerLockedNotice.style.display = isLocked ? 'flex' : 'none';
+        }
+        
+        // Disable/enable banner controls
+        bannerSettings.forEach(setting => {
+            const inputs = setting.querySelectorAll('input, button.option-pill');
+            inputs.forEach(input => {
+                if (input.type === 'checkbox' && input.id === 'banner-locked') {
+                    return; // Don't disable the lock toggle itself
+                }
+                input.disabled = isLocked;
+                if (isLocked) {
+                    input.style.opacity = '0.5';
+                    input.style.cursor = 'not-allowed';
+                } else {
+                    input.style.opacity = '';
+                    input.style.cursor = '';
+                }
+            });
+        });
+        
+        // Special handling for the main banner enabled checkbox
+        if (bannerEnabledCheckbox) {
+            bannerEnabledCheckbox.disabled = isLocked;
+            if (isLocked) {
+                bannerEnabledCheckbox.style.opacity = '0.5';
+                bannerEnabledCheckbox.style.cursor = 'not-allowed';
+            } else {
+                bannerEnabledCheckbox.style.opacity = '';
+                bannerEnabledCheckbox.style.cursor = '';
+            }
+        }
+    }
+
+    showUnlockDialog() {
+        const unlockKey = prompt('Enter the unlock key to modify banner settings:');
+        
+        // Simple unlock mechanism - you can make this more sophisticated
+        if (unlockKey === 'admin123' || unlockKey === 'unlock') {
+            this.settings.bannerLocked = false;
+            this.saveSettings();
+            this.updateBannerLockState();
+            document.getElementById('banner-locked').checked = false;
+            this.showToast('Banner settings unlocked', 'success');
+        } else if (unlockKey !== null) { // null means cancelled
+            this.showToast('Invalid unlock key', 'error');
+        }
     }
     
     showConfirmation(title, message, onConfirm) {
