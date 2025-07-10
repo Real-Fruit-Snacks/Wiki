@@ -177,6 +177,10 @@ class NotesWiki {
         this.resetPressTimer = null;
         this.resetPressed = false;
         
+        // Page Visibility API state for timer optimization
+        this.pageVisible = true;
+        this.timerIntervalActive = false;
+        
         // Pomodoro state
         this.pomodoroMode = 'work'; // 'work', 'short-break', 'long-break'
         this.pomodoroSessionCount = 0;
@@ -250,6 +254,9 @@ class NotesWiki {
             
             // Initialize Pomodoro mode
             this.initializePomodoroMode();
+            
+            // Setup Page Visibility API for timer performance optimization
+            this.setupPageVisibilityAPI();
         
         // Apply line number setting
         this.applyLineNumberSetting();
@@ -12524,6 +12531,65 @@ class NotesWiki {
         return false;
     }
     
+    // Page Visibility API setup for timer performance optimization
+    setupPageVisibilityAPI() {
+        // Check if Page Visibility API is supported
+        if (typeof document.hidden === "undefined") {
+            console.log('Page Visibility API not supported - timer will continue updating when page is hidden');
+            return;
+        }
+        
+        const handleVisibilityChange = () => {
+            this.pageVisible = !document.hidden;
+            
+            if (this.pageVisible) {
+                // Page became visible - resume timer updates if timer is running
+                if (this.timerRunning && !this.timerIntervalActive) {
+                    this.startTimerInterval();
+                    
+                    // Immediately update display to show current time
+                    this.updateTimerDisplay();
+                    
+                    // Check for Pomodoro completion in case it happened while page was hidden
+                    if (this.settings.pomodoroEnabled && this.pomodoroTargetTime > 0) {
+                        const currentElapsed = Date.now() - this.timerStartTime;
+                        if (currentElapsed >= this.pomodoroTargetTime && this.timerRunning) {
+                            this.handlePomodoroComplete();
+                        }
+                    }
+                }
+            } else {
+                // Page became hidden - pause timer updates to save CPU
+                if (this.timerIntervalActive) {
+                    this.stopTimerInterval();
+                }
+            }
+        };
+        
+        // Add event listener for visibility changes
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        
+        // Store the handler for cleanup
+        this.visibilityChangeHandler = handleVisibilityChange;
+    }
+    
+    startTimerInterval() {
+        if (!this.timerIntervalActive) {
+            this.timerInterval = setInterval(() => {
+                this.updateTimerDisplay();
+            }, 1000);
+            this.timerIntervalActive = true;
+        }
+    }
+    
+    stopTimerInterval() {
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+            this.timerInterval = null;
+            this.timerIntervalActive = false;
+        }
+    }
+
     // Timer methods
     toggleTimer() {
         if (this.timerRunning) {
@@ -12537,9 +12603,10 @@ class NotesWiki {
         this.timerRunning = true;
         this.timerStartTime = Date.now() - this.timerElapsed;
         
-        this.timerInterval = setInterval(() => {
-            this.updateTimerDisplay();
-        }, 1000);
+        // Only start timer interval if page is visible (Page Visibility API optimization)
+        if (this.pageVisible) {
+            this.startTimerInterval();
+        }
         
         this.updateTimerUI();
         this.updateTimerDisplay();
@@ -12549,10 +12616,8 @@ class NotesWiki {
         this.timerRunning = false;
         this.timerElapsed = Date.now() - this.timerStartTime;
         
-        if (this.timerInterval) {
-            clearInterval(this.timerInterval);
-            this.timerInterval = null;
-        }
+        // Stop timer interval using optimized method
+        this.stopTimerInterval();
         
         this.updateTimerUI();
     }
@@ -12562,10 +12627,8 @@ class NotesWiki {
         this.timerElapsed = 0;
         this.timerStartTime = null;
         
-        if (this.timerInterval) {
-            clearInterval(this.timerInterval);
-            this.timerInterval = null;
-        }
+        // Stop timer interval using optimized method
+        this.stopTimerInterval();
         
         this.updateTimerDisplay();
         this.updateTimerUI();
@@ -12862,9 +12925,10 @@ class NotesWiki {
         this.timerRunning = true;
         this.timerStartTime = Date.now() - this.timerElapsed;
         
-        this.timerInterval = setInterval(() => {
-            this.updateTimerDisplay();
-        }, 1000);
+        // Only start timer interval if page is visible (Page Visibility API optimization)
+        if (this.pageVisible) {
+            this.startTimerInterval();
+        }
         
         this.updateTimerUI();
         this.updateTimerDisplay();
@@ -12875,10 +12939,8 @@ class NotesWiki {
         this.timerElapsed = 0;
         this.timerStartTime = null;
         
-        if (this.timerInterval) {
-            clearInterval(this.timerInterval);
-            this.timerInterval = null;
-        }
+        // Stop timer interval using optimized method
+        this.stopTimerInterval();
         
         // Reset progress bar
         document.getElementById('progress-bar').style.width = '0%';
@@ -15660,6 +15722,12 @@ class NotesWiki {
                 if (this.contextResizeObserver) {
                     this.contextResizeObserver.disconnect();
                     this.contextResizeObserver = null;
+                }
+                
+                // Remove Page Visibility API handler
+                if (this.visibilityChangeHandler) {
+                    document.removeEventListener('visibilitychange', this.visibilityChangeHandler);
+                    this.visibilityChangeHandler = null;
                 }
                 
                 // console.log('Application cleanup completed');
