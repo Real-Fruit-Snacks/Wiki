@@ -24,7 +24,6 @@ const includes = [
     'build.py',
     'package.json',
     'README.md',
-    'CLAUDE.md',
     '_config.yml',
     '.nojekyll',  // Include Jekyll bypass file
     'notes-index.json'  // Include the built index

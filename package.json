@@ -1,6 +1,6 @@
 {
   "name": "notes-wiki",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "Self-contained offline wiki with 74 themes, multi-tab interface, and advanced search",
   "main": "script.js",
   "scripts": {
