@@ -268,7 +268,7 @@ body.custom-fonts-loaded {
     font-weight: 500;
     cursor: pointer;
     transition: all var(--transition-fast);
-    max-width: min(300px, 40vw);
+    max-width: none;
 }
 
 .context-dropdown-toggle:hover {
