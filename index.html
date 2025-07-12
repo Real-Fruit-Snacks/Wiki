@@ -197,6 +197,13 @@
                                 </svg>
                                 <span>Quick Notes</span>
                             </button>
+                            <button class="mobile-menu-item" id="mobile-variable-manager-btn" onclick="window.notesWiki.toggleVariableManager()" aria-label="Variable Manager">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 8a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM4 11a1 1 0 100 2h8a1 1 0 100-2H4z"/>
+                                    <path d="M14 11h2v2h-2v-2zm0 4h2v2h-2v-2z"/>
+                                </svg>
+                                <span>Variable Manager</span>
+                            </button>
                             <button class="mobile-menu-item" id="mobile-text-analyzer-toggle" aria-label="Text Analyzer">
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M4 4h12v2H4V4zm0 4h12v2H4V8zm0 4h8v2H4v-2z"/>
@@ -272,6 +279,14 @@
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 100 2h4a1 1 0 100-2H8zm0-3a1 1 0 100 2h4a1 1 0 100-2H8z"/>
                                 <path d="M12 2.586V6a1 1 0 001 1h3.414L12 2.586z"/>
+                            </svg>
+                        </button>
+                        
+                        <!-- Variable Manager -->
+                        <button class="icon-button" id="variable-manager-btn" onclick="window.notesWiki.toggleVariableManager()" title="Variable Manager (Ctrl+Shift+V)" aria-label="Variable Manager">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 8a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM4 11a1 1 0 100 2h8a1 1 0 100-2H4z"/>
+                                <path d="M14 11h2v2h-2v-2zm0 4h2v2h-2v-2z"/>
                             </svg>
                         </button>
                         
@@ -1498,6 +1513,10 @@
                         <div class="shortcut-item">
                             <span class="shortcut-key">Ctrl+Shift+S</span>
                             <span class="shortcut-desc">Toggle Quick Notes panel</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Ctrl+Shift+V</span>
+                            <span class="shortcut-desc">Toggle Variable Manager panel</span>
                         </div>
                         <div class="shortcut-item">
                             <span class="shortcut-key">Escape</span>

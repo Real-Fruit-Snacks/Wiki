@@ -186,6 +186,11 @@ class NotesWiki {
         this.pomodoroSessionCount = 0;
         this.pomodoroTargetTime = 0; // Target time in milliseconds
         
+        // Variable Manager state - initialized properly in init()
+        this.variableValues = new Map(); // Map of note path -> Map of variable name -> value
+        this.currentVariables = []; // Variables in the current note
+        this.isVariableManagerOpen = false;
+        
         this.init();
     }
     
@@ -296,6 +301,9 @@ class NotesWiki {
         
         // Initialize quick notes panel
         this.initializeQuickNotes();
+        
+        // Initialize variable manager
+        this.initializeVariableManager();
         
         // Populate theme picker
         this.populateThemePicker();
@@ -1552,6 +1560,13 @@ class NotesWiki {
                     return;
                 }
                 
+                // Variable Manager with Ctrl+Shift+V
+                if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'V') {
+                    e.preventDefault();
+                    this.toggleVariableManager();
+                    return;
+                }
+                
                 // Toggle split view with Ctrl+/
                 if ((e.ctrlKey || e.metaKey) && e.key === '/') {
                     e.preventDefault();
@@ -1868,6 +1883,11 @@ class NotesWiki {
             
             // Render note
             this.renderNote();
+            
+            // Refresh Variable Manager if it's open
+            if (this.isVariableManagerOpen) {
+                this.refreshVariables();
+            }
             
             // Update URL
             window.location.hash = path;
@@ -2461,6 +2481,9 @@ class NotesWiki {
             
             // Remove any trailing newline from code content
             codeContent = codeContent.replace(/\n$/, '');
+            
+            // Apply variable replacement if variables exist
+            codeContent = self.replaceVariablesInCode(codeContent);
             
             // Parse the info string for language, title, and collapse
             let language = '';
@@ -14917,6 +14940,224 @@ class NotesWiki {
     createStickyNote() {
         this.toggleNotesPanel();
     }
+    
+    // ============================================
+    // VARIABLE MANAGER IMPLEMENTATION
+    // ============================================
+    
+    initializeVariableManager() {
+        this.loadVariableSettings();
+        this.setupVariableManagerPanel();
+    }
+    
+    extractVariables(content) {
+        if (!content) return [];
+        
+        // Find all variables in the format $VariableName
+        const variableRegex = /\$([a-zA-Z_][a-zA-Z0-9_]*)\b/g;
+        const variables = new Map(); // Use Map to track count
+        let match;
+        
+        while ((match = variableRegex.exec(content)) !== null) {
+            const varName = match[1];
+            variables.set(varName, (variables.get(varName) || 0) + 1);
+        }
+        
+        // Convert to array of objects with name and count
+        return Array.from(variables.entries()).map(([name, count]) => ({
+            name,
+            count,
+            value: this.getVariableValue(name) || ''
+        }));
+    }
+    
+    getVariableValue(varName) {
+        if (!this.currentNotePath) return '';
+        
+        const noteVariables = this.variableValues.get(this.currentNotePath);
+        return noteVariables ? noteVariables.get(varName) || '' : '';
+    }
+    
+    setVariableValue(varName, value) {
+        if (!this.currentNotePath) return;
+        
+        if (!this.variableValues.has(this.currentNotePath)) {
+            this.variableValues.set(this.currentNotePath, new Map());
+        }
+        
+        const noteVariables = this.variableValues.get(this.currentNotePath);
+        noteVariables.set(varName, value);
+        
+        // Update the current variables array
+        const variable = this.currentVariables.find(v => v.name === varName);
+        if (variable) {
+            variable.value = value;
+        }
+        
+        // Re-render the current note to apply changes
+        this.renderNote();
+        
+        // Save to localStorage
+        this.saveVariableSettings();
+    }
+    
+    replaceVariablesInCode(codeContent) {
+        if (!this.currentNotePath || !this.variableValues.has(this.currentNotePath)) {
+            return codeContent;
+        }
+        
+        const noteVariables = this.variableValues.get(this.currentNotePath);
+        let processedCode = codeContent;
+        
+        for (const [varName, value] of noteVariables.entries()) {
+            if (value) { // Only replace if value is not empty
+                const regex = new RegExp(`\\$${varName}\\b`, 'g');
+                processedCode = processedCode.replace(regex, value);
+            }
+        }
+        
+        return processedCode;
+    }
+    
+    saveVariableSettings() {
+        try {
+            // Convert Maps to plain objects for serialization
+            const serializable = {};
+            for (const [notePath, variables] of this.variableValues.entries()) {
+                serializable[notePath] = Object.fromEntries(variables);
+            }
+            localStorage.setItem('variableManagerSettings', JSON.stringify(serializable));
+        } catch (error) {
+            console.warn('Failed to save variable settings:', error);
+        }
+    }
+    
+    loadVariableSettings() {
+        try {
+            const stored = localStorage.getItem('variableManagerSettings');
+            if (stored) {
+                const parsed = JSON.parse(stored);
+                this.variableValues = new Map();
+                
+                for (const [notePath, variables] of Object.entries(parsed)) {
+                    this.variableValues.set(notePath, new Map(Object.entries(variables)));
+                }
+            }
+        } catch (error) {
+            console.warn('Failed to load variable settings:', error);
+            this.variableValues = new Map();
+        }
+    }
+    
+    setupVariableManagerPanel() {
+        // Create the slide-out panel structure
+        const panelHTML = `
+            <div id="variable-manager-panel" class="variable-manager-panel">
+                <div class="variable-manager-header">
+                    <h3>Variable Manager</h3>
+                    <div class="variable-manager-controls">
+                        <button class="icon-button" id="refresh-variables" title="Refresh variables">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
+                        <button class="icon-button" id="close-variable-manager" title="Close panel">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="variable-manager-content">
+                    <div class="variables-instructions">
+                        <h4>How to use Variable Manager:</h4>
+                        <ul>
+                            <li>Use <code>$VariableName</code> in your code blocks</li>
+                            <li>Set values here to replace them in all code blocks</li>
+                            <li>Variables are saved per note</li>
+                            <li>Changes apply immediately</li>
+                        </ul>
+                    </div>
+                    <div class="variables-list" id="variables-list">
+                        <!-- Variables will be populated here -->
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Add panel to the page
+        document.body.insertAdjacentHTML('beforeend', panelHTML);
+        
+        // Set up event listeners
+        document.getElementById('refresh-variables').addEventListener('click', () => this.refreshVariables());
+        document.getElementById('close-variable-manager').addEventListener('click', () => this.toggleVariableManager());
+    }
+    
+    toggleVariableManager() {
+        const panel = document.getElementById('variable-manager-panel');
+        const button = document.getElementById('variable-manager-btn');
+        const mobileButton = document.getElementById('mobile-variable-manager-btn');
+        
+        if (!panel) return;
+        
+        this.isVariableManagerOpen = !this.isVariableManagerOpen;
+        
+        if (this.isVariableManagerOpen) {
+            panel.classList.add('open');
+            button?.classList.add('active');
+            mobileButton?.classList.add('active');
+            
+            // Refresh variables for current note
+            this.refreshVariables();
+        } else {
+            panel.classList.remove('open');
+            button?.classList.remove('active');
+            mobileButton?.classList.remove('active');
+        }
+    }
+    
+    refreshVariables() {
+        if (!this.currentNote) {
+            this.displayVariables([]);
+            return;
+        }
+        
+        // Extract variables from current note content
+        this.currentVariables = this.extractVariables(this.currentNote.content);
+        this.displayVariables(this.currentVariables);
+    }
+    
+    displayVariables(variables) {
+        const variablesList = document.getElementById('variables-list');
+        if (!variablesList) return;
+        
+        if (variables.length === 0) {
+            variablesList.innerHTML = `
+                <div class="variables-empty">
+                    No variables found in this note.<br>
+                    Use <code>$VariableName</code> in your code blocks to get started.
+                </div>
+            `;
+            return;
+        }
+        
+        variablesList.innerHTML = variables.map(variable => `
+            <div class="variable-item">
+                <div class="variable-item-header">
+                    <span class="variable-name">$${this.escapeHtml(variable.name)}</span>
+                    <span class="variable-usage-count">${variable.count} usage${variable.count !== 1 ? 's' : ''}</span>
+                </div>
+                <input 
+                    type="text" 
+                    class="variable-input" 
+                    placeholder="Enter value for ${this.escapeHtml(variable.name)}"
+                    value="${this.escapeHtml(variable.value)}"
+                    onchange="window.notesWiki.setVariableValue('${this.escapeHtml(variable.name)}', this.value)"
+                    oninput="window.notesWiki.setVariableValue('${this.escapeHtml(variable.name)}', this.value)"
+                >
+            </div>
+        `).join('');
+    }
         setupMobileMenu() {
         const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
         const mobileMenuContent = document.getElementById('mobile-menu-content');
@@ -14974,6 +15215,12 @@ class NotesWiki {
         document.getElementById('mobile-sticky-note-btn')?.addEventListener('click', () => {
             mobileMenuContent.classList.remove('show');
             this.createStickyNote();
+        });
+        
+        // Variable Manager
+        document.getElementById('mobile-variable-manager-btn')?.addEventListener('click', () => {
+            mobileMenuContent.classList.remove('show');
+            this.toggleVariableManager();
         });
         
         // Settings
