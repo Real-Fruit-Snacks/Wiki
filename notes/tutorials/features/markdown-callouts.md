@@ -1,8 +1,8 @@
 ---
-title: Markdown Callouts - Complete Guide
+title: Markdown Callouts
 tags: [tutorial, markdown, callouts, formatting, documentation]
 author: Wiki Team
-created: 2025-01-19
+created: 2025-07-11
 description: Complete guide to all 13 callout types available in Notes Wiki with examples and best practices
 ---
 
