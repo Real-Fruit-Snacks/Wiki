@@ -7611,6 +7611,31 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+    padding-right: var(--spacing-xs); /* Space for scrollbar */
+}
+
+/* Custom scrollbar for variables list */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    .variables-list::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .variables-list::-webkit-scrollbar-track {
+        background: var(--bg-tertiary);
+        border-radius: var(--radius-sm);
+    }
+
+    .variables-list::-webkit-scrollbar-thumb {
+        background: var(--border-primary);
+        border-radius: var(--radius-sm);
+    }
+
+    .variables-list::-webkit-scrollbar-thumb:hover {
+        background: var(--border-focus);
+    }
 }
 
 .variable-item {
