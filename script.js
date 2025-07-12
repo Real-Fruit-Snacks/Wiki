@@ -15065,7 +15065,14 @@ class NotesWiki {
         const panelHTML = `
             <div id="variable-manager-panel" class="variable-manager-panel">
                 <div class="variable-manager-header">
-                    <h3>Variable Manager</h3>
+                    <div class="variable-manager-title">
+                        <h3>Variable Manager</h3>
+                        <button class="icon-button variable-help-btn" id="variable-help-btn" title="How to use Variable Manager">
+                            <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
+                    </div>
                     <div class="variable-manager-controls">
                         <button class="icon-button" id="refresh-variables" title="Refresh variables">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
@@ -15080,7 +15087,13 @@ class NotesWiki {
                     </div>
                 </div>
                 <div class="variable-manager-content">
-                    <div class="variables-instructions">
+                    <div class="variables-list" id="variables-list">
+                        <!-- Variables will be populated here -->
+                    </div>
+                </div>
+                <!-- Help tooltip -->
+                <div class="variable-help-tooltip" id="variable-help-tooltip">
+                    <div class="help-tooltip-content">
                         <h4>How to use Variable Manager:</h4>
                         <ul>
                             <li>Use <code>$VariableName</code> in your code blocks</li>
@@ -15088,9 +15101,6 @@ class NotesWiki {
                             <li>Variables are saved per note</li>
                             <li>Changes apply immediately</li>
                         </ul>
-                    </div>
-                    <div class="variables-list" id="variables-list">
-                        <!-- Variables will be populated here -->
                     </div>
                 </div>
             </div>
@@ -15102,6 +15112,7 @@ class NotesWiki {
         // Set up event listeners
         document.getElementById('refresh-variables').addEventListener('click', () => this.refreshVariables());
         document.getElementById('close-variable-manager').addEventListener('click', () => this.toggleVariableManager());
+        document.getElementById('variable-help-btn').addEventListener('click', (e) => this.toggleVariableHelp(e));
     }
     
     toggleVariableManager() {
@@ -15124,7 +15135,65 @@ class NotesWiki {
             panel.classList.remove('open');
             button?.classList.remove('active');
             mobileButton?.classList.remove('active');
+            
+            // Hide help tooltip if it's open
+            this.hideVariableHelp();
         }
+    }
+    
+    toggleVariableHelp(e) {
+        e.stopPropagation();
+        const tooltip = document.getElementById('variable-help-tooltip');
+        const helpBtn = document.getElementById('variable-help-btn');
+        
+        if (!tooltip || !helpBtn) return;
+        
+        const isVisible = tooltip.classList.contains('visible');
+        
+        if (isVisible) {
+            this.hideVariableHelp();
+        } else {
+            this.showVariableHelp();
+            
+            // Hide tooltip when clicking outside
+            setTimeout(() => {
+                document.addEventListener('click', this.hideVariableHelpOnClickOutside.bind(this), { once: true });
+            }, 0);
+        }
+    }
+    
+    showVariableHelp() {
+        const tooltip = document.getElementById('variable-help-tooltip');
+        const helpBtn = document.getElementById('variable-help-btn');
+        
+        if (!tooltip || !helpBtn) return;
+        
+        tooltip.classList.add('visible');
+        helpBtn.classList.add('active');
+    }
+    
+    hideVariableHelp() {
+        const tooltip = document.getElementById('variable-help-tooltip');
+        const helpBtn = document.getElementById('variable-help-btn');
+        
+        if (!tooltip || !helpBtn) return;
+        
+        tooltip.classList.remove('visible');
+        helpBtn.classList.remove('active');
+    }
+    
+    hideVariableHelpOnClickOutside(e) {
+        const tooltip = document.getElementById('variable-help-tooltip');
+        const helpBtn = document.getElementById('variable-help-btn');
+        
+        if (!tooltip || !helpBtn) return;
+        
+        // Don't hide if clicking on the help button or inside the tooltip
+        if (helpBtn.contains(e.target) || tooltip.contains(e.target)) {
+            return;
+        }
+        
+        this.hideVariableHelp();
     }
     
     refreshVariables() {

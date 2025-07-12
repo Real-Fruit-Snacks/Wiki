@@ -7588,10 +7588,30 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     background: var(--bg-primary);
 }
 
+.variable-manager-title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
 .variable-manager-header h3 {
     margin: 0;
     font-size: var(--text-lg);
     font-weight: 600;
+}
+
+.variable-help-btn {
+    padding: var(--spacing-xs);
+    opacity: 0.6;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.variable-help-btn:hover,
+.variable-help-btn.active {
+    opacity: 1;
+    background: var(--bg-accent);
+    color: var(--text-accent);
 }
 
 .variable-manager-controls {
@@ -7732,6 +7752,64 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     border-radius: var(--radius-sm);
     font-family: var(--font-mono);
     font-size: 0.9em;
+}
+
+/* Variable Help Tooltip */
+.variable-help-tooltip {
+    position: absolute;
+    top: 45px;
+    left: var(--spacing-md);
+    right: var(--spacing-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 200;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all var(--transition-normal);
+    pointer-events: none;
+}
+
+.variable-help-tooltip.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.help-tooltip-content {
+    padding: var(--spacing-md);
+}
+
+.help-tooltip-content h4 {
+    margin: 0 0 var(--spacing-sm) 0;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.help-tooltip-content ul {
+    margin: 0;
+    padding-left: var(--spacing-md);
+    list-style-type: disc;
+}
+
+.help-tooltip-content li {
+    margin-bottom: var(--spacing-xs);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.help-tooltip-content code {
+    background: var(--bg-code);
+    padding: 1px 4px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    color: var(--accent-primary);
 }
 
 /* Button active state when panel is open */
