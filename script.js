@@ -5143,9 +5143,9 @@ class NotesWiki {
                 total: 0,
                 uppercase: 0,
                 lowercase: 0,
-                numbers: 0,
-                symbols: 0,
-                spaces: 0
+                number: 0,
+                symbol: 0,
+                space: 0
             }
         };
         
@@ -5166,11 +5166,11 @@ class NotesWiki {
     }
     
     getCharacterType(char) {
-        if (char === ' ') return 'spaces';
+        if (char === ' ') return 'space';
         if (char.match(/[A-Z]/)) return 'uppercase';
         if (char.match(/[a-z]/)) return 'lowercase';
-        if (char.match(/[0-9]/)) return 'numbers';
-        return 'symbols';
+        if (char.match(/[0-9]/)) return 'number';
+        return 'symbol';
     }
     
     displayCharacterAnalysis(analysis) {
@@ -5195,9 +5195,9 @@ class NotesWiki {
         document.getElementById('total-chars').textContent = analysis.stats.total;
         document.getElementById('uppercase-count').textContent = analysis.stats.uppercase;
         document.getElementById('lowercase-count').textContent = analysis.stats.lowercase;
-        document.getElementById('number-count').textContent = analysis.stats.numbers;
-        document.getElementById('symbol-count').textContent = analysis.stats.symbols;
-        document.getElementById('space-count').textContent = analysis.stats.spaces;
+        document.getElementById('number-count').textContent = analysis.stats.number;
+        document.getElementById('symbol-count').textContent = analysis.stats.symbol;
+        document.getElementById('space-count').textContent = analysis.stats.space;
     }
     
     clearTextAnalyzer() {
