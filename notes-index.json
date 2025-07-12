@@ -1,14 +1,14 @@
 {
   "notes": [
     {
-      "path": "/notes/test-callout-simple.md",
-      "context": null,
+      "path": "/notes/tutorials/features/test-callout-simple.md",
+      "context": "tutorials",
       "metadata": {
         "title": "Test Callout Fix",
         "tags": [
           "test"
         ],
-        "created": "2025-07-11",
+        "created": "2025-07-12",
         "author": "Unknown",
         "description": "",
         "updated": null,
@@ -772,7 +772,6 @@
     "home": 1,
     "index": 1,
     "documentation": 3,
-    "test": 1,
     "tutorial": 6,
     "code": 2,
     "advanced": 4,
@@ -822,6 +821,7 @@
     "preferences": 2,
     "tabs": 2,
     "tags": 1,
+    "test": 1,
     "best-practices": 1,
     "note-taking": 1,
     "getting-started": 3,
@@ -839,9 +839,9 @@
     "reference": 1
   },
   "authors": [
+    "NotesWiki Team",
     "Wiki Admin",
-    "Wiki Team",
-    "NotesWiki Team"
+    "Wiki Team"
   ],
   "categories": [
     "templates"
@@ -850,9 +850,9 @@
     {
       "id": "tutorials",
       "name": "Tutorials",
-      "noteCount": 25
+      "noteCount": 26
     }
   ],
-  "generated": "2025-07-11T21:09:38.297331",
+  "generated": "2025-07-12T10:19:57.585773",
   "totalNotes": 27
 }
