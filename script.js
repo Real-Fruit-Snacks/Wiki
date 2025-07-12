@@ -5312,7 +5312,8 @@ class NotesWiki {
                 lowercase: 0,
                 number: 0,
                 symbol: 0,
-                space: 0
+                space: 0,
+                newline: 0
             }
         };
         
@@ -5334,6 +5335,7 @@ class NotesWiki {
     
     getCharacterType(char) {
         if (char === ' ') return 'space';
+        if (char === '\n' || char === '\r') return 'newline';
         if (char.match(/[A-Z]/)) return 'uppercase';
         if (char.match(/[a-z]/)) return 'lowercase';
         if (char.match(/[0-9]/)) return 'number';
@@ -5344,16 +5346,34 @@ class NotesWiki {
         const display = document.getElementById('character-display');
         display.innerHTML = '';
         
+        let currentLine = document.createElement('div');
+        currentLine.className = 'character-line';
+        display.appendChild(currentLine);
+        
         analysis.characters.forEach((charData, index) => {
+            if (charData.type === 'newline') {
+                // Create a new line for line breaks
+                currentLine = document.createElement('div');
+                currentLine.className = 'character-line';
+                display.appendChild(currentLine);
+                return;
+            }
+            
             const charBox = document.createElement('div');
             charBox.className = `character-box ${charData.type} animated`;
             charBox.textContent = charData.char === ' ' ? '' : charData.char;
-            charBox.title = `Character: "${charData.char === ' ' ? 'Space' : charData.char}" (${charData.type})`;
+            
+            let charLabel = charData.char;
+            if (charData.char === ' ') charLabel = 'Space';
+            else if (charData.char === '\n') charLabel = 'New Line';
+            else if (charData.char === '\r') charLabel = 'Carriage Return';
+            
+            charBox.title = `Character: "${charLabel}" (${charData.type})`;
             
             // Add animation delay for nice effect
             charBox.style.animationDelay = `${index * 0.01}s`;
             
-            display.appendChild(charBox);
+            currentLine.appendChild(charBox);
         });
     }
     
@@ -5365,6 +5385,7 @@ class NotesWiki {
         document.getElementById('number-count').textContent = analysis.stats.number;
         document.getElementById('symbol-count').textContent = analysis.stats.symbol;
         document.getElementById('space-count').textContent = analysis.stats.space;
+        document.getElementById('newline-count').textContent = analysis.stats.newline;
     }
     
     updateHashDisplay(hash) {

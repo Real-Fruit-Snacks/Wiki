@@ -8620,6 +8620,10 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     background-color: #6b7280; /* Gray */
 }
 
+.newline-color {
+    background-color: #8b5cf6; /* Purple */
+}
+
 /* Output Section */
 .text-analyzer-output {
     display: flex;
@@ -8636,7 +8640,7 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     border: 1px solid var(--border-primary);
     border-radius: var(--radius-md);
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 3px;
     align-content: flex-start;
 }
@@ -8655,6 +8659,14 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
 .character-display .empty-state p {
     margin: 0;
     text-align: center;
+}
+
+/* Character Lines */
+.character-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    min-height: 32px;
 }
 
 /* Character Boxes */
