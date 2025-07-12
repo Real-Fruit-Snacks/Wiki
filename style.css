@@ -5451,8 +5451,8 @@ select.dropdown:focus {
     }
     
     .context-dropdown-label {
-        min-width: 60px;
-        max-width: 120px;
+        min-width: auto;
+        max-width: none;
         font-size: var(--text-xs);
     }
     
