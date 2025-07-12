@@ -7760,16 +7760,18 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     top: 45px;
     left: var(--spacing-md);
     right: var(--spacing-md);
-    background: var(--bg-tertiary);
+    background: var(--bg-tooltip, var(--bg-secondary));
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
     z-index: 200;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
     transition: all var(--transition-normal);
     pointer-events: none;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .variable-help-tooltip.visible {
