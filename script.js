@@ -14994,8 +14994,19 @@ class NotesWiki {
             variable.value = value;
         }
         
+        // Save the current scroll position before re-rendering
+        const mainContent = document.getElementById('main-content');
+        const scrollTop = mainContent ? mainContent.scrollTop : 0;
+        
         // Re-render the current note to apply changes
         this.renderNote();
+        
+        // Restore scroll position after rendering
+        if (mainContent) {
+            requestAnimationFrame(() => {
+                mainContent.scrollTop = scrollTop;
+            });
+        }
         
         // Save to localStorage
         this.saveVariableSettings();
@@ -15152,11 +15163,36 @@ class NotesWiki {
                     class="variable-input" 
                     placeholder="Enter value for ${this.escapeHtml(variable.name)}"
                     value="${this.escapeHtml(variable.value)}"
-                    onchange="window.notesWiki.setVariableValue('${this.escapeHtml(variable.name)}', this.value)"
-                    oninput="window.notesWiki.setVariableValue('${this.escapeHtml(variable.name)}', this.value)"
+                    data-variable-name="${this.escapeHtml(variable.name)}"
                 >
             </div>
         `).join('');
+        
+        // Add proper event listeners with debouncing
+        this.setupVariableInputListeners();
+    }
+    
+    setupVariableInputListeners() {
+        const inputs = document.querySelectorAll('.variable-input');
+        
+        inputs.forEach(input => {
+            const varName = input.dataset.variableName;
+            let debounceTimeout;
+            
+            // Handle input changes with debouncing
+            input.addEventListener('input', (e) => {
+                clearTimeout(debounceTimeout);
+                debounceTimeout = setTimeout(() => {
+                    this.setVariableValue(varName, e.target.value);
+                }, 300); // 300ms debounce delay
+            });
+            
+            // Handle immediate change on blur for responsiveness
+            input.addEventListener('change', (e) => {
+                clearTimeout(debounceTimeout);
+                this.setVariableValue(varName, e.target.value);
+            });
+        });
     }
         setupMobileMenu() {
         const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
