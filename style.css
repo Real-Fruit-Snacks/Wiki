@@ -5455,8 +5455,8 @@ select.dropdown:focus {
         font-weight: 500;
         min-width: auto;
         max-width: none;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        overflow: visible;
+        text-overflow: unset;
         white-space: nowrap;
     }
     
