@@ -248,10 +248,10 @@ body.custom-fonts-loaded {
 .context-dropdown-label {
     font-size: var(--text-sm);
     font-weight: 500;
-    min-width: 80px;
+    min-width: auto;
     max-width: none;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow: visible;
+    text-overflow: unset;
     white-space: nowrap;
 }
 

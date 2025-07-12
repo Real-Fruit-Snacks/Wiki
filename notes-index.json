@@ -989,9 +989,9 @@
     "reference": 1
   },
   "authors": [
-    "Wiki Admin",
     "Wiki Team",
-    "NotesWiki Team"
+    "NotesWiki Team",
+    "Wiki Admin"
   ],
   "categories": [
     "templates"
@@ -1008,6 +1008,6 @@
       "noteCount": 26
     }
   ],
-  "generated": "2025-07-12T12:12:12.037739",
+  "generated": "2025-07-12T12:19:02.459692",
   "totalNotes": 32
 }
