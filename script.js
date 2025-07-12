@@ -15079,6 +15079,11 @@ class NotesWiki {
                                 <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/>
                             </svg>
                         </button>
+                        <button class="icon-button" id="reset-variables" title="Clear all variable values">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M9 2a1 1 0 000 2H7.414l1.293 1.293a1 1 0 01-1.414 1.414L5.586 5H4a1 1 0 000 2v4a2 2 0 002 2h6a2 2 0 002-2V7a1 1 0 100-2h-1.586l-1.707 1.707a1 1 0 01-1.414-1.414L10.586 4H9zM8 8a1 1 0 012 0v2a1 1 0 11-2 0V8z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
                         <button class="icon-button" id="close-variable-manager" title="Close panel">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
@@ -15111,6 +15116,7 @@ class NotesWiki {
         
         // Set up event listeners
         document.getElementById('refresh-variables').addEventListener('click', () => this.refreshVariables());
+        document.getElementById('reset-variables').addEventListener('click', () => this.resetVariables());
         document.getElementById('close-variable-manager').addEventListener('click', () => this.toggleVariableManager());
         document.getElementById('variable-help-btn').addEventListener('click', (e) => this.toggleVariableHelp(e));
     }
@@ -15205,6 +15211,51 @@ class NotesWiki {
         // Extract variables from current note content
         this.currentVariables = this.extractVariables(this.currentNote.content);
         this.displayVariables(this.currentVariables);
+    }
+    
+    resetVariables() {
+        if (!this.currentNotePath) {
+            this.showToast('No note is currently loaded', 'error');
+            return;
+        }
+        
+        if (this.currentVariables.length === 0) {
+            this.showToast('No variables to reset', 'info');
+            return;
+        }
+        
+        // Clear all variable values for the current note
+        if (this.variableValues.has(this.currentNotePath)) {
+            this.variableValues.delete(this.currentNotePath);
+        }
+        
+        // Update current variables array to have empty values
+        this.currentVariables.forEach(variable => {
+            variable.value = '';
+        });
+        
+        // Save the current scroll position before re-rendering
+        const mainContent = document.getElementById('main-content');
+        const scrollTop = mainContent ? mainContent.scrollTop : 0;
+        
+        // Re-display variables with empty values
+        this.displayVariables(this.currentVariables);
+        
+        // Re-render the current note to remove variable replacements
+        this.renderNote();
+        
+        // Restore scroll position after rendering
+        if (mainContent) {
+            requestAnimationFrame(() => {
+                mainContent.scrollTop = scrollTop;
+            });
+        }
+        
+        // Save to localStorage
+        this.saveVariableSettings();
+        
+        // Show confirmation toast
+        this.showToast('All variable values cleared');
     }
     
     displayVariables(variables) {
