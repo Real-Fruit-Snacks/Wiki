@@ -977,6 +977,32 @@ class NotesWiki {
             this.showTagsButtonContextMenu(e);
         });
         
+        // Text Analyzer toggle
+        document.getElementById('text-analyzer-toggle').addEventListener('click', () => {
+            this.closeAllDropdowns();
+            this.toggleTextAnalyzer();
+        });
+        
+        // Text Analyzer close button
+        document.getElementById('text-analyzer-close').addEventListener('click', () => {
+            this.hideTextAnalyzer();
+        });
+        
+        // Text Analyzer buttons
+        document.getElementById('analyze-text-btn').addEventListener('click', () => {
+            this.analyzeText();
+        });
+        
+        document.getElementById('clear-text-btn').addEventListener('click', () => {
+            this.clearTextAnalyzer();
+        });
+        
+        // Mobile Text Analyzer toggle
+        document.getElementById('mobile-text-analyzer-toggle').addEventListener('click', () => {
+            this.toggleMobileMenu();
+            this.toggleTextAnalyzer();
+        });
+        
         document.getElementById('close-tags').addEventListener('click', () => {
             this.hideTagsModal();
         });
@@ -5050,6 +5076,154 @@ class NotesWiki {
                 searchClear.style.display = 'none';
             }
             this.filterTagsBySearch('');
+        }
+    }
+    
+    // Text Analyzer Methods
+    toggleTextAnalyzer() {
+        const panel = document.getElementById('text-analyzer-panel');
+        const button = document.getElementById('text-analyzer-toggle');
+        
+        if (panel.classList.contains('open')) {
+            this.hideTextAnalyzer();
+        } else {
+            this.showTextAnalyzer();
+        }
+    }
+    
+    showTextAnalyzer() {
+        const panel = document.getElementById('text-analyzer-panel');
+        const button = document.getElementById('text-analyzer-toggle');
+        
+        panel.classList.add('open');
+        button.classList.add('active');
+        
+        // Focus on textarea
+        const textarea = document.getElementById('text-analyzer-input');
+        if (textarea) {
+            textarea.focus();
+        }
+    }
+    
+    hideTextAnalyzer() {
+        const panel = document.getElementById('text-analyzer-panel');
+        const button = document.getElementById('text-analyzer-toggle');
+        
+        panel.classList.remove('open');
+        button.classList.remove('active');
+    }
+    
+    analyzeText() {
+        const textarea = document.getElementById('text-analyzer-input');
+        const text = textarea.value.trim();
+        
+        if (!text) {
+            this.showToast('Please enter some text to analyze', 'warning');
+            return;
+        }
+        
+        // Hide empty state and show stats
+        const statsSection = document.getElementById('text-analyzer-stats');
+        statsSection.style.display = 'block';
+        
+        // Analyze characters
+        const analysis = this.performTextAnalysis(text);
+        
+        // Update display
+        this.displayCharacterAnalysis(analysis);
+        this.updateTextStatistics(analysis);
+        
+        this.showToast('Text analyzed successfully', 'success');
+    }
+    
+    performTextAnalysis(text) {
+        const analysis = {
+            characters: [],
+            stats: {
+                total: 0,
+                uppercase: 0,
+                lowercase: 0,
+                numbers: 0,
+                symbols: 0,
+                spaces: 0
+            }
+        };
+        
+        for (let i = 0; i < text.length; i++) {
+            const char = text[i];
+            const charData = {
+                char: char,
+                type: this.getCharacterType(char),
+                position: i
+            };
+            
+            analysis.characters.push(charData);
+            analysis.stats.total++;
+            analysis.stats[charData.type]++;
+        }
+        
+        return analysis;
+    }
+    
+    getCharacterType(char) {
+        if (char === ' ') return 'spaces';
+        if (char.match(/[A-Z]/)) return 'uppercase';
+        if (char.match(/[a-z]/)) return 'lowercase';
+        if (char.match(/[0-9]/)) return 'numbers';
+        return 'symbols';
+    }
+    
+    displayCharacterAnalysis(analysis) {
+        const display = document.getElementById('character-display');
+        display.innerHTML = '';
+        
+        analysis.characters.forEach((charData, index) => {
+            const charBox = document.createElement('div');
+            charBox.className = `character-box ${charData.type} animated`;
+            charBox.textContent = charData.char === ' ' ? '' : charData.char;
+            charBox.title = `Character: "${charData.char === ' ' ? 'Space' : charData.char}" (${charData.type})`;
+            
+            // Add animation delay for nice effect
+            charBox.style.animationDelay = `${index * 0.01}s`;
+            
+            display.appendChild(charBox);
+        });
+    }
+    
+    updateTextStatistics(analysis) {
+        // Update stat values
+        document.getElementById('total-chars').textContent = analysis.stats.total;
+        document.getElementById('uppercase-count').textContent = analysis.stats.uppercase;
+        document.getElementById('lowercase-count').textContent = analysis.stats.lowercase;
+        document.getElementById('number-count').textContent = analysis.stats.numbers;
+        document.getElementById('symbol-count').textContent = analysis.stats.symbols;
+        document.getElementById('space-count').textContent = analysis.stats.spaces;
+    }
+    
+    clearTextAnalyzer() {
+        const textarea = document.getElementById('text-analyzer-input');
+        const display = document.getElementById('character-display');
+        const statsSection = document.getElementById('text-analyzer-stats');
+        
+        // Clear text
+        textarea.value = '';
+        
+        // Reset display
+        display.innerHTML = '<div class="empty-state"><p>Enter text above and click "Analyze Text" to see character breakdown</p></div>';
+        
+        // Hide stats
+        statsSection.style.display = 'none';
+        
+        // Focus on textarea
+        textarea.focus();
+        
+        this.showToast('Text analyzer cleared', 'info');
+    }
+    
+    toggleMobileMenu() {
+        const mobileMenu = document.getElementById('mobile-menu-content');
+        if (mobileMenu) {
+            mobileMenu.classList.toggle('show');
         }
     }
     
