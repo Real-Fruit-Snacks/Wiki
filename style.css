@@ -243,6 +243,7 @@ body.custom-fonts-loaded {
     gap: var(--spacing-xs);
     padding: var(--spacing-xs) var(--spacing-sm);
     min-width: auto;
+    width: fit-content;
 }
 
 .context-dropdown-label {

@@ -990,8 +990,8 @@
   },
   "authors": [
     "Wiki Admin",
-    "Wiki Team",
-    "NotesWiki Team"
+    "NotesWiki Team",
+    "Wiki Team"
   ],
   "categories": [
     "templates"
@@ -1008,6 +1008,6 @@
       "noteCount": 26
     }
   ],
-  "generated": "2025-07-12T12:50:34.279447",
+  "generated": "2025-07-12T12:55:47.925881",
   "totalNotes": 32
 }
