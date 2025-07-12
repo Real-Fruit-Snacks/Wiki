@@ -5451,9 +5451,13 @@ select.dropdown:focus {
     }
     
     .context-dropdown-label {
+        font-size: var(--text-xs);
+        font-weight: 500;
         min-width: auto;
         max-width: none;
-        font-size: var(--text-xs);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     
     .context-dropdown-toggle.icon-button {
