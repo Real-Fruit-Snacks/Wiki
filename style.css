@@ -8711,6 +8711,67 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     opacity: 0.7;
 }
 
+/* MD5 Hash Display */
+.text-analyzer-hash {
+    padding: var(--spacing-md);
+    background-color: var(--bg-primary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+.text-analyzer-hash h4 {
+    margin: 0 0 var(--spacing-md) 0;
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.hash-display {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.hash-value {
+    flex: 1;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-sm);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    word-break: break-all;
+    line-height: 1.4;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.copy-hash-btn {
+    padding: var(--spacing-sm);
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.copy-hash-btn:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-color: var(--border-secondary);
+}
+
+.copy-hash-btn.success {
+    background-color: var(--success-bg);
+    color: var(--success-text);
+    border-color: var(--success-border);
+}
+
 /* Statistics */
 .text-analyzer-stats {
     padding: var(--spacing-md);
