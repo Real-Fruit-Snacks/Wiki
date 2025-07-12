@@ -8914,57 +8914,62 @@ class NotesWiki {
                 return match ? src.indexOf(match[0]) : -1;
             },
             tokenizer(src, tokens) {
-                // Match callout blocks
-                // First try to match callout with custom title on same line
-                let rule = /^> \[!(WARNING|INFO|TIP|NOTE|DANGER|IMPORTANT|CAUTION|SUCCESS|QUESTION|EXAMPLE|QUOTE|BUG|TODO)\]\s+([^\n]+)\n((?:>.*(?:\n|$))*)/;
-                let match = rule.exec(src);
+                // Match callout blocks with better handling of empty titles
+                // Match pattern: > [!TYPE] optional_title
+                // Content: lines starting with >
                 
-                // If no match, try without custom title
-                if (!match) {
-                    rule = /^> \[!(WARNING|INFO|TIP|NOTE|DANGER|IMPORTANT|CAUTION|SUCCESS|QUESTION|EXAMPLE|QUOTE|BUG|TODO)\]\s*\n((?:>.*(?:\n|$))*)/;
-                    match = rule.exec(src);
-                    
-                    if (match) {
-                        // Rearrange match array to have consistent structure
-                        match = [match[0], match[1], undefined, match[2]];
-                    }
+                const calloutRegex = /^> \[!(WARNING|INFO|TIP|NOTE|DANGER|IMPORTANT|CAUTION|SUCCESS|QUESTION|EXAMPLE|QUOTE|BUG|TODO)\](.*)$/m;
+                const match = calloutRegex.exec(src);
+                
+                if (!match) return false;
+                
+                const calloutType = match[1];
+                const titlePart = match[2];
+                
+                // Extract custom title if present (non-empty after trimming)
+                const customTitle = titlePart.trim() || null;
+                
+                // Find the end of the callout block
+                const lines = src.split('\n');
+                let contentLines = [];
+                let i = 1; // Start after the callout declaration line
+                
+                // Collect all lines that start with '>'
+                while (i < lines.length && lines[i].startsWith('>')) {
+                    contentLines.push(lines[i]);
+                    i++;
                 }
                 
-                if (match) {
-                    const type = match[1].toLowerCase();
-                    const customTitle = match[2];
-                    const title = customTitle || getDefaultTitle(type);
-                    
-                    // Process content lines - remove '> ' prefix
-                    const rawContent = match[3];
-                    const contentLines = rawContent
-                        .split('\n')
-                        .map(line => {
-                            // Remove the '>' and any following space at the start of the line
-                            // Handle both "> " and ">" cases
-                            if (line.startsWith('> ')) {
-                                return line.substring(2);
-                            } else if (line.startsWith('>')) {
-                                return line.substring(1);
-                            }
-                            return line;
-                        })
-                        .filter((line, index, arr) => {
-                            // Keep non-empty lines or empty lines that are between content
-                            return line.trim() || (index > 0 && index < arr.length - 1);
-                        });
-                    
-                    const content = contentLines.join('\n').trim();
-                    
-                    return {
-                        type: 'callout',
-                        raw: match[0],
-                        calloutType: type,
-                        title: title,
-                        content: content,
-                        tokens: this.lexer.blockTokens(content)
-                    };
-                }
+                // Calculate the raw match text for proper tokenization
+                const rawMatch = lines.slice(0, i).join('\n');
+                
+                // Process content lines - remove '> ' prefix
+                const processedContent = contentLines
+                    .map(line => {
+                        if (line.startsWith('> ')) {
+                            return line.substring(2);
+                        } else if (line.startsWith('>')) {
+                            return line.substring(1);
+                        }
+                        return line;
+                    })
+                    .filter((line, index, arr) => {
+                        // Keep non-empty lines or empty lines that are between content
+                        return line.trim() || (index > 0 && index < arr.length - 1);
+                    })
+                    .join('\n')
+                    .trim();
+                
+                const title = customTitle || getDefaultTitle(calloutType.toLowerCase());
+                
+                return {
+                    type: 'callout',
+                    raw: rawMatch,
+                    calloutType: calloutType.toLowerCase(),
+                    title: title,
+                    content: processedContent,
+                    tokens: this.lexer.blockTokens(processedContent)
+                };
             },
             renderer(token) {
                 const icon = getCalloutIcon(token.calloutType);
