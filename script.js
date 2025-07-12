@@ -8914,90 +8914,107 @@ class NotesWiki {
                 return match ? src.indexOf(match[0]) : -1;
             },
             tokenizer(src, tokens) {
-                // Match callout blocks with better handling of empty titles
-                // Match pattern: > [!TYPE] optional_title
-                // Content: lines starting with >
-                
-                const calloutRegex = /^> \[!(WARNING|INFO|TIP|NOTE|DANGER|IMPORTANT|CAUTION|SUCCESS|QUESTION|EXAMPLE|QUOTE|BUG|TODO)\](.*)$/m;
-                const match = calloutRegex.exec(src);
-                
-                if (!match) return false;
-                
-                const calloutType = match[1];
-                const titlePart = match[2];
-                
-                // Extract custom title if present (non-empty after trimming)
-                const customTitle = titlePart.trim() || null;
-                
-                // Find the end of the callout block
-                const lines = src.split('\n');
-                let contentLines = [];
-                let i = 1; // Start after the callout declaration line
-                
-                // Collect all lines that start with '>'
-                while (i < lines.length && lines[i].startsWith('>')) {
-                    contentLines.push(lines[i]);
-                    i++;
+                try {
+                    // Match callout blocks with better handling of empty titles
+                    // Match pattern: > [!TYPE] optional_title
+                    // Content: lines starting with >
+                    
+                    const calloutRegex = /^> \[!(WARNING|INFO|TIP|NOTE|DANGER|IMPORTANT|CAUTION|SUCCESS|QUESTION|EXAMPLE|QUOTE|BUG|TODO)\](.*)$/m;
+                    const match = calloutRegex.exec(src);
+                    
+                    if (!match) return false;
+                    
+                    const calloutType = match[1];
+                    const titlePart = match[2];
+                    
+                    // Extract custom title if present (non-empty after trimming)
+                    const customTitle = titlePart.trim() || null;
+                    
+                    // Find the end of the callout block
+                    const lines = src.split('\n');
+                    let contentLines = [];
+                    let i = 1; // Start after the callout declaration line
+                    
+                    // Collect all lines that start with '>'
+                    while (i < lines.length && lines[i].startsWith('>')) {
+                        contentLines.push(lines[i]);
+                        i++;
+                    }
+                    
+                    // Calculate the raw match text for proper tokenization
+                    const rawMatch = lines.slice(0, i).join('\n');
+                    
+                    // Process content lines - remove '> ' prefix
+                    const processedContent = contentLines
+                        .map(line => {
+                            if (line.startsWith('> ')) {
+                                return line.substring(2);
+                            } else if (line.startsWith('>')) {
+                                return line.substring(1);
+                            }
+                            return line;
+                        })
+                        .filter((line, index, arr) => {
+                            // Keep non-empty lines or empty lines that are between content
+                            return line.trim() || (index > 0 && index < arr.length - 1);
+                        })
+                        .join('\n')
+                        .trim();
+                    
+                    const title = customTitle || getDefaultTitle(calloutType.toLowerCase());
+                    
+                    return {
+                        type: 'callout',
+                        raw: rawMatch,
+                        calloutType: calloutType.toLowerCase(),
+                        title: title,
+                        content: processedContent,
+                        tokens: this.lexer.blockTokens(processedContent)
+                    };
+                } catch (error) {
+                    console.error('Error processing callout:', error);
+                    return false;
                 }
-                
-                // Calculate the raw match text for proper tokenization
-                const rawMatch = lines.slice(0, i).join('\n');
-                
-                // Process content lines - remove '> ' prefix
-                const processedContent = contentLines
-                    .map(line => {
-                        if (line.startsWith('> ')) {
-                            return line.substring(2);
-                        } else if (line.startsWith('>')) {
-                            return line.substring(1);
-                        }
-                        return line;
-                    })
-                    .filter((line, index, arr) => {
-                        // Keep non-empty lines or empty lines that are between content
-                        return line.trim() || (index > 0 && index < arr.length - 1);
-                    })
-                    .join('\n')
-                    .trim();
-                
-                const title = customTitle || getDefaultTitle(calloutType.toLowerCase());
-                
-                return {
-                    type: 'callout',
-                    raw: rawMatch,
-                    calloutType: calloutType.toLowerCase(),
-                    title: title,
-                    content: processedContent,
-                    tokens: this.lexer.blockTokens(processedContent)
-                };
             },
             renderer(token) {
-                const icon = getCalloutIcon(token.calloutType);
-                
-                // Parse the content, which should already have > removed
-                let renderedContent = this.parser.parse(token.tokens);
-                
-                
-                // Check if marked wrapped content in blockquote tags
-                if (renderedContent.includes('<blockquote>')) {
-                    // Remove blockquote tags while preserving inner content
-                    renderedContent = renderedContent
-                        .replace(/<blockquote>\s*/g, '')
-                        .replace(/\s*<\/blockquote>/g, '');
+                try {
+                    const icon = getCalloutIcon(token.calloutType);
+                    
+                    // Parse the content, which should already have > removed
+                    let renderedContent = this.parser.parse(token.tokens);
+                    
+                    
+                    // Check if marked wrapped content in blockquote tags
+                    if (renderedContent.includes('<blockquote>')) {
+                        // Remove blockquote tags while preserving inner content
+                        renderedContent = renderedContent
+                            .replace(/<blockquote>\s*/g, '')
+                            .replace(/\s*<\/blockquote>/g, '');
+                    }
+                    
+                    // Also check for escaped > characters at the start of any paragraph
+                    renderedContent = renderedContent.replace(/<p>&gt;\s*/g, '<p>');
+                    
+                    return `<div class="callout callout-${token.calloutType}">
+                        <div class="callout-header">
+                            <span class="callout-icon">${icon}</span>
+                            <span class="callout-title">${self.escapeHtml(token.title)}</span>
+                        </div>
+                        <div class="callout-content">
+                            ${renderedContent}
+                        </div>
+                    </div>`;
+                } catch (error) {
+                    console.error('Error rendering callout:', error, token);
+                    return `<div class="callout callout-note">
+                        <div class="callout-header">
+                            <span class="callout-title">Error</span>
+                        </div>
+                        <div class="callout-content">
+                            <p>Error rendering callout: ${error.message}</p>
+                        </div>
+                    </div>`;
                 }
-                
-                // Also check for escaped > characters at the start of any paragraph
-                renderedContent = renderedContent.replace(/<p>&gt;\s*/g, '<p>');
-                
-                return `<div class="callout callout-${token.calloutType}">
-                    <div class="callout-header">
-                        <span class="callout-icon">${icon}</span>
-                        <span class="callout-title">${self.escapeHtml(token.title)}</span>
-                    </div>
-                    <div class="callout-content">
-                        ${renderedContent}
-                    </div>
-                </div>`;
             }
         };
     }
