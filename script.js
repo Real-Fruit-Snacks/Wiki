@@ -455,6 +455,14 @@ class NotesWiki {
             ul.className = 'file-tree' + (level > 0 ? ' file-tree-folder' : '');
             
             Object.entries(node).sort(([aKey, aValue], [bKey, bValue]) => {
+                const aIsFolder = !aValue.path;
+                const bIsFolder = !bValue.path;
+                
+                // First sort by type: folders first, then files
+                if (aIsFolder && !bIsFolder) return -1;
+                if (!aIsFolder && bIsFolder) return 1;
+                
+                // Then sort alphabetically within each type
                 const aDisplayName = aValue.path ? (aValue.metadata.title || aKey.replace('.md', '')) : aKey;
                 const bDisplayName = bValue.path ? (bValue.metadata.title || bKey.replace('.md', '')) : bKey;
                 return aDisplayName.localeCompare(bDisplayName);
