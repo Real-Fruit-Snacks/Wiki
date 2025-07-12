@@ -14963,12 +14963,12 @@ class NotesWiki {
             variables.set(varName, (variables.get(varName) || 0) + 1);
         }
         
-        // Convert to array of objects with name and count
+        // Convert to array of objects with name and count, sorted alphabetically
         return Array.from(variables.entries()).map(([name, count]) => ({
             name,
             count,
             value: this.getVariableValue(name) || ''
-        }));
+        })).sort((a, b) => a.name.localeCompare(b.name));
     }
     
     getVariableValue(varName) {
