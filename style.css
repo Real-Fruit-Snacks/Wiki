@@ -5388,6 +5388,20 @@ select.dropdown:focus {
     font-size: 10px;
 }
 
+.mobile-menu-separator {
+    padding: var(--spacing-xs) var(--spacing-lg);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--text-muted);
+    text-align: left;
+    border-bottom: 1px solid var(--border-primary);
+    margin: var(--spacing-xs) 0;
+    background: var(--bg-secondary);
+    cursor: default;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
 @media (max-width: 768px) {
     .desktop-nav {
         display: none;
