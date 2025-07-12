@@ -1,6 +1,31 @@
 {
   "notes": [
     {
+      "path": "/notes/test-callout-simple.md",
+      "context": null,
+      "metadata": {
+        "title": "Test Callout Fix",
+        "tags": [
+          "test"
+        ],
+        "created": "2025-07-11",
+        "author": "Unknown",
+        "description": "",
+        "updated": null,
+        "category": null,
+        "status": null,
+        "aliases": [],
+        "related": [],
+        "dependencies": [],
+        "keywords": [],
+        "tableOfContents": "auto",
+        "hideFromSearch": false
+      },
+      "content_preview": "> [!NOTE]\n> This should render properly with content below the header.\n\n\n> [!NOTE] Custom Title\n> This should also render properly.\n\n\n> [!INFO]\n> This is line one.\n> This is line two.\n> This is line t...",
+      "searchable_content": "\nTest Callout Fix\n\nBasic Callout\n> [!NOTE]\n> This should render properly with content below the header.\n\nCallout with Custom Title\n> [!NOTE] Custom Title\n> This should also render properly.\n\nMulti-line Callout\n> [!INFO]\n> This is line one.\n> This is line two.\n> This is line three.\n\nEnd of test. ",
+      "code_blocks_count": 0
+    },
+    {
       "path": "/notes/tutorials/features/markdown-callouts.md",
       "context": "tutorials",
       "metadata": {
@@ -747,6 +772,7 @@
     "home": 1,
     "index": 1,
     "documentation": 3,
+    "test": 1,
     "tutorial": 6,
     "code": 2,
     "advanced": 4,
@@ -813,9 +839,9 @@
     "reference": 1
   },
   "authors": [
-    "NotesWiki Team",
+    "Wiki Admin",
     "Wiki Team",
-    "Wiki Admin"
+    "NotesWiki Team"
   ],
   "categories": [
     "templates"
@@ -827,6 +853,6 @@
       "noteCount": 25
     }
   ],
-  "generated": "2025-07-11T20:25:09.846454",
-  "totalNotes": 26
+  "generated": "2025-07-11T21:09:38.297331",
+  "totalNotes": 27
 }

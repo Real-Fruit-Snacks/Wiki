@@ -8914,41 +8914,74 @@ class NotesWiki {
                 return match ? src.indexOf(match[0]) : -1;
             },
             tokenizer(src, tokens) {
-                // Comprehensive callout parsing with single regex
-                const calloutRegex = /^> \[!(WARNING|INFO|TIP|NOTE|DANGER|IMPORTANT|CAUTION|SUCCESS|QUESTION|EXAMPLE|QUOTE|BUG|TODO)\](?:\s+([^\n\r]+))?\s*(?:\n|\r\n?|$)((?:>.*(?:\n|\r\n?|$))*)/;
-                const match = calloutRegex.exec(src);
+                // Debug logging
+                if (src.includes('[!NOTE]')) {
+                    console.log('Callout debug - Source:', JSON.stringify(src.substring(0, 200)));
+                }
                 
-                if (!match) {
+                // Match the callout header first
+                const headerMatch = /^> \[!(WARNING|INFO|TIP|NOTE|DANGER|IMPORTANT|CAUTION|SUCCESS|QUESTION|EXAMPLE|QUOTE|BUG|TODO)\](.*)$/m.exec(src);
+                if (!headerMatch) {
                     return null;
                 }
                 
-                const type = match[1].toLowerCase();
-                const customTitle = match[2]?.trim();
+                const type = headerMatch[1].toLowerCase();
+                const headerLine = headerMatch[0];
+                const customTitle = headerMatch[2]?.trim();
                 const title = customTitle || getDefaultTitle(type);
-                const rawContent = match[3] || '';
                 
-                // Process content lines - remove '> ' prefix from each line
-                const contentLines = rawContent
-                    .split(/\n|\r\n?/)
-                    .map(line => {
-                        // Remove the '>' and following space/character at the start of each line
-                        if (line.startsWith('> ')) {
-                            return line.substring(2);
-                        } else if (line.startsWith('>')) {
-                            return line.substring(1);
+                // Find the start of the callout
+                const calloutStart = src.indexOf(headerLine);
+                if (calloutStart !== 0) {
+                    return null; // Must be at the start
+                }
+                
+                // Find all subsequent lines that start with '>'
+                const lines = src.split('\n');
+                const calloutLines = [lines[0]]; // Include the header line
+                
+                for (let i = 1; i < lines.length; i++) {
+                    const line = lines[i];
+                    if (line.startsWith('>')) {
+                        calloutLines.push(line);
+                    } else if (line.trim() === '') {
+                        // Empty line might be part of callout, check next line
+                        if (i + 1 < lines.length && lines[i + 1].startsWith('>')) {
+                            calloutLines.push(line);
+                        } else {
+                            break; // End of callout
                         }
-                        return line;
-                    })
-                    .filter((line, index, arr) => {
-                        // Keep non-empty lines and empty lines that are between content
-                        return line.trim() !== '' || (index > 0 && index < arr.length - 1);
-                    });
+                    } else {
+                        break; // End of callout
+                    }
+                }
+                
+                // Extract content from lines (excluding header)
+                const contentLines = calloutLines.slice(1).map(line => {
+                    if (line.startsWith('> ')) {
+                        return line.substring(2);
+                    } else if (line.startsWith('>')) {
+                        return line.substring(1);
+                    }
+                    return line;
+                }).filter(line => line.trim() !== '');
                 
                 const content = contentLines.join('\n').trim();
+                const raw = calloutLines.join('\n');
+                
+                // Debug logging
+                if (src.includes('[!NOTE]')) {
+                    console.log('Callout debug - Parsed:', {
+                        type,
+                        title,
+                        content: JSON.stringify(content),
+                        raw: JSON.stringify(raw)
+                    });
+                }
                 
                 return {
                     type: 'callout',
-                    raw: match[0],
+                    raw: raw,
                     calloutType: type,
                     title: title,
                     content: content,
@@ -8961,13 +8994,23 @@ class NotesWiki {
                 // Parse the content tokens
                 let renderedContent = this.parser.parse(token.tokens);
                 
+                // Debug logging
+                if (token.calloutType === 'note') {
+                    console.log('Callout renderer debug:', {
+                        calloutType: token.calloutType,
+                        title: token.title,
+                        content: token.content,
+                        renderedContent: renderedContent
+                    });
+                }
+                
                 // Clean up any blockquote tags that might have been added
                 renderedContent = renderedContent
                     .replace(/<blockquote>\s*/g, '')
                     .replace(/\s*<\/blockquote>/g, '')
                     .replace(/<p>&gt;\s*/g, '<p>');
                 
-                return `<div class="callout callout-${token.calloutType}">
+                const html = `<div class="callout callout-${token.calloutType}">
                     <div class="callout-header">
                         <span class="callout-icon">${icon}</span>
                         <span class="callout-title">${self.escapeHtml(token.title)}</span>
@@ -8976,6 +9019,13 @@ class NotesWiki {
                         ${renderedContent}
                     </div>
                 </div>`;
+                
+                // Debug logging
+                if (token.calloutType === 'note') {
+                    console.log('Callout HTML output:', html);
+                }
+                
+                return html;
             }
         };
     }
