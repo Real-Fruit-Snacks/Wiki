@@ -9197,8 +9197,8 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
 
 /* Button active state */
 #text-analyzer-toggle.active {
-    background-color: var(--accent-primary);
-    color: white;
+    background: var(--bg-accent);
+    color: var(--text-accent);
 }
 
 /* Responsive Design */
