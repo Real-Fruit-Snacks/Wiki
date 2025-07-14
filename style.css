@@ -7430,11 +7430,7 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     flex-direction: column;
 }
 
-.quick-notes-panel.open {
-    right: 0;
-}
-
-/* Quick Notes Size Classes */
+/* Quick Notes Panel Size Classes */
 .quick-notes-panel.quick-notes-size-small {
     width: 400px;
     right: -400px;
@@ -7450,6 +7446,21 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     right: -800px;
 }
 
+/* Open state positioning for different sizes */
+.quick-notes-panel.quick-notes-size-small.open {
+    right: 0;
+}
+
+.quick-notes-panel.quick-notes-size-medium.open {
+    right: 0;
+}
+
+.quick-notes-panel.quick-notes-size-large.open {
+    right: 0;
+}
+
+
+
 .quick-notes-header {
     display: flex;
     align-items: center;
@@ -7457,6 +7468,7 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     padding: var(--spacing-md);
     border-bottom: 1px solid var(--border-color);
     background: var(--bg-primary);
+    gap: var(--spacing-md);
 }
 
 .quick-notes-title-section {
@@ -7471,6 +7483,7 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     font-weight: 600;
 }
 
+/* Quick Notes Size Toggle */
 .quick-notes-size-toggle {
     display: flex;
     background-color: var(--bg-secondary);
@@ -7480,7 +7493,7 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     margin-left: var(--spacing-xs);
 }
 
-.quick-notes-size-btn {
+.quick-notes-size-toggle .size-toggle-btn {
     background: transparent;
     border: none;
     padding: var(--spacing-xs) var(--spacing-sm);
@@ -7493,16 +7506,16 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     min-width: 32px;
 }
 
-.quick-notes-size-btn:last-child {
+.quick-notes-size-toggle .size-toggle-btn:last-child {
     border-right: none;
 }
 
-.quick-notes-size-btn:hover {
+.quick-notes-size-toggle .size-toggle-btn:hover {
     background-color: var(--bg-hover);
     color: var(--text-primary);
 }
 
-.quick-notes-size-btn.active {
+.quick-notes-size-toggle .size-toggle-btn.active {
     background-color: var(--accent-primary);
     color: var(--bg-primary);
     font-weight: 700;
@@ -7632,6 +7645,12 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     .quick-notes-panel.quick-notes-size-large {
         width: 100%;
         right: -100%;
+    }
+    
+    .quick-notes-panel.quick-notes-size-small.open,
+    .quick-notes-panel.quick-notes-size-medium.open,
+    .quick-notes-panel.quick-notes-size-large.open {
+        right: 0;
     }
 }
 

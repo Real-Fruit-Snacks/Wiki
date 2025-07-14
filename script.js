@@ -5493,35 +5493,6 @@ class NotesWiki {
         this.showToast('Text analyzer cleared', 'info');
     }
     
-    setQuickNotesSize(size) {
-        const panel = document.getElementById('quick-notes-panel');
-        const sizeButtons = document.querySelectorAll('.quick-notes-size-btn');
-        
-        if (!panel) return;
-        
-        // Remove all size classes
-        panel.classList.remove('quick-notes-size-small', 'quick-notes-size-medium', 'quick-notes-size-large');
-        
-        // Add the new size class
-        panel.classList.add(`quick-notes-size-${size}`);
-        
-        // Update button states
-        sizeButtons.forEach(btn => {
-            btn.classList.remove('active');
-            if (btn.dataset.size === size) {
-                btn.classList.add('active');
-            }
-        });
-        
-        // Save the size preference
-        this.settings.quickNotesSize = size;
-        this.saveSettings();
-        
-        // Show toast notification
-        const sizeNames = { small: 'Small', medium: 'Medium', large: 'Large' };
-        this.showToast(`Quick Notes size: ${sizeNames[size]}`, 'success');
-    }
-    
     setTextAnalyzerSize(size) {
         const panel = document.getElementById('text-analyzer-panel');
         const sizeButtons = document.querySelectorAll('.size-toggle-btn');
@@ -5555,17 +5526,16 @@ class NotesWiki {
         this.showToast(`Text analyzer size: ${sizeNames[size]}`, 'success');
     }
     
-    initializeQuickNotesSize() {
-        const size = this.settings.quickNotesSize || 'small';
+    setQuickNotesSize(size) {
         const panel = document.getElementById('quick-notes-panel');
-        const sizeButtons = document.querySelectorAll('.quick-notes-size-btn');
+        const sizeButtons = document.querySelectorAll('#quick-notes-size-toggle .size-toggle-btn');
         
         if (!panel) return;
         
         // Remove all size classes
         panel.classList.remove('quick-notes-size-small', 'quick-notes-size-medium', 'quick-notes-size-large');
         
-        // Add the saved size class
+        // Add the new size class
         panel.classList.add(`quick-notes-size-${size}`);
         
         // Update button states
@@ -5575,6 +5545,14 @@ class NotesWiki {
                 btn.classList.add('active');
             }
         });
+        
+        // Save the size preference
+        this.settings.quickNotesSize = size;
+        this.saveSettings();
+        
+        // Show feedback
+        const sizeNames = { small: 'Small', medium: 'Medium', large: 'Large' };
+        this.showToast(`Quick Notes size: ${sizeNames[size]}`, 'success');
     }
     
     initializeTextAnalyzerSize() {
@@ -5589,6 +5567,28 @@ class NotesWiki {
         
         // Add the saved size class
         panel.classList.add(`text-analyzer-size-${size}`);
+        
+        // Update button states
+        sizeButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.size === size) {
+                btn.classList.add('active');
+            }
+        });
+    }
+    
+    initializeQuickNotesSize() {
+        const size = this.settings.quickNotesSize || 'small';
+        const panel = document.getElementById('quick-notes-panel');
+        const sizeButtons = document.querySelectorAll('#quick-notes-size-toggle .size-toggle-btn');
+        
+        if (!panel) return;
+        
+        // Remove all size classes
+        panel.classList.remove('quick-notes-size-small', 'quick-notes-size-medium', 'quick-notes-size-large');
+        
+        // Add the saved size class
+        panel.classList.add(`quick-notes-size-${size}`);
         
         // Update button states
         sizeButtons.forEach(btn => {
@@ -14808,9 +14808,9 @@ class NotesWiki {
                     <div class="quick-notes-title-section">
                         <h3>Quick Notes</h3>
                         <div class="quick-notes-size-toggle" id="quick-notes-size-toggle">
-                            <button class="quick-notes-size-btn active" data-size="small" title="Small">S</button>
-                            <button class="quick-notes-size-btn" data-size="medium" title="Medium">M</button>
-                            <button class="quick-notes-size-btn" data-size="large" title="Large">L</button>
+                            <button class="size-toggle-btn active" data-size="small" title="Small">S</button>
+                            <button class="size-toggle-btn" data-size="medium" title="Medium">M</button>
+                            <button class="size-toggle-btn" data-size="large" title="Large">L</button>
                         </div>
                     </div>
                     <div class="quick-notes-controls">
@@ -14845,16 +14845,16 @@ class NotesWiki {
         
         // Quick Notes size toggle
         document.getElementById('quick-notes-size-toggle').addEventListener('click', (e) => {
-            if (e.target.classList.contains('quick-notes-size-btn')) {
+            if (e.target.classList.contains('size-toggle-btn')) {
                 this.setQuickNotesSize(e.target.dataset.size);
             }
         });
         
+        // Initialize size from settings
+        this.initializeQuickNotesSize();
+        
         // Load and display notes
         this.displayQuickNotes();
-        
-        // Initialize panel size after creation
-        this.initializeQuickNotesSize();
     }
     
     toggleNotesPanel() {
