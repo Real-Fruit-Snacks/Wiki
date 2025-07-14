@@ -280,6 +280,9 @@ class NotesWiki {
         // Apply custom CSS
         this.applyCustomCSS();
         
+        // Initialize text analyzer size
+        this.initializeTextAnalyzerSize();
+        
         // Load notes index
         await this.loadNotesIndex();
         
@@ -1003,6 +1006,13 @@ class NotesWiki {
         
         document.getElementById('clear-text-btn').addEventListener('click', () => {
             this.clearTextAnalyzer();
+        });
+        
+        // Text Analyzer size toggle
+        document.getElementById('text-analyzer-size-toggle').addEventListener('click', (e) => {
+            if (e.target.classList.contains('size-toggle-btn')) {
+                this.setTextAnalyzerSize(e.target.dataset.size);
+            }
         });
         
         // Copy hash button
@@ -3058,6 +3068,8 @@ class NotesWiki {
             pomodoroBreakDuration: 5,
             pomodoroLongBreakDuration: 15,
             pomodoroCyclesBeforeLongBreak: 4,
+            // Text analyzer settings
+            textAnalyzerSize: 'small',
             // Banner settings
             bannerEnabled: false,
             bannerText: 'Important Notice',
@@ -5477,6 +5489,61 @@ class NotesWiki {
         textarea.focus();
         
         this.showToast('Text analyzer cleared', 'info');
+    }
+    
+    setTextAnalyzerSize(size) {
+        const panel = document.getElementById('text-analyzer-panel');
+        const sizeButtons = document.querySelectorAll('.size-toggle-btn');
+        
+        if (!panel) return;
+        
+        // Remove all size classes
+        panel.classList.remove('text-analyzer-size-small', 'text-analyzer-size-medium', 'text-analyzer-size-large');
+        
+        // Add the new size class
+        panel.classList.add(`text-analyzer-size-${size}`);
+        
+        // Update button states
+        sizeButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.size === size) {
+                btn.classList.add('active');
+            }
+        });
+        
+        // Save the size preference
+        this.settings.textAnalyzerSize = size;
+        this.saveSettings();
+        
+        // Show toast
+        const sizeNames = {
+            'small': 'Small (500px)',
+            'medium': 'Medium (700px)', 
+            'large': 'Large (900px)'
+        };
+        this.showToast(`Text analyzer size: ${sizeNames[size]}`, 'success');
+    }
+    
+    initializeTextAnalyzerSize() {
+        const size = this.settings.textAnalyzerSize || 'small';
+        const panel = document.getElementById('text-analyzer-panel');
+        const sizeButtons = document.querySelectorAll('.size-toggle-btn');
+        
+        if (!panel) return;
+        
+        // Remove all size classes
+        panel.classList.remove('text-analyzer-size-small', 'text-analyzer-size-medium', 'text-analyzer-size-large');
+        
+        // Add the saved size class
+        panel.classList.add(`text-analyzer-size-${size}`);
+        
+        // Update button states
+        sizeButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.size === size) {
+                btn.classList.add('active');
+            }
+        });
     }
     
     toggleMobileMenu() {
