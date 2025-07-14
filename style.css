@@ -7424,7 +7424,7 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     height: calc(100vh - var(--header-height) - var(--tab-bar-height));
     background: var(--bg-secondary);
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-    transition: right var(--transition-normal);
+    transition: right var(--transition-normal), width var(--transition-normal);
     z-index: 150; /* Below dropdowns (200) but above content */
     display: flex;
     flex-direction: column;
@@ -7432,6 +7432,22 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
 
 .quick-notes-panel.open {
     right: 0;
+}
+
+/* Quick Notes Size Classes */
+.quick-notes-panel.quick-notes-size-small {
+    width: 400px;
+    right: -400px;
+}
+
+.quick-notes-panel.quick-notes-size-medium {
+    width: 600px;
+    right: -600px;
+}
+
+.quick-notes-panel.quick-notes-size-large {
+    width: 800px;
+    right: -800px;
 }
 
 .quick-notes-header {
@@ -7443,10 +7459,53 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     background: var(--bg-primary);
 }
 
+.quick-notes-title-section {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
 .quick-notes-header h3 {
     margin: 0;
     font-size: var(--text-lg);
     font-weight: 600;
+}
+
+.quick-notes-size-toggle {
+    display: flex;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    margin-left: var(--spacing-xs);
+}
+
+.quick-notes-size-btn {
+    background: transparent;
+    border: none;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border-right: 1px solid var(--border-primary);
+    min-width: 32px;
+}
+
+.quick-notes-size-btn:last-child {
+    border-right: none;
+}
+
+.quick-notes-size-btn:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.quick-notes-size-btn.active {
+    background-color: var(--accent-primary);
+    color: var(--bg-primary);
+    font-weight: 700;
 }
 
 .quick-notes-controls {
@@ -7568,7 +7627,9 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .quick-notes-panel {
+    .quick-notes-panel.quick-notes-size-small,
+    .quick-notes-panel.quick-notes-size-medium,
+    .quick-notes-panel.quick-notes-size-large {
         width: 100%;
         right: -100%;
     }
