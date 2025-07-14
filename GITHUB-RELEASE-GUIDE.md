@@ -1,9 +1,9 @@
-# 🚀 GitHub Release Guide for Notes Wiki v4.2.0
+# 🚀 GitHub Release Guide for Notes Wiki v4.2.1
 
 ## 📦 Release Package Ready
 
-✅ **Release Package**: `notes-wiki-v4.2.0-complete.tar.gz` (1.5 MB)  
-✅ **Tag**: `v4.2.0` (already exists)  
+✅ **Release Package**: `notes-wiki-v4.2.1-complete.tar.gz` (1.5 MB)  
+✅ **Tag**: `v4.2.1` (freshly created)  
 ✅ **Repository**: `Real-Fruit-Snacks/Wiki`  
 
 ## 🎯 Creating the GitHub Release
@@ -15,14 +15,14 @@
 
 ### Step 2: Configure Release Details
 
-**Release Title**: `Notes Wiki v4.2.0 - Variable Manager & Enhanced Features`
+**Release Title**: `Notes Wiki v4.2.1 - Variable Manager & Enhanced Features`
 
-**Tag**: Select `v4.2.0` (existing tag)
+**Tag**: Select `v4.2.1` (freshly created tag)
 
 **Release Notes** (copy and paste this):
 
 ```markdown
-# 🎉 Notes Wiki v4.2.0 - Variable Manager & Enhanced Features
+# 🎉 Notes Wiki v4.2.1 - Variable Manager & Enhanced Features
 
 ## 🔥 Major New Features
 
@@ -72,7 +72,7 @@ This release includes everything needed for GitLab Pages deployment:
 
 ## 🆕 For New Users
 
-1. **Download**: `notes-wiki-v4.2.0-complete.tar.gz`
+1. **Download**: `notes-wiki-v4.2.1-complete.tar.gz`
 2. **Extract**: All files to your hosting location
 3. **Deploy**: To GitHub Pages, GitLab Pages, or any static hosting
 4. **Access**: Your personal wiki works completely offline!
@@ -102,7 +102,7 @@ This release includes everything needed for GitLab Pages deployment:
 ### Step 3: Upload the Release Asset
 
 1. In the **Assets** section, click **"Attach binaries by dropping them here or selecting them"**
-2. Select the file: `notes-wiki-v4.2.0-complete.tar.gz`
+2. Select the file: `notes-wiki-v4.2.1-complete.tar.gz`
 3. The file will upload automatically
 
 ### Step 4: Publish the Release
@@ -113,21 +113,21 @@ This release includes everything needed for GitLab Pages deployment:
 ## 📋 Release Checklist
 
 - [ ] Release title set correctly
-- [ ] Tag v4.2.0 selected
+- [ ] Tag v4.2.1 selected
 - [ ] Release notes copied
-- [ ] Tar file uploaded (`notes-wiki-v4.2.0-complete.tar.gz`)
+- [ ] Tar file uploaded (`notes-wiki-v4.2.1-complete.tar.gz`)
 - [ ] "Set as the latest release" checked
 - [ ] Release published
 
 ## 🎯 Post-Release
 
 After publishing, your release will be available at:
-- **Release URL**: https://github.com/Real-Fruit-Snacks/Wiki/releases/tag/v4.2.0
-- **Direct Download**: https://github.com/Real-Fruit-Snacks/Wiki/releases/download/v4.2.0/notes-wiki-v4.2.0-complete.tar.gz
+- **Release URL**: https://github.com/Real-Fruit-Snacks/Wiki/releases/tag/v4.2.1
+- **Direct Download**: https://github.com/Real-Fruit-Snacks/Wiki/releases/download/v4.2.1/notes-wiki-v4.2.1-complete.tar.gz
 
 ## 📊 Package Contents Summary
 
-The `notes-wiki-v4.2.0-complete.tar.gz` contains:
+The `notes-wiki-v4.2.1-complete.tar.gz` contains:
 - Complete application (HTML, CSS, JS)
 - 74 professional themes in 10 categories
 - All bundled libraries (marked, prism, js-yaml)
