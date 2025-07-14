@@ -323,3 +323,4 @@ if (location.protocol !== 'https:' && !location.hostname.includes('localhost')) 
 - **Content backups** - Export notes and configuration
 - **Theme backups** - Preserve custom themes
 - **Settings backups** - Export user configurations
+ 
