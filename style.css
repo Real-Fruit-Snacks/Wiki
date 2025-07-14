@@ -2802,11 +2802,11 @@ body:not(.show-line-numbers) .code-with-counters .code-line::before {
     gap: var(--spacing-xs);
     padding: var(--spacing-xs) var(--spacing-sm);
     background: var(--accent-primary);
-    color: white;
+    color: var(--bg-primary);
     border: none;
     border-radius: var(--radius-sm);
     font-size: var(--text-xs);
-    font-weight: 500;
+    font-weight: 600;
     text-decoration: none;
     cursor: pointer;
     transition: all var(--transition-fast);
@@ -2815,6 +2815,7 @@ body:not(.show-line-numbers) .code-with-counters .code-line::before {
 
 .combined-code-jump-button:hover {
     background: color-mix(in srgb, var(--accent-primary) 85%, black);
+    color: var(--bg-primary);
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
