@@ -8992,6 +8992,16 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     background-color: #8b5cf6; /* Purple */
 }
 
+/* Legend item text */
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
 /* Output Section */
 .text-analyzer-output {
     display: flex;
@@ -9048,11 +9058,12 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     border: 2px solid var(--border-primary);
     font-family: var(--font-mono);
     font-size: var(--text-sm);
-    font-weight: 500;
+    font-weight: 600;
     color: var(--text-primary);
     background-color: var(--bg-secondary);
-    transition: transform var(--transition-fast);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
     cursor: default;
+    position: relative;
 }
 
 .character-box:hover {
@@ -9062,28 +9073,51 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
 }
 
 .character-box.uppercase {
+    background-color: rgba(59, 130, 246, 0.15);
     border-color: #3b82f6;
+    color: var(--text-primary);
 }
 
 .character-box.lowercase {
+    background-color: rgba(16, 185, 129, 0.15);
     border-color: #10b981;
+    color: var(--text-primary);
 }
 
 .character-box.number {
+    background-color: rgba(245, 158, 11, 0.15);
     border-color: #f59e0b;
+    color: var(--text-primary);
 }
 
 .character-box.symbol {
+    background-color: rgba(239, 68, 68, 0.15);
     border-color: #ef4444;
+    color: var(--text-primary);
 }
 
 .character-box.space {
+    background-color: rgba(107, 114, 128, 0.15);
     border-color: #6b7280;
+    color: var(--text-primary);
+}
+
+.character-box.newline {
+    background-color: rgba(139, 92, 246, 0.15);
+    border-color: #8b5cf6;
+    color: var(--text-primary);
 }
 
 .character-box.space::before {
     content: '⎵';
-    opacity: 0.7;
+    opacity: 0.8;
+    color: var(--text-primary);
+}
+
+.character-box.newline::before {
+    content: '↵';
+    opacity: 0.8;
+    color: var(--text-primary);
 }
 
 /* MD5 Hash Display */
