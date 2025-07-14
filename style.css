@@ -8787,6 +8787,12 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     gap: var(--spacing-md);
 }
 
+.text-analyzer-title-section {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
 /* Size Toggle */
 .text-analyzer-size-toggle {
     display: flex;
@@ -8794,6 +8800,7 @@ body.focus-mode.focus-mode-wide .pane-content .content-wrapper {
     border: 1px solid var(--border-primary);
     border-radius: var(--radius-sm);
     overflow: hidden;
+    margin-left: var(--spacing-xs);
 }
 
 .size-toggle-btn {
