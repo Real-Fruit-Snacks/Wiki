@@ -1,0 +1,325 @@
+# Deployment & Hosting Configuration
+
+## Supported Hosting Platforms
+
+The Notes Wiki is designed for static hosting with specific configurations for GitHub Pages and GitLab Pages.
+
+## GitHub Pages Configuration
+
+### Repository Settings
+- **GitHub Pages source**: GitHub Actions (recommended)
+- **Custom domain**: Optional, configure in repository settings
+- **HTTPS enforcement**: Enabled for security
+
+### Required Files
+- **[_config.yml](mdc:_config.yml)** - Jekyll configuration for GitHub Pages
+- **[.nojekyll](mdc:.nojekyll)** - Bypasses Jekyll processing for assets
+- **[404.html](mdc:404.html)** - Custom 404 page for client-side routing
+
+### GitHub Actions Workflow
+```yaml
+# .github/workflows/deploy.yml
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+    
+    - name: Build search index
+      run: python build.py
+    
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
+```
+
+### Base Path Configuration ([index.html](mdc:index.html))
+```javascript
+// Auto-detect base path for GitHub Pages
+function detectBasePath() {
+  const hostname = window.location.hostname;
+  
+  if (hostname === 'localhost' || hostname === '127.0.0.1') {
+    return '/';
+  }
+  
+  // GitHub Pages: username.github.io/repository
+  if (hostname.includes('.github.io')) {
+    const pathSegments = window.location.pathname.split('/');
+    return pathSegments.length > 1 ? `/${pathSegments[1]}/` : '/';
+  }
+  
+  return '/';
+}
+```
+
+## GitLab Pages Configuration
+
+### Repository Structure
+- **[gitlab-files/](mdc:gitlab-files/)** - GitLab-specific configuration files
+- **[.gitlab-ci.yml](mdc:.gitlab-ci.yml)** - GitLab CI/CD pipeline configuration
+
+### GitLab CI/CD Pipeline
+```yaml
+# .gitlab-ci.yml
+pages:
+  stage: deploy
+  image: python:3.9
+  script:
+    - python build.py
+    - mkdir public
+    - cp -r * public/
+    - rm -rf public/.git
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
+```
+
+### GitLab Pages Deployment
+```bash
+# Build and deploy to GitLab Pages
+python build.py           # Generate search index
+# Files are served from public/ directory
+```
+
+## Build Process Integration
+
+### Python Build Script ([build.py](mdc:build.py))
+```python
+# Deployment-aware build process
+def build_for_deployment():
+    # Generate search index
+    build_search_index()
+    
+    # Optimize assets for production
+    optimize_assets()
+    
+    # Validate all links and references
+    validate_links()
+    
+    # Generate deployment manifest
+    create_manifest()
+```
+
+### Release Creation ([create-release.js](mdc:create-release.js))
+```javascript
+// Create deployment-ready release
+const createRelease = async () => {
+  // Validate all components
+  await validateComponents();
+  
+  // Build search index
+  await buildSearchIndex();
+  
+  // Create release archive
+  await createArchive();
+  
+  // Generate deployment instructions
+  await generateDeploymentGuide();
+};
+```
+
+## Domain Configuration
+
+### Custom Domain Setup
+1. **Add CNAME file** to repository root with your domain
+2. **Configure DNS** - Point to GitHub/GitLab Pages
+3. **Enable HTTPS** - Use Let's Encrypt or custom certificate
+4. **Update base paths** - Ensure correct asset loading
+
+### SSL/TLS Configuration
+```html
+<!-- Force HTTPS in production -->
+<script>
+if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+  location.replace(`https:${location.href.substring(location.protocol.length)}`);
+}
+</script>
+```
+
+## Asset Loading and Caching
+
+### Service Worker ([sw.js](mdc:sw.js))
+```javascript
+// Cache strategy for offline functionality
+const CACHE_NAME = 'notes-wiki-v4.2.0';
+const urlsToCache = [
+  '/',
+  '/style.css',
+  '/script.js',
+  '/notes-index.json',
+  '/libs/',
+  '/fonts/',
+  '/themes/'
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(urlsToCache))
+  );
+});
+```
+
+### CDN Configuration
+```html
+<!-- Fallback to local assets if CDN fails -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Test CDN availability
+  const testCDN = () => {
+    // Implementation for CDN fallback
+  };
+});
+</script>
+```
+
+## Performance Optimization for Hosting
+
+### Compression
+```python
+# Gzip compression for static assets
+import gzip
+import shutil
+
+def compress_assets():
+    files_to_compress = [
+        'script.js',
+        'style.css',
+        'notes-index.json'
+    ]
+    
+    for file in files_to_compress:
+        with open(file, 'rb') as f_in:
+            with gzip.open(f'{file}.gz', 'wb') as f_out:
+                shutil.copyfileobj(f_in, f_out)
+```
+
+### Browser Caching
+```html
+<!-- Cache control headers -->
+<meta http-equiv="Cache-Control" content="max-age=31536000, immutable">
+```
+
+## Monitoring and Analytics
+
+### Error Tracking
+```javascript
+// Production error monitoring
+window.addEventListener('error', (event) => {
+  if (window.location.hostname !== 'localhost') {
+    // Log to analytics service
+    trackError(event.error, event.filename, event.lineno);
+  }
+});
+```
+
+### Performance Monitoring
+```javascript
+// Track page load performance
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const perfData = performance.getEntriesByType('navigation')[0];
+    if (perfData) {
+      trackPerformance({
+        loadTime: perfData.loadEventEnd - perfData.fetchStart,
+        domContentLoaded: perfData.domContentLoadedEventEnd - perfData.fetchStart,
+        firstPaint: performance.getEntriesByType('paint')[0]?.startTime
+      });
+    }
+  }, 0);
+});
+```
+
+## Deployment Checklist
+
+### Pre-deployment Validation
+- [ ] Run `npm run build` successfully
+- [ ] Validate all themes with `npm run validate-themes`
+- [ ] Test search functionality with current index
+- [ ] Verify all internal links work correctly
+- [ ] Check responsive design on multiple devices
+- [ ] Validate HTML and CSS
+- [ ] Test performance on 3G connection
+
+### GitHub Pages Deployment
+- [ ] Enable GitHub Pages in repository settings
+- [ ] Configure custom domain (if applicable)
+- [ ] Set up GitHub Actions workflow
+- [ ] Test deployment with sample content
+- [ ] Verify HTTPS certificate
+- [ ] Check 404 error handling
+
+### GitLab Pages Deployment
+- [ ] Configure GitLab CI/CD pipeline
+- [ ] Set up public directory structure
+- [ ] Test build process in CI environment
+- [ ] Verify deployment artifacts
+- [ ] Check custom domain configuration
+- [ ] Test SSL/TLS setup
+
+## Troubleshooting Common Issues
+
+### GitHub Pages Issues
+- **404 errors**: Check base path configuration in [index.html](mdc:index.html)
+- **Theme loading fails**: Verify asset paths and CORS settings
+- **Search not working**: Ensure [notes-index.json](mdc:notes-index.json) is generated
+- **Slow loading**: Optimize assets and enable compression
+
+### GitLab Pages Issues
+- **Build failures**: Check Python dependencies and build script
+- **Asset loading**: Verify public directory structure
+- **HTTPS issues**: Configure SSL certificate properly
+- **Cache problems**: Clear browser cache and CDN cache
+
+### General Hosting Issues
+- **Base path problems**: Update configuration for subdirectory hosting
+- **CORS errors**: Configure proper headers for cross-origin requests
+- **Performance issues**: Optimize assets and enable caching
+- **Mobile issues**: Test responsive design and touch interactions
+
+## Security Considerations
+
+### Content Security Policy
+```html
+<meta http-equiv="Content-Security-Policy" 
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
+```
+
+### HTTPS Enforcement
+```javascript
+// Redirect to HTTPS in production
+if (location.protocol !== 'https:' && !location.hostname.includes('localhost')) {
+  location.replace('https:' + window.location.href.substring(window.location.protocol.length));
+}
+```
+
+## Maintenance
+
+### Regular Updates
+- **Monthly security updates** - Keep dependencies current
+- **Performance monitoring** - Track loading times and errors
+- **Link validation** - Check for broken internal/external links
+- **SSL certificate renewal** - Ensure HTTPS remains valid
+
+### Backup Strategy
+- **Repository backups** - Regular git backups
+- **Content backups** - Export notes and configuration
+- **Theme backups** - Preserve custom themes
+- **Settings backups** - Export user configurations

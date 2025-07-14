@@ -1,0 +1,320 @@
+# Performance Optimization Guidelines
+
+## Performance Targets
+
+The Notes Wiki is designed for optimal performance with large note collections and extensive theme switching.
+
+### Target Metrics
+- **Initial load time**: < 3 seconds on 3G connection
+- **Theme switching**: < 500ms
+- **Search response**: < 200ms for 1000+ notes
+- **Tab switching**: < 100ms
+- **Memory usage**: Stable over extended sessions
+- **Bundle size**: Self-contained under 20MB
+
+## JavaScript Performance ([script.js](mdc:script.js))
+
+### Efficient DOM Manipulation
+```javascript
+// Batch DOM operations
+const fragment = document.createDocumentFragment();
+items.forEach(item => fragment.appendChild(item));
+container.appendChild(fragment);
+
+// Cache DOM queries
+const searchInput = document.getElementById('search-input');
+const resultsContainer = document.getElementById('results');
+
+// Use event delegation
+document.addEventListener('click', (e) => {
+  if (e.target.matches('.tab-item')) {
+    this.switchTab(e.target.dataset.tabId);
+  }
+});
+```
+
+### Search Optimization
+```javascript
+// Debounced search to prevent excessive API calls
+const debouncedSearch = this.debounce((query) => {
+  this.performSearch(query);
+}, 300);
+
+// Efficient text search with indexing
+searchNotes(query) {
+  // Use pre-built index from notes-index.json
+  const index = this.searchIndex;
+  const results = [];
+  
+  // Optimize for common search patterns
+  if (query.startsWith('tag:')) {
+    return this.searchByTag(query.substring(4));
+  }
+  
+  return this.fullTextSearch(query, index);
+}
+```
+
+### Memory Management
+```javascript
+// Clean up event listeners
+removeTab(tabId) {
+  const tab = this.tabs[tabId];
+  if (tab) {
+    tab.removeEventListener('click', this.tabClickHandler);
+    tab.remove();
+    delete this.tabs[tabId];
+  }
+}
+
+// Lazy loading for large content
+loadNoteContent(noteId) {
+  if (this.contentCache[noteId]) {
+    return Promise.resolve(this.contentCache[noteId]);
+  }
+  
+  return this.fetchNote(noteId).then(content => {
+    this.contentCache[noteId] = content;
+    return content;
+  });
+}
+```
+
+## CSS Performance ([style.css](mdc:style.css) & [themes/](mdc:themes/))
+
+### Efficient Selectors
+```css
+/* Prefer class selectors over complex nesting */
+.note-content { /* Good */ }
+.sidebar .note-list .note-item .title { /* Avoid deep nesting */ }
+
+/* Use CSS custom properties for theme switching */
+:root {
+  --primary-color: #333;
+  --transition-speed: 0.3s;
+}
+
+.theme-element {
+  color: var(--primary-color);
+  transition: color var(--transition-speed);
+}
+```
+
+### Minimize Reflows and Repaints
+```css
+/* Use transforms for animations */
+.tab-item {
+  transform: translateX(0);
+  transition: transform 0.3s ease;
+}
+
+.tab-item.active {
+  transform: translateX(10px);
+}
+
+/* Avoid layout-triggering properties in animations */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.fade-in.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+```
+
+### Theme Loading Optimization
+```css
+/* Critical CSS inlined in index.html */
+/* Non-critical theme styles loaded asynchronously */
+
+/* Optimize font loading */
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/inter.woff2') format('woff2');
+  font-display: swap; /* Prevent invisible text during font load */
+}
+```
+
+## Build Process Optimization ([build.py](mdc:build.py))
+
+### Efficient Index Generation
+```python
+# Optimize notes-index.json generation
+def build_search_index():
+    index = {}
+    
+    # Process files in batches
+    for batch in chunk_files(note_files, batch_size=50):
+        process_batch(batch, index)
+    
+    # Compress whitespace in JSON output
+    with open('notes-index.json', 'w') as f:
+        json.dump(index, f, separators=(',', ':'))
+```
+
+### Content Processing
+```python
+# Cache parsed markdown to avoid reprocessing
+def process_note(filepath):
+    cache_key = f"{filepath}:{os.path.getmtime(filepath)}"
+    
+    if cache_key in self.cache:
+        return self.cache[cache_key]
+    
+    content = parse_markdown(filepath)
+    self.cache[cache_key] = content
+    return content
+```
+
+## Asset Optimization
+
+### Font Loading ([fonts/](mdc:fonts/))
+```css
+/* Preload critical fonts */
+<link rel="preload" href="fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+
+/* Use font-display for better performance */
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('fonts/jetbrains-mono.woff2') format('woff2');
+  font-display: swap;
+}
+```
+
+### Image Optimization
+```html
+<!-- Use appropriate image formats -->
+<img src="image.webp" alt="Description" loading="lazy">
+
+<!-- Responsive images -->
+<img srcset="image-small.webp 480w, image-large.webp 1024w" 
+     sizes="(max-width: 480px) 480px, 1024px" 
+     src="image.webp" alt="Description">
+```
+
+## Monitoring and Profiling
+
+### Performance Monitoring
+```javascript
+// Track performance metrics
+const performanceObserver = new PerformanceObserver((list) => {
+  for (const entry of list.getEntries()) {
+    if (entry.name === 'theme-switch') {
+      console.log(`Theme switch took ${entry.duration}ms`);
+    }
+  }
+});
+
+performanceObserver.observe({entryTypes: ['measure']});
+
+// Measure critical operations
+performance.mark('theme-switch-start');
+this.switchTheme(newTheme);
+performance.mark('theme-switch-end');
+performance.measure('theme-switch', 'theme-switch-start', 'theme-switch-end');
+```
+
+### Memory Usage Tracking
+```javascript
+// Monitor memory usage
+setInterval(() => {
+  if (performance.memory) {
+    const { usedJSHeapSize, totalJSHeapSize } = performance.memory;
+    console.log(`Memory usage: ${usedJSHeapSize / totalJSHeapSize * 100}%`);
+  }
+}, 30000);
+```
+
+## Common Performance Issues
+
+### JavaScript Bottlenecks
+- **Excessive DOM queries** - Cache frequently accessed elements
+- **Synchronous operations** - Use requestAnimationFrame for heavy tasks
+- **Memory leaks** - Remove event listeners and clear references
+- **Inefficient search** - Use proper indexing and debouncing
+
+### CSS Performance Problems
+- **Complex selectors** - Simplify CSS selectors
+- **Forced reflows** - Batch DOM reads and writes
+- **Unnecessary animations** - Use transform and opacity for animations
+- **Large stylesheets** - Split CSS and load conditionally
+
+### Network Performance
+- **Large assets** - Optimize images and fonts
+- **Blocking resources** - Use async/defer for non-critical scripts
+- **Excessive requests** - Bundle and minify resources
+- **Slow CDN** - Use local assets for offline functionality
+
+## Optimization Checklist
+
+### Before Deployment
+- [ ] Run performance profiling in Chrome DevTools
+- [ ] Test with large note collections (500+ notes)
+- [ ] Verify theme switching performance across all 74 themes
+- [ ] Check memory usage during extended sessions
+- [ ] Test on slower devices and connections
+
+### Code Review Checks
+- [ ] No blocking synchronous operations
+- [ ] Efficient DOM manipulation patterns
+- [ ] Proper event listener cleanup
+- [ ] Debounced user input handling
+- [ ] Cached expensive operations
+
+### Theme Performance
+- [ ] Minimal CSS selector complexity
+- [ ] Efficient use of CSS custom properties
+- [ ] No layout-triggering animations
+- [ ] Optimized font loading
+- [ ] Compressed CSS output
+
+## Performance Tools
+
+### Browser DevTools
+- **Performance tab** - Profile JavaScript execution
+- **Memory tab** - Track memory usage and leaks
+- **Network tab** - Monitor asset loading
+- **Lighthouse** - Comprehensive performance audit
+
+### Testing Commands
+```bash
+# Performance testing
+npm run test:performance      # Run performance benchmarks
+npm run profile              # Generate performance profile
+npm run memory-test          # Check for memory leaks
+```
+
+### Monitoring Scripts
+```javascript
+// Add to build process
+const performanceTest = require('./performance-test');
+
+performanceTest.run({
+  iterations: 100,
+  themes: ['dark', 'light', 'monokai', 'dracula'],
+  operations: ['search', 'theme-switch', 'tab-switch']
+});
+```
+
+## Continuous Optimization
+
+### Regular Performance Reviews
+- **Monthly performance audits** - Run comprehensive testing
+- **Theme performance validation** - Test new themes for performance impact
+- **Search index optimization** - Optimize as note collection grows
+- **Memory usage monitoring** - Track long-term memory stability
+
+### Performance Budgets
+- **JavaScript bundle size** - Max 2MB
+- **CSS bundle size** - Max 500KB per theme
+- **Search index size** - Max 1MB for 1000 notes
+- **Memory usage** - Max 100MB for typical usage
+
+### Optimization Priorities
+1. **Critical path performance** - Initial load and core functionality
+2. **Perceived performance** - Theme switching and search response
+3. **Memory efficiency** - Long-term stability
+4. **Network optimization** - Asset loading and caching

@@ -1,0 +1,145 @@
+# Testing & Quality Assurance Guidelines
+
+## Testing Strategy
+
+The Notes Wiki uses a multi-layered testing approach to ensure reliability and performance across all 74 themes and features.
+
+## Available Testing Tools
+
+### JavaScript Validation
+- **[validate-themes.js](mdc:validate-themes.js)** - Validates all CSS themes for syntax and required variables
+- **Node.js validation** - `npm run validate` checks script.js syntax
+- **Puppeteer testing** - `npm run test` runs end-to-end browser tests
+
+### NPM Scripts for Testing
+```bash
+npm run validate           # Validate JavaScript syntax
+npm run validate-themes    # Validate all CSS themes
+npm run validate-all       # Run all validation checks
+npm run test              # Run Puppeteer browser tests
+npm run test:debug        # Run tests with debugging output
+```
+
+## Testing Checklist
+
+### Before Making Changes
+1. **Run full validation**: `npm run validate-all`
+2. **Test theme switching** - Verify all 74 themes load correctly
+3. **Check core functionality** - Search, tabs, split view, bookmarks
+4. **Validate markdown rendering** - Test with various content types
+
+### After Making Changes
+1. **Syntax validation** - Ensure no JavaScript/CSS errors
+2. **Theme compatibility** - Test changes across multiple themes
+3. **Cross-browser testing** - Verify in Chrome, Firefox, Safari
+4. **Mobile responsiveness** - Test on different screen sizes
+5. **Performance testing** - Check for memory leaks or slow operations
+
+## Testing Focus Areas
+
+### Core JavaScript ([script.js](mdc:script.js))
+- **Tab management** - Creation, switching, drag & drop
+- **Search functionality** - Full-text search, tag filtering
+- **Theme system** - Dynamic loading, persistence
+- **Split view** - Side-by-side note viewing
+- **Markdown rendering** - Syntax highlighting, link processing
+
+### Theme System ([themes/](mdc:themes/))
+- **CSS validation** - Syntax and variable completeness
+- **Visual consistency** - Layout stability across themes
+- **Accessibility** - Color contrast and readability
+- **Performance** - CSS load times and rendering speed
+
+### Content Processing ([build.py](mdc:build.py))
+- **Index generation** - Verify [notes-index.json](mdc:notes-index.json) accuracy
+- **Frontmatter parsing** - YAML extraction and validation
+- **Content indexing** - Search functionality with new content
+
+## Common Testing Scenarios
+
+### Theme Development Testing
+```bash
+# Validate new theme
+npm run validate-themes
+
+# Test with specific theme
+# 1. Load application
+# 2. Switch to new theme
+# 3. Navigate through different pages
+# 4. Test search functionality
+# 5. Verify syntax highlighting
+```
+
+### JavaScript Feature Testing
+```bash
+# Full validation suite
+npm run validate-all
+
+# Browser testing
+npm run test
+
+# Debug mode for troubleshooting
+npm run test:debug
+```
+
+## Quality Assurance Standards
+
+### Code Quality
+- **No console errors** - Clean browser console output
+- **Proper error handling** - Graceful failure modes
+- **Performance optimization** - Efficient DOM manipulation
+- **Memory management** - No memory leaks in long sessions
+
+### User Experience
+- **Responsive design** - Works on all screen sizes
+- **Accessibility** - Keyboard navigation and screen reader support
+- **Loading performance** - Fast initial load and theme switching
+- **Data persistence** - Settings and state preservation
+
+### Content Quality
+- **Markdown compatibility** - Supports full CommonMark spec
+- **Link validation** - No broken internal links
+- **Image handling** - Proper asset loading and caching
+- **Search accuracy** - Relevant results and proper indexing
+
+## Debugging Guidelines
+
+### Common Issues
+- **Theme loading failures** - Check CSS syntax and base path
+- **Search not working** - Verify [notes-index.json](mdc:notes-index.json) generation
+- **Tab persistence issues** - Check localStorage functionality
+- **Performance problems** - Profile JavaScript execution
+
+### Debugging Tools
+- **Browser DevTools** - Console, Network, Performance tabs
+- **Puppeteer debugging** - `npm run test:debug` for detailed output
+- **CSS validation** - Use built-in theme validator
+- **Network monitoring** - Check for failed asset loads
+
+## Continuous Integration
+
+### Pre-commit Checks
+1. Run `npm run validate-all`
+2. Test core functionality manually
+3. Verify theme compatibility
+4. Check for any console errors
+
+### Release Testing
+1. **Full build process** - `npm run build`
+2. **Package validation** - `npm run package`
+3. **Deployment testing** - Test on GitHub/GitLab Pages
+4. **Cross-platform verification** - Multiple browsers and devices
+
+## Performance Benchmarks
+
+### Target Metrics
+- **Initial load time** - Under 3 seconds
+- **Theme switching** - Under 500ms
+- **Search response** - Under 200ms
+- **Memory usage** - Stable over extended sessions
+
+### Monitoring
+- Use browser Performance tab for profiling
+- Monitor memory usage during long sessions
+- Track search performance with large note collections
+- Measure theme switching performance across all 74 themes

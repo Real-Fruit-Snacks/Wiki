@@ -1,0 +1,227 @@
+# Accessibility Guidelines
+
+## Accessibility Standards
+
+The Notes Wiki follows WCAG 2.1 AA standards to ensure accessibility for all users, including those using assistive technologies.
+
+## Key Accessibility Features
+
+### Keyboard Navigation
+- **Tab management** - Full keyboard support for creating, switching, and closing tabs
+- **Search interface** - Arrow keys for result navigation, Enter to select
+- **Theme switching** - Keyboard shortcuts for theme selection
+- **Split view** - Keyboard shortcuts for layout management
+- **Focus management** - Proper focus order and visible focus indicators
+
+### Screen Reader Support
+- **Semantic HTML** - Proper heading hierarchy (h1-h6) in [index.html](mdc:index.html)
+- **ARIA labels** - Descriptive labels for interactive elements
+- **Alt text** - All images have descriptive alt attributes
+- **Role attributes** - Proper roles for complex widgets
+- **Live regions** - Screen reader announcements for dynamic content
+
+### Visual Accessibility
+- **Color contrast** - All 74 themes meet WCAG contrast ratios
+- **Scalable text** - Supports browser zoom up to 200%
+- **Focus indicators** - Clear visual focus states
+- **High contrast mode** - Compatible with system high contrast settings
+
+## Implementation Guidelines
+
+### Theme Development ([themes/](mdc:themes/))
+
+#### Required Contrast Ratios
+```css
+/* Minimum contrast ratios for accessibility */
+:root {
+  /* Text on background: 4.5:1 minimum */
+  --text-primary: /* High contrast color */;
+  --bg-primary: /* Background color */;
+  
+  /* Large text (18px+): 3:1 minimum */
+  --text-secondary: /* Medium contrast color */;
+  
+  /* Interactive elements: 4.5:1 minimum */
+  --accent-primary: /* High contrast accent */;
+  --hover-color: /* Accessible hover state */;
+}
+```
+
+#### Focus States
+Every interactive element must have a visible focus indicator:
+```css
+button:focus,
+input:focus,
+select:focus,
+.tab-item:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+```
+
+### JavaScript Implementation ([script.js](mdc:script.js))
+
+#### Keyboard Event Handling
+```javascript
+// Example: Tab navigation with keyboard
+handleKeyDown(event) {
+  switch(event.key) {
+    case 'ArrowLeft':
+      this.navigateTab(-1);
+      break;
+    case 'ArrowRight':
+      this.navigateTab(1);
+      break;
+    case 'Enter':
+    case ' ':
+      this.activateTab();
+      break;
+  }
+}
+```
+
+#### ARIA Attributes
+```javascript
+// Dynamic ARIA updates
+updateTabAccessibility(tabIndex) {
+  const tab = this.tabs[tabIndex];
+  tab.setAttribute('aria-selected', 'true');
+  tab.setAttribute('aria-expanded', 'true');
+  tab.setAttribute('tabindex', '0');
+}
+```
+
+### HTML Structure ([index.html](mdc:index.html))
+
+#### Semantic Markup
+```html
+<main role="main">
+  <nav role="navigation" aria-label="Main navigation">
+    <ul role="tablist">
+      <li role="tab" aria-selected="true" tabindex="0">
+        Tab 1
+      </li>
+    </ul>
+  </nav>
+  
+  <article role="tabpanel" aria-labelledby="tab-1">
+    <!-- Content -->
+  </article>
+</main>
+```
+
+#### Form Elements
+```html
+<label for="search-input">Search notes</label>
+<input 
+  id="search-input"
+  type="search"
+  aria-describedby="search-help"
+  aria-expanded="false"
+  aria-haspopup="listbox"
+>
+<div id="search-help">
+  Use quotes for exact phrases, tag: for tag search
+</div>
+```
+
+## Testing Accessibility
+
+### Manual Testing
+1. **Keyboard navigation** - Navigate entire interface using only keyboard
+2. **Screen reader testing** - Test with NVDA, JAWS, or VoiceOver
+3. **High contrast mode** - Test with system high contrast enabled
+4. **Zoom testing** - Verify usability at 200% zoom
+5. **Color blindness** - Test with color vision simulators
+
+### Automated Testing
+```bash
+# Add to testing workflow
+npm run test:accessibility  # Run accessibility checks
+npm run validate-contrast  # Validate theme contrast ratios
+```
+
+### Browser Testing
+- **Chrome DevTools** - Lighthouse accessibility audit
+- **Firefox Developer Tools** - Accessibility inspector
+- **Safari Web Inspector** - Accessibility features
+- **Edge DevTools** - Accessibility insights
+
+## Accessibility Checklist
+
+### For All Changes
+- [ ] Keyboard navigation works correctly
+- [ ] Focus indicators are visible
+- [ ] Screen reader announcements are appropriate
+- [ ] Color contrast meets WCAG standards
+- [ ] Text scales properly with zoom
+- [ ] No flashing or motion that could cause seizures
+
+### For Theme Development
+- [ ] All text meets contrast ratio requirements
+- [ ] Focus states are clearly visible
+- [ ] Hover states don't rely solely on color
+- [ ] Theme works with high contrast mode
+- [ ] All interactive elements are distinguishable
+
+### For JavaScript Features
+- [ ] Keyboard shortcuts are documented
+- [ ] ARIA attributes are properly maintained
+- [ ] Dynamic content updates are announced
+- [ ] Focus management works correctly
+- [ ] Error messages are accessible
+
+### For Content ([notes/](mdc:notes/))
+- [ ] Headings follow proper hierarchy
+- [ ] Images have descriptive alt text
+- [ ] Links have meaningful text
+- [ ] Tables have proper headers
+- [ ] Lists use proper markup
+
+## Common Accessibility Issues
+
+### Focus Management
+- **Lost focus** - Ensure focus moves logically after actions
+- **Trapped focus** - Properly manage focus in modals/dialogs
+- **Skip links** - Provide skip to content functionality
+- **Focus order** - Maintain logical tab order
+
+### Screen Reader Support
+- **Missing labels** - All form elements need labels
+- **Empty links** - Links must have descriptive text
+- **Redundant announcements** - Avoid duplicate information
+- **Missing landmarks** - Use proper ARIA landmarks
+
+### Visual Design
+- **Low contrast** - Ensure sufficient color contrast
+- **Color-only information** - Don't rely solely on color
+- **Small touch targets** - Minimum 44px touch targets
+- **Responsive design** - Works at all screen sizes
+
+## Accessibility Resources
+
+### Testing Tools
+- **WAVE** - Web accessibility evaluation tool
+- **axe DevTools** - Automated accessibility testing
+- **Lighthouse** - Built-in Chrome accessibility audit
+- **Colour Contrast Analyser** - Color contrast testing
+
+### Documentation
+- **WCAG 2.1 Guidelines** - Web Content Accessibility Guidelines
+- **ARIA Authoring Practices** - WAI-ARIA implementation guide
+- **MDN Accessibility** - Mozilla accessibility documentation
+- **WebAIM** - Web accessibility training and resources
+
+## Maintenance
+
+### Regular Reviews
+- **Quarterly accessibility audits** - Comprehensive testing
+- **Theme validation** - Verify contrast ratios after updates
+- **User feedback** - Collect accessibility feedback
+- **Best practices updates** - Stay current with standards
+
+### Documentation Updates
+- Keep accessibility guidelines current
+- Document new keyboard shortcuts
+- Update ARIA patterns as needed
+- Maintain testing procedures
